@@ -1,0 +1,241 @@
+{
+  "schema": "ASRA-PAPER-LEAN-REVIEW-PACKET-v1",
+  "id": "E003-CORRECTNESS-ONLY-REVIEW-2026-10-13",
+  "status": "AWAITING_MAINTAINER_DECISION",
+  "drafted_by": "Claude, 2026-10-13. The questions, explanations and probe summaries are AI-drafted; they are not a review and change no atlas status.",
+  "candidate_edge_id": "N2:DSO:E-PAPER-LEAN-SEMANTIC",
+  "candidate_edge_scope": "Proposed relation paper_to_lean_semantic_match at correctness-only scope: Correctness-only correspondence between Theorem 6.2 of arXiv:2311.14125v1 and Correct (3/5) k t in Debate_Correct.lean at de3a6e500ae1a65dfeea2f91ef519ebad9704be0; resource bounds, language and machine model excluded. Proposed by Claude on 2026-10-13; not reviewed by any human at this scope.",
+  "candidate_edge_conditions": [
+    "Paper side: Theorem 6.2 of arXiv:2311.14125v1 as stated in the Section 6 extract; its language, probabilistic oracle machine, input, time and complexity content is excluded from this correspondence and is not mapped.",
+    "Lean side: the declaration correctness at Debate/Correct.lean lines 28-34, commit de3a6e500ae1a65dfeea2f91ef519ebad9704be0, which constructs Correct (3/5) k t for the Params.defaults alice, bob and vera strategies; no Cost.lean result is included.",
+    "Paper Definition 6.1 (strict <, supremum over inputs) and Lean Oracle.lipschitz (non-strict <=, one fixed oracle against every formal oracle) are compared without adopting an interpretation of self or zero-distance comparisons.",
+    "Opposing strategies are compared only within the Lean Alice and Bob function types; the paper's unbounded-time opposing oracle machines are not identified with them.",
+    "The nine review dimensions of the accepted 2026-10-05 draft, with Hatem's recorded limitations, are transcribed by Claude on 2026-10-13 in N2-SRC:DSO:E003-TRANSCRIPTION-2026-10-13 (E003_NINE_DIMENSION_TRANSCRIPTION.json); that file is an AI-drafted transcription, not a review event."
+  ],
+  "claim": "Theorem 6.2 of the debate paper and the Lean declaration correctness say the same thing about correctness (completeness 3/5, soundness 2/5), and nothing more.",
+  "exclusions": [
+    "Resource bounds (prover time, verifier time, verifier queries) are not part of the claim.",
+    "The paper's language and probabilistic oracle machine are not mapped to Lean objects.",
+    "Opposing debaters are compared only as the Lean Alice and Bob types, so Bob decides before the coin is flipped."
+  ],
+  "prior_decision": {
+    "file": "AGR_Atlas_Infrastructure/ontology_v2/review_v1/e003_v1/HATEM_AI_ASSISTED_REVIEW_DECISION_2026-10-05.json",
+    "summary": "On 5 October 2026 the maintainer accepted the nine-dimension review and differences D01 to D07, kept the full E003 match open, and left the three Definition 6.1 questions below blank."
+  },
+  "paper": {
+    "id": "arXiv:2311.14125v1",
+    "title": "Scalable AI Safety via Doubly-Efficient Debate",
+    "pdf": "https://arxiv.org/pdf/2311.14125v1",
+    "html": "https://arxiv.org/html/2311.14125v1"
+  },
+  "lean": {
+    "repository": "google-deepmind/debate",
+    "commit": "de3a6e500ae1a65dfeea2f91ef519ebad9704be0",
+    "declaration": "correctness",
+    "href": "https://github.com/google-deepmind/debate/blob/de3a6e500ae1a65dfeea2f91ef519ebad9704be0/Debate/Correct.lean#L28-L34"
+  },
+  "definition_quote": {
+    "locator": "PDF p. 6, Definition 6.1",
+    "text": "For K > 0, a probabilistic oracle machine M is K-Lipschitz at oracle 𝒪 if, for any other oracle 𝒪′, sup_x |P[M^𝒪(x) = 1] − P[M^𝒪′(x) = 1]| < K · sup_z |P[𝒪(z) = 1] − P[𝒪′(z) = 1]|.",
+    "prose": "In other words, if M is run with any oracle which assigns similar probabilities to 𝒪, the probability that M outputs 1 should change by at most a K factor more than the maximum difference in the oracle probabilities."
+  },
+  "lean_counterpart": {
+    "locator": "Comp/Oracle.lean:39–44, Oracle.lipschitz",
+    "summary": "Lean uses ≤ instead of <, and compares the oracle with every formal oracle, including itself.",
+    "href": "https://github.com/google-deepmind/debate/blob/de3a6e500ae1a65dfeea2f91ef519ebad9704be0/Comp/Oracle.lean#L39-L44",
+    "code": "/-- An oracle computation is k-Lipschitz if the final probability differs by ≤ k * oracle dist.\n    We define this asymmetrically, as we want the neighborhood of a particular oracle. -/\nstructure Oracle.lipschitz (o : Oracle) (t : ℕ) (k : ℝ) : Prop where\n  k0 : 0 ≤ k\n  le : ∀ o' : Oracle, |(o.final t).prob true - (o'.final t).prob true| ≤ k * dist o o'"
+  },
+  "questions": [
+    {
+      "id": "does_other_oracle_include_self",
+      "question": "Does “any other oracle 𝒪′” include 𝒪 itself?",
+      "why": "If it does, both sides are zero and the strict < reads 0 < 0, which is false. No machine would then be K-Lipschitz, and Theorem 6.2 would apply to nothing. Lean's ≤ does not have this problem.",
+      "options": [
+        {
+          "value": "EXCLUDES_SELF",
+          "label": "No, only a different oracle"
+        },
+        {
+          "value": "INCLUDES_SELF",
+          "label": "Yes, 𝒪 itself too"
+        },
+        {
+          "value": "CANNOT_TELL",
+          "label": "Can't tell from the paper"
+        }
+      ]
+    },
+    {
+      "id": "treatment_of_distinct_zero_distance_oracles",
+      "question": "How are two different oracles at distance zero treated?",
+      "why": "Two different oracles can give every query the same probability. The right side is then K · 0, so the strict < fails for that pair unless the definition is read as skipping it.",
+      "options": [
+        {
+          "value": "SKIPPED_BY_DEFINITION",
+          "label": "The definition skips them"
+        },
+        {
+          "value": "STRICT_CONDITION_FAILS",
+          "label": "They make the condition fail"
+        },
+        {
+          "value": "NONE_EXIST_IN_PAPER_MODEL",
+          "label": "No such pair exists in the paper's model"
+        },
+        {
+          "value": "CANNOT_TELL",
+          "label": "Can't tell from the paper"
+        }
+      ]
+    },
+    {
+      "id": "displayed_strict_inequality_versus_at_most_prose",
+      "question": "Which governs: the displayed strict < or the prose “at most”?",
+      "why": "The prose describes ≤, which matches Lean. If ≤ governs, the strictness part of D01 goes away and only the comparison-domain difference (D02) is left. If < governs, the two questions above decide whether the definition can be met at all.",
+      "options": [
+        {
+          "value": "AT_MOST_GOVERNS",
+          "label": "The prose “at most” (≤)"
+        },
+        {
+          "value": "STRICT_GOVERNS",
+          "label": "The displayed strict <"
+        },
+        {
+          "value": "CANNOT_TELL",
+          "label": "Can't tell from the paper"
+        }
+      ]
+    }
+  ],
+  "decision": {
+    "question": "Promote the correctness-only claim to a reviewed relation?",
+    "options": [
+      {
+        "value": "PROMOTE_AS_STATED",
+        "label": "Yes, as stated with its exclusions",
+        "consequence": "The candidate becomes a reviewed link with your name on it, at correctness-only scope."
+      },
+      {
+        "value": "PROMOTE_WITH_CORRECTIONS",
+        "label": "Yes, with my corrections",
+        "consequence": "The link is promoted after your written corrections are applied to its scope or conditions."
+      },
+      {
+        "value": "KEEP_OPEN",
+        "label": "No, keep it a candidate",
+        "consequence": "Nothing changes; your answers are recorded as an attributed review."
+      },
+      {
+        "value": "UNABLE_TO_ASSESS",
+        "label": "I can't assess this",
+        "consequence": "Nothing changes; the reason is recorded."
+      }
+    ]
+  },
+  "blocking_rule": "If 𝒪′ includes 𝒪 itself and the strict < governs, the paper's definition can never be met, so promotion as stated is refused.",
+  "probes": [
+    {
+      "title": "Strict versus non-strict bridge",
+      "href": "https://github.com/elshatlawy/ai-safety-metamath-bible/blob/bfa8dba7922dd3a6e31e627395f8389d380c405c/AGR_Proof_Of_Concept_01/formal/PaperLeanLipschitzBridge.lean#L30-L58",
+      "bears_on": [
+        "Question 1",
+        "Question 3"
+      ],
+      "what_it_shows": "Lean-checked in the pinned model: a strict bound over every oracle, the oracle itself included, is impossible (0 < 0); a strict bound over different oracles implies Lean's ≤ version; Lean's ≤ version gives a strict bound only with a larger constant and positive distance."
+    },
+    {
+      "title": "Zero-step boundary case",
+      "href": "https://github.com/elshatlawy/ai-safety-metamath-bible/blob/bfa8dba7922dd3a6e31e627395f8389d380c405c/AGR_Proof_Of_Concept_01/formal/ZeroStepProbe.lean#L63-L80",
+      "bears_on": [
+        "Question 2",
+        "Question 3"
+      ],
+      "what_it_shows": "Lean-checked: with no oracle queries, Lean's ≤ property holds at constant 1, but the strict version over different oracles fails at that constant. The two readings separate even without the self-comparison."
+    },
+    {
+      "id": "bridge_probe_v1",
+      "title": "Restricted oracle counterexample",
+      "bears_on": [
+        "D01",
+        "D02"
+      ],
+      "what_it_shows": "Matching the machine's output law alone does not carry the paper's perturbation bound over to Lean's comparison against every kernel.",
+      "href": "https://github.com/elshatlawy/ai-safety-metamath-bible/blob/bfa8dba7922dd3a6e31e627395f8389d380c405c/AGR_Atlas_Infrastructure/ontology_v2/review_v1/e003_v1/bridge_probe_v1/README.md"
+    },
+    {
+      "id": "oracle_representation_v1",
+      "title": "Oracle representation contract",
+      "bears_on": [
+        "D01",
+        "D02"
+      ],
+      "what_it_shows": "A sufficient condition under which a weak (≤) paper-style bound carries over to Lean's universal premise, with a checked example that meets it.",
+      "href": "https://github.com/elshatlawy/ai-safety-metamath-bible/blob/bfa8dba7922dd3a6e31e627395f8389d380c405c/AGR_Atlas_Infrastructure/ontology_v2/review_v1/e003_v1/oracle_representation_v1/README.md"
+    },
+    {
+      "id": "paper_oracle_v1",
+      "title": "Two-query machine",
+      "bears_on": [
+        "D02"
+      ],
+      "what_it_shows": "A small concrete machine where the sufficient condition fails, yet Lean's universal premise still holds at one base: a failed route is not a refutation.",
+      "href": "https://github.com/elshatlawy/ai-safety-metamath-bible/blob/bfa8dba7922dd3a6e31e627395f8389d380c405c/AGR_Atlas_Infrastructure/ontology_v2/review_v1/e003_v1/paper_oracle_v1/README.md"
+    },
+    {
+      "id": "protocol_probe_v1",
+      "title": "Stage-order discriminator",
+      "bears_on": [
+        "D05"
+      ],
+      "what_it_shows": "Letting Bob decide after seeing the coin can change the outcome law, so the claim is limited to a Bob who decides first.",
+      "href": "https://github.com/elshatlawy/ai-safety-metamath-bible/blob/bfa8dba7922dd3a6e31e627395f8389d380c405c/AGR_Atlas_Infrastructure/ontology_v2/review_v1/e003_v1/protocol_probe_v1/README.md"
+    },
+    {
+      "id": "comp_step_bridge_v1",
+      "title": "Bit-invisible step",
+      "bears_on": [
+        "D05"
+      ],
+      "what_it_shows": "When Bob cannot see the coin, the paper-order step and Lean's step have exactly the same law.",
+      "href": "https://github.com/elshatlawy/ai-safety-metamath-bible/blob/bfa8dba7922dd3a6e31e627395f8389d380c405c/AGR_Atlas_Infrastructure/ontology_v2/review_v1/e003_v1/comp_step_bridge_v1/README.md"
+    },
+    {
+      "id": "paper_round_v1",
+      "title": "Figure 1 round",
+      "bears_on": [
+        "D05",
+        "D06"
+      ],
+      "what_it_shows": "One round of the paper's protocol maps to Lean's step only under stated restrictions on Bob and the coin.",
+      "href": "https://github.com/elshatlawy/ai-safety-metamath-bible/blob/bfa8dba7922dd3a6e31e627395f8389d380c405c/AGR_Atlas_Infrastructure/ontology_v2/review_v1/e003_v1/paper_round_v1/README.md"
+    }
+  ],
+  "sources_to_check": [
+    {
+      "id": "paper:p6-definition-6.1",
+      "label": "Paper, PDF p. 6, Definition 6.1",
+      "href": "https://arxiv.org/pdf/2311.14125v1#page=6"
+    },
+    {
+      "id": "paper:p7-theorem-6.2",
+      "label": "Paper, PDF p. 7, Figure 1 and Theorem 6.2",
+      "href": "https://arxiv.org/pdf/2311.14125v1#page=7"
+    },
+    {
+      "id": "lean:Debate/Correct.lean:28-34",
+      "label": "Lean, Debate/Correct.lean lines 28–34",
+      "href": "https://github.com/google-deepmind/debate/blob/de3a6e500ae1a65dfeea2f91ef519ebad9704be0/Debate/Correct.lean#L28-L34"
+    },
+    {
+      "id": "lean:Comp/Oracle.lean:39-44",
+      "label": "Lean, Comp/Oracle.lean lines 39–44",
+      "href": "https://github.com/google-deepmind/debate/blob/de3a6e500ae1a65dfeea2f91ef519ebad9704be0/Comp/Oracle.lean#L39-L44"
+    },
+    {
+      "id": "lean:Debate/Protocol.lean:40-127",
+      "label": "Lean, Debate/Protocol.lean lines 40–127",
+      "href": "https://github.com/google-deepmind/debate/blob/de3a6e500ae1a65dfeea2f91ef519ebad9704be0/Debate/Protocol.lean#L40-L127"
+    }
+  ]
+}

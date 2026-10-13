@@ -6,11 +6,12 @@
   <meta name="color-scheme" content="light">
   <meta name="description" content="Search source-pinned AI safety concepts, claims, assumptions, formal statements, and evidence in a selected research atlas.">
   <title>AI Safety Research Atlas</title>
-  <link rel="stylesheet" href="./styles.css?v=0c8c81f679fb">
+  <link rel="stylesheet" href="./styles.css?v=9185607baf20">
   <script src="./concept_search.js?v=e0e5db4727b8" defer></script>
   <script src="./research_notes.js?v=36d3a70e636a" defer></script>
+  <script src="./review_card.js?v=f2a7b99daf68" defer></script>
   <script src="./problem_routes.js?v=f3d2dbaaf8de" defer></script>
-  <script src="./app.js?v=b994e353653d" defer></script>
+  <script src="./app.js?v=2abb1d11bfb3" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -96,6 +97,7 @@
       <div class="page-intro"><p class="eyebrow"><span></span> Paper analysis · preview</p><h1 id="paper-title">From a paper to<br><em>inspectable knowledge.</em></h1><p>The proposed workflow finds definitions, claims, and assumptions with exact locations, then lets a researcher correct meaning before a formal statement or relationship is published.</p></div>
       <div class="paper-layout"><div class="paper-card"><span class="step-count">WORKSPACE PREVIEW</span><h2>Start with a source</h2><p>The existing local work-packet prototype supports pinned extraction and formalization steps. This webpage does not upload, parse, or analyze a PDF.</p><label class="outline-button" for="paper-file">Choose a PDF locally</label><input id="paper-file" type="file" accept="application/pdf,.pdf"><p id="paper-file-note" class="file-note">Your file stays on this device; selection only displays its name.</p><div class="paper-example"><span class="step-count">PINNED EXAMPLE</span><strong>Debate theorem and Lean correctness</strong><p>Compare a paper theorem with a Lean declaration and inspect the open question of source-to-formal meaning.</p><button id="paper-example-open" class="text-link" type="button">Open the existing atlas record <span aria-hidden="true">→</span></button></div></div><ol class="paper-steps"><li><span>01</span><div><strong>Locate</strong><p>Pin the source and exact statement spans.</p></div></li><li><span>02</span><div><strong>Correct</strong><p>Review definitions, assumptions, and quantifiers.</p></div></li><li><span>03</span><div><strong>Check</strong><p>Use Lean for the exact formal statement where appropriate.</p></div></li><li><span>04</span><div><strong>Connect</strong><p>Keep meaning, system fit, and empirical support separate.</p></div></li></ol></div>
       <section id="paper-pilot-result" class="paper-pilot-result" aria-label="Local paper pilot result" hidden></section>
+      <section id="paper-review" class="paper-pilot-result paper-review" aria-label="Review the paper-to-Lean match" hidden></section>
     </section>
 
     <section class="view about-view" id="about-view" aria-labelledby="about-title" hidden>

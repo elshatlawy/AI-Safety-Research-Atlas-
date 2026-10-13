@@ -264,6 +264,19 @@ function renderPaperPilot() {
     <div class="pilot-links"><a href="./paper-pilot/FIDELITY_REPORT.md" target="_blank" rel="noopener">Read the seven differences ↗</a><a href="./paper-pilot/CORRECTION_LOG.md" target="_blank" rel="noopener">Inspect corrections ↗</a><a href="./paper-pilot/summary.json" download>Download run receipt</a></div>
     <details><summary>Source pins and check scope</summary><p>PDF SHA-256: <code>${esc(pilot.pdf_sha256)}</code></p><p>Source acquisition: ${esc(pilot.source_acquisition)}</p><p>${esc(pilot.lean_toolchain)} · Debate commit <code>${esc(pilot.debate_commit)}</code></p><p>Axioms reported: ${esc(Object.values(pilot.axioms_reported).flat().join(", "))}. The source was recompiled against cached pinned imports; this is not a clean rebuild of every dependency. E003 remains open and the atlas is unchanged.</p></details>`;
 }
+function renderReviewCard(packet,pin) {
+  const box=$("paper-review");box.innerHTML=AtlasReviewCard.render(packet);box.hidden=false;
+  $("review-form").addEventListener("submit",event=>{
+    event.preventDefault();
+    const form={};for(const [key,value] of new FormData(event.target))form[key]=value;
+    const response=AtlasReviewCard.collect(form,packet,{pin,now:new Date().toISOString().replace(/\.\d+Z$/,"Z")});
+    const found=AtlasReviewCard.problems(response,packet),box=$("review-problems");
+    box.innerHTML=found.length?`<ul>${found.map(item=>`<li>${esc(item)}</li>`).join("")}</ul>`:"";
+    if(found.length)return;
+    download(`${packet.id.toLowerCase()}-decision.json`,JSON.stringify(response,null,2)+"\n","application/json");
+    box.innerHTML='<p>Decision file saved. Send it to the maintainer, or add it to the repository in a pull request.</p>';
+  });
+}
 function startingEntries() {
   const chosen=preferredStarts.map(nodeFor).filter(Boolean);
   if(chosen.length<3) chosen.push(...state.data.nodes.filter(n=>!chosen.some(c=>c.id===n.id) && ["HUMAN_REVIEWED","SOURCE_ANCHORED"].includes(n.state)).slice(0,3-chosen.length));
@@ -587,6 +600,14 @@ async function init() {
         state.paperPilot=pilot;state.paperPilotPin=Array.from(new Uint8Array(digest),byte=>byte.toString(16).padStart(2,"0")).join("");
       }
     } catch { /* The unverified optional receipt remains hidden. */ }
+    try {
+      const reviewResponse=await fetch("./paper-pilot/review_packet.json",{cache:"no-store"});
+      if(reviewResponse.ok&&window.AtlasReviewCard) {
+        const raw=await reviewResponse.text();
+        const digest=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(raw));
+        renderReviewCard(AtlasReviewCard.validatePacket(JSON.parse(raw)),Array.from(new Uint8Array(digest),byte=>byte.toString(16).padStart(2,"0")).join(""));
+      }
+    } catch { /* An unverified review packet stays hidden. */ }
     state.incidents=new Map(data.nodes.map(n=>[n.id,[]]));for(const edge of data.edges){state.incidents.get(edge.source)?.push(edge);if(edge.target!==edge.source)state.incidents.get(edge.target)?.push(edge);}
     fillFilters();restoreSaved();applyURL();
     $("snapshot-label").textContent=`Snapshot ${data.snapshot.id.slice(0,8)} · ${data.counts.nodes.toLocaleString()} indexed records`;
