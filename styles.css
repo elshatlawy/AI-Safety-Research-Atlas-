@@ -158,3 +158,6 @@ h1,h2,h3,p{overflow-wrap:anywhere}
 .review-problems ul{border:1px solid #e7c9b3;background:#fdf6f0;border-radius:8px;padding:10px 12px 10px 28px;margin:0 0 12px}.review-problems li{font-size:12px;color:var(--warning);line-height:1.6}.review-problems p{font-size:12px;color:var(--green)}
 @media(max-width:800px){.review-sides{grid-template-columns:minmax(0,1fr)}}
 .review-code{margin:0 0 12px;padding:12px 14px;overflow-x:auto;background:var(--soft);border-radius:8px;font-size:12px;line-height:1.5;white-space:pre}
+.review-readings{flex-direction:column}.review-lean{display:block;font-size:11px;line-height:1.55;color:var(--muted);margin-top:3px}.review-lean b{font-weight:650}.review-lean b.ok{color:var(--green)}.review-lean b.bad{color:var(--warning)}.review-lean span{color:#8a9a91}.review-lean.muted{color:#9aa79f}
+.review-settled{border:1px solid var(--mint);background:#f3f8f2;border-radius:10px;padding:16px 20px;margin:0 0 14px}.review-settled article{margin-top:10px}.review-settled strong{font-size:13px;color:var(--ink)}.review-settled article p{font-size:12px;line-height:1.6;color:var(--muted);margin:3px 0 0}
+.review-summary{font-size:13px!important;color:var(--green)!important;font-weight:600;margin:0 0 10px}

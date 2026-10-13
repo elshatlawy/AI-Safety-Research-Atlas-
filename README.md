@@ -6,7 +6,7 @@ This bundle contains the joined atlas at merged commit `bfa8dba` (the v0.1.1 atl
 
 The 25 source-reading notes are original AI-authored analysis, labelled provisional. Their original analysis snapshot is retained separately from their attachment to this public view. They do not change the records or their verification. The paper receipt rechecks an existing Lean type, not a new theorem or a full paper formalization.
 
-The paper page also carries a review card for the maintainer's open paper-to-Lean decision (`paper-pilot/review_packet.json`). Its questions and explanations were drafted by Claude. Filling it in only downloads a decision file to the reviewer's device; nothing is sent, and no atlas status changes until the maintainer commits a validated file.
+The paper page also carries a review card for the maintainer's open paper-to-Lean decision (`paper-pilot/review_packet.json`). Its questions, explanations and small Lean examples were drafted by Claude. Lean checked each example against the pinned debate code, and a question is shown as settled only where those checks agree. Filling it in only downloads a decision file to the reviewer's device; nothing is sent, and no atlas status changes until the maintainer commits a validated file.
 
 Two guided problem routes select existing records and recorded links. A route provides an order for inspection, not an inference chain. Its separate overlay hash identifies the exact selection; the underlying atlas snapshot and evidence statuses are unchanged.
 
