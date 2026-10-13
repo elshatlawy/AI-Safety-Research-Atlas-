@@ -221,6 +221,9 @@ function renderProblemRoute() {
   box.innerHTML=`<div class="route-panel-head"><span>GUIDED PROBLEM · ONE ATLAS</span><button class="text-link" data-clear-problem type="button">Back to concept search</button></div><ol class="route-stages">${route.stages.map((s,i)=>`<li><button type="button" data-route-stage="${esc(s.id)}" aria-pressed="${s.id===state.problemStage}"><span>${String(i+1).padStart(2,"0")}</span><strong>${esc(s.label)}</strong></button></li>`).join("")}</ol>${stage.id==="knowledge"?`<div class="route-branches" aria-label="Knowledge branches">${stage.groups.map(group=>`<button type="button" data-route-branch="${esc(group.id)}" aria-pressed="${group.id===state.knowledgeBranch}">${group.id==="formal"?"Formal results & arguments":"Empirical evidence & gaps"}</button>`).join("")}</div>`:""}<p class="route-scope">${esc(part.summary)}</p>${links.length?`<details class="route-connections"><summary>Inspect ${links.length} recorded connection${links.length===1?"":"s"}</summary><div>${links.map(e=>`<button type="button" data-route-edge="${esc(e.id)}"><span>${esc(short(nodeFor(e.source)?.title||e.source,65))} → ${esc(short(nodeFor(e.target)?.title||e.target,65))}</span><small>${esc(pretty(e.relation))} · ${esc(pretty(e.state))}${e.disposition&&e.disposition!=="UNASSESSED"?` · ${esc(pretty(e.disposition))}`:""}</small></button>`).join("")}</div></details>`:""}<p class="route-boundary">Navigation stages, not a composed argument. Shared structures may be source-specific or proposed.</p><details class="route-obligation"><summary>What still needs evidence?</summary><p>${esc(route.main_open_question)}</p></details>`;
 }
 function showView(view,update=true) {
+  // Only a change of page returns to the top; re-showing the current view
+  // (opening a record, a route or a search) keeps the reader's place.
+  const changed=view!==state.view||$(`${view}-view`).hidden;
   state.view=view;
   for (const name of ["search","paper","about"]) {
     $(`${name}-view`).hidden=name!==view;
@@ -230,7 +233,7 @@ function showView(view,update=true) {
   }
   document.title=`${view==="search"?"Search":view==="paper"?"Analyze a paper · Preview":"About"} · AI Safety Research Atlas`;
   if(update) setRoute();
-  scrollTo({top:0,behavior:matchMedia("(prefers-reduced-motion:reduce)").matches?"instant":"smooth"});
+  if(changed) scrollTo({top:0,behavior:matchMedia("(prefers-reduced-motion:reduce)").matches?"instant":"smooth"});
 }
 function sourceLine(ref, compact=false) {
   const source=sourceFor(ref);
