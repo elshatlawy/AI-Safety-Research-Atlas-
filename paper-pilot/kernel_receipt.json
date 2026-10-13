@@ -1,0 +1,43 @@
+{
+  "allowed_axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "axioms_reported": {
+    "E003Pilot.correctness_recheck": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ]
+  },
+  "candidate_file": "Candidate.lean",
+  "candidate_file_sha256": "2cc3a342f03b6823ecdf0770d32b2c205ad0b9cf0a9362d3c9e6ff9e782ba2c2",
+  "caveat": "This run checks this file against the Lake environment. It does not by itself rebuild all imported dependencies or verify a paper-to-Lean meaning match.",
+  "command": "lake env lean <temporary exact source copy with appended #print axioms probes>",
+  "declarations_requested": [
+    "E003Pilot.correctness_recheck"
+  ],
+  "exit_code": 0,
+  "lake_environment_file_hashes": {
+    "lake-manifest.json": "f79b8c8051b9895453ad36a748e69aaa98d9923c8eadf6b2897d27dd23791e48",
+    "lakefile.lean": "9e8ced059840a63c626d48a7257e75de420601b01665ab6297af03075d974ced",
+    "lean-toolchain": "61561b06f5587e027815fac8f59bf6ca160dfbf3f7372fc6297664acfd85b8c0"
+  },
+  "lean_toolchain": "Lean (version 4.8.0, aarch64-apple-darwin, commit df668f00e6c0, Release)",
+  "missing_reports": [],
+  "passed": true,
+  "sanitization_note": "Removed machine-specific absolute paths. The original pathful receipts remain ignored in the local run; hashes pin their exact bytes.",
+  "sanitized_fields": [
+    "original_lean_check.file",
+    "original_lean_check.lake_root",
+    "original_proof_attempt.lake_environment.lake_root"
+  ],
+  "schema": "AAIS-E003-SANITIZED-KERNEL-RECEIPT-v1",
+  "source_commit": "de3a6e500ae1a65dfeea2f91ef519ebad9704be0",
+  "source_lean_check_sha256": "ba679de90f3dde4fea2af29e84d63b358d9e1bfbe8ad01f15dc257f9002c8baa",
+  "source_proof_attempt_receipt_sha256": "78f08408b43c7963b0a977f8516bd50b73aa6d32f104bd07e2f0b5b7175febeb",
+  "stderr": "",
+  "stdout": "'E003Pilot.correctness_recheck' depends on axioms: [propext, Classical.choice, Quot.sound]\n",
+  "unexpected_axioms": []
+}

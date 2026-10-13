@@ -1,0 +1,75 @@
+{
+  "axioms_reported": {
+    "E003Pilot.correctness_recheck": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ]
+  },
+  "canonical_atlas_mutated": false,
+  "context_sha256": "ba4d24f1432ec32405bec67201e7e12db7ffa07ad8cfcc56834514102927d3f1",
+  "debate_commit": "de3a6e500ae1a65dfeea2f91ef519ebad9704be0",
+  "e003_status": "OPEN_UNCHANGED",
+  "extraction_proposal_sha256": "88109d14e8d72b13da52d96bc9728b4acf6f598ca1e1a1bb3267e24107db02be",
+  "fidelity_proposal_sha256": "29456a7af5e58e931686ce5c0490674774b74915ba8c3f283d94d958bff95afc",
+  "formalization_proposal_sha256": "2411b91540b06e506c35822cb4cabdea29a6cf24be7f2e415eb4962e297bf18b",
+  "frozen_statement_sha256": "3df639efdbe7cb5fb8bb7d068000f70f42daea6810612b6e73783e7e5cca7a35",
+  "generated_at_utc": "2026-10-13T15:43:55+00:00",
+  "imported_at_utc": "2026-10-13T15:41:18+00:00",
+  "lake_environment_file_hashes": {
+    "lake-manifest.json": "f79b8c8051b9895453ad36a748e69aaa98d9923c8eadf6b2897d27dd23791e48",
+    "lakefile.lean": "9e8ced059840a63c626d48a7257e75de420601b01665ab6297af03075d974ced",
+    "lean-toolchain": "61561b06f5587e027815fac8f59bf6ca160dfbf3f7372fc6297664acfd85b8c0"
+  },
+  "lean_passed": true,
+  "lean_source_sha256": {
+    "Comp/Oracle.lean": "3e53d1f173699ba6bc9bc6f340e49020f47c8114062314f934e6d50b2a003926",
+    "Debate/Correct.lean": "f1a3ac3b111b2ef39ead7a21afc254cf99266d86e886464a8deece78a213d953",
+    "Debate/Protocol.lean": "017f0584dd9a80d089599317123390f3d17c6cbb9f2ed786d0982f7a8e27f95a"
+  },
+  "lean_toolchain": "Lean (version 4.8.0, aarch64-apple-darwin, commit df668f00e6c0, Release)",
+  "local_copy_modified_at_utc": "2026-09-30T21:54:09+00:00",
+  "new_mathematical_progress": false,
+  "original_remote_retrieval_at_utc": null,
+  "paper_id": "arXiv:2311.14125v1",
+  "paper_to_lean_fidelity": "AI_DRAFT; HUMAN_SOURCE_REVIEW_PENDING",
+  "paper_url": "https://arxiv.org/pdf/2311.14125v1",
+  "pdf_sha256": "88bf163ab823599049083b8c0461cb5a5c7b64614b68e7754b8d8948bed7c1da",
+  "pdftotext_version": "pdftotext version 26.09.0",
+  "pipeline_sha256": "e14d90e236a140093e014f82b004e2b51cc81a9d818011c5df26f360f3a349b9",
+  "proof_candidate_sha256": "2cc3a342f03b6823ecdf0770d32b2c205ad0b9cf0a9362d3c9e6ff9e782ba2c2",
+  "proof_receipt_sha256": "78f08408b43c7963b0a977f8516bd50b73aa6d32f104bd07e2f0b5b7175febeb",
+  "sanitized_kernel_receipt_sha256": "625627c85dca3834b4261268676e712ff5a3632e70095dc3ef80cc3faf043219",
+  "schema": "AAIS-E003-LOCAL-PAPER-PILOT-v1",
+  "source_acquisition": "Existing versioned local PDF; this run imported exact bytes. Direct remote refetch was unavailable from the shell.",
+  "source_lean_check_sha256": "ba679de90f3dde4fea2af29e84d63b358d9e1bfbe8ad01f15dc257f9002c8baa",
+  "source_lines_sha256": "322e57bdf96ccbefaa04fa5a0ccc5ee61605257ebd0c0edb1a28b2fbd19ab613",
+  "source_recheck_exit_code": 0,
+  "source_spans": {
+    "D61": {
+      "extracted_span_sha256": "8ac6fa27faf34c5040d0f2ae488aeea9e6cef511a3b1de7befea881518f1bf9a",
+      "pdftotext_line_end": 49,
+      "pdftotext_line_start": 45,
+      "physical_pdf_page": 6
+    },
+    "FIG1": {
+      "extracted_span_sha256": "3f44a0091c1fe2d3655bca9824a10a81b3d1425ce2f036fe207518fb6ecfe333",
+      "pdftotext_line_end": 24,
+      "pdftotext_line_start": 1,
+      "physical_pdf_page": 7
+    },
+    "LEAN_NOTE": {
+      "extracted_span_sha256": "c8d2b44bbcb1a629a72d87d3c7b2dad8cd3307583ae33946667cee89857c54e3",
+      "pdftotext_line_end": 24,
+      "pdftotext_line_start": 17,
+      "physical_pdf_page": 8
+    },
+    "T62": {
+      "extracted_span_sha256": "84a062e14b9efa752e891e0334472fd49ffed74f85721ae97862e0aa8bd5facc",
+      "pdftotext_line_end": 32,
+      "pdftotext_line_start": 30,
+      "physical_pdf_page": 7
+    }
+  },
+  "unexpected_axioms": []
+}

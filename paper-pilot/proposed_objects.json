@@ -1,0 +1,12 @@
+{
+  "schema": "AAIS-E003-PAPER-PILOT-PROPOSALS-v1",
+  "analysis_authorship": "CODEX_AI_FIRST_PASS",
+  "admission": "NOT_ADMITTED_TO_ATLAS",
+  "canonical_mutation": false,
+  "source": {"id": "arXiv:2311.14125v1", "pdf_sha256": "88bf163ab823599049083b8c0461cb5a5c7b64614b68e7754b8d8948bed7c1da", "attribution": "Brown-Cohen, Irving, Piliouras; versioned original paper"},
+  "objects": [
+    {"local_id": "PILOT-D61", "record_type": "Definition", "epistemic_type": "PAPER_DEFINITION", "pilot_standing": "PROPOSED", "locator": "PDF physical p.6, extracted lines 45-49", "label": "Machine-at-oracle K-Lipschitz condition", "review_obligations": ["strict comparison", "self/zero-distance interpretation", "machine input supremum"]},
+    {"local_id": "PILOT-T62", "record_type": "Claim", "epistemic_type": "PAPER_THEOREM_CLAIM", "pilot_standing": "PROPOSED", "locator": "PDF physical p.7, extracted lines 30-32", "label": "Language-level stochastic debate result", "review_obligations": ["scope of protocol", "probabilistic event", "resource bounds"]}
+  ],
+  "candidate_relationship": {"local_id": "PILOT-E003-NARROW", "from": "PILOT-T62", "to_existing_record": "DEB-016", "relation": "candidate_mapping", "scope": "possible correctness-only component; excludes full language, protocol, and resource claims", "pilot_standing": "PROPOSED_ONLY", "open_difference_ids": ["D01", "D02", "D03", "D04", "D05", "D06", "D07"], "do_not_promote_e003": true}
+}

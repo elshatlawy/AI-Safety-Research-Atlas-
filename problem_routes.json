@@ -1,0 +1,1294 @@
+{
+  "schema": "ASRA-PROBLEM-ROUTES-v1",
+  "status": "AI_ASSISTED_NAVIGATION_VIEW",
+  "basis": "EXISTING_RECORDED_LINKS",
+  "source_basis": {
+    "audited_public_snapshot": "fbb380993d0b42a378ddf5f93cfe49aaa40a3f174e466eb39b1c245d7b42b19c",
+    "canonical_source_commit": "62f0bffdac13d97362f8520473a5c7f30e5913b7",
+    "existing_route_source": "AGR_Atlas_Infrastructure/ontology_v2/problem_routes_v1/content/ROUTES.json",
+    "adaptation": "Updated navigation summaries from existing public records; no scientific relationship or verification promotion."
+  },
+  "required_pins": {
+    "native_packs": [
+      {
+        "file": "cross_foundation.json",
+        "sha256": "9621c8441e66e66165bbbee5ccced618891ff9b24358f326bd79afedb5319be7"
+      },
+      {
+        "file": "debate.json",
+        "sha256": "5ac768f65b5499561db94674a78649340ea0d827452be471cbfe4cb15cf60477"
+      },
+      {
+        "file": "debate_information_bridge.json",
+        "sha256": "3289a8e9054472af83951269e0fe7b2ba4dcf5c6d2060f03adbea6435b0a6392"
+      },
+      {
+        "file": "elk.json",
+        "sha256": "94f184140bfe7743e8049f4972c07804103e31bad635dc0750892df81da3e6c0"
+      },
+      {
+        "file": "monitoring.json",
+        "sha256": "412c23e69cb2e40d6ecd7d5ac8b2c51462d1f59cf17695d7087fa7a002fdc3bc"
+      },
+      {
+        "file": "library_bridges_v1.json",
+        "sha256": "f0ab36d9da6587257b65e5d6137c711563692122cec361a1e4e42c45875f6356"
+      },
+      {
+        "file": "ai_concepts_intake.json",
+        "sha256": "c41e3890ab7c915379ce2ceedb4cf1adc77d810251877c571f99aac128a0da29"
+      },
+      {
+        "file": "observation_policy_bridge_reviewed.json",
+        "sha256": "cf8a2f177bbc770c0b4b4b07f7eb0a31c11f93086349bbe4a392d72ab11f35d6"
+      },
+      {
+        "file": "oversight_smoke.json",
+        "sha256": "db3efce325770fa3a0943ed51430493a65063fa6eb0c81834ab12d786a035271"
+      },
+      {
+        "file": "physlib_garbling_bridge.json",
+        "sha256": "e4b68de66b7f93b7437d17204799d01882bf7e7450a47b11349dc0ca260d8d8b"
+      },
+      {
+        "file": "two_population_certificate.json",
+        "sha256": "347dff47a7e1171ea67e3e052d30ea73c4cf9ea8710a78669bdb46fff652ad5a"
+      },
+      {
+        "file": "training_papers_v1.json",
+        "sha256": "5e4f7de27dace9bde20384d8f486b99dc6adbe3e6a2f9dcefc33e9d0a6439bcf"
+      },
+      {
+        "file": "ai_safety_primary_concepts_v1.json",
+        "sha256": "54e251a5551f70d52063a1b6a6a540bb823e3fdc142a860ca0e8f9332d60b8e8"
+      }
+    ],
+    "phase1_sha256": "570ca70b59ab98e901bde466a2b3c68ce3cef856279c3804bbff03e07527b36d"
+  },
+  "records": {
+    "nodes": [
+      {
+        "id": "N2:IT:BLACKWELL-CHANNEL",
+        "state": "RECORDED",
+        "source_refs": [
+          {
+            "locator": "physical PDF p.1 §I, Theorem 1",
+            "source_id": "N2-SRC:IT:RAUH-2017"
+          }
+        ],
+        "disposition": "UNASSESSED",
+        "assessments": [],
+        "identity_policy": null
+      },
+      {
+        "id": "N2:IT:DEBATE-CHANNEL-CANDIDATE",
+        "state": "PROPOSED",
+        "source_refs": [
+          {
+            "locator": "physical PDF pp.8-9 Figure 2 and §3.1",
+            "source_id": "N2-SRC:IT:DEBATE-2018"
+          },
+          {
+            "locator": "Proposed debate mapping and its open conditions",
+            "source_id": "N2-SRC:IT:SOURCE-AUDIT"
+          }
+        ],
+        "disposition": "UNASSESSED",
+        "assessments": [],
+        "identity_policy": null
+      },
+      {
+        "id": "N2:IT:DEBATE-GARBLING-QUESTION",
+        "state": "OPEN",
+        "source_refs": [
+          {
+            "locator": "physical PDF p.8 Table 2 and §3.1",
+            "source_id": "N2-SRC:IT:DEBATE-2018"
+          },
+          {
+            "locator": "Proposed debate mapping and its open conditions",
+            "source_id": "N2-SRC:IT:SOURCE-AUDIT"
+          }
+        ],
+        "disposition": "UNASSESSED",
+        "assessments": [],
+        "identity_policy": null
+      },
+      {
+        "id": "N2:IT:FINITE-FORWARD-LEMMA",
+        "state": "OPEN",
+        "source_refs": [
+          {
+            "locator": "physical PDF p.1 §I, constructive argument preceding Theorem 1",
+            "source_id": "N2-SRC:IT:RAUH-2017"
+          },
+          {
+            "locator": "Derived finite forward lemma",
+            "source_id": "N2-SRC:IT:SOURCE-AUDIT"
+          }
+        ],
+        "disposition": "UNASSESSED",
+        "assessments": [],
+        "identity_policy": null
+      },
+      {
+        "id": "N2:IT:FIXED-JUDGE-METHOD",
+        "state": "RECORDED",
+        "source_refs": [
+          {
+            "locator": "physical PDF p.8 §3.1, Figure 2 and Table 2",
+            "source_id": "N2-SRC:IT:DEBATE-2018"
+          }
+        ],
+        "disposition": "UNASSESSED",
+        "assessments": [],
+        "identity_policy": null
+      },
+      {
+        "id": "N2:IT:FIXED-JUDGE-MONOTONICITY",
+        "state": "RECORDED",
+        "source_refs": [
+          {
+            "locator": "values and interpretation",
+            "source_id": "N2-SRC:IT:FINITE-WITNESS-RESULT"
+          },
+          {
+            "locator": "Concrete failed inferences §1",
+            "source_id": "N2-SRC:IT:SOURCE-AUDIT"
+          }
+        ],
+        "disposition": "REFUTED",
+        "assessments": [
+          {
+            "basis": "The rich-signal fixed rule scores 0 and the poor-signal fixed rule scores 1/2 despite the state-independent garbling.",
+            "dimension": "FINITE_COUNTEREXAMPLE",
+            "evidence_links": [
+              {
+                "kind": "SOURCE_REF",
+                "role": "SUPPORTS",
+                "source_ref": [
+                  {
+                    "locator": "exact four accuracy values",
+                    "source_id": "N2-SRC:IT:FINITE-WITNESS-RESULT"
+                  }
+                ]
+              }
+            ],
+            "result": "FAIL",
+            "scope": "finite two-state discriminator, not the MNIST debate system"
+          }
+        ],
+        "identity_policy": null
+      },
+      {
+        "id": "N2:IT:FIXED-JUDGE-WITNESS",
+        "state": "RECORDED",
+        "source_refs": [
+          {
+            "locator": "result() and exact Fraction assertions",
+            "source_id": "N2-SRC:IT:FINITE-WITNESS"
+          },
+          {
+            "locator": "values",
+            "source_id": "N2-SRC:IT:FINITE-WITNESS-RESULT"
+          }
+        ],
+        "disposition": "UNASSESSED",
+        "assessments": [
+          {
+            "basis": "The finite_witness.py assertions and saved deterministic output agree on all four exact rational values.",
+            "dimension": "FINITE_ENUMERATION",
+            "evidence_links": [
+              {
+                "kind": "SOURCE_REF",
+                "role": "SUPPORTS",
+                "source_ref": [
+                  {
+                    "locator": "exact four accuracy values",
+                    "source_id": "N2-SRC:IT:FINITE-WITNESS-RESULT"
+                  }
+                ]
+              }
+            ],
+            "result": "PASS",
+            "scope": "finite two-state discriminator, not the MNIST debate system"
+          }
+        ],
+        "identity_policy": null
+      },
+      {
+        "id": "N2:IT:PIXEL-DEBATE-PROTOCOL",
+        "state": "RECORDED",
+        "source_refs": [
+          {
+            "locator": "physical PDF p.3 §2; pp.8-9 Figure 2, Table 2, §3.1",
+            "source_id": "N2-SRC:IT:DEBATE-2018"
+          }
+        ],
+        "disposition": "UNASSESSED",
+        "assessments": [],
+        "identity_policy": null
+      },
+      {
+        "id": "N2:IT:POST-GARBLING",
+        "state": "RECORDED",
+        "source_refs": [
+          {
+            "locator": "physical PDF p.1 §I, κ₁ = λ · κ₂ before Theorem 1",
+            "source_id": "N2-SRC:IT:RAUH-2017"
+          }
+        ],
+        "disposition": "UNASSESSED",
+        "assessments": [],
+        "identity_policy": null
+      },
+      {
+        "id": "N2:LIB:PHYS-BORN-FACTOR",
+        "state": "RECORDED",
+        "source_refs": [
+          {
+            "locator": "lines 134-140; imported foundations lines 8-9",
+            "source_id": "N2-SRC:LIB:PHYSLIB-POSTPROCESSING"
+          }
+        ],
+        "disposition": "UNASSESSED",
+        "assessments": [],
+        "identity_policy": null
+      },
+      {
+        "id": "N2:MON:ATTACK-POP",
+        "state": "OPEN",
+        "source_refs": [
+          {
+            "locator": "population; assumption_obligations",
+            "source_id": "INT-V1-SRC-CONTROL-CASE"
+          },
+          {
+            "locator": "math/assumptions",
+            "source_id": "INT-V1-SRC-THEOREM-TARGET"
+          }
+        ],
+        "disposition": "UNASSESSED",
+        "assessments": [],
+        "identity_policy": null
+      },
+      {
+        "id": "N2:MON:BASIC-MONITOR",
+        "state": "RECORDED",
+        "source_refs": [
+          {
+            "locator": "basic_monitor_builder",
+            "source_id": "INT-V1-SRC-CONTROL-MONITOR"
+          },
+          {
+            "locator": "default formatter",
+            "source_id": "INT-V1-SRC-CONTROL-FORMATTER"
+          }
+        ],
+        "disposition": "UNASSESSED",
+        "assessments": [],
+        "identity_policy": null
+      },
+      {
+        "id": "N2:MON:BUDGET-MODEL",
+        "state": "RECORDED",
+        "source_refs": [
+          {
+            "locator": "math/statement; math/assumptions",
+            "source_id": "INT-V1-SRC-THEOREM-TARGET"
+          },
+          {
+            "locator": "BudgetedObservation.dual_certificate",
+            "source_id": "INT-V1-SRC-THEOREM-LEAN"
+          }
+        ],
+        "disposition": "UNASSESSED",
+        "assessments": [],
+        "identity_policy": null
+      },
+      {
+        "id": "N2:MON:CONTROL-SYSTEM",
+        "state": "OPEN",
+        "source_refs": [
+          {
+            "locator": "system; provenance",
+            "source_id": "INT-V1-SRC-CONTROL-CASE"
+          }
+        ],
+        "disposition": "UNASSESSED",
+        "assessments": [],
+        "identity_policy": null
+      },
+      {
+        "id": "N2:MON:EVALUATION-DESIGN",
+        "state": "OPEN",
+        "source_refs": [
+          {
+            "locator": "Exact question; budget population and paper relationship",
+            "source_id": "N2-SRC:MON:PROTOCOL-DRAFT"
+          },
+          {
+            "locator": "population; events; open_gates",
+            "source_id": "INT-V1-SRC-CONTROL-CASE"
+          },
+          {
+            "locator": "case; open_gates",
+            "source_id": "INT-V1-SRC-THEOREM-TARGET"
+          }
+        ],
+        "disposition": "UNASSESSED",
+        "assessments": [],
+        "identity_policy": null
+      },
+      {
+        "id": "N2:MON:FIBER-LEMMA",
+        "state": "RECORDED",
+        "source_refs": [
+          {
+            "locator": "BudgetedObservation.dual_certificate_fiber; lines 35–75",
+            "source_id": "INT-V1-SRC-THEOREM-LEAN"
+          },
+          {
+            "locator": "theorems/BudgetedObservation.dual_certificate_fiber",
+            "source_id": "INT-V1-SRC-THEOREM-CHECK"
+          }
+        ],
+        "disposition": "UNASSESSED",
+        "assessments": [
+          {
+            "basis": "Existing pinned verification lists this exact declaration, a successful compile, no proof holes, and only propext, Classical.choice, Quot.sound axioms.",
+            "dimension": "FORMAL_CHECK",
+            "evidence_links": [
+              {
+                "kind": "SOURCE_REF",
+                "role": "SUPPORTS",
+                "source_ref": [
+                  {
+                    "locator": "theorems/BudgetedObservation.dual_certificate_fiber",
+                    "source_id": "INT-V1-SRC-THEOREM-CHECK"
+                  }
+                ]
+              }
+            ],
+            "result": "PASS",
+            "scope": "BudgetedObservation.dual_certificate_fiber in pinned Lean 4.33.0 environment"
+          }
+        ],
+        "identity_policy": null
+      },
+      {
+        "id": "N2:MON:HONEST-DEFER-BUDGET",
+        "state": "OPEN",
+        "source_refs": [
+          {
+            "locator": "Budget population and paper relationship",
+            "source_id": "N2-SRC:MON:PROTOCOL-DRAFT"
+          },
+          {
+            "locator": "population; modes",
+            "source_id": "INT-V1-SRC-CONTROL-CASE"
+          }
+        ],
+        "disposition": "UNASSESSED",
+        "assessments": [],
+        "identity_policy": null
+      },
+      {
+        "id": "N2:MON:HONEST-POP",
+        "state": "OPEN",
+        "source_refs": [
+          {
+            "locator": "population; modes; sampling_distribution",
+            "source_id": "INT-V1-SRC-CONTROL-CASE"
+          }
+        ],
+        "disposition": "UNASSESSED",
+        "assessments": [],
+        "identity_policy": null
+      },
+      {
+        "id": "N2:MON:INTENDED-EVENT",
+        "state": "OPEN",
+        "source_refs": [
+          {
+            "locator": "events/E-INTENDED",
+            "source_id": "INT-V1-SRC-CONTROL-CASE"
+          }
+        ],
+        "disposition": "UNASSESSED",
+        "assessments": [],
+        "identity_policy": null
+      },
+      {
+        "id": "N2:MON:MARKER-MEASUREMENT",
+        "state": "RECORDED",
+        "source_refs": [
+          {
+            "locator": "_evaluate_side_task",
+            "source_id": "INT-V1-SRC-CONTROL-SCORER"
+          },
+          {
+            "locator": "cases",
+            "source_id": "INT-V1-SRC-CONTROL-SCORER-AUDIT"
+          }
+        ],
+        "disposition": "UNASSESSED",
+        "assessments": [
+          {
+            "basis": "Exact-function fixture includes a bare marker with no observed model generation",
+            "dimension": "IMPLEMENTATION_AUDIT",
+            "evidence_links": [
+              {
+                "kind": "SOURCE_REF",
+                "role": "SUPPORTS",
+                "source_ref": [
+                  {
+                    "locator": "cases",
+                    "source_id": "INT-V1-SRC-CONTROL-SCORER-AUDIT"
+                  }
+                ]
+              }
+            ],
+            "result": "PASS",
+            "scope": "isolated _evaluate_side_task marker rule only"
+          }
+        ],
+        "identity_policy": null
+      },
+      {
+        "id": "N2:MON:TWO-POP-CERT",
+        "state": "RECORDED",
+        "source_refs": [
+          {
+            "locator": "TwoPopulationCertificate.dual_certificate_two_populations",
+            "source_id": "N2-SRC:MON:TWO-POP-LEAN"
+          },
+          {
+            "locator": "files/TwoPopulationCertificate.lean; declarations/dual_certificate_two_populations",
+            "source_id": "N2-SRC:MON:TWO-POP-VERIFICATION"
+          },
+          {
+            "locator": "decision; accepted_scope; independent_primary_source_review_attested=false",
+            "source_id": "N2-SRC:MON:TWO-POP-APPROVAL"
+          }
+        ],
+        "disposition": "UNASSESSED",
+        "assessments": [
+          {
+            "basis": "Compile exit 0, zero warnings and proof-hole matches; exact source SHA-256 and axiom list are pinned. The check is only for the Lean proposition.",
+            "dimension": "FORMAL_CHECK",
+            "evidence_links": [
+              {
+                "kind": "SOURCE_REF",
+                "role": "SUPPORTS",
+                "source_ref": [
+                  {
+                    "locator": "files/TwoPopulationCertificate.lean; axioms_for_all_listed_declarations",
+                    "source_id": "N2-SRC:MON:TWO-POP-VERIFICATION"
+                  }
+                ]
+              }
+            ],
+            "result": "PASS",
+            "scope": "TwoPopulationCertificate.dual_certificate_two_populations in pinned Lean 4.33.0/AISFA/Mathlib environment"
+          }
+        ],
+        "identity_policy": null
+      },
+      {
+        "id": "N2:MON:TWO-POP-DECISION",
+        "state": "RECORDED",
+        "source_refs": [
+          {
+            "locator": "TwoPopulationCertificate.no_budgeted_policy_meets_target",
+            "source_id": "N2-SRC:MON:TWO-POP-LEAN"
+          },
+          {
+            "locator": "files/TwoPopulationCertificate.lean; declarations/no_budgeted_policy_meets_target",
+            "source_id": "N2-SRC:MON:TWO-POP-VERIFICATION"
+          },
+          {
+            "locator": "decision; accepted_scope; independent_prior_art_review_attested=false",
+            "source_id": "N2-SRC:MON:TWO-POP-APPROVAL"
+          }
+        ],
+        "disposition": "UNASSESSED",
+        "assessments": [
+          {
+            "basis": "The checked corollary invokes the checked two-population certificate with a strict target premise. Its scope is exact finite mathematics, not a measured decision rule.",
+            "dimension": "FORMAL_CHECK",
+            "evidence_links": [
+              {
+                "kind": "SOURCE_REF",
+                "role": "SUPPORTS",
+                "source_ref": [
+                  {
+                    "locator": "files/TwoPopulationCertificate.lean; declarations/no_budgeted_policy_meets_target",
+                    "source_id": "N2-SRC:MON:TWO-POP-VERIFICATION"
+                  }
+                ]
+              }
+            ],
+            "result": "PASS",
+            "scope": "TwoPopulationCertificate.no_budgeted_policy_meets_target in pinned Lean 4.33.0/AISFA/Mathlib environment"
+          }
+        ],
+        "identity_policy": null
+      },
+      {
+        "id": "N2:MON:TWO-POP-WITNESS",
+        "state": "RECORDED",
+        "source_refs": [
+          {
+            "locator": "TwoPopulationWitness.certified; TwoPopulationWitness.positive_and_tight",
+            "source_id": "N2-SRC:MON:TWO-POP-WITNESS"
+          },
+          {
+            "locator": "files/TwoPopulationWitness.lean",
+            "source_id": "N2-SRC:MON:TWO-POP-VERIFICATION"
+          },
+          {
+            "locator": "decision; accepted_scope; graph_effect",
+            "source_id": "N2-SRC:MON:TWO-POP-APPROVAL"
+          }
+        ],
+        "disposition": "UNASSESSED",
+        "assessments": [
+          {
+            "basis": "The finite witness file compiled with no warnings or holes and exact source hash recorded; its laws and event indicators are stipulated.",
+            "dimension": "FORMAL_CHECK",
+            "evidence_links": [
+              {
+                "kind": "SOURCE_REF",
+                "role": "SUPPORTS",
+                "source_ref": [
+                  {
+                    "locator": "files/TwoPopulationWitness.lean; declarations/certified and positive_and_tight",
+                    "source_id": "N2-SRC:MON:TWO-POP-VERIFICATION"
+                  }
+                ]
+              }
+            ],
+            "result": "PASS",
+            "scope": "TwoPopulationWitness.certified and positive_and_tight in pinned Lean 4.33.0/AISFA/Mathlib environment"
+          }
+        ],
+        "identity_policy": null
+      },
+      {
+        "id": "N2:XDOM:OBSERVATION-POLICY-STRUCTURE",
+        "state": "PROPOSED",
+        "source_refs": [
+          {
+            "locator": "arXiv:2606.12268v1 §3.1 Policies; §3.3 Definition 2",
+            "source_id": "PH1-PDF-ELK-V1"
+          },
+          {
+            "locator": "BudgetedObservation.lean lines 17-30, 77-96",
+            "source_id": "INT-V1-SRC-THEOREM-LEAN"
+          },
+          {
+            "locator": "Proposed policy-form map and transfer boundary",
+            "source_id": "N2-SRC:XDOM:OBS-POLICY-AUDIT"
+          }
+        ],
+        "disposition": "UNASSESSED",
+        "assessments": [],
+        "identity_policy": null
+      }
+    ],
+    "edges": [
+      {
+        "id": "N2:IT:E-CANDIDATE-GENERIC-CHANNEL",
+        "source": "N2:IT:DEBATE-CHANNEL-CANDIDATE",
+        "target": "N2:IT:BLACKWELL-CHANNEL",
+        "relation": "candidate_mapping",
+        "state": "PROPOSED",
+        "scope": "finite matched pixel-debate population under fixed strategies",
+        "conditions": [
+          "same finite state alphabet across compared protocols",
+          "fixed strategies and channel law"
+        ],
+        "open_obligations": [
+          "identify the full conditional law and its sampling uncertainty",
+          "source-specific human mapping review"
+        ],
+        "source_refs": [
+          {
+            "locator": "physical PDF p.8 §3.1",
+            "source_id": "N2-SRC:IT:DEBATE-2018"
+          },
+          {
+            "locator": "physical PDF p.1 §I",
+            "source_id": "N2-SRC:IT:RAUH-2017"
+          }
+        ],
+        "assessments": [],
+        "path_eligibility": [],
+        "disposition": "UNASSESSED",
+        "assertion_role": "CANDIDATE"
+      },
+      {
+        "id": "N2:IT:E-CHANNEL-GARBLING-TEST",
+        "source": "N2:IT:DEBATE-CHANNEL-CANDIDATE",
+        "target": "N2:IT:POST-GARBLING",
+        "relation": "candidate_mapping",
+        "state": "PROPOSED",
+        "scope": "possible channel order between random-mask and strategic transcript conditions",
+        "conditions": [
+          "matched hidden state, transcript semantics, prior, action set, and loss"
+        ],
+        "open_obligations": [
+          "identify both K matrices",
+          "find or rule out a state-independent G with uncertainty accounting"
+        ],
+        "source_refs": [
+          {
+            "locator": "physical PDF p.1 §I",
+            "source_id": "N2-SRC:IT:RAUH-2017"
+          },
+          {
+            "locator": "physical PDF p.8 Table 2",
+            "source_id": "N2-SRC:IT:DEBATE-2018"
+          }
+        ],
+        "assessments": [],
+        "path_eligibility": [],
+        "disposition": "UNASSESSED",
+        "assertion_role": "CANDIDATE"
+      },
+      {
+        "id": "N2:IT:E-FIXED-INFERENCE-WARNING",
+        "source": "N2:IT:FIXED-JUDGE-MONOTONICITY",
+        "target": "N2:IT:DEBATE-GARBLING-QUESTION",
+        "relation": "analogous_to",
+        "state": "RECORDED",
+        "scope": "refuted universal fixed-rule inference relevant as a review warning",
+        "conditions": [],
+        "open_obligations": [],
+        "source_refs": [
+          {
+            "locator": "values",
+            "source_id": "N2-SRC:IT:FINITE-WITNESS-RESULT"
+          }
+        ],
+        "assessments": [],
+        "path_eligibility": [],
+        "disposition": "UNASSESSED",
+        "assertion_role": "NAVIGATION"
+      },
+      {
+        "id": "N2:IT:E-GARBLING-LEMMA",
+        "source": "N2:IT:POST-GARBLING",
+        "target": "N2:IT:FINITE-FORWARD-LEMMA",
+        "relation": "candidate_mapping",
+        "state": "PROPOSED",
+        "scope": "finite forward derivation premise",
+        "conditions": [
+          "same prior, action space, and utility; optimized decision rules"
+        ],
+        "open_obligations": [
+          "formalize and kernel-check the finite statement before any proof-path use"
+        ],
+        "source_refs": [
+          {
+            "locator": "Derived finite forward lemma",
+            "source_id": "N2-SRC:IT:SOURCE-AUDIT"
+          },
+          {
+            "locator": "physical PDF p.1 §I",
+            "source_id": "N2-SRC:IT:RAUH-2017"
+          }
+        ],
+        "assessments": [],
+        "path_eligibility": [],
+        "disposition": "UNASSESSED",
+        "assertion_role": "CANDIDATE"
+      },
+      {
+        "id": "N2:IT:E-JUDGE-CHANNEL",
+        "source": "N2:IT:FIXED-JUDGE-METHOD",
+        "target": "N2:IT:DEBATE-CHANNEL-CANDIDATE",
+        "relation": "candidate_mapping",
+        "state": "PROPOSED",
+        "scope": "fixed classifier's final mask input and scoring rule's label claims in the 2018 pixel experiment",
+        "conditions": [
+          "hold judge weights and input representation fixed"
+        ],
+        "open_obligations": [
+          "pin classifier code or full specification and verify its exact inputs"
+        ],
+        "source_refs": [
+          {
+            "locator": "physical PDF p.8 §3.1",
+            "source_id": "N2-SRC:IT:DEBATE-2018"
+          },
+          {
+            "locator": "Proposed debate mapping and its open conditions",
+            "source_id": "N2-SRC:IT:SOURCE-AUDIT"
+          }
+        ],
+        "assessments": [],
+        "path_eligibility": [],
+        "disposition": "UNASSESSED",
+        "assertion_role": "CANDIDATE"
+      },
+      {
+        "id": "N2:IT:E-LEMMA-DEBATE-QUESTION",
+        "source": "N2:IT:FINITE-FORWARD-LEMMA",
+        "target": "N2:IT:DEBATE-GARBLING-QUESTION",
+        "relation": "candidate_mapping",
+        "state": "PROPOSED",
+        "scope": "hypothetical application to a fixed pixel-debate population",
+        "conditions": [
+          "prove the two-channel garbling and match utility, prior, actions, and transcript timing"
+        ],
+        "open_obligations": [
+          "audit fixed-judge versus optimal-judge difference",
+          "review the exact scope before any substantive application"
+        ],
+        "source_refs": [
+          {
+            "locator": "Proposed debate mapping and its open conditions",
+            "source_id": "N2-SRC:IT:SOURCE-AUDIT"
+          }
+        ],
+        "assessments": [],
+        "path_eligibility": [],
+        "disposition": "UNASSESSED",
+        "assertion_role": "CANDIDATE"
+      },
+      {
+        "id": "N2:IT:E-PROTOCOL-CHANNEL",
+        "source": "N2:IT:PIXEL-DEBATE-PROTOCOL",
+        "target": "N2:IT:DEBATE-CHANNEL-CANDIDATE",
+        "relation": "candidate_mapping",
+        "state": "PROPOSED",
+        "scope": "2018 MNIST pixel protocol only",
+        "conditions": [
+          "fix question/image population and debater strategy profile",
+          "include claimed labels and final sparse mask in the classifier signal; do not assume reveal order is an input"
+        ],
+        "open_obligations": [
+          "extract or measure K(t|s) and verify information timing",
+          "human review of the complete protocol-to-channel map"
+        ],
+        "source_refs": [
+          {
+            "locator": "physical PDF pp.8-9 Figure 2 and §3.1",
+            "source_id": "N2-SRC:IT:DEBATE-2018"
+          },
+          {
+            "locator": "Proposed debate mapping",
+            "source_id": "N2-SRC:IT:SOURCE-AUDIT"
+          }
+        ],
+        "assessments": [],
+        "path_eligibility": [],
+        "disposition": "UNASSESSED",
+        "assertion_role": "CANDIDATE"
+      },
+      {
+        "id": "N2:MON:E-EVENT-MEASURE",
+        "source": "N2:MON:EVALUATION-DESIGN",
+        "target": "N2:MON:INTENDED-EVENT",
+        "relation": "candidate_mapping",
+        "state": "OPEN",
+        "scope": "future frozen Rogue Eval attack episodes",
+        "conditions": [],
+        "open_obligations": [
+          "freeze an event capture protocol and denominator",
+          "record uncertainty and held-out episodes before an empirical prediction"
+        ],
+        "source_refs": [
+          {
+            "locator": "events/E-INTENDED; open_gates",
+            "source_id": "INT-V1-SRC-CONTROL-CASE"
+          }
+        ],
+        "assessments": [],
+        "path_eligibility": [],
+        "disposition": "UNASSESSED",
+        "assertion_role": "CANDIDATE"
+      },
+      {
+        "id": "N2:MON:E-PROXY-INTENDED",
+        "source": "N2:MON:MARKER-MEASUREMENT",
+        "target": "N2:MON:INTENDED-EVENT",
+        "relation": "candidate_mapping",
+        "state": "RECORDED",
+        "scope": "isolated upstream scorer helper only",
+        "conditions": [],
+        "open_obligations": [
+          "define and independently collect the actual generated-harm event in a frozen episode"
+        ],
+        "source_refs": [
+          {
+            "locator": "cases",
+            "source_id": "INT-V1-SRC-CONTROL-SCORER-AUDIT"
+          }
+        ],
+        "assessments": [
+          {
+            "basis": "CORRECT is returned without observed model generation",
+            "dimension": "PROXY_VALIDITY",
+            "evidence_links": [
+              {
+                "kind": "SOURCE_REF",
+                "role": "COUNTERS",
+                "source_ref": [
+                  {
+                    "locator": "cases",
+                    "source_id": "INT-V1-SRC-CONTROL-SCORER-AUDIT"
+                  }
+                ]
+              }
+            ],
+            "result": "FAIL",
+            "scope": "isolated upstream scorer helper only"
+          }
+        ],
+        "path_eligibility": [],
+        "disposition": "REFUTED",
+        "assertion_role": "CANDIDATE"
+      },
+      {
+        "id": "N2:MON:E-TWO-POP-DECISION-USES-CERT",
+        "source": "N2:MON:TWO-POP-DECISION",
+        "target": "N2:MON:TWO-POP-CERT",
+        "relation": "formal_proof_uses",
+        "state": "RECORDED",
+        "scope": "exact Lean corollary invocation of dual_certificate_two_populations",
+        "conditions": [],
+        "open_obligations": [],
+        "source_refs": [
+          {
+            "locator": "no_budgeted_policy_meets_target; dual_certificate_two_populations invocation",
+            "source_id": "N2-SRC:MON:TWO-POP-LEAN"
+          }
+        ],
+        "assessments": [],
+        "path_eligibility": [],
+        "disposition": "UNASSESSED",
+        "assertion_role": "NAVIGATION"
+      },
+      {
+        "id": "N2:MON:E-TWO-POP-HONEST-APPLICATION",
+        "source": "N2:MON:TWO-POP-CERT",
+        "target": "N2:MON:HONEST-DEFER-BUDGET",
+        "relation": "candidate_mapping",
+        "state": "PROPOSED",
+        "scope": "prospective Rogue Eval honest-output usefulness metric versus the formal honest deferral budget",
+        "conditions": [
+          "exact same monitor-input type and policy on attack and honest predecision snapshots",
+          "honest cost is operationally the theorem's deferral indicator on a frozen honest sampling law"
+        ],
+        "open_obligations": [
+          "review the paper's separate honest usefulness rule against this deferral-only formal metric",
+          "freeze attack and honest draw laws, exact materialized monitor request, shared policy function, and routing behavior",
+          "measure or conservatively bound honest fiber masses and attack potential-event masses with uncertainty before any system decision"
+        ],
+        "source_refs": [
+          {
+            "locator": "dual_certificate_two_populations; honestDeferrals",
+            "source_id": "N2-SRC:MON:TWO-POP-LEAN"
+          },
+          {
+            "locator": "Does this repair the formal budget mismatch?; Does ControlArena instantiate OA, OH, and p?",
+            "source_id": "N2-SRC:MON:TWO-POP-REVIEW"
+          },
+          {
+            "locator": "Budget population and paper relationship",
+            "source_id": "N2-SRC:MON:PROTOCOL-DRAFT"
+          }
+        ],
+        "assessments": [],
+        "path_eligibility": [],
+        "disposition": "UNASSESSED",
+        "assertion_role": "CANDIDATE"
+      },
+      {
+        "id": "N2:MON:E-TWO-POP-USES-FIBER",
+        "source": "N2:MON:TWO-POP-CERT",
+        "target": "N2:MON:FIBER-LEMMA",
+        "relation": "formal_proof_uses",
+        "state": "RECORDED",
+        "scope": "exact Lean proof invocation of BudgetedObservation.dual_certificate_fiber",
+        "conditions": [],
+        "open_obligations": [],
+        "source_refs": [
+          {
+            "locator": "dual_certificate_two_populations; exact dual_certificate_fiber invocation",
+            "source_id": "N2-SRC:MON:TWO-POP-LEAN"
+          }
+        ],
+        "assessments": [],
+        "path_eligibility": [],
+        "disposition": "UNASSESSED",
+        "assertion_role": "NAVIGATION"
+      },
+      {
+        "id": "N2:MON:E-TWO-POP-WITNESS-USES-CERT",
+        "source": "N2:MON:TWO-POP-WITNESS",
+        "target": "N2:MON:TWO-POP-CERT",
+        "relation": "formal_proof_uses",
+        "state": "RECORDED",
+        "scope": "finite witness proof invokes the two-population certificate",
+        "conditions": [],
+        "open_obligations": [],
+        "source_refs": [
+          {
+            "locator": "TwoPopulationWitness.certified",
+            "source_id": "N2-SRC:MON:TWO-POP-WITNESS"
+          }
+        ],
+        "assessments": [],
+        "path_eligibility": [],
+        "disposition": "UNASSESSED",
+        "assertion_role": "NAVIGATION"
+      },
+      {
+        "id": "N2:PG:E-GARBLING-BASIC-MONITOR",
+        "source": "N2:IT:POST-GARBLING",
+        "target": "N2:MON:BASIC-MONITOR",
+        "relation": "candidate_mapping",
+        "state": "PROPOSED",
+        "scope": "prospective observation coarsening in the pinned ControlArena basic monitor composition",
+        "conditions": [
+          "fix one predecision snapshot X and exact materialized monitor-request Y boundary",
+          "show Y=f(X), or identify one state-independent stochastic G, under all relevant task contexts",
+          "specify attack and honest episode populations and the same routing action semantics"
+        ],
+        "open_obligations": [
+          "pin and trace a concrete Rogue Eval predecision snapshot to the exact monitor request",
+          "account for randomness, observation timing, and any hidden side inputs",
+          "calibrate separate attack-event and honest-deferral populations with a specified observable event",
+          "humanly review the system map before any empirical or safety claim"
+        ],
+        "source_refs": [
+          {
+            "locator": "basic_monitor_builder",
+            "source_id": "INT-V1-SRC-CONTROL-MONITOR"
+          },
+          {
+            "locator": "default formatter",
+            "source_id": "INT-V1-SRC-CONTROL-FORMATTER"
+          },
+          {
+            "locator": "What this changes for the monitoring research question",
+            "source_id": "N2-SRC:PG:SOURCE-AUDIT"
+          }
+        ],
+        "assessments": [],
+        "path_eligibility": [],
+        "disposition": "UNASSESSED",
+        "assertion_role": "CANDIDATE"
+      },
+      {
+        "id": "N2:PG:E-PHYSLIB-FINITE-GARBLING",
+        "source": "N2:LIB:PHYS-BORN-FACTOR",
+        "target": "N2:IT:POST-GARBLING",
+        "relation": "candidate_mapping",
+        "state": "PROPOSED",
+        "scope": "one-way finite normal-state/outcome restriction of a Physlib Born-law factorization",
+        "conditions": [
+          "finite measurable outcome spaces X and Y, with measurable singletons",
+          "one selected finite family of normal states of the same E",
+          "one state-independent Markov kernel κ for every selected state"
+        ],
+        "open_obligations": [
+          "formalize and check the finite singleton expansion against pinned Physlib in one Lean environment",
+          "independently review source semantics, channel orientation, and normal-state quantifiers",
+          "do not infer the Physlib all-state relation from a sampled-state matrix fit"
+        ],
+        "source_refs": [
+          {
+            "locator": "lines 60–85 and 134–140",
+            "source_id": "N2-SRC:LIB:PHYSLIB-POSTPROCESSING"
+          },
+          {
+            "locator": "physical PDF p.1 §I",
+            "source_id": "N2-SRC:IT:RAUH-2017"
+          },
+          {
+            "locator": "Conditional type and assumption map; nonconverse",
+            "source_id": "N2-SRC:PG:SOURCE-AUDIT"
+          }
+        ],
+        "assessments": [],
+        "path_eligibility": [],
+        "disposition": "UNASSESSED",
+        "assertion_role": "CANDIDATE"
+      },
+      {
+        "id": "N2:XDOM:E-MONITOR-POLICY-FORM-REVIEWED",
+        "source": "N2:MON:BUDGET-MODEL",
+        "target": "N2:XDOM:OBSERVATION-POLICY-STRUCTURE",
+        "relation": "instantiates",
+        "state": "RECORDED",
+        "scope": "Policy-form projection of the pinned finite BudgetedObservation model's O and bounded p; no implemented monitor or theorem application transfer",
+        "conditions": [
+          "Use the pinned finite Omega and I, O:Omega->I, and p:I->Real with 0<=p(i)<=1",
+          "Interpret p(i) as the formal defer-branch mixture weight after observation O"
+        ],
+        "open_obligations": [],
+        "source_refs": [
+          {
+            "locator": "BudgetedObservation.lean lines 17-30 and 77-96",
+            "source_id": "INT-V1-SRC-THEOREM-LEAN"
+          },
+          {
+            "locator": "Exact source loci and scoped object map",
+            "source_id": "N2-SRC:XDOM:OBS-POLICY-AUDIT"
+          },
+          {
+            "locator": "R5 and edge-specific recommendation",
+            "source_id": "N2-SRC:XDOM:AI-REVIEW-PROPOSAL"
+          },
+          {
+            "locator": "Hatem's attributed decision",
+            "source_id": "N2-SRC:XDOM:HATEM-AI-APPROVAL"
+          }
+        ],
+        "assessments": [
+          {
+            "basis": "Codex's attributed comparison of the named primary source span; this is not a machine proof of the semantic bridge.",
+            "dimension": "AI_SOURCE_REVIEW",
+            "evidence_links": [
+              {
+                "kind": "SOURCE_REF",
+                "role": "SUPPORTS",
+                "source_ref": [
+                  {
+                    "locator": "BudgetedObservation.lean lines 17-30 and 77-96",
+                    "source_id": "INT-V1-SRC-THEOREM-LEAN"
+                  }
+                ]
+              },
+              {
+                "kind": "SOURCE_REF",
+                "role": "SUPPORTS",
+                "source_ref": [
+                  {
+                    "locator": "Proposed policy-form map; transfer boundary",
+                    "source_id": "N2-SRC:XDOM:OBS-POLICY-AUDIT"
+                  }
+                ]
+              },
+              {
+                "kind": "SOURCE_REF",
+                "role": "SUPPORTS",
+                "source_ref": [
+                  {
+                    "locator": "AI_REVIEW_CARD.md and proposed four-edge disposition",
+                    "source_id": "N2-SRC:XDOM:AI-REVIEW-PROPOSAL"
+                  }
+                ]
+              }
+            ],
+            "result": "PASS",
+            "scope": "Policy-form projection of the pinned finite BudgetedObservation model's O and bounded p; no implemented monitor or theorem application transfer"
+          },
+          {
+            "basis": "Hatem approved the AI proposal as written; no personal source check was reported.",
+            "dimension": "HUMAN_DRAFT_APPROVAL",
+            "evidence_links": [
+              {
+                "kind": "SOURCE_REF",
+                "role": "SUPPORTS",
+                "source_ref": [
+                  {
+                    "locator": "APPROVE_AS_WRITTEN; AI_DRAFT_ONLY",
+                    "source_id": "N2-SRC:XDOM:HATEM-AI-APPROVAL"
+                  }
+                ]
+              }
+            ],
+            "result": "PASS",
+            "scope": "Policy-form projection of the pinned finite BudgetedObservation model's O and bounded p; no implemented monitor or theorem application transfer"
+          },
+          {
+            "basis": "No independent human primary-source review is claimed or required for this attributed AI-assisted policy-form record.",
+            "dimension": "INDEPENDENT_PRIMARY_SOURCE_REVIEW",
+            "evidence_links": [],
+            "result": "OPEN",
+            "scope": "Policy-form projection of the pinned finite BudgetedObservation model's O and bounded p; no implemented monitor or theorem application transfer"
+          }
+        ],
+        "path_eligibility": [],
+        "disposition": "UNASSESSED",
+        "assertion_role": "SUBSTANTIVE"
+      }
+    ]
+  },
+  "routes": [
+    {
+      "id": "monitoring",
+      "title": "Monitoring limits",
+      "question": "What can a monitor miss?",
+      "summary": "Follow the role of observation access and a limited deferral budget.",
+      "main_open_question": "Does the actual monitor input and shared routing policy satisfy the modeled observation assumptions? Real populations and adverse-event measurement still need evidence.",
+      "stages": [
+        {
+          "id": "problem",
+          "label": "AI safety problem",
+          "summary": "Recognize harmful behavior while limiting deferral to a trusted system.",
+          "record_ids": [
+            "N2:MON:CONTROL-SYSTEM",
+            "N2:MON:INTENDED-EVENT",
+            "N2:MON:ATTACK-POP",
+            "N2:MON:HONEST-POP"
+          ],
+          "edge_ids": []
+        },
+        {
+          "id": "structures",
+          "label": "Concepts & structures",
+          "summary": "Separate visible information, decision policy and the population supplying the budget. Shared structure candidates retain their recorded identity and review scope.",
+          "record_ids": [
+            "N2:MON:BUDGET-MODEL",
+            "N2:XDOM:OBSERVATION-POLICY-STRUCTURE",
+            "N2:IT:POST-GARBLING"
+          ],
+          "edge_ids": [
+            "N2:XDOM:E-MONITOR-POLICY-FORM-REVIEWED"
+          ]
+        },
+        {
+          "id": "bridges",
+          "label": "Cross-domain bridges",
+          "summary": "Compare information loss with finite channel garbling and Physlib measurement postprocessing. The application maps remain proposed.",
+          "record_ids": [
+            "N2:IT:POST-GARBLING",
+            "N2:LIB:PHYS-BORN-FACTOR",
+            "N2:MON:BASIC-MONITOR"
+          ],
+          "edge_ids": [
+            "N2:PG:E-PHYSLIB-FINITE-GARBLING",
+            "N2:PG:E-GARBLING-BASIC-MONITOR"
+          ]
+        },
+        {
+          "id": "knowledge",
+          "label": "Formal & empirical knowledge",
+          "summary": "Inspect a checked two-population bound alongside the remaining system and measurement work.",
+          "record_ids": [],
+          "edge_ids": [],
+          "groups": [
+            {
+              "id": "formal",
+              "label": "Formal results & arguments",
+              "summary": "The checked finite bound, corollary, witness and proof dependency do not certify the running monitor.",
+              "record_ids": [
+                "N2:MON:TWO-POP-CERT",
+                "N2:MON:TWO-POP-DECISION",
+                "N2:MON:TWO-POP-WITNESS",
+                "N2:MON:FIBER-LEMMA"
+              ],
+              "edge_ids": [
+                "N2:MON:E-TWO-POP-USES-FIBER",
+                "N2:MON:E-TWO-POP-DECISION-USES-CERT",
+                "N2:MON:E-TWO-POP-WITNESS-USES-CERT"
+              ]
+            },
+            {
+              "id": "empirical",
+              "label": "Empirical evidence & gaps",
+              "summary": "The marker proxy is insufficient for the intended event. Intended-event measurement and real-population outcomes remain open.",
+              "record_ids": [
+                "N2:MON:EVALUATION-DESIGN",
+                "N2:MON:MARKER-MEASUREMENT",
+                "N2:MON:INTENDED-EVENT",
+                "N2:MON:HONEST-DEFER-BUDGET"
+              ],
+              "edge_ids": [
+                "N2:MON:E-TWO-POP-HONEST-APPLICATION",
+                "N2:MON:E-PROXY-INTENDED",
+                "N2:MON:E-EVENT-MEASURE"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "debate",
+      "title": "Information and oversight",
+      "question": "Does more information improve oversight?",
+      "summary": "Distinguish better information from a better decision by a fixed judge.",
+      "main_open_question": "Fix the population, protocol, strategies, complete judge input and decision loss before comparing channels. The finite witness is not an evaluation of the paper’s classifier.",
+      "stages": [
+        {
+          "id": "problem",
+          "label": "AI safety problem",
+          "summary": "Agents reveal selected evidence to a fixed classifier in pixel debate. Does the judge choose the correct answer?",
+          "record_ids": [
+            "N2:IT:PIXEL-DEBATE-PROTOCOL",
+            "N2:IT:FIXED-JUDGE-METHOD"
+          ],
+          "edge_ids": []
+        },
+        {
+          "id": "structures",
+          "label": "Concepts & structures",
+          "summary": "Identify the hidden state, the signal reaching the judge and the rule acting on that signal. These definitions remain source-specific.",
+          "record_ids": [
+            "N2:IT:BLACKWELL-CHANNEL",
+            "N2:IT:POST-GARBLING",
+            "N2:IT:DEBATE-CHANNEL-CANDIDATE"
+          ],
+          "edge_ids": []
+        },
+        {
+          "id": "bridges",
+          "label": "Cross-domain bridges",
+          "summary": "Explore proposed links to information channels and state-independent garbling under a fixed population and protocol.",
+          "record_ids": [
+            "N2:IT:DEBATE-CHANNEL-CANDIDATE",
+            "N2:IT:DEBATE-GARBLING-QUESTION"
+          ],
+          "edge_ids": [
+            "N2:IT:E-PROTOCOL-CHANNEL",
+            "N2:IT:E-JUDGE-CHANNEL",
+            "N2:IT:E-CANDIDATE-GENERIC-CHANNEL",
+            "N2:IT:E-CHANNEL-GARBLING-TEST"
+          ]
+        },
+        {
+          "id": "knowledge",
+          "label": "Formal & empirical knowledge",
+          "summary": "Compare optimal decision value with fixed-judge accuracy, then inspect the paper’s reported setup.",
+          "record_ids": [],
+          "edge_ids": [],
+          "groups": [
+            {
+              "id": "formal",
+              "label": "Formal results & arguments",
+              "summary": "The forward argument has no Lean check in this slice. A finite counterexample challenges the universal fixed-judge inference.",
+              "record_ids": [
+                "N2:IT:FINITE-FORWARD-LEMMA",
+                "N2:IT:FIXED-JUDGE-WITNESS",
+                "N2:IT:FIXED-JUDGE-MONOTONICITY"
+              ],
+              "edge_ids": [
+                "N2:IT:E-GARBLING-LEMMA",
+                "N2:IT:E-LEMMA-DEBATE-QUESTION",
+                "N2:IT:E-FIXED-INFERENCE-WARNING"
+              ]
+            },
+            {
+              "id": "empirical",
+              "label": "Empirical evidence & gaps",
+              "summary": "The protocol and judge records point to the paper’s reported experiment, not a local replication or a measured channel transfer.",
+              "record_ids": [
+                "N2:IT:PIXEL-DEBATE-PROTOCOL",
+                "N2:IT:FIXED-JUDGE-METHOD"
+              ],
+              "edge_ids": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
