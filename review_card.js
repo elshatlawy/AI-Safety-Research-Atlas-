@@ -1,8 +1,11 @@
-/* Paper-to-Lean review card. Drafts an attributed decision file; never changes atlas status. */
+/* Paper-to-Lean review card. Drafts an attributed decision file, or shows the committed outcome read-only; never changes atlas status. */
 (function(root) {
   "use strict";
   const PACKET_SCHEMA="ASRA-PAPER-LEAN-REVIEW-PACKET-v1";
   const RESPONSE_SCHEMA="ASRA-PAPER-LEAN-REVIEW-RESPONSE-v1";
+  const OUTCOME_SCHEMA="ASRA-PAPER-LEAN-REVIEW-OUTCOME-v1";
+  const MONTHS=["January","February","March","April","May","June","July","August","September","October","November","December"];
+  const DECIDED={PROMOTE_AS_STATED:"promoted as stated",PROMOTE_WITH_CORRECTIONS:"promoted with corrections",KEEP_OPEN:"kept as a candidate",UNABLE_TO_ASSESS:"not assessed"};
   const PROMOTE=new Set(["PROMOTE_AS_STATED","PROMOTE_WITH_CORRECTIONS"]);
   const esc=value=>String(value??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
   const href=value=>{try {const u=new URL(value);return u.protocol==="https:"?u.href:"";}catch{return "";}};
@@ -81,7 +84,50 @@
       </form>`;
   }
 
-  const api={validatePacket,problems,collect,render,RESPONSE_SCHEMA};
+  // A committed decision replaces the form. Anything that does not match the packet it answers fails closed.
+  function validateOutcome(outcome,packet,pin) {
+    const fail=message=>{throw Error(`Review outcome ${message}.`);};
+    if(outcome?.schema!==OUTCOME_SCHEMA||outcome.status!=="DECISION_RECORDED") fail("has an unexpected format");
+    if(outcome.packet_id!==packet.id||outcome.packet_sha256!==pin||outcome.candidate_edge_id!==packet.candidate_edge_id) fail("answers a different packet");
+    if(!String(outcome.reviewer_id||"").trim()||!outcome.reviewer_role||!outcome.quorum) fail("lacks its reviewer or quorum");
+    if(!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$/.test(outcome.reviewed_at_utc||"")) fail("has no UTC review time");
+    if(!values(packet.decision.options).has(outcome.decision?.value)||!DECIDED[outcome.decision.value]) fail("names an unknown decision");
+    const answers=Array.isArray(outcome.answers)?outcome.answers:[];
+    if(answers.length!==packet.questions.length||!packet.questions.every(q=>answers.filter(a=>a.question_id===q.id&&values(q.options).has(a.value)).length===1)) fail("does not answer every packet question once");
+    const settled=new Set((packet.settled||[]).map(s=>s.id)), sources=new Set(packet.sources_to_check.map(s=>s.id));
+    if(!Array.isArray(outcome.settled_by_lean)||!outcome.settled_by_lean.every(s=>settled.has(s.id))) fail("names a question the packet does not settle");
+    if(!Array.isArray(outcome.personally_checked)||!outcome.personally_checked.every(s=>sources.has(s.id))) fail("names a source outside the packet");
+    const result=outcome.result||{};
+    if(!result.edge_id||!result.review_event_id||!result.relation||!result.lifecycle_state||!Array.isArray(result.open_obligations)||!Array.isArray(result.path_eligibility)) fail("lacks its recorded result");
+    if(!/^[0-9a-f]{64}$/.test(outcome.decision_file?.sha256||"")||!outcome.decision_file.path||!outcome.does_not_establish||!outcome.ai_assistance) fail("lacks its decision file or limits");
+    return outcome;
+  }
+  function decisionDate(utc) {
+    const [year,month,day]=utc.slice(0,10).split("-").map(Number);
+    return `${day} ${MONTHS[month-1]} ${year}`;
+  }
+  function renderOutcome(packet,outcome) {
+    const result=outcome.result, label=(id,value)=>packet.questions.find(q=>q.id===id)?.options.find(o=>o.value===value)?.label||value;
+    const answers=outcome.answers.map(a=>`<article><strong>${esc(packet.questions.find(q=>q.id===a.question_id).question)}</strong><p>${esc(label(a.question_id,a.value))} <span class="review-tag">${esc(a.value)}</span></p></article>`).join("");
+    const settled=outcome.settled_by_lean.map(s=>{const item=packet.settled.find(x=>x.id===s.id);return `<article><strong>${esc(item.question)}</strong><p>${esc(item.says)} <span class="review-tag">${esc(item.probe)}</span></p></article>`;}).join("");
+    const checked=outcome.personally_checked.map(s=>{const item=packet.sources_to_check.find(x=>x.id===s.id);return `<li>${link(item.href,item.label)}</li>`;}).join("");
+    const resolved=result.resolved?.length?`${esc(result.resolved.join(", "))} ${result.resolved.length===1?"is":"are"} resolved; `:"";
+    const open=result.open_obligations.length?`${resolved}${esc(result.open_obligations.join(", "))} remain open obligations, so the link stays ${esc(result.lifecycle_state)}.`:`${resolved}The link is ${esc(result.lifecycle_state)}.`;
+    return `<div class="pilot-heading"><div><span class="step-count">REVIEWED MATCH · DECISION RECORDED</span><h2>Reviewed by ${esc(outcome.reviewer_id)} on ${esc(decisionDate(outcome.reviewed_at_utc))}: ${esc(DECIDED[outcome.decision.value])}</h2></div><span class="literature-badge">Quorum ${esc(outcome.quorum)}</span></div>
+      <p class="review-summary">${esc(outcome.reviewer_id)} answered ${outcome.answers.length===1?"the question":outcome.answers.length===2?"both questions":`all ${esc(outcome.answers.length)} questions`} and chose “${esc(packet.decision.options.find(o=>o.value===outcome.decision.value).label)}”. This card is a read-only record of that decision and asks for no new one.</p>
+      <p class="review-claim"><strong>The claim:</strong> ${esc(packet.claim)}</p>
+      <ul class="review-exclusions">${packet.exclusions.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>
+      <section class="review-settled"><span class="step-count">THE REVIEWER'S ANSWERS</span>${answers}</section>
+      ${settled?`<section class="review-settled"><span class="step-count">SETTLED BY LEAN · NOT ASKED</span>${settled}</section>`:""}
+      <p class="status-note"><strong>What was recorded:</strong> the ${esc(result.assertion_role||"")} ${esc(result.relation)} link ${esc(result.edge_id)} with review event ${esc(result.review_event_id)}. ${open} Inference paths: ${result.path_eligibility.length?esc(result.path_eligibility.join(", ")):"none"}.</p>
+      <p class="status-note"><strong>What it does not establish:</strong> ${esc(outcome.does_not_establish)}</p>
+      <p class="status-note"><strong>Quorum ${esc(outcome.quorum)}.</strong> Role: ${esc(outcome.reviewer_role)}. The reviewer was the only human taking part; an AI system does not count toward the quorum. A later reviewer whose scope covers this decision may challenge it.</p>
+      <p class="status-note">${esc(outcome.ai_assistance)}</p>
+      <details class="review-probes"><summary>Sources the reviewer checked personally (${outcome.personally_checked.length})</summary><ul>${checked}</ul><p class="status-note">Recorded level: ${esc(outcome.source_review_level)}.</p></details>
+      <details class="review-probes"><summary>The decision record</summary><ul><li><strong>Decision file</strong><small>${esc(outcome.decision_file.path)} · SHA-256 <code>${esc(outcome.decision_file.sha256)}</code></small></li><li><strong>Saved</strong><small>${esc(outcome.reviewed_at_utc)} · ${esc(outcome.timestamp_basis||"")}</small></li><li><strong>Packet answered</strong><small>${esc(outcome.packet_id)} · SHA-256 <code>${esc(outcome.packet_sha256)}</code></small></li><li><strong>Candidate kept unchanged</strong><small>${esc(outcome.candidate_edge_id)}</small></li></ul></details>`;
+  }
+
+  const api={validatePacket,problems,collect,render,validateOutcome,renderOutcome,RESPONSE_SCHEMA,OUTCOME_SCHEMA};
   if(typeof module==="object"&&module.exports)module.exports=api;
   else root.AtlasReviewCard=api;
 })(typeof globalThis!=="undefined"?globalThis:this);

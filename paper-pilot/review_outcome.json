@@ -1,0 +1,89 @@
+{
+  "schema": "ASRA-PAPER-LEAN-REVIEW-OUTCOME-v1",
+  "status": "DECISION_RECORDED",
+  "packet_id": "E003-CORRECTNESS-ONLY-REVIEW-2026-10-13-G1",
+  "packet_sha256": "38dd7080821ea844b60579b07a6fc01f693fbcfaece4c1312967c4f7e406128f",
+  "candidate_edge_id": "N2:DSO:E-PAPER-LEAN-SEMANTIC",
+  "reviewer_id": "Hatem Elshatlawy",
+  "reviewer_role": "Maintainer; Relation Promotion Authority under the temporary bootstrap clause",
+  "quorum": "SINGLE_MAINTAINER",
+  "reviewed_at_utc": "2026-10-13T21:24:07Z",
+  "timestamp_basis": "Reviewer's browser clock when the file was saved.",
+  "source_review_level": "PRIMARY_SOURCES_CHECKED",
+  "personally_checked": [
+    {
+      "id": "paper:p6-definition-6.1",
+      "label": "Paper, PDF p. 6, Definition 6.1"
+    },
+    {
+      "id": "paper:p7-theorem-6.2",
+      "label": "Paper, PDF p. 7, Figure 1 and Theorem 6.2"
+    },
+    {
+      "id": "lean:Debate/Correct.lean:28-34",
+      "label": "Lean, Debate/Correct.lean lines 28–34"
+    },
+    {
+      "id": "lean:Comp/Oracle.lean:39-44",
+      "label": "Lean, Comp/Oracle.lean lines 39–44"
+    },
+    {
+      "id": "lean:Debate/Protocol.lean:40-127",
+      "label": "Lean, Debate/Protocol.lean lines 40–127"
+    }
+  ],
+  "answers": [
+    {
+      "question_id": "does_other_oracle_include_self",
+      "question": "Does “any other oracle 𝒪′” include 𝒪 itself?",
+      "value": "EXCLUDES_SELF",
+      "label": "No, only a different oracle"
+    },
+    {
+      "question_id": "displayed_strict_inequality_versus_at_most_prose",
+      "question": "Which governs: the displayed strict < or the prose “at most”?",
+      "value": "AT_MOST_GOVERNS",
+      "label": "The prose “at most” (≤)"
+    }
+  ],
+  "settled_by_lean": [
+    {
+      "id": "treatment_of_distinct_zero_distance_oracles",
+      "question": "How are two different oracles at distance zero treated?",
+      "says": "In Lean's model, two oracles at distance zero are the same oracle, so there is no such pair and how the paper would treat one cannot change this correctness-only claim.",
+      "probe": "zero_distance_means_same_oracle"
+    }
+  ],
+  "decision": {
+    "value": "PROMOTE_AS_STATED",
+    "label": "Yes, as stated with its exclusions"
+  },
+  "corrections": "",
+  "note": "",
+  "decision_file": {
+    "path": "AGR_Atlas_Infrastructure/ontology_v2/review_v1/e003_v1/HATEM_E003_CORRECTNESS_ONLY_DECISION_2026-10-13.json",
+    "sha256": "f6e41b2ccae746086d3589f46cb4ad3f5801c0269aa699e429be2c9cc192146d"
+  },
+  "result": {
+    "pack": "AGR_Atlas_Infrastructure/ontology_v2/native_v2/examples/debate_e003_reviewed.json",
+    "review_event_id": "N2:DSO:REVIEW-E003-CORRECTNESS-ONLY-2026-10-13",
+    "edge_id": "N2:DSO:E-PAPER-LEAN-SEMANTIC-REVIEWED",
+    "relation": "paper_to_lean_semantic_match",
+    "assertion_role": "SUBSTANTIVE",
+    "lifecycle_state": "OPEN",
+    "resolved": [
+      "D01"
+    ],
+    "open_obligations": [
+      "D02",
+      "D03",
+      "D04",
+      "D05",
+      "D06",
+      "D07"
+    ],
+    "path_eligibility": []
+  },
+  "does_not_establish": "A full match of Theorem 6.2 with the Lean declaration. D02-D07 stay open: the paper's inputs, language, machine, event law, Figure 1 protocol order, conditioning and resource bounds are not mapped. The link supports no proof, system-applicability or empirical-prediction path.",
+  "ai_assistance": "Claude (AI) drafted the review packet's questions, explanations and Lean examples and transcribed this record; it is not the reviewer of record. Hatem Elshatlawy is."
+}

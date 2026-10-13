@@ -277,6 +277,23 @@ function renderReviewCard(packet,pin) {
     box.innerHTML='<p>Decision file saved. Send it to the maintainer, or add it to the repository in a pull request.</p>';
   });
 }
+function renderReviewOutcome(packet,outcome) {
+  const box=$("paper-review");box.innerHTML=AtlasReviewCard.renderOutcome(packet,outcome);box.hidden=false;
+}
+async function loadReviewCard() {
+  try {
+    const reviewResponse=await fetch("./paper-pilot/review_packet.json",{cache:"no-store"});
+    if(!reviewResponse.ok||!window.AtlasReviewCard) return;
+    const raw=await reviewResponse.text();
+    const digest=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(raw));
+    const packet=AtlasReviewCard.validatePacket(JSON.parse(raw)),pin=Array.from(new Uint8Array(digest),byte=>byte.toString(16).padStart(2,"0")).join("");
+    // A committed decision replaces the form. Only a packet with no outcome file (404) invites a decision;
+    // any other failure, or an outcome that does not match this packet, leaves the card hidden.
+    const outcomeResponse=await fetch("./paper-pilot/review_outcome.json",{cache:"no-store"});
+    if(outcomeResponse.ok) renderReviewOutcome(packet,AtlasReviewCard.validateOutcome(JSON.parse(await outcomeResponse.text()),packet,pin));
+    else if(outcomeResponse.status===404) renderReviewCard(packet,pin);
+  } catch { /* An unverified review packet or outcome stays hidden. */ }
+}
 function startingEntries() {
   const chosen=preferredStarts.map(nodeFor).filter(Boolean);
   if(chosen.length<3) chosen.push(...state.data.nodes.filter(n=>!chosen.some(c=>c.id===n.id) && ["HUMAN_REVIEWED","SOURCE_ANCHORED"].includes(n.state)).slice(0,3-chosen.length));
@@ -600,14 +617,7 @@ async function init() {
         state.paperPilot=pilot;state.paperPilotPin=Array.from(new Uint8Array(digest),byte=>byte.toString(16).padStart(2,"0")).join("");
       }
     } catch { /* The unverified optional receipt remains hidden. */ }
-    try {
-      const reviewResponse=await fetch("./paper-pilot/review_packet.json",{cache:"no-store"});
-      if(reviewResponse.ok&&window.AtlasReviewCard) {
-        const raw=await reviewResponse.text();
-        const digest=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(raw));
-        renderReviewCard(AtlasReviewCard.validatePacket(JSON.parse(raw)),Array.from(new Uint8Array(digest),byte=>byte.toString(16).padStart(2,"0")).join(""));
-      }
-    } catch { /* An unverified review packet stays hidden. */ }
+    await loadReviewCard();
     state.incidents=new Map(data.nodes.map(n=>[n.id,[]]));for(const edge of data.edges){state.incidents.get(edge.source)?.push(edge);if(edge.target!==edge.source)state.incidents.get(edge.target)?.push(edge);}
     fillFilters();restoreSaved();applyURL();
     $("snapshot-label").textContent=`Snapshot ${data.snapshot.id.slice(0,8)} · ${data.counts.nodes.toLocaleString()} indexed records`;
