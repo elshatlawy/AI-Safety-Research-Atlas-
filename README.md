@@ -14,4 +14,12 @@ Original code is Apache 2.0; see `LICENSE-CODE.txt`. Original project data, note
 
 No coordinator keys, participant responses, local model assets or private joined-data export are included. Semantic-model search is disabled for this release. The separate literature action sends a query to OpenAlex only when clicked; its results remain discovery metadata outside the atlas.
 
-This is the complete 21-file minimal deployment. At the maintainer's request, earlier research pages, their redirects and the large formal-index/network assets are retired from the public site. They remain recoverable in repository history. The footer stays within this interface: Data, About and Contribute. Canonical research records are unchanged.
+## For AI agents
+
+`llms.txt` tells an AI agent how to use the atlas: its rules, its files, and a recipe for each kind of research question. `agent/index.json` lists every record with its type, state, sources and card path; `agent/papers.json` lists every source with its records; and `agent/records/` holds one small card per record with its text, its sources (with a link that opens the PDF at the cited page), its links in both directions with their state, rationale and open obligations, and a link to the record on this website. All of these are built from `atlas_data.json` alone and add no paper text. A card's links to formal kernel dependencies are capped at 40 per direction; `atlas_data.json` has them all.
+
+## Scope
+
+The site itself is 21 files: 20 interface and data files plus `PUBLIC_BUILD_MANIFEST.json`. The agent files add `llms.txt`, two index files and one card per record.
+
+This is the complete minimal deployment. At the maintainer's request, earlier research pages, their redirects and the large formal-index/network assets are retired from the public site. They remain recoverable in repository history. The footer stays within this interface: Data, About and Contribute. Canonical research records are unchanged.
