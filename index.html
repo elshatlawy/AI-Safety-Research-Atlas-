@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <script>
-/* Old explorer links (?view=…, ?record=…, ?q=…) open the record explorer. */
-if (location.search) location.replace("explore.html" + location.search + location.hash);
+/* Old record-explorer links (?view=…, ?record=…, ?q=…) open the record graph, at their record if they name one. */
+if (location.search) { const r = new URLSearchParams(location.search).get("record"); location.replace(location.pathname + (r ? "#graph/" + encodeURIComponent(r) : "#graph")); }
 </script>
 <title>Safety Research Atlas</title>
 <meta name="description" content="Open research questions on the debate safety case, ranked by the step they affect, with what later work settled and what is left.">
@@ -21,6 +21,7 @@ if (location.search) location.replace("explore.html" + location.search + locatio
   --ev-weak:#86b6ef; --ev-weak-ink:#10233d; --ev-sup:#256abf; --ev-sup-ink:#ffffff; --ev-con:#eb6834; --ev-con-ink:#1b1c1a;
   --lg-proved:#1baf7a; --lg-problem:#eb6834; --lg-derived:#6250d6; --lg-partly:#256abf; --lg-narrowed:#86b6ef; --lg-answered:#184f95;
   --g-proved:#1b1c1a; --g-multi:#184f95; --g-single:#3987e5; --g-prelim:#9ec5f4;
+  --area0:#2a78d6; --area1:#1baf7a; --area2:#eda100;
   --shadow:0 1px 2px rgba(27,28,26,.05),0 12px 32px rgba(27,28,26,.08);
   --r:14px;
 }
@@ -32,6 +33,7 @@ if (location.search) location.replace("explore.html" + location.search + locatio
   --ev-weak:#1c5cab; --ev-weak-ink:#ffffff; --ev-sup:#86b6ef; --ev-sup-ink:#0b1a2e; --ev-con:#d95926; --ev-con-ink:#1b1c1a;
   --lg-proved:#199e70; --lg-problem:#d95926; --lg-derived:#9085e9; --lg-partly:#3987e5; --lg-narrowed:#1c5cab; --lg-answered:#86b6ef;
   --g-proved:#ecebe5; --g-multi:#9ec5f4; --g-single:#3987e5; --g-prelim:#1c5cab;
+  --area0:#3987e5; --area1:#199e70; --area2:#c98500;
   --shadow:0 1px 2px rgba(0,0,0,.3),0 12px 32px rgba(0,0,0,.35); color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#131412; --surface:#1b1c1a; --sunk:#222320; --ink:#ecebe5; --ink2:#b3b2aa; --muted:#878780;
@@ -41,6 +43,7 @@ if (location.search) location.replace("explore.html" + location.search + locatio
   --ev-weak:#1c5cab; --ev-weak-ink:#ffffff; --ev-sup:#86b6ef; --ev-sup-ink:#0b1a2e; --ev-con:#d95926; --ev-con-ink:#1b1c1a;
   --lg-proved:#199e70; --lg-problem:#d95926; --lg-derived:#9085e9; --lg-partly:#3987e5; --lg-narrowed:#1c5cab; --lg-answered:#86b6ef;
   --g-proved:#ecebe5; --g-multi:#9ec5f4; --g-single:#3987e5; --g-prelim:#1c5cab;
+  --area0:#3987e5; --area1:#199e70; --area2:#c98500;
   --shadow:0 1px 2px rgba(0,0,0,.3),0 12px 32px rgba(0,0,0,.35); color-scheme:dark}
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
@@ -76,7 +79,7 @@ kbd{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:11px;border:1p
   .nav a{padding:5px 9px;font-size:13.5px}
 }
 
-main{padding-block:28px 64px}
+main{padding-block:28px calc(64px + env(safe-area-inset-bottom,0px))}
 section{margin-top:44px}
 .sechead{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px}
 .sechead h2{font-size:20px;font-weight:650;letter-spacing:-.01em}
@@ -128,7 +131,6 @@ section{margin-top:44px}
 .btn{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line2);background:var(--surface);border-radius:10px;padding:6px 11px;font-size:13px;cursor:pointer;text-decoration:none;color:var(--ink);white-space:nowrap}
 .btn:hover{border-color:var(--ink2)}
 .btn.dark{background:var(--ink);color:var(--bg);border-color:var(--ink)}
-.foot{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted);display:flex;flex-wrap:wrap;gap:8px 20px}
 
 /* papers */
 .toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;margin-bottom:14px}
@@ -564,7 +566,7 @@ p.clamp{margin:0}
 .hit .hm{font-size:12px;color:var(--muted)}
 mark{background:var(--mark);color:inherit;border-radius:3px;padding:0 1px}
 
-/* tooltip, toast, footer */
+/* tooltip, toast */
 .tip{position:fixed;z-index:50;pointer-events:none;max-width:300px;background:var(--ink);color:var(--bg);font-size:12.5px;line-height:1.35;border-radius:10px;padding:7px 10px;white-space:pre-line;box-shadow:var(--shadow)}
 .tip[hidden]{display:none}
 .toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:60;background:var(--ink);color:var(--bg);border-radius:999px;padding:8px 16px;font-size:13.5px}
@@ -572,9 +574,6 @@ mark{background:var(--mark);color:inherit;border-radius:3px;padding:0 1px}
 .copybox div{background:var(--surface);border-radius:16px;padding:16px;width:min(640px,100%);display:flex;flex-direction:column;gap:10px}
 .copybox textarea{width:100%;height:260px;font-family:"JetBrains Mono",monospace;font-size:12px;border:1px solid var(--line2);border-radius:10px;padding:10px;background:var(--sunk);color:var(--ink)}
 .empty{padding:40px 0;color:var(--muted)}
-.gfoot{border-top:1px solid var(--line);padding-top:16px;padding-bottom:calc(28px + env(safe-area-inset-bottom,0px));font-size:12.5px;color:var(--muted);display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline}
-.xlink{color:var(--ink2);text-underline-offset:3px;white-space:nowrap}
-.sfoot{display:flex;flex-wrap:wrap;gap:4px 8px;padding:9px 18px 11px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted)}
 
 /* ---------- pictures: argument tree, timelines, evidence plot, local graph, previews ---------- */
 .nav{overflow-x:auto;scrollbar-width:none;min-width:0}
@@ -951,6 +950,52 @@ a.fdot2:hover,a.fdot2:focus-visible{box-shadow:0 0 0 2px var(--surface),0 0 0 3.
 .spf .mlab{margin:0 4px 0 0}
 .fgrow > *{grid-row:1}
 .pg.hl .pb:not(.on){opacity:.25}
+
+/* ---------- record graph: every record in the atlas ---------- */
+.rgtools{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center;margin:18px 0 12px}
+.rgfind{position:relative;display:flex;align-items:center;gap:8px;border:1px solid var(--line2);background:var(--surface);border-radius:999px;padding:6px 12px;min-width:0;flex:0 1 340px;color:var(--muted)}
+.rgfind:focus-within{border-color:var(--ink2)}
+.rgfind input{border:0;outline:0;background:transparent;font:inherit;font-size:14px;color:var(--ink);min-width:0;width:100%}
+.rgfind span{font-size:12px;white-space:nowrap}
+.rgres{position:absolute;z-index:6;left:0;right:0;top:calc(100% + 6px);background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);padding:6px;display:grid;gap:1px}
+.rgres[hidden]{display:none}
+.rgres a{display:block;text-decoration:none;font-size:13.5px;color:var(--ink);padding:6px 9px;border-radius:8px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rgres a:hover,.rgres a:focus{background:var(--sunk);outline:0}
+.rgleg .chip i,.rglist i,.rgdot{flex:none;width:9px;height:9px;border-radius:50%;background:var(--c);display:inline-block}
+.rgleg .chip.on{background:var(--sunk);color:var(--ink);border-color:var(--ink2)}
+.rgbox{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:18px;overflow:hidden;height:min(74vh,780px);touch-action:pan-y}
+.rgbox.zoomed{touch-action:none}
+.rgbox svg{display:block;width:100%;height:100%;user-select:none;-webkit-user-select:none}
+.rgbox.drag svg{cursor:grabbing}
+.rgh{fill:var(--sunk);cursor:zoom-in}
+.rgd{cursor:pointer;transition:opacity .15s}
+.rgd.a0{fill:var(--area0)} .rgd.a1{fill:var(--area1)} .rgd.a2{fill:var(--area2)}
+.rgsvg.dim .rgd:not(.hit){opacity:.12}
+.rgd.sel{stroke:var(--ink);stroke-width:2.4px;vector-effect:non-scaling-stroke}
+.rgl line{stroke:var(--ink);stroke-opacity:.38;stroke-width:1px;vector-effect:non-scaling-stroke}
+.rgl circle{fill:none;stroke:var(--ink);stroke-width:1.4px;vector-effect:non-scaling-stroke}
+.rglab text{fill:var(--ink);font-weight:600;paint-order:stroke;stroke:var(--surface);stroke-linejoin:round;cursor:zoom-in}
+.rglab tspan{fill:var(--muted);font-weight:500}
+.rgzoom{position:absolute;right:10px;bottom:10px;display:flex;flex-direction:column;gap:6px}
+.rgzoom button{width:34px;height:34px;border-radius:10px;border:1px solid var(--line2);background:var(--surface);cursor:pointer;font-size:17px;line-height:1;display:flex;align-items:center;justify-content:center;color:var(--ink)}
+.rgzoom button:hover{border-color:var(--ink2)}
+.rgnote{font-size:13px;color:var(--muted);max-width:78ch;margin:12px 0 0}
+.rglist{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:2px 14px}
+.rglist button{display:flex;align-items:center;gap:9px;text-align:left;border:0;background:transparent;padding:6px 7px;border-radius:8px;cursor:pointer;font-size:13.5px;color:var(--ink2);min-width:0}
+.rglist button:hover{background:var(--sunk);color:var(--ink)}
+.rglist span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1}
+.rglist b{font-family:"JetBrains Mono",ui-monospace,monospace;font-weight:500;font-size:12px;color:var(--muted)}
+.rgtext{font-family:"Source Serif 4",Georgia,serif;font-size:16px;line-height:1.55;margin:14px 0 0}
+.rgstate{font-size:13px;color:var(--ink2);margin-top:12px}
+.rgstate b{font-family:"JetBrains Mono",ui-monospace,monospace;font-weight:500;font-size:11.5px;background:var(--sunk);border-radius:6px;padding:2px 6px;margin-right:6px}
+.rglinks{display:grid;gap:1px}
+.rglinks a{display:block;text-decoration:none;font-size:13.5px;padding:5px 7px;border-radius:8px;color:var(--ink)}
+.rglinks a:hover{background:var(--sunk)}
+.rglinks .rel{display:block;font-size:11.5px;color:var(--muted)}
+.rglinks .lk{justify-self:start;margin-top:6px}
+.lk{border:0;background:transparent;padding:0;color:var(--ink2);text-decoration:underline;text-underline-offset:3px;cursor:pointer;font-size:13px}
+.sheet .actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+@media (max-width:720px){.rgbox{height:62vh}}
 </style>
 </head>
 <body>
@@ -958,11 +1003,10 @@ a.fdot2:hover,a.fdot2:focus-visible{box-shadow:0 0 0 2px var(--surface),0 0 0 3.
   <a class="brand" href="#gaps" aria-label="Safety Research Atlas, open questions">
     <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><path d="M6 19 L12 7 L20 15" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M6 19 Q14 23 20 15" fill="none" stroke="currentColor" stroke-width="1.6" stroke-dasharray="2 2.4"/><circle cx="6" cy="19" r="3.2" fill="currentColor"/><circle cx="12" cy="7" r="3.2" fill="var(--bg)" stroke="currentColor" stroke-width="1.6"/><circle cx="20" cy="15" r="3.2" fill="currentColor"/></svg>
     <span>Safety Research Atlas</span></a>
-  <nav class="nav" aria-label="Views"><a href="overview.html">Overview</a><a href="#gaps" data-v="gaps">Gaps</a><a href="#discoveries" data-v="ledger">Discoveries</a><a href="#results" data-v="results">Results</a><a href="#map" data-v="map">Map</a><a href="#papers" data-v="papers">Papers</a><a href="#assumptions" data-v="assumptions" hidden>Assumptions</a><a href="#proofs" data-v="proofs" hidden>Proofs</a></nav>
+  <nav class="nav" aria-label="Views"><a href="overview.html">Overview</a><a href="#gaps" data-v="gaps">Gaps</a><a href="#discoveries" data-v="ledger">Discoveries</a><a href="#results" data-v="results">Results</a><a href="#map" data-v="map">Map</a><a href="#papers" data-v="papers">Papers</a><a href="#graph" data-v="graph">Graph</a><a href="#assumptions" data-v="assumptions" hidden>Assumptions</a><a href="#proofs" data-v="proofs" hidden>Proofs</a></nav>
   <button class="sbtn" id="openSearch" type="button" aria-label="Search the atlas"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M11 11l3.5 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Search</span><kbd>/</kbd></button>
 </div></header>
 <main class="wrap" id="app"><div class="empty">Loading the atlas…</div></main>
-<footer class="wrap gfoot" id="gfoot"><a class="xlink" data-xlink href="explore.html">All records</a></footer>
 <aside class="sheet" id="sheet" hidden aria-live="polite"></aside>
 <div class="sover" id="search" hidden>
   <div class="spanel" role="dialog" aria-label="Search">
@@ -970,7 +1014,6 @@ a.fdot2:hover,a.fdot2:focus-visible{box-shadow:0 0 0 2px var(--surface),0 0 0 3.
       <input id="q" type="search" placeholder="Search findings, papers and open questions" autocomplete="off" spellcheck="false"><kbd>esc</kbd></div>
     <div class="skinds" id="skinds"></div>
     <div class="sres" id="sres"></div>
-    <div class="sfoot"><a class="xlink" data-xlink href="explore.html">All records</a><span>in the record explorer</span></div>
   </div>
 </div>
 <div class="tip" id="tip" hidden></div>
@@ -1076,14 +1119,8 @@ async function boot() {
   L.forEach((l, j) => { l.i = j; l.f = FAM[l.r] || "related"; ADJ[l.s].push(j); ADJ[l.t].push(j); l.ps = R[l.s].p; l.pt = R[l.t].p; });
   GQ.forEach(q => { q.lane = q.origin != null && R[q.origin] ? P[R[q.origin].p].lane : null; });
   bootDeps();
-  renderFooter();
   window.addEventListener("hashchange", route);
   route();
-}
-function renderFooter() {
-  $("#gfoot").innerHTML = `<a class="xlink" data-xlink href="explore.html"></a>`;
-  const n = D.snapshot && D.snapshot.records;
-  document.querySelectorAll("[data-xlink]").forEach(a => { a.textContent = n ? `All ${fmt(n)} records` : "All records"; });
 }
 
 /* ---------- routing ---------- */
@@ -1102,6 +1139,7 @@ function route() {
   else if ((m = h.match(/^d([1-9])$/))) view = ["papers", "papers", +m[1] - 1];
   else if ((m = h.match(/^p(\d+)$/)) && P[+m[1]]) view = ["papers", null, null, "p", +m[1]];
   else if ((m = h.match(/^x(\d+)-(\d+)$/)) && P[+m[1]] && P[+m[2]]) view = ["papers", null, null, "x", +m[1], +m[2]];
+  else if ((m = h.match(/^graph(?:\/(.+))?$/))) view = ["graph", m[1] || null];
   else if ((m = h.match(/^r(\d+)$/)) && R[+m[1]]) view = ["record", +m[1]];
   else if ((m = h.match(/^k-([a-z]+)$/)) && KMAP[m[1]]) view = ["kind", m[1]];
   else if ((m = h.match(/^assumptions(?:=(.*))?$/)) && DP) view = ["assumptions", m[1] ? m[1].toUpperCase() : null];
@@ -1120,6 +1158,7 @@ function route() {
   }
   else if (view[0] === "ledger") renderLedger();
   else if (view[0] === "results") renderResults();
+  else if (view[0] === "graph") renderGraph(view[1]);
   else if (view[0] === "record") renderRecord(view[1]);
   else if (view[0] === "kind") renderKind(view[1]);
   else if (view[0] === "assumptions") renderAssumptions(view[1]);
@@ -1127,7 +1166,7 @@ function route() {
   const navOn = $(".nav a.on"), nav = $(".nav");
   if (!navOn && nav) nav.scrollLeft = 0;
   if (navOn && nav && nav.scrollWidth > nav.clientWidth) { const a = navOn.getBoundingClientRect(), b = nav.getBoundingClientRect(); if (a.left < b.left || a.right > b.right) nav.scrollLeft += a.left - b.left - (b.width - a.width) / 2; }
-  const key = ["papers", "gaps", "assumptions", "proofs"].includes(view[0]) ? view[0] : h;
+  const key = ["papers", "gaps", "assumptions", "proofs", "graph"].includes(view[0]) ? view[0] : h;
   if (key !== lastView) { window.scrollTo(0, 0); lastView = key; }
   if (h === "agents") $("#agents")?.scrollIntoView({block:"start"});
 }
@@ -1873,11 +1912,11 @@ function renderMap() {
       </div>
       <div style="display:flex;flex-direction:column;gap:10px;min-width:0">
         <div class="codeline"><code>${esc(LIVE)}llms.txt</code><button class="btn" data-copy="${esc(LIVE)}llms.txt" type="button">Copy</button></div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap"><a class="btn" href="${esc(LIVE)}llms.txt" target="_blank" rel="noopener">Open llms.txt ↗</a><a class="btn" href="explore.html">Record explorer</a></div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap"><a class="btn" href="${esc(LIVE)}llms.txt" target="_blank" rel="noopener">Open llms.txt ↗</a><a class="btn" href="#graph">Every record</a></div>
       </div>
     </div>
   </section>
-  ${D.snapshot ? `<div class="foot"><span>Whole atlas: ${fmt(D.snapshot.records)} records · ${fmt(D.snapshot.links)} links · ${fmt(D.snapshot.sources)} sources</span><span>Quotes are copied exactly from the papers' PDFs.</span></div>` : ""}`;
+`;
   document.querySelectorAll(".ltile .pd").forEach(d => d.addEventListener("click", e => { e.preventDefault(); location.hash = "p" + d.dataset.paper; }));
   $("#bigs").onclick = () => openSearch("");
   document.querySelectorAll("[data-try]").forEach(b => b.onclick = () => openSearch(b.dataset.try));
@@ -2208,6 +2247,276 @@ function renderKind(k) {
     <div class="sechead" style="margin-top:10px"><h2 style="display:flex;align-items:center;gap:10px">${kicon(k, 16)} ${list.length} ${esc(K[2].toLowerCase())} from ${nP} papers</h2>
       <div class="legend">${KINDS.filter(x => x[0] !== "concept").map(x => `<a class="chip ${x[0] === k ? "on" : ""}" href="#k-${x[0]}">${kicon(x[0])}${esc(x[2])}</a>`).join("")}</div></div>
     ${lanes.map(([li, rs]) => `<div class="kgroup"><h3>${esc(LANE_SHORT[li])}</h3><div class="cards">${rs.map(r => `<a class="card" href="#r${r.i}"><div class="cp">${esc(P[r.p].short)} · p. ${r.pg}</div><div class="ct">${esc(r.t)}</div><div class="cq">“${esc(String(r.q || "").replace(/-\n/g, "").replace(/\n/g, " "))}”</div>${r.set ? `<div class="cs">${esc(r.set)}</div>` : ""}</a>`).join("")}</div></div>`).join("")}`;
+}
+
+/* ---------- record graph: every record in the atlas ---------- */
+const AREA_VAR = ["var(--area0)", "var(--area1)", "var(--area2)"];
+const RELN = {kernel_proof_depends_on:"proof uses", kernel_type_depends_on:"type uses", kernel_value_depends_on:"definition uses", kernel_constructor_depends_on:"constructor uses",
+  candidate_mapping:"linked to", metamath_proof_ref:"proof cites", source_contains:"source contains", application_requires:"application requires", curated_context:"context for",
+  formal_statement_requires:"statement requires", formal_proof_uses:"proof uses", formal_definition_uses:"definition uses", investigation_targets:"investigates"};
+// GT: the layout is drawn transposed (x and y swapped) when the box is taller than wide, so a phone screen holds it.
+let GR = null, GRI = null, GADJ = null, GVB = null, GT = false, GSEL = -1, GHITS = null, GAREA = -1, gAnim = 0, gResize = false;
+function loadGraph() {
+  if (!loadGraph.p) loadGraph.p = fetch("graph.json?v=590ee8675439").then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }).then(g => {
+    const N = g.nodes;
+    GRI = {}; N.id.forEach((id, i) => { GRI[id.toLowerCase()] = i; });
+    GADJ = N.id.map(() => []);
+    for (let j = 0; j < g.links.length; j += 3) {
+      const s = g.links[j], t = g.links[j + 1], r = g.links[j + 2];
+      GADJ[s].push([t, r, 1]); if (t !== s) GADJ[t].push([s, r, 0]);
+    }
+    GR = g; return g;
+  });
+  return loadGraph.p;
+}
+const relLabel = r => RELN[GR.relations[r]] || GR.relations[r].replace(/_/g, " ");
+const kindLabel = k => { const t = (k || "record").replace(/_/g, " "); return t[0].toUpperCase() + t.slice(1); };
+const graphHref = i => "#graph/" + encodeURIComponent(GR.nodes.id[i]);
+const gx = i => GT ? GR.nodes.y[i] : GR.nodes.x[i], gy = i => GT ? GR.nodes.x[i] : GR.nodes.y[i];
+const gcx = G => GT ? G.y : G.x, gcy = G => GT ? G.x : G.y;
+const gW = () => GT ? GR.height : GR.width, gH = () => GT ? GR.width : GR.height;
+function renderGraph(sel) {
+  if (!GR) {
+    $("#app").innerHTML = `<div class="empty">Loading every record…</div>`;
+    loadGraph().then(() => { if (/^#graph\b/i.test(location.hash)) route(); })
+      .catch(() => { loadGraph.p = null; $("#app").innerHTML = `<div class="empty">The record graph could not be loaded.</div>`; });
+    return;
+  }
+  if (!$("#rgsvg")) drawGraph();
+  selectRecord(sel != null && GRI[sel] != null ? GRI[sel] : -1);
+}
+function drawGraph() {
+  const g = GR, n = g.nodes.id.length;
+  $("#app").innerHTML = `
+  <div class="ghead"><div class="eyebrow">Whole atlas</div><h1 class="gtitle">Every record, grouped by what it links to</h1>
+    <p class="lede">${fmt(n)} records in ${g.groups.length} groups. Records that link to each other or quote the same source sit together. Click a dot to read it and see its links.</p></div>
+  <div class="rgtools">
+    <label class="rgfind"><svg width="15" height="15" viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M11 11l3.5 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      <input id="rgq" type="search" placeholder="Find a record" autocomplete="off" spellcheck="false" aria-label="Find a record"><span id="rgqn"></span><div class="rgres" id="rgres" hidden></div></label>
+    <div class="legend rgleg">${g.areas.map((a, k) => `<button class="chip" type="button" data-area="${k}" aria-pressed="false" style="--c:${AREA_VAR[k]}"><i></i>${esc(a.name)} <span class="muted mono">${fmt(a.n)}</span></button>`).join("")}</div>
+  </div>
+  <div class="rgbox" id="rgbox">
+    <svg id="rgsvg" class="rgsvg" role="img" aria-label="${fmt(n)} records drawn as dots in ${g.groups.length} groups; the list below names every group"></svg>
+    <div class="rgzoom"><button type="button" data-z="in" aria-label="Zoom in">+</button><button type="button" data-z="out" aria-label="Zoom out">−</button><button type="button" data-z="fit" aria-label="Show every group">⤢</button></div>
+  </div>
+  <p class="rgnote">Groups come from community detection (Louvain) over the ${fmt(g.links.length / 3)} recorded links, with a weaker tie between records that quote the same source. A group is not a field, and two dots side by side are not a claimed link.</p>
+  <section><div class="sechead"><h2>The ${g.groups.length} groups</h2><span class="muted" style="font-size:13px">largest first</span></div>
+    <div class="rglist">${g.groups.map((G, k) => `<button type="button" data-g="${k}" style="--c:${AREA_VAR[G.area]}"><i></i><span>${esc(G.name)}</span><b>${G.n}</b></button>`).join("")}</div></section>`;
+  GHITS = null; GAREA = -1; GSEL = -1;
+  fillGraph();
+  wireGraph();
+}
+function fillGraph() {
+  const g = GR, N = g.nodes, [bw, bh] = boxSize();
+  GT = bh > bw * 1.15;
+  const halos = g.groups.map((G, k) => `<circle class="rgh" cx="${gcx(G)}" cy="${gcy(G)}" r="${G.r + 6}" data-g="${k}" data-tip="${esc(G.name)}\n${G.n} record${G.n > 1 ? "s" : ""}"/>`).join("");
+  const dots = N.id.map((_, i) => `<circle class="rgd a${N.area[i]}" cx="${gx(i)}" cy="${gy(i)}" r="${g.dot}" data-i="${i}"/>`).join("");
+  const labs = g.groups.map((G, k) => G.n >= 12 ? `<text x="${gcx(G)}" data-x="${gcx(G)}" y="${(gcy(G) - G.r - 10).toFixed(1)}" text-anchor="middle" data-g="${k}">${esc(G.name)} <tspan>${G.n}</tspan></text>` : "").join("");
+  $("#rgsvg").innerHTML = `<g class="rghalo">${halos}</g><g class="rgl" id="rgl"></g><g class="rgdots">${dots}</g><g class="rglab" id="rglab">${labs}</g>`;
+  setVB(fitVB(0, 0, gW(), gH()));
+  applyDim();
+  if (GSEL >= 0) { $(`#rgsvg .rgd[data-i="${GSEL}"]`)?.classList.add("sel"); showLinks(GSEL); }
+}
+function boxSize() { const b = $("#rgbox"); return [b.clientWidth || 1, b.clientHeight || 1]; }
+function sheetCover() {
+  const sh = $("#sheet"), b = $("#rgbox");
+  if (!sh || sh.hidden || !b || innerWidth <= 720) return 0;
+  return Math.max(0, Math.min(b.clientWidth * .6, b.getBoundingClientRect().right - sh.getBoundingClientRect().left));
+}
+// The view box that shows the region, centred in the part of the box the record sheet leaves visible.
+function fitVB(x, y, w, h, cover = 0) {
+  const [bw, bh] = boxSize(), vw = bw - cover, k = Math.max(w / vw, h / bh);
+  return {x: x + w / 2 - vw / 2 * k, y: y + h / 2 - bh / 2 * k, w: bw * k, h: bh * k};
+}
+const fullVB = () => fitVB(0, 0, gW(), gH());
+const isFull = () => GVB.w >= fullVB().w - 1e-6;
+function setVB(vb) {
+  const full = fullVB();
+  const w = Math.min(full.w, Math.max(full.w / 14, vb.w)), h = w * full.h / full.w;
+  const cx = Math.min(gW() + w * .3, Math.max(-w * .3, vb.x + vb.w / 2)), cy = Math.min(gH(), Math.max(0, vb.y + vb.h / 2));
+  GVB = w >= full.w - 1e-6 ? full : {x: cx - w / 2, y: cy - h / 2, w, h};
+  const svg = $("#rgsvg"); if (!svg) return;
+  svg.setAttribute("viewBox", `${GVB.x.toFixed(1)} ${GVB.y.toFixed(1)} ${GVB.w.toFixed(1)} ${GVB.h.toFixed(1)}`);
+  const upp = GVB.w / boxSize()[0], lab = $("#rglab");
+  lab.style.fontSize = (12.5 * upp).toFixed(2) + "px"; lab.style.strokeWidth = (4 * upp).toFixed(2) + "px";
+  // A label whose group is in view slides inside the box edge; larger groups keep their label when two would overlap.
+  const placed = [], pad = 3 * upp, lo = GVB.x + 6 * upp, hi = GVB.x + GVB.w - 6 * upp;
+  lab.querySelectorAll("text").forEach(t => {
+    t.style.display = "";
+    const x0 = +t.dataset.x;
+    t.setAttribute("x", x0);
+    let b = t.getBBox();
+    if (x0 > GVB.x && x0 < GVB.x + GVB.w) {
+      const dx = b.x < lo || b.width > hi - lo ? lo - b.x : b.x + b.width > hi ? hi - b.x - b.width : 0;
+      if (dx) { t.setAttribute("x", (x0 + dx).toFixed(1)); b = {x: b.x + dx, y: b.y, width: b.width, height: b.height}; }
+    }
+    if (placed.some(o => b.x - pad < o.x + o.width && o.x - pad < b.x + b.width && b.y - pad < o.y + o.height && o.y - pad < b.y + b.height)) t.style.display = "none";
+    else placed.push(b);
+  });
+  $("#rgbox").classList.toggle("zoomed", !isFull());
+}
+function animateVB(to) {
+  const from = {...GVB}, t0 = performance.now(), id = ++gAnim;
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) { setVB(to); return; }
+  const step = now => {
+    if (id !== gAnim) return;
+    const t = Math.min(1, (now - t0) / 380), e = t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+    setVB({x: from.x + (to.x - from.x) * e, y: from.y + (to.y - from.y) * e, w: from.w + (to.w - from.w) * e, h: from.h + (to.h - from.h) * e});
+    if (t < 1) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+}
+function zoomBy(f, px, py) { const vb = GVB; setVB({x: px - (px - vb.x) * f, y: py - (py - vb.y) * f, w: vb.w * f, h: vb.h * f}); }
+function svgPoint(cx, cy) { const r = $("#rgsvg").getBoundingClientRect(); return [GVB.x + (cx - r.left) / r.width * GVB.w, GVB.y + (cy - r.top) / r.height * GVB.h]; }
+function zoomGroup(k) {
+  const G = GR.groups[k], pad = Math.max(G.r * .3, 30);
+  animateVB(fitVB(gcx(G) - G.r - pad, gcy(G) - G.r - pad - 16, 2 * (G.r + pad), 2 * (G.r + pad) + 16, sheetCover()));
+}
+function showLinks(i) {
+  const l = $("#rgl"); if (!l) return;
+  if (i < 0) { l.innerHTML = ""; return; }
+  const x = gx(i), y = gy(i), r = GR.dot + 2.2;
+  l.innerHTML = GADJ[i].map(([o]) => `<line x1="${x}" y1="${y}" x2="${gx(o)}" y2="${gy(o)}"/>`).join("") + GADJ[i].map(([o]) => `<circle cx="${gx(o)}" cy="${gy(o)}" r="${r}"/>`).join("");
+}
+function applyDim() {
+  const svg = $("#rgsvg"); if (!svg) return;
+  const N = GR.nodes, on = GHITS || GAREA >= 0;
+  svg.classList.toggle("dim", !!on);
+  svg.querySelectorAll(".rgd").forEach(d => { const i = +d.dataset.i; d.classList.toggle("hit", !!on && (!GHITS || GHITS.has(i)) && (GAREA < 0 || N.area[i] === GAREA)); });
+}
+function findRecords(q) {
+  const N = GR.nodes, terms = q.toLowerCase().split(/\s+/).filter(Boolean);
+  if (!terms.length) return null;
+  const hits = [];
+  N.id.forEach((id, i) => { const t = (N.title[i] + " " + id).toLowerCase(); if (terms.every(w => t.includes(w))) hits.push(i); });
+  return hits;
+}
+function wireGraph() {
+  const svg = $("#rgsvg"), box = $("#rgbox"), N = GR.nodes;
+  svg.addEventListener("mouseover", e => {
+    const d = e.target.closest(".rgd");
+    if (d) { const i = +d.dataset.i; if (!d.dataset.tip) d.dataset.tip = `${N.title[i]}\n${GR.groups[N.group[i]].name}`; showLinks(i); }
+    else showLinks(GSEL);
+  }, true);
+  svg.addEventListener("mouseleave", () => showLinks(GSEL));
+  let drag = null, moved = false;
+  const ptrs = new Map();
+  svg.addEventListener("pointerdown", e => {
+    ptrs.set(e.pointerId, [e.clientX, e.clientY]); moved = false;
+    if (ptrs.size === 1 && !isFull()) drag = {x: e.clientX, y: e.clientY, vb: {...GVB}};
+    if (ptrs.size === 2) drag = null;
+  });
+  svg.addEventListener("pointermove", e => {
+    if (!ptrs.has(e.pointerId)) return;
+    const prev = ptrs.get(e.pointerId); ptrs.set(e.pointerId, [e.clientX, e.clientY]);
+    if (ptrs.size === 2) {
+      const ids = [...ptrs.keys()], [a, b] = [...ptrs.values()];
+      const pa = e.pointerId === ids[0] ? prev : a, pb = e.pointerId === ids[1] ? prev : b;
+      const d0 = Math.hypot(pa[0] - pb[0], pa[1] - pb[1]), d1 = Math.hypot(a[0] - b[0], a[1] - b[1]);
+      if (d0 > 0 && d1 > 0) { const [px, py] = svgPoint((a[0] + b[0]) / 2, (a[1] + b[1]) / 2); gAnim++; zoomBy(d0 / d1, px, py); moved = true; }
+      return;
+    }
+    if (!drag) return;
+    const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+    if (!moved && Math.hypot(dx, dy) < 4) return;
+    moved = true; box.classList.add("drag"); gAnim++;
+    const k = GVB.w / svg.getBoundingClientRect().width;
+    setVB({x: drag.vb.x - dx * k, y: drag.vb.y - dy * k, w: drag.vb.w, h: drag.vb.h});
+  });
+  const end = e => { ptrs.delete(e.pointerId); if (!ptrs.size) { drag = null; box.classList.remove("drag"); } };
+  svg.addEventListener("pointerup", end); svg.addEventListener("pointercancel", end);
+  svg.addEventListener("wheel", e => {
+    if (!e.ctrlKey && !e.metaKey) return;
+    e.preventDefault(); gAnim++;
+    const [px, py] = svgPoint(e.clientX, e.clientY); zoomBy(Math.exp(e.deltaY * 0.004), px, py);
+  }, {passive: false});
+  svg.addEventListener("click", e => {
+    if (moved) { moved = false; return; }
+    const d = e.target.closest(".rgd");
+    if (d) { location.hash = graphHref(+d.dataset.i); return; }
+    const g = e.target.closest("[data-g]"); if (g) zoomGroup(+g.dataset.g);
+  });
+  box.querySelector(".rgzoom").addEventListener("click", e => {
+    const b = e.target.closest("[data-z]"); if (!b) return;
+    const z = b.dataset.z, cx = GVB.x + GVB.w / 2, cy = GVB.y + GVB.h / 2;
+    if (z === "fit") animateVB(fullVB());
+    else { const f = z === "in" ? 0.6 : 1 / 0.6; animateVB({x: cx - GVB.w * f / 2, y: cy - GVB.h * f / 2, w: GVB.w * f, h: GVB.h * f}); }
+  });
+  $(".rglist").addEventListener("click", e => { const b = e.target.closest("[data-g]"); if (!b) return; box.scrollIntoView({block: "nearest", behavior: "smooth"}); zoomGroup(+b.dataset.g); });
+  $(".rgleg").addEventListener("click", e => {
+    const b = e.target.closest("[data-area]"); if (!b) return;
+    const k = +b.dataset.area; GAREA = GAREA === k ? -1 : k;
+    document.querySelectorAll(".rgleg [data-area]").forEach(c => { const on = +c.dataset.area === GAREA; c.classList.toggle("on", on); c.setAttribute("aria-pressed", on); });
+    applyDim();
+  });
+  const q = $("#rgq"), res = $("#rgres"); let tq = 0;
+  const runFind = () => {
+    const hits = findRecords(q.value);
+    GHITS = hits ? new Set(hits) : null; applyDim();
+    $("#rgqn").textContent = hits ? `${fmt(hits.length)} found` : "";
+    res.hidden = !hits || !hits.length;
+    res.innerHTML = hits ? hits.slice(0, 8).map(i => `<a href="${esc(graphHref(i))}"><span class="rgdot" style="--c:${AREA_VAR[N.area[i]]};margin-right:8px"></span>${esc(N.title[i])}</a>`).join("") : "";
+  };
+  q.addEventListener("input", () => { clearTimeout(tq); tq = setTimeout(runFind, 120); });
+  q.addEventListener("keydown", e => {
+    if (e.key === "Enter") { e.preventDefault(); clearTimeout(tq); runFind(); const a = res.querySelector("a"); res.hidden = true; if (a) location.hash = a.getAttribute("href"); }
+    if (e.key === "Escape") { q.value = ""; runFind(); }
+    if (e.key === "ArrowDown") { const a = res.querySelector("a"); if (a && !res.hidden) { e.preventDefault(); a.focus(); } }
+  });
+  q.addEventListener("focus", () => { if (res.innerHTML) res.hidden = false; });
+  res.addEventListener("click", () => { res.hidden = true; });
+  res.addEventListener("keydown", e => {
+    const a = e.target.closest("a"); if (!a) return;
+    if (e.key === "ArrowDown" && a.nextElementSibling) { e.preventDefault(); a.nextElementSibling.focus(); }
+    if (e.key === "ArrowUp") { e.preventDefault(); (a.previousElementSibling || q).focus(); }
+  });
+  if (!gResize) {
+    gResize = true;
+    document.addEventListener("click", e => { const r = $("#rgres"); if (r && !e.target.closest(".rgfind")) r.hidden = true; });
+    let tr = 0;
+    window.addEventListener("resize", () => { clearTimeout(tr); tr = setTimeout(() => {
+      if (!$("#rgsvg")) return;
+      const [bw, bh] = boxSize();
+      if ((bh > bw * 1.15) !== GT) fillGraph(); else setVB(isFull() ? fullVB() : GVB);
+    }, 150); });
+  }
+}
+function selectRecord(i) {
+  const svg = $("#rgsvg"); if (!svg) return;
+  svg.querySelector(".rgd.sel")?.classList.remove("sel");
+  GSEL = i; showLinks(i);
+  if (i < 0) { closeSheet(); return; }
+  svg.querySelector(`.rgd[data-i="${i}"]`)?.classList.add("sel");
+  openRecordSheet(i);
+  const [bw] = boxSize(), vw = bw - sheetCover(), k = GVB.w / bw, x = gx(i), y = gy(i);
+  const inView = x > GVB.x + .05 * vw * k && x < GVB.x + .95 * vw * k && y > GVB.y + GVB.h * .05 && y < GVB.y + GVB.h * .95;
+  if (isFull()) zoomGroup(GR.nodes.group[i]);
+  else if (!inView) animateVB({x: x - vw / 2 * k, y: y - GVB.h / 2, w: GVB.w, h: GVB.h});
+}
+function linkList(i, dir, title) {
+  const N = GR.nodes, list = GADJ[i].filter(x => x[2] === dir);
+  if (!list.length) return "";
+  return `<h4>${title} <span class="muted mono" style="font-weight:500">${list.length}</span></h4><div class="rglinks">${list.map(([o, r], k) => `<a href="${esc(graphHref(o))}"${k >= 30 ? " hidden" : ""}><span class="rel">${esc(relLabel(r))}</span>${esc(N.title[o])}</a>`).join("")}${list.length > 30 ? `<button class="lk" type="button" data-more>Show all ${list.length}</button>` : ""}</div>`;
+}
+async function openRecordSheet(i) {
+  const N = GR.nodes, k = N.group[i], G = GR.groups[k];
+  openSheet(`<div class="kchip"><span class="rgdot" style="--c:${AREA_VAR[N.area[i]]}"></span>${esc(kindLabel(N.kind[i]))}</div>
+    <h2>${esc(N.title[i])}</h2>
+    <div class="meta"><span>${esc(GR.areas[N.area[i]].name)}</span><button class="lk" type="button" data-zg="${k}">${esc(G.name)}</button></div>
+    <div id="rgcard"><p class="muted" style="margin-top:14px">Loading the record…</p></div>
+    ${linkList(i, 1, "Links from this record")}${linkList(i, 0, "Links to this record")}
+    <div class="actions">${N.finding[i] >= 0 ? `<a class="btn dark" href="#r${N.finding[i]}">Open the finding and its quote</a>` : ""}<a class="btn" href="${esc(N.card[i])}" target="_blank" rel="noopener">JSON card ↗</a><button class="btn" type="button" data-copy="${esc(LIVE + graphHref(i))}">Copy link</button></div>`, "graph");
+  const sh = $("#sheet");
+  sh.querySelectorAll("[data-more]").forEach(b => b.onclick = () => { b.parentElement.querySelectorAll("a[hidden]").forEach(a => { a.hidden = false; }); b.remove(); });
+  sh.querySelector("[data-zg]").onclick = () => zoomGroup(k);
+  let c = null;
+  try { const r = await fetch(N.card[i]); if (r.ok) c = await r.json(); } catch (e) { c = null; }
+  const slot = $("#rgcard"); if (GSEL !== i || !slot) return;
+  if (!c) { slot.innerHTML = `<p class="muted" style="margin-top:14px">This record's card could not be loaded.</p>`; return; }
+  const src = (c.sources || []).map(s => `<li>${/^https:\/\//.test(s.url || "") ? `<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.title || s.source_id)}</a>` : esc(s.title || s.source_id)}${s.locator ? ` <span class="muted">· ${esc(s.locator)}</span>` : ""}</li>`).join("");
+  slot.innerHTML = `${c.text ? `<p class="rgtext">${esc(c.text)}</p>` : ""}
+    <div class="rgstate"><b>${esc(c.state || "")}</b>${esc(c.state_meaning || "")}</div>
+    ${src ? `<h4>Source</h4><ul>${src}</ul>` : ""}`;
 }
 
 /* ---------- search ---------- */

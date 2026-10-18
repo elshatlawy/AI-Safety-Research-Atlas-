@@ -50,4 +50,4 @@ Recipes:
 
 ## Humans
 
-The visual atlas is at the site root, https://elshatlawy.github.io/AI-Safety-Research-Atlas-/. Every record is browsable at https://elshatlawy.github.io/AI-Safety-Research-Atlas-/explore.html (a card's human_url opens one record). Corrections and new sources go to the research repository through its maintainer.
+The visual atlas is at the site root, https://elshatlawy.github.io/AI-Safety-Research-Atlas-/. Every record is a dot in the record graph at https://elshatlawy.github.io/AI-Safety-Research-Atlas-/#graph (a card's human_url opens one record there). Corrections and new sources go to the research repository through its maintainer.

@@ -29,7 +29,7 @@
       --ev-sup:#199e70; --ev-weak:#2b5f9c; --ev-con:#d95926; color-scheme:dark}
     *{box-sizing:border-box}
     body{background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
-    .wrap{max-width:1000px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:40px 72px}
+    .wrap{max-width:1000px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:36px calc(72px + env(safe-area-inset-bottom,0px))}
     h1,h2,h3{margin:0;text-wrap:balance}
     .eyebrow{font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
     h1{font-family:var(--font-display);font-weight:600;font-size:clamp(30px,4.4vw,44px);line-height:1.08;letter-spacing:-.02em;margin-top:10px}
@@ -106,11 +106,8 @@
     .steps{display:grid;gap:10px;counter-reset:s}
     .step{display:grid;grid-template-columns:44px minmax(0,1fr);gap:4px 14px;align-items:start}
     .step .n{font-family:var(--font-mono);font-size:26px;line-height:1;color:var(--muted);padding-top:2px}
-    .step.rec{border-color:var(--seq);box-shadow:inset 3px 0 0 var(--seq)}
-    .step.rec .n{color:var(--seq)}
     .step h3{font-size:16px;font-weight:650}
     .step p{margin:3px 0 0;font-size:13.5px;color:var(--ink2);max-width:72ch}
-    .pill{display:inline-block;font-size:11px;font-weight:600;letter-spacing:.04em;padding:1px 8px;border-radius:999px;background:var(--seq);color:var(--bg);margin-left:8px;vertical-align:2px}
 
     /* debate roadmap */
     .road{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;position:relative}
@@ -137,13 +134,40 @@
     .pipe{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:0 0 14px;font-size:13px}
     .pipe span{background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:3px 11px;white-space:nowrap}
     .pipe em{font-style:normal;color:var(--muted)}
-    footer{margin-top:56px;padding-top:14px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted)}
     @media (prefers-reduced-motion: reduce){*{transition:none!important}}
     
     body{margin:0}
-    .crumb{display:flex;flex-wrap:wrap;gap:4px 18px;font-size:13.5px;margin-bottom:28px}
-    .crumb a{color:var(--ink2);text-underline-offset:3px}
-    .crumb a:first-child{color:var(--ink);font-weight:600;text-decoration:none}
+    body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+    /* top bar: the same as the front page's */
+    .top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:saturate(1.4) blur(12px);-webkit-backdrop-filter:saturate(1.4) blur(12px);border-bottom:1px solid var(--line)}
+    .topin{max-width:1200px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;align-items:center;gap:18px;height:56px}
+    .brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:650;letter-spacing:-.01em;white-space:nowrap;color:var(--ink)}
+    .brand svg{flex:none}
+    .nav{display:flex;gap:2px;margin-left:auto;overflow-x:auto;scrollbar-width:none;min-width:0}
+    .nav::-webkit-scrollbar{display:none}
+    .nav a{text-decoration:none;padding:7px 12px;border-radius:999px;color:var(--ink2);font-weight:500;font-size:14.5px;white-space:nowrap}
+    .nav a:hover{background:var(--sunk);color:var(--ink)}
+    .nav a.on{background:var(--ink);color:var(--bg)}
+    @media (max-width:980px){.brand span{display:none}.nav a{padding:7px 10px}.topin{gap:10px}}
+    @media (max-width:720px){.topin{flex-wrap:wrap;height:auto;padding-top:9px;gap:6px 10px}.brand span{display:inline;font-size:14.5px}.nav{order:3;width:100%;margin-left:0;justify-content:space-between;padding-bottom:7px}.nav a{padding:5px 9px;font-size:13.5px}}
+    /* how the atlas works */
+    .flow{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;position:relative}
+    .fs{position:relative;display:flex;flex-direction:column;gap:2px}
+    .fs:not(:last-child)::after{content:"→";position:absolute;top:5px;right:-9px;color:var(--muted);font-size:14px}
+    .fs svg{width:30px;height:30px;color:var(--seq);margin-bottom:6px}
+    .fs b{font-family:var(--font-mono);font-weight:500;font-size:22px;letter-spacing:-.02em;line-height:1.1}
+    .fs .fk{font-weight:600;font-size:13.5px}
+    .fs small{font-size:12.5px;color:var(--ink2);line-height:1.4;margin-top:2px}
+    @media (max-width:860px){.flow{grid-template-columns:1fr}.fs{display:grid;grid-template-columns:40px minmax(0,1fr);grid-template-areas:"i b" "i k" "i s";gap:0 12px}.fs svg{grid-area:i;margin:4px 0 0}.fs b{grid-area:b}.fs .fk{grid-area:k}.fs small{grid-area:s}.fs:not(:last-child)::after{display:none}}
+    .go4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+    @media (max-width:860px){.go4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media (max-width:520px){.go4{grid-template-columns:1fr}}
+    a.go{display:block;text-decoration:none;color:var(--ink)}
+    a.go:hover{border-color:var(--ink2)}
+    .go .gn{font-family:var(--font-mono);font-size:12px;color:var(--muted)}
+    .go b{display:block;font-size:14.5px;margin:2px 0 3px}
+    .go span{font-size:13px;color:var(--ink2)}
+    .go .gt{display:block;margin-top:8px;font-size:12.5px;color:var(--seq)}
     /* what could come next */
     .prop{display:inline-block;font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--warn);margin-bottom:4px}
     .part{display:flex;align-items:baseline;gap:10px;margin:30px 0 4px}
@@ -223,23 +247,68 @@
     .stp p{margin:0;font-size:12.5px;color:var(--ink2)}
     .stp .sg{margin-top:6px;font-size:12px;color:var(--ink);border-top:1px solid var(--line);padding-top:6px}
     @media (max-width:860px){.stairs{grid-template-columns:1fr;gap:0}.stp{display:grid;grid-template-columns:88px minmax(0,1fr);grid-template-areas:"bar h" "bar p" "bar g";gap:0 14px;padding:10px 0;border-bottom:1px solid var(--line)}.stp .bar{grid-area:bar;height:auto;justify-content:center}.stp .bar::after{height:14px;width:calc(var(--h) * .8)}.stp .bar span{margin:0 0 4px}.stp .sk{display:none}.stp h3{grid-area:h}.stp p{grid-area:p}.stp .sg{grid-area:g;border:0;padding:0;margin-top:2px}}
-    .who5{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin-top:14px}
-    .who5 .panel span{font-size:13px;color:var(--ink2)}
-    .who5 .who{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:4px}
-    @media (max-width:860px){.who5{grid-template-columns:repeat(2,minmax(0,1fr))}}
-    @media (max-width:520px){.who5{grid-template-columns:1fr}}
+    /* one database, many applications */
+    .mdb{padding:18px}
+    .apps{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+    .app{font-size:13px;padding:6px 12px;border-radius:10px;border:1.5px dashed var(--seq-soft);color:var(--ink2);background:var(--bg)}
+    .app.live{border:1.5px solid var(--seq);background:var(--seq);color:var(--bg);font-weight:600}
+    .stems{height:26px;margin:4px 8% 0;background:repeating-linear-gradient(90deg,var(--line2) 0 1.5px,transparent 1.5px 12.5%)}
+    .found{border-radius:12px;overflow:hidden;border:1px solid var(--line2)}
+    .ly{display:grid;grid-template-columns:14px 170px minmax(0,1fr);gap:10px;align-items:center;padding:9px 14px;font-size:13px;color:var(--ink2);background:var(--sunk);border-bottom:1px solid var(--bg)}
+    .ly:last-child{border-bottom:0}
+    .ly b{color:var(--ink);font-size:13.5px}
+    .ly .dot{width:12px;height:12px}
+    .fcap{text-align:center;font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-top:8px}
+    .mkey{display:flex;flex-wrap:wrap;gap:4px 16px;font-size:12.5px;color:var(--ink2);margin-top:10px}
+    .mkey span{display:inline-flex;align-items:center;gap:6px}
+    .mkey .app{padding:0;width:16px;height:11px;border-radius:3px}
+    .mkey .dot{width:11px;height:11px}
+    @media (max-width:640px){.ly{grid-template-columns:14px minmax(0,1fr);grid-template-areas:"d b" "d t";gap:2px 10px}.ly .dot{grid-area:d}.ly b{grid-area:b}.ly span{grid-area:t}}
+    /* long-run uses */
+    .uses6{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+    @media (max-width:860px){.uses6{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media (max-width:520px){.uses6{grid-template-columns:1fr}}
+    .use6 .who{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:6px}
+    .use6 p{margin:0 0 8px;font-size:13px;color:var(--ink2)}
+    .use6 p:last-child{margin-bottom:0}
+    .use6 b{display:block;color:var(--ink);font-size:14px}
     .aim{margin-top:18px;font-family:var(--font-display);font-size:21px;line-height:1.3;max-width:56ch}
     
     </style>
     </head>
     <body>
+    <header class="top"><div class="topin">
+      <a class="brand" href="./" aria-label="Safety Research Atlas, front page">
+        <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><path d="M6 19 L12 7 L20 15" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M6 19 Q14 23 20 15" fill="none" stroke="currentColor" stroke-width="1.6" stroke-dasharray="2 2.4"/><circle cx="6" cy="19" r="3.2" fill="currentColor"/><circle cx="12" cy="7" r="3.2" fill="var(--bg)" stroke="currentColor" stroke-width="1.6"/><circle cx="20" cy="15" r="3.2" fill="currentColor"/></svg>
+        <span>Safety Research Atlas</span></a>
+      <nav class="nav" aria-label="Views"><a class="on" href="overview.html" aria-current="page">Overview</a><a href="./#gaps">Gaps</a><a href="./#discoveries">Discoveries</a><a href="./#results">Results</a><a href="./#map">Map</a><a href="./#papers">Papers</a><a href="./#graph">Graph</a></nav>
+    </div></header>
     <div class="wrap">
-    <nav class="crumb" aria-label="Site"><a href="./">Safety Research Atlas</a><a href="explore.html">All 1,750 records</a></nav>
     <header>
       <div class="eyebrow">AI Safety Research Atlas · 18 October 2026</div>
       <h1>Where the atlas stands, and where it could go</h1>
-      <p class="lede">One area, debate and scalable oversight, now works as a discovery engine. Everything else is a thin map. No person has checked any result yet, so nothing in it is citable.</p>
+      <p class="lede">One area, debate and scalable oversight, now works as a discovery engine.</p>
     </header>
+
+    <section id="how">
+      <h2>How the atlas works</h2>
+      <p class="sub">Every record quotes its source exactly, every link says why it exists, and nothing counts until it passes checks built to catch planted mistakes.</p>
+      <div class="flow" role="list" aria-label="How the database is made">
+        <div class="fs" role="listitem"><svg viewBox="0 0 30 30" aria-hidden="true"><path d="M8 4h10l5 5v17H8z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M18 4v5h5M11.5 15h8M11.5 19h8M11.5 23h5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><b>245</b><span class="fk">pinned sources</span><small>Papers, Lean and Mathlib, Metamath, each fixed to one version</small></div>
+        <div class="fs" role="listitem"><svg viewBox="0 0 30 30" aria-hidden="true"><path d="M5 8h20M5 14h20M5 20h13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M21 19.5l2 2 4-4.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><b>1,750</b><span class="fk">records</span><small>Each a claim, definition, theorem or result, quoted with its page and lines</small></div>
+        <div class="fs" role="listitem"><svg viewBox="0 0 30 30" aria-hidden="true"><circle cx="7" cy="21" r="3.2" fill="currentColor"/><circle cx="15" cy="8" r="3.2" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="23" cy="19" r="3.2" fill="currentColor"/><path d="M8.6 18.3l4.8-7.6M17.3 10.4l4.2 6" stroke="currentColor" stroke-width="1.6"/></svg><b>5,821</b><span class="fk">typed links</span><small>Builds on, disputes, proof uses; each with the reason it exists</small></div>
+        <div class="fs" role="listitem"><svg viewBox="0 0 30 30" aria-hidden="true"><path d="M15 3.5l9 3.5v7c0 6-4 10-9 12-5-2-9-6-9-12V7z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M10.5 15l3 3 6-6.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><b>539/542</b><span class="fk">planted mistakes caught</span><small>Two blind AI checks; Lean's kernel for proofs; a person's sign-off on a few</small></div>
+        <div class="fs" role="listitem"><svg viewBox="0 0 30 30" aria-hidden="true"><rect x="4" y="6" width="22" height="15" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M11 25h8M15 21v4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M9 16l3-4 3 2.5 4-5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><b>3</b><span class="fk">ways in</span><small>This site's views, llms.txt for AI agents, and the raw data</small></div>
+      </div>
+      <div class="part"><h3>How to use it</h3></div>
+      <div class="go4">
+        <a class="panel go" href="./#gaps"><span class="gn">1</span><b>Start from a question</b><span>Open questions, ranked by the safety-case step they affect.</span><span class="gt">Gaps →</span></a>
+        <a class="panel go" href="./#results"><span class="gn">2</span><b>Check a result first</b><span>Its setting, its assumptions and how strong its evidence is.</span><span class="gt">Results →</span></a>
+        <a class="panel go" href="./#graph"><span class="gn">3</span><b>Find any record</b><span>Every record as a dot. Click one for its quote, source and links.</span><span class="gt">Graph →</span></a>
+        <a class="panel go" href="llms.txt"><span class="gn">4</span><b>Hand it to an AI agent</b><span>One file gives an agent the rules and a search index.</span><span class="gt">llms.txt →</span></a>
+      </div>
+      <p class="note">Everything is downloadable: <a href="atlas_data.json">the public view</a> with every record and link, and <a href="PUBLIC_BUILD_MANIFEST.json">its hash manifest</a>. Code is Apache-2.0 and data CC BY 4.0.</p>
+    </section>
 
     <section id="contents">
       <h2>What's in it</h2>
@@ -336,7 +405,7 @@
       <h2>The best next steps</h2>
       <p class="sub">Credibility first, because it multiplies everything else. A new area built on unconfirmed checks would inherit the same doubt.</p>
       <div class="steps">
-        <div class="panel step rec"><div class="n">1</div><div><h3>Get the finds confirmed<span class="pill">Recommended</span></h3><p>Experts check the 9 errors from short notes: the claim, the Lean counterexample, a suggested fix. People review only a small core of debate statements, each shown beside a blind plain-maths read-back of its Lean version; AI checks cover the rest. That turns the first results into findings people can cite.</p></div></div>
+        <div class="panel step"><div class="n">1</div><div><h3>Get the finds confirmed</h3><p>Experts check the 9 errors from short notes: the claim, the Lean counterexample, a suggested fix. People review only a small core of debate statements, each shown beside a blind plain-maths read-back of its Lean version; AI checks cover the rest. That turns the first results into findings people can cite.</p></div></div>
         <div class="panel step"><div class="n">2</div><div><h3>Measure usefulness automatically</h3><p>An agent answers the 52 authors' questions with and without the atlas. We report accuracy, sources found and time taken. No people needed, and it gives the first real answer to "does this help?".</p></div></div>
         <div class="panel step"><div class="n">3</div><div><h3>Make the results understandable</h3><p>Understanding cards for the results the safety case leans on, and a blocker label on every open question so each one gets the right kind of agent.</p></div></div>
         <div class="panel step"><div class="n">4</div><div><h3>Run the first theory-building mission</h3><p>Ask what changes when "training reaches equilibrium" is weakened: 15 safety-case steps rest on it and only 6 results address it.</p></div></div>
@@ -378,7 +447,6 @@
       <p class="sub">Twelve ideas for what the atlas could become, set against what it already has. None of them changes what a record is; they change how records are reviewed, explained and worked on.</p>
 
       <div class="part"><span class="pn">A</span><h3>Twelve ideas worth taking</h3></div>
-      <p class="psub">0 are partly in place, 0 not yet.</p>
       <div class="panel ideas" role="table" aria-label="Twelve ideas and how far the atlas has them today">
         <div class="irow ih" role="row"><span role="columnheader">Idea</span><span role="columnheader">Atlas today</span><span role="columnheader">What we would add</span></div>
         <div class="irow" role="row"><span class="i" role="cell">Many research roles, one graph<small>Today: agents read it through llms.txt; only our own pipeline writes to it</small></span><span class="t" role="cell"><i class="dot p"></i>partly</span><span class="a" role="cell">Agents take roles (definer, prover, experimenter, explainer, auditor) and write back to the same records.</span></div><div class="irow" role="row"><span class="i" role="cell">Compare definitions first<small>Today: 59 debate definitions quoted; not yet compared across papers</small></span><span class="t" role="cell"><i class="dot p"></i>partly</span><span class="a" role="cell">One page per concept: each paper&#x27;s definition side by side, and exactly where they agree or differ.</span></div><div class="irow" role="row"><span class="i" role="cell">Organise by shared structure<small>Today: organised by paper and by topic</small></span><span class="t" role="cell"><i class="dot n"></i>not yet</span><span class="a" role="cell">Views built around games, information channels and constrained policies, showing which assumptions let results connect.</span></div><div class="irow" role="row"><span class="i" role="cell">Freeze the statement<small>Today: results quote their exact source lines; Lean versions sit in separate files</small></span><span class="t" role="cell"><i class="dot p"></i>partly</span><span class="a" role="cell">Each result gets one fixed statement. Proofs, evidence and counterexamples attach to it and never edit it.</span></div><div class="irow" role="row"><span class="i" role="cell">People review a small core<small>Today: no person has reviewed a debate result yet</small></span><span class="t" role="cell"><i class="dot n"></i>not yet</span><span class="a" role="cell">People check only the safety-case steps, the definitions they use and the headline results. AI checks cover the rest.</span></div><div class="irow" role="row"><span class="i" role="cell">Check formal statements against the source<small>Today: 3 paper-to-Lean cards with 31 flagged differences</small></span><span class="t" role="cell"><i class="dot p"></i>partly</span><span class="a" role="cell">An agent restates each Lean statement in plain maths without seeing the paper. A reviewer compares two statements, and every changed hypothesis is recorded.</span></div><div class="irow" role="row"><span class="i" role="cell">Results that fill in later<small>Today: the proof graph shows what an error breaks downstream; support does not flow up yet</small></span><span class="t" role="cell"><i class="dot p"></i>partly</span><span class="a" role="cell">Support flows up the safety case as its steps are proved or measured, the way errors already flow down.</span></div><div class="irow" role="row"><span class="i" role="cell">Use proofs as inputs<small>Today: 13 Lean projects checked; not yet mined for reusable pieces</small></span><span class="t" role="cell"><i class="dot p"></i>partly</span><span class="a" role="cell">Mine proofs for reusable lemmas and for the assumptions that actually carry the weight.</span></div><div class="irow" role="row"><span class="i" role="cell">Name the blocker first<small>Today: questions are labelled empirical, mathematical or mixed</small></span><span class="t" role="cell"><i class="dot p"></i>partly</span><span class="a" role="cell">Six blocker types, each sent to the right kind of agent (see 3 below).</span></div><div class="irow" role="row"><span class="i" role="cell">Credit ideas, count reuse<small>Today: every record cites its source line; AI-made results don&#x27;t say whose idea they build on</small></span><span class="t" role="cell"><i class="dot p"></i>partly</span><span class="a" role="cell">Record whose idea a result builds on, with AI-proposed ideas marked provisional, and count how often each result is reused.</span></div><div class="irow" role="row"><span class="i" role="cell">Explain, then check understanding<small>Today: summaries, hypothesis lists and &#x27;what remains&#x27; lines; no worked examples or self-tests</small></span><span class="t" role="cell"><i class="dot p"></i>partly</span><span class="a" role="cell">Understanding cards with a worked example and a quick self-test (see 1 below).</span></div><div class="irow" role="row"><span class="i" role="cell">Measure the automation itself<small>Today: planted-error tallies (539 of 542 caught); people&#x27;s time and cost not logged</small></span><span class="t" role="cell"><i class="dot p"></i>partly</span><span class="a" role="cell">Log people&#x27;s interventions, cost and caught errors per result, to learn how much oversight the pipeline really needs.</span></div>
@@ -407,13 +475,25 @@
       <div class="part"><span class="pn">C</span><h3>The long road: from map to the place AI-safety research is checked</h3></div>
       <p class="psub">Each stage adds one thing people can do that they could not do before.</p>
       <div class="stairs"><div class="stp done"><div class="bar" style="--h:18px"><span>You are here</span></div><div class="sk">Now</div><h3>Map</h3><p>Debate read, graded and attacked once.</p><div class="sg">A ranked to-do list for debate</div></div><div class="stp"><div class="bar" style="--h:31px"></div><div class="sk">1</div><h3>Trust</h3><p>Experts confirm the finds; people review a small core.</p><div class="sg">Findings people can cite</div></div><div class="stp"><div class="bar" style="--h:44px"></div><div class="sk">2</div><h3>Understand</h3><p>Understanding cards, concept pages, blocker labels.</p><div class="sg">Results usable without reading every paper</div></div><div class="stp"><div class="bar" style="--h:57px"></div><div class="sk">3</div><h3>Build</h3><p>Weaken-an-assumption missions; support flows up the safety case.</p><div class="sg">New results, not just a map</div></div><div class="stp"><div class="bar" style="--h:70px"></div><div class="sk">4</div><h3>Widen</h3><p>AI control next, then other areas, joined by shared structures.</p><div class="sg">Results checked across areas</div></div><div class="stp"><div class="bar" style="--h:83px"></div><div class="sk">5</div><h3>Open</h3><p>Outside researchers' agents take missions, credited by reuse.</p><div class="sg">Grows faster than one team can</div></div><div class="stp"><div class="bar" style="--h:96px"></div><div class="sk">6</div><h3>Decide</h3><p>Live safety cases, a transfer check for real systems, ranked experiments.</p><div class="sg">Decisions rest on checked evidence</div></div></div>
-      <div class="who5"><div class="panel"><div class="who">Researchers</div><span>Check what a result really needs before building on it, and pick a problem with a head start.</span></div><div class="panel"><div class="who">Safety-case writers and evaluators</div><span>See what each step of an argument rests on, and how strong that is.</span></div><div class="panel"><div class="who">Funders</div><span>Back the experiments and proofs that would move the most safety-case steps.</span></div><div class="panel"><div class="who">Newcomers</div><span>Learn an area through understanding cards, in a sensible order.</span></div><div class="panel"><div class="who">AI agents</div><span>Query it, take a mission, and hand back results that pass the checks.</span></div></div>
       <p class="aim">The aim: the place you check before you cite, build on or rely on an AI-safety result.</p>
+
+      <div class="part"><span class="pn">D</span><h3>One database, many applications</h3></div>
+      <p class="psub">A reusable master database connecting theory, AI-safety research, formal results, implementations and evidence. Applications grow from that shared foundation instead of each building its own.</p>
+      <div class="panel mdb" role="img" aria-label="Six applications live today and ten proposed, all resting on one database of five layers: theory, AI-safety research, formal results, implementations and empirical evidence">
+        <div class="apps"><span class="app live">Open questions</span><span class="app live">Discoveries</span><span class="app live">Result grades</span><span class="app live">Record graph</span><span class="app live">Agent entrance</span><span class="app live">Data downloads</span><span class="app">Pre-citation check</span><span class="app">Safety-case audit</span><span class="app">Transfer check</span><span class="app">Research missions</span><span class="app">Funder portfolio</span><span class="app">Living reviews</span><span class="app">Learning paths</span><span class="app">Definition atlas</span><span class="app">New-paper triage</span><span class="app">Replication tracker</span></div>
+        <div class="stems" aria-hidden="true"></div>
+        <div class="found"><div class="ly"><i class="dot p" title="started"></i><b>Empirical evidence</b><span>248 debate results graded by their evidence; 152 rest on one setting</span></div><div class="ly"><i class="dot n" title="thin"></i><b>Implementations</b><span>a toy debate system, one ControlArena case and one open-model oversight study</span></div><div class="ly"><i class="dot p" title="started"></i><b>Formal results</b><span>997 Lean and Metamath records; 13 Lean projects machine-checked</span></div><div class="ly"><i class="dot p" title="started"></i><b>AI-safety research</b><span>657 debate records from 42 papers read in full; 96 on 22 other topics</span></div><div class="ly"><i class="dot p" title="started"></i><b>Theory</b><span>59 definitions and 27 theorems quoted from the debate papers</span></div></div>
+        <div class="fcap">One shared foundation</div>
+      </div>
+      <div class="mkey"><span><i class="app live"></i>live today</span><span><i class="app"></i>could be built</span><span><i class="dot p"></i>layer started</span><span><i class="dot n"></i>layer thin</span></div>
+
+      <div class="part"><span class="pn">E</span><h3>Uses worth building, by who they serve</h3></div>
+      <p class="psub">Each one is a view or a tool over the same records, so every answer stays one click from its source.</p>
+      <div class="uses6"><div class="panel use6"><div class="who">Researchers</div><p><b>Pre-citation check</b>Paste a claim; get its source line, conditions, evidence grade and any known problem.</p><p><b>Transfer check</b>See which assumptions your system breaks before you rely on a result.</p></div><div class="panel use6"><div class="who">Safety-case writers</div><p><b>Safety-case audit</b>Every step of an argument marked supported, contested or missing.</p><p><b>Evals mapped to claims</b>Which step a benchmark really tests, and which it only seems to.</p></div><div class="panel use6"><div class="who">Funders and labs</div><p><b>Funder portfolio</b>The experiments and proofs that would move the most steps, with costs.</p><p><b>Living reviews</b>A state-of-evidence review per area, refreshed as papers arrive.</p></div><div class="panel use6"><div class="who">Newcomers</div><p><b>Learning paths</b>An ordered path through definitions and results, with self-tests.</p><p><b>Definition atlas</b>Every paper&#x27;s definition of a term side by side.</p></div><div class="panel use6"><div class="who">Policy</div><p><b>Evidence briefings</b>What is and isn&#x27;t established, each claim one click from its source.</p><p><b>Replication tracker</b>Which results replicate, conflict, or rest on one setting.</p></div><div class="panel use6"><div class="who">AI agents</div><p><b>Research missions</b>Take a ranked open problem, hand back results that pass the checks.</p><p><b>New-paper triage</b>Within a day: what a new paper adds, contradicts or repeats.</p></div></div>
       <div class="callout"><b>A bonus for AI safety itself.</b> The atlas's own pipeline, AI doing the work under checks tested on planted errors with people reviewing a small core, is a working test of scalable oversight. Logging how well it holds up is evidence in its own right.</div>
       <p class="note">It counts as useful only if researchers find the right sources faster, catch missing assumptions, avoid invalid transfers, reuse its exports and send corrections. Record counts don't.</p>
     </section>
     
-    <footer>Counts come from this site's data: 1,750 records, 5,821 links and 245 sources. A few measures taken outside it (answer verdicts, planted-error tallies, quote checks, search recall) are as of 18 October 2026. "What could come next" is a proposal; none of it is built yet.</footer>
     </div>
     </body>
     </html>
