@@ -1,0 +1,161 @@
+{
+ "schema": "ASRA-GAP-CLOSING-AGENT-v1",
+ "paper": "1811.07871v1",
+ "review_status": "provisional_ai_draft",
+ "rules": [
+  "Everything here is an AI draft (provisional_ai_draft): each counted item passed two blind AI checks that were tested on planted errors, and no person has reviewed it.",
+  "A finding counts only in the setting its own quoted lines show; read `setting` before carrying it to another setting.",
+  "A question's status is a label from fixed rules over its counted findings; `status_check` says whether that label itself passed its check.",
+  "Cite the paper and page from the passage, and read the PDF page before relying on a claim."
+ ],
+ "notes": "CLAIM-COMPLEXITY-ANALOGY: the record's quote begins mid-sentence ('logic formulas that involve alternating quantifiers'); the card adds p9 L11-16 for the start of the analogy and its binary-evaluation simplification. The analogy is credited to Irving et al. (2018), but its mapping to recursive reward modeling is the authors' own, so the card grades it ARGUMENT_ONLY rather than CITED_FROM_OTHER_WORK. CORE links all four assumption records, two of which (ASM-SIMPLER-ASSISTANT-TASK, ASM-EXHAUSTIVE-DECOMP) concern the recursive part of the direction.",
+ "cards": [
+  {
+   "record_id": "N2:DSOFT:ARXIV-1811.07871v1:CORE",
+   "paper": "1811.07871v1",
+   "evidence_type": "argument",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-1811.07871v1:DEF-REWARD-MODELING",
+     "N2:DSOFT:ARXIV-1811.07871v1:DEF-RECURSIVE-RM"
+    ],
+    "description": "A research-agenda paper: it frames the agent alignment problem, proposes reward modeling and its recursive application, lists the challenges it expects when scaling and approaches to mitigate them, and discusses research avenues for establishing trust.",
+    "passages": [
+     {
+      "version": "1811.07871v1",
+      "page": 2,
+      "lines": [
+       28,
+       39
+      ],
+      "text": "As we scale reward modeling to complex general domains, we expect to encounter a number of\nchallenges (Section 4). The severity of these challenges and whether they can be overcome is currently\nan open research question. Some promising approaches are discussed in Section 5.\nEventually we want to scale reward modeling to domains that are too complex for humans to evaluate\ndirectly. To apply reward modeling to these domains we need to boost the user’s ability to evaluate\noutcomes. In Section 3.2 we describe how reward modeling can be applied recursively: agents trained\nwith reward modeling can assist the user in the evaluation process when training the next agent.\nTraining aligned agents is our goal, but how do we know when we have achieved it? When deploying\nagents in the real world, we need to provide evidence that our agents are actually sufficiently aligned,\nso that users can trust them. Section 6 discusses five different research avenues that can help increase\ntrust in our agents: design choices, testing, interpretability, formal verification, and theoretical\nguarantees.",
+      "pdf_page": "https://arxiv.org/pdf/1811.07871v1#page=2"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-1811.07871v1:ASM-1-LEARN-INTENTIONS",
+     "N2:DSOFT:ARXIV-1811.07871v1:ASM-2-EVAL-EASIER",
+     "N2:DSOFT:ARXIV-1811.07871v1:ASM-SIMPLER-ASSISTANT-TASK",
+     "N2:DSOFT:ARXIV-1811.07871v1:ASM-EXHAUSTIVE-DECOMP"
+    ],
+    "stated_hypotheses": [
+     "Assumption 1: user intentions can be learned to sufficiently high accuracy.",
+     "Assumption 2: for many tasks, evaluating outcomes is easier than producing the correct behaviour.",
+     "For the recursive version to scale, each assisting agent's task must be simpler and narrower than the task of the agent it helps evaluate.",
+     "The user's decomposition of task evaluation must be exhaustive.",
+     "Scope: one agent aligned to one user; the preference payload is out of scope."
+    ],
+    "passages": [
+     {
+      "version": "1811.07871v1",
+      "page": 3,
+      "lines": [
+       4,
+       5
+      ],
+      "text": "Assumptions. Our research direction rests on two assumptions. The first assumption is based\non the intuition that learning others’ intentions is easy enough that most humans can do it. While",
+      "pdf_page": "https://arxiv.org/pdf/1811.07871v1#page=3"
+     },
+     {
+      "version": "1811.07871v1",
+      "page": 3,
+      "lines": [
+       35,
+       38
+      ],
+      "text": "Disclaimer. It is important to emphasize that the success of the research direction we describe\nhere is not guaranteed and it should not be understood as a plan that, when executed, achieves agent\nalignment. Instead, it outlines what research questions will inform us whether or not reward modeling\nis a scalable solution to alignment.",
+      "pdf_page": "https://arxiv.org/pdf/1811.07871v1#page=3"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Reinforcement learning agents trained on reward models learned from user feedback (proposal)",
+    "task_data": null,
+    "judge": "The user, who gives feedback, assisted by previously trained agents in the recursive version",
+    "regime": "theory",
+    "scale": null
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-1811.07871v1:LIM-SCOPE",
+     "N2:DSOFT:ARXIV-1811.07871v1:LIM-REWARD-GAMING"
+    ],
+    "notes": "The authors say success of the direction is not guaranteed and it is not a plan that achieves alignment when executed; reward gaming is possibly its greatest weakness; the preference payload is out of scope."
+   },
+   "strength": {
+    "grade": "ARGUMENT_ONLY",
+    "reason": "A research-direction proposal resting on two stated assumptions; the passages give no proof or experiment for it."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-1811.07871v1:CLAIM-COMPLEXITY-ANALOGY",
+   "paper": "1811.07871v1",
+   "evidence_type": "argument",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-1811.07871v1:DEF-REWARD-MODELING",
+     "N2:DSOFT:ARXIV-1811.07871v1:DEF-RECURSIVE-RM"
+    ],
+    "description": "An informal analogy, credited to Irving et al. (2018): reward modeling corresponds to evaluating an existentially quantified formula, recursive reward modeling at depth k to formulas with k alternating quantifiers, and with polynomially bounded quantifiers and a polynomial-time formula reward modeling corresponds to NP.",
+    "passages": [
+     {
+      "version": "1811.07871v1",
+      "page": 9,
+      "lines": [
+       11,
+       16
+      ],
+      "text": "Analogy to complexity theory. In the reward modeling setup the agent proposes a behavior that is\nevaluated by the user. This is conceptually analogous to solving existentially quantified first-order\nlogic formulas such as ∃x. ϕ(x). The agent proposes a behavior x and the user evaluates the quality\nof this behavior. For simplicity of this analogy, let us assume that the user’s evaluation is binary so\nthat it can be captured by the predicate ϕ.\nWith recursive reward modeling we can solve tasks that are analogous to more complicated first-order",
+      "pdf_page": "https://arxiv.org/pdf/1811.07871v1#page=9"
+     },
+     {
+      "version": "1811.07871v1",
+      "page": 9,
+      "lines": [
+       28,
+       33
+      ],
+      "text": "This analogy to complexity theory, first introduced by Irving et al. (2018), provides two important\ninsights:\n1. It is widely believed that the complexity classes P and NP are not equal, which supports\nAssumption 2 that for a lot of relevant problems evaluation is easier than producing solutions.\n2. Basically every formal statement that mathematicians care about can be written as a firstorder logic statement with a finite number of alternating quantifiers. This suggests that\nrecursive reward modeling can cover a very general space of tasks.",
+      "pdf_page": "https://arxiv.org/pdf/1811.07871v1#page=9"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "For simplicity, the user's evaluation is assumed binary so it can be captured by a predicate.",
+     "The NP correspondence holds for polynomially bounded quantifiers and a formula evaluable in polynomial time.",
+     "The first insight drawn (support for Assumption 2) relies on the widely held belief that P and NP are not equal."
+    ],
+    "passages": []
+   },
+   "setting": {
+    "systems": "Agents trained with reward modeling or recursive reward modeling, and a user who evaluates their behaviour (conceptual)",
+    "task_data": "Tasks viewed as first-order logic formulas; the Hamiltonian cycle problem as an example",
+    "judge": "The user evaluates the proposed behaviour and the assistance",
+    "regime": "theory",
+    "scale": null
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [],
+    "notes": "Presented as an analogy under a simplifying binary-evaluation assumption; no theorem is stated or proved in these passages."
+   },
+   "strength": {
+    "grade": "ARGUMENT_ONLY",
+    "reason": "An analogy to complexity theory without a formal statement or proof; it is the authors' application to recursive reward modeling of an analogy they credit to Irving et al. (2018), so it is not merely a cited result."
+   },
+   "review_status": "provisional_ai_draft"
+  }
+ ]
+}

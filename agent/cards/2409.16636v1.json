@@ -1,0 +1,525 @@
+{
+ "schema": "ASRA-GAP-CLOSING-AGENT-v1",
+ "paper": "2409.16636v1",
+ "review_status": "provisional_ai_draft",
+ "rules": [
+  "Everything here is an AI draft (provisional_ai_draft): each counted item passed two blind AI checks that were tested on planted errors, and no person has reviewed it.",
+  "A finding counts only in the setting its own quoted lines show; read `setting` before carrying it to another setting.",
+  "A question's status is a label from fixed rules over its counted findings; `status_check` says whether that label itself passed its check.",
+  "Cite the paper and page from the passage, and read the PDF page before relying on a claim."
+ ],
+ "notes": "The paper has no assumption records; the DEF- and METHOD- records serve as method links and hypotheses come from added passages. Only the debater skill-accuracy relationship carries p-values (p < 10^-6 overall; p < 10^-4 on easy and hard questions in Appendix F); the protocol accuracies (77/75/72/68%), win rates and transfer correlations have no stated uncertainty in the lines read, so all cards are EMPIRICAL_SINGLE_SETTING (one task, one debater model family, one judge). The fully trained consultant's win rate is 50% in Section 4.1 (p8 L15-16) but 52% in Section 5.1 (p9 L30-31). RES-PROTOCOL-COMPARISON's quote starts mid-sentence (its opening is p8 L36-37). CORE's quote states no statistics; the p-value comes from p2 L77-80. No record seems mislabelled.",
+ "cards": [
+  {
+   "record_id": "N2:DSOFT:ARXIV-2409.16636v1:CORE",
+   "paper": "2409.16636v1",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2409.16636v1:DEF-DEBATE",
+     "N2:DSOFT:ARXIV-2409.16636v1:METHOD-SELFPLAY-DPO",
+     "N2:DSOFT:ARXIV-2409.16636v1:METHOD-JUDGE",
+     "N2:DSOFT:ARXIV-2409.16636v1:DEF-SINGLE-CONSULTANCY",
+     "N2:DSOFT:ARXIV-2409.16636v1:DEF-ENSEMBLED-DOUBLE"
+    ],
+    "description": "Llama3-8B debaters and consultants were trained by supervised finetuning and then self-play with a modified DPO against a finetuned GPT-4-Turbo judge, and training checkpoints were evaluated in self-play on QuALITY-HARD validation questions by judge accuracy, against single, ensembled and double consultancy baselines.",
+    "passages": [
+     {
+      "version": "2409.16636v1",
+      "page": 5,
+      "lines": [
+       13,
+       16
+      ],
+      "text": "We start with a version of Llama3-8B-Instruct that was finetuned by GradientAI to extend the context\nlength to from 8k to 262k tokens (AI@Meta, 2024; GradientAI, 2024). This context length extension\nis necessary to accommodate the full text of the QuALITY stories, which run to over 10k tokens\n(Pang et al., 2022).",
+      "pdf_page": "https://arxiv.org/pdf/2409.16636v1#page=5"
+     },
+     {
+      "version": "2409.16636v1",
+      "page": 7,
+      "lines": [
+       33,
+       36
+      ],
+      "text": "To measure how longer training and higher win rates affect the accuracy of the judge, we test different training checkpoints on the QuALITY-HARD validation set. Since some of Michael et al.\n(2023)’s debates drew from the validation set, we exclude some questions that were either present in\nthe training transcripts or shared a short story with a question in the training transcripts. After this\nfiltering, we end up testing on 433 distinct questions.",
+      "pdf_page": "https://arxiv.org/pdf/2409.16636v1#page=7"
+     },
+     {
+      "version": "2409.16636v1",
+      "page": 4,
+      "lines": [
+       13,
+       17
+      ],
+      "text": "• Judge accuracy is measured using self-play where each model is pit against a copy of\nitself. The judge is considered to be correct if it assigns greater than 50% probability to the\ncorrect answer. For single consultancy, where there is no opposing model, judge accuracy\nis averaged equally between cases where the consultant is advocating for the correct and\nincorrect answer.",
+      "pdf_page": "https://arxiv.org/pdf/2409.16636v1#page=4"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "Hidden-information setup: debaters can read the story while the judge reads only the quotes they select, so the debaters' expertise comes from access to information.",
+     "Questions come from QuALITY-HARD, with one side defending the correct answer and the other the best distractor marked by annotators.",
+     "The judge is a GPT-4-Turbo finetuned on human judgments, chosen to be calibrated to the 50/50 prior that a consultant is correct.",
+     "The authors limit their conclusions to one domain and one set of model capabilities."
+    ],
+    "passages": [
+     {
+      "version": "2409.16636v1",
+      "page": 2,
+      "lines": [
+       102,
+       105
+      ],
+      "text": "Following Parrish et al. (2022b), our debates center on questions from the QuALITY dataset (Pang\net al., 2022) of multiple choice reading comprehension questions over short stories. We exclusively\nsample questions from the QuALITY-HARD subset, with one debater defending the correct answer\nand the other defending the answer marked as the best distractor by annotators.",
+      "pdf_page": "https://arxiv.org/pdf/2409.16636v1#page=2"
+     },
+     {
+      "version": "2409.16636v1",
+      "page": 10,
+      "lines": [
+       40,
+       49
+      ],
+      "text": "We explore whether training models to win debates can also help judges determine the correct answer to reading comprehension questions where the judge does not have access to the text of the\nstory being discussed. We find that there is indeed a small but significant positive relationship between the ability of the model to win a debate and the usefulness of that model’s debate transcripts\nin discovering true answers.\nNon-adversarial alternatives, in which a single model argues for an assigned answer, are comparatively less productive. We trace this weakness to three sources: one-sided information (the judge\nis unaware of the strength of the alternative answer), lack of explicit comparison (the judge cannot\nsee arguments side-by-side), and the rewarding of non-truth-seeking strategies (where the lack of an\nadversary makes the judge easier to exploit).\nAlthough our conclusions are limited to one particular domain and set of model capabilities, these\nresults nonetheless suggest that debate training has unique properties that make it well suited for\nsupervising more sophisticated models.",
+      "pdf_page": "https://arxiv.org/pdf/2409.16636v1#page=10"
+     },
+     {
+      "version": "2409.16636v1",
+      "page": 2,
+      "lines": [
+       77,
+       80
+      ],
+      "text": "We find this relationship to be positive for debate, with a 4% absolute increase in judge accuracy after\ndebate training (p < 10−6 ), with indications that further optimization should yield more accurate\noutcomes. Notably, these gains in evaluator accuracy occur without the requirement of a ground\ntruth supervision signal.",
+      "pdf_page": "https://arxiv.org/pdf/2409.16636v1#page=2"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Llama3-8B-Instruct (262k-context version) debaters and consultants trained with supervised finetuning and then a modified DPO",
+    "task_data": "QuALITY-HARD reading comprehension questions in a hidden-passage setup (judge sees only quotes the debaters select), correct answer vs best distractor; 433 validation questions for evaluation",
+    "judge": "GPT-4-Turbo finetuned on human judgments of debate and consultancy transcripts",
+    "regime": "mixed",
+    "scale": "8B debater and consultant models; 433 evaluation questions"
+   },
+   "quantitative": {
+    "n": "433 distinct QuALITY-HARD validation questions",
+    "uncertainty": "p < 10^-6 for the 4% absolute judge-accuracy increase after debate training; none stated for the consultancy comparison in these passages"
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2409.16636v1:LIM-SCOPE"
+    ],
+    "notes": "The expertise gap rests on asymmetric access to text and may poorly proxy gaps in reasoning ability; only reading comprehension questions are studied. The authors call the debate effect small but significant and limit their conclusions to one domain and set of model capabilities."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "One task (QuALITY-HARD), one debater model family and one judge; the debate effect has p < 10^-6, but the multi-setting condition is not met."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2409.16636v1:RES-WINRATE",
+   "paper": "2409.16636v1",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2409.16636v1:METHOD-SELFPLAY-DPO",
+     "N2:DSOFT:ARXIV-2409.16636v1:METHOD-JUDGE"
+    ],
+    "description": "Debater checkpoints from SFT to full DPO training play a round-robin tournament (each question debated twice with sides flipped) whose results give Elo scores and an implied win rate against an average debater; consultant win rate is how often the judge assigns over 50% to the consultant's side in single consultancy.",
+    "passages": [
+     {
+      "version": "2409.16636v1",
+      "page": 4,
+      "lines": [
+       18,
+       24
+      ],
+      "text": "• Debater win rate is measured using a round-robin tournament where each model debates\nevery other model. Since some positions are easier to defend than others, each question\ngets debated twice, with the debaters flipping sides between rounds, and a debater wins if\nit receives an average judge confidence over 50% across both rounds. The results of the\nround-robin tournament are then used to construct Elo scores for each model. These Elo\nscores yield an implied probability that a given model will defeat an average debater, which\nwe report as the final reported win rate.",
+      "pdf_page": "https://arxiv.org/pdf/2409.16636v1#page=4"
+     },
+     {
+      "version": "2409.16636v1",
+      "page": 4,
+      "lines": [
+       25,
+       29
+      ],
+      "text": "• Consultant win rate is the frequency with which the judge assigns a greater than 50%\nprobability to the position being defended by the consultant in single consultancy. Although\nensembled and double consultancy allow for head-to-head matchups, we use the single\nconsultancy win rate when tracking the relationship between consultant skill and judge\naccuracy because the models are trained to win at single consultancy,",
+      "pdf_page": "https://arxiv.org/pdf/2409.16636v1#page=4"
+     },
+     {
+      "version": "2409.16636v1",
+      "page": 6,
+      "lines": [
+       1,
+       4
+      ],
+      "text": "Figure 4: Debate and consultant training. We train Llama3-8B to convince the judge in both the\ndebate and consultancy mediums using SFT and DPO. Depicted are win rates over the final iteration\nof DPO training, initialized from the SFT model. Overall win rates for each debate checkpoint (left)\nare calculated on the basis of Elo scores inferred from head-to-head win rates (right).",
+      "pdf_page": "https://arxiv.org/pdf/2409.16636v1#page=6"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "Win rates are judged by the finetuned GPT-4-Turbo judge whose confidence the models are trained to maximize.",
+     "Analysed checkpoints come from the final DPO iteration, trained on the aggregated preference data and initialized from the SFT model.",
+     "The authors suspect the low SFT consultant win rate reflects the judge being trained on transcripts with human or GPT-4-Turbo consultants."
+    ],
+    "passages": [
+     {
+      "version": "2409.16636v1",
+      "page": 7,
+      "lines": [
+       11,
+       17
+      ],
+      "text": "Training Procedure We train the debater and consultant using multiple iterations of our variant of\nDPO (Xiong et al., 2024; Chen et al., 2024), starting from the SFT model. During each iteration, we\nsample branching rollouts from the current model (as described above) to produce a new preference\ndataset. We then combine this with the preference data from previous iterations to form a shuffled,\naggregate dataset which is used to run another round of modified DPO training initialized from the\nSFT model. All of our analysis results are reported on different checkpoints from the final iteration\nthat is trained on the full, aggregated dataset.",
+      "pdf_page": "https://arxiv.org/pdf/2409.16636v1#page=7"
+     },
+     {
+      "version": "2409.16636v1",
+      "page": 9,
+      "lines": [
+       28,
+       33
+      ],
+      "text": "DPO training can help current open-source 8B-sized models be more convincing to a GPT-4–\nlevel judge. The fully trained debate model wins 67% of the time against the average debater in\nthe sample and 82.5% against its SFT-trained base model. Similarly, the fully-trained consultant\nconvinces the judge of its position 52% of the time, up from 36% with just supervised finetuning.\nThese results suggest it may be feasible to train much stronger persuasive models with larger LMs\nand more compute.",
+      "pdf_page": "https://arxiv.org/pdf/2409.16636v1#page=9"
+     },
+     {
+      "version": "2409.16636v1",
+      "page": 2,
+      "lines": [
+       102,
+       105
+      ],
+      "text": "Following Parrish et al. (2022b), our debates center on questions from the QuALITY dataset (Pang\net al., 2022) of multiple choice reading comprehension questions over short stories. We exclusively\nsample questions from the QuALITY-HARD subset, with one debater defending the correct answer\nand the other defending the answer marked as the best distractor by annotators.",
+      "pdf_page": "https://arxiv.org/pdf/2409.16636v1#page=2"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Llama3-8B debater and consultant checkpoints, from SFT-only to fully DPO-trained",
+    "task_data": "QuALITY-HARD multiple-choice reading-comprehension questions over short stories (one side defends the correct answer, the other the best distractor), in the debate and single consultancy formats",
+    "judge": "GPT-4-Turbo finetuned on human judgments of debate and consultancy transcripts",
+    "regime": "mixed",
+    "scale": "8B models; checkpoints of the final DPO iteration"
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": "None stated; win rates are point values"
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2409.16636v1:LIM-SCOPE"
+    ],
+    "notes": "Section 5.1 gives the fully trained consultant's rate as 52% (Section 4.1 says 50%); win rates are measured against the judge used for training. The expertise gap rests on asymmetric access to text and may poorly proxy gaps in reasoning ability; only reading comprehension questions are studied."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "One task, one model family and one judge, with point win rates and no uncertainty reported."
+   },
+   "review_status": "provisional_ai_draft",
+   "check_history": [
+    "card-1: flagged or undecided by two blind checks; rewritten from the checkers' suggested fix (quotes unchanged)"
+   ]
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2409.16636v1:RES-DEBATE-ACCURACY",
+   "paper": "2409.16636v1",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2409.16636v1:METHOD-SELFPLAY-DPO",
+     "N2:DSOFT:ARXIV-2409.16636v1:METHOD-JUDGE",
+     "N2:DSOFT:ARXIV-2409.16636v1:DEF-DEBATE",
+     "N2:DSOFT:ARXIV-2409.16636v1:DEF-SINGLE-CONSULTANCY"
+    ],
+    "description": "Each debater and consultant checkpoint is run in self-play on 433 QuALITY-HARD validation questions; the judge counts as correct when it gives over 50% to the correct answer (averaged over correct- and incorrect-side consultants), and judge accuracy is related to model skill measured by win rate (Figure 5).",
+    "passages": [
+     {
+      "version": "2409.16636v1",
+      "page": 7,
+      "lines": [
+       33,
+       36
+      ],
+      "text": "To measure how longer training and higher win rates affect the accuracy of the judge, we test different training checkpoints on the QuALITY-HARD validation set. Since some of Michael et al.\n(2023)’s debates drew from the validation set, we exclude some questions that were either present in\nthe training transcripts or shared a short story with a question in the training transcripts. After this\nfiltering, we end up testing on 433 distinct questions.",
+      "pdf_page": "https://arxiv.org/pdf/2409.16636v1#page=7"
+     },
+     {
+      "version": "2409.16636v1",
+      "page": 4,
+      "lines": [
+       13,
+       17
+      ],
+      "text": "• Judge accuracy is measured using self-play where each model is pit against a copy of\nitself. The judge is considered to be correct if it assigns greater than 50% probability to the\ncorrect answer. For single consultancy, where there is no opposing model, judge accuracy\nis averaged equally between cases where the consultant is advocating for the correct and\nincorrect answer.",
+      "pdf_page": "https://arxiv.org/pdf/2409.16636v1#page=4"
+     },
+     {
+      "version": "2409.16636v1",
+      "page": 7,
+      "lines": [
+       1,
+       2
+      ],
+      "text": "Figure 5: Skill–Accuracy Relationship. The judge’s accuracy increases alongside the skill level of\nthe debaters. For consultancy, this relationship is indistinguishable from noise.",
+      "pdf_page": "https://arxiv.org/pdf/2409.16636v1#page=7"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "The judge is never trained on the debater models' transcripts, and the debaters are not trained to maximize judge accuracy.",
+     "Questions come from QuALITY-HARD with correct answer vs best distractor, in the hidden-passage setup.",
+     "Validation questions that appeared in, or shared a story with, the training transcripts are excluded."
+    ],
+    "passages": [
+     {
+      "version": "2409.16636v1",
+      "page": 2,
+      "lines": [
+       102,
+       105
+      ],
+      "text": "Following Parrish et al. (2022b), our debates center on questions from the QuALITY dataset (Pang\net al., 2022) of multiple choice reading comprehension questions over short stories. We exclusively\nsample questions from the QuALITY-HARD subset, with one debater defending the correct answer\nand the other defending the answer marked as the best distractor by annotators.",
+      "pdf_page": "https://arxiv.org/pdf/2409.16636v1#page=2"
+     },
+     {
+      "version": "2409.16636v1",
+      "page": 21,
+      "lines": [
+       16,
+       18
+      ],
+      "text": "There is also a statistically significant relationship between debater skill and accuracy on both easy\n(p < 10−4 ) and hard (p < 10−4 ) problems. None of the relationships between consultant skill and\naccuracy are significant.",
+      "pdf_page": "https://arxiv.org/pdf/2409.16636v1#page=21"
+     },
+     {
+      "version": "2409.16636v1",
+      "page": 5,
+      "lines": [
+       13,
+       16
+      ],
+      "text": "We start with a version of Llama3-8B-Instruct that was finetuned by GradientAI to extend the context\nlength to from 8k to 262k tokens (AI@Meta, 2024; GradientAI, 2024). This context length extension\nis necessary to accommodate the full text of the QuALITY stories, which run to over 10k tokens\n(Pang et al., 2022).",
+      "pdf_page": "https://arxiv.org/pdf/2409.16636v1#page=5"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Llama3-8B-Instruct (262k-context version) debaters and consultants trained with supervised finetuning and then a modified DPO",
+    "task_data": "QuALITY-HARD reading comprehension questions in a hidden-passage setup (judge sees only quotes the debaters select), correct answer vs best distractor",
+    "judge": "GPT-4-Turbo finetuned on human judgments of debate and consultancy transcripts",
+    "regime": "mixed",
+    "scale": "433 validation questions; 8B models"
+   },
+   "quantitative": {
+    "n": "433 distinct QuALITY-HARD validation questions",
+    "uncertainty": "p < 10^-6 for the 4-point debate gain; Appendix F gives p < 10^-4 for the debater skill-accuracy relationship on both easy and hard questions and no significant consultant relationship"
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2409.16636v1:LIM-SCOPE"
+    ],
+    "notes": "The consultancy relationship is reported as not significant ('indistinguishable from noise'). The expertise gap rests on asymmetric access to text and may poorly proxy gaps in reasoning ability; only reading comprehension questions are studied."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "One task, one debater model family and one judge; the debate gain has p < 10^-6, but the rubric needs more than one task, dataset or model family for multi-setting."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2409.16636v1:RES-PROTOCOL-COMPARISON",
+   "paper": "2409.16636v1",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2409.16636v1:DEF-ENSEMBLED-DOUBLE",
+     "N2:DSOFT:ARXIV-2409.16636v1:DEF-SINGLE-CONSULTANCY",
+     "N2:DSOFT:ARXIV-2409.16636v1:DEF-DEBATE",
+     "N2:DSOFT:ARXIV-2409.16636v1:METHOD-JUDGE",
+     "N2:DSOFT:ARXIV-2409.16636v1:METHOD-SELFPLAY-DPO"
+    ],
+    "description": "Judge accuracy, averaged across all training checkpoints, is compared between debate and three consultancy protocols run with the same consultant model (single; ensembled, averaging two single consultancies on opposite sides; double, showing both sides in one context); separately trained single-turn models are compared in Appendix G.",
+    "passages": [
+     {
+      "version": "2409.16636v1",
+      "page": 4,
+      "lines": [
+       1,
+       3
+      ],
+      "text": "All three consultancy methods use the same underlying model, which is trained to maximize its\nsingle consultancy score. Ensembled and double consultancy are different evaluation methods, not\ntraining procedures.",
+      "pdf_page": "https://arxiv.org/pdf/2409.16636v1#page=4"
+     },
+     {
+      "version": "2409.16636v1",
+      "page": 5,
+      "lines": [
+       13,
+       16
+      ],
+      "text": "We start with a version of Llama3-8B-Instruct that was finetuned by GradientAI to extend the context\nlength to from 8k to 262k tokens (AI@Meta, 2024; GradientAI, 2024). This context length extension\nis necessary to accommodate the full text of the QuALITY stories, which run to over 10k tokens\n(Pang et al., 2022).",
+      "pdf_page": "https://arxiv.org/pdf/2409.16636v1#page=5"
+     },
+     {
+      "version": "2409.16636v1",
+      "page": 22,
+      "lines": [
+       14,
+       20
+      ],
+      "text": "We train separate models to argue for only a single turn using identical procedures to the ones\nused for the multi-turn setting that we report in our main experiments. Results are shown in Figures 10, 11, and 12. Notable results include the following:\n1. Judges are equivalently accurate when judging one and two-turn debates and consultancies.\nThis aligns with the findings of both Khan et al. (2024) and Kenton et al. (2024), who\nobserved a similar phenomenon in their experiments. This is additional evidence for our\nconclusion that the judges are not sensitive to refutations provided by the debaters in their\nsecond speech.",
+      "pdf_page": "https://arxiv.org/pdf/2409.16636v1#page=22"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "All consultancy variants use the same model, trained to maximize its single consultancy score; ensembled and double consultancy are evaluation methods, not training procedures.",
+     "Double consultancy differs from debate in that the sides never see each other's claims, so the gap between them is used to measure refutation.",
+     "The explanations (asymmetric strength of evidence, side-by-side comparison, missing or unused refutation) are the authors' hedged readings ('suggests', 'implying')."
+    ],
+    "passages": [
+     {
+      "version": "2409.16636v1",
+      "page": 3,
+      "lines": [
+       69,
+       72
+      ],
+      "text": "arguments to produce a single judgment. It differs from debate in that the debaters never get\nto see the claims advanced by their opponent. The difference between the debate and double\nconsultancy results lets us measure the strength of the debaters’ capacity for refutation and\nthe importance of refutation in the judge’s decision-making process.",
+      "pdf_page": "https://arxiv.org/pdf/2409.16636v1#page=3"
+     },
+     {
+      "version": "2409.16636v1",
+      "page": 2,
+      "lines": [
+       102,
+       105
+      ],
+      "text": "Following Parrish et al. (2022b), our debates center on questions from the QuALITY dataset (Pang\net al., 2022) of multiple choice reading comprehension questions over short stories. We exclusively\nsample questions from the QuALITY-HARD subset, with one debater defending the correct answer\nand the other defending the answer marked as the best distractor by annotators.",
+      "pdf_page": "https://arxiv.org/pdf/2409.16636v1#page=2"
+     },
+     {
+      "version": "2409.16636v1",
+      "page": 7,
+      "lines": [
+       33,
+       36
+      ],
+      "text": "To measure how longer training and higher win rates affect the accuracy of the judge, we test different training checkpoints on the QuALITY-HARD validation set. Since some of Michael et al.\n(2023)’s debates drew from the validation set, we exclude some questions that were either present in\nthe training transcripts or shared a short story with a question in the training transcripts. After this\nfiltering, we end up testing on 433 distinct questions.",
+      "pdf_page": "https://arxiv.org/pdf/2409.16636v1#page=7"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Llama3-8B-Instruct (262k-context version) debaters and consultants trained with supervised finetuning and then a modified DPO",
+    "task_data": "QuALITY-HARD reading comprehension questions in a hidden-passage setup (judge sees only quotes the debaters select), correct answer vs best distractor",
+    "judge": "GPT-4-Turbo finetuned on human judgments of debate and consultancy transcripts",
+    "regime": "mixed",
+    "scale": "433 validation questions; accuracies averaged across all checkpoints"
+   },
+   "quantitative": {
+    "n": "433 distinct QuALITY-HARD validation questions",
+    "uncertainty": "None stated for the 77%, 75%, 72% and 68% accuracies"
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2409.16636v1:LIM-SCOPE"
+    ],
+    "notes": "The causal readings are hedged; the one-turn comparison relies on separately trained models in Appendix G. The expertise gap rests on asymmetric access to text and may poorly proxy gaps in reasoning ability; only reading comprehension questions are studied."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "One task and model family, with point accuracies and no uncertainty reported for the protocol comparison."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2409.16636v1:RES-EVIDENCE-TRANSFER",
+   "paper": "2409.16636v1",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2409.16636v1:METHOD-SELFPLAY-DPO",
+     "N2:DSOFT:ARXIV-2409.16636v1:METHOD-JUDGE"
+    ],
+    "description": "Across training checkpoints the authors measure quoted words in debater and consultant speeches and how much of the consultant's second-speech quoting repeats its first speech, and re-evaluate debaters and consultants with an untrained GPT-4o judge, correlating its win rates with those under the trained GPT-4-Turbo judge (Figure 6).",
+    "passages": [
+     {
+      "version": "2409.16636v1",
+      "page": 8,
+      "lines": [
+       1,
+       5
+      ],
+      "text": "Figure 6: Policy changes across training. Far left: As we train for longer, the debate model uses\nmore evidence while the consultant model uses less. Center left: The consultant model becomes\nmore repetitive over training, with the vast majority of its quotes in the second speech being repeated\nfrom the first. Right: The strategic differences adopted by the debater models transfer to convincing\nan untrained GPT-4o judge more successfully than the strategies adopted by the consultant models.",
+      "pdf_page": "https://arxiv.org/pdf/2409.16636v1#page=8"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "The trained GPT-4-Turbo judge is the one the models were optimized against; the GPT-4o transfer judge is untrained.",
+     "The reading that debaters learn more generally useful strategies while consultants learn judge-specific features is hedged ('suggests', 'may')."
+    ],
+    "passages": [
+     {
+      "version": "2409.16636v1",
+      "page": 2,
+      "lines": [
+       102,
+       105
+      ],
+      "text": "Following Parrish et al. (2022b), our debates center on questions from the QuALITY dataset (Pang\net al., 2022) of multiple choice reading comprehension questions over short stories. We exclusively\nsample questions from the QuALITY-HARD subset, with one debater defending the correct answer\nand the other defending the answer marked as the best distractor by annotators.",
+      "pdf_page": "https://arxiv.org/pdf/2409.16636v1#page=2"
+     },
+     {
+      "version": "2409.16636v1",
+      "page": 5,
+      "lines": [
+       13,
+       16
+      ],
+      "text": "We start with a version of Llama3-8B-Instruct that was finetuned by GradientAI to extend the context\nlength to from 8k to 262k tokens (AI@Meta, 2024; GradientAI, 2024). This context length extension\nis necessary to accommodate the full text of the QuALITY stories, which run to over 10k tokens\n(Pang et al., 2022).",
+      "pdf_page": "https://arxiv.org/pdf/2409.16636v1#page=5"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Llama3-8B debater and consultant checkpoints, from SFT-only to fully trained",
+    "task_data": "Debates and consultancies on QuALITY-HARD questions",
+    "judge": "Finetuned GPT-4-Turbo (training judge) and untrained GPT-4o (transfer judge)",
+    "regime": "mixed",
+    "scale": null
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": "The consultant's drop in quoting is 'barely significant due to high variance'; no uncertainty is given for the 96% increase or the Pearson correlations (0.98 and 0.51)"
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2409.16636v1:LIM-SCOPE"
+    ],
+    "notes": "The consultancy quoting trend is barely significant, and the number of checkpoints behind the correlations is not stated in these passages."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "One task and model family; the only uncertainty statement is that the consultant trend is barely significant, and no test is given for the correlations."
+   },
+   "review_status": "provisional_ai_draft"
+  }
+ ]
+}

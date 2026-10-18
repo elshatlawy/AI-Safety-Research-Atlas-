@@ -1,0 +1,606 @@
+{
+ "schema": "ASRA-GAP-CLOSING-AGENT-v1",
+ "paper": "2407.04622v2",
+ "review_status": "provisional_ai_draft",
+ "rules": [
+  "Everything here is an AI draft (provisional_ai_draft): each counted item passed two blind AI checks that were tested on planted errors, and no person has reviewed it.",
+  "A finding counts only in the setting its own quoted lines show; read `setting` before carrying it to another setting.",
+  "A question's status is a label from fixed rules over its counted findings; `status_check` says whether that label itself passed its check.",
+  "Cite the paper and page from the passage, and read the PDF page before relying on a claim."
+ ],
+ "notes": "All six records are correctly labelled and their quotes show their results. CORE is the abstract summary. Uncertainty for every card comes from figure captions and the significance paragraph (95% CIs, permutation p-values, bootstrap CIs); the figures themselves are not in the text. RES-ABLATIONS summarises chain-of-thought as having 'little effect', while the ablation paragraph says judge chain-of-thought 'tends to harm performance or be insignificant'. The paper says models are used 1-shot by default (p8 L34-35) but that judges are 0-shot prompted for the Figure 2 results (p9 L3-4); the extractive and closed cards follow the latter. No method record covers the Elo experiment, so RES-DEBATER-ELO's method is given by Appendix E passages.",
+ "cards": [
+  {
+   "record_id": "N2:DSOFT:ARXIV-2407.04622v2:CORE",
+   "paper": "2407.04622v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2407.04622v2:DEF-CONSULTANCY-DEBATE",
+     "N2:DSOFT:ARXIV-2407.04622v2:DEF-OPEN-ROLE"
+    ],
+    "description": "LLM judges answer binary-choice questions after consultancy, debate or their open-role variants, or directly (QA with or without the article), and judge accuracy is measured against the ground-truth labels of 9 tasks.",
+    "passages": [
+     {
+      "version": "2407.04622v2",
+      "page": 6,
+      "lines": [
+       44,
+       49
+      ],
+      "text": "Our study is performed on a collection of tasks in which an underlying binary-choice question\nanswering dataset is wrapped with the requisite logic and prompt templates for evaluating various\nscalable oversight protocols involving LLMs. On each task, a judge LLM answers a question from the\ntask, possibly after seeing output from debater or consultant LLMs, and judge accuracy is measured\non the ground-truth dataset labels. We vary the setup along the three axes of (1) the scalable oversight\nprotocol, (2) the QA task, and (3) the judge LLM, each of which we now describe in more detail.",
+      "pdf_page": "https://arxiv.org/pdf/2407.04622v2#page=6"
+     },
+     {
+      "version": "2407.04622v2",
+      "page": 8,
+      "lines": [
+       25,
+       35
+      ],
+      "text": "We use the following models in our work: Gemma7B (V1) (Gemma Team et al., 2024) (instruction\ntuned version, text-only), GPT-3.5 (Brown et al., 2020) (gpt-3.5-turbo-0125), Gemini Pro 1.0 (Gemini\nTeam et al., 2023) (text-only version), and Gemini Pro 1.5 (Reid et al., 2024) (image+text-to-text\nversion, allowing us to operate on multimodal only with this model). Gemma7B is open-source, which\nwe hope aids reproducibility by others. GPT3.5 has been used in previous work Khan et al. (2024) as\na judge, enabling us to compare some results.\nIn our first experiments, Section 4.1 and Section 4.2, we use the strongest model, Pro 1.5,\nas debaters/consultants, and all models as (possibly weaker) judges allowing us to study strong\nconsultants/debaters overseen by weaker judges. In Section 4.3 we vary the debater model, and\nanalyse it with two judges (Pro 1.0, Pro 1.5). Models are used 1-shot, with default sampling options\nunless otherwise specified.",
+      "pdf_page": "https://arxiv.org/pdf/2407.04622v2#page=8"
+     },
+     {
+      "version": "2407.04622v2",
+      "page": 3,
+      "lines": [
+       33,
+       35
+      ],
+      "text": "LLMs. We perform a large-scale evaluation sweeping over 9 tasks, each sampling 128 questions,\ntotalling approximately 5 million model generation calls, affording us insight on which aspects of our\nstudy are practically significant. Our findings are as follows, see Figure 2:",
+      "pdf_page": "https://arxiv.org/pdf/2407.04622v2#page=3"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "LLMs stand in for human judges, and judge models are taken to be weaker than, or equal to, the agent models.",
+     "In assigned-role consultancy the consultant argues for the correct or the incorrect answer; in the open-role variants the agent chooses which answer to argue for.",
+     "The study is inference-only: models are prompted to play the roles, not trained in these games."
+    ],
+    "passages": [
+     {
+      "version": "2407.04622v2",
+      "page": 3,
+      "lines": [
+       3,
+       8
+      ],
+      "text": "Figure 2 | Assigned-role results: mean judge accuracy (y-axis) split by task type (facet), judge model\n(x-axis), protocol (colour). Higher is better. 95% CI calculated aggregated over tasks of same type\n(Appendix D for details). The QA with article protocol (purple) can only be applied for extractive\ntasks. Only Pro 1.5 is multimodal.\nmore capable models and weaker judges, in our main evaluation experiments we vary the strength of\nthe judge to be equal or weaker than the models it is judging.",
+      "pdf_page": "https://arxiv.org/pdf/2407.04622v2#page=3"
+     },
+     {
+      "version": "2407.04622v2",
+      "page": 6,
+      "lines": [
+       55,
+       66
+      ],
+      "text": "group tasks into three categories, see Table 1: Extractive QA (QuALITY (Pang et al., 2021), BoolQ\n(Clark et al., 2019) and GPQA-extractive (Rein et al., 2023)), in which a binary-choice question, along\nwith an article, are supplied to consultants/debaters but not to the judge, introducing an information\nasymmetry. Debaters extract passages from the article to use in their arguments – modeling a specific\nkind of weak-strong gap. The debaters and judges have access to a tool which verifies whether the\npassage is indeed contained in the article (see Appendix G). Closed QA (MMLU (Hendrycks et al.,\n2020), GSM8KQA (Cobbe et al., 2021), PrOntoQA (Saparov and He, 2023), TruthfulQA (Lin et al.,\n2021) and GPQA (Rein et al., 2023)) contain questions and answers, but there is no article to use as\na source, in contrast to extractive QA, and hence there is no information asymmetry. The weak-strong\ngaps being motivated here are more intrinsic to the models – their capability and skill/reasoning gaps.\nMultimodal (MMMU (Yue et al., 2023)) tasks are image+text-to-text, others are text-to-text. Judge\nand debaters/consultants can view the image as well as the question, without information asymmetry.",
+      "pdf_page": "https://arxiv.org/pdf/2407.04622v2#page=6"
+     },
+     {
+      "version": "2407.04622v2",
+      "page": 9,
+      "lines": [
+       5,
+       8
+      ],
+      "text": "To estimate statistical significance in the difference in performance between protocols we calculate\npermutation-based 𝑝-values of accuracy differences between protocols, for each task type and judge.\nSee Figure A.1 for pairwise significance results. We now highlight some key features of our results\n(taking significance level 5%).",
+      "pdf_page": "https://arxiv.org/pdf/2407.04622v2#page=9"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Gemini Pro 1.5 as debaters/consultants in Sections 4.1-4.2 (debater model varied in Section 4.3); judges Gemma7B, GPT-3.5, Gemini Pro 1.0 and Gemini Pro 1.5 (only Pro 1.5 handles multimodal input)",
+    "task_data": "9 binary-choice QA tasks: extractive (QuALITY, BoolQ, GPQA-extractive; article hidden from the judge), closed (MMLU, GSM8KQA, PrOntoQA, TruthfulQA, GPQA) and multimodal (MMMU)",
+    "judge": "LLM judges Gemma7B, GPT-3.5, Gemini Pro 1.0 and Gemini Pro 1.5, scored against ground-truth labels",
+    "regime": "evaluation",
+    "scale": "9 tasks with 128 questions sampled per task, about 5 million model generation calls"
+   },
+   "quantitative": {
+    "n": "128 questions sampled per task, 9 tasks",
+    "uncertainty": "95% confidence intervals (Figure 2) and permutation-based p-values between protocols at a 5% significance level"
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2407.04622v2:LIM-INFERENCE-ONLY",
+     "N2:DSOFT:ARXIV-2407.04622v2:LIM-NO-HUMANS"
+    ],
+    "notes": "Inference-only, with consultants/debaters fine-tuned by RLHF for honesty; no human judges, and agents far from superhuman."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_MULTI_SETTING",
+    "reason": "The experiments span 9 tasks of three types and four judge models, with 95% confidence intervals and permutation p-values reported."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2407.04622v2:RES-EXTRACTIVE",
+   "paper": "2407.04622v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2407.04622v2:DEF-CONSULTANCY-DEBATE"
+    ],
+    "description": "Assigned-role consultancy and debate with Gemini Pro 1.5 agents (3 rounds; debate with simultaneous turns and best-of-4 response selection) are judged 0-shot by four LLM judges on extractive tasks and compared with QA with and without the article; protocol differences are tested with permutation p-values at the 5% level.",
+    "passages": [
+     {
+      "version": "2407.04622v2",
+      "page": 8,
+      "lines": [
+       39,
+       41
+      ],
+      "text": "We first present our findings across task types, judge models and assigned-role protocols (consultancy,\ndebate and QA with/without article), in Figure 2; results for individual tasks can be found in Appendix B, Figure B.1. For these results we select the following settings: for consultancy/debate, we\nuse Pro 1.5 as consultant/debaters and have 3 rounds of interaction. For debate, we use simultaneous turns with debaters selecting their responses through Best-of-4: 4 samples are independently",
+      "pdf_page": "https://arxiv.org/pdf/2407.04622v2#page=8"
+     },
+     {
+      "version": "2407.04622v2",
+      "page": 9,
+      "lines": [
+       3,
+       8
+      ],
+      "text": "generated, and Pro 1.5 is prompted to select the most persuasive one1 . Judges are 0-shot prompted\nto predict the answer given the protocol transcript.\nTo estimate statistical significance in the difference in performance between protocols we calculate\npermutation-based 𝑝-values of accuracy differences between protocols, for each task type and judge.\nSee Figure A.1 for pairwise significance results. We now highlight some key features of our results\n(taking significance level 5%).",
+      "pdf_page": "https://arxiv.org/pdf/2407.04622v2#page=9"
+     },
+     {
+      "version": "2407.04622v2",
+      "page": 8,
+      "lines": [
+       25,
+       35
+      ],
+      "text": "We use the following models in our work: Gemma7B (V1) (Gemma Team et al., 2024) (instruction\ntuned version, text-only), GPT-3.5 (Brown et al., 2020) (gpt-3.5-turbo-0125), Gemini Pro 1.0 (Gemini\nTeam et al., 2023) (text-only version), and Gemini Pro 1.5 (Reid et al., 2024) (image+text-to-text\nversion, allowing us to operate on multimodal only with this model). Gemma7B is open-source, which\nwe hope aids reproducibility by others. GPT3.5 has been used in previous work Khan et al. (2024) as\na judge, enabling us to compare some results.\nIn our first experiments, Section 4.1 and Section 4.2, we use the strongest model, Pro 1.5,\nas debaters/consultants, and all models as (possibly weaker) judges allowing us to study strong\nconsultants/debaters overseen by weaker judges. In Section 4.3 we vary the debater model, and\nanalyse it with two judges (Pro 1.0, Pro 1.5). Models are used 1-shot, with default sampling options\nunless otherwise specified.",
+      "pdf_page": "https://arxiv.org/pdf/2407.04622v2#page=8"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "Information asymmetry: consultants/debaters see the article but the judge does not (except in QA with article); passages they extract are checked by a verification tool available to debaters and judges.",
+     "The consultant argues separately for the correct and the incorrect answer, simulating a worst-case RLHF in which feedback cannot tell them apart."
+    ],
+    "passages": [
+     {
+      "version": "2407.04622v2",
+      "page": 6,
+      "lines": [
+       53,
+       64
+      ],
+      "text": "appropriate for each scalable oversight protocol. In general, where an underlying dataset is multiple\nchoice, we form a binary choice version by selecting the correct answer and a random answer. We\ngroup tasks into three categories, see Table 1: Extractive QA (QuALITY (Pang et al., 2021), BoolQ\n(Clark et al., 2019) and GPQA-extractive (Rein et al., 2023)), in which a binary-choice question, along\nwith an article, are supplied to consultants/debaters but not to the judge, introducing an information\nasymmetry. Debaters extract passages from the article to use in their arguments – modeling a specific\nkind of weak-strong gap. The debaters and judges have access to a tool which verifies whether the\npassage is indeed contained in the article (see Appendix G). Closed QA (MMLU (Hendrycks et al.,\n2020), GSM8KQA (Cobbe et al., 2021), PrOntoQA (Saparov and He, 2023), TruthfulQA (Lin et al.,\n2021) and GPQA (Rein et al., 2023)) contain questions and answers, but there is no article to use as\na source, in contrast to extractive QA, and hence there is no information asymmetry. The weak-strong\ngaps being motivated here are more intrinsic to the models – their capability and skill/reasoning gaps.",
+      "pdf_page": "https://arxiv.org/pdf/2407.04622v2#page=6"
+     },
+     {
+      "version": "2407.04622v2",
+      "page": 3,
+      "lines": [
+       33,
+       35
+      ],
+      "text": "LLMs. We perform a large-scale evaluation sweeping over 9 tasks, each sampling 128 questions,\ntotalling approximately 5 million model generation calls, affording us insight on which aspects of our\nstudy are practically significant. Our findings are as follows, see Figure 2:",
+      "pdf_page": "https://arxiv.org/pdf/2407.04622v2#page=3"
+     },
+     {
+      "version": "2407.04622v2",
+      "page": 3,
+      "lines": [
+       3,
+       6
+      ],
+      "text": "Figure 2 | Assigned-role results: mean judge accuracy (y-axis) split by task type (facet), judge model\n(x-axis), protocol (colour). Higher is better. 95% CI calculated aggregated over tasks of same type\n(Appendix D for details). The QA with article protocol (purple) can only be applied for extractive\ntasks. Only Pro 1.5 is multimodal.",
+      "pdf_page": "https://arxiv.org/pdf/2407.04622v2#page=3"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Gemini Pro 1.5 consultants/debaters; judges Gemma7B, GPT-3.5, Gemini Pro 1.0 and Gemini Pro 1.5",
+    "task_data": "Binary-choice extractive QA tasks QuALITY, BoolQ and GPQA-extractive",
+    "judge": "LLM judges Gemma7B, GPT-3.5, Gemini Pro 1.0 and Gemini Pro 1.5",
+    "regime": "evaluation",
+    "scale": "128 questions sampled per task"
+   },
+   "quantitative": {
+    "n": "128 questions sampled per task (three extractive tasks)",
+    "uncertainty": "95% confidence intervals aggregated over tasks of the same type (Figure 2); permutation-based p-values at the 5% level (Figure A.1)"
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2407.04622v2:LIM-INFERENCE-ONLY",
+     "N2:DSOFT:ARXIV-2407.04622v2:LIM-NO-HUMANS"
+    ],
+    "notes": "QA with article is best for every judge (information is 'best used directly, even by a weak model, rather than filtered through oversight'); Gemma7B, the weakest judge, does no better with debate than with QA without article."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_MULTI_SETTING",
+    "reason": "Three extractive tasks and four judge models, with 95% confidence intervals and permutation tests at the 5% level."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2407.04622v2:RES-CLOSED",
+   "paper": "2407.04622v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2407.04622v2:DEF-CONSULTANCY-DEBATE"
+    ],
+    "description": "Assigned-role consultancy and debate with Gemini Pro 1.5 agents (3 rounds; debate with simultaneous turns and best-of-4 response selection) are judged 0-shot by four LLM judges on closed tasks and compared with QA without article; protocol differences are tested with permutation p-values at the 5% level.",
+    "passages": [
+     {
+      "version": "2407.04622v2",
+      "page": 8,
+      "lines": [
+       39,
+       41
+      ],
+      "text": "We first present our findings across task types, judge models and assigned-role protocols (consultancy,\ndebate and QA with/without article), in Figure 2; results for individual tasks can be found in Appendix B, Figure B.1. For these results we select the following settings: for consultancy/debate, we\nuse Pro 1.5 as consultant/debaters and have 3 rounds of interaction. For debate, we use simultaneous turns with debaters selecting their responses through Best-of-4: 4 samples are independently",
+      "pdf_page": "https://arxiv.org/pdf/2407.04622v2#page=8"
+     },
+     {
+      "version": "2407.04622v2",
+      "page": 9,
+      "lines": [
+       3,
+       8
+      ],
+      "text": "generated, and Pro 1.5 is prompted to select the most persuasive one1 . Judges are 0-shot prompted\nto predict the answer given the protocol transcript.\nTo estimate statistical significance in the difference in performance between protocols we calculate\npermutation-based 𝑝-values of accuracy differences between protocols, for each task type and judge.\nSee Figure A.1 for pairwise significance results. We now highlight some key features of our results\n(taking significance level 5%).",
+      "pdf_page": "https://arxiv.org/pdf/2407.04622v2#page=9"
+     },
+     {
+      "version": "2407.04622v2",
+      "page": 8,
+      "lines": [
+       25,
+       35
+      ],
+      "text": "We use the following models in our work: Gemma7B (V1) (Gemma Team et al., 2024) (instruction\ntuned version, text-only), GPT-3.5 (Brown et al., 2020) (gpt-3.5-turbo-0125), Gemini Pro 1.0 (Gemini\nTeam et al., 2023) (text-only version), and Gemini Pro 1.5 (Reid et al., 2024) (image+text-to-text\nversion, allowing us to operate on multimodal only with this model). Gemma7B is open-source, which\nwe hope aids reproducibility by others. GPT3.5 has been used in previous work Khan et al. (2024) as\na judge, enabling us to compare some results.\nIn our first experiments, Section 4.1 and Section 4.2, we use the strongest model, Pro 1.5,\nas debaters/consultants, and all models as (possibly weaker) judges allowing us to study strong\nconsultants/debaters overseen by weaker judges. In Section 4.3 we vary the debater model, and\nanalyse it with two judges (Pro 1.0, Pro 1.5). Models are used 1-shot, with default sampling options\nunless otherwise specified.",
+      "pdf_page": "https://arxiv.org/pdf/2407.04622v2#page=8"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "No information asymmetry: closed tasks have no article, so judge and agents see the same question and answer options.",
+     "The consultant argues separately for the correct and the incorrect answer.",
+     "The authors interpret Gemma7B as likely too weak to be informative and Pro 1.5 (judging its own model) as having no weak-strong asymmetry, so they treat GPT-3.5 and Pro 1.0 as the most indicative judges."
+    ],
+    "passages": [
+     {
+      "version": "2407.04622v2",
+      "page": 6,
+      "lines": [
+       53,
+       64
+      ],
+      "text": "appropriate for each scalable oversight protocol. In general, where an underlying dataset is multiple\nchoice, we form a binary choice version by selecting the correct answer and a random answer. We\ngroup tasks into three categories, see Table 1: Extractive QA (QuALITY (Pang et al., 2021), BoolQ\n(Clark et al., 2019) and GPQA-extractive (Rein et al., 2023)), in which a binary-choice question, along\nwith an article, are supplied to consultants/debaters but not to the judge, introducing an information\nasymmetry. Debaters extract passages from the article to use in their arguments – modeling a specific\nkind of weak-strong gap. The debaters and judges have access to a tool which verifies whether the\npassage is indeed contained in the article (see Appendix G). Closed QA (MMLU (Hendrycks et al.,\n2020), GSM8KQA (Cobbe et al., 2021), PrOntoQA (Saparov and He, 2023), TruthfulQA (Lin et al.,\n2021) and GPQA (Rein et al., 2023)) contain questions and answers, but there is no article to use as\na source, in contrast to extractive QA, and hence there is no information asymmetry. The weak-strong\ngaps being motivated here are more intrinsic to the models – their capability and skill/reasoning gaps.",
+      "pdf_page": "https://arxiv.org/pdf/2407.04622v2#page=6"
+     },
+     {
+      "version": "2407.04622v2",
+      "page": 3,
+      "lines": [
+       33,
+       35
+      ],
+      "text": "LLMs. We perform a large-scale evaluation sweeping over 9 tasks, each sampling 128 questions,\ntotalling approximately 5 million model generation calls, affording us insight on which aspects of our\nstudy are practically significant. Our findings are as follows, see Figure 2:",
+      "pdf_page": "https://arxiv.org/pdf/2407.04622v2#page=3"
+     },
+     {
+      "version": "2407.04622v2",
+      "page": 3,
+      "lines": [
+       3,
+       6
+      ],
+      "text": "Figure 2 | Assigned-role results: mean judge accuracy (y-axis) split by task type (facet), judge model\n(x-axis), protocol (colour). Higher is better. 95% CI calculated aggregated over tasks of same type\n(Appendix D for details). The QA with article protocol (purple) can only be applied for extractive\ntasks. Only Pro 1.5 is multimodal.",
+      "pdf_page": "https://arxiv.org/pdf/2407.04622v2#page=3"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Gemini Pro 1.5 consultants/debaters; judges Gemma7B, GPT-3.5, Gemini Pro 1.0 and Gemini Pro 1.5",
+    "task_data": "Binary-choice closed QA tasks MMLU, GSM8KQA, PrOntoQA, TruthfulQA and GPQA",
+    "judge": "LLM judges Gemma7B, GPT-3.5, Gemini Pro 1.0 and Gemini Pro 1.5",
+    "regime": "evaluation",
+    "scale": "128 questions sampled per task"
+   },
+   "quantitative": {
+    "n": "128 questions sampled per task (five closed tasks)",
+    "uncertainty": "Permutation p-values: p = 0.037 for GPT-3.5 (debate vs QA without article) and p = 0.1, not significant, for Pro 1.0; 95% confidence intervals aggregated over tasks of the same type (Figure 2)"
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2407.04622v2:LIM-INFERENCE-ONLY",
+     "N2:DSOFT:ARXIV-2407.04622v2:LIM-NO-HUMANS"
+    ],
+    "notes": "For Gemma7B QA without article beats debate, and for Pro 1.5 judging its own model debate gives lower accuracy than QA without article; the authors read the results as small or no benefit of debate over QA without article."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_MULTI_SETTING",
+    "reason": "Five closed tasks and four judge models, with permutation p-values (e.g. p = 0.037, p = 0.1) and 95% confidence intervals reported."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2407.04622v2:RES-ABLATIONS",
+   "paper": "2407.04622v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2407.04622v2:DEF-CONSULTANCY-DEBATE"
+    ],
+    "description": "One setting is changed at a time and judge accuracy is compared: turns reduced from 3 to 1 in consultancy and debate, debater best-of-N reduced from 4 to 1, judge 6-shot versus 0-shot prompting, and judge chain-of-thought versus a direct answer (Figures A.2-A.5).",
+    "passages": [
+     {
+      "version": "2407.04622v2",
+      "page": 9,
+      "lines": [
+       34,
+       39
+      ],
+      "text": "Ablation: Number of turns We investigate what happens when we reduce the number of turns from\n3 to 1 in consultancy and debate. We find no significant effect from the number of turns. This suggests,\nfor these tasks, models and protocols, more rounds does not help the judge. This is consistent with\nthe findings of Khan et al. (2024) for QuALITY. See Figure A.2.\nAblation: Best-of-N for debaters We consider the debate protocol and reduce the best-of-N (BoN)\nsampling for debater responses from 4 to 1, i.e. standard sampling. We do not see substantial reduction",
+      "pdf_page": "https://arxiv.org/pdf/2407.04622v2#page=9"
+     },
+     {
+      "version": "2407.04622v2",
+      "page": 10,
+      "lines": [
+       3,
+       10
+      ],
+      "text": "in judge accuracy, suggesting our implementation of best-of-N is not helpful. Khan et al. (2024) don’t\ndirectly report the influence of 𝑁 on judge accuracy, though their Fig. 3 suggests Elo increases with 𝑁\nand judge accuracy increases with Elo (though perhaps less so for stronger debaters). Our findings\non Elo Section 4.3 suggest BoN=4 increases Elo, but doesn’t significantly increase accuracy. See\nFigure A.3.\nAblation: Judge Few-shot prompting We look at varying 0-shot to 6-shot prompting for the judge,\nbalancing the order of the correct answer across examples. Overall, the results do not show significant\nimprovement with 6-shots. See Figure A.4.",
+      "pdf_page": "https://arxiv.org/pdf/2407.04622v2#page=10"
+     },
+     {
+      "version": "2407.04622v2",
+      "page": 10,
+      "lines": [
+       11,
+       16
+      ],
+      "text": "Ablation: Judge Chain-of-thought We prompt the judge to use chain-of-thought (CoT) reasoning\n(Wei et al., 2022) before giving its answer and compare this to our default prompt instructing the\njudge to just give its answer (prediction). Surprisingly, we see CoT tends to harm performance or be\ninsignificant (see Figure A.5). We hypothesise that having weaker judges use their own CoT causes\nthem to disregard the verbalised reasoning offered by stronger consultants/debaters, which might be\nhigher quality. Stureborg et al. (2024) also noticed CoT degrading LLM evaluation performance.",
+      "pdf_page": "https://arxiv.org/pdf/2407.04622v2#page=10"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "Conclusions are scoped to 'these tasks, models and protocols' in an inference-only setting.",
+     "Best-of-N here uses the debater model to compare the N samples, which differs from Khan et al.'s method and from standard best-of-N with a trained reward model.",
+     "The authors hypothesise that judge chain-of-thought makes weaker judges disregard the stronger agents' reasoning."
+    ],
+    "passages": [
+     {
+      "version": "2407.04622v2",
+      "page": 9,
+      "lines": [
+       40,
+       45
+      ],
+      "text": "1 This differs from the best-of-N in Khan et al. (2024) which relied on comparing log probabilities of samples compared\nto a dummy argument. Firstly, we didn’t have access to log probabilities in our debater model. Secondly, we thought it\nwas more principled not to choose compared to a dummy argument, but to compare between the arguments themselves.\nThird, we used the debater model to compare the 𝑁 samples, rather than the judge model as we suspected this would be\nthe strongest judge. Also, our implementation differs from standard best-of-N which would typically use a trained reward\nmodel for scoring.",
+      "pdf_page": "https://arxiv.org/pdf/2407.04622v2#page=9"
+     },
+     {
+      "version": "2407.04622v2",
+      "page": 35,
+      "lines": [
+       3,
+       10
+      ],
+      "text": "Figure A.2 | The influence of the number of turns of consultancy and debate. We observe no\nbenefit to increasing the number of turns of each protocol. Colours to denote protocol employed\nin each experiment. Lighter colours indicate fewer rounds. The error bars depict 95% confidence\nintervals.\n\nFigure A.3 | The influence of best-of-N sampling on debate performance. We observe no consistent\nbenefit to using best-of-N sampling on debater responses. The error bars depict 95% confidence\nintervals.",
+      "pdf_page": "https://arxiv.org/pdf/2407.04622v2#page=35"
+     },
+     {
+      "version": "2407.04622v2",
+      "page": 36,
+      "lines": [
+       3,
+       11
+      ],
+      "text": "Figure A.4 | The influence of few-shot prompting on judge performance.. We compare 6-shot\nprompting (paler colours) with 0-shot prompting (darker colours), our default approach. We observe\nno consistent benefit to using few-shot prompting. Different colours denote different protocols. The\nerror bars depict 95% confidence intervals.\n\nFigure A.5 | The influence of judge model chain-of-thought. We observe no consistent benefit to\nusing chain-of-thought prompting, and sometimes observe degradation. Different colours denote\ndifferent protocols. Paler colours denote chain-of-thought, while darker colours denote prediction\nwithout chain-of-thought (our default). The error bars depict 95% confidence intervals.",
+      "pdf_page": "https://arxiv.org/pdf/2407.04622v2#page=36"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "LLM consultants, debaters and judges of the study (models per ablation not named in these passages)",
+    "task_data": "The study's tasks ('for these tasks, models and protocols'); not broken down in these passages",
+    "judge": "LLM judges",
+    "regime": "evaluation",
+    "scale": null
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": "95% confidence intervals in Figures A.2-A.5; the text reports no significant effect of turns, no significant accuracy gain from best-of-4, and no significant improvement with 6-shot prompting"
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2407.04622v2:LIM-INFERENCE-ONLY"
+    ],
+    "notes": "Judge chain-of-thought 'tends to harm performance or be insignificant' rather than having no effect; the best-of-N finding concerns the authors' own implementation ('our implementation of best-of-N is not helpful')."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_MULTI_SETTING",
+    "reason": "Each ablation is reported for the study's tasks and protocols with 95% confidence intervals (Figures A.2-A.5)."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2407.04622v2:RES-OPEN-ROLE",
+   "paper": "2407.04622v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2407.04622v2:DEF-OPEN-ROLE",
+     "N2:DSOFT:ARXIV-2407.04622v2:DEF-CONSULTANCY-DEBATE"
+    ],
+    "description": "Open consultancy and open debate are formed from the assigned-role runs by keeping, or relabelling, those in which the consultant's or protagonist's assigned answer matches the agent model's own direct-QA answer; judge accuracy is then split by whether that chosen answer was correct (Figure 3 bottom).",
+    "passages": [
+     {
+      "version": "2407.04622v2",
+      "page": 12,
+      "lines": [
+       12,
+       15
+      ],
+      "text": "To understand more how the judge is affected by the correctness of the protagonist/consultant’s\nchoice, in Figure 3 bottom we plot the judge accuracy for open consultancy and open debate, split by\nwhether the consultant, or protagonist in debate, has chosen the correct (dark) or incorrect (light)\nanswer.",
+      "pdf_page": "https://arxiv.org/pdf/2407.04622v2#page=12"
+     },
+     {
+      "version": "2407.04622v2",
+      "page": 8,
+      "lines": [
+       25,
+       35
+      ],
+      "text": "We use the following models in our work: Gemma7B (V1) (Gemma Team et al., 2024) (instruction\ntuned version, text-only), GPT-3.5 (Brown et al., 2020) (gpt-3.5-turbo-0125), Gemini Pro 1.0 (Gemini\nTeam et al., 2023) (text-only version), and Gemini Pro 1.5 (Reid et al., 2024) (image+text-to-text\nversion, allowing us to operate on multimodal only with this model). Gemma7B is open-source, which\nwe hope aids reproducibility by others. GPT3.5 has been used in previous work Khan et al. (2024) as\na judge, enabling us to compare some results.\nIn our first experiments, Section 4.1 and Section 4.2, we use the strongest model, Pro 1.5,\nas debaters/consultants, and all models as (possibly weaker) judges allowing us to study strong\nconsultants/debaters overseen by weaker judges. In Section 4.3 we vary the debater model, and\nanalyse it with two judges (Pro 1.0, Pro 1.5). Models are used 1-shot, with default sampling options\nunless otherwise specified.",
+      "pdf_page": "https://arxiv.org/pdf/2407.04622v2#page=8"
+     },
+     {
+      "version": "2407.04622v2",
+      "page": 11,
+      "lines": [
+       10,
+       19
+      ],
+      "text": "4.2. Open-Role Results\n\nFigure 3 | Open debate, where a protagonist debater chooses which answer to argue for, and open\nconsultancy, where the consultant chooses which answer to argue for. Top: Judge accuracy (y-axis)\nand win rate of protagonist/consultant (x-axis). Blue colours indicate open consultancy, red colours\nindicate open debate, with the shade corresponding to judge model. Each facet is task type. Bottom:\nJudge accuracy according to whether the protagonist/consultant chose the correct (dark) or incorrect\n(light) answer. Split by judge model (x-axis) and protocol: open consultancy and open debate. Each\nfacet is task type. 95% CIs in all plots. The consultant/protagonist chooses the correct answer in\n88%, 84%, 71% of questions, for extractive, closed and multimodal tasks respectively.",
+      "pdf_page": "https://arxiv.org/pdf/2407.04622v2#page=11"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "The agent's 'choice' is identified with the answer the same model gives under direct QA (QA with/without article for extractive/closed tasks), reusing existing assigned-role data rather than new runs.",
+     "In open debate the antagonist is automatically assigned the opposing answer."
+    ],
+    "passages": []
+   },
+   "setting": {
+    "systems": "Gemini Pro 1.5 as consultant/debaters; judges Gemma7B, GPT-3.5, Gemini Pro 1.0 and Gemini Pro 1.5 (only Pro 1.5 handles multimodal input)",
+    "task_data": "Extractive, closed and multimodal binary-choice tasks (Figure 3 facets by task type)",
+    "judge": "LLM judges Gemma7B, GPT-3.5, Gemini Pro 1.0 and Gemini Pro 1.5",
+    "regime": "evaluation",
+    "scale": null
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": "95% confidence intervals in all Figure 3 plots"
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2407.04622v2:LIM-INFERENCE-ONLY",
+     "N2:DSOFT:ARXIV-2407.04622v2:LIM-NO-HUMANS"
+    ],
+    "notes": "The gain when the protagonist is incorrect trades off against a relative drop when the protagonist is correct; the agent chose the correct answer in 88%, 84% and 71% of questions (extractive, closed, multimodal), so incorrect-choice cases are the minority."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_MULTI_SETTING",
+    "reason": "Three task types and four judge models, with 95% confidence intervals in all Figure 3 plots."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2407.04622v2:RES-DEBATER-ELO",
+   "paper": "2407.04622v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [],
+    "description": "Five debaters (Gemma7B, GPT-3.5, Gemini Pro 1.0, Gemini Pro 1.5 with BoN=1, and Pro 1.5 with BoN=4) give 1-turn simultaneous opening arguments; 512 cross-play pairings are judged by Pro 1.5, aggregate, correct-answer and incorrect-answer Elo scores are computed from the win rates with bootstrap confidence intervals, and aggregate Elo is compared with Pro 1.5 judge accuracy (Figure 4).",
+    "passages": [
+     {
+      "version": "2407.04622v2",
+      "page": 20,
+      "lines": [
+       8,
+       15
+      ],
+      "text": "E. Elo Calculation\nThis appendix gives more detail on the Elo calculation method, which follows a similar setup to Khan\net al. (2024). We generate a series of 1-turn arguments in simultaneous debate (i.e. just opening\narguments), with five debaters: Gemma7B, GPT-3.5, Gemini Pro 1.0, Gemini Pro 1.5 (all with BoN=1),\nand Gemini Pro 1.5 with BoN=4. We then sample 512 (with each dataset contributing an equal\nnumber) pairings of cross-play debates and judge them with Pro 1.5 to generate a win-rate matrix,\n𝜔 𝑖, 𝑗 where 𝑖, 𝑗 range over the five debaters, representing frequency that debater 𝑖 beats debater 𝑗. We\nthen calculate aggregate Elo ranking scores, 𝐸 𝑖 for each debater. To do this, we define the expected",
+      "pdf_page": "https://arxiv.org/pdf/2407.04622v2#page=20"
+     },
+     {
+      "version": "2407.04622v2",
+      "page": 20,
+      "lines": [
+       34,
+       37
+      ],
+      "text": "using the BFGS algorithm. To estimate confidence intervals we use statistical bootstrapping with 500\nseeds. We further calculate correct-Elo and incorrect-Elo scores by considering each debater to be\ntwo distinct players: one that is assigned the correct answer, and that is assigned the incorrect answer,\nand calculating corresponding Elo scores as above (but now with ten players).",
+      "pdf_page": "https://arxiv.org/pdf/2407.04622v2#page=20"
+     },
+     {
+      "version": "2407.04622v2",
+      "page": 13,
+      "lines": [
+       3,
+       7
+      ],
+      "text": "Figure 4 | Top: Elo of debaters, coloured by model, separated by whether they’re assigned to argue for\nthe correct (dark) or incorrect (light) answer. Middle: Correct answer advantage (correct debater’s\nElo - incorrect debater’s Elo) vs. aggregate debater Elo. Bottom: Plot of Pro 1.5 judge accuracy vs.\ndebater aggregate Elo scores. 95% CIs. Judge decisions are more sensitive to debaters on extractive\ntasks than closed tasks.",
+      "pdf_page": "https://arxiv.org/pdf/2407.04622v2#page=13"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "A debater's persuasiveness in inference-only debate is used as a proxy for training models to win the debate game.",
+     "Correct-Elo and incorrect-Elo treat each debater as two players, one assigned the correct and one the incorrect answer.",
+     "The authors suggest ('may be due to') that the clearer trend on extractive tasks reflects judges relying on debaters for information they cannot access."
+    ],
+    "passages": [
+     {
+      "version": "2407.04622v2",
+      "page": 12,
+      "lines": [
+       33,
+       36
+      ],
+      "text": "We now analyse the relative persuasiveness of debaters, motivated by debate as a scalable alignment\ntraining protocol. As a proxy for training models to win at the debate game, we instead consider a\ndebater model’s relative strength at persuading the judge (in inference-only debate) and investigate\nhow that correlates with judge accuracy. Compared to Section 4.1 and Section 4.2, which only",
+      "pdf_page": "https://arxiv.org/pdf/2407.04622v2#page=12"
+     },
+     {
+      "version": "2407.04622v2",
+      "page": 14,
+      "lines": [
+       26,
+       30
+      ],
+      "text": "We notice overall that both Gemini-family judges tends to assign relatively lower Elo scores to\nGPT3.5 than expected based on relative capabilities of the models. We speculate this may be an artifact\nof self-preference bias (Panickssery et al., 2024) in which an LLM evaluator prefers its own generations\ncompared to other models (though generalised such that a judge model prefers generations from\ntheir own model families rather than just from itself).",
+      "pdf_page": "https://arxiv.org/pdf/2407.04622v2#page=14"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Debaters Gemma7B, GPT-3.5, Gemini Pro 1.0, Gemini Pro 1.5 (BoN=1) and Gemini Pro 1.5 (BoN=4); judge Gemini Pro 1.5",
+    "task_data": "Extractive and closed tasks, each dataset contributing an equal number of the 512 pairings",
+    "judge": "Gemini Pro 1.5",
+    "regime": "evaluation",
+    "scale": "512 cross-play debate pairings of 1-turn debates"
+   },
+   "quantitative": {
+    "n": "512 cross-play debate pairings",
+    "uncertainty": "95% confidence intervals from bootstrap sampling with 500 seeds (Figure 4)"
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2407.04622v2:LIM-INFERENCE-ONLY",
+     "N2:DSOFT:ARXIV-2407.04622v2:LIM-NO-HUMANS"
+    ],
+    "notes": "The correct-answer advantage does not clearly grow with Elo, unlike Khan et al.; on closed tasks debaters are less differentiated; the authors speculate that self-preference bias makes Gemini-family judges give GPT-3.5 relatively low Elo."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_MULTI_SETTING",
+    "reason": "Five debater models on extractive and closed tasks, with bootstrap 95% confidence intervals reported (Figure 4)."
+   },
+   "review_status": "provisional_ai_draft"
+  }
+ ]
+}

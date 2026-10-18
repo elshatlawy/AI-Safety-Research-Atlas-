@@ -1,0 +1,175 @@
+{
+ "schema": "ASRA-GAP-CLOSING-AGENT-v1",
+ "id": "Q52",
+ "question": "Which debate graph topologies satisfy the martingale condition?",
+ "asked_by": "Choi et al., Debate or Vote: Which Yields Better Decisions in Multi-Agent Large Language Models?",
+ "rank": 28,
+ "status": "NARROWED",
+ "status_check": "AI_CHECKED",
+ "remaining_question": "In Choi et al.'s DCM debate model, exactly which debate graph topologies and prior assignments make condition (1) hold for every agent at every round, beyond Proposition 1's sufficient conditions? And on topologies where it fails (e.g. a directed star centred on a leader and gated on the leader's transcript, where the symmetry condition generally fails for the leader's update), is some weaker quantity, such as the average belief, still a martingale?",
+ "remaining_type": "MATHEMATICAL",
+ "safety_case": [],
+ "findings": [
+  {
+   "id": "Q52:F1",
+   "later_paper": "arXiv 2610.16343v1: Efficient Multi-Agent Reasoning via Confidence-Guided Adaptive Debate",
+   "first_submitted": "2026-10-12",
+   "effect": "NARROWS",
+   "claim": "For a discrete-choice abstraction of the type used in Choi et al. (2025), with posterior-mean beliefs updated by neighbour information, Proposition 3.2 states that if interaction is restricted to a directed star centred at the leader L (only L receives peer messages) and activated only on an event measurable w.r.t. L's transcript, the symmetry condition 'p_{i,t-1} equals the average of its neighbors' beliefs' required by Theorem 2.7 'generally fails' for the leader's update, so martingale neutrality does not apply to the leader's belief trajectory. The appendix restatement (Proposition A.4) says, more weakly, that this sufficient condition 'is not enforced' for the leader update, so Theorem 2.7 'cannot be invoked' to conclude martingale neutrality.",
+   "setting": "Theory (a proposition and its appendix restatement) in the LASE framework, for a discrete-choice abstraction of the type used in Choi et al. (2025); a directed star centred on the leader, activated only on an uncertainty event measurable w.r.t. the leader's transcript; concerns the leader's update only. A gated, leader-only interaction rather than a fixed debate graph.",
+   "bears_on": "Rules out one interaction structure (a gated directed star, for the leader's update) as one that guarantees the sufficient averaging condition behind martingale neutrality, though the appendix says only that the condition 'is not enforced'; it does not say which topologies satisfy it.",
+   "passages": [
+    {
+     "version": "2610.16343v1",
+     "page": 4,
+     "lines": [
+      135,
+      135
+     ],
+     "text": "Proposition 3.2 (LASE breaks symmetry conditions underlying martingale neutrality). Consider a discrete-choice",
+     "pdf_page": "https://arxiv.org/pdf/2610.16343v1#page=4"
+    },
+    {
+     "version": "2610.16343v1",
+     "page": 5,
+     "lines": [
+      17,
+      25
+     ],
+     "text": "abstraction of the type used in Choi et al. (2025), with\nposterior-mean beliefs pi,t updated by neighbor information. If interaction is restricted to a directed star centered at\nL (i.e., only L receives peer messages) and activated only\n(t)\non an event U (zL ) = 1 measurable w.r.t. L’s transcript,\nthen the symmetry condition “pi,t−1 equals the average of\nits neighbors’ beliefs” required by Theorem 2.7 generally\nfails for the leader’s update. Consequently, martingale neutrality does not apply to the leader’s belief trajectory under\nLASE.",
+     "pdf_page": "https://arxiv.org/pdf/2610.16343v1#page=5"
+    },
+    {
+     "version": "2610.16343v1",
+     "page": 11,
+     "lines": [
+      32,
+      39
+     ],
+     "text": "A.2. Proof of Proposition: breaking symmetry\nProposition A.4 (LASE breaks symmetry conditions underlying martingale neutrality). Consider a discrete-choice abstraction as in Choi et al. (2025), with posterior-mean beliefs pi,t updated by neighbor information. Under LASE’s leader-centric\nstar topology (only L incorporates peer messages) together with uncertainty-gated interaction (an update is executed only\nwhen U = 1, where U is measurable w.r.t. the leader transcript), the sufficient symmetry/averaging condition required\nby Theorem 2.7 is not enforced for the leader update. Therefore, Theorem 2.7 cannot be invoked to conclude martingale\nneutrality for LASE.\nProof. Theorem 2.7 states a sufficient condition: if, at an update step, an agent’s belief equals the average of its neighbors’\nbeliefs, then the agent’s next-step belief is a martingale in expectation. Formally, let Ni denote the neighbor set whose",
+     "pdf_page": "https://arxiv.org/pdf/2610.16343v1#page=11"
+    }
+   ]
+  },
+  {
+   "id": "Q52:F2",
+   "later_paper": "arXiv 2510.07517v5: When Identity Skews Debate: Anonymization for Bias-Reduced Multi-Agent Reasoning",
+   "first_submitted": "2025-10-08",
+   "effect": "RELATED_ONLY",
+   "claim": "With identity-weighted Dirichlet updates c_{i,t} = w_i e_{i,t} + sum over the peer set P(i) of w_j e_{j,t}, the authors show the predictive probabilities remain a martingale 'provided that all agents draw from the same predictive distribution', the same conclusion as Choi et al.",
+   "setting": "Theory (appendix proof); DCM debate model with positive identity weights and a general peer set; requires all agents to share one predictive distribution.",
+   "bears_on": "Extends the sufficient condition to weighted updates on any peer set when beliefs coincide; no new topology-level characterisation.",
+   "passages": [
+    {
+     "version": "2510.07517v5",
+     "page": 28,
+     "lines": [
+      70,
+      72
+     ],
+     "text": "whose belief update process is αi,t = αi,t−1 + ci,t , where ci,t = wi ei,t + j∈P(i) wj ej,t . The variables\nwi , wj > 0 are the identity weights, and ei,t , ej,t ∈ BK are one-hot vectors indicating the answer chosen\nout of K possible answers.",
+     "pdf_page": "https://arxiv.org/pdf/2510.07517v5#page=28"
+    },
+    {
+     "version": "2510.07517v5",
+     "page": 28,
+     "lines": [
+      107,
+      110
+     ],
+     "text": "Therefore, the predictive probabilities {pi,t } remains a martingale under the weighted update provided\nthat all agents draw from the same predictive distribution. This is the same conclusion derived in (Choi\net al., 2025)’s work, implying that response anonymization, while a necessary step towards reliable MAD,\nis not expected to break the martingale property of the system.",
+     "pdf_page": "https://arxiv.org/pdf/2510.07517v5#page=28"
+    }
+   ]
+  },
+  {
+   "id": "Q52:F3",
+   "later_paper": "arXiv 2601.19921v3: Demystifying Multi-Agent Debate: The Role of Confidence and Diversity",
+   "first_submitted": "2026-01-09",
+   "effect": "RELATED_ONLY",
+   "claim": "Theorem 1 proves that confidence-weighted debate yields a strict submartingale for each agent's belief on the correct answer under the assumptions that (i) agents are homogeneous and fully connected and (ii) confidence is positively correlated with correctness; the limitations state that the experiments focus on homogeneous agents and fully connected debate graphs and that extending to asymmetric communication topologies may introduce additional dynamics not captured.",
+   "setting": "Theory plus experiments; confidence-weighted debate; homogeneous, fully connected agents; confidence positively correlated with correctness.",
+   "bears_on": "Shows the later theory stays in the fully connected case; the topology question is left open.",
+   "passages": [
+    {
+     "version": "2601.19921v3",
+     "page": 6,
+     "lines": [
+      19,
+      26
+     ],
+     "text": "Theorem 1 (Confidence-weighted debate yields\na submartingale). Assume that: (i) agents are\nhomogeneous and fully connected; and (ii) confidence is positively correlated with correctness,\nin the sense that higher-confidence answers are,\non average, more likely to be correct than lowerconfidence ones. Let pi,t denote agent i’s belief\non the correct answer at round t, and let Ft\nbe the filtration generated by the debate history. Then the belief process {pi,t }t≥0 becomes\na strict submartingale:",
+     "pdf_page": "https://arxiv.org/pdf/2601.19921v3#page=6"
+    },
+    {
+     "version": "2601.19921v3",
+     "page": 9,
+     "lines": [
+      23,
+      26
+     ],
+     "text": "Fourth, our experiments focus on homogeneous\nagents and fully connected debate graphs. Extending the framework to heterogeneous models, asymmetric communication topologies, or larger agent\npopulations may introduce additional dynamics not\ncaptured in this work.",
+     "pdf_page": "https://arxiv.org/pdf/2601.19921v3#page=9"
+    }
+   ]
+  },
+  {
+   "id": "Q52:F4",
+   "later_paper": "arXiv 2603.06801v1: Breaking the Martingale Curse: Multi-Agent Debate via Asymmetric Cognitive Potential Energy",
+   "first_submitted": "2026-03-06",
+   "effect": "RELATED_ONLY",
+   "claim": "The authors restate the martingale property of [9] as Proposition 2.2: in a closed debate system without external oracle signals, if the belief update rule is linear (as in their Eq. 1) and symmetric, the average belief in the ground truth forms a martingale. They contend that the 'Debate-as-Martingale' characterization relies on strong assumptions (independent initial errors and purely linear aggregation), and report that all MAD variants consistently outperform majority voting across the tested benchmarks, with substantial margins on ARC-C and BBH, which they read as the debate process, 'regardless of the specific topology', acting as a 'denoising' filter.",
+   "setting": "A restated proposition for a closed debate system with a linear (Eq. 1), symmetric belief update (martingale of the average belief, not a per-agent condition on a graph); experiments comparing MAD variants with majority voting on benchmarks including TruthfulQA, LogiQA, ARC-C and BBH (the passage says voting struggles 'in the challenging interval'). The passages do not name the topologies tested.",
+   "bears_on": "Frames the martingale as a property of linear symmetric aggregation and reports gains over voting that the authors read as topology-independent; does not say which debate graph topologies satisfy the martingale condition.",
+   "passages": [
+    {
+     "version": "2603.06801v1",
+     "page": 3,
+     "lines": [
+      64,
+      69
+     ],
+     "text": "Recent work [9] characterizes the belief evolution in MAD as a martingale. We restate this property\nunder our notation to motivate our proposed method.\nProposition 2.2 (Martingale Property of Standard MAD). In a closed debate system without external\noracle signals, if the belief update rule is linear (as in Eq.(1)) and symmetric, the sequence of the\naverage belief in the ground truth, denoted as µt = p̄(t) (y ∗ ), forms a martingale:\nE[µt+1 | H (t) ] = µt .",
+     "pdf_page": "https://arxiv.org/pdf/2603.06801v1#page=3"
+    },
+    {
+     "version": "2603.06801v1",
+     "page": 4,
+     "lines": [
+      5,
+      8
+     ],
+     "text": "The “Debate-as-Martingale” hypothesis [9] poses a fundamental challenge to the field: if MAD\ncannot theoretically outperform majority voting in expectation, then the computational cost of iterative\ninteraction is unjustifiable. However, we contend that this theoretical characterization relies on strong\nassumptions: specifically, that initial errors are independent and that the aggregation is purely linear.",
+     "pdf_page": "https://arxiv.org/pdf/2603.06801v1#page=4"
+    },
+    {
+     "version": "2603.06801v1",
+     "page": 4,
+     "lines": [
+      96,
+      107
+     ],
+     "text": "1. Voting Stagnates in Correlated Noise. As detailed in Table 1, Majority Voting struggles to extract\ncorrect answers in the challenging interval. Across all datasets, the voting baseline shows negligible\nimprovement, or even degradation, as the ensemble size increases. For instance, increasing N from\n2 to 5 fails to break the performance ceiling on tasks like TruthfulQA and LogiQA. This empirical\nplateau confirms that errors in these adversarial regimes are highly correlated; simply adding more\nstatic agents merely reinforces the false consensus rather than diluting it.\n2. Debate Consistently Outperforms Voting. Table 1 demonstrates that this limitation is structural\nto voting, not the models. All MAD variants consistently outperform Majority Voting across\nthe tested benchmarks. In the most challenging reasoning tasks such as ARC-C and BBH, debate\nmechanisms achieve substantial margins over the voting baseline. This indicates that the debate\nprocess itself, regardless of the specific topology, acts as a necessary “denoising” filter that disrupts\nthe homogeneous error patterns of the crowd.",
+     "pdf_page": "https://arxiv.org/pdf/2603.06801v1#page=4"
+    }
+   ]
+  }
+ ],
+ "findings_drafted": 4,
+ "maths": [
+  {
+   "folder": "q52",
+   "label": "Proved",
+   "settled": "Within the formal model described in formal_statement, Lean proves the following without sorry. (1) The one-step martingale identity for an agent is equivalent to the paper's condition (1) at that state. (2) From a homogeneous start, on any observation structure, agent i's belief is a martingale iff every agent i observes has the same observation set as i. On the paper's undirected graphs with self-observation, all agents' beliefs are martingales iff the graph is a disjoint union of cliques. With heterogeneous starts this holds iff, in addition, the agents in each clique start with equal alpha^(1) and total. So the paper's Proposition 1 (fully connected, isolated, isolated homogeneous cliques) is also necessary: no other debate topology satisfies condition (1) at all rounds. The line, the ring (Sparse MAD), stars and paths fail already after one round. Without self-observation only the edgeless graph works. (3) Weaker averaged versions hold more widely. On every d-regular undirected graph, e.g. the ring, with equal initial totals, the uniform average belief and the paper's collective belief q_t are exact martingales, although (1) fails for every agent. On K1+K2 the individual beliefs are martingales but q_t is not. On the line example the uniform average drifts. (4) From a homogeneous start, on every topology, each agent's unconditional expected belief stays at its initial value at every round. The paper's consequence 'expected belief unchanged' (stated for homogeneous, fully connected agents) therefore does not depend on the topology; the topology question concerns only the conditional (martingale) property.",
+   "remains": "(i) Necessity for averaged beliefs, still a conjecture: on undirected graphs with a homogeneous start, is the uniform average belief (or any fixed positive weighting) a martingale only when every connected component is regular, and the collective belief q_t only when the graph is regular? This is checked exhaustively only for n <= 6 and 2-3 rounds. (ii) A precise characterisation for averages on directed observation structures, where the simple regular-and-balanced rule is sufficient but not necessary. (iii) Formalising the passage from 'identity at every reachable state' to a measure-theoretic martingale for the paper's filtration. (iv) Variants of the update the paper mentions (weighted or soft counts, heterogeneous influence), correlated answers within a round, and whether any of this predicts LLM debate behaviour (the paper's near-martingale observation for Sparse MAD)."
+  }
+ ],
+ "experiment_package": null,
+ "review_status": "provisional_ai_draft",
+ "rules": [
+  "Everything here is an AI draft (provisional_ai_draft): each counted item passed two blind AI checks that were tested on planted errors, and no person has reviewed it.",
+  "A finding counts only in the setting its own quoted lines show; read `setting` before carrying it to another setting.",
+  "A question's status is a label from fixed rules over its counted findings; `status_check` says whether that label itself passed its check.",
+  "Cite the paper and page from the passage, and read the PDF page before relying on a claim."
+ ]
+}

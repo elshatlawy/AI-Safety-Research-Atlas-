@@ -1,0 +1,1128 @@
+{
+ "schema": "ASRA-GAP-CLOSING-AGENT-v1",
+ "review_status": "provisional_ai_draft",
+ "rules": [
+  "Everything here is an AI draft (provisional_ai_draft): each counted item passed two blind AI checks that were tested on planted errors, and no person has reviewed it.",
+  "A finding counts only in the setting its own quoted lines show; read `setting` before carrying it to another setting.",
+  "A question's status is a label from fixed rules over its counted findings; `status_check` says whether that label itself passed its check.",
+  "Cite the paper and page from the passage, and read the PDF page before relying on a claim."
+ ],
+ "labels": "Assemble the discovery ledger: every pilot result that passed its checks, with its label and weight.\n\nLabels (fixed vocabulary):\n- Proved: a statement checked by the Lean kernel whose wording passed the faithfulness checks.\n- Answered by later work / Partly answered by later work / Narrowed: a question status whose check\n  passed, resting on later-paper findings whose checks passed.\n- Derived: a conclusion that follows from quoted premises (paper inconsistencies, the pooled\n  debate-versus-consultancy table, evidence gaps on the safety case).\n- Paper problem: a flaw in a paper's own statement or proof found by a Lean audit, whose check passed.\n\nEach entry carries the safety-case steps it bears on and, where it concerns an open question, that\ngap's rank. Entries are counted by fixed rules from data/ and the checks' results files; nothing is\nadded by hand.",
+ "counts": {
+  "Proved": 6,
+  "Paper problem": 52,
+  "Derived": 11,
+  "Partly answered by later work": 12,
+  "Narrowed": 15
+ },
+ "entries": [
+  {
+   "id": "LG-Q21-formal",
+   "label": "Proved",
+   "question_id": "Q21",
+   "statement": "In the idealized black-box model (2506.13609v2 Section 7, 2610.02557v1 Section 5), naive recursive debate on a depth-d, width-q AND decomposition with one uniformly hidden flawed leaf catches the dishonest debater with probability at most (m+1)/q^d, for any Bob making m adaptive oracle queries; 1/q^d is attained at m = 0. The model assumes Alice's visible argument does not depend on where the flaw is. Theorem 5.3 of 2610.02557v1 holds in packing form for randomized checkers that are finite mixtures of deterministic decision trees, with Alice folded in as oracle-independent: some root-flipping block changes the acceptance probability by at most m/R. For AND trees with one flaw this gives m >= (1 - 2 eps) q^d. Lemma 5.4 of that paper (local fbs >= rho implies global >= rho^d) is not re-proved; the AND case does not need it.",
+   "evidence": "10 of 10 Lean statements checked as faithful (Q21:L1, Q21:L2, Q21:L3, Q21:L4, Q21:L5, Q21:L6, Q21:L7, Q21:L8, Q21:L9, Q21:L10); data/maths/formal/",
+   "remains": "(1) The question as posed (2311.08702v1 p14 L12-13) is empirical: whether obfuscated arguments appear in harder free-text debates. Nothing here bears on that. (2) Computational form F3: whether any recursive protocol with Bob's cost polynomial in Alice's avoids computationally obfuscated arguments beyond stable / low-FBS decompositions (2610.02557v1 p14 L47-56; 2311.14125v1 p9 L40-46); in the black-box model the answer is negative by F2. (3) Not formalized here: Lemma 5.4 of 2610.02557v1 (local to global fractional block sensitivity, needed beyond AND trees), debaters that query the oracle themselves, and any complexity model (so 'efficient' is an abstract class in Q21_conjecture_computational). (4) Which natural 'harder questions' admit low-FBS decompositions (the stability questions Q51/Q47, handled by another worker).",
+   "safety_case": [
+    "SC-OP-EMPIRICAL",
+    "SC-ASM-NO-OBFUSCATION"
+   ],
+   "gap_rank": 8,
+   "new": true
+  },
+  {
+   "id": "LG-Q22-q22",
+   "label": "Proved",
+   "question_id": "Q22",
+   "statement": "For the repository's protocol in the Lean model with a flawed verifier oracle (debaters use the true oracle): (1) small uniform verifier errors cost at most δ(106000k²+1) of completeness and soundness, independent of the computation length t, because only verifier queries are charged and the verifier makes O(k²) expected queries; (2) random errors drawn independently of the debaters' strategies cost at most ε(106000k²+1) on average, which answers a precise version of the paper's second sub-question ('arbitrary errors on a randomly selected subset of queries') positively when ε is small compared with 1/k²; (3) in general the loss is the expected number of verifier queries that land on wrong answers in the debate actually played; (4) a precise version of the paper's first sub-question fails for this protocol: one adversarially placed wrong answer lets a dishonest debater win with probability ≥ 49/50, for every t and every k ≥ 1, on either side; in the soundness instance that query is never sent to the verifier under honest play, and for t ≥ 1 changing it does not change the computation's answer; uniform errors of order 1/k also break the protocol; (5) if all parties share a flawed oracle that is itself k-Lipschitz, the repository's theorem transfers with the 2/3 margin raised by kδ.",
+   "evidence": "17 of 21 Lean statements checked as faithful (Q22:L1, Q22:L2, Q22:L3, Q22:L4, Q22:L5, Q22:L6, Q22:L7, Q22:L8, Q22:L9, Q22:L10, Q22:L11, Q22:L12, Q22:L13, Q22:L14, Q22:L19, Q22:L20, Q22:L21); data/maths/q22/",
+   "remains": "(i) Whether some debate protocol, not the repository's, can verify a natural class of K-Lipschitz computations when the verifier's oracle errs adversarially on an arbitrary set of at most k queries (the paper's first sub-question). In the repository's protocol and in Figure 1 the verifier's check at the aborted round decides the debate, so a protocol would have to check more than the disputed query, for example by exploiting robustness of the computation as Chen, Kalai and Xi do for single-prover proofs. (ii) The exact tolerance of the default protocol to uniform verifier error: robust at δ < 1/(10(106000k²+1)), broken at δ = 3/(100k); whether retuned parameters tolerate δ = Θ(1/k) is open. (iii) Random errors whose realised locations the dishonest debater can see. Informally (not proved here) such a debater can follow the honest path until it reaches an erroneous query and lie there, so once errors along a path become likely, the same attack applies. (iv) Errors in the debaters' own oracle (the paper's separate 'Power of the Provers' question), and a shared flawed oracle that is not Lipschitz. (v) Transfer of all statements to the paper's Turing-machine model, with cross-examination coin flipping and its constants.",
+   "safety_case": [
+    "SC-C4.5",
+    "SC-ASM-RANDOM-WASHOUT"
+   ],
+   "gap_rank": 9,
+   "new": true
+  },
+  {
+   "id": "LG-Q37-formal",
+   "label": "Proved",
+   "question_id": "Q37",
+   "statement": "In a finite one-message model, a training procedure that can evaluate every prover of the class on training instances yields, with probability >= 1 - |V|(1 - eps)^m, a verifier whose completeness plus soundness error against every prover of the class is <= eps, whenever it is consistent on the data; m >= ln(|V|/delta)/eps suffices. The bound depends on the verifier class size but not on the prover class size. If training only sees a weaker prover class than deployment, no sample size and no learner suffices in general: in an explicit two-world example with a perfect verifier available in each world, every learner's expected deployment soundness errors in the two worlds sum to 1/2 for every m. A verifier class that cannot separate a dishonest message on a false instance from the honest message on a true instance has completeness plus soundness error at least the smaller of the two instances' probabilities, whatever the data: the verifier's ability sets a floor that data cannot remove.",
+   "evidence": "7 of 10 Lean statements checked as faithful (Q37:L1, Q37:L2, Q37:L3, Q37:L4, Q37:L5, Q37:L6, Q37:L7); data/maths/formal/",
+   "remains": "(1) Q37_conjecture (prover ability must enter a proper verifier's sample complexity) and Q37_conjecture_improper are open. (2) Q37_agnostic is standard (Hoeffding plus union bound) but not proved in Lean here. (3) Multi-round protocols (nip, mnip, debate) and joint training: in neural interactive proofs the prover is itself learned from data, so its ability is a hypothesis class plus an optimiser; nothing here covers training dynamics or equilibrium finding. (4) Model differences: the nip loss in 2412.08897v2 is worst-case over inputs (Q37-p8, Q37-p9), while our errors are probabilities under P; they coincide only up to the minimum instance mass. (5) Computational abilities (circuit size, compute) rather than hypothesis classes, e.g. relative-complexity results like the soundness construction of 2506.13609v2, are not addressed.",
+   "safety_case": [
+    "SC-C4.1",
+    "SC-C2.2"
+   ],
+   "gap_rank": 12,
+   "new": true
+  },
+  {
+   "id": "LG-Q47-stability",
+   "label": "Proved",
+   "question_id": "Q47",
+   "statement": "Q47: in Figure 2, a coherent estimator makes every intermediate consistency reward 0 whatever the prover does; the only signal against a coherent dishonest estimator is the leaf reward, bounded by the largest leaf error.",
+   "evidence": "2 of 2 Lean statements checked as faithful (Q47:L1, Q47:L2); data/maths/stability/",
+   "remains": "(1) Exact characterization of completeness for Figure 2 on a fixed tree: an unstable sensitive cut is sufficient for failure (derived) and all-nodes-stable is sufficient for success (Theorem 6.1); the conjecture that 'no unstable sensitive cut' is also sufficient for success (exact for all q = 2, d = 2 trees computed) needs a proof and tests for q >= 3; a closed form for Val(x,T,1/rho) on non-uniform trees is open. (2) Adaptive provers: our necessity results fix the prover's tree; whether a prover that changes decomposition in response to B's estimates can beat the barrier min(r^(d+1), 1/fbs_alpha(F_T)) of its realised tree is not settled here. (3) Beyond black-box judges and unbounded opponents: 2610.02557v1 settles the query lower bound for black-box judges (fixed revealed tree, distinct leaves); protocols with structured or partly transparent judgments, and opponents that cannot find sensitive blocks, remain open, as that paper also states (p14 L47-56). (4) Q51(b) converse: does a decomposition with small global fbs_alpha(F_T) <= R imply one of depth O(d) with local fbs <= C R^(1/d)? And which natural problem classes (beyond weighted thresholds, Lipschitz aggregators, AND-like proofs) have small global fbs for some A-provable decomposition? (5) Q47: a protocol that provably elicits coherent, leaf-calibrated reports with an fbs-independent incentive gap, and a useful notion of honesty whose conversion to correctness costs less than fbs_alpha(F_T), are open; the unstable-to-stable transformation route (M to M*) is not addressed here. (6) General-q proofs of the phi-uniform closed form and of the unstable-cut statement (both only derived and checked for q = 2, 3).",
+   "safety_case": [
+    "SC-C4.6"
+   ],
+   "gap_rank": 16,
+   "new": true
+  },
+  {
+   "id": "LG-Q51-stability",
+   "label": "Proved",
+   "question_id": "Q51",
+   "statement": "Q51, depth 1: in the Figure 2 game with r = 1/rho (rho >= 1) on one instance, the honest bound (exists A, for all B, E[payoff] >= 1/rho^2) holds iff the root is rho-stable, i.e. iff fbs_z(f) <= rho; the exact value is 1/(rho max(rho, fbs)). Q51, any depth, Figure 2 with r = 1/rho: if the root node of the prover's tree is not rho-stable, every prover strategy is held below the Theorem 6.1 bound 1/rho^(d+1) by some estimator. So root stability is necessary for the conclusion of Theorem 6.1 on that tree. Q51, margin barrier: for every reward ratio r >= 0, every tree T and every prover using T, some valid estimator holds the expected payoff to <= min(r^(d+1), 1/W) for every fractional packing of sensitive blocks of the path-indexed composed function F_T with total weight W; at the LP optimum, <= min(r^(d+1), 1/fbs_alpha(F_T)). So no choice of the protocol parameter gives the honest prover more than 1/fbs_alpha(F_T), and the conclusion of Theorem 6.1 on T forces fbs_alpha(F_T) <= rho^(d+1). Q51(b), sufficient classes with constants: weighted-margin functions are (sum w)/m-stable; weighted-Lipschitz score thresholds with margin delta are (sum w)/delta-stable; [#true >= theta] is t/(t - theta + 1)-stable at t >= theta true inputs and (q - t)/(theta - t)-stable below (exact: equals fbs for q <= 5); every function is q-stable. Q51(b), lower bounds and one-level composition: k disjoint sensitive blocks rule out rho < k (AND of q bits: best constant exactly q); if inner functions are rho2-stable and the outer function is rho1-stable, the composition is rho1 rho2-stable (inner functions may share inputs).",
+   "evidence": "20 of 20 Lean statements checked as faithful (Q51:L1, Q51:L2, Q51:L3, Q51:L4, Q51:L5, Q51:L6, Q51:L7, Q51:L8, Q51:L9, Q51:L10, Q51:L11, Q51:L12, Q51:L13, Q51:L14, Q51:L15, Q51:L16, Q51:L17, Q51:L18, Q51:L19, Q51:L20); data/maths/stability/",
+   "remains": "(1) Exact characterization of completeness for Figure 2 on a fixed tree: an unstable sensitive cut is sufficient for failure (derived) and all-nodes-stable is sufficient for success (Theorem 6.1); the conjecture that 'no unstable sensitive cut' is also sufficient for success (exact for all q = 2, d = 2 trees computed) needs a proof and tests for q >= 3; a closed form for Val(x,T,1/rho) on non-uniform trees is open. (2) Adaptive provers: our necessity results fix the prover's tree; whether a prover that changes decomposition in response to B's estimates can beat the barrier min(r^(d+1), 1/fbs_alpha(F_T)) of its realised tree is not settled here. (3) Beyond black-box judges and unbounded opponents: 2610.02557v1 settles the query lower bound for black-box judges (fixed revealed tree, distinct leaves); protocols with structured or partly transparent judgments, and opponents that cannot find sensitive blocks, remain open, as that paper also states (p14 L47-56). (4) Q51(b) converse: does a decomposition with small global fbs_alpha(F_T) <= R imply one of depth O(d) with local fbs <= C R^(1/d)? And which natural problem classes (beyond weighted thresholds, Lipschitz aggregators, AND-like proofs) have small global fbs for some A-provable decomposition? (5) Q47: a protocol that provably elicits coherent, leaf-calibrated reports with an fbs-independent incentive gap, and a useful notion of honesty whose conversion to correctness costs less than fbs_alpha(F_T), are open; the unstable-to-stable transformation route (M to M*) is not addressed here. (6) General-q proofs of the phi-uniform closed form and of the unstable-cut statement (both only derived and checked for q = 2, 3).",
+   "safety_case": [
+    "SC-C4.6"
+   ],
+   "gap_rank": 18,
+   "new": true
+  },
+  {
+   "id": "LG-Q52-q52",
+   "label": "Proved",
+   "question_id": "Q52",
+   "statement": "Within the formal model described in formal_statement, Lean proves the following without sorry. (1) The one-step martingale identity for an agent is equivalent to the paper's condition (1) at that state. (2) From a homogeneous start, on any observation structure, agent i's belief is a martingale iff every agent i observes has the same observation set as i. On the paper's undirected graphs with self-observation, all agents' beliefs are martingales iff the graph is a disjoint union of cliques. With heterogeneous starts this holds iff, in addition, the agents in each clique start with equal alpha^(1) and total. So the paper's Proposition 1 (fully connected, isolated, isolated homogeneous cliques) is also necessary: no other debate topology satisfies condition (1) at all rounds. The line, the ring (Sparse MAD), stars and paths fail already after one round. Without self-observation only the edgeless graph works. (3) Weaker averaged versions hold more widely. On every d-regular undirected graph, e.g. the ring, with equal initial totals, the uniform average belief and the paper's collective belief q_t are exact martingales, although (1) fails for every agent. On K1+K2 the individual beliefs are martingales but q_t is not. On the line example the uniform average drifts. (4) From a homogeneous start, on every topology, each agent's unconditional expected belief stays at its initial value at every round. The paper's consequence 'expected belief unchanged' (stated for homogeneous, fully connected agents) therefore does not depend on the topology; the topology question concerns only the conditional (martingale) property.",
+   "evidence": "12 of 12 Lean statements checked as faithful (Q52:L1, Q52:L2, Q52:L3, Q52:L4, Q52:L5, Q52:L6, Q52:L7, Q52:L8, Q52:L9, Q52:L10, Q52:L11, Q52:L12); data/maths/q52/",
+   "remains": "(i) Necessity for averaged beliefs, still a conjecture: on undirected graphs with a homogeneous start, is the uniform average belief (or any fixed positive weighting) a martingale only when every connected component is regular, and the collective belief q_t only when the graph is regular? This is checked exhaustively only for n <= 6 and 2-3 rounds. (ii) A precise characterisation for averages on directed observation structures, where the simple regular-and-balanced rule is sufficient but not necessary. (iii) Formalising the passage from 'identity at every reachable state' to a measure-theoretic martingale for the paper's filtration. (iv) Variants of the update the paper mentions (weighted or soft counts, heterogeneous influence), correlated answers within a round, and whether any of this predicts LLM debate behaviour (the paper's near-martingale observation for Sparse MAD).",
+   "safety_case": [],
+   "gap_rank": 28,
+   "new": true
+  },
+  {
+   "id": "AU-1805.00899v2:P01",
+   "label": "Paper problem",
+   "severity": "ambiguity",
+   "paper": "arXiv 1805.00899v2",
+   "statement": "The n-round debate formula is printed as ∃x0 ∀x1 ··· ∃x_{n−1}. With Alice first and turns alternating, the last quantifier is ∃ only for odd n; for n = 2, the Σ2P case in the preceding sentences, it is ∀. Notational: Σ_nP for n rounds is unaffected, and so is the proof of Theorem 1, since n can be taken odd by adding a dummy statement (our remark, not the paper's).",
+   "evidence": "p5 L65-76; p5 L18-25; p6 L1-2; Lean: DebateGame.alt_two (two statements give ∃x0 ∀x1) and DebateGame.printed_last_exists_differs (a judge for which the printed ∃x0 ∃x1 holds and the debate formula fails), both proved, no sorry",
+   "safety_case": [],
+   "gap_rank": null,
+   "new": true
+  },
+  {
+   "id": "AU-1805.00899v2:P02",
+   "label": "Paper problem",
+   "severity": "gap",
+   "paper": "arXiv 1805.00899v2",
+   "statement": "Section 2.2 is titled 'DEBATE = PSPACE' and says that with polynomially many rounds 'the complexity class is PSPACE', but Theorem 1 states and proves only one direction (every PSPACE problem has a debate with a polynomial-time judge). The reverse inclusion is not proved, and the condition it needs, statements of polynomial size, is stated only on p15.",
+   "evidence": "PDF p5 L50, L73-78; p15 L32-33; Lean: None for the complexity claim (Mathlib has no PSPACE). DebateGame.debate_decides formalizes only the game step of Theorem 1, with Sipser's reduction as the hypothesis hL; it puts no size bound on statements.",
+   "safety_case": [],
+   "gap_rank": null,
+   "new": true
+  },
+  {
+   "id": "AU-1805.00899v2:P03",
+   "label": "Paper problem",
+   "severity": "ambiguity",
+   "paper": "arXiv 1805.00899v2",
+   "statement": "Prime-counting debate: the paper bisects half-open ranges [a, b) and has the judge check p on the singleton {p}. That is exact if π(m) counts primes below m (as 'up to n bits' suggests). With the usual π(m) = #primes ≤ m, differences of π count (a, b], and truthful π-claims can lose: Bob steers to [4, 5), where π(5) − π(4) = 1 but 4 is not prime. With counts below m, the paper's claims (a lie is localized by bisection; truthful Alice wins) are proved.",
+   "evidence": "PDF p6 L9-17 and L38-44; Lean: DebateGame.le_convention_loses (probe, proved); DebateGame.honest_wins, DebateGame.bob_wins and DebateGame.pi_debate proved with Nat.primeCounting' (primes below m), for history-dependent strategies",
+   "safety_case": [],
+   "gap_rank": null,
+   "new": true
+  },
+  {
+   "id": "AU-1805.00899v2:P04",
+   "label": "Paper problem",
+   "severity": "ambiguity",
+   "paper": "arXiv 1805.00899v2",
+   "statement": "The cost of the best known prime-counting algorithm is printed as O(2^{n/2+ε}), which read literally is a constant times 2^{n/2}. The analytic method of Lagarias and Odlyzko is usually quoted as O(x^{1/2+ε}) = O(2^{(1/2+ε)n}). Likely a misprint in the exponent; the cited paper was not checked.",
+   "evidence": "PDF p6 L11-12; Lean: DebateGame.printed_bound_is_const_mul: 2^(n/2+ε) = 2^ε · 2^(n/2) (probe, proved)",
+   "safety_case": [],
+   "gap_rank": null,
+   "new": true
+  },
+  {
+   "id": "AU-1805.00899v2:P05",
+   "label": "Paper problem",
+   "severity": "error",
+   "paper": "arXiv 1805.00899v2",
+   "statement": "Side remark: 'any equilibria in an iterated zero sum game is weakly dominated by a strategy which treats each game as separate'. Under the standard meaning of weak dominance this is false. In a two-round repetition of a 2×3 zero-sum game with value 0, a history-dependent equilibrium strategy is not matched against every opponent by any strategy that treats rounds separately, mixed or not. The conclusion that the game's value (optimal play in that sense) is unchanged is not affected.",
+   "evidence": "PDF p7 L22-24; Lean: DebateGame.iterated_not_dominated (probe, proved): each pair of Alice's rows earns 0 against Bob's columns (c1, c1), the strategy adaptive earns 0 there and at least 0 against every pair of Bob's columns (b1, b2), and no separate strategy (p1, p2), with p1, p2 in [0, 1], does at least as well as adaptive against every pair of Bob's columns (b1, b2).",
+   "safety_case": [],
+   "gap_rank": null,
+   "new": true
+  },
+  {
+   "id": "AU-2108.12099v1:P01",
+   "label": "Paper problem",
+   "severity": "ambiguity",
+   "paper": "arXiv 2108.12099v1",
+   "statement": "Equation (2), the display of Definition 3 (p.2 L59-65), prints the follower's response as w2∗(w1) = arg min_{w2} L2(w1∗, w2): the loss is taken at the equilibrium leader strategy w1∗, not at the argument w1, so read literally the response does not depend on w1. On that literal reading, if the follower's best response to w1∗ is unique (the Lean hypothesis; footnote 1 says 'We assume uniqueness of equilibria for simplicity'), a Stackelberg equilibrium is exactly a Nash equilibrium (Lean). The prose of Definition 3 ('the leader's strategy is optimal taking into consideration how the follower will respond to modifications') points to the intended L2(w1, w2). The two readings differ in substance; the printed one looks like a typo.",
+   "evidence": "p2 L54-67; Lean: PVG.stackelbergAsPrinted_iff_nash (proved): if the follower's best response to w₁ is unique, IsStackelbergAsPrinted ↔ IsNash.",
+   "safety_case": [],
+   "gap_rank": null,
+   "new": true
+  },
+  {
+   "id": "AU-2108.12099v1:P02",
+   "label": "Paper problem",
+   "severity": "gap",
+   "paper": "arXiv 2108.12099v1",
+   "statement": "Footnote 1 assumes unique equilibria, but in these games the follower's best response is not unique. Against a sound verifier, if a no-instance has positive probability, every prover policy has loss +∞, and even with a bounded loss the prover's message on a no-instance does not matter. The paper never says how the follower breaks ties, and the results of Theorems 1 and 2 depend on it.",
+   "evidence": "PDF p.2 line 67 (footnote 1); p.15 lines 10-13 (Theorem 2 necessity proof); Lean: PVG.every_prover_policy_is_best (proved); PVG.TwoInputs.best_response_not_unique (proved): two different prover policies are both best responses.",
+   "safety_case": [],
+   "gap_rank": null,
+   "new": true
+  },
+  {
+   "id": "AU-2108.12099v1:P03",
+   "label": "Paper problem",
+   "severity": "error",
+   "paper": "arXiv 2108.12099v1",
+   "statement": "Theorem 2 says that in verifier-leading formulations with the instance revealed after the verifier moves, equilibrium is 'both necessary and sufficient' (p.6 L10-12). For the ordering Verifier, Prover, Instance this fails under either tie rule. Ties broken for the verifier (strong Stackelberg): sufficiency fails. In a three-input Lean example a complete and sound verifier vstar exists, as Definition 4 assumes (p.5 L70-75), yet the verifier strategy what, whose output is that of vhat (a verifier that also accepts message true on the no-instance 0), forms a strong Stackelberg equilibrium with the prover phat, and vhat is not sound. (Argued in words: vhat rejects the other no-instance whatever the message, so every prover policy has loss +∞ and the prover gains nothing by fooling.) Ties broken against the verifier (weak Stackelberg): necessity fails; in a two-input Lean example the verifier strategy wstar, whose output is that of the complete and sound verifier vstar, is the leader's strategy in no equilibrium. The faulty step is 'there exists a prover policy that can fool the verifier ... This will also cause the verifier's loss to be nonzer[o]' (p.15 L21-22): that a fooling policy exists does not mean the equilibrium prover uses it. Both examples rest on −log 0 = +∞ (argued in words; in Lean, −log is PVG.nlog, which is +∞ at 0), which the paper's own computation uses ('the prover's loss will be infinity', p.14 L66); a person should judge whether the theorem meant to exclude such cases.",
+   "evidence": "p6 L10-17; p15 L18-25; p5 L64-75; p14 L66-69; Lean: PVG.ThreeInputs.theorem2_sufficiency_fails_VPI, PVG.ThreeInputs.out_what, PVG.TwoInputs.theorem2_necessity_fails_weak, PVG.TwoInputs.out_wstar, PVG.TwoInputs.assumptions (all proved) and the definition PVG.nlog. Three-input example (inputs 0, 1, 2 with probability 1/3 each, label true only on input 2): the first theorem gives (i) vstar is sound against every prover and gives the correct label on message true at every input (so the prover that always sends true makes it complete), (ii) with VLoss as the leader's loss, the verifier strategy what and the prover policy phat form a strong Stackelberg equilibrium, (iii) vhat gives the correct label on phat's messages, (iv) vhat is not sound; out_what states that the output of what equals that of vhat. Two-input example (inputs false and true with probability 1/2 each, label = input): theorem2_necessity_fails_weak states that for every prover policy p, wstar with p is not a weak Stackelberg equilibrium with VLoss as the leader's loss; out_wstar states that the output of wstar equals that of vstar, and assumptions states that this vstar is sound against every prover and gives the correct label on message true at every input (so it is complete as well). nlog q, the −log of the losses, is ⊤ (+∞) for q ≤ 0.",
+   "safety_case": [],
+   "gap_rank": null,
+   "new": true
+  },
+  {
+   "id": "AU-2108.12099v1:P04",
+   "label": "Paper problem",
+   "severity": "gap",
+   "paper": "arXiv 2108.12099v1",
+   "statement": "For the ordering Verifier, Instance, Prover, Theorem 2 holds in Lean (strong rule), but sufficiency needs every input to have positive probability. Without it, the accept-everything verifier is an equilibrium in both verifier-leading orderings although it is not sound. Definition 4 does not assume full support.",
+   "evidence": "PDF p.5 lines 61-79 (Definition 4); p.6 lines 10-17 (Theorem 2); Lean: PVG.theorem2_necessity_VIP and PVG.theorem2_sufficiency_VIP (proved, the latter with hP : ∀ x, P x ≠ 0); PVG.FullSupport.needs_full_support (proved).",
+   "safety_case": [],
+   "gap_rank": null,
+   "new": true
+  },
+  {
+   "id": "AU-2108.12099v1:P05",
+   "label": "Paper problem",
+   "severity": "gap",
+   "paper": "arXiv 2108.12099v1",
+   "statement": "Corollary 1's proof (p.15 L41-44) rests on Theorem 2's sufficiency ('(by Theorem 2)'), which fails for the ordering Verifier, Prover, Instance: Lean gives a strong Stackelberg equilibrium whose verifier vhat is not sound although a complete and sound vstar exists. So the proof does not establish the corollary for that ordering. The corollary itself holds there for strong Stackelberg equilibria whenever a complete and sound pair is available as a verifier strategy: Lean proves it directly, without Theorem 2's sufficiency.",
+   "evidence": "p15 L40-44; p6 L10-12; Lean: PVG.corollary1 (proved for any finite input set, labelling and verifier family, without Theorem 2's sufficiency); PVG.ThreeInputs.theorem2_sufficiency_fails_VPI (proved, in namespace ThreeInputs: three inputs of probability 1/3, label true only on input 2): an equilibrium for Verifier, Prover, Instance whose verifier is not sound.",
+   "safety_case": [],
+   "gap_rank": null,
+   "new": true
+  },
+  {
+   "id": "AU-2108.12099v1:P06",
+   "label": "Paper problem",
+   "severity": "error",
+   "paper": "arXiv 2108.12099v1",
+   "statement": "Proposition 1 says that when the verifier is given the instance before it picks its strategy, equilibrium is 'neither necessary nor sufficient' (p.5 L91-93), and the paper says proper protocols are equilibria of 'only three of the eight game formulations' (p.5 L86-89). But on every revealed instance the complete and sound pair is an equilibrium (Lean): Nash for Instance, {Prover, Verifier}, and strong Stackelberg for Instance, Verifier, Prover and for Instance, Prover, Verifier (orderings as listed in Table 1, p.5 L9-17). So 'not necessary' is false for these orderings (for the two Stackelberg ones, with ties broken for the leader), and so is 'only three of the eight'. The text after Proposition 1 (L94-95) argues only 'not sufficient' (the trivial verifier), which Lean confirms. If Instance, Prover, Verifier counts among Theorem 1's 'prover-leading sequential PVG formulations' (p.6 L1-2), Theorem 1's 'neither necessary' fails there too. Prover, Instance, Verifier was not checked.",
+   "evidence": "p5 L84-95; p5 L9-17; p6 L1-2; Lean: PVG.prop1_nash, PVG.prop1_verifier_leads, PVG.prop1_prover_leads (proved for any finite input set, any message set, labelling and verifier family, on each revealed instance; the TwoInputs definitions are not involved); PVG.prop1_trivial_verifier (proved) confirms the trivial verifier.",
+   "safety_case": [],
+   "gap_rank": null,
+   "new": true
+  },
+  {
+   "id": "AU-2108.12099v1:P07",
+   "label": "Paper problem",
+   "severity": "gap",
+   "paper": "arXiv 2108.12099v1",
+   "statement": "Theorem 1's proof argues on Definition 6 (p.14 L7-9), where 'The prover can choose between two policies p1 and p2' (L12) and the verifier's three policies (L25) 'ignore the input' (L62). Definition 4 assumes that 'both P and V include every constant mapping' and that a complete and sound v∗ exists ((5), (6); p.5 L68-75). The paper's check that (p1, v1) 'satisfy Equations 5 and 6' (L62-63) holds for the provers {p1, p2}; with the constant provers added, none of v1, v2, v3 is complete and sound (Lean). So Definition 6 does not meet Definition 4's assumptions, and the proof leaves open whether Theorem 1 holds for problems that do.",
+   "evidence": "p14 L5-12; p14 L25; p14 L62-63; p5 L64-75; Lean: PVG.Def6.outside_definition4 (proved: with the constant provers added, no base verifier of Definition 6 is complete and sound; the list it ranges over is Def6's own, of v1, v2, v3, not the one of TwoInputs); PVG.Def6.paper_pair_complete_sound (proved: complete and sound for the two policies of Definition 6); the base verifiers are PVG.Def6.v1, PVG.Def6.v2, PVG.Def6.v3.",
+   "safety_case": [],
+   "gap_rank": null,
+   "new": true
+  },
+  {
+   "id": "AU-2108.12099v1:P08",
+   "label": "Paper problem",
+   "severity": "gap",
+   "paper": "arXiv 2108.12099v1",
+   "statement": "Theorem 1's lack-of-sufficiency argument breaks off mid-sentence: it ends 'This is because 1) p1 achieves the best prover loss given that the verifier' (p.14 L96-97), the page then ends (L99 is the page number), and p.15 begins with Theorem 2 (p.15 L1). The sentence also names p1 in the scenario 'where the prover picks p2' (L94), where p2 appears to be meant. The claim itself holds: Lean proves that p2 with the verifier strategy that puts weight ½ on v2 and ½ on v3 (Def6's whalf) is a prover-leading Stackelberg equilibrium under both tie rules, while v2 is not complete and v3 is not sound for the two policies of Definition 6.",
+   "evidence": "p14 L92-101; p15 L1-4; Lean: PVG.Def6.lack_of_sufficiency, PVG.Def6.L₁, PVG.Def6.L₂, PVG.Def6.whalf, PVG.Def6.V and PVG.mix (the theorem proved, the rest definitions). The theorem states that the strong and the weak Stackelberg predicate both hold with leader loss L₁ = proverLoss (the prover's loss) at the prover's policy .p2, and follower loss L₂ = verifierLoss (the verifier's loss) at the verifier's strategy whalf, so the prover leads and the verifier best-responds; its last two conjuncts say the base verifier v2 is not complete and v3 is not sound for the provers Set.range pol (the two policies of Definition 6). whalf is the weight vector ![0, 1 / 2, 1 / 2] on V = ![v1, v2, v3], and the verifier's output out w = mix V w.1 is the w-weighted sum of the base verifiers (in mix, V is the argument, not TwoInputs.V), so whalf puts weight 0 on v1 and ½ each on v2 and v3. This whalf is Def6's own; TwoInputs defines another whalf.",
+   "safety_case": [],
+   "gap_rank": null,
+   "new": true
+  },
+  {
+   "id": "AU-2108.12099v1:P09",
+   "label": "Paper problem",
+   "severity": "ambiguity",
+   "paper": "arXiv 2108.12099v1",
+   "statement": "In Theorem 1's lack-of-necessity argument the text puts all weight on v1 ('assigning a weight of 1 to v1 and a weight of 0 to v2 and v3', p.14 L64-65), but the display evaluates v2: 'Jp = − log v2 (x = 0, p(x) = 0) + − log v2 (x = 1, p(x) = 1) = +∞' (L69). The values under its two braces, extracted as '+∞' (L75) and '0' (L77), fit v1: for v2 the second term is also +∞ (Lean). So v2 looks like a typo for v1; the conclusion +∞ holds either way.",
+   "evidence": "p14 L64-77; Lean: PVG.Def6.display_names_v2 (proved): the second term is ⊤ for v2 and 0 for v1.",
+   "safety_case": [],
+   "gap_rank": null,
+   "new": true
+  },
+  {
+   "id": "AU-2108.12099v1:P10",
+   "label": "Paper problem",
+   "severity": "ambiguity",
+   "paper": "arXiv 2108.12099v1",
+   "statement": "The prover's loss under p2 is displayed as 'Jp = − log 0.5 + − log 0.5 = 1' (p.14 L83-87; the extracted text splits the weights ½ of the uniform inputs, L10, into separate '1' and '2' lines). With those weights Jp = ½(−log 0.5) + ½(−log 0.5) = −log 0.5, which equals 1 only with log base 2; with the natural log it is log 2 ≈ 0.693 (Lean). Losses (3) and (4) (p.4 L12-16) write '− log' with no base. The conclusion at L92, 'the prover can do better by picking p2 over p1', compares Jp with the prover's loss under p1, which the paper gives as +∞ ('the prover’s loss will be infinity', p.14 L66-69), so it needs only that Jp is finite.",
+   "evidence": "p14 L9-11; p14 L66-69; p14 L82-93; p4 L11-18; Lean: PVG.Def6.p2_loss_is_log_two (proved): with the natural log (Real.log), the prover's loss in this scenario (Def6's own half-half verifier strategy on v2 and v3, not the one defined in TwoInputs) is log 2, and log 2 < 1.",
+   "safety_case": [],
+   "gap_rank": null,
+   "new": true
+  },
+  {
+   "id": "AU-2108.12099v1:P11",
+   "label": "Paper problem",
+   "severity": "ambiguity",
+   "paper": "arXiv 2108.12099v1",
+   "statement": "Theorems 4 and 5 assume 'any initialization with p0i > 0, p1i > 0 for all i ∈ M' (p.7 L11, L18), where M = {0, 1, ..., K} and p0 = [p00, ..., p0K], p1 = [p10, ..., p1K] are the prover's message probabilities on inputs 0 and 1 (p.6 L44-46). Definition 5's restriction, 'the prover cannot send the message 1 when x = 0 and cannot send 0 when x = 1' (p.7 L1-2), forces p⁰₁ = p¹₀ = 0. Read literally, no initialization meets the hypothesis and both theorems hold only vacuously; the likely intended reading is positivity on the allowed tokens. The two readings differ in substance.",
+   "evidence": "p6 L42-47; p7 L1-2; p7 L11-20; Lean: PVG.BEC.init_hypothesis_unsatisfiable (proved, every K ≥ 1).",
+   "safety_case": [],
+   "gap_rank": null,
+   "new": true
+  },
+  {
+   "id": "AU-2108.12099v1:P12",
+   "label": "Paper problem",
+   "severity": "gap",
+   "paper": "arXiv 2108.12099v1",
+   "statement": "Theorem 4 says 'reasonable learning rates'; its proof assumes two time scales (η_P ≪ η_V) and asserts without proof that the verifier converges first. It also never writes the regularized verifier loss ('entropy regularization (i.e., label smoothing)'). Lean checks the algebra for λ > 0, under a label-smoothing loss whose per-token minimizers are the values (9): the identities in (11) and (12), with (11) negative for a ≤ 1, b < 1 and (12) positive for a, b < 1; and that a = 1, 0 < b < 1 with q as in (9) is a Nash equilibrium (the verifier cannot improve with outputs in (0, 1), the prover cannot improve with any a' ≤ 1). The convergence is not formalized.",
+   "evidence": "p7 L8-15; p16 L10-32; p16 L66-71; Lean: PVG.BEC.eq11, PVG.BEC.eq12, PVG.BEC.thm4_prover_cannot_improve, PVG.BEC.thm4_verifier_best (proved, all with λ > 0; thm4_verifier_best also needs 0 < a and 0 < b); dynamics not formalized.",
+   "safety_case": [],
+   "gap_rank": null,
+   "new": true
+  },
+  {
+   "id": "AU-2108.12099v1:P13",
+   "label": "Paper problem",
+   "severity": "gap",
+   "paper": "arXiv 2108.12099v1",
+   "statement": "Theorem 5 (p.16 L72-74) claims convergence for 'gradient descent on both prover and verifier with any learning rates'. The proof works only 'From the viewpoint of prover', as a 'single-objective optimization problem' with loss (13), in which the verifier's outputs are written as expressions in a, b and λ; it concludes from the signs of the gradients (14) and (15), via 'the identity log(1 + x) < x', that 'a, b will converge to 0' (p.17 L2-4). It does not discuss the verifier's own updates or the step sizes, so convergence 'with any learning rates' is not argued. Lean checks only the algebra: for λ > 0, a < 1 and b < 1, (14) and (15) are the partial derivatives of (13) and both are positive. The dynamics are not formalized.",
+   "evidence": "p16 L72-113; p17 L1-5; Lean: PVG.BEC.eq14_is_derivative, PVG.BEC.eq15_is_derivative, PVG.BEC.eq14_eq15_pos (proved, each for λ > 0, a < 1, b < 1), where PVG.BEC.L13 is (13); dynamics not formalized.",
+   "safety_case": [],
+   "gap_rank": null,
+   "new": true
+  },
+  {
+   "id": "AU-2108.12099v1:P14",
+   "label": "Paper problem",
+   "severity": "ambiguity",
+   "paper": "arXiv 2108.12099v1",
+   "statement": "The set Cp in completeness (5) and soundness (6) is not defined. Lean reads it as all prover policies, which is what soundness against P amounts to once P contains every constant mapping.",
+   "evidence": "PDF p.5 lines 71 and 75; Lean: PVG.sound_univ_of_constants and PVG.complete_iff_of_sound (proved).",
+   "safety_case": [],
+   "gap_rank": null,
+   "new": true
+  },
+  {
+   "id": "AU-2108.12099v1:P15",
+   "label": "Paper problem",
+   "severity": "ambiguity",
+   "paper": "arXiv 2108.12099v1",
+   "statement": "For the verifier's base set, 'every constant mapping (i.e. ones which don't depend on the input)' can mean the two constant-valued maps or every map that reads only the message. The Lean examples use the first reading. I expect their conclusions to survive the second, but this is not checked.",
+   "evidence": "PDF p.5 lines 68-69; Lean: Example verifier sets in PVG.TwoInputs.V, PVG.ThreeInputs.V, PVG.Def6Repaired.V.",
+   "safety_case": [],
+   "gap_rank": null,
+   "new": true
+  },
+  {
+   "id": "AU-2312.04792v4:P01",
+   "label": "Paper problem",
+   "severity": "ambiguity",
+   "paper": "arXiv 2312.04792v4",
+   "statement": "Definition 1 allows i = j but its two clauses then conflict: ϕ_{i,i}(x)(i) must be both 0 and x(i) + x(i) = 2x(i), so ϕ_{i,i} is not a map Δ_N → Δ_N as written (either clause alone gives total mass 1 − x(i) or 1 + x(i)). The matrix form in Appendix C.1 has the same clash at entry (i, i). Taking ϕ_{i,i} = identity (the evident intent) makes the two internal-regret formulas agree; |Φ| = N² + N counts the N diagonal pairs.",
+   "evidence": "PDF p.4 lines 18-21 (Definition 1); p.12 lines 74-75 (matrix form); p.6 line 57 (|Φ| = N² + N); Lean: LargeGames.def1_diag_unsat (proved): for x(i) ≠ 0 no y satisfies the literal Definition 1 with i = j. LargeGames.internal_regret_identity (proved) holds with ϕ_{i,i} = identity.",
+   "safety_case": [],
+   "gap_rank": null,
+   "new": true
+  },
+  {
+   "id": "AU-2312.04792v4:P02",
+   "label": "Paper problem",
+   "severity": "error",
+   "paper": "arXiv 2312.04792v4",
+   "statement": "Theorem 5 prints the coordinate-wise Gumbel(0,1) density as D(x_i) ∼ e^{x_i + e^{−x_i}} (checked on the rendered PDF). That function is ≥ 1 everywhere, so it is not integrable and defines no distribution; the standard Gumbel(0,1) density is e^{−(x + e^{−x})}, whose mean γ is what Lemma 10 uses. A dropped minus sign; the intent is clear from the name.",
+   "evidence": "PDF p.7 lines 4-9 (Theorem 5); Lean: LargeGames.printed_density_not_integrable (proved): ¬ Integrable (fun x ↦ exp (x + exp (−x))) on ℝ.",
+   "safety_case": [],
+   "gap_rank": null,
+   "new": true
+  },
+  {
+   "id": "AU-2312.04792v4:P03",
+   "label": "Paper problem",
+   "severity": "gap",
+   "paper": "arXiv 2312.04792v4",
+   "statement": "Proof of Lemma 9 asserts E[g_t(α_t^s)] = g_t(α′_t) 'since g_t is linear in α' and then applies Hoeffding, treating g_t as fixed. But Algorithm 1 sets x_t = FixedPoint(ϕ_{α_t}) from the same S samples (line 7) and defines g_t(α) = f_t(ϕ_α(x_t)) (line 8), so g_t depends on the samples (and y_t may react to x_t). The step therefore needs a bound uniform over x_t (e.g. a union bound over actions), which the paper does not give. The probe does NOT refute Lemma 9 or Theorem 5; a uniform bound may well rescue them, possibly with an extra log N factor (not checked).",
+   "evidence": "p14 L167-169; p6 L36-40; p6 L56-61; Lean: LargeGames.lemma9_probe (proved). Set-up: N = 2, S = 1 (one draw m), game mis, opponent fixed at e_0 (pureS 0). The maps are LargeGames.mapOf, indexed by (Fin 2 × Fin 2) ⊕ Fin 2: the N² + N = 6 maps of Φ = ΦI ∪ ΦE (four ϕ_{i,j} and two ψ_i), over which Algorithm 1's α ranges (p6 L56-61). The weights α′ (alphaP, a noncomputable def not among the statements shown) are 2/7 on ϕ_{0,0} and 1/7 on each of the other five maps, total 1. x_t = pureS (fixedOf m) is a fixed point of the drawn map (first conjunct); averaged over the draw, g_t(α_t) is 3/7 (second conjunct) while g_t(α′_t) with the same x_t is 23/49 (third conjunct).",
+   "safety_case": [],
+   "gap_rank": null,
+   "new": true
+  },
+  {
+   "id": "AU-2312.04792v4:P04",
+   "label": "Paper problem",
+   "severity": "gap",
+   "paper": "arXiv 2312.04792v4",
+   "statement": "Proof of Lemma 10 bounds E[max of N² + N i.i.d. Gumbels] = ln(N² + N) + γ by 4 ln N + γ; this holds for N ≥ 2 but fails at N = 1 (ln 2 > 0). N ≥ 2 is never stated (also needed for η = √(ln N/T) > 0 and for absorbing O(√T) into O(√(T ln N)) in Theorem 5's proof). Edge case only.",
+   "evidence": "PDF p.15 lines 131-139; p.14 line 151; p.7 lines 9-13; Lean: LargeGames.lemma10_log_bound (proved for N ≥ 2); LargeGames.lemma10_log_bound_fails_at_one (proved).",
+   "safety_case": [],
+   "gap_rank": null,
+   "new": true
+  },
+  {
+   "id": "AU-2312.04792v4:P06",
+   "label": "Paper problem",
+   "severity": "ambiguity",
+   "paper": "arXiv 2312.04792v4",
+   "statement": "The structured game requires A ∈ [0,1]^{N×N} with A = A1 + εA2, A1 rows of ones on R, A2 ∈ {0,1}. For ε > 0 this forces A2 = 0 on the rows in R (rows of R exactly all ones), which the paper does not say. Under that stated hypothesis Corollary 6 holds with factor 1 instead of 2, for any A ∈ [0,1] and any R, and in the structured game even without the r·InternalRegret term; the paper's constants (2ε_A T, (1 − ε)T) match a reading where rows in R earn up to 1 + ε, i.e. A ∉ [0,1]. The stated bounds remain true (loose), so this is an inconsistency in the set-up, not a false claim.",
+   "evidence": "p7 L24-27; p7 L34-39; p7 L46-51; Lean: LargeGames.structured_rows_one (proved: A ≤ 1, ε > 0 ⇒ rows in R are all ones, A2 = 0 there); LargeGames.swap_le_one (proved: factor 1, any R); LargeGames.swap_le_structured (proved: swap gain ≤ ε_A T with rows of ones on R).",
+   "safety_case": [],
+   "gap_rank": null,
+   "new": true
+  },
+  {
+   "id": "AU-2312.04792v4:P07",
+   "label": "Paper problem",
+   "severity": "gap",
+   "paper": "arXiv 2312.04792v4",
+   "statement": "Corollary 7 is about Algorithm 1, whose guarantee in Theorem 5 holds 'with probability at least 1 − δ', and the text derives Corollary 7 from 'the external regret guarantee'; yet Corollary 7 states its bounds with no probability qualifier. It also needs r ≥ 1 (R nonempty) and ε ≥ 0, which the set-up does not state: with r = 0 (e.g. A = 0) the mass bound (1 − ε)T − O(√(T ln N)) fails for ε < 1 and large T (argued in words). It calls the structured game 'the simple game'.",
+   "evidence": "p7 L4-16; p7 L24-28; p7 L40-51; Lean: LargeGames.corollary7_mass (proved) has the hypotheses hε : 0 ≤ ε, hR : R.Nonempty and a bound B on every external-regret summand, and no probability; that the first two are needed is argued in words (no Lean probe).",
+   "safety_case": [],
+   "gap_rank": null,
+   "new": true
+  },
+  {
+   "id": "AU-2312.04792v4:P08",
+   "label": "Paper problem",
+   "severity": "ambiguity",
+   "paper": "arXiv 2312.04792v4",
+   "statement": "Section 4 says 'in zero-sum games all CCEs and CEs are Nash equilibria'. Read literally this is false: a CCE is a joint distribution and need not be a product. The standard true statement is that the marginals of any CCE of a two-player zero-sum game form a Nash equilibrium (not formalized here).",
+   "evidence": "PDF p.7 lines 58-60; Lean: LargeGames.rps_diag_cce_not_product (proved): in rock-paper-scissors with rewards in [0,1], weight 1/3 on each (k, k) satisfies the paper's CCE inequalities for both players but is not a product distribution.",
+   "safety_case": [],
+   "gap_rank": null,
+   "new": true
+  },
+  {
+   "id": "AU-2312.04792v4:P09",
+   "label": "Paper problem",
+   "severity": "ambiguity",
+   "paper": "arXiv 2312.04792v4",
+   "statement": "Corollary 3 (stated as a corollary 'of Theorem 1.1 in [24]'; p5 L154-161 and p6 L43-46) bounds the expected external regret of Algorithm 2 without saying whether the opponent may adapt to the player's past strategies. Algorithm 2 draws the noise r at line 2, before its loop starts at line 4, and the update at line 6 uses that same r ('+ r x', p12 L48); none of lines 1-6 draws r again (p12 L26-49). In a repeated game the opponent generally adapts (argued in words), and the paper itself says (p6 L64-66) that it requires sublinear regret 'under a fully adaptive adversary' for updating αt, 'and thus' would like a variant of FTPL whose updates are deterministic. Which opponents Corollary 3 covers is unclear.",
+   "evidence": "p5 L154-161; p6 L43-46; p6 L64-66; p12 L26-49; Lean: none (not formalized; depends on the cited theorem).",
+   "safety_case": [],
+   "gap_rank": null,
+   "new": true
+  },
+  {
+   "id": "AU-2312.04792v4:P10",
+   "label": "Paper problem",
+   "severity": "ambiguity",
+   "paper": "arXiv 2312.04792v4",
+   "statement": "The same p = 0.045 is given for two different comparisons. The Figure 2 caption says that with Combined the judge is significantly more likely (p = 0.045) 'to choose the correct answer than to answer incorrectly or abstain from responding', a comparison within Combined; the body gives p = 0.045 for the increase in correct answers of Combined over the control. The caption's preceding sentence says the '*' marks significance 'when compared to the control', which fits the body's comparison. So the caption sentence and the body describe different tests for the same p-value, and the text does not settle which was run. Based on the caption and body text only; the bar heights of Figure 2a are not used.",
+   "evidence": "PDF p.9 lines 65-76; Lean: none (not formalized; rests on the caption and body text only).",
+   "safety_case": [],
+   "gap_rank": null,
+   "new": true
+  },
+  {
+   "id": "AU-2407.13692v2:P01",
+   "label": "Paper problem",
+   "severity": "gap",
+   "paper": "arXiv 2407.13692v2",
+   "statement": "Theorem 1 as stated on p7 assumes only that H is all deterministic maps. Its proof needs three further hypotheses that only Appendix A states: X restricted to inputs of positive probability, and for every input at least one correct and at least one incorrect solution. In Lean, with the draft's reading of the equilibrium (PVG.Stackelberg), dropping each one breaks the theorem: with an input of probability 0, an equilibrium exists whose verifier fails completeness (required at every x ∈ X, p21 L30) at that input; with no correct solution, an equilibrium exists without completeness; with no incorrect solution, completeness and soundness hold but no equilibrium extends (v, h).",
+   "evidence": "p7 L1-4; p21 L6-12; p21 L26-31; Lean: PVG.probe_zero_weight_input, PVG.probe_no_correct_solution, PVG.probe_no_incorrect_solution (all proved; equilibria in the draft's reading PVG.Stackelberg). PVG.stackelberg_iff_complete_sound (proved) assumes PVG.Assumptions, whose fields include p_pos, has_correct and has_incorrect. The game in probe_no_incorrect_solution has loss l(v, b) = (v - b2r b)^2 and reward r(v, true) = 2 + v, r(v, false) = -v; it meets every field of PVG.Assumptions except has_incorrect (on [0, 1], r(v, true) >= 2 > 0 >= r(v', false), and r(., true) is increasing, as the conditions on r at p21 L27-28 ask), and allV contains 1correct, so only that hypothesis is dropped.",
+   "safety_case": [],
+   "gap_rank": null,
+   "new": true
+  },
+  {
+   "id": "AU-2407.13692v2:P02",
+   "label": "Paper problem",
+   "severity": "gap",
+   "paper": "arXiv 2407.13692v2",
+   "statement": "The proof's step 'We already know that the utility of the verifier is at its maximum at −lv(v∗) = 0' is not argued. It holds because the verifier 1correct, paired with a correct helpful and an incorrect sneaky answer, is a best response with zero loss. That uses that 1correct is an allowed verifier and that both kinds of solution exist.",
+   "evidence": "PDF p21 L61-62; Lean: PVG.stackelberg_iff_complete_sound proves the step this way, using the hypothesis hVc (1correct is in the verifier class) and Assumptions.has_correct/has_incorrect",
+   "safety_case": [],
+   "gap_rank": null,
+   "new": true
+  },
+  {
+   "id": "AU-2407.13692v2:P03",
+   "label": "Paper problem",
+   "severity": "ambiguity",
+   "paper": "arXiv 2407.13692v2",
+   "statement": "The verifier class is never stated. Theorem 1 restricts only the prover class H, and Appendix A gives v's type X × Z → [0, 1]. If the verifier class is restricted, the direction from an equilibrium to completeness and soundness can fail: with the constant 1/2 as the only verifier, an equilibrium (in the draft's reading) exists and completeness fails.",
+   "evidence": "PDF p7 L1-4; p21 L9; Lean: PVG.probe_restricted_verifiers (proved): with verifier class {v}, v the constant 1/2, (v, fun _ => true, fun _ => false) is an equilibrium and completeness fails. PVG.stackelberg_iff_complete_sound (proved) takes the verifier class V as a parameter, with hypotheses hV (every verifier in V maps into [0, 1]) and hVc (1correct, written fun x z => b2r (G.c x z), is in V).",
+   "safety_case": [],
+   "gap_rank": null,
+   "new": true
+  },
+  {
+   "id": "AU-2407.13692v2:P04",
+   "label": "Paper problem",
+   "severity": "gap",
+   "paper": "arXiv 2407.13692v2",
+   "statement": "Negating completeness, the proof writes '∃x, 1correct(x, h∗(x)) = 0 or v(x, h∗(x)) = 0'. Completeness in Appendix A asks 1correct(x, h(x)) = 1 and v(x, h(x)) = 1, and v takes values in [0, 1], so the negation is 1correct = 0 or v ≠ 1 at some x. The case 1correct = 1 with v strictly between 0 and 1 is not treated; the argument the proof gives for v = 0 (positive mass at x′ makes the verifier loss positive, contradicting lV(v∗) = 0, p22 L1-7) covers it unchanged. Minor.",
+   "evidence": "p21 L9; p21 L29-30; p21 L61-64; p22 L1-7; Lean: PVG.lossV_zero (proved): under PVG.Assumptions and v valued in [0, 1], verifier loss 0 gives v x (h x) = b2r (G.c x (h x)) and v x (s x) = b2r (G.c x (s x)) at every x, which also excludes values strictly between 0 and 1. PVG.stackelberg_iff_complete_sound (proved) derives completeness and soundness of a verifier v ∈ V from an equilibrium under PVG.Assumptions, for a verifier class V whose members all take values in [0, 1] and which contains the correct-label verifier fun x z => b2r (G.c x z) (hypothesis hVc).",
+   "safety_case": [],
+   "gap_rank": null,
+   "new": true
+  },
+  {
+   "id": "AU-2407.13692v2:P05",
+   "label": "Paper problem",
+   "severity": "ambiguity",
+   "paper": "arXiv 2407.13692v2",
+   "statement": "Theorem 1 concludes that completeness and soundness hold for '(v∗, π∗)', while the equilibrium it names is (v∗, h∗, s∗); the theorem does not say what π∗ is (p6 L29-31 introduces π as the role-conditioned prover, with h and s its helpful and sneaky roles). Appendix A restates the conclusion for '(v∗, h∗)' but defines completeness as '∃h s.t. ∀x ∈ X , 1correct (x, h(x)) = 1 and v(x, h(x)) = 1', a property of v alone. So it is unclear whether completeness must hold for the equilibrium's own h∗, as the proof uses (p21 L35, L42), or for some h.",
+   "evidence": "p7 L1-4; p6 L29-31; p21 L29-35; p21 L39-42; Lean: The ambiguity is argued in words. The Lean draft fixes one reading: PVG.Complete takes the helpful prover h as an argument, and PVG.stackelberg_iff_complete_sound states (∃ s, Stackelberg G V v h s) ↔ Complete G v h ∧ Sound G v, with the same h on both sides (completeness for the equilibrium's own h).",
+   "safety_case": [],
+   "gap_rank": null,
+   "new": true
+  },
+  {
+   "id": "AU-2407.13692v2:P06",
+   "label": "Paper problem",
+   "severity": "ambiguity",
+   "paper": "arXiv 2407.13692v2",
+   "statement": "The verifier-leading Stackelberg equilibrium is described only in words that mix a leader-follower condition with 'none of the players have incentives to change its strategy' (a Nash-style condition). Tie-breaking among the prover's best responses is not specified.",
+   "evidence": "PDF p7 L5-8; Lean: PVG.Stackelberg is the draft's one reading: v ∈ V, (h, s) is a prover best response to v (PVG.BestResponse), and no verifier in V with any of its prover best responses has lower verifier loss; taking v' = v, ties among v's best responses are broken in the verifier's favour. PVG.stackelberg_iff_complete_sound (proved) is Theorem 1 under this reading. Other readings are not checked in Lean.",
+   "safety_case": [],
+   "gap_rank": null,
+   "new": true
+  },
+  {
+   "id": "AU-2412.08897v2:P01",
+   "label": "Paper problem",
+   "severity": "error",
+   "paper": "arXiv 2412.08897v2",
+   "statement": "Proposition 7 proof, sufficiency half: it says the unique SEv of its adp example is (δ3p, σ†v), with σ†v = (bδ1v, bδ2v, (1 − 2b)δ3v) and b = 3a/2, and that this profile is not valid for a ⩽ 2/9. But for every prior 0 < a < 1/3, δ2p has strictly lower prover loss than δ3p against σ†v, so the prover can beneficially deviate and, by the test the proof itself uses for (δ1p, σ⋆v), (δ3p, σ†v) is not an SEv. Moreover, for every rational prior 0 < a < 1/3 an SEv exists and every SEv of the example is valid in the sense the proof checks (soundness against the three listed prover strategies). So the example does not show lack of sufficiency; Proposition 7 itself is not refuted (another example may work; not checked).",
+   "evidence": "p23 L19-29; p23 L7-18; p23 L3-6; p22 L42-44; Lean: lean/AdpExample.lean (pair A, differences A11-A13): delta3_not_BR (for 0 < a < 1/3, against σdag a, which is σ†v with b = 3a/2, the adp prover loss of strategy 1 = δ2p is strictly below that of strategy 2 = δ3p); every_SEv_valid (for input weights wt = (k, k, k, n) with k, n > 0, i.e. a = k/(3k + n), every rational 0 < a < 1/3, every IsSEv profile is valid in Lean's sense: Definition 2 with soundness checked against the three listed prover strategies only); isSEv_half (strategy 0 = δ1p with the verifier mix (1/2, 1/2, 0) is an SEv, so SEvs exist); IsBR (the prover's exact best response, used by IsSEv).",
+   "safety_case": [],
+   "gap_rank": null,
+   "new": true
+  },
+  {
+   "id": "AU-2412.08897v2:P02",
+   "label": "Paper problem",
+   "severity": "error",
+   "paper": "arXiv 2412.08897v2",
+   "statement": "Proposition 7 proof: under (δ3p, σ†v), σ†v = (bδ1v, bδ2v, (1 − 2b)δ3v), it says x = 1 is accepted 'w.p. 2b (hence ϵc = 1 − 2b)'. By the strategy definitions, δ3p sends message 1 on x = 1, which δ1v, δ2v and δ3v all accept, so x = 1 is accepted with probability 1; the completeness error is 2b, from x = 3 (message 3 is accepted only by δ3v). With the proof's ϵs = 1 − b, ϵc + ϵs = 1 + b, so the profile is never valid for a > 0; 'valid if and only if b > 1/3' and the bound a ⩽ 2/9 rest on the wrong ϵc.",
+   "evidence": "p23 L19-29; p22 L45-58; Lean: lean/AdpExample.lean (A14, A15): dagger_accepts_x1 (σdag a is σ†v with b = 3a/2 and δp 2 is δ3p: δ3p's message on x = 1 is accepted with probability 1); dagger_x3_error (one minus the acceptance probability of δ3p's message on x = 3 is 2b); dagger_not_valid (for a > 0, ⟨δ3p, σ†v⟩ is not Valid, Lean's Definition 2 with soundness against the three listed prover strategies).",
+   "safety_case": [],
+   "gap_rank": null,
+   "new": true
+  },
+  {
+   "id": "AU-2412.08897v2:P03",
+   "label": "Paper problem",
+   "severity": "error",
+   "paper": "arXiv 2412.08897v2",
+   "statement": "Proposition 7 proof, intuition: '⟨δp, δv⟩(3)T = 0 if δp = δ1p or δ2p (for any δv)' is false. By the strategy definitions, δ1p(3) = 3 mod 2 = 1 and δ2p(3) = 2 − |3 − 2| = 1, and message 1 is accepted by δ1v = [0 < mp < 3], δ2v = [mp < 2] and δ3v = 1; so for every pure verifier the output on x = 3 is 1, which is the correct label (y = x mod 2).",
+   "evidence": "p23 L31-33; p22 L45-58; Lean: lean/AdpExample.lean (A16): x3_accepted (for each pure verifier strategy i, δv i accepts the messages δp 0 3 and δp 1 3, i.e. the messages of δ1p and δ2p on x = 3).",
+   "safety_case": [],
+   "gap_rank": null,
+   "new": true
+  },
+  {
+   "id": "AU-2412.08897v2:P04",
+   "label": "Paper problem",
+   "severity": "error",
+   "paper": "arXiv 2412.08897v2",
+   "statement": "Proposition 7 proof: for the prover playing δ3p and the verifier playing (bδ1v, bδ2v, (1 − 2b)δ3v), it gives the verifier's negative loss as 'a log b + a log(2b) + a log b + (1 − 3a) log(1 − 2b)'. From the strategy definitions and the prior P(0) = P(1) = P(2) = a, P(3) = 1 − 3a, the verifier is correct with probability b on x = 0 and x = 2, 1 − 2b on x = 3, and 1 on x = 1 (δ3p sends message 1, which all three verifier strategies accept, and the label is 1). So the negative loss is a log b + a log 1 + a log b + (1 − 3a) log(1 − 2b): the printed a log(2b) should be a log 1 = 0. Hence b = 3a/2 is the stationary point of a wrong expression; by hand (not in Lean) the corrected stationary point is b = a/(1 − a).",
+   "evidence": "p23 L36-43; p23 L19-21; p23 L7; p22 L45-58; Lean: lean/AdpExample.lean (A17): verifier_objective (the adp verifier loss when the prover plays strategy 2 = δ3p and the verifier mixes (b, b, 1 − 2b) is minus the sum of a log b, a log 1, a log b and (1 − 3a) log(1 − 2b), the terms for x = 0, 1, 2, 3). The stationary point b = a/(1 − a) is computed by hand.",
+   "safety_case": [],
+   "gap_rank": null,
+   "new": true
+  },
+  {
+   "id": "AU-2412.08897v2:P06",
+   "label": "Paper problem",
+   "severity": "error",
+   "paper": "arXiv 2412.08897v2",
+   "statement": "Typo 'ϵc + ϵc' for ϵc + ϵs, twice in Proposition 7's proof: p23 L4-5 set ϵc = 0 and ϵs = 5/8, then print ϵc + ϵc as 5/8; L24-25 set ϵc = 1 − 2b and ϵs = 1 − b, then print ϵc + ϵc as 2 − 3b. Both printed values are ϵc + ϵs. Read from the text.",
+   "evidence": "p23 L3-6; p23 L24-25; Lean: lean/AdpExample.lean (A7): valid_star (⟨δ1p, σ⋆v⟩, i.e. strategy 0 with σstar = (5/8, 3/8, 0), is Valid: some εc, εs with εc + εs < 1 bound its errors; the statement does not fix the values 0 and 5/8). The typo itself is read from the text.",
+   "safety_case": [],
+   "gap_rank": null,
+   "new": true
+  },
+  {
+   "id": "AU-2412.08897v2:P07",
+   "label": "Paper problem",
+   "severity": "ambiguity",
+   "paper": "arXiv 2412.08897v2",
+   "statement": "Proposition 7 proof: σ⋆v's soundness is checked only 'for any δp' (the prover's deterministic strategies), and the text does not say whether the example's prover may use only the three listed δ1p, δ2p, δ3p or any function X → X (its message space is X; adp's Σp is 'a set of' such functions). Definition 2 asks soundness 'for any prover p′', with provers restricted to a set P. Under the first reading ⟨δ1p, σ⋆v⟩ is valid. Under the second, a prover that sends message 1 on input 0 (label 0) is accepted by σ⋆v with probability 1, so ϵs = 1 and ⟨δ1p, σ⋆v⟩ is not valid.",
+   "evidence": "p22 L42-51; p23 L3-6; p3 L41-45; p5 L33-34; p22 L53-58; Lean: lean/AdpExample.lean (A5): star_accepts_message_1 (input 0 has label 0, and σstar = σ⋆v accepts message 1 with probability 1); valid_star (⟨δ1p, σ⋆v⟩ is Valid, Lean's Definition 2 whose soundness clause ranges only over the three listed prover strategies).",
+   "safety_case": [],
+   "gap_rank": null,
+   "new": true
+  },
+  {
+   "id": "AU-2412.08897v2:P08",
+   "label": "Paper problem",
+   "severity": "gap",
+   "paper": "arXiv 2412.08897v2",
+   "statement": "Theorem 8, forward direction (valid ⇒ strict e-SEv, with the proof's eᵖ and eᵛ): the proof (p24 L10-42) supposes that the prover can deviate to reduce its loss by at least eᵖ, derives a contradiction with validity, and concludes 'Thus σ is a strict e-SEv of G'. It never checks the verifier's side, that the verifier is within eᵛ of the loss of its optimal strategy (p23 L54-55: 'within some ep or ev of the loss from their optimal strategy, respectively'); the proof's eᵛ := 1 − min over σv of the max of Lᵛ(σ) over σp ∈ eᵖ-LNE(G(σv)), the set that 'contains the prover’s approximate (local) best-responses', takes a verifier strategy's loss to be that max. The step is missing, and in Lean's outcome model the conclusion fails: in a game F in which the prover can combine its behaviour on the two inputs, a valid profile is not a strict e-SEv with the proof's tolerances.",
+   "evidence": "p23 L54-74; p24 L10-42; Lean: lean/NipTheorem8.lean (B9, B10): forward_fails (in its game the profile ((true, false), true) is valid but not a strict e-SEv with eᵖ = 1 − 0 and eᵛ = 1 − 2/5); F_minValid and F_minWorst (these are the proof's tolerances there: the least Lᵛ of a valid profile is 0, and the least over verifier strategies of the largest Lᵛ over the prover's eᵖ-best responses is 2/5); not_theorem8_F (so that game violates Lean's form of Theorem 8 with the proof's tolerances); F_rectangular (there the prover can combine its behaviour on the two inputs); Game.IsSE (strict e-SEv: an eᵖ-best response for the prover, and no verifier strategy whose worst case over the prover's eᵖ-best responses is lower by eᵛ or more).",
+   "safety_case": [],
+   "gap_rank": null,
+   "new": true
+  },
+  {
+   "id": "AU-2412.08897v2:P09",
+   "label": "Paper problem",
+   "severity": "gap",
+   "paper": "arXiv 2412.08897v2",
+   "statement": "Theorem 8 proof: it sets eᵛ := 1 − min over σv of the max of Lᵛ(σ) over σp ∈ eᵖ-LNE(G(σv)), the set that 'contains the prover’s approximate (local) best-responses to σv'. This eᵛ can be negative, whereas the paper takes each tolerance ei ∈ R⩾0: Lᵛ(σ) = LWC(σ | y = 1) + LWC(σ | y = 0) is a sum of two worst-case losses (LWC is a max of ℓ(σ, x) over inputs) and need not be at most 1. In Lean's game F1, with eᵖ = 1 − 0 (the proof's eᵖ := 1 − min over σ⋆ ∈ Σ⋆, the valid proof systems, of Lᵛ(σ⋆); the least Lᵛ of a valid profile there is 0), the min-max is 11/10, so eᵛ = 1 − 11/10 < 0, and no profile is a strict e-SEv with these tolerances although a valid profile exists. So the proof's choice of eᵛ is not admissible in general.",
+   "evidence": "p23 L57-74; p6 L5-15; p6 L27-28; p4 L52-53; Lean: lean/NipTheorem8.lean (B11): F1_negative_ev (in game F1, with the reading verifier only, the proof's tolerances are eᵖ = 1 − 0 and eᵛ = 1 − 11/10 < 0, the min-max of Lᵛ being 11/10 by Game.IsMinWorst with Game.IsWorst; the profile ((true, false), ()) satisfies Game.Valid; and no profile satisfies Game.IsSE with these tolerances). Lean's finite outcome model has no notion of locality: Game.IsWorst takes the max over all of the prover's approximate best responses, Game.BR.",
+   "safety_case": [],
+   "gap_rank": null,
+   "new": true
+  },
+  {
+   "id": "AU-2412.08897v2:P10",
+   "label": "Paper problem",
+   "severity": "gap",
+   "paper": "arXiv 2412.08897v2",
+   "statement": "Theorem 8 proof, forward step 'Because σ is a valid IP system, then ϵs(σ†p, σv) ⩽ ϵs(σ)' (p24 L17). The proof defines ϵs(σ′) := sup over x with y = 0 of ℓ(σ′, x), σ′'s own soundness error (p23 L52-53), and uses ϵs(σ) so in Lp(σ) = ϵc(σ) − ϵs(σ) (p24 L14-16). Validity bounds every prover's soundness error against σv by the validity bound (Definition 2: 'for any prover p′'; Σ⋆, the valid proof systems: '∀σp ... ⩽ ϵ⋆s'), which can exceed σ's own ϵs(σ). So the step does not follow; reading 'with bounds ϵc(σ) and ϵs(σ)' (p24 L10) as the validity bounds would give it but not Lp(σ) = ϵc(σ) − ϵs(σ). In Lean's outcome model the conclusion fails: in game C the profile (true, ()) is valid (own soundness error 0; the other prover strategy's 11/20) but is not an approximate best response with eᵖ = 1 − 2/5, the proof's eᵖ := 1 − min over σ⋆ ∈ Σ⋆ of Lᵛ(σ⋆) there, so Lean's forms of Theorem 8 fail in C under both readings of the verifier's condition.",
+   "evidence": "p24 L10-17; p23 L52-61; p23 L73-74; p24 L3-9; p3 L36-44; Lean: lean/NipTheorem8.lean (B12): coupled_forward_fails (in game C the least Lᵛ of a valid profile is 2/5, so the proof's eᵖ is 1 − 2/5, and the min-max of Lᵛ is 11/20; the profile (true, ()) is valid but not an approximate best response, Game.BR, with eᵖ = 1 − 2/5); not_theorem8_C (C violates both Game.Theorem8 and Game.Theorem8AtProfile, Lean's forms of Theorem 8 with the proof's tolerances under the two readings of the verifier's condition).",
+   "safety_case": [],
+   "gap_rank": null,
+   "new": true
+  },
+  {
+   "id": "AU-2412.08897v2:P11",
+   "label": "Paper problem",
+   "severity": "gap",
+   "paper": "arXiv 2412.08897v2",
+   "statement": "Theorem 8 proof, converse: σ†p is taken from Σ̂p, the approximate best responses to σv that maximise the soundness error, so 'by construction' gives ϵs(σ̃p, σv) ⩽ ϵs(σ†p, σv) only for σ̃p among the approximate best responses, not 'for any prover strategy σ̃p' as claimed. The step is unjustified. In Lean's outcome model the converse fails: in a game D a strict e-SEv with the proof's tolerances is not valid.",
+   "evidence": "p24 L43-48; p23 L56-58; p23 L63-71; p24 L69-71; Lean: lean/NipTheorem8.lean (B13): converse_fails (in game D the profile (true, true) is a strict e-SEv, Game.IsSE, with eᵖ = 1 − 3/5 and eᵛ = 1 − 1/2, but is not valid); D_minValid and D_minWorst (these are the proof's tolerances for D: the least Lᵛ of a valid profile is 3/5 and the min-max of Lᵛ is 1/2); not_theorem8_D (D violates Lean's form of Theorem 8).",
+   "safety_case": [],
+   "gap_rank": null,
+   "new": true
+  },
+  {
+   "id": "AU-2412.08897v2:P12",
+   "label": "Paper problem",
+   "severity": "gap",
+   "paper": "arXiv 2412.08897v2",
+   "statement": "Theorem 8 under reading B (the verifier's loss at σ is Lᵛ(σ) itself, instead of Definition 5's max of Lᵛ over the prover's eᵖ-best responses, which the proof's eᵛ uses): in Lean's outcome model, with the proof's tolerances and a prover that can combine its behaviour across inputs, the forward direction holds but the converse fails (game H: a profile meets reading B's condition and is not valid). Under Definition 5's reading the converse holds for such games with finitely many prover strategies. So reading B does not rescue the proof: it gives the forward direction for such games but breaks the converse.",
+   "evidence": "p23 L49-58; p23 L63-71; p4 L40-48; p24 L69-71; Lean: lean/NipTheorem8.lean (B14-B16): H_converse_fails (in its game, with eᵖ = eᵛ = 1 − 1/10, the proof's tolerances there, the profile (1, true) satisfies reading B's condition but is not valid); not_theorem8AtProfile_H (so Lean's form of Theorem 8 under reading B fails there); H_rectangular (in that game the prover can combine behaviours); Game.IsSEAtProfile (reading B's condition); forward_of_rectangular (reading B, prover can combine behaviours: every valid profile meets the condition with the proof's tolerances); converse_of_rectangular (Definition 5's reading, finitely many prover strategies that can be combined: every strict e-SEv with the proof's eᵛ is valid).",
+   "safety_case": [],
+   "gap_rank": null,
+   "new": true
+  },
+  {
+   "id": "AU-2412.08897v2:P13",
+   "label": "Paper problem",
+   "severity": "ambiguity",
+   "paper": "arXiv 2412.08897v2",
+   "statement": "Theorem 8's statement does not say which tolerance e is meant ('an approximate ... equilibrium'); read as 'for some e', it would make every profile valid, since every profile is an e-SE for large enough e (argued in words). The proof fixes eᵖ and eᵛ, and Lean's Theorem8 uses those.",
+   "evidence": "p6 L31-33; p23 L56-74; Lean: lean/NipTheorem8.lean (B4): Game.Theorem8 (fixes eᵖ = 1 − m and eᵛ = 1 − w, with m the least Lᵛ of a valid profile, Game.IsMinValidLv, and w the least over verifier strategies of the largest Lᵛ over the prover's eᵖ-best responses, Game.IsMinWorst with Game.IsWorst, as the proof sets them; Game.IsSE is the strict e-SEv condition).",
+   "safety_case": [],
+   "gap_rank": null,
+   "new": true
+  },
+  {
+   "id": "AU-2412.08897v2:P14",
+   "label": "Paper problem",
+   "severity": "ambiguity",
+   "paper": "arXiv 2412.08897v2",
+   "statement": "Theorem 12's proof sets ϵk := min over (σv1, σp) ∈ e-SEv(G′) of ϵk(σv1, σp) (p27 L4), and footnote 9 says this rests on 'a strong Stackelberg equilibrium in which v1 is assumed to break any ties in favour of p'. Definition 5, which defines (local, global and approximate) Stackelberg equilibria, has the leader minimise the max of its loss over the followers' local equilibria and states no tie-breaking rule. So the proof uses e-SEv with a tie-breaking rule that Definition 5 does not have, while Theorem 12's statement ('an approximate verifier-prover-leading Stackelberg equilibrium (e-SEv1,p) of G') does not mention it: the theorem can be read as claimed for Definition 5's equilibria or only for those with the footnote's tie-breaking, which can differ when there are ties. Argued in words; not formalized.",
+   "evidence": "p4 L36-53; p26 L15-17; p27 L3-6; p27 L95-96; Lean: none: argued in words; Theorem 12 and strong Stackelberg equilibria are not formalized.",
+   "safety_case": [],
+   "gap_rank": null,
+   "new": true
+  },
+  {
+   "id": "AU-2412.08897v2:P15",
+   "label": "Paper problem",
+   "severity": "ambiguity",
+   "paper": "arXiv 2412.08897v2",
+   "statement": "Definition 6, requirement 1 ('Lv(σ) ⩽ Lv(σ′) if and only if Eσ[mT = 1S(x)] ⩾ Eσ′[mT = 1S(x)]': Lᵛ orders profiles exactly as expected accuracy does), read literally, fails for losses the paper uses in PVGs. In Lean it fails for a nip outcome table with nip's Lᵛ = LWC(σ | y = 1) + LWC(σ | y = 0) (game R: two label-1 inputs, one label-0 input, uniform prior), and for the adp game of Proposition 7's proof (X = {0, 1, 2, 3}, y = x mod 2, prior P(0) = P(1) = P(2) = a, P(3) = 1 − 3a) with adp's log loss Lᵛ at a = 1/5 (two profiles with equal expected accuracy and different Lᵛ). So under the literal reading these games are not PVGs, although the paper calls nip and adp PVGs; the requirement's parenthesis (the verifier's objective is to output the true label) allows a looser reading.",
+   "evidence": "p5 L3-11; p6 L23-29; p21 L20-29; p22 L42-48; p23 L7; Lean: lean/NipTheorem8.lean (R1): R_requirement1_fails (game R, a nip outcome table with two label-1 inputs, one label-0 input and one verifier strategy, violates Game.Requirement1, Lean's requirement 1 for uniformly weighted inputs, with total error in place of expected accuracy); lean/AdpExample.lean (R2): requirement1_fails_Lv (at a = 1/5, so that prior (1/5) = (1/5, 1/5, 1/5, 2/5), strategy 0 with the verifier mix (1/2, 1/2, 0) and strategy 1 with (9/10, 1/10, 0) have equal expected accuracy, but the first has strictly smaller adp verifier loss); requirement1_fails (the same with likelihood scores).",
+   "safety_case": [],
+   "gap_rank": null,
+   "new": true
+  },
+  {
+   "id": "AU-2412.08897v2:P16",
+   "label": "Paper problem",
+   "severity": "gap",
+   "paper": "arXiv 2412.08897v2",
+   "statement": "Lemma 19 omits footnote 10's assumption that P gives positive probability to every open ball; without it the first claim (worst-case uniform convergence from compactness and Lipschitz losses) fails, e.g. for data from a point mass.",
+   "evidence": "p28 L3-4; footnote 10 p28 L112-114; Lean: lean/WorstCase.lean (K1): lemma19_needs_full_support (on the finite, hence compact, space Bool, with one strategy whose loss is 1 at true and 0 at false, Lipschitz for the discrete metric, and data drawn from the point mass at false, WorstCaseUC, Lean's Definition 17 of worst-case uniform convergence, fails; WorstCaseUC compares LWC, the worst-case loss over all inputs, with LWCD, the worst case over the first m data points).",
+   "safety_case": [],
+   "gap_rank": null,
+   "new": true
+  },
+  {
+   "id": "AU-2412.08897v2:P17",
+   "label": "Paper problem",
+   "severity": "gap",
+   "paper": "arXiv 2412.08897v2",
+   "statement": "Theorem 12: the main text defines zk-nip by adding Lv3 to the prover's loss, but the proof uses a lexicographic objective, and it assumes the ϵk bound is tight (minimal over valid IP systems), which the statement does not say.",
+   "evidence": "p8 L12-16; p26 L30-39; Lean: none: not formalized (text reading only)",
+   "safety_case": [],
+   "gap_rank": null,
+   "new": true
+  },
+  {
+   "id": "AU-2412.08897v2:P18",
+   "label": "Paper problem",
+   "severity": "gap",
+   "paper": "arXiv 2412.08897v2",
+   "statement": "Theorem 11's proof ('We follow the proof of Theorem 8') repeats Theorem 8's forward step: from σ being valid 'with bounds ϵc (σ) and ϵs (σ)' it takes 'ϵs(σ†p1, σ†p2, σv) ⩽ ϵs(σ)', although ϵs(σ) is also σ's own error in the provers' loss ϵc(σ) − ϵs(σ), and validity bounds other provers only by the validity bound; the converse is given only as 'proceeds as before'. So the forward step is unjustified here, as in Theorem 8. Argued in words; mnip is not formalized.",
+   "evidence": "p25 L22-25; p25 L54-55; p25 L61-72; p24 L10-17; p23 L52-53; Lean: none for mnip (not formalized; argued in words). For nip only, lean/NipTheorem8.lean: coupled_forward_fails shows that the conclusion of Theorem 8's forward step can fail (in game C a valid profile is not an approximate best response, Game.BR, with the proof's eᵖ = 1 − 2/5).",
+   "safety_case": [],
+   "gap_rank": null,
+   "new": true
+  },
+  {
+   "id": "MA-DEBATE-CONSULTANCY",
+   "label": "Derived",
+   "kind": "pooled_table",
+   "statement": "Across 56 matched debate-versus-baseline comparisons from 5 papers (13 from quoted numbers, 43 read from figures), the judge was more accurate with debate in 51; the median difference is +8.4 points. Settings differ (judges, models, tasks); this is a table of matched comparisons, not a weighted effect size.",
+   "evidence": "data/meta/pooled.json",
+   "safety_case": [
+    "SC-OP-EMPIRICAL"
+   ],
+   "gap_rank": 1,
+   "new": true
+  },
+  {
+   "id": "DX01",
+   "label": "Derived",
+   "kind": "paper_inconsistency",
+   "paper": "Brown-Cohen, Irving and Piliouras 2023 (arXiv 2311.14125v1)",
+   "statement": "Theorem 7.1 states prover time O(T), but its proof says the prover time is the same as Theorem 5.3, which states O(T log T). A reader citing the O(T) prover time should know the paper's own proof, as written, does not derive it.",
+   "scope": "Concerns only the prover-time entry of Theorem 7.1 in this v1 PDF. The verifier time O(l log T) and O(1) queries in Theorem 7.1 agree with Theorem 5.3, and the completeness and soundness arguments are not affected. Theorem 7.2 is not assessed.",
+   "evidence": "arXiv 2311.14125v1 p.5 L7-8; arXiv 2311.14125v1 p.6 L32-34; arXiv 2311.14125v1 p.9 L1-3; arXiv 2311.14125v1 p.20 L12-20",
+   "safety_case": [],
+   "gap_rank": null,
+   "new": true
+  },
+  {
+   "id": "DX02",
+   "label": "Derived",
+   "kind": "paper_inconsistency",
+   "paper": "Hase et al. 2024 (arXiv 2401.06751v2)",
+   "statement": "The text says the 70-100% easy-to-hard SGR results are statistically significant, but in the cited Appendix Table 2 the StrategyQA hard-test estimate (0.72) has a 95% CI of ±0.93, which includes 0, and p = 0.0788.",
+   "scope": "Concerns the significance statement for one of the six hard-test rows (Llama-2-70b, ICL). The other five hard-test rows in the quoted lines have p <= 0.0158. The point estimate 0.72 is still inside the 70-100% range the text gives. The 'All' test rows and other models or methods are not assessed.",
+   "evidence": "arXiv 2401.06751v2 p.7 L37-42; arXiv 2401.06751v2 p.20 L174-176; arXiv 2401.06751v2 p.20 L98-109; arXiv 2401.06751v2 p.20 L118-129",
+   "safety_case": [],
+   "gap_rank": null,
+   "new": true
+  },
+  {
+   "id": "DX03",
+   "label": "Derived",
+   "kind": "paper_inconsistency",
+   "paper": "Lightman et al. 2023 (arXiv 2305.20050v1)",
+   "statement": "The out-of-distribution set is 224 questions in the Section 5 text and 234 in Table 1, where the per-test counts (45, 60, 45, 84) also add up to 234.",
+   "scope": "Concerns only the stated number of OOD questions. The accuracies in Table 1 and the text's comparison of PRM, ORM and majority voting are not assessed.",
+   "evidence": "arXiv 2305.20050v1 p.10 L50-54; arXiv 2305.20050v1 p.10 L1-5; arXiv 2305.20050v1 p.10 L28-36",
+   "safety_case": [],
+   "gap_rank": null,
+   "new": true
+  },
+  {
+   "id": "DX04",
+   "label": "Derived",
+   "kind": "paper_inconsistency",
+   "paper": "Arnesen et al. 2024 (arXiv 2409.16636v1)",
+   "statement": "The fully trained consultant's win rate against the judge is 50% in Section 4.1 and 52% in Section 5.1, with the same 36% SFT baseline in both.",
+   "scope": "Concerns only the fully trained consultant's win rate. The SFT consultant's 36% and the debater's 67% match across the two sections. The paper's claims about judge accuracy are not assessed.",
+   "evidence": "arXiv 2409.16636v1 p.8 L11-18; arXiv 2409.16636v1 p.9 L28-31",
+   "safety_case": [],
+   "gap_rank": null,
+   "new": true
+  },
+  {
+   "id": "DX05",
+   "label": "Derived",
+   "kind": "paper_inconsistency",
+   "paper": "Parrish et al. 2022 (arXiv 2210.10860v1)",
+   "statement": "The number of writers is 10 in the main text and 12 in Appendix A.1, for the same qualification-based selection.",
+   "scope": "Concerns only the writer count. Judge recruitment and the paper's results are not assessed.",
+   "evidence": "arXiv 2210.10860v1 p.2 L108-113; arXiv 2210.10860v1 p.5 L43-54; arXiv 2210.10860v1 p.6 L57-60",
+   "safety_case": [],
+   "gap_rank": null,
+   "new": true
+  },
+  {
+   "id": "DX06",
+   "label": "Derived",
+   "kind": "paper_inconsistency",
+   "paper": "Cohen et al. 2023 (arXiv 2305.13281v1)",
+   "statement": "In Table 4's LM V LM row, two printed F1 values do not equal the harmonic mean of the precision and recall printed beside them: 77.7 (P 74.5, R 74.9; harmonic mean 74.70, and 77.7 exceeds both P and R) and 76.7 (P 85.1, R 70.7; harmonic mean 77.23).",
+   "scope": "Concerns two cells of the LM V LM row of Table 4 under the paper's own F1 definition. The Majority and '- Follow-up' rows of Table 4 agree with the formula. The comparisons with baselines and other tables are not assessed here.",
+   "evidence": "arXiv 2305.13281v1 p.5 L64-71; arXiv 2305.13281v1 p.6 L4-8; arXiv 2305.13281v1 p.6 L64-71; arXiv 2305.13281v1 p.7 L211-213",
+   "safety_case": [],
+   "gap_rank": null,
+   "new": true
+  },
+  {
+   "id": "DX07",
+   "label": "Derived",
+   "kind": "paper_inconsistency",
+   "paper": "Goel et al. 2025 (arXiv 2502.04313v2)",
+   "statement": "The paper names the fourth weak model of its weak-to-strong study inconsistently: Table 9 lists Llama-3.2-1B, Appendix C.1 says Llama3.2-1B was discarded, and Table 11's model pairs use Llama-3.2-3B.",
+   "scope": "Concerns only the identity of one of the four weak models. The other three weak models, the three strong models and the 15 datasets are consistent across the quoted lines. Figure 4's legend is not used (figure only). The similarity-versus-gain findings are not assessed.",
+   "evidence": "arXiv 2502.04313v2 p.45 L5-16; arXiv 2502.04313v2 p.46 L23-26; arXiv 2502.04313v2 p.50 L3-5; arXiv 2502.04313v2 p.50 L16-27",
+   "safety_case": [],
+   "gap_rank": null,
+   "new": true
+  },
+  {
+   "id": "DX08",
+   "label": "Derived",
+   "kind": "paper_inconsistency",
+   "paper": "Wen et al. 2024 (arXiv 2409.12822v3)",
+   "statement": "On p.4 the human evaluation error rate and human false positive rate are described in words as measures of human evaluation (Rhuman) but written formally with Rtrain, the paper's symbol for the automatic RLHF proxy reward.",
+   "scope": "Concerns the notation of two metric definitions on p.4. It does not by itself show which quantity the reported error and false positive rates were computed from; the reported numbers and findings are not assessed.",
+   "evidence": "arXiv 2409.12822v3 p.3 L97-105; arXiv 2409.12822v3 p.4 L22-30",
+   "safety_case": [],
+   "gap_rank": null,
+   "new": true
+  },
+  {
+   "id": "DX09",
+   "label": "Derived",
+   "kind": "paper_inconsistency",
+   "paper": "Liang et al. 2023 (arXiv 2305.19118v4)",
+   "statement": "The text says MAD (GPT-3.5 backbone) shows significant advancements over GPT-4 across automatic and human metrics, but in Table 1 the two are tied on Lexical COMET (82.0 and 82.0).",
+   "scope": "Concerns the claim of advancement over GPT-4 on one automatic metric. Other Table 1 columns are not assessed here. A search of the numbered text found no significance test, p-value or confidence interval for this comparison, but absence cannot be shown by quotation, so this item rests only on the tie.",
+   "evidence": "arXiv 2305.19118v4 p.5 L176-180; arXiv 2305.19118v4 p.5 L1-12; arXiv 2305.19118v4 p.5 L27-29; arXiv 2305.19118v4 p.5 L47-57",
+   "safety_case": [],
+   "gap_rank": null,
+   "new": true
+  },
+  {
+   "id": "SC-EVIDENCE-GAPS",
+   "label": "Derived",
+   "kind": "evidence_gap",
+   "statement": "14 of 45 steps of the debate safety case have no checked evidence in the 42 papers: deployment and low stakes: SC-ASM-NOT-EXTREME, SC-ASM-SECURE-ENV, SC-C2.3, SC-C2.4, SC-C3.7, SC-D4.1, SC-D4.3, SC-D4.4, SC-O, SC-OP-HIGH-STAKES, SC-OP-HONESTY-ALIGNMENT, SC-Oprime; training reaches the honest equilibrium: SC-D5.1, SC-D5.2",
+   "evidence": "data/ranking/gap_map.json (node labels from checked mappings)",
+   "safety_case": [
+    "SC-ASM-NOT-EXTREME",
+    "SC-ASM-SECURE-ENV",
+    "SC-C2.3",
+    "SC-C2.4",
+    "SC-C3.7",
+    "SC-D4.1",
+    "SC-D4.3",
+    "SC-D4.4",
+    "SC-D5.1",
+    "SC-D5.2",
+    "SC-O",
+    "SC-OP-HIGH-STAKES",
+    "SC-OP-HONESTY-ALIGNMENT",
+    "SC-Oprime"
+   ],
+   "gap_rank": null,
+   "new": true
+  },
+  {
+   "id": "ST-Q43",
+   "label": "Partly answered by later work",
+   "question_id": "Q43",
+   "statement": "Open empirical questions: does debate help, reach equilibrium, show obfuscation? What remains: With debaters RL-trained against human (or human-simulating) judges on tasks beyond QuALITY, does debate measurably raise judge accuracy over consultancy, does training reliably reach a stable honest equilibrium, do obfuscated arguments emerge, how large are the judges' systematic errors relative to ground truth and in which domains, and how many questions in the target domain are hard to settle by deductive argument?",
+   "evidence": "6 later-paper findings passed their checks (Q43:F1, Q43:F2, Q43:F3, Q43:F4, Q43:F5, Q43:F6)",
+   "safety_case": [
+    "SC-OP-EMPIRICAL",
+    "SC-C4.6",
+    "SC-E6.1",
+    "SC-ASM-NO-OBFUSCATION"
+   ],
+   "gap_rank": 1,
+   "new": false
+  },
+  {
+   "id": "ST-Q44",
+   "label": "Partly answered by later work",
+   "question_id": "Q44",
+   "statement": "Open: how serious is exploration hacking and how can it be prevented? What remains: Do models that were not explicitly trained to exploration hack acquire it spontaneously during RL training, including debate training, and when it does not show in their chain-of-thought, can it be detected or prevented well enough to supply the exploration guarantee (no high-reward strategies left unexplored) that the debate safety case requires?",
+   "evidence": "4 later-paper findings passed their checks (Q44:F1, Q44:F2, Q44:F3, Q44:F4)",
+   "safety_case": [
+    "SC-OP-EXPLORATION",
+    "SC-E5.3"
+   ],
+   "gap_rank": 2,
+   "new": false
+  },
+  {
+   "id": "ST-Q35",
+   "label": "Partly answered by later work",
+   "question_id": "Q35",
+   "statement": "Do scalable oversight methods (critique, debate, decomposition) work on misleading errors? What remains: Do task decomposition, critique and debate assistance raise human evaluators' detection of unintended, RLHF-induced misleading errors (U-SOPHISTRY) on tasks like QuALITY and APPS above unassisted evaluation, and does any gain hold when the policy is trained against the assisted evaluator?",
+   "evidence": "4 later-paper findings passed their checks (Q35:F1, Q35:F2, Q35:F3, Q35:F4)",
+   "safety_case": [
+    "SC-D4.2",
+    "SC-E6.1"
+   ],
+   "gap_rank": 14,
+   "new": false
+  },
+  {
+   "id": "ST-Q39",
+   "label": "Partly answered by later work",
+   "question_id": "Q39",
+   "statement": "How can model similarity be measured on free-text answers and reasoning, to study its role in debate and process supervision? What remains: Does a free-text similarity measure between models (for example residualised compression distance on outputs, the judge's likelihood of a response, or a CAPA-style agreement computed on answer-matched free-form answers) predict how often a weaker judge sides with a similar debater in judged debate with ground-truth labels, and how often a process reward model misses step errors made by a similar policy?",
+   "evidence": "5 later-paper findings passed their checks (Q39:F1, Q39:F2, Q39:F3, Q39:F4, Q39:F5)",
+   "safety_case": [
+    "SC-C5.2"
+   ],
+   "gap_rank": 15,
+   "new": false
+  },
+  {
+   "id": "ST-Q47",
+   "label": "Partly answered by later work",
+   "question_id": "Q47",
+   "statement": "Can a debate protocol avoid needing stability, for example by targeting honesty instead of correctness? What remains: Can a recursive debate protocol that rewards honest reporting of the debaters' beliefs (rather than deciding L(x)), or that uses non-black-box access to human judgment or the debaters' bounded computation, achieve completeness on decompositions whose fractional block sensitivity rho makes rho^d superpolynomial, while keeping prover-estimator debate's soundness without stability (an average-case guarantee)?",
+   "evidence": "4 later-paper findings passed their checks (Q47:F1, Q47:F2, Q47:F3, Q47:F4)",
+   "safety_case": [
+    "SC-C4.6"
+   ],
+   "gap_rank": 16,
+   "new": false
+  },
+  {
+   "id": "ST-Q50",
+   "label": "Partly answered by later work",
+   "question_id": "Q50",
+   "statement": "Does some variant of debate work as a component of an overall alignment strategy? What remains: Is there a debate protocol, trained end to end, whose guarantees survive (a) human judges with bounded but systematic, correlated errors and (b) debaters free to choose among winning decompositions or subclaims to leak or steer information, and does it keep its reward-hacking benefits in domains without verifiable ground truth?",
+   "evidence": "6 later-paper findings passed their checks (Q50:F1, Q50:F2, Q50:F3, Q50:F4, Q50:F5, Q50:F6)",
+   "safety_case": [
+    "SC-C4.5",
+    "SC-D4.2"
+   ],
+   "gap_rank": 17,
+   "new": false
+  },
+  {
+   "id": "ST-Q51",
+   "label": "Partly answered by later work",
+   "question_id": "Q51",
+   "statement": "Open: is stability necessary, and which problems admit stable decompositions? What remains: Outside the black-box judgment model of 2610.02557 (e.g. exploiting the debaters' equal computational power or a relaxed judgment oracle), can a debate protocol efficiently decide problems all of whose decompositions have large fractional block sensitivity, and which natural problem classes (proof-like vs evidence-aggregating claims) admit decompositions with rho^d polynomial in the input size?",
+   "evidence": "3 later-paper findings passed their checks (Q51:F1, Q51:F2, Q51:F3)",
+   "safety_case": [
+    "SC-C4.6"
+   ],
+   "gap_rank": 18,
+   "new": false
+  },
+  {
+   "id": "ST-Q09",
+   "label": "Partly answered by later work",
+   "question_id": "Q09",
+   "statement": "Is learned task decomposition feasible for hard real-world tasks, and where does it fail? What remains: Can a decomposition model trained from human feedback beat a fixed decomposition on a hard real-world task without verifiable answers (e.g. book-length summarization), measured by the quality of the human supervision it enables, and on which tasks do cross-part dependencies make it fail?",
+   "evidence": "5 later-paper findings passed their checks (Q09:F1, Q09:F2, Q09:F3, Q09:F4, Q09:F5)",
+   "safety_case": [],
+   "gap_rank": 29,
+   "new": false
+  },
+  {
+   "id": "ST-Q13",
+   "label": "Partly answered by later work",
+   "question_id": "Q13",
+   "statement": "Do debate, market-making and recursive reward modeling work in sandwiching trials? What remains: In a sandwiching trial with non-expert humans, a model stronger than them, and expert or ground-truth scoring, do multi-turn debate between model debaters, market making, and genuinely recursive reward modeling (assistant models trained in earlier rounds helping the non-experts evaluate the next model) raise non-expert accuracy above consultancy and above simple deference to the model?",
+   "evidence": "6 later-paper findings passed their checks (Q13:F1, Q13:F2, Q13:F3, Q13:F4, Q13:F5, Q13:F6)",
+   "safety_case": [],
+   "gap_rank": 30,
+   "new": false
+  },
+  {
+   "id": "ST-Q18",
+   "label": "Partly answered by later work",
+   "question_id": "Q18",
+   "statement": "Open question: does process supervision's advantage generalize beyond math? What remains: With step labels of comparable quality to PRM800K's human labels, does process supervision beat outcome supervision outside math (e.g. law, medicine, open-ended writing), and which task properties (how definable steps are, chain-of-thought length, label noise) decide the sign of the effect?",
+   "evidence": "7 later-paper findings passed their checks (Q18:F1, Q18:F2, Q18:F3, Q18:F4, Q18:F5, Q18:F6, Q18:F7)",
+   "safety_case": [],
+   "gap_rank": 31,
+   "new": false
+  },
+  {
+   "id": "ST-Q26",
+   "label": "Partly answered by later work",
+   "question_id": "Q26",
+   "statement": "What makes a concept easy or hard for a strong model to learn from weak labels, and can weak-to-strong generalization error be estimated without labels? What remains: Can the absolute test error of a weak-to-strong model (not only its trend across weak supervisors) be estimated with no ground-truth labels, including for hyperparameter selection, for fully finetuned models, for reward modeling and when realizability fails? And which property of a concept (expansion, overlap density, linear decodability, salience) causally determines whether it is easy or hard to learn from weak labels when manipulated directly rather than only correlated?",
+   "evidence": "5 later-paper findings passed their checks (Q26:F1, Q26:F2, Q26:F3, Q26:F4, Q26:F5)",
+   "safety_case": [],
+   "gap_rank": 32,
+   "new": false
+  },
+  {
+   "id": "ST-Q38",
+   "label": "Partly answered by later work",
+   "question_id": "Q38",
+   "statement": "Which other combinations of scalable oversight and weak-to-strong generalization work? What remains: Does task decomposition combined with weak-to-strong training (a strong model trained on weak supervision of decomposed subtasks, testing part-to-complete generalization) recover more of the performance gap, measured against held-out ground-truth or expert labels, than plain W2SG or debate+W2SG, on verifiable tasks and on tasks without an automatic verifier?",
+   "evidence": "5 later-paper findings passed their checks (Q38:F1, Q38:F2, Q38:F3, Q38:F4, Q38:F5)",
+   "safety_case": [],
+   "gap_rank": 33,
+   "new": false
+  },
+  {
+   "id": "ST-Q45",
+   "label": "Narrowed",
+   "question_id": "Q45",
+   "statement": "Without online training in high-stakes settings, how can distribution shift, alignment faking and coordinated errors be handled? What remains: In a high-stakes deployment of a debate-trained agent with no online training, what evidence can bound (a) train-to-deploy behaviour gaps under distribution shift, including alignment faking that can persist through training, and (b) coordinated errors between instances of the same model, covering both correlated honest mistakes the judge's reward signal misses and deliberate coordination (active or acausal collusion, attacks split across instances), given that, of the collusion strategies, only passive self-recognition can so far be elicited (by SFT) well enough to be bounded, while it is unclear how to comprehensively elicit and evaluate active signalling strategies and acausal collusion and per-agent monitoring degrades as an attack is split across more agents?",
+   "evidence": "6 later-paper findings passed their checks (Q45:F1, Q45:F2, Q45:F3, Q45:F4, Q45:F5, Q45:F6)",
+   "safety_case": [
+    "SC-OP-HIGH-STAKES",
+    "SC-D4.4",
+    "SC-C2.3"
+   ],
+   "gap_rank": 4,
+   "new": false
+  },
+  {
+   "id": "ST-Q11",
+   "label": "Narrowed",
+   "question_id": "Q11",
+   "statement": "How far can critique training be pushed relative to discriminator performance, and what stops models from explaining what they know? What remains: On a task with verifiable flaws (e.g. tampered code), what fraction of the flaws a model can be shown to detect (by its best discriminator, a probe on its activations or a generative verifier) do its trained critiques articulate to humans, does that fraction rise with critique-training compute and model scale, and what prevents the remaining detected flaws from being articulated (given that fine-tuning on ground-truth explanations left freeform rule articulation at 0% for 7/10 rules)?",
+   "evidence": "5 later-paper findings passed their checks (Q11:F1, Q11:F2, Q11:F3, Q11:F4, Q11:F5)",
+   "safety_case": [
+    "SC-D5.4"
+   ],
+   "gap_rank": 7,
+   "new": false
+  },
+  {
+   "id": "ST-Q21",
+   "label": "Narrowed",
+   "question_id": "Q21",
+   "statement": "Will obfuscated arguments become an obstacle for debate on harder questions? What remains: In multi-turn free-text debates on questions hard enough that honest debaters must argue from long decompositions, with strong debaters (human, prompted or RL-trained models) and human or LLM judges, how often does the dishonest side win by presenting arguments whose flaw the honest side cannot locate, and does restricting debates to stable, low-sensitivity decompositions reduce that rate?",
+   "evidence": "3 later-paper findings passed their checks (Q21:F1, Q21:F2, Q21:F3)",
+   "safety_case": [
+    "SC-OP-EMPIRICAL",
+    "SC-ASM-NO-OBFUSCATION"
+   ],
+   "gap_rank": 8,
+   "new": false
+  },
+  {
+   "id": "ST-Q22",
+   "label": "Narrowed",
+   "question_id": "Q22",
+   "statement": "Do doubly-efficient debate guarantees survive an oracle that gives wrong answers on some queries? What remains: For a natural class of oracle machines (for example eps-robust or K-Lipschitz ones), is there a doubly-efficient debate protocol that still decides the language defined by the intended judgment oracle H when the verifier can only query an oracle O that disagrees with H on an arbitrary set of queries of bounded size or density (or on a randomly chosen delta-fraction), with polynomial-time honest provers and poly(1/delta) verifier queries?",
+   "evidence": "2 later-paper findings passed their checks (Q22:F1, Q22:F2)",
+   "safety_case": [
+    "SC-C4.5",
+    "SC-ASM-RANDOM-WASHOUT"
+   ],
+   "gap_rank": 9,
+   "new": false
+  },
+  {
+   "id": "ST-Q28",
+   "label": "Narrowed",
+   "question_id": "Q28",
+   "statement": "Does debate generalise to larger evidence bases or uncitable parametric knowledge? What remains: When the decisive evidence must be found in a large external corpus (e.g. published scientific literature) that the judge can only spot-check, or when the debaters can draw only on their own uncitable (parametric) knowledge with no source text, does debate between stronger models raise a weaker judge's accuracy above direct QA and consultancy?",
+   "evidence": "2 later-paper findings passed their checks (Q28:F1, Q28:F2)",
+   "safety_case": [
+    "SC-D5.4",
+    "SC-OP-EMPIRICAL"
+   ],
+   "gap_rank": 10,
+   "new": false
+  },
+  {
+   "id": "ST-Q32",
+   "label": "Narrowed",
+   "question_id": "Q32",
+   "statement": "Can debate with weak judges beat direct QA baselines, e.g. via judge fine-tuning? What remains: On closed tasks without information asymmetry (e.g. GPQA or MMLU-Pro), does a weak judge fine-tuned on debate judging reach higher accuracy with debate than the same judge fine-tuned on direct QA with matched data and compute?",
+   "evidence": "2 later-paper findings passed their checks (Q32:F1, Q32:F2)",
+   "safety_case": [
+    "SC-OP-EMPIRICAL"
+   ],
+   "gap_rank": 11,
+   "new": false
+  },
+  {
+   "id": "ST-Q37",
+   "label": "Narrowed",
+   "question_id": "Q37",
+   "statement": "Can learning-theoretic results say how the abilities of learning agents and available data affect a weaker agent's ability to verify a stronger one? What remains: For learned provers and verifiers (e.g. neural networks trained to equilibrium in a prover-verifier game), what bounds relate the verifier's hypothesis-class capacity and training-sample size, and the prover's capacity, to the soundness and completeness the trained protocol achieves?",
+   "evidence": "4 later-paper findings passed their checks (Q37:F1, Q37:F2, Q37:F3, Q37:F4)",
+   "safety_case": [
+    "SC-C4.1",
+    "SC-C2.2"
+   ],
+   "gap_rank": 12,
+   "new": false
+  },
+  {
+   "id": "ST-Q49",
+   "label": "Narrowed",
+   "question_id": "Q49",
+   "statement": "How would humans check that an unsupervised elicitation method reads a constitution as intended? What remains: For an ICM-trained reward model built from a stated constitution, which human-run checks (e.g. reviewing cross-model or cross-run label disagreements, critique-assisted audits of the elicited labels, small human-labelled probe sets per principle) detect labels that follow a reading other than the authors' intended one, and at what rate on deliberately planted misreadings?",
+   "evidence": "4 later-paper findings passed their checks (Q49:F1, Q49:F2, Q49:F3, Q49:F4)",
+   "safety_case": [
+    "SC-C5.2"
+   ],
+   "gap_rank": 13,
+   "new": false
+  },
+  {
+   "id": "ST-Q02",
+   "label": "Narrowed",
+   "question_id": "Q02",
+   "statement": "Proposed experiments: can RL learn nearly as fast with reward on 10% of episodes? What remains: In simple continuous-control tasks (cartpole balance, pendulum swing-up) with deep RL, when the true reward is revealed on only a random 10% of episodes, does an agent that also learns from the unlabeled episodes (e.g. via a learned reward model) match the learning curve of an agent given reward on every episode, and how much does actively choosing the labeled episodes change this?",
+   "evidence": "7 later-paper findings passed their checks (Q02:F1, Q02:F2, Q02:F3, Q02:F4, Q02:F5, Q02:F6, Q02:F7)",
+   "safety_case": [],
+   "gap_rank": 22,
+   "new": false
+  },
+  {
+   "id": "ST-Q05",
+   "label": "Narrowed",
+   "question_id": "Q05",
+   "statement": "Can Iterated Amplification be applied to complex real-world beyond-human-scale tasks? What remains: Can a full amplify-and-distill loop, with humans (or a learned model of them) decomposing, be trained on a real-world task where neither demonstrations nor reliable evaluations of the final output are available, and how would success be verified there?",
+   "evidence": "3 later-paper findings passed their checks (Q05:F1, Q05:F2, Q05:F3)",
+   "safety_case": [],
+   "gap_rank": 23,
+   "new": false
+  },
+  {
+   "id": "ST-Q15",
+   "label": "Narrowed",
+   "question_id": "Q15",
+   "statement": "What is needed to automate decomposition, error analysis and program repair? What remains: Can an LM revise the decomposition of a multi-step LM program, localize what causes a failure and repair it reliably enough to replace human iteration (e.g. a failed-to-success flip rate approaching a human developer's), both on tasks with automatic evaluation (where, on Who&When, the best of three attribution methods found the decisive failure step only 14.2% of the time and a trained tracer, AgenTracer-8B, only improved on frontier LLMs) and on tasks with subjective answers that have no ground-truth answers or automatic evaluation function?",
+   "evidence": "6 later-paper findings passed their checks (Q15:F1, Q15:F2, Q15:F3, Q15:F4, Q15:F5, Q15:F6)",
+   "safety_case": [],
+   "gap_rank": 24,
+   "new": false
+  },
+  {
+   "id": "ST-Q16",
+   "label": "Narrowed",
+   "question_id": "Q16",
+   "statement": "Can several examiner models, or a trained examiner, make cross-examination better at detecting factual errors? What remains: Does training the examiner's question generation (e.g. with RL rewarded on detection correctness), or pooling several diverse examiners, raise cross-examination F1 at detecting factual errors above a single prompted examiner with a majority-vote or trained (e.g. linear) decision rule, and do correlated mistakes across capable examiner LMs limit the gain from pooling?",
+   "evidence": "4 later-paper findings passed their checks (Q16:F1, Q16:F2, Q16:F3, Q16:F4)",
+   "safety_case": [],
+   "gap_rank": 25,
+   "new": false
+  },
+  {
+   "id": "ST-Q30",
+   "label": "Narrowed",
+   "question_id": "Q30",
+   "statement": "Open question: how do strong models perceive the knowledge boundaries of weak supervisors? What remains: In Yang et al.'s weak-to-strong preference-alignment setup with a conflicting target, given that correctness of weak preference orders alone lets the strong model perceive weak-unknown samples, does it do so by checking each weak order against its own knowledge (as F2's stronger model predicting the weaker model's correctness suggests) or by inferring per-domain weak competence from the portion and distribution of supervised samples across domains, as would be tested by ablations that equalize the per-domain distribution while holding the correctness of the orders and the strong model fixed?",
+   "evidence": "3 later-paper findings passed their checks (Q30:F1, Q30:F2, Q30:F3)",
+   "safety_case": [],
+   "gap_rank": 26,
+   "new": false
+  },
+  {
+   "id": "ST-Q42",
+   "label": "Narrowed",
+   "question_id": "Q42",
+   "statement": "What is the probability that ASI escapes control (Compton constant) in realistic settings? What remains: What escape probability per deployment does the Elo-gap win probability of Eq. (5) predict, and what is observed, in realistic settings such as RLHF, supervised fine-tuning and AI-control environments (with prompted and trained attackers), across a controlled range of attacker-monitor capability gaps, audit budgets and horizons, and how does it extrapolate toward the ASI regime?",
+   "evidence": "4 later-paper findings passed their checks (Q42:F1, Q42:F2, Q42:F3, Q42:F4)",
+   "safety_case": [],
+   "gap_rank": 27,
+   "new": false
+  },
+  {
+   "id": "ST-Q52",
+   "label": "Narrowed",
+   "question_id": "Q52",
+   "statement": "Which debate graph topologies satisfy the martingale condition? What remains: In Choi et al.'s DCM debate model, exactly which debate graph topologies and prior assignments make condition (1) hold for every agent at every round, beyond Proposition 1's sufficient conditions? And on topologies where it fails (e.g. a directed star centred on a leader and gated on the leader's transcript, where the symmetry condition generally fails for the leader's update), is some weaker quantity, such as the average belief, still a martingale?",
+   "evidence": "4 later-paper findings passed their checks (Q52:F1, Q52:F2, Q52:F3, Q52:F4)",
+   "safety_case": [],
+   "gap_rank": 28,
+   "new": false
+  }
+ ]
+}

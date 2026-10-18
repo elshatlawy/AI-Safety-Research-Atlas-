@@ -1,0 +1,123 @@
+{
+ "schema": "ASRA-GAP-CLOSING-AGENT-v1",
+ "id": "Q28",
+ "question": "Does debate generalise to larger evidence bases or uncitable parametric knowledge?",
+ "asked_by": "Khan et al., Debating with More Persuasive LLMs Leads to More Truthful Answers",
+ "rank": 10,
+ "status": "NARROWED",
+ "status_check": "AI_CHECKED",
+ "remaining_question": "When the decisive evidence must be found in a large external corpus (e.g. published scientific literature) that the judge can only spot-check, or when the debaters can draw only on their own uncitable (parametric) knowledge with no source text, does debate between stronger models raise a weaker judge's accuracy above direct QA and consultancy?",
+ "remaining_type": "EMPIRICAL",
+ "safety_case": [
+  {
+   "node": "SC-D5.4",
+   "relation": "INDIRECT",
+   "reason": "The question's part on 'parametric knowledge' that is not easily citeable or verifiable would be evidence on whether such knowledge can be argued compellingly, the D5.4 worry, though from debate between stronger models before a weaker judge rather than recursive tree debate on AI research.",
+   "node_evidence": "WEAK",
+   "branch": "the equilibrium is correct (debate structure and judges)",
+   "score": 1.0
+  },
+  {
+   "node": "SC-OP-EMPIRICAL",
+   "relation": "INDIRECT",
+   "reason": "An answer would show whether debate raises a weaker judge's accuracy when the decisive evidence lies in a large corpus such as scientific literature, evidence beyond the QuALITY setting on the node's key question of whether debate measurably improves performance.",
+   "node_evidence": "WEAK",
+   "branch": "deployment and low stakes",
+   "score": 1.0
+  }
+ ],
+ "findings": [
+  {
+   "id": "Q28:F1",
+   "later_paper": "arXiv 2610.02557v1: How to Have a Sensitive Debate: An Instance-Optimal Protocol for AI Debate",
+   "first_submitted": "2026-10-01",
+   "effect": "NARROWS",
+   "claim": "In the authors' running example a claim is true if a majority of correct published papers support it; if the first debater claims 2/3 of the papers support it, the opponent need not check every paper but can randomly sample a few and catch a lie with constant probability, whereas a claim resting on 50 of 99 papers is too sensitive and the protocol lets the opponent win by showing this. They prove the protocol is instance-optimal given black-box access to human judgments: if an instance admits a decomposition with fractional block sensitivity rho, no protocol that correctly decides it has asymptotically lower complexity for the debaters.",
+   "setting": "Theory (query complexity). Debaters Alice and Bob; human judgment as a black-box oracle on sub-claims (e.g. 'this paper is correct and supports the claim'); claims that decompose with low fractional block sensitivity; no experiments, no LLM or human judges.",
+   "bears_on": "The larger-evidence-base part (the question's example is quoting published literature): in theory, a judge need only spot-check a few sampled pieces of evidence when the claim is not too sensitive to any single piece; it says nothing empirical and nothing about uncitable parametric knowledge.",
+   "passages": [
+    {
+     "version": "2610.02557v1",
+     "page": 3,
+     "lines": [
+      30,
+      41
+     ],
+     "text": "sub-claims yi are of the form: this particular paper from the existing literature is both correct and\nsupports the original claim. Furthermore, the truth of the original claim x is the majority vote of\nthe truth values of the sub-claims yi .\nNext, suppose that Alice claims that in fact 2/3 of the published papers yi support the claim.\nWe view this as an assignment by Alice of alleged truth values zi to each sub-claim yi . In this case,\nthe key insight is that Bob need not check every single paper for correctness in order to verify the\noverall claim. Instead, Bob can just randomly sample a paper among the 2/3 that Alice says support\nthe original claim, i.e., those where zi = 1. If Alice is lying about the original claim x, then at least\n1/6 of the sub-claims must also be lies. Hence, by sampling randomly among the 2/3 where zi = 1,\nBob will have a 1/6\n2/3 = 1/4 chance of catching Alice in a lie. Thus, just by sampling a few research\npapers from the entire area to check, Bob can be confident of catching Alice in a lie.",
+     "pdf_page": "https://arxiv.org/pdf/2610.02557v1#page=3"
+    },
+    {
+     "version": "2610.02557v1",
+     "page": 3,
+     "lines": [
+      42,
+      50
+     ],
+     "text": "On the other hand, suppose that Alice claims that 50 out of a total of 99 papers yi support the\noriginal claim x. In this case, Bob has no recourse but to check every single one of the 50 papers, as\neven a single incorrect paper would flip the majority vote and overturn the truth of the original claim.\nThe key to our protocol is that Bob is allowed to demonstrate that Alice has made an unreasonably\nsensitive claim of this form, in which case Alice will lose the debate. This in turn requires Alice\nto only decompose her claims in a way that is not too sensitive to errors in individual sub-claims.\nWe view this as a very natural restriction when arguing about claims that inherently involve fuzzy\nhuman judgment. Indeed, one should be very suspicious of any argument that is highly sensitive to\nchanges in individual pieces of evidence, and yet relies on fuzzy human judgments in each step.",
+     "pdf_page": "https://arxiv.org/pdf/2610.02557v1#page=3"
+    },
+    {
+     "version": "2610.02557v1",
+     "page": 3,
+     "lines": [
+      8,
+      14
+     ],
+     "text": "The equivalence to fractional block sensitivity further enables us to prove that the performance\nof our protocol is instance optimal assuming black-box access to human judgments. That is, if the\nparticular problem instance admits a decomposition with fractional block sensitivity ρ, then any\nprotocol which correctly decides the outcome on this instance cannot have asymptotically lower\ncomplexity for the debaters. All prior theoretical work on debate has modeled human judgment as a\nblack-box oracle, so this result can be interpreted as demonstrating the necessity of going beyond\nthis model in order to further expand the class of problems solvable via debate.",
+     "pdf_page": "https://arxiv.org/pdf/2610.02557v1#page=3"
+    }
+   ]
+  },
+  {
+   "id": "Q28:F2",
+   "later_paper": "arXiv 2607.01251v1: Collaborative Disagreement Resolution for Scalable Oversight",
+   "first_submitted": "2026-06-02",
+   "effect": "RELATED_ONLY",
+   "claim": "On the subset of benchmark questions (including HLE-MC) where exactly one of two consultants is correct, with weak judges (GPT-4o-mini, Gemma-3-4B) at 11-26% naive accuracy, the authors report that their collaborative Disagreement Resolution protocol outperforms debate in 10 of 12 conditions, and that both interactive protocols generally outperform static double consultancy, with an exception on HLE-MC for the GPT-4o-Claude pair.",
+   "setting": "Experiment: consultant pairs GPT-4o vs Claude and GLM-4.6 vs Kimi K2; weak LLM judges GPT-4o-mini and Gemma-3-4B (GPT-4 as a stronger-judge ablation); natural-disagreement subset where exactly one consultant is correct; protocols compared: Disagreement Resolution, Debate, Double Consultancy; HLE-MC among the benchmarks. The passages do not say whether consultants or judges see any source text.",
+   "bears_on": "Same topic as the uncitable-parametric-knowledge part (weak LLM judges, stronger consultants, expert benchmark questions), but the passages do not show that the debaters lack a citable source, and they compare debate with Disagreement Resolution and double consultancy on a disagreement subset, not with direct QA; nothing on larger evidence bases.",
+   "passages": [
+    {
+     "version": "2607.01251v1",
+     "page": 5,
+     "lines": [
+      77,
+      79
+     ],
+     "text": "To instantiate capability asymmetry, we use weaker models\nas judges (Definition 1): GPT-4o-mini and Gemma-3-4B.\nWe also include GPT-4 as a stronger judge as ablation in Section 5.3 to compare protocol sensitivity to judge capability.",
+     "pdf_page": "https://arxiv.org/pdf/2607.01251v1#page=5"
+    },
+    {
+     "version": "2607.01251v1",
+     "page": 7,
+     "lines": [
+      124,
+      130
+     ],
+     "text": "We evaluate on the natural disagreement subset, filtering for\nquestions where exactly one consultant answers correctly.\nThe disagreement subset shows imbalanced consultant accuracy (30–40% vs. 60–70%) due to differing error patterns,\nbut both consultants remain significantly stronger than the\njudge (11–26% naive accuracy). This confirms that our evaluation setting realistically captures the intended capability\nasymmetry, in which a weak judge must rely on interactions\nbetween stronger consultants to identify the truth.",
+     "pdf_page": "https://arxiv.org/pdf/2607.01251v1#page=7"
+    },
+    {
+     "version": "2607.01251v1",
+     "page": 7,
+     "lines": [
+      166,
+      177
+     ],
+     "text": "Table 2 summarizes our primary results comparing scalable\noversight protocols. Overall, Disagreement Resolution (DR)\noutperforms Debate in 10 of the 12 evaluated conditions.\nThis advantage holds across model capabilities, with an average improvement of +4.3% for the GPT-4o–Claude pairing\nand +21.3% for the GLM-4.6–Kimi K2 pairing. These findings suggest that collaborative truth-seeking interactions\nenable consultants to more effectively surface and resolve\ndisagreements than adversarial debate.\nWe also compare against static Double Consultancy, in\nwhich the judge observes independent answers and reasoning from both consultants without interaction. While\ninteractive protocols (DR and Debate) generally outperform\nthis baseline, we observe an exception on HLE-MC with the\nGPT-4o–Claude pair, where Double Consultancy achieves",
+     "pdf_page": "https://arxiv.org/pdf/2607.01251v1#page=7"
+    }
+   ]
+  }
+ ],
+ "findings_drafted": 2,
+ "maths": [],
+ "experiment_package": null,
+ "review_status": "provisional_ai_draft",
+ "rules": [
+  "Everything here is an AI draft (provisional_ai_draft): each counted item passed two blind AI checks that were tested on planted errors, and no person has reviewed it.",
+  "A finding counts only in the setting its own quoted lines show; read `setting` before carrying it to another setting.",
+  "A question's status is a label from fixed rules over its counted findings; `status_check` says whether that label itself passed its check.",
+  "Cite the paper and page from the passage, and read the PDF page before relying on a claim."
+ ]
+}

@@ -1,0 +1,74 @@
+{
+ "schema": "ASRA-GAP-CLOSING-AGENT-v1",
+ "id": "Q48",
+ "question": "Does persona-aware debate help human judges on manipulated content, satire, propaganda and unresolved claims?",
+ "asked_by": "Rahman et al., AI Debate Aids Assessment of Controversial Claims",
+ "rank": 6,
+ "status": "STILL_OPEN",
+ "status_check": "AI_CHECKED",
+ "remaining_question": "Does debate whose debaters know the judge's persona raise human judges' accuracy and calibration over non-persona debate and consultancy? Two cases are open: (a) content whose truthfulness is subjective or contested, such as satire, propaganda and manipulated media, and (b) claims unresolved at judging time and scored after resolution (for example prediction-market questions).",
+ "remaining_type": "EMPIRICAL",
+ "safety_case": [
+  {
+   "node": "SC-E6.1",
+   "relation": "INDIRECT",
+   "reason": "An answer would be human-trial evidence on how accurate and calibrated debate-aided human judges are on contested or not-yet-resolved claims, part of the systematic-error evidence E6.1 says is needed.",
+   "node_evidence": "WEAK",
+   "branch": "the equilibrium is correct (debate structure and judges)",
+   "score": 1.0
+  }
+ ],
+ "findings": [
+  {
+   "id": "Q48:F1",
+   "later_paper": "arXiv 2510.13912v3: AI Debaters are More Persuasive when Arguing in Alignment with Their Own Beliefs",
+   "first_submitted": "2025-10-15",
+   "effect": "RELATED_ONLY",
+   "claim": "On subjective questions, LLM debaters were shown a judge persona designed to conflict with their measured prior beliefs. They tended to choose stances aligned with that persona rather than with their priors, and were more persuasive when defending stances aligned with their own priors. Sequential debate favoured the second debater. The judge is an LLM rather than a human, and the questions are subjective rather than labelled with ground truth.",
+   "setting": "Experiment applying debate to subjective questions; LLM debaters' prior beliefs measured; debaters chose a position and were shown a judge persona designed to conflict with their priors; sequential debate examined; LLM judge, no human judges and no ground-truth labels. Differs from the question: no human judges, and subjective questions rather than manipulated content, satire, propaganda or claims later resolved.",
+   "bears_on": "Persona-aware debate on subjective content. It shows debaters bending toward a stated judge persona with an LLM judge, a sycophancy risk for persona-aware debate. It does not test human judges, manipulated content, satire, propaganda, or claims later resolved.",
+   "passages": [
+    {
+     "version": "2510.13912v3",
+     "page": 1,
+     "lines": [
+      30,
+      36
+     ],
+     "text": "claim defended is false. In this work, we apply debate to subjective questions\nand explicitly measure large language models’ prior beliefs before experiments.\nDebaters were asked to select the position they preferred to defend, then presented\nwith a judge persona deliberately designed to conflict with their identified priors.\nThis setup allowed us to test whether models would adopt sycophantic strategies,\naligning with the judge’s presumed perspective to maximize persuasiveness, or\ninstead remain faithful to their prior beliefs as a persuasion strategy. We further",
+     "pdf_page": "https://arxiv.org/pdf/2510.13912v3#page=1"
+    },
+    {
+     "version": "2510.13912v3",
+     "page": 1,
+     "lines": [
+      41,
+      46
+     ],
+     "text": "four main findings: (1) models tend to prefer defending stances aligned with the\njudge persona rather than with their prior beliefs; (2) sequential debate introduces\na significant bias favoring the second debater; (3) models are more persuasive\nwhen defending positions aligned with their prior beliefs; and (4) paradoxically,\narguments misaligned with prior beliefs are rated as higher quality in pairwise\ncomparison. These results can inform human judges to provide higher-quality",
+     "pdf_page": "https://arxiv.org/pdf/2510.13912v3#page=1"
+    },
+    {
+     "version": "2510.13912v3",
+     "page": 9,
+     "lines": [
+      5,
+      11
+     ],
+     "text": "Our work has limitations. First, we do not employ human judges. While AI debate is designed\nfor humans supervising superhuman AI, using an LLM as judge likely introduces limitations in\nreplicating human judgment, particularly in subjective domains where prior beliefs of the judge play a\nsignificant role, as demonstrated in our results. Future work could benefit from incorporating multiple\nLLMs or human judges. A promising direction is to measure judges’ prior beliefs and biases and\nassess whether debate mitigates these influences [Irving et al., 2018]. However, for a biased judge\nto change their opinion, debaters must be genuinely persuasive, which is what our study seeks to",
+     "pdf_page": "https://arxiv.org/pdf/2510.13912v3#page=9"
+    }
+   ]
+  }
+ ],
+ "findings_drafted": 1,
+ "maths": [],
+ "experiment_package": null,
+ "review_status": "provisional_ai_draft",
+ "rules": [
+  "Everything here is an AI draft (provisional_ai_draft): each counted item passed two blind AI checks that were tested on planted errors, and no person has reviewed it.",
+  "A finding counts only in the setting its own quoted lines show; read `setting` before carrying it to another setting.",
+  "A question's status is a label from fixed rules over its counted findings; `status_check` says whether that label itself passed its check.",
+  "Cite the paper and page from the passage, and read the PDF page before relying on a claim."
+ ]
+}

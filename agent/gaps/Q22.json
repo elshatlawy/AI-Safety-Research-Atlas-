@@ -1,0 +1,130 @@
+{
+ "schema": "ASRA-GAP-CLOSING-AGENT-v1",
+ "id": "Q22",
+ "question": "Do doubly-efficient debate guarantees survive an oracle that gives wrong answers on some queries?",
+ "asked_by": "Brown-Cohen et al., Scalable AI Safety via Doubly-Efficient Debate",
+ "rank": 9,
+ "status": "NARROWED",
+ "status_check": "AI_CHECKED",
+ "remaining_question": "For a natural class of oracle machines (for example eps-robust or K-Lipschitz ones), is there a doubly-efficient debate protocol that still decides the language defined by the intended judgment oracle H when the verifier can only query an oracle O that disagrees with H on an arbitrary set of queries of bounded size or density (or on a randomly chosen delta-fraction), with polynomial-time honest provers and poly(1/delta) verifier queries?",
+ "remaining_type": "MATHEMATICAL",
+ "safety_case": [
+  {
+   "node": "SC-C4.5",
+   "relation": "INDIRECT",
+   "reason": "An answer would show whether debate guarantees survive a judgment oracle that errs on a bounded or random set of queries, i.e. how much judge error a protocol can tolerate, which bears on how accurate C4.5's (simulated) human inputs must be, but in a theoretical model of doubly-efficient debate rather than the case's protocol.",
+   "node_evidence": "WEAK",
+   "branch": "the equilibrium is correct (debate structure and judges)",
+   "score": 1.0
+  },
+  {
+   "node": "SC-ASM-RANDOM-WASHOUT",
+   "relation": "INDIRECT",
+   "reason": "The question's case of errors on a randomly selected subset of queries would give theoretical evidence, for doubly-efficient debate, on whether random judge errors are harmless, which the assumption takes for granted because they should wash out over training.",
+   "node_evidence": "WEAK",
+   "branch": "the equilibrium is correct (debate structure and judges)",
+   "score": 1.0
+  }
+ ],
+ "findings": [
+  {
+   "id": "Q22:F1",
+   "later_paper": "arXiv 2607.03561v1: How to Avoid Debate: Scalable AI Safety via Doubly-Efficient Interactive Proofs",
+   "first_submitted": "2026-07-03",
+   "effect": "NARROWS",
+   "claim": "The authors give doubly-efficient single-prover interactive proofs and arguments for oracle-aided computations that are robust, i.e. whose output does not change if at most a small fraction of the answers to oracle queries are incorrect; in the argument system the verifier opens O(1/eps) positions of the prover's committed query-answer string and checks those oracle calls against the oracle, and robustness then gives soundness. They motivate robustness by human judgment being error-prone, suggest redundancy (rephrasing, majority of several people) may make tasks robust, and say the results 'suggest' verification is possible without debate under noise-tolerant oracle access. The quoted lines do not treat the verifier's own oracle as erring, and the protocols are single-prover, not debate.",
+   "setting": "Theory. Doubly-efficient single-prover interactive proofs and arguments for oracle-aided computations (a circuit C with oracle gates; the oracle stands for human judgment or an external database); the argument system uses a Merkle commitment and a succinct argument of knowledge. Hypothesis: C is eps-robust; the verifier checks a few committed oracle calls against the oracle, whose answers are taken as correct. Differs from the question's setting: single prover, not debate, and the verifier's own oracle is not modelled as erring.",
+   "bears_on": "Sub-question 'is there a class of computations that can be verified ... where the oracle may make errors on an arbitrary subset of limited size?': offers eps-robust computations as a candidate class, but proves results only for a trusted oracle and a single prover, not for doubly-efficient debate with an erring oracle.",
+   "passages": [
+    {
+     "version": "2607.03561v1",
+     "page": 1,
+     "lines": [
+      17,
+      25
+     ],
+     "text": "In this work, we show how to avoid debate: we initiate the study of single-prover interactive proofs\nfor AI safety. Prior results in single-prover interactive proofs do not immediately carry over to the AI\nsafety setting: for example, they do not work when the computation has access to an oracle, such as\nto human judgment or an external database such as the web. We present doubly-efficient single-prover\ninteractive proofs and arguments for oracle-aided computations (also known as relativizing proofs),\nin the settings where (1) the computation is robust, in the sense that the output does not change if\nat most a small fraction of the answers to oracle queries are incorrect, or (2) the oracle is a low-degree\npolynomial. These results suggest that interactive verification is possible even without debate, under\nstructured or noise-tolerant oracle access.",
+     "pdf_page": "https://arxiv.org/pdf/2607.03561v1#page=1"
+    },
+    {
+     "version": "2607.03561v1",
+     "page": 4,
+     "lines": [
+      28,
+      35
+     ],
+     "text": "Robust computation. We say that a computation is robust if the output does not change even if\na small fraction of answers to oracle queries are modified. Intuitively, robustness allows a verifier to\n“spot-check” oracle calls instead of having to evaluate all of them. It seems natural to assume that the\ncomputation is robust, especially in the setting where the oracle is taken to represent human judgment:\nhuman judgment is already error-prone, so as a safeguard, the output of the computation should not\nchange if a small number of the human answers change, otherwise the output is not very meaningful.\nMore broadly, many natural tasks may be able to be made robust using redundancy, e.g., in the case of\nhuman judgment, we might rephrase the question or ask multiple people and take the majority answer.",
+     "pdf_page": "https://arxiv.org/pdf/2607.03561v1#page=4"
+    },
+    {
+     "version": "2607.03561v1",
+     "page": 8,
+     "lines": [
+      35,
+      45
+     ],
+     "text": "In our argument system, the prover uses a Merkle hash to commit to a string of queries and answers,\nwhich is supposed to be the string Q of queries and answers that C makes to O on input x. The prover\nand verifier engage in a succinct argument of knowledge [Kil92] to prove that there exists a string Q′ such\nthat (i) Q′ is consistent with the commitment and (ii) CQ′ (x) = 1, where CQ′ (x) runs C(x) but with the\ninputs and outputs of oracle gates replaced by those in Q′. The additional knowledge property ensures\nthat there not only exists a Q′ satisfying (i) and (ii), but that the prover also knows such a Q′, which we\ncan efficiently “extract” out. The verifier also asks the prover to open the commitment at a few random\npositions (specifically, at O(1/ε) positions, where we assume the circuit C is “ε-robust”) and checks that\nthe oracle calls at these positions are correct. If the verifier accepts, then we can show that with high\nprobability there is some fixed string Q′ such that the computation “with respect to” Q′ is correct, and\nmost of the oracle calls in Q′ are correct; then using the robustness assumption, we get soundness.",
+     "pdf_page": "https://arxiv.org/pdf/2607.03561v1#page=8"
+    }
+   ]
+  },
+  {
+   "id": "Q22:F2",
+   "later_paper": "arXiv 2609.24895v2: Human-LLM Deliberation as Interactive Proof: Conditions for Verifiability Without Transparency",
+   "first_submitted": "2026-09-21",
+   "effect": "RELATED_ONLY",
+   "claim": "The authors state that the formal analyses of debate (Brown-Cohen et al., 2024) and of single-prover protocols (Chen et al., 2026) treat human judgments as defining what is correct. In their own model the human is the verifier and may execute a check incorrectly: given per-round bounds, supplied by each application, on how often a check passes a false claim and how often the human executes it incorrectly, they prove that the probability of ever accepting a false claim is at most delta against any adaptive prover (Theorem 1), and lower-bound acceptance of a true claim by a product of per-round success probabilities (Theorem 2).",
+   "setting": "Theory (Theorems 1-2). A computationally unbounded LLM prover paired with a resource-bounded human verifier who checks requested details without seeing the LLM's internals and may carry out a check incorrectly; passed checks accumulate evidence toward an acceptance threshold within a round budget; per-round bounds on false passes and on human checking errors are supplied by each application. Differs from the question's setting: one LLM prover, not debate, and not a computation in which human judgments define what is correct.",
+   "bears_on": "The 'oracle gives incorrect answers' part, in a different model (bounded per-round human checking errors at the verifier, single prover); also confirms that the 2024 debate and 2026 single-prover analyses treat judgments as correct.",
+   "passages": [
+    {
+     "version": "2609.24895v2",
+     "page": 5,
+     "lines": [
+      17,
+      25
+     ],
+     "text": "Formal analyses of debate (Brown-Cohen et al., 2024) and of single-prover protocols\n(Chen et al., 2026) prove guarantees against dishonest provers by giving the human a\ndifferent role from ours. They write the task as a computation that occasionally asks a\nhuman for a judgment, and they treat these judgments as defining what is correct. The\nverifier is an efficient algorithm, and the protocols ensure that it needs only a few human\njudgments to catch a wrong claim. In our setting the human is the verifier and may carry\nout a check incorrectly, so our guarantees are stated in terms of two per-round bounds that\neach application supplies: how often a check passes a false claim, and how often the human\nexecutes it incorrectly.",
+     "pdf_page": "https://arxiv.org/pdf/2609.24895v2#page=5"
+    },
+    {
+     "version": "2609.24895v2",
+     "page": 3,
+     "lines": [
+      19,
+      26
+     ],
+     "text": "2. Error guarantees under imperfect responses and checking (Section 4). Given\nper-round bounds on how often a check can pass a false claim and how often the human executes it incorrectly, the probability that the verifier ever accepts a false claim\nis at most δ, whatever strategy the LLM uses (Theorem 1). For a true claim, the\nprobability of acceptance within the budget is at least the product, over rounds, of\nthe chances that the LLM answers adequately and the human checks correctly (Theorem 2). Neither result assumes that rounds are independent. Questions may follow\nthe dialogue if each round uses a reference check, such as a uniformly random requirement, with a probability fixed before the round. With a polynomial-time verifier and\na large enough gap between the two error bounds, the protocol is an interactive proof\nin the standard sense (Corollary 1).",
+     "pdf_page": "https://arxiv.org/pdf/2609.24895v2#page=3"
+    },
+    {
+     "version": "2609.24895v2",
+     "page": 1,
+     "lines": [
+      29,
+      36
+     ],
+     "text": "When an LLM supplies an argument a user could not produce, how can the user decide\nwhether to accept its claim? Inspired by interactive proofs, we pair a computationally unbounded LLM prover with a resource-bounded human verifier. The verifier checks requested\ndetails without seeing the LLM’s internals; passed checks accumulate evidence toward an\nacceptance threshold. Given task-supplied bounds on false passes and human checking\nerrors, we prove anytime-valid soundness against adaptive provers: the probability of ever\naccepting a false claim is at most a chosen error level. For a true claim, acceptance within\nthe budget has probability at least the product of per-round probabilities that the LLM\nresponds adequately and the human checks correctly, provided the threshold is reachable",
+     "pdf_page": "https://arxiv.org/pdf/2609.24895v2#page=1"
+    }
+   ]
+  }
+ ],
+ "findings_drafted": 2,
+ "maths": [
+  {
+   "folder": "q22",
+   "label": "Proved",
+   "settled": "For the repository's protocol in the Lean model with a flawed verifier oracle (debaters use the true oracle): (1) small uniform verifier errors cost at most δ(106000k²+1) of completeness and soundness, independent of the computation length t, because only verifier queries are charged and the verifier makes O(k²) expected queries; (2) random errors drawn independently of the debaters' strategies cost at most ε(106000k²+1) on average, which answers a precise version of the paper's second sub-question ('arbitrary errors on a randomly selected subset of queries') positively when ε is small compared with 1/k²; (3) in general the loss is the expected number of verifier queries that land on wrong answers in the debate actually played; (4) a precise version of the paper's first sub-question fails for this protocol: one adversarially placed wrong answer lets a dishonest debater win with probability ≥ 49/50, for every t and every k ≥ 1, on either side; in the soundness instance that query is never sent to the verifier under honest play, and for t ≥ 1 changing it does not change the computation's answer; uniform errors of order 1/k also break the protocol; (5) if all parties share a flawed oracle that is itself k-Lipschitz, the repository's theorem transfers with the 2/3 margin raised by kδ.",
+   "remains": "(i) Whether some debate protocol, not the repository's, can verify a natural class of K-Lipschitz computations when the verifier's oracle errs adversarially on an arbitrary set of at most k queries (the paper's first sub-question). In the repository's protocol and in Figure 1 the verifier's check at the aborted round decides the debate, so a protocol would have to check more than the disputed query, for example by exploiting robustness of the computation as Chen, Kalai and Xi do for single-prover proofs. (ii) The exact tolerance of the default protocol to uniform verifier error: robust at δ < 1/(10(106000k²+1)), broken at δ = 3/(100k); whether retuned parameters tolerate δ = Θ(1/k) is open. (iii) Random errors whose realised locations the dishonest debater can see. Informally (not proved here) such a debater can follow the honest path until it reaches an erroneous query and lie there, so once errors along a path become likely, the same attack applies. (iv) Errors in the debaters' own oracle (the paper's separate 'Power of the Provers' question), and a shared flawed oracle that is not Lipschitz. (v) Transfer of all statements to the paper's Turing-machine model, with cross-examination coin flipping and its constants."
+  }
+ ],
+ "experiment_package": null,
+ "review_status": "provisional_ai_draft",
+ "rules": [
+  "Everything here is an AI draft (provisional_ai_draft): each counted item passed two blind AI checks that were tested on planted errors, and no person has reviewed it.",
+  "A finding counts only in the setting its own quoted lines show; read `setting` before carrying it to another setting.",
+  "A question's status is a label from fixed rules over its counted findings; `status_check` says whether that label itself passed its check.",
+  "Cite the paper and page from the passage, and read the PDF page before relying on a claim."
+ ]
+}

@@ -1,0 +1,490 @@
+{
+ "schema": "ASRA-GAP-CLOSING-AGENT-v1",
+ "paper": "2311.08702v1",
+ "review_status": "provisional_ai_draft",
+ "rules": [
+  "Everything here is an AI draft (provisional_ai_draft): each counted item passed two blind AI checks that were tested on planted errors, and no person has reviewed it.",
+  "A finding counts only in the setting its own quoted lines show; read `setting` before carrying it to another setting.",
+  "A question's status is a label from fixed rules over its counted findings; `status_check` says whether that label itself passed its check.",
+  "Cite the paper and page from the passage, and read the PDF page before relying on a claim."
+ ],
+ "notes": "CORE is graded EMPIRICAL_PRELIMINARY by its weaker part: the human debate vs consultancy gap is significant (p = 0.04), but the human-versus-AI skill comparison in the same claim rests on differences the paper does not detect as significant (p8 L57-L58). RES-ERRORS-DEBATE: the quote is from the introduction; its 33% sums two non-exclusive Table 2 tags (25% single-round endings, 8% last-minute swings, p9 L121-L123 and p10 L140-L143). Table 1 gives n = 154 human debates while Table 3 (p23) gives 155; cards use the 413 total stated in the text. No assumption records exist for this paper; the i.i.d. caveat (footnote 7) and uncontrolled data collection are given as stated hypotheses with their lines.",
+ "cards": [
+  {
+   "record_id": "N2:DSOFT:ARXIV-2311.08702v1:CORE",
+   "paper": "2311.08702v1",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2311.08702v1:DEF-DEBATE",
+     "N2:DSOFT:ARXIV-2311.08702v1:DEF-CONSULTANCY",
+     "N2:DSOFT:ARXIV-2311.08702v1:METHOD-JUDGE-SCORING"
+    ],
+    "description": "Human judges who cannot read the story judge interactive, judge-ended debates (two experts, one per answer) or consultancies (one expert arguing a randomly assigned answer) on hard QuALITY questions, with human or GPT-4 experts, and judge accuracy is compared across the four conditions.",
+    "passages": [
+     {
+      "version": "2311.08702v1",
+      "page": 6,
+      "lines": [
+       7,
+       18
+      ],
+      "text": "2022). We use the QuALITY-hard subset, where a majority of 5 annotators with only 45 seconds of\naccess to the story got the question wrong while all annotators with untimed access to the story got\nthe answer correct.4 To focus on especially hard questions, we further restrict our results to questions\nthat were marked by the untimed annotators as requiring more than one or two sentences of context to\nget correct (the idea being to avoid questions which could be easily resolved with a single quote from\none of the debaters). Each question in QuALITY has four answers, one of which is correct; as our\ndebates consider only two answer choices, we use the correct answer and the incorrect option that was\nlabeled as the best distractor most often by the QuALITY dataset’s untimed validation annotators.\nWe only use the Project Gutenberg subset of QuALITY-hard, which consists of questions over\npublic-domain science fiction short stories. Since the stories are entirely fictional, judges can almost\nnever guess the answer on the basis of prior knowledge, and must rely on the information provided by\nthe debaters.5",
+      "pdf_page": "https://arxiv.org/pdf/2311.08702v1#page=6"
+     },
+     {
+      "version": "2311.08702v1",
+      "page": 6,
+      "lines": [
+       23,
+       33
+      ],
+      "text": "Experimental Conditions While our main experimental results concern human debaters, we also\ntest with AI debaters. As the AI debater, we use the version of GPT-4 with a 32,000-token context\nwindow available through the OpenAI API as gpt-4-32k. Prompts are provided in Appendix G. We\nuse human judges in all experiments.6 This gives us four experimental conditions: human debate,\nhuman consultancy, AI debate, and AI consultancy.\nParticipants We recruit 19 people to serve as both debaters and judges in our experiments. Our\nparticipants, all of whom were New York University employees during data collection, include 12\nundergraduates on the NYU debate team, all with at least one year of experience in competitive\ndebate; 6 members of the research team, three of whom have at least one year of experience with\ncompetitive debate; and one NYU Master’s student with 6 years of experience studying Jewish legal\nreasoning and argumentation.",
+      "pdf_page": "https://arxiv.org/pdf/2311.08702v1#page=6"
+     },
+     {
+      "version": "2311.08702v1",
+      "page": 8,
+      "lines": [
+       57,
+       58
+      ],
+      "text": "In the AI case, judge accuracies on debate (78%) and consultancy (80%) are similar and lie between\nhuman debate and consultancy; we do not detect a significant difference with either setting. One",
+      "pdf_page": "https://arxiv.org/pdf/2311.08702v1#page=8"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "Judges see only the experts' arguments and the short quotes they reveal, never the passage.",
+     "Consultants argue for the incorrect answer half of the time.",
+     "Statistical analyses assume debates are independent and identically distributed, which the authors say is not strictly true (several questions per story, repeated debates on some questions, different participants across settings).",
+     "Data collection was not perfectly controlled across conditions: consultancy was added in June 2023, AI debaters in July, and the set of debaters changed over time."
+    ],
+    "passages": [
+     {
+      "version": "2311.08702v1",
+      "page": 7,
+      "lines": [
+       126,
+       130
+      ],
+      "text": "7Our statistical analyses are performed under the assumption that the debates are independently and identically\ndistributed. This is not strictly true, as we sample the data in ways that make it easier to efficiently annotate: We\ndraw multiple questions for each story, hold multiple debates on some questions, and have a different distribution\nof participants between settings. Robustness checks to back up the validity of our analysis are provided in\nAppendix D.",
+      "pdf_page": "https://arxiv.org/pdf/2311.08702v1#page=7"
+     },
+     {
+      "version": "2311.08702v1",
+      "page": 6,
+      "lines": [
+       44,
+       46
+      ],
+      "text": "Data collection was not perfectly controlled between our four experimental conditions, as some\ncomponents of our experimental design were developed part of the way through data collection: The\nconsultancy baseline was only developed in June of 2023 and the AI debaters were only incorporated",
+      "pdf_page": "https://arxiv.org/pdf/2311.08702v1#page=6"
+     },
+     {
+      "version": "2311.08702v1",
+      "page": 7,
+      "lines": [
+       109,
+       112
+      ],
+      "text": "into the data collection platform in July. The set of debaters who participated in the experiment also\nvaried over the course of these months. These factors were due to us trying to collect as much data\nas possible subject to practical limits on engineering capacity, annotator availability, and researcher\nforesight. We validate our analysis in Section 4 with partial controls in Appendix D.",
+      "pdf_page": "https://arxiv.org/pdf/2311.08702v1#page=7"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Human debaters and consultants (19 NYU participants, including 12 NYU debate-team undergraduates) and GPT-4 (gpt-4-32k) as AI debater and consultant",
+    "task_data": "QuALITY-hard reading comprehension (Project Gutenberg science-fiction stories), restricted to questions needing more than one or two sentences of context; two options: the correct answer and the most-often-chosen best distractor",
+    "judge": "Non-expert human judges (from the same participant pool) who cannot read the story",
+    "regime": "evaluation",
+    "scale": "19 human participants serving as debaters and judges"
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": "The 84% vs 74% difference is described as significant; no significant difference is detected between the AI settings and either human setting"
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2311.08702v1:LIM-SCOPE",
+     "N2:DSOFT:ARXIV-2311.08702v1:LIM-DISHONEST-STRATEGIES",
+     "N2:DSOFT:ARXIV-2311.08702v1:LIM-STALEMATE-CALIBRATION"
+    ],
+    "notes": "Conditions were collected at different times with changing participants, and the statistics assume i.i.d. debates; the human-versus-AI comparison is described as 'evidence' and its differences are not detected as significant."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_PRELIMINARY",
+    "reason": "The debate-versus-consultancy gap is called significant in one setting (human experts on QuALITY-hard), but the claim's human-versus-AI part rests on differences the paper does not detect as significant, so the claim is graded by that weaker part."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2311.08702v1:RES-ACCURACY",
+   "paper": "2311.08702v1",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2311.08702v1:DEF-DEBATE",
+     "N2:DSOFT:ARXIV-2311.08702v1:DEF-CONSULTANCY",
+     "N2:DSOFT:ARXIV-2311.08702v1:METHOD-JUDGE-SCORING"
+    ],
+    "description": "Judge accuracy is computed for human debate, human consultancy, AI debate and AI consultancy over 413 sessions and compared with a proportion test; a mixed-effects model with judge identity as a random effect is a robustness check.",
+    "passages": [
+     {
+      "version": "2311.08702v1",
+      "page": 6,
+      "lines": [
+       23,
+       33
+      ],
+      "text": "Experimental Conditions While our main experimental results concern human debaters, we also\ntest with AI debaters. As the AI debater, we use the version of GPT-4 with a 32,000-token context\nwindow available through the OpenAI API as gpt-4-32k. Prompts are provided in Appendix G. We\nuse human judges in all experiments.6 This gives us four experimental conditions: human debate,\nhuman consultancy, AI debate, and AI consultancy.\nParticipants We recruit 19 people to serve as both debaters and judges in our experiments. Our\nparticipants, all of whom were New York University employees during data collection, include 12\nundergraduates on the NYU debate team, all with at least one year of experience in competitive\ndebate; 6 members of the research team, three of whom have at least one year of experience with\ncompetitive debate; and one NYU Master’s student with 6 years of experience studying Jewish legal\nreasoning and argumentation.",
+      "pdf_page": "https://arxiv.org/pdf/2311.08702v1#page=6"
+     },
+     {
+      "version": "2311.08702v1",
+      "page": 23,
+      "lines": [
+       83,
+       87
+      ],
+      "text": "Table 4: Learned parameters of our mixed-effects model. Human debate is used as a reference\ncategory, pinning its effect terms to 0. Global fixed effects are 𝛽ˆ0 = 1.8 and 𝜎02 = 0.2. Human debate\nand human consultancy remain significantly different (𝑝 = 0.0487) after controlling for judge identity\nas a random effect. Interesting, AI consultancy shows much more variation in judge skill than other\nsettings.",
+      "pdf_page": "https://arxiv.org/pdf/2311.08702v1#page=23"
+     },
+     {
+      "version": "2311.08702v1",
+      "page": 8,
+      "lines": [
+       57,
+       58
+      ],
+      "text": "In the AI case, judge accuracies on debate (78%) and consultancy (80%) are similar and lie between\nhuman debate and consultancy; we do not detect a significant difference with either setting. One",
+      "pdf_page": "https://arxiv.org/pdf/2311.08702v1#page=8"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "Questions are from the Project Gutenberg subset of QuALITY-hard, restricted to those whose untimed annotators said needed more than one or two sentences of context, with two options: the correct answer and the most-often-chosen best distractor.",
+     "Statistical analyses assume debates are i.i.d., which the authors say is not strictly true (several questions per story, repeated debates on some questions, different participants across settings).",
+     "The 92.5% upper bound is estimated from debaters' post-debate Likert ratings of the marked answer's correctness, counting a rating of 3 as a 50% chance."
+    ],
+    "passages": [
+     {
+      "version": "2311.08702v1",
+      "page": 6,
+      "lines": [
+       7,
+       18
+      ],
+      "text": "2022). We use the QuALITY-hard subset, where a majority of 5 annotators with only 45 seconds of\naccess to the story got the question wrong while all annotators with untimed access to the story got\nthe answer correct.4 To focus on especially hard questions, we further restrict our results to questions\nthat were marked by the untimed annotators as requiring more than one or two sentences of context to\nget correct (the idea being to avoid questions which could be easily resolved with a single quote from\none of the debaters). Each question in QuALITY has four answers, one of which is correct; as our\ndebates consider only two answer choices, we use the correct answer and the incorrect option that was\nlabeled as the best distractor most often by the QuALITY dataset’s untimed validation annotators.\nWe only use the Project Gutenberg subset of QuALITY-hard, which consists of questions over\npublic-domain science fiction short stories. Since the stories are entirely fictional, judges can almost\nnever guess the answer on the basis of prior knowledge, and must rely on the information provided by\nthe debaters.5",
+      "pdf_page": "https://arxiv.org/pdf/2311.08702v1#page=6"
+     },
+     {
+      "version": "2311.08702v1",
+      "page": 7,
+      "lines": [
+       126,
+       130
+      ],
+      "text": "7Our statistical analyses are performed under the assumption that the debates are independently and identically\ndistributed. This is not strictly true, as we sample the data in ways that make it easier to efficiently annotate: We\ndraw multiple questions for each story, hold multiple debates on some questions, and have a different distribution\nof participants between settings. Robustness checks to back up the validity of our analysis are provided in\nAppendix D.",
+      "pdf_page": "https://arxiv.org/pdf/2311.08702v1#page=7"
+     },
+     {
+      "version": "2311.08702v1",
+      "page": 7,
+      "lines": [
+       134,
+       138
+      ],
+      "text": "bound, and estimate it using the feedback surveys filled out by debaters. After each debate, we ask the debaters to\nrate the actual correctness of the answer that was marked correct in QuALITY on a 5-point Likert scale, where 5\nis definitely correct, 1 is definitely incorrect, and 3 is totally ambiguous/arguable (see Appendix F). Debaters\nmarked questions with a 3 10% of the time, a 2 1% of the time, and a 1 2% of the time. Counting each 3 as a\n50% chance of a correct answer, this suggests an upper bound of about 92.5%. However, it is possible that the",
+      "pdf_page": "https://arxiv.org/pdf/2311.08702v1#page=7"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Human debaters and consultants (19 NYU participants, including 12 NYU debate-team undergraduates) and GPT-4 (gpt-4-32k) as AI debater and consultant",
+    "task_data": "QuALITY-hard reading comprehension (Project Gutenberg science-fiction stories), restricted to questions needing more than one or two sentences of context; two options: the correct answer and the most-often-chosen best distractor",
+    "judge": "Non-expert human judges (from the same participant pool) who cannot read the story",
+    "regime": "evaluation",
+    "scale": "413 debates and consultancies across four conditions; 19 participants"
+   },
+   "quantitative": {
+    "n": "413 debates and consultancies across four conditions",
+    "uncertainty": "Human debate vs human consultancy: p = 0.04 by proportion test, and p = 0.0487 after controlling for judge identity as a random effect; no significant difference is detected between the AI settings and either human setting"
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2311.08702v1:LIM-SCOPE",
+     "N2:DSOFT:ARXIV-2311.08702v1:LIM-DISHONEST-STRATEGIES",
+     "N2:DSOFT:ARXIV-2311.08702v1:LIM-STALEMATE-CALIBRATION"
+    ],
+    "notes": "Sampling is not i.i.d. (several questions per story, repeated debates, different participants across settings); the AI debate and AI consultancy accuracies do not differ significantly from either human setting."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "The significant debate-versus-consultancy difference (p = 0.04; p = 0.0487 with judge random effects) is shown only with human experts on one task; with GPT-4 experts no significant difference is detected."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2311.08702v1:RES-CONSULTANCY-HONESTY",
+   "paper": "2311.08702v1",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2311.08702v1:DEF-CONSULTANCY"
+    ],
+    "description": "Judge accuracy on consultancies is split by whether the consultant was assigned the correct (honest) or incorrect (dishonest) answer, separately for human and GPT-4 consultants (Figure 4).",
+    "passages": [
+     {
+      "version": "2311.08702v1",
+      "page": 8,
+      "lines": [
+       43,
+       46
+      ],
+      "text": "Figure 4: Judge accuracy on consultancies, split by whether the consultant argues for the correct or\nincorrect answer. Judges are often deceived by dishonest human consultants, but actually discern\nthe answer better when AIs argue for the incorrect answer, reflecting that current models struggle to\nmake high-quality arguments in this case.",
+      "pdf_page": "https://arxiv.org/pdf/2311.08702v1#page=8"
+     },
+     {
+      "version": "2311.08702v1",
+      "page": 6,
+      "lines": [
+       23,
+       33
+      ],
+      "text": "Experimental Conditions While our main experimental results concern human debaters, we also\ntest with AI debaters. As the AI debater, we use the version of GPT-4 with a 32,000-token context\nwindow available through the OpenAI API as gpt-4-32k. Prompts are provided in Appendix G. We\nuse human judges in all experiments.6 This gives us four experimental conditions: human debate,\nhuman consultancy, AI debate, and AI consultancy.\nParticipants We recruit 19 people to serve as both debaters and judges in our experiments. Our\nparticipants, all of whom were New York University employees during data collection, include 12\nundergraduates on the NYU debate team, all with at least one year of experience in competitive\ndebate; 6 members of the research team, three of whom have at least one year of experience with\ncompetitive debate; and one NYU Master’s student with 6 years of experience studying Jewish legal\nreasoning and argumentation.",
+      "pdf_page": "https://arxiv.org/pdf/2311.08702v1#page=6"
+     },
+     {
+      "version": "2311.08702v1",
+      "page": 6,
+      "lines": [
+       7,
+       18
+      ],
+      "text": "2022). We use the QuALITY-hard subset, where a majority of 5 annotators with only 45 seconds of\naccess to the story got the question wrong while all annotators with untimed access to the story got\nthe answer correct.4 To focus on especially hard questions, we further restrict our results to questions\nthat were marked by the untimed annotators as requiring more than one or two sentences of context to\nget correct (the idea being to avoid questions which could be easily resolved with a single quote from\none of the debaters). Each question in QuALITY has four answers, one of which is correct; as our\ndebates consider only two answer choices, we use the correct answer and the incorrect option that was\nlabeled as the best distractor most often by the QuALITY dataset’s untimed validation annotators.\nWe only use the Project Gutenberg subset of QuALITY-hard, which consists of questions over\npublic-domain science fiction short stories. Since the stories are entirely fictional, judges can almost\nnever guess the answer on the basis of prior knowledge, and must rely on the information provided by\nthe debaters.5",
+      "pdf_page": "https://arxiv.org/pdf/2311.08702v1#page=6"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "Consultants are assigned the correct or incorrect answer with 50% probability each.",
+     "Human judges are used in all conditions."
+    ],
+    "passages": []
+   },
+   "setting": {
+    "systems": "Human consultants (NYU participants) and GPT-4 (gpt-4-32k) consultants",
+    "task_data": "QuALITY-hard reading comprehension (Project Gutenberg science-fiction stories), restricted to questions needing more than one or two sentences of context; two options: the correct answer and the most-often-chosen best distractor",
+    "judge": "Non-expert human judges (from the same participant pool) who cannot read the story",
+    "regime": "evaluation",
+    "scale": null
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2311.08702v1:LIM-SCOPE"
+    ],
+    "notes": "No test is reported for the honest-versus-dishonest differences, and the split sizes are not given in these lines; the explanations offered ('perhaps because ...') are the authors' hypotheses."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "Percentages for two kinds of consultant on one task are reported without any test, interval or standard error."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2311.08702v1:RES-ERRORS-DEBATE",
+   "paper": "2311.08702v1",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2311.08702v1:DEF-DEBATE"
+    ],
+    "description": "The authors manually tag each incorrectly judged human debate and consultancy with non-exclusive error categories and report category frequencies (Table 2); the 33% figure combines judges deciding after a single round (25% of debate mistakes) and last-minute swings (8%).",
+    "passages": [
+     {
+      "version": "2311.08702v1",
+      "page": 9,
+      "lines": [
+       108,
+       111
+      ],
+      "text": "To understand qualitatively why some settings perform worse than others, and to understand how we\ncan increase debate’s accuracy further, we manually tag each human debate and consultancy where\njudges get the answer wrong with non-exclusive error categories. The frequencies of these errors are\nshown in Table 2.",
+      "pdf_page": "https://arxiv.org/pdf/2311.08702v1#page=9"
+     },
+     {
+      "version": "2311.08702v1",
+      "page": 9,
+      "lines": [
+       121,
+       123
+      ],
+      "text": "Judges often end debates too early. A central reason for judge mistakes in debate was ending\nthe debate prematurely (as seen in Appendix H.3). In 25% of mistakes on debates and 8% on\n9",
+      "pdf_page": "https://arxiv.org/pdf/2311.08702v1#page=9"
+     },
+     {
+      "version": "2311.08702v1",
+      "page": 10,
+      "lines": [
+       140,
+       146
+      ],
+      "text": "consultancies, the judge made their decision after only a single round; this is especially problematic\nin debates, as it gives no time for either debater to refute potential lies by the other. In addition, 8% of\ndebates and 4% of consultancies ended with last-minute swings, where the judge immediately ended\nthe round upon changing their preferred answer without giving a chance for the expert(s) to refute\ntheir new reasoning. Both of these errors could be easily remedied by requiring judges to wait at least\none extra round after the first round or after a swing in their judgment, or simply by increasing the\nincentive for judge correctness.",
+      "pdf_page": "https://arxiv.org/pdf/2311.08702v1#page=10"
+     },
+     {
+      "version": "2311.08702v1",
+      "page": 2,
+      "lines": [
+       1,
+       7
+      ],
+      "text": "Figure 1: High-level summary of our experimental setup. We source hard reading comprehension\nquestions from the QuALITY dataset (Pang et al., 2022) and incentivize human judges who can’t read\nthe passage to answer them correctly. Experts who have full access to the passage are allowed to reveal\nsnippets of it (highlighted) in addition to free-text prose. In debate, the experts simultaneously defend\ntheir assigned option in their opening statements, and following rounds are sequential. In consultancy,\nthe non-expert judge only interacts with one expert defending one option chosen at random. In both\nsettings, the judge chooses when to end the session; sessions average at about 1,000 words total.",
+      "pdf_page": "https://arxiv.org/pdf/2311.08702v1#page=2"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "Error categories are assigned manually and are non-exclusive, so one debate can count under several categories.",
+     "That these errors can be mitigated by judge training, rules such as waiting one extra round, or stronger debaters is offered as a suggestion ('should be possible', 'could be easily remedied', 'suggests')."
+    ],
+    "passages": [
+     {
+      "version": "2311.08702v1",
+      "page": 10,
+      "lines": [
+       147,
+       151
+      ],
+      "text": "Honest debaters are suboptimal. In 46% of debate mistakes, the honest debater could have used\nthe evidence in the story more to their advantage. In scalable oversight, we want our methods to\nimprove as the AI systems become more capable. So, the fact that even our skilled human debaters did\nnot use the evidence in the story optimally suggests that judge accuracy using debate could improve if\ndebater skill increased. We would also expect this to correspond to an increase in dishonest debater",
+      "pdf_page": "https://arxiv.org/pdf/2311.08702v1#page=10"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Skilled human debaters (experts with full access to the passage)",
+    "task_data": "Incorrectly judged human debates on hard reading-comprehension questions from the QuALITY dataset (the same error tagging also covers consultancies)",
+    "judge": "Human judges who cannot read the passage (non-expert judges), who choose when to end the session",
+    "regime": "evaluation",
+    "scale": null
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2311.08702v1:LIM-SCOPE",
+     "N2:DSOFT:ARXIV-2311.08702v1:LIM-DISHONEST-STRATEGIES"
+    ],
+    "notes": "The number of incorrectly judged debates is not stated in these lines; the 33% adds two non-exclusive tags; the proposed remedies are offered as suggestions."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "Descriptive frequencies from manual tagging in one setting, with no uncertainty reported."
+   },
+   "review_status": "provisional_ai_draft",
+   "check_history": [
+    "card-1: flagged or undecided by two blind checks; rewritten from the checkers' suggested fix (quotes unchanged)"
+   ]
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2311.08702v1:RES-ERRORS-CONSULTANCY",
+   "paper": "2311.08702v1",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2311.08702v1:DEF-CONSULTANCY"
+    ],
+    "description": "The authors manually tag each incorrectly judged human consultancy and debate with non-exclusive error categories and report category frequencies (Table 2); 'cannot extract key evidence from dishonest consultant' is tagged in 52% of consultancy mistakes.",
+    "passages": [
+     {
+      "version": "2311.08702v1",
+      "page": 9,
+      "lines": [
+       108,
+       111
+      ],
+      "text": "To understand qualitatively why some settings perform worse than others, and to understand how we\ncan increase debate’s accuracy further, we manually tag each human debate and consultancy where\njudges get the answer wrong with non-exclusive error categories. The frequencies of these errors are\nshown in Table 2.",
+      "pdf_page": "https://arxiv.org/pdf/2311.08702v1#page=9"
+     },
+     {
+      "version": "2311.08702v1",
+      "page": 10,
+      "lines": [
+       72,
+       76
+      ],
+      "text": "Cannot extract key evidence\n\nJudge cannot extract key evidence from dishonest consultant\n\n52",
+      "pdf_page": "https://arxiv.org/pdf/2311.08702v1#page=10"
+     },
+     {
+      "version": "2311.08702v1",
+      "page": 10,
+      "lines": [
+       136,
+       138
+      ],
+      "text": "Table 2: Error rates among human debates and consultancies with incorrect judgments. Each debate\nor consultancy can be tagged with multiple errors, as there can be multiple reasons for an incorrect\njudgment.",
+      "pdf_page": "https://arxiv.org/pdf/2311.08702v1#page=10"
+     },
+     {
+      "version": "2311.08702v1",
+      "page": 2,
+      "lines": [
+       1,
+       7
+      ],
+      "text": "Figure 1: High-level summary of our experimental setup. We source hard reading comprehension\nquestions from the QuALITY dataset (Pang et al., 2022) and incentivize human judges who can’t read\nthe passage to answer them correctly. Experts who have full access to the passage are allowed to reveal\nsnippets of it (highlighted) in addition to free-text prose. In debate, the experts simultaneously defend\ntheir assigned option in their opening statements, and following rounds are sequential. In consultancy,\nthe non-expert judge only interacts with one expert defending one option chosen at random. In both\nsettings, the judge chooses when to end the session; sessions average at about 1,000 words total.",
+      "pdf_page": "https://arxiv.org/pdf/2311.08702v1#page=2"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "Error categories are assigned manually and are non-exclusive.",
+     "The expectation that the problem worsens with harder questions or experts better at obscuring evidence is a prediction, not a measured result."
+    ],
+    "passages": []
+   },
+   "setting": {
+    "systems": "Human consultants (a single expert with full access to the passage), compared with human debaters",
+    "task_data": "Incorrectly judged human consultancies and debates on hard reading-comprehension questions from the QuALITY dataset",
+    "judge": "Human judges who cannot read the passage (non-expert judges), who choose when to end the session",
+    "regime": "evaluation",
+    "scale": null
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2311.08702v1:LIM-SCOPE"
+    ],
+    "notes": "'Significantly more likely' is stated with no test reported in these lines; the number of incorrectly judged consultancies is not stated here."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "Descriptive frequencies from manual tagging in one setting, with no uncertainty reported."
+   },
+   "review_status": "provisional_ai_draft",
+   "check_history": [
+    "card-1: flagged or undecided by two blind checks; rewritten from the checkers' suggested fix (quotes unchanged)"
+   ]
+  }
+ ]
+}

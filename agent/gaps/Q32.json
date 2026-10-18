@@ -1,0 +1,115 @@
+{
+ "schema": "ASRA-GAP-CLOSING-AGENT-v1",
+ "id": "Q32",
+ "question": "Can debate with weak judges beat direct QA baselines, e.g. via judge fine-tuning?",
+ "asked_by": "Kenton et al., On scalable oversight with weak LLMs judging strong LLMs",
+ "rank": 11,
+ "status": "NARROWED",
+ "status_check": "AI_CHECKED",
+ "remaining_question": "On closed tasks without information asymmetry (e.g. GPQA or MMLU-Pro), does a weak judge fine-tuned on debate judging reach higher accuracy with debate than the same judge fine-tuned on direct QA with matched data and compute?",
+ "remaining_type": "EMPIRICAL",
+ "safety_case": [
+  {
+   "node": "SC-OP-EMPIRICAL",
+   "relation": "INDIRECT",
+   "reason": "An answer would show whether debate judged by a weak (fine-tuned) LLM judge beats direct QA baselines, evidence on the node's key question of whether debate measurably improves performance, though with LLM judges on benchmark questions rather than human judges.",
+   "node_evidence": "WEAK",
+   "branch": "deployment and low stakes",
+   "score": 1.0
+  }
+ ],
+ "findings": [
+  {
+   "id": "Q32:F1",
+   "later_paper": "arXiv 2605.27483v1: Debate Helps Weak Judges Reward Stronger Models",
+   "first_submitted": "2026-05-26",
+   "effect": "NARROWS",
+   "claim": "The authors treat opening-only consultancy (the judge sees the problem and the proposer's generated answer, but no advocacy transcript) as the closest bare LLM-as-reward-model baseline, and use Direct QA (asking the judge model to solve the task itself) only as a proxy for task difficulty. In Table 4 the critic-opening lift (opening-only debate minus opening-only consultancy) is +0.185, +0.177 and +0.140 macro-F1 (p <= 0.01) on the three responder pairings (Qwen3.5-122B/35B on CC; Gemini 3.1 Pro/3 Flash and Opus 4.6/4.5 on ARC) and not significant on the two non-responder pairings (gpt-oss-120B/20B and Qwen3.5-35B/Qwen3-4B on CC: -0.016, p = 0.200; +0.023, p = 0.165).",
+   "setting": "Experiment: a judge model classifies a proposer's answer as correct or incorrect under debate and consultancy protocols, full and opening-only; five model pairings (Qwen3.5-122B/35B, Gemini 3.1 Pro/3 Flash, Opus 4.6/4.5, gpt-oss-120B/20B, Qwen3.5-35B/Qwen3-4B) on CC and ARC tasks; metric is macro-F1 lift with paired-bootstrap CIs; Direct QA is used only as a task-difficulty proxy. The quoted lines do not say which model in a pairing is the judge, and they describe no training or judge fine-tuning.",
+   "bears_on": "Whether debate can beat a judge-only baseline when the judge sees the problem and the answer: the critic's opening beats opening-only consultancy, the authors' closest bare LLM-as-reward-model baseline, on 3 of 5 pairings. It is not a comparison with Direct QA (the judge solving the task itself), which the authors use only as a difficulty proxy, and it does not test judge fine-tuning. The paper's title says weak judges reward stronger models; the quoted lines do not state the judge's relative strength.",
+   "passages": [
+    {
+     "version": "2605.27483v1",
+     "page": 4,
+     "lines": [
+      51,
+      56
+     ],
+     "text": "Direct QA. Although not an oversight protocol, Direct QA—directly asking a model to solve a\ntask—provides a proxy for task difficulty.\nMapping to RLAIF baselines. We treat these protocols as a ladder of RLAIF-style reward labelers.\nDirect QA asks the judge model to solve the task itself; it measures task difficulty rather than\nclassification over a candidate answer. The closest bare LLM-as-reward-model baseline is openingonly consultancy: the judge sees the problem and the proposer’s generated answer, but no advocacy\ntranscript. Full consultancy adds one-sided defense of that same answer. These baselines grow",
+     "pdf_page": "https://arxiv.org/pdf/2605.27483v1#page=4"
+    },
+    {
+     "version": "2605.27483v1",
+     "page": 16,
+     "lines": [
+      5,
+      16
+     ],
+     "text": "Table 4 consolidates the canonical-prompt full-debate lift (debate − consultancy) and critic-opening\nlift (opening-only debate − opening-only consultancy) for every pairing reported in §4.1, computed\nfrom the same paired-bootstrap procedure as Appendix B. Top three rows are responder pairings\n(full-debate lift CI excludes zero); bottom two are non-responders.\nTable 4: Per-pairing canonical-prompt macro-F1 lifts. Full-debate lift is debate − consultancy; criticopening lift is opening-only debate − opening-only consultancy. Paired bootstrap, nboot = 10,000;\n95% percentile CIs in brackets, two-sided p-values. Qwen3.5-122B/35B values match Table 10\n(Original × 35B) within rounding; the other rows are computed from the same per-question artifacts.\nPairing / domain\n\nFull-debate lift\n\nQwen3.5-122B/35B, CC",
+     "pdf_page": "https://arxiv.org/pdf/2605.27483v1#page=16"
+    },
+    {
+     "version": "2605.27483v1",
+     "page": 16,
+     "lines": [
+      17,
+      28
+     ],
+     "text": "Gemini 3.1 Pro/3 Flash, ARC\nOpus 4.6/4.5, ARC\n\nCritic-opening lift\n\n+0.140 [+0.105, +0.178], p < 0.001 +0.185 [+0.146, +0.225], p < 0.001\n+0.140 [+0.061, +0.227], p < 0.001 +0.177 [+0.074, +0.279], p = 0.001\n+0.157 [+0.062, +0.258], p = 0.003 +0.140 [+0.036, +0.240], p = 0.010\n\ngpt-oss-120B/20B, CC\n+0.014 [−0.009, +0.037], p = 0.234 −0.016 [−0.039, +0.008], p = 0.200\nQwen3.5-35B/Qwen3-4B, CC −0.002 [−0.034, +0.031], p = 0.930 +0.023 [−0.010, +0.057], p = 0.165",
+     "pdf_page": "https://arxiv.org/pdf/2605.27483v1#page=16"
+    }
+   ]
+  },
+  {
+   "id": "Q32:F2",
+   "later_paper": "arXiv 2608.17776v1: Debate Training Reduces Reward Hacking in RLAIF",
+   "first_submitted": "2026-08-18",
+   "effect": "NARROWS",
+   "claim": "With a frozen, smaller and lower-capability judge, RL training with debate (adversarial self-play) kept judge MCC stable for much longer than the RLAIF-A baseline, under which judge MCC degraded steadily as the policy learned outputs the judge accepts despite being incorrect; debate maintained peak validation accuracy and reached a peak about 2 percentage points higher than the baseline (recovering roughly 45% of the gap to the RLVR roofline), an absolute effect the authors call small. They say that, in contrast to prior empirical work that found debate's benefits limited to toy settings, information-asymmetric tasks or inference-only evaluation, debate's key benefit emerges through RL training itself, and that debate appears to sustain peak performance by default, at least in their setting.",
+   "setting": "RL training of a Gemini 2.5 Flash-class SFT policy with debate (adversarial self-play); frozen, smaller Gemini 2.5 Flash Lite judge, never updated; RLAIF-A baseline; validation accuracy compared with an RLVR roofline. Differs from the question's setting: the judge is frozen, not fine-tuned, and the comparison is with the RLAIF-A baseline, not with direct QA.",
+   "bears_on": "The training-time half of the asking paper's caveat: debate beats a judge-alone reward baseline (RLAIF-A, where the judge accepts or rejects the policy's outputs) when used for training, but the judge is frozen (no judge fine-tuning) and the baseline is not the judge doing direct QA.",
+   "passages": [
+    {
+     "version": "2608.17776v1",
+     "page": 5,
+     "lines": [
+      9,
+      14
+     ],
+     "text": "All experiments RL train the same initial policy model (Gemini 2.5 Flash-class, which has undergone\nSFT), and use a judge model (publicly available Gemini 2.5 Flash Lite) that is frozen throughout\ntraining and is never updated. The judge is a smaller, lower-capability model; while it initially\nperforms comparably to the policy on the task, the policy quickly surpasses it with training. This\nasymmetry is deliberate: it models the scalable oversight setting in which the supervisor is less capable\nthan the agent it evaluates.",
+     "pdf_page": "https://arxiv.org/pdf/2608.17776v1#page=5"
+    },
+    {
+     "version": "2608.17776v1",
+     "page": 8,
+     "lines": [
+      39,
+      50
+     ],
+     "text": "Judge MCC remains stable. Under the RLAIF- 𝐴 baseline, judge MCC degrades steadily as the policy\nlearns to produce outputs the judge accepts despite being incorrect. Under debate, MCC remains\nstable for much longer. This is also reflected in reward curves: baseline reward increases even as\naccuracy declines, a hallmark of reward hacking.\nPeak accuracy is maintained. Debate maintains peak validation accuracy rather than declining\nwith continued training. This is practically important: without ground-truth labels, one cannot\nidentify the optimal early-stopping point, and overshooting the peak leads to significant performance\nlosses. Debate is slower to reach peak accuracy, as expected: the learning rate is reduced by 4× for\nmulti-player stability, and only half the batch trains Alice’s solution quality.\nPeak accuracy is modestly higher. Peak validation accuracy under debate is ∼2 percentage points\nhigher than baseline ( 𝑃 (best) = 0.9987; Table 1), recovering roughly 45% of the gap to the RLVR\nroofline1 . While the absolute effect is small, we emphasise that the maintained judge performance",
+     "pdf_page": "https://arxiv.org/pdf/2608.17776v1#page=8"
+    },
+    {
+     "version": "2608.17776v1",
+     "page": 13,
+     "lines": [
+      5,
+      14
+     ],
+     "text": "Our results suggest a positive update on the promise of debate as a practical training protocol for\nscalable oversight. Prior empirical work found debate’s benefits limited to toy settings, informationasymmetric tasks, or inference-only evaluation; and concurrent work struggles with saturation and\nreward hacking. In contrast, we find that the key benefit of debate emerges through RL training itself:\nthe adversarial self-play keeps rewards in check, maintains judge performance leading to higher peak\naccuracy that persists through many RL steps, and prevents the accuracy collapse seen under the\nRLAIF baseline.\nThis has practical implications. In domains without ground-truth labels, practitioners cannot\nidentify when reward hacking begins or select an optimal checkpoint. A training protocol that sustains\npeak performance by default, rather than requiring careful early stopping, is therefore of direct value.\nDebate appears to provide this property, at least in our setting.",
+     "pdf_page": "https://arxiv.org/pdf/2608.17776v1#page=13"
+    }
+   ]
+  }
+ ],
+ "findings_drafted": 2,
+ "maths": [],
+ "experiment_package": null,
+ "review_status": "provisional_ai_draft",
+ "rules": [
+  "Everything here is an AI draft (provisional_ai_draft): each counted item passed two blind AI checks that were tested on planted errors, and no person has reviewed it.",
+  "A finding counts only in the setting its own quoted lines show; read `setting` before carrying it to another setting.",
+  "A question's status is a label from fixed rules over its counted findings; `status_check` says whether that label itself passed its check.",
+  "Cite the paper and page from the passage, and read the PDF page before relying on a claim."
+ ]
+}

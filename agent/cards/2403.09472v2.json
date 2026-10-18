@@ -1,0 +1,570 @@
+{
+ "schema": "ASRA-GAP-CLOSING-AGENT-v1",
+ "paper": "2403.09472v2",
+ "review_status": "provisional_ai_draft",
+ "rules": [
+  "Everything here is an AI draft (provisional_ai_draft): each counted item passed two blind AI checks that were tested on planted errors, and no person has reviewed it.",
+  "A finding counts only in the setting its own quoted lines show; read `setting` before carrying it to another setting.",
+  "A question's status is a label from fixed rules over its counted findings; `status_check` says whether that label itself passed its check.",
+  "Cite the paper and page from the passage, and read the PDF page before relying on a claim."
+ ],
+ "notes": "Re-ranking figures carry a shaded band that the Figure 4 caption calls the performance variance; this is not a confidence interval, standard error or test, and no such statistic was found for any carded result, so all empirical cards are EMPIRICAL_SINGLE_SETTING; 'significantly' is used without tests. RES-EVAL-BETTER: the quote begins mid-sentence ('observation leads to the conclusion'); the observation it continues (p.8 lines 446-447, weighted voting's larger advantage on harder tasks) is added as a method passage. RES-RL: the 33.0 baseline it beats is a previous state-of-the-art number from another paper [75]. CORE: the 52.5% re-ranking@1024 figure is stated in the abstract (the quote); the lines read do not restate it in text. ASM-EASY-QUALITY is a general footnote assumption; it is linked to all cards, including the APPS coding card.",
+ "cards": [
+  {
+   "record_id": "N2:DSOFT:ARXIV-2403.09472v2:CORE",
+   "paper": "2403.09472v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2403.09472v2:DEF-E2H",
+     "N2:DSOFT:ARXIV-2403.09472v2:METHOD-EVAL-TO-GEN",
+     "N2:DSOFT:ARXIV-2403.09472v2:METRIC-CHOICE"
+    ],
+    "description": "Generators and outcome- or process-supervised reward models are trained with supervision only on easy MATH problems (levels 1-3); the reward models then optimise generators on all levels by re-ranking sampled solutions (best-of-n, weighted voting) or as rewards in reinforcement learning (ReST, DPO, PPO), and accuracy is measured on the MATH500 test set.",
+    "passages": [
+     {
+      "version": "2403.09472v2",
+      "page": 5,
+      "lines": [
+       12,
+       17
+      ],
+      "text": "Dataset MATH [32] is a dataset of 12,500 challenging competition mathematics problems, where\n7,500 of them are training problems and 5,000 are originally used for testing. Following Lightman et al.\n[40], Wang et al. [75], we use the identical subset of 500 representative problems (i.e., MATH500) as\nour test set, uniformly sample another 500 problems for validation, across all five difficulty levels,\nand leave the rest 4,000 MATH test split problems combined with the original 7,500 MATH training\nsplit problems as our training set.",
+      "pdf_page": "https://arxiv.org/pdf/2403.09472v2#page=5"
+     },
+     {
+      "version": "2403.09472v2",
+      "page": 6,
+      "lines": [
+       118,
+       125
+      ],
+      "text": "Finally, given a generator model (i.e., policy model) and a evaluator model (i.e., reward model; RM),\nwe optimize the generator against the evaluator using either re-ranking or reinforcement learning.\nBest-of-n (BoN), also known as rejection sampling, is a reranking approach that sample multiple\nsolutions from the generator and selects one with the highest RM score.\nWeighted Voting is similar to majority voting or self-consistency [76], but weights each solution\naccording to its RM score [74].\nReinforcement Learning (RL) We consider three online/offline RL variants, Reinforced SelfTraining (ReST) [28, 67], Direct Policy Optimization (DPO) [56], and Proximal Policy Optimization\n(PPO) [62]. Due to the space limit, please find their detailed description in Appendix B.",
+      "pdf_page": "https://arxiv.org/pdf/2403.09472v2#page=6"
+     },
+     {
+      "version": "2403.09472v2",
+      "page": 6,
+      "lines": [
+       141,
+       141
+      ],
+      "text": "Base Language Model Llemma is a large language model for mathematics [6], which is continue pretrained from Code Llama [58] / LlaMA-2 [72]. We use both 7b and 34b variants in our experiments.",
+      "pdf_page": "https://arxiv.org/pdf/2403.09472v2#page=6"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2403.09472v2:ASM-EASY-QUALITY"
+    ],
+    "stated_hypotheses": [
+     "Supervision (problems, solutions and answers) exists only for easy problems (levels 1-3); hard problems (levels 4-5) are given only as questions.",
+     "Human demonstrations are simulated with model-generated solutions: filtered PRM800K (from a few-shot base GPT-4 model) and MetaMATH (from ChatGPT); process labels come from PRM800K's human annotations or, for MetaMath, from Math-Shepherd.",
+     "In one RL condition, hard questions (without answers) are available for RL training, and their rewards come only from the easy-trained evaluator.",
+     "RL checkpoints are selected by validation accuracy, and the 500-problem validation set is sampled across all five difficulty levels."
+    ],
+    "passages": [
+     {
+      "version": "2403.09472v2",
+      "page": 5,
+      "lines": [
+       18,
+       25
+      ],
+      "text": "Simulated Human Demonstrations While the original MATH dataset provides full step-by-step\nsolutions, these solutions typically skip many chain-of-thought steps [79], which can be hard for\nlanguage models to directly imitate2 . Instead, we consider filtered PRM800K [40] and MetaMATH\n[86] as our SFT training data: the former is generated by a Minerva-style base GPT-4 model using\nfew-shot prompting after filtering the correct answers [39, 48], while the latter is generated by\nChatGPT [47]. We keep all the GSM8K data in the MetaMATH dataset since they are typically\neasier than the problems in MATH. PRM800K comes with human annotated process labels, while for\nMetaMath, we use Math-Shepherd as the corresponding process labels [75].",
+      "pdf_page": "https://arxiv.org/pdf/2403.09472v2#page=5"
+     },
+     {
+      "version": "2403.09472v2",
+      "page": 9,
+      "lines": [
+       115,
+       125
+      ],
+      "text": "Given the conclusion above, an important question arises: how can evaluators once again assist\ngenerators in achieving enhanced easy-to-hard generalization capabilities? We further investigate\nthe enhancement of policy models through RL, utilizing easy-to-hard evaluators as reward models.\nSimilar to re-ranking, SFT and PRM are only trained on easy data. For a fair comparison between\nPRM800K and MetaMath, we only use vanilla PRMs in the RL training. All the RL methods use the\nvalidation accuracy for selecting the best checkpoint5 . Our comparison spans offline (ReST & DPO)\nand online (PPO) RL algorithms under two training conditions:\nEasy Questions & Easy Final Answers. The SFT model samples from easy questions and receives\nthe corresponding Final-Answer and optional PRM rewards.\nAll Questions & Easy Final Answers. This assumes access to a range of easy and hard problems for\nRL training, with rewards for hard tasks solely provided by the easy-to-hard evaluator.",
+      "pdf_page": "https://arxiv.org/pdf/2403.09472v2#page=9"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Llemma 7b and 34b generators (policy models) and reward models",
+    "task_data": "MATH: supervision from levels 1-3 (PRM800K or MetaMath/Math-Shepherd data); evaluation on the MATH500 test set across levels 1-5",
+    "judge": "Reward models trained on easy problems score candidate solutions; the reported metric is accuracy on MATH500",
+    "regime": "mixed",
+    "scale": "7b and 34b models; MATH500 test set of 500 problems; re-ranking with up to 1024 samples per problem (34b, per the quote)"
+   },
+   "quantitative": {
+    "n": "MATH500: 500 test problems",
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2403.09472v2:LIM-1"
+    ],
+    "notes": "The authors list a focus on specific model sizes and datasets, domain-specific reasoning tasks, and open questions about long-term implications and robustness."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "The experiments use one task family (MATH) and one model family (Llemma at 7b and 34b), and no confidence interval, standard error or test is reported for the headline accuracies, which the rubric grades single-setting."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2403.09472v2:RES-GENERATORS",
+   "paper": "2403.09472v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2403.09472v2:DEF-E2H"
+    ],
+    "description": "Llemma generators are prompted (ICL) with exemplars from all levels, only level 5, or only easy levels, or fine-tuned (SFT) on all levels or only easy levels, using PRM800K or MetaMath data, and evaluated on MATH500 with greedy decoding and majority voting.",
+    "passages": [
+     {
+      "version": "2403.09472v2",
+      "page": 5,
+      "lines": [
+       31,
+       42
+      ],
+      "text": "Full & Hard ICL Full in-context learning (ICL) is a base model prompted with exemplars sampled\nfrom all difficulty levels, or only from the level 5 [24].\nEasy-to-Hard ICL This model is prompted with exemplars from easy problems. This baseline\nevaluates the degree to which a model can solve problems more difficult than those seen in the\nprompts [95].\nFull SFT As prior work suggests that finetuning should outperform prompting alone [68, 52, 50], the\nfull supervised fine-tuning (SFT) model is typically considered as a ceiling that a model can achieve\non a type of task [11, 29].\nEasy-to-Hard SFT This generator model is trained only on the easy tasks. Prior work suggests that\nit can generalize to hard tasks but with some degeneration in performance [71].\nThe generator models are evaluated in greedy decoding and self-consistency (also known as majority\nvoting) settings [76].",
+      "pdf_page": "https://arxiv.org/pdf/2403.09472v2#page=5"
+     },
+     {
+      "version": "2403.09472v2",
+      "page": 5,
+      "lines": [
+       12,
+       17
+      ],
+      "text": "Dataset MATH [32] is a dataset of 12,500 challenging competition mathematics problems, where\n7,500 of them are training problems and 5,000 are originally used for testing. Following Lightman et al.\n[40], Wang et al. [75], we use the identical subset of 500 representative problems (i.e., MATH500) as\nour test set, uniformly sample another 500 problems for validation, across all five difficulty levels,\nand leave the rest 4,000 MATH test split problems combined with the original 7,500 MATH training\nsplit problems as our training set.",
+      "pdf_page": "https://arxiv.org/pdf/2403.09472v2#page=5"
+     },
+     {
+      "version": "2403.09472v2",
+      "page": 6,
+      "lines": [
+       141,
+       141
+      ],
+      "text": "Base Language Model Llemma is a large language model for mathematics [6], which is continue pretrained from Code Llama [58] / LlaMA-2 [72]. We use both 7b and 34b variants in our experiments.",
+      "pdf_page": "https://arxiv.org/pdf/2403.09472v2#page=6"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2403.09472v2:ASM-EASY-QUALITY"
+    ],
+    "stated_hypotheses": [
+     "Easy-to-hard generators see only the easy problems (levels 1-3).",
+     "SFT training data are filtered PRM800K (generated by a few-shot base GPT-4 model) or MetaMATH (generated by ChatGPT)."
+    ],
+    "passages": [
+     {
+      "version": "2403.09472v2",
+      "page": 5,
+      "lines": [
+       18,
+       25
+      ],
+      "text": "Simulated Human Demonstrations While the original MATH dataset provides full step-by-step\nsolutions, these solutions typically skip many chain-of-thought steps [79], which can be hard for\nlanguage models to directly imitate2 . Instead, we consider filtered PRM800K [40] and MetaMATH\n[86] as our SFT training data: the former is generated by a Minerva-style base GPT-4 model using\nfew-shot prompting after filtering the correct answers [39, 48], while the latter is generated by\nChatGPT [47]. We keep all the GSM8K data in the MetaMATH dataset since they are typically\neasier than the problems in MATH. PRM800K comes with human annotated process labels, while for\nMetaMath, we use Math-Shepherd as the corresponding process labels [75].",
+      "pdf_page": "https://arxiv.org/pdf/2403.09472v2#page=5"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Llemma 7b and 34b generators (ICL and SFT)",
+    "task_data": "MATH500 test set; PRM800K and MetaMath training data",
+    "judge": null,
+    "regime": "mixed",
+    "scale": "7b and 34b models; MATH500 (500 test problems)"
+   },
+   "quantitative": {
+    "n": "MATH500: 500 test problems",
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2403.09472v2:LIM-1"
+    ],
+    "notes": "The data-quality explanation is the authors' hypothesis ('We hypothesize'); no uncertainty is given for the Table 1 values."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "One task (MATH500) and one model family, with no reported uncertainty, which the rubric grades single-setting."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2403.09472v2:RES-OPRM",
+   "paper": "2403.09472v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2403.09472v2:METHOD-EVAL-TO-GEN"
+    ],
+    "description": "SFT generators and reward models (ORM, PRM, and OPRM trained on the mixed ORM and PRM data) are trained on PRM800K levels 1-3 and used to re-rank sampled solutions on all levels; Figures 8-9 compare the reward models at 7b and 34b, and follow-up runs use MetaMath/Math-Shepherd.",
+    "passages": [
+     {
+      "version": "2403.09472v2",
+      "page": 6,
+      "lines": [
+       103,
+       113
+      ],
+      "text": "Outcome Reward Model (ORM) is trained on the Final-Answer rewards. Following Cobbe et al.\n[16], Uesato et al. [74], Lightman et al. [40], we train the reward head to predict on every token\nwhether the solution is correct, in a similar sense to a value model [85]. At inference time, we use the\nORM’s prediction at the final token as the reward of the solution.\nProcess Reward Model (PRM) is trained to predict whether each step (delimited by newlines) in\nthe chain-of-thought reasoning path is correct. The labels are usually labeled by humans [74, 40] or\nestimated with rollouts [65, 75].\nOutcome & Process Reward Model (OPRM) Building on the distinct advantages of ORMs and\nPRMs, we introduce the Outcome & Process Reward Model (OPRM), which harnesses the complementary strengths of both. OPRM is trained on the mixed data of ORMs and PRMs. Specifically, it\nevaluates the correctness of each intermediate reasoning step, akin to PRMs, while also assesses the\noverall solution’s accuracy at the final answer stage, mirroring the functionality of ORMs.",
+      "pdf_page": "https://arxiv.org/pdf/2403.09472v2#page=6"
+     },
+     {
+      "version": "2403.09472v2",
+      "page": 8,
+      "lines": [
+       417,
+       426
+      ],
+      "text": "Re-ranking\n\nWe consider two re-ranking strategies: Best-of-n (or rejection sampling) and Weighted Voting. In our\neasy-to-hard generalization setting, both SFT models and Reward Models (RMs) are trained on easier\ntasks (levels 1-3), but evaluated on all difficulty levels (1-5). We compare the performance between\nmajority voting (SFT only) and re-ranking (SFT + OPRM) on the PRM800K dataset in Figure 4-5,\nand the performance of different reward models (PRMs, ORMs, & OPRMs) on the PRM800K dataset\nin Figure 8-9. Specifically, we use min as the reward aggregation function for best-of-n and prod for\nweighted voting4 . The figures illustrate the performance of different decoding strategies or reward\nmodels under the same number of sampled solutions per problem. We have the following findings:",
+      "pdf_page": "https://arxiv.org/pdf/2403.09472v2#page=8"
+     },
+     {
+      "version": "2403.09472v2",
+      "page": 24,
+      "lines": [
+       5,
+       10
+      ],
+      "text": "We compare the re-ranking performance of Process Reward Models (PRMs), Outcome Reward\nModels (ORMs), and our proposed Outcome & Process Reward Models (OPRMs). Figure 8 shows\nthe results on 7b models and Figure 9 is on 34b models. We find that in our setting of Llemma [6] +\nMATH [32], PRMs and ORMs perform similarly, with PRMs slightly outperforming ORMs on hard\ntasks. But the OPRMs that trained on the mixed data of PRMs and ORMs significantly outperforms\nboth of them.",
+      "pdf_page": "https://arxiv.org/pdf/2403.09472v2#page=24"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2403.09472v2:ASM-EASY-QUALITY"
+    ],
+    "stated_hypotheses": [
+     "SFT models and reward models are trained only on easy problems (MATH levels 1-3) and evaluated on all difficulty levels (1-5)."
+    ],
+    "passages": []
+   },
+   "setting": {
+    "systems": "Llemma 7b and 34b SFT generators with PRM, ORM and OPRM reward models",
+    "task_data": "MATH with PRM800K data (training on levels 1-3, evaluation on all levels); follow-up on MetaMath/Math-Shepherd",
+    "judge": "Reward models re-rank sampled solutions; accuracy on MATH",
+    "regime": "mixed",
+    "scale": "7b and 34b models"
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2403.09472v2:LIM-1"
+    ],
+    "notes": "'Significantly outperforms' is stated without a named test. On MetaMath/Math-Shepherd, adding ORM examples gave no significant improvement, which the authors say 'may be attributed' to Math-Shepherd already being generated from final-answer rewards."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "One task family (MATH) and one model family, with no confidence interval, standard error or test for the comparison, which the rubric grades single-setting."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2403.09472v2:RES-RERANK",
+   "paper": "2403.09472v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2403.09472v2:METHOD-EVAL-TO-GEN"
+    ],
+    "description": "SFT generators and OPRMs trained on PRM800K levels 1-3 are compared on levels 1-5 under majority voting (SFT only), best-of-n and weighted voting (SFT + OPRM) as the number of sampled solutions per problem grows, including a 7b generator with a 34b evaluator and a 34b generator with a 7b evaluator (Figures 4-5).",
+    "passages": [
+     {
+      "version": "2403.09472v2",
+      "page": 8,
+      "lines": [
+       417,
+       426
+      ],
+      "text": "Re-ranking\n\nWe consider two re-ranking strategies: Best-of-n (or rejection sampling) and Weighted Voting. In our\neasy-to-hard generalization setting, both SFT models and Reward Models (RMs) are trained on easier\ntasks (levels 1-3), but evaluated on all difficulty levels (1-5). We compare the performance between\nmajority voting (SFT only) and re-ranking (SFT + OPRM) on the PRM800K dataset in Figure 4-5,\nand the performance of different reward models (PRMs, ORMs, & OPRMs) on the PRM800K dataset\nin Figure 8-9. Specifically, we use min as the reward aggregation function for best-of-n and prod for\nweighted voting4 . The figures illustrate the performance of different decoding strategies or reward\nmodels under the same number of sampled solutions per problem. We have the following findings:",
+      "pdf_page": "https://arxiv.org/pdf/2403.09472v2#page=8"
+     },
+     {
+      "version": "2403.09472v2",
+      "page": 7,
+      "lines": [
+       406,
+       409
+      ],
+      "text": "Figure 4: Easy-to-hard generalization of 7b (upper) and 34b (lower) evaluators. Both SFTs and RMs\nare trained on the easy data. We found that PRMs trained on easy tasks can significantly improve the\nre-ranking (i.e., weighted voting) performance on hard tasks. The shaded margin of the curve plot in\nthis paper represents the performance variance.",
+      "pdf_page": "https://arxiv.org/pdf/2403.09472v2#page=7"
+     },
+     {
+      "version": "2403.09472v2",
+      "page": 8,
+      "lines": [
+       411,
+       413
+      ],
+      "text": "Figure 5: Easy-to-hard generalization of evaluators applied to generators of different sizes. We\nevaluated 7b generator + 34b evaluator (upper) and 34b generator + 7b evaluator (lower). Both SFTs\nand RMs are trained on the easy data.",
+      "pdf_page": "https://arxiv.org/pdf/2403.09472v2#page=8"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2403.09472v2:ASM-EASY-QUALITY"
+    ],
+    "stated_hypotheses": [
+     "SFT models and reward models are trained only on easy problems (MATH levels 1-3) and evaluated on all difficulty levels (1-5).",
+     "Best-of-n uses min and weighted voting uses prod as the reward aggregation function."
+    ],
+    "passages": []
+   },
+   "setting": {
+    "systems": "Llemma 7b and 34b SFT generators with OPRM evaluators of 7b and 34b",
+    "task_data": "MATH problems at all difficulty levels; PRM800K training data (levels 1-3)",
+    "judge": "OPRM scores used to re-rank sampled solutions",
+    "regime": "mixed",
+    "scale": "7b and 34b generators and evaluators; varying number of sampled solutions per problem"
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": "Figure 4's caption says the shaded margins of the curve plots show the performance variance; no confidence interval, standard error or statistical test is stated."
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2403.09472v2:LIM-1"
+    ],
+    "notes": "The explanation for weighted voting beating best-of-n (a less powerful base model on harder tasks, possible reward over-optimization) is the authors' hypothesis; 'significantly improve' is stated without a test."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "One task family and one model family, with only a variance band and no confidence interval, standard error or test, which the rubric grades single-setting."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2403.09472v2:RES-EVAL-BETTER",
+   "paper": "2403.09472v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2403.09472v2:METHOD-EVAL-TO-GEN"
+    ],
+    "description": "Drawn from the re-ranking experiments: with SFT models and reward models trained on levels 1-3, re-ranking by the reward model (weighted voting) is compared with majority voting over the SFT model's own samples, and its advantage grows on harder problems.",
+    "passages": [
+     {
+      "version": "2403.09472v2",
+      "page": 8,
+      "lines": [
+       417,
+       426
+      ],
+      "text": "Re-ranking\n\nWe consider two re-ranking strategies: Best-of-n (or rejection sampling) and Weighted Voting. In our\neasy-to-hard generalization setting, both SFT models and Reward Models (RMs) are trained on easier\ntasks (levels 1-3), but evaluated on all difficulty levels (1-5). We compare the performance between\nmajority voting (SFT only) and re-ranking (SFT + OPRM) on the PRM800K dataset in Figure 4-5,\nand the performance of different reward models (PRMs, ORMs, & OPRMs) on the PRM800K dataset\nin Figure 8-9. Specifically, we use min as the reward aggregation function for best-of-n and prod for\nweighted voting4 . The figures illustrate the performance of different decoding strategies or reward\nmodels under the same number of sampled solutions per problem. We have the following findings:",
+      "pdf_page": "https://arxiv.org/pdf/2403.09472v2#page=8"
+     },
+     {
+      "version": "2403.09472v2",
+      "page": 8,
+      "lines": [
+       446,
+       447
+      ],
+      "text": "Greater effectiveness of re-ranking on harder tasks: Weighted voting not only consistently\nsurpasses majority voting but also shows a more pronounced advantage on harder tasks. This",
+      "pdf_page": "https://arxiv.org/pdf/2403.09472v2#page=8"
+     },
+     {
+      "version": "2403.09472v2",
+      "page": 7,
+      "lines": [
+       406,
+       409
+      ],
+      "text": "Figure 4: Easy-to-hard generalization of 7b (upper) and 34b (lower) evaluators. Both SFTs and RMs\nare trained on the easy data. We found that PRMs trained on easy tasks can significantly improve the\nre-ranking (i.e., weighted voting) performance on hard tasks. The shaded margin of the curve plot in\nthis paper represents the performance variance.",
+      "pdf_page": "https://arxiv.org/pdf/2403.09472v2#page=7"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2403.09472v2:ASM-EASY-QUALITY"
+    ],
+    "stated_hypotheses": [
+     "SFT models and reward models are trained only on easier tasks (levels 1-3) and evaluated on all difficulty levels (1-5)."
+    ],
+    "passages": []
+   },
+   "setting": {
+    "systems": "7b and 34b SFT generators and reward models (OPRM)",
+    "task_data": "PRM800K dataset; SFT models and reward models trained on easier tasks (levels 1-3) and evaluated on all difficulty levels (1-5)",
+    "judge": "Reward-model scores (weighted voting) compared with majority voting",
+    "regime": "mixed",
+    "scale": "7b and 34b models"
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": "Figure 4's caption says the shaded margins of the curve plots show the performance variance; no confidence interval, standard error or statistical test is stated."
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2403.09472v2:LIM-1"
+    ],
+    "notes": "The conclusion is drawn from re-ranking gains over majority voting, not from a separate measure of each model's own generalization."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "One dataset (PRM800K) with 7b and 34b models; the shaded margin shows performance variance, but no confidence interval, standard error or test is stated, and with one dataset the rubric grades it single-setting."
+   },
+   "review_status": "provisional_ai_draft",
+   "check_history": [
+    "card-1: flagged or undecided by two blind checks; rewritten from the checkers' suggested fix (quotes unchanged)"
+   ]
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2403.09472v2:RES-RL",
+   "paper": "2403.09472v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2403.09472v2:METHOD-EVAL-TO-GEN"
+    ],
+    "description": "7b policies are trained from SFT models with ReST, DPO or PPO using final-answer rewards on easy questions and, optionally, rewards from a PRM trained on easy data, under two conditions (easy questions only, or all questions with easy final answers); checkpoints are chosen by validation accuracy and greedy-decoding accuracy is reported (Table 2).",
+    "passages": [
+     {
+      "version": "2403.09472v2",
+      "page": 9,
+      "lines": [
+       115,
+       125
+      ],
+      "text": "Given the conclusion above, an important question arises: how can evaluators once again assist\ngenerators in achieving enhanced easy-to-hard generalization capabilities? We further investigate\nthe enhancement of policy models through RL, utilizing easy-to-hard evaluators as reward models.\nSimilar to re-ranking, SFT and PRM are only trained on easy data. For a fair comparison between\nPRM800K and MetaMath, we only use vanilla PRMs in the RL training. All the RL methods use the\nvalidation accuracy for selecting the best checkpoint5 . Our comparison spans offline (ReST & DPO)\nand online (PPO) RL algorithms under two training conditions:\nEasy Questions & Easy Final Answers. The SFT model samples from easy questions and receives\nthe corresponding Final-Answer and optional PRM rewards.\nAll Questions & Easy Final Answers. This assumes access to a range of easy and hard problems for\nRL training, with rewards for hard tasks solely provided by the easy-to-hard evaluator.",
+      "pdf_page": "https://arxiv.org/pdf/2403.09472v2#page=9"
+     },
+     {
+      "version": "2403.09472v2",
+      "page": 9,
+      "lines": [
+       1,
+       2
+      ],
+      "text": "Table 2: Comparing reinforcement learning (RL) approaches for easy-to-hard generalization. All\nmethods are of 7b size and evaluated with greedy decoding.",
+      "pdf_page": "https://arxiv.org/pdf/2403.09472v2#page=9"
+     },
+     {
+      "version": "2403.09472v2",
+      "page": 6,
+      "lines": [
+       124,
+       125
+      ],
+      "text": "Reinforcement Learning (RL) We consider three online/offline RL variants, Reinforced SelfTraining (ReST) [28, 67], Direct Policy Optimization (DPO) [56], and Proximal Policy Optimization\n(PPO) [62]. Due to the space limit, please find their detailed description in Appendix B.",
+      "pdf_page": "https://arxiv.org/pdf/2403.09472v2#page=6"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2403.09472v2:ASM-EASY-QUALITY"
+    ],
+    "stated_hypotheses": [
+     "The SFT model and the PRM are trained only on easy data, and only vanilla PRMs are used in RL.",
+     "In the 'All Questions & Easy Final Answers' condition, hard questions are available for RL and their rewards come only from the easy-to-hard evaluator.",
+     "Best checkpoints are selected by validation accuracy, and the 500-problem validation set is sampled across all five difficulty levels."
+    ],
+    "passages": [
+     {
+      "version": "2403.09472v2",
+      "page": 5,
+      "lines": [
+       12,
+       17
+      ],
+      "text": "Dataset MATH [32] is a dataset of 12,500 challenging competition mathematics problems, where\n7,500 of them are training problems and 5,000 are originally used for testing. Following Lightman et al.\n[40], Wang et al. [75], we use the identical subset of 500 representative problems (i.e., MATH500) as\nour test set, uniformly sample another 500 problems for validation, across all five difficulty levels,\nand leave the rest 4,000 MATH test split problems combined with the original 7,500 MATH training\nsplit problems as our training set.",
+      "pdf_page": "https://arxiv.org/pdf/2403.09472v2#page=5"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "7b policy models trained with ReST, DPO and PPO",
+    "task_data": "MATH500 test set (greedy decoding); PRM800K and MetaMath training data",
+    "judge": "Final-answer rewards on easy questions plus rewards from an easy-trained process reward model",
+    "regime": "mixed",
+    "scale": "7b models"
+   },
+   "quantitative": {
+    "n": "MATH500: 500 test problems",
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2403.09472v2:LIM-1"
+    ],
+    "notes": "The 33.0 comparison point is the previous state-of-the-art model trained across all task levels, not one of the models trained in this comparison; 'significantly surpassing' is stated without a test."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "One task (MATH, evaluated on MATH500) at one model size (7b), with no uncertainty reported for the accuracies, which the rubric grades single-setting."
+   },
+   "review_status": "provisional_ai_draft",
+   "check_history": [
+    "card-1: flagged or undecided by two blind checks; rewritten from the checkers' suggested fix (quotes unchanged)"
+   ]
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2403.09472v2:RES-CODING",
+   "paper": "2403.09472v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2403.09472v2:METHOD-EVAL-TO-GEN"
+    ],
+    "description": "Code Llama 7b and 34b are fine-tuned on easy (Introductory) APPS data and evaluated on a 500-question APPS test subsample with greedy decoding and with best-of-N selection by a same-size outcome reward model trained only on easy data (Table 3).",
+    "passages": [
+     {
+      "version": "2403.09472v2",
+      "page": 10,
+      "lines": [
+       1,
+       3
+      ],
+      "text": "Table 3: Easy-to-hard generalization of evaluators on coding problems (APPS). Both SFTs and RMs\nare trained on the easy (Introductory) data. We found that ORMs trained on easy tasks can improve\nthe re-ranking (Best-of-N) performance on hard (Interview & Competition) coding problems.",
+      "pdf_page": "https://arxiv.org/pdf/2403.09472v2#page=10"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2403.09472v2:ASM-EASY-QUALITY"
+    ],
+    "stated_hypotheses": [
+     "Both the SFT models and the outcome reward model are trained only on easy (Introductory) problems; the hard problems are Interview and Competition."
+    ],
+    "passages": []
+   },
+   "setting": {
+    "systems": "Code Llama 7b and 34b SFT models with same-size outcome reward models",
+    "task_data": "APPS: 500 test questions sub-sampled from the original test set (100 Introductory, 300 Interview, 100 Competition)",
+    "judge": "The outcome reward model selects among N sampled solutions",
+    "regime": "mixed",
+    "scale": "7b and 34b models; 500 test questions"
+   },
+   "quantitative": {
+    "n": "500 APPS test questions (100 Introductory, 300 Interview, 100 Competition)",
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2403.09472v2:LIM-1"
+    ],
+    "notes": "'Significantly improves' is stated without a test; the extension beyond mathematics is hedged ('suggesting its applicability')."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "One coding dataset and one model family, with no reported uncertainty, which the rubric grades single-setting."
+   },
+   "review_status": "provisional_ai_draft"
+  }
+ ]
+}

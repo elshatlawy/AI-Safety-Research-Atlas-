@@ -1,0 +1,723 @@
+{
+ "schema": "ASRA-GAP-CLOSING-AGENT-v1",
+ "paper": "2502.04313v2",
+ "review_status": "provisional_ai_draft",
+ "rules": [
+  "Everything here is an AI draft (provisional_ai_draft): each counted item passed two blind AI checks that were tested on planted errors, and no person has reviewed it.",
+  "A finding counts only in the setting its own quoted lines show; read `setting` before carrying it to another setting.",
+  "A question's status is a label from fixed rules over its counted findings; `status_check` says whether that label itself passed its check.",
+  "Cite the paper and page from the passage, and read the PDF page before relying on a claim."
+ ],
+ "notes": "No assumption records exist for this paper, so hypotheses are given in plain words with supporting lines. CORE bundles the judge, weak-to-strong and capability-trend results and is graded by its weaker parts (EMPIRICAL_SINGLE_SETTING). RES-W2S-CEILING: the record's quote is a table fragment (numbers without row labels) that does not by itself show which value is which; the card adds Table 3's caption and row labels (p7 L2-L10) and the Q3 text. RES-AFFINITY-CONTROLS: the quote starts mid-sentence ('shows that both, ...'); its subject 'The multiple regression analysis' is on p5 L101, added. RES-CORRELATED-ERRORS is graded EMPIRICAL_SINGLE_SETTING because no statistic is reported for the Figure 6 trend even though two datasets are used; Appendix D.1 and D.4 speak of significance without numbers. Weak model naming is inconsistent in the paper: Table 9 lists meta-llama/Llama-3.2-1B as a weak model, Appendix C.1 lists Llama3.2-1B among discarded weak models, and the Figure 4 legend shows Llama-3.2-3B; cards avoid naming the weak models. The judge study's model count reads '9 judge and 39 model pairs' (p5 L35); cards report 39 evaluated models with that wording in mind. CLAIM-OVERSIGHT-RISK is an argument (ARGUMENT_ONLY).",
+ "cards": [
+  {
+   "record_id": "N2:DSOFT:ARXIV-2502.04313v2:CORE",
+   "paper": "2502.04313v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2502.04313v2:DEF-CAPA"
+    ],
+    "description": "The authors compute CAPA, a chance-adjusted, probability-based similarity of model mistakes on multiple-choice questions, and relate it to LLM-as-a-judge scores, to the gain from weak-to-strong training, and to model capability across leaderboard models.",
+    "passages": [
+     {
+      "version": "2502.04313v2",
+      "page": 1,
+      "lines": [
+       32,
+       37
+      ],
+      "text": "Figure 1. Our Main Contributions. We develop a novel probabilistic metric for model similarity, CAPA (κp ), which adjusts for\nchance agreement due to accuracy. Using this, we find (1) LLM-asa-judge scores are biased towards more similar models controlling\nfor the model’s capability (2) Gain from training strong models on\nannotations of weak supervisors (weak-to-strong generalization) is\nhigher when the two models are more different, (3) Concerningly,\nmodel errors are getting more correlated as capabilities increase.",
+      "pdf_page": "https://arxiv.org/pdf/2502.04313v2#page=1"
+     },
+     {
+      "version": "2502.04313v2",
+      "page": 5,
+      "lines": [
+       31,
+       37
+      ],
+      "text": "ground-truth answers allows us to compare the judgment\nscores with verifiable accuracy measurements (details and\ncomparisons with alternatives are in Appendix B.3), consistent with prior scalable oversight research (Bowman et al.,\n2022). We compute pairwise similarity with CAPA, κp ,\nacross 9 judge and 39 model pairs. For a complete overview\nof models investigated, question filtering, inference setup,\nand prompts used for judges, see Appendix B.",
+      "pdf_page": "https://arxiv.org/pdf/2502.04313v2#page=5"
+     },
+     {
+      "version": "2502.04313v2",
+      "page": 8,
+      "lines": [
+       21,
+       30
+      ],
+      "text": "We collect sample-wise evaluation files for 130 official models from the OpenLLM Leaderboard 2 released by HuggingFace, listed in Appendix D.5. We use MMLU-Pro (Wang\net al., 2024) and Big Bench Hard (BBH) (Suzgun et al.,\n2023) as they measure a broad range of capabilities using\nMCQ, and frontier models have reasonable accuracies while\nnot saturating these datasets. We first bucket these models into five performance percentile ranges. Then, for each\nmodel, we compute its mean similarity (κp ) with models in\nthe same bucket from different developers, to prevent confounding from distillation or continual training. More setup\ndetails are provided in Appendix D.1. In Appendix D.3 we\nalso report pairwise results, and using the extension of κp\nfor sets of M > 2 models.",
+      "pdf_page": "https://arxiv.org/pdf/2502.04313v2#page=8"
+     },
+     {
+      "version": "2502.04313v2",
+      "page": 4,
+      "lines": [
+       70,
+       81
+      ],
+      "text": "To study whether LM judges prefer more similar models,\nwe evaluate a large set of judges and models on MMLUPro (Wang et al., 2024), a benchmark for hard problem\nsolving questions across 14 domains. We filter 8,707 questions that can also be answered in a free-text response style,\nwithout options, following Myrzakhan et al. (2024). Each\nquestion is posed to every evaluated model as an MCQ and\nas an open-style question. The per-sample results of the\nformer are used to compute the similarities of judge-model\npairs, whereas responses to the latter are given to an LLMas-a-judge. The judge has to make a binary decision on\nwhether a free-text response is correct or wrong. This is\ndone based on its own internal knowledge without access to\na ground-truth solution. We call the average of binary judgments across the benchmark the model’s Judgment Score\nfor a given judge. Using a parallel MCQ evaluation with",
+      "pdf_page": "https://arxiv.org/pdf/2502.04313v2#page=4"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "Similarity is measured on multiple-choice answers; the authors say they had to limit their analysis to MCQ tasks.",
+     "In the weak-to-strong part, 'weak' and 'strong' are defined by model size (4 weak models of 1-3B and 3 strong models of 7-9B parameters, 12 pairs, 15 binary classification NLP tasks from Burns et al. 2024)."
+    ],
+    "passages": [
+     {
+      "version": "2502.04313v2",
+      "page": 9,
+      "lines": [
+       53,
+       56
+      ],
+      "text": "Extending to similarity metrics for free-text outputs: Everyday use of generative models is based on their free-text\nresponses. Like much work on benchmarking, we had to\nlimit to MCQ tasks as the science of precisely evaluating\nfree-text is still evolving (Biderman et al., 2024). For example, both model-free (Papineni et al., 2002) and model-based",
+      "pdf_page": "https://arxiv.org/pdf/2502.04313v2#page=9"
+     },
+     {
+      "version": "2502.04313v2",
+      "page": 6,
+      "lines": [
+       163,
+       168
+      ],
+      "text": "Following Burns et al. (2024), we define “weak” and “strong”\nbased on model size. We study 4 weak models in the 1 −\n3B parameter range, and 3 strong models in the 7 − 9B\nparameter range, for a total of 12 model pairs, and 15 of\nthe binary classification NLP tasks studied in Burns et al.\n(2024), specified in Table 9. The smaller models do have",
+      "pdf_page": "https://arxiv.org/pdf/2502.04313v2#page=6"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "LLM judges and the models they score (9 judges, 39 models in the text's '9 judge and 39 model pairs'); 12 weak-supervisor/strong-student pairs; 130 official OpenLLM Leaderboard 2 models",
+    "task_data": "Filtered MMLU-Pro questions (8,707 that can also be answered in free-text form; each posed as an MCQ for similarity and as an open-style question for the judge) for the judge study; 15 binary classification NLP tasks from Burns et al. (2024) for weak-to-strong training; MMLU-Pro and Big Bench Hard sample-wise evaluations for the capability trend",
+    "judge": "LLM-as-a-judge in the evaluation part (a binary correct/wrong decision on each free-text response, without access to a ground-truth solution); none in the weak-to-strong and capability-trend parts",
+    "regime": "mixed",
+    "scale": "9 judges and 39 models; 4 weak (1-3B) and 3 strong (7-9B) models; 130 leaderboard models"
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2502.04313v2:LIM-CAUSATION"
+    ],
+    "notes": "The authors state that the similarity effects are correlational and that establishing causation would need ways to make a model less similar without harming its capabilities; the analysis is limited to multiple-choice tasks."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "The claim bundles several experiments; its statements that complementary knowledge plays a crucial role and that model mistakes are becoming more similar come with no test statistic, interval or standard error in these lines, so the bundle is graded by that weaker part, and the correlated-failure risk is the authors' inference."
+   },
+   "review_status": "provisional_ai_draft",
+   "check_history": [
+    "card-1: flagged or undecided by two blind checks; rewritten from the checkers' suggested fix (quotes unchanged)"
+   ]
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2502.04313v2:RES-AFFINITY-BIAS",
+   "paper": "2502.04313v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2502.04313v2:DEF-CAPA"
+    ],
+    "description": "Each filtered MMLU-Pro question is posed to every evaluated model both as an MCQ, whose per-sample results give judge-model CAPA, and as an open question whose free-text answer an LLM judge marks correct or wrong without a reference solution; per judge, the average verdict (Judgment Score) is correlated with judge-model similarity (Figure 3, across-family pairs).",
+    "passages": [
+     {
+      "version": "2502.04313v2",
+      "page": 4,
+      "lines": [
+       70,
+       81
+      ],
+      "text": "To study whether LM judges prefer more similar models,\nwe evaluate a large set of judges and models on MMLUPro (Wang et al., 2024), a benchmark for hard problem\nsolving questions across 14 domains. We filter 8,707 questions that can also be answered in a free-text response style,\nwithout options, following Myrzakhan et al. (2024). Each\nquestion is posed to every evaluated model as an MCQ and\nas an open-style question. The per-sample results of the\nformer are used to compute the similarities of judge-model\npairs, whereas responses to the latter are given to an LLMas-a-judge. The judge has to make a binary decision on\nwhether a free-text response is correct or wrong. This is\ndone based on its own internal knowledge without access to\na ground-truth solution. We call the average of binary judgments across the benchmark the model’s Judgment Score\nfor a given judge. Using a parallel MCQ evaluation with",
+      "pdf_page": "https://arxiv.org/pdf/2502.04313v2#page=4"
+     },
+     {
+      "version": "2502.04313v2",
+      "page": 5,
+      "lines": [
+       31,
+       37
+      ],
+      "text": "ground-truth answers allows us to compare the judgment\nscores with verifiable accuracy measurements (details and\ncomparisons with alternatives are in Appendix B.3), consistent with prior scalable oversight research (Bowman et al.,\n2022). We compute pairwise similarity with CAPA, κp ,\nacross 9 judge and 39 model pairs. For a complete overview\nof models investigated, question filtering, inference setup,\nand prompts used for judges, see Appendix B.",
+      "pdf_page": "https://arxiv.org/pdf/2502.04313v2#page=5"
+     },
+     {
+      "version": "2502.04313v2",
+      "page": 5,
+      "lines": [
+       13,
+       19
+      ],
+      "text": "Figure 3. Judgment Score Relation with Model Similarity on\nonly across family pairs. Each line is a regression model fit\nbetween judgment and similarity scores. The circle shape indicates\nthat only across-family judge-model pairs are plotted. We report\nfor each fit the corresponding Pearson correlation values, r. We\nfound significant positive correlation between judgment scores and\nCAPA across all judges, ∗∗ indicates p < 0.01.",
+      "pdf_page": "https://arxiv.org/pdf/2502.04313v2#page=5"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "Questions are the 8,707 MMLU-Pro questions that can also be answered in free-text style without options.",
+     "The judge decides from its own knowledge, without access to a ground-truth solution.",
+     "Similarity is computed from the models' multiple-choice answers to the same questions, and ground-truth MCQ answers give the reference accuracy.",
+     "Figure 3 plots only judge-model pairs from different model families.",
+     "Judges are nine instruction-tuned open-weight models from four model families, up to 72B parameters; the evaluated models include base models."
+    ],
+    "passages": [
+     {
+      "version": "2502.04313v2",
+      "page": 37,
+      "lines": [
+       31,
+       34
+      ],
+      "text": "Our judge preference experiments were performed using nine high-capability, open-weight models from four different\nmodel families. The models that represent the current state-of-the-art of open-weight language models from very small up to\nmodels with 72 billion parameters. Whereas the judges are all instruction-tuned, the list of evaluated models contains base\nmodels as well.",
+      "pdf_page": "https://arxiv.org/pdf/2502.04313v2#page=37"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "9 instruction-tuned open-weight LLM judges from four model families (up to 72B parameters) and 39 evaluated base and instruction-tuned models",
+    "task_data": "MMLU-Pro, filtered to 8,707 questions answerable in free-text style (14 domains)",
+    "judge": "LLM-as-a-judge giving a binary correct/wrong verdict on free-text answers without a reference solution",
+    "regime": "evaluation",
+    "scale": "9 judges; 39 evaluated models; 8,707 questions"
+   },
+   "quantitative": {
+    "n": "9 judges by 39 evaluated models on 8,707 questions",
+    "uncertainty": "Positive Pearson correlation significant at p < 0.01 for every judge; average r = 0.84"
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2502.04313v2:LIM-CAUSATION"
+    ],
+    "notes": "Correlational: the authors say causation is not established. The Qwen2.5-72B-Instruct example (71% vs 67%) is one illustrative pair."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_MULTI_SETTING",
+    "reason": "The correlation is reported for each of nine judges from four model families, each with a significance test (p < 0.01)."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2502.04313v2:RES-AFFINITY-CONTROLS",
+   "paper": "2502.04313v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2502.04313v2:DEF-CAPA"
+    ],
+    "description": "For each judge, a partial correlation between Judgment Score and judge-model similarity controlling for the evaluated model's ground-truth accuracy, and a multiple regression of Judgment Score on similarity and accuracy (Table 2); Appendix B.1 adds model size as a further covariate.",
+    "passages": [
+     {
+      "version": "2502.04313v2",
+      "page": 5,
+      "lines": [
+       97,
+       101
+      ],
+      "text": "Q2: Is this merely due to better accuracy? Note that\nwhile κp adjusts for inflation in agreement of highly accurate models, we do expect models with lower accuracy to\nbe less similar with highly capable judge models, and thus\nhave lower κp . To control for the accuracy of the evaluated\nmodel we perform multiple regression and partial correlation analysis (Table 2). The multiple regression analysis",
+      "pdf_page": "https://arxiv.org/pdf/2502.04313v2#page=5"
+     },
+     {
+      "version": "2502.04313v2",
+      "page": 5,
+      "lines": [
+       2,
+       10
+      ],
+      "text": "Table 2. Partial Correlation and Multiple Regression Results.\nThe table reports partial correlation results between judgment\nscores and model similarity when controlling for accuracy (r Pearson correlation), as well as multiple regression results between judgment scores (DV) ∼ similarity (IV) and accuracy (IV).\n∗ and ∗∗ indicate significance level p<0.05 and p<0.01 respectively. Across all judges we find a significant partial correlation,\nwhich implies that after controlling for accuracy there remains\na relationship between judge score and model similarity. With\nrespect to Multiple regression, across all judges we find a significant effect of both IV on judgment scores while holding the other\nconstant, suggesting a strong positive relationship (for details, see\nAppendix B.6).",
+      "pdf_page": "https://arxiv.org/pdf/2502.04313v2#page=5"
+     },
+     {
+      "version": "2502.04313v2",
+      "page": 30,
+      "lines": [
+       26,
+       31
+      ],
+      "text": "We compute partial correlations between judge scores and judge-model similarity while controlling for ground-truth\naccuracy. All judges show statistically significant positive correlations (Table B.6.1), with coefficients ranging from r = 0.35\n(Llama-3.3-70B-Instruct) to r = 0.65 (Llama-3.1-8B-Instruct). The strongest correlations occur for\nsmaller judges from the same gemma-2 family (gemma-2-27b-it and gemma-2-9b-it), while larger Qwen2.5 judges\nexhibit moderate correlations (r = 0.42 and r = 0.43). All p-values remain significant (p < 0.05), with the most robust\nresults for the larger gemma judge (p = 0.00001).",
+      "pdf_page": "https://arxiv.org/pdf/2502.04313v2#page=30"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "Judgment Scores are averages of LLM judges' binary verdicts on free-text answers to 8,707 filtered MMLU-Pro questions, given without a ground-truth solution.",
+     "The control variable is the evaluated model's ground-truth accuracy.",
+     "Partial correlation and multiple regression assume normal, homoscedastic residuals; the authors report normality for 7 of 9 judges (exceptions Meta-Llama-3.1-8B-Instruct and Ministral-8B) and constant variance for all.",
+     "Judges are nine instruction-tuned open-weight models from four model families."
+    ],
+    "passages": [
+     {
+      "version": "2502.04313v2",
+      "page": 32,
+      "lines": [
+       71,
+       76
+      ],
+      "text": "• Model Fit: All regressions achieve high explanatory power with adjusted R2 values between 0.87 (Ministral-8B)\nand 0.92 (gemma-2-9b-it).\n• Assumption Verification:\n– Normality: Residuals are normally distributed (Shapiro-Wilk p > 0.05) for 7 of 9 judges. Exceptions:\nMeta-Llama-3.1-8B-Instruct (p = 0.002) and Ministral-8B (p = 0.012).\n– Homoscedasticity: All models satisfy constant variance assumptions (Breusch-Pagan p > 0.05).",
+      "pdf_page": "https://arxiv.org/pdf/2502.04313v2#page=32"
+     },
+     {
+      "version": "2502.04313v2",
+      "page": 37,
+      "lines": [
+       31,
+       34
+      ],
+      "text": "Our judge preference experiments were performed using nine high-capability, open-weight models from four different\nmodel families. The models that represent the current state-of-the-art of open-weight language models from very small up to\nmodels with 72 billion parameters. Whereas the judges are all instruction-tuned, the list of evaluated models contains base\nmodels as well.",
+      "pdf_page": "https://arxiv.org/pdf/2502.04313v2#page=37"
+     },
+     {
+      "version": "2502.04313v2",
+      "page": 4,
+      "lines": [
+       70,
+       81
+      ],
+      "text": "To study whether LM judges prefer more similar models,\nwe evaluate a large set of judges and models on MMLUPro (Wang et al., 2024), a benchmark for hard problem\nsolving questions across 14 domains. We filter 8,707 questions that can also be answered in a free-text response style,\nwithout options, following Myrzakhan et al. (2024). Each\nquestion is posed to every evaluated model as an MCQ and\nas an open-style question. The per-sample results of the\nformer are used to compute the similarities of judge-model\npairs, whereas responses to the latter are given to an LLMas-a-judge. The judge has to make a binary decision on\nwhether a free-text response is correct or wrong. This is\ndone based on its own internal knowledge without access to\na ground-truth solution. We call the average of binary judgments across the benchmark the model’s Judgment Score\nfor a given judge. Using a parallel MCQ evaluation with",
+      "pdf_page": "https://arxiv.org/pdf/2502.04313v2#page=4"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "9 instruction-tuned open-weight LLM judges from four model families and the models they score",
+    "task_data": "MMLU-Pro, filtered to 8,707 questions answerable in free-text style; similarity from the parallel MCQ evaluation",
+    "judge": "LLM-as-a-judge without reference solutions",
+    "regime": "evaluation",
+    "scale": "9 judges (one partial correlation and one regression per judge)"
+   },
+   "quantitative": {
+    "n": "9 judges, one analysis each",
+    "uncertainty": "Significance marks at p < 0.05 and p < 0.01 in Table 2; partial correlations r = 0.35 to 0.65, all p < 0.05"
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2502.04313v2:LIM-CAUSATION"
+    ],
+    "notes": "Residual normality fails for two of the nine judges' regressions; the analysis remains correlational."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_MULTI_SETTING",
+    "reason": "Per-judge partial correlations and regressions across nine judges from four model families are reported with significance levels (all partial correlations p < 0.05)."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2502.04313v2:RES-W2S-SIMILARITY",
+   "paper": "2502.04313v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2502.04313v2:DEF-CAPA"
+    ],
+    "description": "Following Burns et al. (2024), each weak base model is finetuned on ground truth to act as supervisor and annotates data on which each strong base model is finetuned with the confidence-weighted loss; CAPA between the weak supervisor and the base student is measured on the validation set before training and correlated with the weak-to-strong gain across 15 tasks and 12 pairs, then a partial correlation controls for the supervisor-student accuracy gap.",
+    "passages": [
+     {
+      "version": "2502.04313v2",
+      "page": 6,
+      "lines": [
+       163,
+       174
+      ],
+      "text": "Following Burns et al. (2024), we define “weak” and “strong”\nbased on model size. We study 4 weak models in the 1 −\n3B parameter range, and 3 strong models in the 7 − 9B\nparameter range, for a total of 12 model pairs, and 15 of\nthe binary classification NLP tasks studied in Burns et al.\n(2024), specified in Table 9. The smaller models do have\nlower accuracy (before finetuning) than the bigger ones\nacross tasks, as shown in Appendix Figure 17, justifying\ncalling them “weak” and “strong”. We measure similarity\nbetween the weak supervisor and base student model on the\nvalidation set. We then perform weak-to-strong training on\nthe student model, using the confidence-weighted finetuning",
+      "pdf_page": "https://arxiv.org/pdf/2502.04313v2#page=6"
+     },
+     {
+      "version": "2502.04313v2",
+      "page": 6,
+      "lines": [
+       189,
+       191
+      ],
+      "text": "Q1: Does Complementary Knowledge Influence Performance Gain? Figure 4 shows that for all model combinations, similarity between the weak supervisor and initial\nstrong student inversely correlates with the improvement\nobtained from weak-to-strong training (r = −0.85). Even",
+      "pdf_page": "https://arxiv.org/pdf/2502.04313v2#page=6"
+     },
+     {
+      "version": "2502.04313v2",
+      "page": 6,
+      "lines": [
+       22,
+       33
+      ],
+      "text": "Llama-3.2-3B - Llama-3.1-8B (r=-0.76)\nLlama-3.2-3B - Qwen2.5-7B (r=-0.91)\nLlama-3.2-3B - gemma-2-9b (r=-0.89)\nQwen2.5-1.5B - Llama-3.1-8B (r=-0.69)\nQwen2.5-1.5B - Qwen2.5-7B (r=-0.92)\nQwen2.5-1.5B - gemma-2-9b (r=-0.81)\ngemma-2-2b - Llama-3.1-8B (r=-0.69)\ngemma-2-2b - Qwen2.5-7B (r=-0.87)\ngemma-2-2b - gemma-2-9b (r=-0.84)\nphi-2 - Llama-3.1-8B (r=-0.69)\nphi-2 - Qwen2.5-7B (r=-0.94)\nphi-2 - gemma-2-9b (r=-0.87)",
+      "pdf_page": "https://arxiv.org/pdf/2502.04313v2#page=6"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "'Weak' and 'strong' are defined by model size (4 weak models of 1-3B, 3 strong of 7-9B parameters).",
+     "The weak supervisor is the weak base model finetuned on ground-truth labels of one training split (Dtr1); it annotates a second split (Dtr2) on which the strong student is finetuned.",
+     "Finetuning uses LoRA adapters (for budget reasons) and the confidence-weighted loss of Burns et al. (2024).",
+     "Three further weak models were run but removed from the analysis because on some tasks their weak-to-strong gain was negative; Hellaswag was dropped because accuracies were often below 60%.",
+     "Hypothesis being tested: lower similarity indicates more complementary knowledge and should go with larger gains."
+    ],
+    "passages": [
+     {
+      "version": "2502.04313v2",
+      "page": 45,
+      "lines": [
+       44,
+       51
+      ],
+      "text": "First, the weak base model W is finetuned on ground-truth labels in Dtr1 to obtain the weak supervisor Ws . In the original\nsetup, this is meant to simulate a human that is an expert at the given task. Then, Wgt annotates samples in Dtr2 , and the\nstrong student model S is finetuned on these annotations to obtain the Weak to Strong trained model Sw2s . In the original\nsetup, the strong base model simulates a future model with superhuman intelligence, but not finetuned for specific domain\nknowledge.\nFinetuning Methodology: For the above finetuning steps we use Low Rank Adapters (LoRA) (Hu et al., 2022) due to\nbudget constraints, and train a binary classifier the same way as Scherlis et al. (2024). We use the confidence weighted loss\nproposed by Burns et al. (2024). This loss encourages the strong model’s predictions to align with both a weaker model and",
+      "pdf_page": "https://arxiv.org/pdf/2502.04313v2#page=45"
+     },
+     {
+      "version": "2502.04313v2",
+      "page": 46,
+      "lines": [
+       23,
+       28
+      ],
+      "text": "Discarded Results: We had initially run experiments with three more weak models: SmolLM 1.7B, Qwen-2.5-0.5B, Llama3.2-1B against the same list of strong models reported above. However, we found that on some tasks, the weak-to-strong\ngain was negative. The weak supervisor (Wgt ) models had lower accuracy compared to the strong student Sb , leading\nto a decrease in accuracy for the strong student after weak to strong training. We thus removed these weak models from\nour analysis. Similarly, we had also tried the Hellaswag dataset, but found that both weak and strong models had very\nlow accuracies, often below 60% where chance is 50% for binary classification, consistent with Scherlis et al. (2024), and\ndecided to not include it in our analysis.",
+      "pdf_page": "https://arxiv.org/pdf/2502.04313v2#page=46"
+     },
+     {
+      "version": "2502.04313v2",
+      "page": 6,
+      "lines": [
+       155,
+       161
+      ],
+      "text": "capabilities (Hughes et al., 2024). Where could this improvement come from? We hypothesize that the existence\nof complementary knowledge or complementary capabilities between two LMs can be one mechanism for driving\nimprovements from LM annotations, if effectively leveraged. This complement can exhibit itself in the form of\ndiffering predictions on training data, and can thus be quantified using functional similarity between the supervisor and\nstudent model. Lower κp is indicative of more complementary knowledge, and as an implication of our hypothesis,\nshould inversely correlate with the performance gain of a\nstudent model when trained on the supervisor’s annotations.",
+      "pdf_page": "https://arxiv.org/pdf/2502.04313v2#page=6"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "4 weak base models (1-3B) and 3 strong base models (7-9B) from the Llama, Qwen, Gemma and Phi families, 12 pairs",
+    "task_data": "15 binary classification NLP tasks from Burns et al. (2024)",
+    "judge": null,
+    "regime": "training",
+    "scale": "12 model pairs by 15 tasks"
+   },
+   "quantitative": {
+    "n": "12 model pairs by 15 tasks",
+    "uncertainty": "Partial correlation controlling for the accuracy gap: r = -0.35, p < 0.01; uncontrolled correlation r = -0.85"
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2502.04313v2:LIM-CAUSATION"
+    ],
+    "notes": "Correlational. Weak models whose gain was negative on some tasks, and Hellaswag, were excluded from the analysis; alternative similarity metrics show the same trend with less variance explained."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_MULTI_SETTING",
+    "reason": "A partial correlation with p < 0.01 is reported across 15 tasks and 12 weak-strong pairs drawn from several model families."
+   },
+   "review_status": "provisional_ai_draft",
+   "check_history": [
+    "card-1: flagged or undecided by two blind checks; rewritten from the checkers' suggested fix (quotes unchanged)"
+   ]
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2502.04313v2:RES-COMPLEMENTARY",
+   "paper": "2502.04313v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [],
+    "description": "The strong student is also finetuned on ground-truth labels (the 'strong elicited' upper-bound model); test samples are split into four quadrants by whether this model and the weak supervisor were correct, and the weak-to-strong model's accuracy is averaged in each quadrant over 15 tasks and 12 model pairs.",
+    "passages": [
+     {
+      "version": "2502.04313v2",
+      "page": 7,
+      "lines": [
+       55,
+       65
+      ],
+      "text": "Q2. Does Complementary Knowledge Add Beyond Elicitation? The original explanation for performance gains\nfrom weak-to-strong generalization is that the weak supervisor “elicits” the latent knowledge in the superior representations of the stronger student (Burns et al., 2024). To\ninvestigate whether complementary knowledge adds to this\nexplanation or is subsumed within it, we first obtain the\nstrong model with “upper-bound” elicitation, by finetuning it on ground-truth annotations. We refer to this as the\nstrong elicited model. We can then separate the test data\ninto four parts based on whether the strong elicited and\nweak supervisor model were correct or wrong, measuring\naverage accuracy of the weak-to-strong model on each part\nto disentangle gains from different factors. The experiment\nsetup is discussed further in Appendix C.2.",
+      "pdf_page": "https://arxiv.org/pdf/2502.04313v2#page=7"
+     },
+     {
+      "version": "2502.04313v2",
+      "page": 46,
+      "lines": [
+       65,
+       68
+      ],
+      "text": "First, our functional similarity metric cannot capture latent knowledge in the strong student’s representations. For this, we\nfollow Burns et al. (2024) and finetune the strong student S on ground-truth labels of Dtr1 to obtain the elicited strong\nstudent model Sgt . Note that we use Dtr1 instead of Dtr2 here so that the training set of Sw2s , Dtr2 , remains held-out, and\nwe can analyze the relative effect of eliciation and complementary knowledge on both the train and test set.",
+      "pdf_page": "https://arxiv.org/pdf/2502.04313v2#page=46"
+     },
+     {
+      "version": "2502.04313v2",
+      "page": 46,
+      "lines": [
+       73,
+       77
+      ],
+      "text": "• Bottom-Left = Elicitation: Wgt does not benefit from latent knowledge of S, so Sw2s accuracy on samples where it is\nwrong but Sgt is correct signify knowledge that could only be from elicitation.\n• Top-Right = Complementary Knowledge Transfer: Sgt does not benefit from the latent knowledge of W , so Sw2s\naccuracy on samples where it is wrong but Wgt is correct signify knowledge that could only be from complementary\nknowledge transfer.",
+      "pdf_page": "https://arxiv.org/pdf/2502.04313v2#page=46"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "The attribution rests on the quadrant logic: the weak supervisor has no access to the strong model's latent knowledge, so accuracy where it was wrong but the elicited model was right is credited to elicitation; the elicited model has no access to the weak model's latent knowledge, so accuracy where it was wrong but the supervisor was right is credited to complementary knowledge transfer.",
+     "The strong model finetuned on ground-truth labels is treated as upper-bound elicitation.",
+     "Tasks are binary classification, where about 11% of predictions flip merely from finetuning on a different random training subset."
+    ],
+    "passages": [
+     {
+      "version": "2502.04313v2",
+      "page": 48,
+      "lines": [
+       127,
+       132
+      ],
+      "text": "In Table 11 and Table 12 we report the underlying numbers for Figure 5 and Figure 15 respectively. The astute observer\nmay be confused about the around 12% accuracy on the test set when when both the weak supervisor and strong elicited\nmodel are wrong (bottom-right quadrant). We find that merely finetuning on a different random subset of training data leads\nto around 11% predictions being flipped. Thus, much of this accuracy could just be due to random chance because of the\nbinary classification setup. This also indicates that complementary knowledge transfer explains much of the beyond-chance\naccuracy not accounted for by elicitation.",
+      "pdf_page": "https://arxiv.org/pdf/2502.04313v2#page=48"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "12 weak-supervisor/strong-student model pairs, plus the strong student finetuned on ground truth",
+    "task_data": "15 tasks, aggregated",
+    "judge": null,
+    "regime": "training",
+    "scale": "15 tasks by 12 model pairs"
+   },
+   "quantitative": {
+    "n": "15 tasks by 12 model pairs (aggregate)",
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [],
+    "notes": "About 12% test accuracy occurs where both the supervisor and the elicited model were wrong, which the authors say could largely be chance (about 11% of predictions flip when finetuning on a different random training subset); no uncertainty is given for the 71.9% and 42.2% averages."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "Averages over 15 tasks and 12 model pairs are reported without any test, interval or standard error for the quadrant accuracies."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2502.04313v2:RES-W2S-CEILING",
+   "paper": "2502.04313v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [],
+    "description": "Accuracies are averaged over 15 datasets and 12 model pairs (180 training runs) and reported as gaps to the strong student's initial accuracy; the new ceiling counts a sample as correct when either the weak supervisor or the strong elicited model is correct (the union of their correct predictions).",
+    "passages": [
+     {
+      "version": "2502.04313v2",
+      "page": 7,
+      "lines": [
+       2,
+       10
+      ],
+      "text": "Table 3. Accuracy gains possible from weak-to-strong training.\nWe average accuracies across 15 datasets and 12 model pairs (180\ntraining runs) and report gaps to the student model’s initial accuracy. Complementary knowledge transfer can enable higher gains\nthan the previously considered ceiling estimate from elicitation.\n\nModel\nInitial Strong Student\nWeak Supervisor\nWeak to Strong Trained Student",
+      "pdf_page": "https://arxiv.org/pdf/2502.04313v2#page=7"
+     },
+     {
+      "version": "2502.04313v2",
+      "page": 7,
+      "lines": [
+       42,
+       53
+      ],
+      "text": "Q3. Where can weak-to-strong training improve? The\nstrong elicited model is considered to represent upper-bound\nperformance. However, recent work has shown that the performance of the strong elicited model can be surpassed (Shi\net al., 2025), indicating it is not really an “upper-bound”.\nIndeed, the strong elicited model’s performance does not\naccount for potential gains from leveraging the complementary knowledge of the weak supervisor. We compute a new\nceiling, taking the union of correct predictions between the\nweak supervisor and strong elicited model, which is significantly higher as shown in Table 3. Interestingly, on the\ntraining set, the weak-to-strong trained model shows similar accuracy on the top-left and bottom-right quadrants as\nshown in Figure 15. Yet, when generalizing to unseen samples, it falls back more often to its initial priors. We hope this\nanalysis guides future work on improving weak-to-strong\ntraining methodology, by highlighting leveraging complementary knowledge as a concrete avenue for improvement.",
+      "pdf_page": "https://arxiv.org/pdf/2502.04313v2#page=7"
+     },
+     {
+      "version": "2502.04313v2",
+      "page": 48,
+      "lines": [
+       122,
+       125
+      ],
+      "text": "In Figure 17 we report average across the 12 model pairs for all 15 datasets. Consistently, the ordering is as follows: the\ninitial strong student has lower accuracy than the weak supervisor, but surpasses it after weak-to-strong training. However,\nit is not able to match the performance ceiling of ground-truth elicitation. Finally, if the take a union over the correct\npredictions of the weak supervisor and strong elicited model, the performance ceiling can be even higher.",
+      "pdf_page": "https://arxiv.org/pdf/2502.04313v2#page=48"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "The previous ceiling is ground-truth elicitation (the strong elicited model).",
+     "The new ceiling is the union of correct predictions of the weak supervisor and the strong elicited model; the passages present it as a ceiling estimate, not as the accuracy of any trained model."
+    ],
+    "passages": []
+   },
+   "setting": {
+    "systems": "12 weak-supervisor/strong-student model pairs and the strong elicited models (ground-truth elicitation)",
+    "task_data": "15 datasets",
+    "judge": null,
+    "regime": "training",
+    "scale": "180 training runs (15 datasets by 12 model pairs)"
+   },
+   "quantitative": {
+    "n": "180 training runs (15 datasets by 12 model pairs)",
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [],
+    "notes": "Table 3 lists the initial strong student at 75.1% with gaps of +4.1 (weak supervisor) and +7.4 (weak-to-strong trained student); the trained student does not reach the ground-truth elicitation ceiling, and on unseen samples it 'falls back more often to its initial priors'. 'Significantly higher' is stated without a statistic."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "Averages over 15 datasets and 12 model pairs are reported with no test, interval or standard error."
+   },
+   "review_status": "provisional_ai_draft",
+   "check_history": [
+    "card-1: flagged or undecided by two blind checks; rewritten from the checkers' suggested fix (quotes unchanged)"
+   ]
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2502.04313v2:RES-CORRELATED-ERRORS",
+   "paper": "2502.04313v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2502.04313v2:DEF-CAPA"
+    ],
+    "description": "Using sample-wise MMLU-Pro and BBH evaluations of 130 OpenLLM Leaderboard 2 models, models are bucketed into five accuracy-percentile ranges, each model's mean CAPA with same-bucket models from different developers is computed, and this similarity is plotted against accuracy (Figure 6).",
+    "passages": [
+     {
+      "version": "2502.04313v2",
+      "page": 8,
+      "lines": [
+       21,
+       30
+      ],
+      "text": "We collect sample-wise evaluation files for 130 official models from the OpenLLM Leaderboard 2 released by HuggingFace, listed in Appendix D.5. We use MMLU-Pro (Wang\net al., 2024) and Big Bench Hard (BBH) (Suzgun et al.,\n2023) as they measure a broad range of capabilities using\nMCQ, and frontier models have reasonable accuracies while\nnot saturating these datasets. We first bucket these models into five performance percentile ranges. Then, for each\nmodel, we compute its mean similarity (κp ) with models in\nthe same bucket from different developers, to prevent confounding from distillation or continual training. More setup\ndetails are provided in Appendix D.1. In Appendix D.3 we\nalso report pairwise results, and using the extension of κp\nfor sets of M > 2 models.",
+      "pdf_page": "https://arxiv.org/pdf/2502.04313v2#page=8"
+     },
+     {
+      "version": "2502.04313v2",
+      "page": 7,
+      "lines": [
+       24,
+       29
+      ],
+      "text": "Figure 6. Average Similarity (κp ) vs Model Capability. We split\n130 LMs into 5 buckets based on their accuracy percentile. For\neach LM we compute its mean similarity within the bucket (across\nmodels from different developers), and plot it against model accuracy. The size of the scatter points indicates model size. As κp\nmeasures overlap in mistakes, the positive correlation indicates LM\nmistakes are getting more correlated with increasing capabilities.",
+      "pdf_page": "https://arxiv.org/pdf/2502.04313v2#page=7"
+     },
+     {
+      "version": "2502.04313v2",
+      "page": 54,
+      "lines": [
+       65,
+       70
+      ],
+      "text": "The scatter plot in Fig 6 shows the increasing similarity trend after aggregating across the subjects (MMLU pro) and tasks\n(BBH). Fig 22 and Fig 23 show the observed trend within each individual subject and task for MMLU Pro and BBH\nrespectively.\nIn the MMLU Pro dataset, the trend of increasing average similarity within each bin as model capability improves is\nconsistently observed across all individual subjects. For the BBH tasks, while the trend is not as pronounced in some tasks,\nit remains significant in the majority of them. This weaker trend in certain BBH tasks can be attributed to the limited number",
+      "pdf_page": "https://arxiv.org/pdf/2502.04313v2#page=54"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "Similarity is averaged only over models from different developers in the same bucket, to avoid confounding from distillation or continual training.",
+     "The authors' preliminary analysis finds only a slight increase in similarity on harder questions, which they read as difficulty not being a significant confounder."
+    ],
+    "passages": [
+     {
+      "version": "2502.04313v2",
+      "page": 8,
+      "lines": [
+       63,
+       70
+      ],
+      "text": "Q2. Why are model errors becoming more correlated?\nThis is an interesting research direction in itself. We perform\na preliminary analysis in Appendix D.2, summarizing key\nconclusions here. First, we observe only a slight increase\nin similarity for harder questions in our datasets, indicating difficulty is not a significant confounder for this trend.\nWe find this trend is stronger in instruction-tuned models,\nand using alternative architectures like Mamba (Gu & Dao,\n2024) may not be enough to increase diversity.",
+      "pdf_page": "https://arxiv.org/pdf/2502.04313v2#page=8"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "130 official models from the OpenLLM Leaderboard 2",
+    "task_data": "MMLU-Pro and Big Bench Hard (BBH) multiple-choice evaluations",
+    "judge": null,
+    "regime": "evaluation",
+    "scale": "130 models in five accuracy buckets"
+   },
+   "quantitative": {
+    "n": "130 models",
+    "uncertainty": "None stated for the Figure 6 correlation; the appendix says the per-task BBH trend remains significant in most tasks without giving a statistic"
+   },
+   "limits": {
+    "record_ids": [],
+    "notes": "The trend is less pronounced in some BBH tasks; the authors' analysis of why errors converge is described as preliminary."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "Two datasets are used, but no test statistic, confidence interval or standard error is given for the Figure 6 correlation, and the appendix's per-task 'significant' carries no reported statistic."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2502.04313v2:CLAIM-OVERSIGHT-RISK",
+   "paper": "2502.04313v2",
+   "evidence_type": "argument",
+   "method": {
+    "record_ids": [],
+    "description": "An argument that extrapolates the measured capability-similarity trend (Figure 6) and the earlier results on less biased judges and on gains from training on LM annotations to LM judges, inter-LM training and LM juries, stated conditionally ('If this trend continues, it could mean ...').",
+    "passages": [
+     {
+      "version": "2502.04313v2",
+      "page": 7,
+      "lines": [
+       81,
+       85
+      ],
+      "text": "The previous two sections highlighted two major advantages\nof having access to more diverse LMs: a) it leads to less\nbiased judges, b) it can drive more performance gains from\ntraining on LM annotations. This points to the importance\nof diversity, or lower model similarity, for AI oversight. As",
+      "pdf_page": "https://arxiv.org/pdf/2502.04313v2#page=7"
+     },
+     {
+      "version": "2502.04313v2",
+      "page": 8,
+      "lines": [
+       32,
+       34
+      ],
+      "text": "Q1. Are model errors becoming more correlated with\nimproving capabilities? Figure 6 shows a strong positive\ncorrelation between model capabilities and κp , which measures similarity beyond chance agreement due to accuracy.",
+      "pdf_page": "https://arxiv.org/pdf/2502.04313v2#page=8"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "The capability-similarity trend continues.",
+     "As model blind spots get harder to detect, people defer more to AI oversight."
+    ],
+    "passages": []
+   },
+   "setting": {
+    "systems": "LM judges, LMs trained on other LMs' annotations, and LM juries, as discussed",
+    "task_data": null,
+    "judge": null,
+    "regime": "theory",
+    "scale": null
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2502.04313v2:LIM-CAUSATION"
+    ],
+    "notes": "The implications are conditional on the trend continuing; the LM-jury implication is not studied in these passages."
+   },
+   "strength": {
+    "grade": "ARGUMENT_ONLY",
+    "reason": "The passage states possible consequences of an extrapolated trend ('could mean', 'could undermine') without an experiment or proof of those consequences."
+   },
+   "review_status": "provisional_ai_draft",
+   "check_history": [
+    "card-1: flagged or undecided by two blind checks; rewritten from the checkers' suggested fix (quotes unchanged)"
+   ]
+  }
+ ]
+}

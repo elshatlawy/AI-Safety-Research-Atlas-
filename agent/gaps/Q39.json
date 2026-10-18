@@ -1,0 +1,218 @@
+{
+ "schema": "ASRA-GAP-CLOSING-AGENT-v1",
+ "id": "Q39",
+ "question": "How can model similarity be measured on free-text answers and reasoning, to study its role in debate and process supervision?",
+ "asked_by": "Goel et al., Great Models Think Alike and this Undermines AI Oversight",
+ "rank": 15,
+ "status": "PARTLY_ANSWERED_BY_LATER_WORK",
+ "status_check": "AI_CHECKED",
+ "remaining_question": "Does a free-text similarity measure between models (for example residualised compression distance on outputs, the judge's likelihood of a response, or a CAPA-style agreement computed on answer-matched free-form answers) predict how often a weaker judge sides with a similar debater in judged debate with ground-truth labels, and how often a process reward model misses step errors made by a similar policy?",
+ "remaining_type": "EMPIRICAL",
+ "safety_case": [
+  {
+   "node": "SC-C5.2",
+   "relation": "INDIRECT",
+   "reason": "An answer would show whether a model judge's similarity to a debater predicts it siding with that debater, a possible systematic error of a model judge relevant to C5.2's bound on the simulated judge, though C5.2's named failure mode is scheming and the question's judges are LLMs, not simulations of human judgement.",
+   "node_evidence": "WEAK",
+   "branch": "the equilibrium is correct (debate structure and judges)",
+   "score": 1.0
+  }
+ ],
+ "findings": [
+  {
+   "id": "Q39:F1",
+   "later_paper": "arXiv 2609.03422v1: Inferred Generative-Process Diversity Predicts Correlated Failure Across Language Models",
+   "first_submitted": "2026-09-03",
+   "effect": "PARTLY_ANSWERS",
+   "claim": "Across 38 language models, a model-pair distance computed on raw free-text responses to open-ended prompts (Normalised Compression Distance residualised against a permutation control) is reported to predict cross-task variation in chance-corrected correlated wrong answers on ten disjoint closed-form benchmark families beyond semantic similarity and capability (cross-benchmark partial rank association -0.216, 95% interval [-0.309, -0.122]). The authors call the evidence pairwise and observational and leave ensemble or multi-agent benefits to future work.",
+   "setting": "Empirical, observational. 38 LMs; the distance is estimated from repeated responses to 100 open-ended Infinity-Chat prompts (model input-output behaviour only, no agent scaffolding); the outcome is chance-corrected correlated wrong-answer agreement on ten closed-form benchmark families; controls for semantic distance and pair capability. No debate, judge, or process-supervision experiment.",
+   "bears_on": "The 'how can similarity be measured on free-text answers' half: a free-text, black-box model-pair similarity validated against correlated failure. It does not measure reasoning traces and does not study a role in debate or process supervision.",
+   "passages": [
+    {
+     "version": "2609.03422v1",
+     "page": 1,
+     "lines": [
+      25,
+      35
+     ],
+     "text": "Drawing from Algorithmic Information Theory, we use Normalised Compression\nDistance between raw model outputs, residualised against a permutation control,\nas a measure of inferred generative-process diversity. Across 38 language models,\nthis measure identifies population structure missed by semantic similarity and\npredicts cross-task variation in chance-corrected correlated failure among model\npairs across ten disjoint benchmark families, beyond semantic similarity and modelpair capability. The cross-benchmark partial rank association is −0.216 with a 95%\ninterval of [−0.309, −0.122], and the estimate is negative on all ten benchmarks.\nThese results indicate that increased generative-process diversity is associated\nwith reduced correlated failure in model pairs that is not attributable to semantic\nsimilarity or capability. Inferred generative-process diversity offers a novel and\npractical approach for investigating diversity of multi-model systems in safetyrelevant contexts.",
+     "pdf_page": "https://arxiv.org/pdf/2609.03422v1#page=1"
+    },
+    {
+     "version": "2609.03422v1",
+     "page": 2,
+     "lines": [
+      35,
+      41
+     ],
+     "text": "more complex agent configurations. Diversity is estimated from repeated responses by 38 language\nmodels to 100 open-ended prompts from the Infinity-Chat taxonomy [11]. We then test whether\nthis independently derived population geometry predicts cross-task variation in correlated wrong\nanswers among pairs in the same model population on ten disjoint closed-form benchmark families,\ncontrolling for semantic similarity and capability. The design tests whether process-level variation\ninferred from observable model behaviour identifies model pairs whose failures are more independent\non different tasks, beyond a correlation between compression and embedding distances.",
+     "pdf_page": "https://arxiv.org/pdf/2609.03422v1#page=2"
+    },
+    {
+     "version": "2609.03422v1",
+     "page": 9,
+     "lines": [
+      31,
+      38
+     ],
+     "text": "These results provide a black-box audit of effective redundancy without access to weights, activations,\narchitecture, or training data. We demonstrate the method first at the model layer, measuring\ndiversity in the input–output behaviour of the language models that drive agents once embedded\nin agentic harnesses. Harnesses introduce memory, tools, environmental feedback, and inter-agent\ncommunication that may amplify or suppress this diversity. Extending the measure to action–\nobservation and tool-use traces is therefore an important next test. The evidence remains pairwise and\nobservational, and whether selecting distant models improves ensemble performance or multi-agent\nresilience is left to future work. PPMd is well suited to sequential byte data and has precedent",
+     "pdf_page": "https://arxiv.org/pdf/2609.03422v1#page=9"
+    }
+   ]
+  },
+  {
+   "id": "Q39:F2",
+   "later_paper": "arXiv 2609.17857v1: Who Judges Matters: Measuring Family-Conditioned Preference in LLM-as-Judge Panels",
+   "first_submitted": "2026-09-15",
+   "effect": "NARROWS",
+   "claim": "In a fully crossed pairwise LLM-as-judge design with 9,312 judgments, the authors report that a common per-family statistic is strongly confounded with candidate quality (r = 0.95 with Bradley-Terry ability); under a corrected estimator that holds the candidate family fixed and compares judges, all four families show a positive same-family lift (3.4-8.4 percentage points; global FPS 0.067). Style similarity from all-mpnet-base-v2 embedding cosine is not predictive (p = 0.91), whereas same-family responses have a higher judge-side mean per-token log-probability (-0.69 vs -1.38 for cross-family), and adding this likelihood advantage reduces the controlled coefficient by 61%, which the authors treat as descriptive attenuation rather than causal mediation.",
+   "setting": "Empirical, evaluation only. Four LLM families as judges and candidates in a fully crossed pairwise LLM-as-judge design with 9,312 judgments (the quoted lines name Qwen 2.5, Gemma 2 and Yi 1.5); corrected estimator holding the candidate family fixed; all-mpnet-base-v2 embedding-cosine style control; judge-side per-token log-probability. No debate, no process supervision.",
+   "bears_on": "Which free-text similarity signals track judge favouritism: judge-side likelihood of the response does, a sentence-embedding cosine does not. Shown for LLM-as-judge evaluation of free-text answers, not for debate or process supervision.",
+   "passages": [
+    {
+     "version": "2609.17857v1",
+     "page": 1,
+     "lines": [
+      35,
+      46
+     ],
+     "text": "Qwen 2.5, Gemma 2, and Yi 1.5) in a fully\ncrossed pairwise design with 9,312 judgments.\nA common per-family statistic is strongly confounded with candidate quality and correlates\nwith Bradley–Terry ability at r = 0.95. We\nderive a corrected estimator that holds the candidate family fixed and compares judges. All\nfour families then show a positive same-family\nlift (3.4–8.4 percentage points), with global\nFPS 0.067 (95% CI [0.053, 0.084], permutation\np = 0.0002). The effect remains under panelbased quality controls, an independent humanconsensus anchor, and a float16 judging replication. Judge-side likelihood is closely related\nto the effect: adding likelihood advantage reduces the controlled coefficient by 61%, which\nwe treat as descriptive attenuation rather than\ncausal mediation. Position is a separate failure",
+     "pdf_page": "https://arxiv.org/pdf/2609.17857v1#page=1"
+    },
+    {
+     "version": "2609.17857v1",
+     "page": 6,
+     "lines": [
+      1,
+      4
+     ],
+     "text": "M2 coefficient is 0.271. Style similarity from allmpnet-base-v2 embedding cosine is not predictive\n(p = 0.91). This measure captures broad semantic and stylistic similarity, not individual surface\nfeatures such as markdown structure, list use, or\nhedging.",
+     "pdf_page": "https://arxiv.org/pdf/2609.17857v1#page=6"
+    },
+    {
+     "version": "2609.17857v1",
+     "page": 6,
+     "lines": [
+      105,
+      110
+     ],
+     "text": "Same-family text is more predictable to the\njudge. Same-family responses have a judgeside mean per-token log-probability of −0.69,\ncompared with −1.38 for cross-family responses.\nThe 0.69 natural-log-unit difference is roughly a\ntwofold ratio in geometric-mean token probability. Family overlap is therefore strongly associated\nwith a directly observed familiarity measure.",
+     "pdf_page": "https://arxiv.org/pdf/2609.17857v1#page=6"
+    }
+   ]
+  },
+  {
+   "id": "Q39:F3",
+   "later_paper": "arXiv 2603.05293v1: Knowledge Divergence and the Value of Debate for Scalable Oversight",
+   "first_submitted": "2026-03-05",
+   "effect": "RELATED_ONLY",
+   "claim": "Under the paper's assumptions, the debate advantage has an exact closed form governed by principal angles between the debating models' representation subspaces: with identical training corpora debate reduces to an RLAIF-like setting where a single-agent method recovers the same optimum, and same-weight self-play debate is the degenerate zero-angle case with no advantage. The author offers this as a theoretical explanation of Goel et al.'s finding and states that the knowledge-divergent regime where debate has practical bite is not studied empirically.",
+   "setting": "Theory: proofs parameterizing debate's value by principal angles between the debating models' representation subspaces (closed form, regimes, existence and negative results); the passages report no experiments. Similarity here is the principal-angle spectrum between representation subspaces, not a metric computed on free text.",
+   "bears_on": "The role of similarity in debate (prediction: debate's value vanishes as models converge); offers no practical free-text similarity metric and no test of the prediction.",
+   "passages": [
+    {
+     "version": "2603.05293v1",
+     "page": 1,
+     "lines": [
+      43,
+      54
+     ],
+     "text": "AI safety via debate and reinforcement learning from AI feedback (RLAIF) are both proposed methods for scalable oversight of advanced AI systems, yet no formal framework\nrelates them or characterizes when debate offers an advantage. We analyze this by parameterizing debate’s value through the geometry of knowledge divergence between debating\nmodels. Using principal angles between models’ representation subspaces, we prove that\nthe debate advantage admits an exact closed\nform. When models share identical training\ncorpora, debate reduces to RLAIF-like where\na single-agent method recovers the same optimum. When models possess divergent knowledge, debate advantage scales with a phase\ntransition from quadratic regime (debate offers\nnegligible benefit) to linear regime (debate is\nessential). We classify three regimes of knowledge divergence (shared, one-sided, and compositional) and provide existence results showing that debate can achieve outcomes inaccessible to either model alone, alongside a negative\nresult showing that sufficiently strong adversarial incentives cause coordination failure in\nthe compositional regime, with a sharp threshold separating effective from ineffective debate.",
+     "pdf_page": "https://arxiv.org/pdf/2603.05293v1#page=1"
+    },
+    {
+     "version": "2603.05293v1",
+     "page": 8,
+     "lines": [
+      30,
+      39
+     ],
+     "text": "Irving et al. (2018) notes that “symmetry between the agents’ capabilities is easy to achieve,\nsince we can use the same weights for both agents\nvia self play.” Our work reveals this as a feature\nthat eliminates debate’s advantage because sameweight debate corresponds to θi = 0 whcih is the\ndegenerate case. The complexity-theoretic results\non debate (Brown-Cohen et al., 2024, 2025, 2026)\nestablish what debate can solve in principle, but\nour framework shows these results have practical\nbite only in the knowledge-divergent regime that\nno current work studies empirically.",
+     "pdf_page": "https://arxiv.org/pdf/2603.05293v1#page=8"
+    },
+    {
+     "version": "2603.05293v1",
+     "page": 8,
+     "lines": [
+      60,
+      67
+     ],
+     "text": "Goel et al. (2025) empirically demonstrate that\nas frontier models become more capable, their errors become more correlated, and that diversity\nbetween models improves oversight quality. Our\nframework provides a theoretical explanation as\nmodels converge on the same training data and\nrepresentations, principal angles shrink and the debate advantage vanishes. The empirical benefits of\nmodel diversity in oversight are consistent with the\ntan(θ/2) scaling.",
+     "pdf_page": "https://arxiv.org/pdf/2603.05293v1#page=8"
+    }
+   ]
+  },
+  {
+   "id": "Q39:F4",
+   "later_paper": "arXiv 2606.20632v2: Post-Training Recipe, More Than Model Family, Shapes Multi-Agent LLM Conversational Behavior",
+   "first_submitted": "2026-05-30",
+   "effect": "NARROWS",
+   "claim": "The authors compute mean pairwise Jensen-Shannon divergence over the distribution of scored conversational moves (challenge, repair, hedging) in multi-LLM conversations and report 0.034 for a family-diverse three-model panel versus 0.251 for a recipe-diverse same-base Llama panel. They call panel-JSD a cue-diversity diagnostic and a precondition for diversity-driven debate gains, not a validated measure, and state that whether it predicts debate accuracy remains open.",
+   "setting": "Empirical. Multi-LLM conversations scored for T1 surface cues (challenge, repair, hedging), with challenge and repair exploratory; mean pairwise JSD for matched k = 3 panels: family-diverse {Llama3.1-8B-Instruct, Qwen-2.5-7B-Instruct, Gemma-2-9B-IT} vs recipe-diverse same-base Llama {Llama-3.1-8B-Instruct, Tülu-3-8B-DPO, DeepSeek-R1-Distill-Llama-8B}. No debate accuracy or judging outcome measured.",
+   "bears_on": "Offers a free-text behavioural (dis)similarity measure for composing debate panels and explicitly leaves its relation to debate outcomes open; multi-agent debate rather than judged oversight debate.",
+   "passages": [
+    {
+     "version": "2606.20632v2",
+     "page": 8,
+     "lines": [
+      73,
+      79
+     ],
+     "text": "Debate-based reasoning improvements (Du et al.,\n2024; Liang et al., 2024) rely on panel members\ncontributing genuinely different perspectives. If\nfamily-diverse panels are close on surface conversational cues (JSD = 0.034), they may provide less\nheterogeneity than their labels suggest. Panel-JSD\nis a diagnostic precondition for diversity-driven debate gains, not a sufficient demonstration; whether\nit predicts debate accuracy remains open.",
+     "pdf_page": "https://arxiv.org/pdf/2606.20632v2#page=8"
+    },
+    {
+     "version": "2606.20632v2",
+     "page": 8,
+     "lines": [
+      83,
+      89
+     ],
+     "text": "We compute mean pairwise Jensen-Shannon divergence (JSD) over the joint {challenge, repair,\nhedging} T1 surface-cue distribution for matched\nk = 3 panels. Because challenge and repair\nare exploratory, JSD is a cue-diversity diagnostic rather than a validated measure of downstream\npanel quality. The family-diverse panel {Llama3.1-8B-Instruct, Qwen-2.5-7B-Instruct, Gemma-29B-IT} achieves mean pairwise JSD 0.034, while\nthe recipe-diverse Llama panel {Llama-3.1-8BInstruct, Tülu-3-8B-DPO, DeepSeek-R1-DistillLlama-8B} reaches 0.251, a 7.5× ratio consistent\nwith the same-base paired contrasts.",
+     "pdf_page": "https://arxiv.org/pdf/2606.20632v2#page=8"
+    }
+   ]
+  },
+  {
+   "id": "Q39:F5",
+   "later_paper": "arXiv 2604.03809v1: Representational Collapse in Multi-Agent LLM Committees: Measurement and Diversity-Aware Consensus",
+   "first_submitted": "2026-04-04",
+   "effect": "NARROWS",
+   "claim": "Embedding each agent's chain-of-thought rationale with a text encoder, the paper reports mean pairwise cosine similarity 0.888 (effective rank 2.17 of 3.0) for three Qwen2.5-14B agents under different role prompts on 100 GSM8K questions, and finds that the encoder choice (0.908 with mxbai versus 0.888 with nomic) changes whether its diversity-weighted protocol improves over baselines. It calls the choice of embedding proxy 'a first-order design decision' and presents the accuracy results as preliminary observations.",
+   "setting": "Empirical, small scale. Same-model, role-prompted agents (three Qwen2.5-14B agents), 100 GSM8K questions; majority vote, self-consistency or diversity-weighted consensus (DALC); chain-of-thought rationales embedded with two encoders (nomic-embed-text, mxbai-embed-large). No judged debate, no oversight, no process supervision; similarity within one model, not across models.",
+   "bears_on": "One way to measure similarity of free-text reasoning traces and its sensitivity to the embedding proxy; within one model, not across models, and not tied to oversight.",
+   "passages": [
+    {
+     "version": "2604.03809v1",
+     "page": 1,
+     "lines": [
+      12,
+      22
+     ],
+     "text": "Multi-agent LLM committees replicate the same model under different role prompts and\naggregate outputs by majority vote, implicitly assuming that agents contribute complementary\nevidence. We embed each agent’s chain-of-thought rationale and measure pairwise similarity:\nacross 100 GSM8K questions with three Qwen2.5-14B agents, mean cosine similarity is 0.888\nand effective rank is 2.17 out of 3.0, a failure mode we term representational collapse. DALC,\na training-free consensus protocol that computes diversity weights from embedding geometry,\nreaches 87% on GSM8K versus 84% for self-consistency at 26% lower token cost. Ablation\nexperiments reveal 1–3 point per-protocol run-to-run variance, confirm that hint sharing contributes more than diversity weighting alone, and show that encoder choice strongly modulates\ncollapse severity (cosine 0.908 with mxbai versus 0.888 with nomic) and downstream accuracy.\nThe more robust finding is that collapse is measurable, worsens on harder tasks, and that the\nchoice of embedding proxy is a first-order design decision for any latent communication protocol.",
+     "pdf_page": "https://arxiv.org/pdf/2604.03809v1#page=1"
+    },
+    {
+     "version": "2604.03809v1",
+     "page": 9,
+     "lines": [
+      33,
+      40
+     ],
+     "text": "The accuracy differences between protocols (1–5 points at n=100) fall within the 1–3 point perprotocol run-to-run variance we measure in the replication ablation. We present these as preliminary observations to motivate the diagnostic, not as established results. The no-hints ablation\n(Section 3.2) partially addresses a gap in the original version of this work, but a fully factorial\ndesign (hints × weighting × projection) would provide cleaner decomposition.\nThe encoder ablation demonstrates that collapse measurements depend on the embedding model.\nTwo encoders tested (nomic-embed-text, mxbai-embed-large) show qualitatively similar collapse but\ndiffer enough in severity (cosine 0.888 vs. 0.908) to change whether DALC improves over baselines.\nExtending to additional encoder families (E5, GTE, SimCSE) and to hidden-state probes using\nCKA or SVCCA on open-weight models would clarify how much the proxy drives the results.",
+     "pdf_page": "https://arxiv.org/pdf/2604.03809v1#page=9"
+    }
+   ]
+  }
+ ],
+ "findings_drafted": 5,
+ "maths": [],
+ "experiment_package": null,
+ "review_status": "provisional_ai_draft",
+ "rules": [
+  "Everything here is an AI draft (provisional_ai_draft): each counted item passed two blind AI checks that were tested on planted errors, and no person has reviewed it.",
+  "A finding counts only in the setting its own quoted lines show; read `setting` before carrying it to another setting.",
+  "A question's status is a label from fixed rules over its counted findings; `status_check` says whether that label itself passed its check.",
+  "Cite the paper and page from the passage, and read the PDF page before relying on a claim."
+ ]
+}

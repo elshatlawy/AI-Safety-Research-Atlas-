@@ -1,0 +1,548 @@
+{
+ "schema": "ASRA-GAP-CLOSING-AGENT-v1",
+ "paper": "2109.10862v2",
+ "review_status": "provisional_ai_draft",
+ "rules": [
+  "Everything here is an AI draft (provisional_ai_draft): each counted item passed two blind AI checks that were tested on planted errors, and no person has reviewed it.",
+  "A finding counts only in the setting its own quoted lines show; read `setting` before carrying it to another setting.",
+  "A question's status is a label from fixed rules over its counted findings; `status_check` says whether that label itself passed its check.",
+  "Cite the paper and page from the passage, and read the PDF page before relying on a claim."
+ ],
+ "notes": "RES-COST-50X: the over-50x figure is an estimate from labeler timing (Appendix E.2), not a run of a non-recursive baseline; it is graded EMPIRICAL_SINGLE_SETTING as measured timing data, though it could be read as ARGUMENT_ONLY. RES-BOOKSUM: 'significantly outperform' is not tied to a test or uncertainty anywhere in the passages. CORE's quote is cut mid-sentence ('We achieve state-of-the-art results on the recent'), so its BookSum part is not shown by the quote. RES-LABEL-EFFICIENCY: the passages do not say how 'performance' on the first leaves is measured, so its judge is null. No assumption records exist for this paper; the decomposition-independence assumption is carried by LIM-DECOMP-INDEPENDENCE.",
+ "cards": [
+  {
+   "record_id": "N2:DSOFT:ARXIV-2109.10862v2:CORE",
+   "paper": "2109.10862v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2109.10862v2:DEF-TASK-DECOMPOSITION",
+     "N2:DSOFT:ARXIV-2109.10862v2:METHOD-FIXED-TREE",
+     "N2:DSOFT:ARXIV-2109.10862v2:METHOD-LOCAL-EVALUATION"
+    ],
+    "description": "Books are split by a fixed algorithm into a tree of summarization tasks; GPT-3 models are fine-tuned by behavioural cloning on labeler demonstrations and by RL against a reward model trained on labeler comparisons, with labelers judging each subtask only against its direct input; full-book summaries are then rated by labelers on 40 books unseen in training.",
+    "passages": [
+     {
+      "version": "2109.10862v2",
+      "page": 5,
+      "lines": [
+       10,
+       17
+      ],
+      "text": "For training the model, we most closely follow the procedure of Stiennon et al. (2020). We start\nwith a pretrained language model and a pool of trained human labelers (see Appendix B for details).\nWe collect demonstrations from labelers and train a model via behavioral cloning. We then repeat\nmany iterations of reward learning and reinforcement learning. To learn the reward function, we\ncollect comparisons from labelers on outputs from the current best policy and train a reward model to\npredict log odds that a response is better. Reinforcement learning directly optimizes the reward with\nan additional KL term to prevent too much drift from the initial policy, typically our best supervised\npolicy. More details in Appendix D.",
+      "pdf_page": "https://arxiv.org/pdf/2109.10862v2#page=5"
+     },
+     {
+      "version": "2109.10862v2",
+      "page": 7,
+      "lines": [
+       56,
+       66
+      ],
+      "text": "We first evaluate our models’ ability to summarize full books that were unseen during pretraining or\nfine-tuning. To do this, we use the 40 most popular books published in 2020 according to Goodreads\nat the time we looked. The resulting books span a variety of genres (see Table 5).\nWe then assigned two labelers to read each book (purchased with reimbursement) and to write a\nsummary of the book. Finally, we ask the labelers to rate summaries from various models and from\nthe other labeler. Labeler agreement for relative quality of model-written summaries was nearly 80%.\nWe evaluate two model sizes, 175B parameters and 6B parameters. For each size, we also evaluate\nthree different modes of training: RL on the whole tree, RL on the first subtree, and BC on the\nwhole tree. For each policy, we generate 3 summaries each, in order to reduce error bars. Even for\ntemperature 0 policies, we can vary the summaries by changing the seed used to randomly choose\nchunking boundaries – we found this to produce significant variation in the summaries.",
+      "pdf_page": "https://arxiv.org/pdf/2109.10862v2#page=7"
+     },
+     {
+      "version": "2109.10862v2",
+      "page": 6,
+      "lines": [
+       24,
+       27
+      ],
+      "text": "We use pretrained transformer language models (Vaswani et al., 2017) from the GPT-3 family (Brown\net al., 2020), which take 2048 tokens of context. Input tokens are produced by the byte pair encoding\nintroduced in Radford et al. (2019). Other architecture and hyperparameters choices follow those of\nStiennon et al. (2020). More details in Appendix D.",
+      "pdf_page": "https://arxiv.org/pdf/2109.10862v2#page=6"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "Task decomposition assumes that separate parts of the task can be completed independently, which the authors say may not hold for books.",
+     "Each subtask summary is produced and judged only from its local input, not from the rest of the book.",
+     "Labelers rate summary quality conditioned on summary length."
+    ],
+    "passages": [
+     {
+      "version": "2109.10862v2",
+      "page": 7,
+      "lines": [
+       17,
+       19
+      ],
+      "text": "For training, we use a subset of the books used in GPT-3’s training data (Brown et al., 2020). The\nbooks are primarily fiction, and contain over 100K words on average. We further constrain our dataset\nby asking labelers to skip non-narrative books.",
+      "pdf_page": "https://arxiv.org/pdf/2109.10862v2#page=7"
+     },
+     {
+      "version": "2109.10862v2",
+      "page": 7,
+      "lines": [
+       29,
+       31
+      ],
+      "text": "We aim to summarize abstractively, tracing out narrative arcs and larger themes rather than listing\nseries of events. Our primary metric is labeler judgments of overall summary quality on a 1-7 Likert\nscale, on held-out books that were neither in the GPT-3 pretraining dataset nor in our book dataset.",
+      "pdf_page": "https://arxiv.org/pdf/2109.10862v2#page=7"
+     },
+     {
+      "version": "2109.10862v2",
+      "page": 8,
+      "lines": [
+       4,
+       8
+      ],
+      "text": "Figure 2: Results on full book evaluations, (a) as a function of model size (measured in billions of\nparameters), and (b) as a function of number of labels. Error bars are obtained by averaging ratings\nfor each book, then computing the standard error of the mean across books. At larger model sizes,\nour RL models significantly outperform our BC models (‘supervised on full tree’). Our models are\nstill far from human performance.",
+      "pdf_page": "https://arxiv.org/pdf/2109.10862v2#page=8"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "GPT-3-family pretrained transformers (2048-token context) fine-tuned at 175B and 6B parameters",
+    "task_data": "Abstractive summarization of entire books: training on a subset of primarily fiction books from GPT-3's training data; full-book evaluation on the 40 most popular books published in 2020 according to Goodreads",
+    "judge": "Trained human labelers (demonstrations, comparisons and 1-7 Likert ratings); for the full-book evaluation, two labelers who read each book",
+    "regime": "mixed",
+    "scale": "175B and 6B parameters; 40 evaluation books with 3 summaries per policy"
+   },
+   "quantitative": {
+    "n": "40 books in the full-book human evaluation (two labelers per book)",
+    "uncertainty": "Standard error of the mean across books (Figure 2 error bars)"
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2109.10862v2:LIM-DECOMP-INDEPENDENCE",
+     "N2:DSOFT:ARXIV-2109.10862v2:LIM-ERROR-COMPOUNDING"
+    ],
+    "notes": "The models are 'still far from human performance' (Figure 2); errors compound up the tree, and summaries made from local context alone can contain inaccurate statements."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "The full-book evaluation behind the claim is one task (40 books) with one model family (GPT-3 at 6B and 175B); standard errors are reported, but only in this single setting."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2109.10862v2:RES-COST-50X",
+   "paper": "2109.10862v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2109.10862v2:METHOD-FIXED-TREE"
+    ],
+    "description": "An estimate from labeler timing: reading a full book took a labeler over 12 hours on average plus over 1 hour to write the summary, over 50 times longer than a single decomposed summarization task; no non-recursive baseline was run.",
+    "passages": [
+     {
+      "version": "2109.10862v2",
+      "page": 26,
+      "lines": [
+       37,
+       40
+      ],
+      "text": "It took over 12 hours on average for a labeler to read a full book, and additionally over 1 hour to\nwrite the summary. This is over 50 times longer than it takes labelers to do a single decomposed\nsummarization task. Thus using the same amount of human time as Figure 2b (enough for 100K total\ndemonstrations and comparisons), we would have had summaries for at most 2K distinct books.",
+      "pdf_page": "https://arxiv.org/pdf/2109.10862v2#page=26"
+     },
+     {
+      "version": "2109.10862v2",
+      "page": 26,
+      "lines": [
+       44,
+       51
+      ],
+      "text": "Another consideration is that reading time can be amortized greatly by having contractors write\nmultiple summaries per book. In practice, we found it difficult to have contractors write multiple\ndistinct summaries. Nevertheless, this could plausibly save a substantial amount of time if executed\nwell.\nFurthermore, learning the book summarization task end-to-end would likely be much more difficult\nthan the decomposed tasks, as the model would need to learn attributions across an extremely long\ncontext. Overall, we believe an end-to-end baseline would likely have been infeasible with naive\nmethods, but leave it to future work to try.",
+      "pdf_page": "https://arxiv.org/pdf/2109.10862v2#page=26"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "The comparison is with a naive non-recursive approach in which generating or evaluating a book summary requires a human to read the entire book."
+    ],
+    "passages": []
+   },
+   "setting": {
+    "systems": "Human labelers; the recursive summarization model",
+    "task_data": "Book summarization: single decomposed summarization tasks versus whole-book summaries; books of hundreds of thousands of words summarized by recursing to depth 3",
+    "judge": null,
+    "regime": "training",
+    "scale": "Human time of Figure 2b (enough for 100K total demonstrations and comparisons), which under the naive approach would give summaries for at most 2K distinct books"
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [],
+    "notes": "Reading time could plausibly be amortized by having contractors write several summaries per book, though the authors found this difficult in practice; an end-to-end baseline was left to future work."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "The over-50x figure is a calculation from average labeler times measured in this one task, with no uncertainty, and the non-recursive alternative was not run."
+   },
+   "review_status": "provisional_ai_draft",
+   "check_history": [
+    "card-1: flagged or undecided by two blind checks; rewritten from the checkers' suggested fix (quotes unchanged)"
+   ]
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2109.10862v2:RES-FULL-BOOK-LIKERT",
+   "paper": "2109.10862v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2109.10862v2:METHOD-FIXED-TREE"
+    ],
+    "description": "Two labelers read each of 40 popular 2020 books unseen during pretraining or fine-tuning, wrote their own summary, and rated model summaries and the other labeler's summary; 175B and 6B models trained by RL on the full tree, RL on the first subtree or BC on the full tree generated 3 summaries per policy, and overall quality is rated on a 1-7 Likert scale.",
+    "passages": [
+     {
+      "version": "2109.10862v2",
+      "page": 7,
+      "lines": [
+       56,
+       66
+      ],
+      "text": "We first evaluate our models’ ability to summarize full books that were unseen during pretraining or\nfine-tuning. To do this, we use the 40 most popular books published in 2020 according to Goodreads\nat the time we looked. The resulting books span a variety of genres (see Table 5).\nWe then assigned two labelers to read each book (purchased with reimbursement) and to write a\nsummary of the book. Finally, we ask the labelers to rate summaries from various models and from\nthe other labeler. Labeler agreement for relative quality of model-written summaries was nearly 80%.\nWe evaluate two model sizes, 175B parameters and 6B parameters. For each size, we also evaluate\nthree different modes of training: RL on the whole tree, RL on the first subtree, and BC on the\nwhole tree. For each policy, we generate 3 summaries each, in order to reduce error bars. Even for\ntemperature 0 policies, we can vary the summaries by changing the seed used to randomly choose\nchunking boundaries – we found this to produce significant variation in the summaries.",
+      "pdf_page": "https://arxiv.org/pdf/2109.10862v2#page=7"
+     },
+     {
+      "version": "2109.10862v2",
+      "page": 7,
+      "lines": [
+       29,
+       31
+      ],
+      "text": "We aim to summarize abstractively, tracing out narrative arcs and larger themes rather than listing\nseries of events. Our primary metric is labeler judgments of overall summary quality on a 1-7 Likert\nscale, on held-out books that were neither in the GPT-3 pretraining dataset nor in our book dataset.",
+      "pdf_page": "https://arxiv.org/pdf/2109.10862v2#page=7"
+     },
+     {
+      "version": "2109.10862v2",
+      "page": 6,
+      "lines": [
+       24,
+       27
+      ],
+      "text": "We use pretrained transformer language models (Vaswani et al., 2017) from the GPT-3 family (Brown\net al., 2020), which take 2048 tokens of context. Input tokens are produced by the byte pair encoding\nintroduced in Radford et al. (2019). Other architecture and hyperparameters choices follow those of\nStiennon et al. (2020). More details in Appendix D.",
+      "pdf_page": "https://arxiv.org/pdf/2109.10862v2#page=6"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "The evaluation books were published in 2020 and were unseen during pretraining or fine-tuning."
+    ],
+    "passages": [
+     {
+      "version": "2109.10862v2",
+      "page": 8,
+      "lines": [
+       4,
+       8
+      ],
+      "text": "Figure 2: Results on full book evaluations, (a) as a function of model size (measured in billions of\nparameters), and (b) as a function of number of labels. Error bars are obtained by averaging ratings\nfor each book, then computing the standard error of the mean across books. At larger model sizes,\nour RL models significantly outperform our BC models (‘supervised on full tree’). Our models are\nstill far from human performance.",
+      "pdf_page": "https://arxiv.org/pdf/2109.10862v2#page=8"
+     },
+     {
+      "version": "2109.10862v2",
+      "page": 8,
+      "lines": [
+       34,
+       36
+      ],
+      "text": "Likert scores for the full book summaries were significantly lower than Likert scores of any of the\nindividual decomposed tasks. This is unsurprising, since the errors accumulated at each depth are all\nreflected in the full book summary score. See Appendix A.3 for more discussion.",
+      "pdf_page": "https://arxiv.org/pdf/2109.10862v2#page=8"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "GPT-3-family models at 175B and 6B (RL full tree, RL first subtree, BC full tree); human-written summaries for comparison",
+    "task_data": "Full-book summaries of the 40 most popular books published in 2020 according to Goodreads",
+    "judge": "The two labelers who read each book (agreement on relative quality of model summaries nearly 80%)",
+    "regime": "evaluation",
+    "scale": "175B and 6B parameters; 40 books"
+   },
+   "quantitative": {
+    "n": "40 books, two labelers per book, 3 summaries per policy",
+    "uncertainty": "Standard error of the mean across books (Figure 2); 'significantly worse' is not tied to a named test in these passages"
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2109.10862v2:LIM-ERROR-COMPOUNDING",
+     "N2:DSOFT:ARXIV-2109.10862v2:LIM-DECOMP-INDEPENDENCE"
+    ],
+    "notes": "Full-book Likert scores were significantly lower than scores of the individual decomposed tasks, which the authors attribute to errors accumulated at each depth."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "One evaluation task (40 books) with one model family; standard errors are reported, but the result is not shown in more than one task, dataset or model family."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2109.10862v2:RES-RL-VS-BC-SUBTREE",
+   "paper": "2109.10862v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2109.10862v2:METHOD-FIXED-TREE"
+    ],
+    "description": "In the 40-book full-book evaluation, 175B and 6B policies trained by RL on the full tree, RL on the first subtree (the first height-1 task and its height-0 children) and BC on the full tree are rated by labelers who read each book, and compared by model size (Figure 2a) and number of labels (Figure 2b).",
+    "passages": [
+     {
+      "version": "2109.10862v2",
+      "page": 7,
+      "lines": [
+       56,
+       66
+      ],
+      "text": "We first evaluate our models’ ability to summarize full books that were unseen during pretraining or\nfine-tuning. To do this, we use the 40 most popular books published in 2020 according to Goodreads\nat the time we looked. The resulting books span a variety of genres (see Table 5).\nWe then assigned two labelers to read each book (purchased with reimbursement) and to write a\nsummary of the book. Finally, we ask the labelers to rate summaries from various models and from\nthe other labeler. Labeler agreement for relative quality of model-written summaries was nearly 80%.\nWe evaluate two model sizes, 175B parameters and 6B parameters. For each size, we also evaluate\nthree different modes of training: RL on the whole tree, RL on the first subtree, and BC on the\nwhole tree. For each policy, we generate 3 summaries each, in order to reduce error bars. Even for\ntemperature 0 policies, we can vary the summaries by changing the seed used to randomly choose\nchunking boundaries – we found this to produce significant variation in the summaries.",
+      "pdf_page": "https://arxiv.org/pdf/2109.10862v2#page=7"
+     },
+     {
+      "version": "2109.10862v2",
+      "page": 6,
+      "lines": [
+       8,
+       13
+      ],
+      "text": "• First subtree. The first subtree refers to the first height 1 task, and its height 0 child tasks\n(of which there are typically 10-13). See the yellow nodes in Figure 1 for an example. In\nSection 4.1, we find that by training on merely the first subtree, the model can generalize to\nthe entire tree.\n• First leaves. The first leaves refers to the height 0 tasks in the first subtree, i.e. those which\nare children of the first height 1 task.",
+      "pdf_page": "https://arxiv.org/pdf/2109.10862v2#page=6"
+     },
+     {
+      "version": "2109.10862v2",
+      "page": 8,
+      "lines": [
+       4,
+       8
+      ],
+      "text": "Figure 2: Results on full book evaluations, (a) as a function of model size (measured in billions of\nparameters), and (b) as a function of number of labels. Error bars are obtained by averaging ratings\nfor each book, then computing the standard error of the mean across books. At larger model sizes,\nour RL models significantly outperform our BC models (‘supervised on full tree’). Our models are\nstill far from human performance.",
+      "pdf_page": "https://arxiv.org/pdf/2109.10862v2#page=8"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "BC policies are scored at their best temperature (T=0.0, 0.3 or 0.6) on this test set, which the authors note may overstate BC quality.",
+     "The worse final 175B full-tree model is included for completeness; the rest of the paper uses the earlier, better model."
+    ],
+    "passages": [
+     {
+      "version": "2109.10862v2",
+      "page": 8,
+      "lines": [
+       10,
+       16
+      ],
+      "text": "We evaluated all BC policies at temperatures T=0.0, 0.3, and 0.6 on this test set. The results in\nFigures 2 and 3 use the best temperatures for these policies.7 This is because it was too expensive\nto ablate temperature on the full book summarization task on our validation set (though we we\nshow temperature sweeps on the validation set for leaf summarization tasks in Appendix D.2, these\ntemperatures are not a priori the best for full book summarization). In the end, we empirically found\nthat the best temperatures for the leaf task were also the best for full book summarization: T=0.6 was\nbest for our 6B BC baseline, and all temperatures performed about equally for our 175B BC baseline.",
+      "pdf_page": "https://arxiv.org/pdf/2109.10862v2#page=8"
+     },
+     {
+      "version": "2109.10862v2",
+      "page": 8,
+      "lines": [
+       39,
+       40
+      ],
+      "text": "While this may overstate quality of the BC policies, we consider the policies to be a baseline and did not\nwant to understate the quality.",
+      "pdf_page": "https://arxiv.org/pdf/2109.10862v2#page=8"
+     },
+     {
+      "version": "2109.10862v2",
+      "page": 8,
+      "lines": [
+       44,
+       46
+      ],
+      "text": "We had convincingly detected this prior to final evaluations via Likert scores for tree tasks, but included it\nfor completeness. The results in the remainder of the paper use the better (earlier) model, and we had committed\nto doing this before running final book evaluations.",
+      "pdf_page": "https://arxiv.org/pdf/2109.10862v2#page=8"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Policies at 175B and 6B parameters: RL on full tree, RL on first subtree, BC on full tree",
+    "task_data": "Full-book summaries of 40 popular 2020 books unseen in training",
+    "judge": "Labelers who read each book and rated the summaries",
+    "regime": "mixed",
+    "scale": "175B and 6B parameters; 40 books"
+   },
+   "quantitative": {
+    "n": "40 books",
+    "uncertainty": "Standard error of the mean across books (Figure 2 error bars)"
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2109.10862v2:LIM-ERROR-COMPOUNDING"
+    ],
+    "notes": "Training on the full tree did not improve performance and the final 175B full-tree model was noticeably worse; the RL advantage over BC is smaller at 6B."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "One evaluation (40 books) comparing training modes at two model sizes; standard errors are reported, but in a single task and dataset."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2109.10862v2:RES-BOOKSUM",
+   "paper": "2109.10862v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2109.10862v2:METHOD-FIXED-TREE"
+    ],
+    "description": "Concatenated depth-1 summaries from the recursive models are scored with ROUGE and BERTScore on the BookSum full-book test set and compared with baseline scores reported by Kryściński et al. (2021) for BertExt, T5 and an extractive oracle.",
+    "passages": [
+     {
+      "version": "2109.10862v2",
+      "page": 10,
+      "lines": [
+       42,
+       43
+      ],
+      "text": "Table 2: Results on the test set of full book version of the BookSum dataset. Baselines (top two\nsections) are from Kryściński et al. (2021). Our 175 RL models significantly outperform the nonoracle baselines.",
+      "pdf_page": "https://arxiv.org/pdf/2109.10862v2#page=10"
+     },
+     {
+      "version": "2109.10862v2",
+      "page": 30,
+      "lines": [
+       1,
+       1
+      ],
+      "text": "Figure 8: Scatter plot of BERTScore vs length, for all 46 books in the BookSum test set.",
+      "pdf_page": "https://arxiv.org/pdf/2109.10862v2#page=30"
+     },
+     {
+      "version": "2109.10862v2",
+      "page": 9,
+      "lines": [
+       19,
+       23
+      ],
+      "text": "Kryściński et al. (2021) report length being a confounder for BERTScore, with longer summaries\nhaving lower scores. We also find a slight negative correlation between length and BERTScore, but\ncontrolling for it does not significantly affect our conclusions (see Appendix I).\nNote that we cannot rule out overlap of the BookSum dataset with our pretraining dataset. Nevertheless, from manual inspection of the trees, we believe that the summarization procedure largely\nreflects the structure of the book, rather than being a result of memorization from pretraining.",
+      "pdf_page": "https://arxiv.org/pdf/2109.10862v2#page=9"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "Depth-0 summaries are much shorter than the reference summaries, so the concatenation of depth-1 summaries is evaluated.",
+     "SummaQA is not reported because it needs paragraph-aligned summaries.",
+     "Baseline numbers are taken from Kryściński et al. (2021)."
+    ],
+    "passages": [
+     {
+      "version": "2109.10862v2",
+      "page": 9,
+      "lines": [
+       12,
+       14
+      ],
+      "text": "and SummaQA (Scialom et al., 2019). SummaQA requires paragraph-aligned summaries, which\nwe do not have, and so we report results on ROUGE and BERTScore. Our depth 0 summaries are\nsubstantially shorter than the reference summaries, so we use the concatenation of depth 1 summaries.",
+      "pdf_page": "https://arxiv.org/pdf/2109.10862v2#page=9"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "175B and 6B recursive summarization models, compared with BertExt, T5 (including an 11B T5 fine-tuned on BookSum) and an extractive oracle",
+    "task_data": "BookSum full-book test set (46 books)",
+    "judge": "Automatic metrics ROUGE and BERTScore",
+    "regime": "evaluation",
+    "scale": "175B and 6B parameters; 46 test books"
+   },
+   "quantitative": {
+    "n": "46 books in the BookSum test set (Figure 8 caption)",
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [],
+    "notes": "Overlap of BookSum with the pretraining data cannot be ruled out; BERTScore is confounded by length, though the authors report that controlling for it does not significantly affect their conclusions."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "One dataset (BookSum) scored with automatic metrics, and no test, interval or standard error is given for the differences."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2109.10862v2:RES-LABEL-EFFICIENCY",
+   "paper": "2109.10862v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [],
+    "description": "On the first-leaves task, three 6B BC baselines are trained with 1/4, 1/2 and all demonstrations, RL policies are started from the 1/4 and 1/2 BC policies with about as many comparisons as demonstrations (a single round of RL), and performance is plotted against number of labels (Figure 4a) and estimated human time (Figure 4b).",
+    "passages": [
+     {
+      "version": "2109.10862v2",
+      "page": 10,
+      "lines": [
+       70,
+       79
+      ],
+      "text": "In this work, we use the same trained labelers to create demonstrations and comparisons, and directly\ncompare RL to BC by plotting model performance versus the amount of human time required to\nproduce each dataset. We study this on the first leaf summarization task rather than the full book\nsummarization task to save human time.\nWe trained 3 versions of a 6B parameter BC baseline, with ¼, ½, and all the demonstrations. Then,\nwe trained RL policies starting from each of the ¼ and ½ BC policies,10 with approximately the same\n10\n\nWe collected comparisons of the initial BC policies at temperature T=1, trained a reward model, and then\nran a single round of RL with the initial BC policy at initialization.",
+      "pdf_page": "https://arxiv.org/pdf/2109.10862v2#page=10"
+     },
+     {
+      "version": "2109.10862v2",
+      "page": 11,
+      "lines": [
+       57,
+       58
+      ],
+      "text": "number of comparisons as there were demonstrations. For these BC policies, we used temperature\nT=0.6, while for RL policies, we use T=0 (see Appendix D.2 for justification).",
+      "pdf_page": "https://arxiv.org/pdf/2109.10862v2#page=11"
+     },
+     {
+      "version": "2109.10862v2",
+      "page": 6,
+      "lines": [
+       12,
+       13
+      ],
+      "text": "• First leaves. The first leaves refers to the height 0 tasks in the first subtree, i.e. those which\nare children of the first height 1 task.",
+      "pdf_page": "https://arxiv.org/pdf/2109.10862v2#page=6"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "The comparison is run on the first-leaf summarization task rather than full books, to save human time.",
+     "The same trained labelers create both demonstrations and comparisons.",
+     "BC policies are sampled at T=0.6 and RL policies at T=0.",
+     "The 3x speed of comparisons rests on estimated human time (Appendix E)."
+    ],
+    "passages": [
+     {
+      "version": "2109.10862v2",
+      "page": 10,
+      "lines": [
+       49,
+       56
+      ],
+      "text": "Figure 4: (a) Performance on the first leaves, as a function of amount of human labels. We see that\nthere are diminishing returns to behavioral cloning, such that RL becomes substantially more efficient\non the margin. A policy trained with RL on 5K demonstrations + 5K comparisons is comparable to\none trained with BC on 10K demonstrations. However, one trained with RL on 10K demonstrations +\n10K comparisons significantly outperforms one trained with BC on 20K demonstrations. Standard\nerror of the mean is estimated via bootstrapping at the label level. (b) Performance on the first leaves,\nas a function of amount of estimated human time. Adjusting for human hours gives RL a greater\nadvantage since comparisons are 3x faster to collect than demonstrations (see Appendix E).",
+      "pdf_page": "https://arxiv.org/pdf/2109.10862v2#page=10"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "6B-parameter BC and RL policies",
+    "task_data": "First-leaves summarization task (height-0 tasks of the first subtree)",
+    "judge": null,
+    "regime": "training",
+    "scale": "6B parameters"
+   },
+   "quantitative": {
+    "n": "BC with 1/4, 1/2 and all demonstrations; Figure 4a compares RL on 5K demonstrations + 5K comparisons with BC on 10K demonstrations, and RL on 10K + 10K with BC on 20K",
+    "uncertainty": "Standard error of the mean estimated by bootstrapping at the label level (Figure 4)"
+   },
+   "limits": {
+    "record_ids": [],
+    "notes": "Shown only on the first-leaves task with 6B models, and the RL policies received a single round of RL from the BC initialization."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "One task (first leaves) at one model size (6B); standard errors are reported, but in a single setting."
+   },
+   "review_status": "provisional_ai_draft"
+  }
+ ]
+}

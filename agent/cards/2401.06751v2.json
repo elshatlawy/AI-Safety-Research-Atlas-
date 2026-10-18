@@ -1,0 +1,582 @@
+{
+ "schema": "ASRA-GAP-CLOSING-AGENT-v1",
+ "paper": "2401.06751v2",
+ "review_status": "provisional_ai_draft",
+ "rules": [
+  "Everything here is an AI draft (provisional_ai_draft): each counted item passed two blind AI checks that were tested on planted errors, and no person has reviewed it.",
+  "A finding counts only in the setting its own quoted lines show; read `setting` before carrying it to another setting.",
+  "A question's status is a label from fixed rules over its counted findings; `status_check` says whether that label itself passed its check.",
+  "Cite the paper and page from the passage, and read the PDF page before relying on a claim."
+ ],
+ "notes": "RES-SGR-ICL: the record says the 70-100% SGR results are statistically significant; Appendix Table 2 (p20 L104-123, read in column order) gives hard-test SGR 0.96, 0.98, 1.00 (ARC), 0.97 (MMLU), 0.72 ± 0.93 (StrategyQA, p = 0.0788) and 0.79 (GSM8k), so the StrategyQA row is not significant at 0.05; the card keeps EMPIRICAL_MULTI_SETTING because CIs and tests are reported across four datasets, but notes this. RES-QLORA-GSM8K: the record's quote starts mid-sentence ('generalization using ICL.' continues p7 L43); the GSM8k reassurance cites Fig. 11, which is an in-context-learning figure. RES-COST-NOISE: the record's setting names MMLU-STEM-5 for both parts, but the text names the dataset only for the noise result (Fig. 6). CONCL-OVERSIGHT is graded ARGUMENT_ONLY as an extrapolation; a reader who counts it as a summary of the experiments might grade it empirically. CORE is graded by its weaker part (the data-collection claim); the main easy-to-hard result alone would be EMPIRICAL_MULTI_SETTING (see RES-SGR-ICL). No assumption records exist for this paper; DEF-HARDNESS is kind method.",
+ "cards": [
+  {
+   "record_id": "N2:DSOFT:ARXIV-2401.06751v2:CORE",
+   "paper": "2401.06751v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2401.06751v2:DEF-E2H",
+     "N2:DSOFT:ARXIV-2401.06751v2:DEF-SGR",
+     "N2:DSOFT:ARXIV-2401.06751v2:DEF-HARDNESS"
+    ],
+    "description": "Models are fit to easy or hard training data (in-context learning, linear probes on frozen hidden states, or QLoRA), with easy and hard defined by each hardness measure, and tested on hard test data against a hard-trained oracle and a zero-shot baseline via the Supervision Gap Recovered; separate experiments compare easy and hard data under a 1:2 cost ratio and a 1:2 label-error ratio.",
+    "passages": [
+     {
+      "version": "2401.06751v2",
+      "page": 5,
+      "lines": [
+       74,
+       84
+      ],
+      "text": "Finetuning Methods. We fit models to data with\nin-context learning (ICL; Brown et al., 2020),\nlinear classifiers trained on frozen model hidden\nstates (Belinkov, 2022), or QLoRA (Dettmers\net al., 2023). StrategyQA and GSM8k benefit\nheavily from utilizing chain-of-thought reasoning\n(CoT; Wei et al., 2022), so we primarily conduct\nexperiments for these datasets with ICL+CoT and\nQLoRA+CoT (using reasoning chains from the\ndatasets for supervision). See descriptions of each\nmethod below, with full detail in Appendix D.",
+      "pdf_page": "https://arxiv.org/pdf/2401.06751v2#page=5"
+     },
+     {
+      "version": "2401.06751v2",
+      "page": 6,
+      "lines": [
+       70,
+       75
+      ],
+      "text": "Statistical Testing. We perform experiments\nusing 5 random seeds, controlling the training data\nselection (leaving remaining data for testing). To\nobtain confidence intervals and p-values, we use\nblock bootstrap sampling (Efron and Tibshirani,\n1994). See Appendix E for further detail.",
+      "pdf_page": "https://arxiv.org/pdf/2401.06751v2#page=6"
+     },
+     {
+      "version": "2401.06751v2",
+      "page": 20,
+      "lines": [
+       174,
+       176
+      ],
+      "text": "Table 2: Supervision Gap Recovered (SGR) statistics for Llama-2-70b with ICL, on hard test data or all test\ndata, defined per dataset and hardness measure. Confidence intervals are 95% CIs estimated by block bootstrap\n(accounting for test data variance and train data variance), and p-values represent a test for a difference from 0.",
+      "pdf_page": "https://arxiv.org/pdf/2401.06751v2#page=20"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "Easy and hard are defined per hardness measure by fixed cutoffs (manual grade or step cutoffs, or the 30th and 70th percentiles).",
+     "Linear probes and QLoRA use n = 160 training points so that enough hard test data remain.",
+     "The claim that easy data can be better assumes hard data costs twice as much to collect, or is mislabelled twice as often, as easy data."
+    ],
+    "passages": [
+     {
+      "version": "2401.06751v2",
+      "page": 5,
+      "lines": [
+       116,
+       123
+      ],
+      "text": "Data Hardness Stratification. To separate\ndatasets into easy and hard data (with leftover data\nbeing medium data), we define easy/hard cutoffs as\nfollows: for Question Num. Words, Answer Num.\nChars, and MDL, we automatically define these\nvalues to be at the 30th and 70th percentiles of the\nvariable range. Other variable cutoffs are defined\nmanually: For ARC, Grade Level is easy (3-5),",
+      "pdf_page": "https://arxiv.org/pdf/2401.06751v2#page=5"
+     },
+     {
+      "version": "2401.06751v2",
+      "page": 6,
+      "lines": [
+       46,
+       56
+      ],
+      "text": "Training Size Controls. For all experiments\nwith linear probing and QLoRA, we use n = 160\ntrain points. While we would prefer to use more\nfinetuning data, the bottleneck we face is that\nfairly comparing easy-to-hard with hard-to-hard\ngeneralization requires both fixing the amount of\nfinetuning data and leaving enough hard data left\nover for testing. Since we have as few as n = 603\nhard test points for MMLU, we have to limit\nfinetuning data to n = 160 points to leave enough\ntest data for reasonably small confidence intervals.",
+      "pdf_page": "https://arxiv.org/pdf/2401.06751v2#page=6"
+     },
+     {
+      "version": "2401.06751v2",
+      "page": 8,
+      "lines": [
+       33,
+       42
+      ],
+      "text": "Design. For (1) the budget assumption, we fit linear\nprobes on either easy or hard data using datasets of\nsizes in {10, 20, 40, 80, 160, 320}. We then show\nhard data test performance vs. training cost, assuming hard data costs twice as much as easy data to\ncollect, meaning labeling 40 easy training points\nis equivalent in cost to labeling 20 hard training\npoints. For (2) the noise assumption, we assume\nthat easy data is mislabeled p% of the time, while\nhard data is mislabeled 2p% of the time. Here,\nwe measure test performance on hard data given",
+      "pdf_page": "https://arxiv.org/pdf/2401.06751v2#page=8"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Open language models up to 70b parameters",
+    "task_data": "ARC, MMLU, StrategyQA and GSM8k question answering, with six human hardness measures and one model-based (loss-based) measure",
+    "judge": "Model answers are scored against ground-truth dataset labels",
+    "regime": "mixed",
+    "scale": "Models up to 70b parameters; n = 160 training points for probes and QLoRA"
+   },
+   "quantitative": {
+    "n": "n = 160 training points for probes and QLoRA; as few as 603 hard MMLU test points",
+    "uncertainty": "95% block-bootstrap CIs and p-values over 5 random seeds for the in-context-learning SGR estimates (Appendix Table 2); none stated for the cost and noise comparison"
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2401.06751v2:LIM-GT-LABELS",
+     "N2:DSOFT:ARXIV-2401.06751v2:LIM-CONTAMINATION"
+    ],
+    "notes": "Evaluations are limited to datasets humans have reliably labelled, up to college-level questions; test contamination of the open models cannot be ruled out, so models may be recalling memorized hard answers."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "The easy-to-hard result has block-bootstrap CIs across four datasets, but the claim also includes the easy-versus-hard data-collection result, which the passages report without uncertainty; the card is graded by that weaker part."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2401.06751v2:RES-SGR-ICL",
+   "paper": "2401.06751v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2401.06751v2:DEF-E2H",
+     "N2:DSOFT:ARXIV-2401.06751v2:DEF-SGR",
+     "N2:DSOFT:ARXIV-2401.06751v2:DEF-HARDNESS"
+    ],
+    "description": "Llama-2-70b is prompted in context with easy or with hard examples (per hardness measure) and tested on hard test data; SGR is computed against zero-shot prompting over 5 random seeds, with 95% CIs and p-values from a block bootstrap over test points and seeds (Appendix Table 2).",
+    "passages": [
+     {
+      "version": "2401.06751v2",
+      "page": 6,
+      "lines": [
+       70,
+       75
+      ],
+      "text": "Statistical Testing. We perform experiments\nusing 5 random seeds, controlling the training data\nselection (leaving remaining data for testing). To\nobtain confidence intervals and p-values, we use\nblock bootstrap sampling (Efron and Tibshirani,\n1994). See Appendix E for further detail.",
+      "pdf_page": "https://arxiv.org/pdf/2401.06751v2#page=6"
+     },
+     {
+      "version": "2401.06751v2",
+      "page": 20,
+      "lines": [
+       118,
+       123
+      ],
+      "text": "0.96 ± 0.10 (p < 1e-4)\n0.98 ± 0.36 (p = 0.0033)\n1.00 ± 0.20 (p < 1e-4)\n0.97 ± 0.59 (p = 0.0158)\n0.72 ± 0.93 (p = 0.0788)\n0.79 ± 0.60 (p = 0.0125)",
+      "pdf_page": "https://arxiv.org/pdf/2401.06751v2#page=20"
+     },
+     {
+      "version": "2401.06751v2",
+      "page": 20,
+      "lines": [
+       125,
+       130
+      ],
+      "text": "Hard\nHard\nHard\nHard\nHard\nHard",
+      "pdf_page": "https://arxiv.org/pdf/2401.06751v2#page=20"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "Models are tested on hard test data according to each hardness measure, while being fit to easy or to hard data.",
+     "Easy and hard cutoffs are fixed per measure: the 30th and 70th percentiles for the length and MDL measures, manual cutoffs otherwise (e.g. ARC grade level easy 3-5)."
+    ],
+    "passages": [
+     {
+      "version": "2401.06751v2",
+      "page": 20,
+      "lines": [
+       174,
+       176
+      ],
+      "text": "Table 2: Supervision Gap Recovered (SGR) statistics for Llama-2-70b with ICL, on hard test data or all test\ndata, defined per dataset and hardness measure. Confidence intervals are 95% CIs estimated by block bootstrap\n(accounting for test data variance and train data variance), and p-values represent a test for a difference from 0.",
+      "pdf_page": "https://arxiv.org/pdf/2401.06751v2#page=20"
+     },
+     {
+      "version": "2401.06751v2",
+      "page": 20,
+      "lines": [
+       104,
+       109
+      ],
+      "text": "ARC\nARC\nARC\nMMLU\nStrategyQA\nGSM8k",
+      "pdf_page": "https://arxiv.org/pdf/2401.06751v2#page=20"
+     },
+     {
+      "version": "2401.06751v2",
+      "page": 5,
+      "lines": [
+       116,
+       123
+      ],
+      "text": "Data Hardness Stratification. To separate\ndatasets into easy and hard data (with leftover data\nbeing medium data), we define easy/hard cutoffs as\nfollows: for Question Num. Words, Answer Num.\nChars, and MDL, we automatically define these\nvalues to be at the 30th and 70th percentiles of the\nvariable range. Other variable cutoffs are defined\nmanually: For ARC, Grade Level is easy (3-5),",
+      "pdf_page": "https://arxiv.org/pdf/2401.06751v2#page=5"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Llama-2-70b with in-context learning",
+    "task_data": "ARC, MMLU, StrategyQA and GSM8k, with easy and hard splits by six dataset-specific hardness measures",
+    "judge": "Model answers are scored against ground-truth dataset labels",
+    "regime": "evaluation",
+    "scale": "Llama-2-70b; 5 random seeds"
+   },
+   "quantitative": {
+    "n": "5 random seeds (training-data draws) per experiment",
+    "uncertainty": "95% block-bootstrap CIs and p-values for a difference from 0 (Appendix Table 2); the six hard-test estimates are 0.72-1.00, with p from < 1e-4 to 0.0788 (0.72 ± 0.93, p = 0.0788)"
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2401.06751v2:LIM-GT-LABELS",
+     "N2:DSOFT:ARXIV-2401.06751v2:LIM-CONTAMINATION"
+    ],
+    "notes": "One of the six hard-test SGR estimates (0.72 ± 0.93) has p = 0.0788, and some intervals are wide (± 0.59, ± 0.60, ± 0.93); the p-values test a difference from 0, not from 70%; test contamination cannot be ruled out."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_MULTI_SETTING",
+    "reason": "Reported on four datasets with 95% block-bootstrap CIs and p-values (Appendix Table 2), although one of the six hard-test estimates is not significant at 0.05 (p = 0.0788)."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2401.06751v2:RES-QLORA-GSM8K",
+   "paper": "2401.06751v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2401.06751v2:DEF-E2H",
+     "N2:DSOFT:ARXIV-2401.06751v2:DEF-SGR",
+     "N2:DSOFT:ARXIV-2401.06751v2:DEF-HARDNESS"
+    ],
+    "description": "Llama-2-70b is finetuned with QLoRA (rank-16 adapters) on n = 160 easy or hard training points per hardness measure and tested on hard test data; SGR by training method is shown in Appendix Fig. 13.",
+    "passages": [
+     {
+      "version": "2401.06751v2",
+      "page": 6,
+      "lines": [
+       12,
+       20
+      ],
+      "text": "3. QLoRA: To finetune our LMs, we execute\nQLoRA with the LoRA implementation from\nHuggingFace peft (Mangrulkar et al., 2022)\nand the 8-bit AdamW from bitsandbytes\n(Dettmers et al., 2022). We train the default layers for Llama-2 with rank r = 16 adapters, α =\n32, and dropout p = 0.1. Model predictions are\nobtained in the same manner as for ICL, i.e., by\nscoring multiple choice options or generating\nt = 100/300 tokens for StrategyQA/GSM8k.",
+      "pdf_page": "https://arxiv.org/pdf/2401.06751v2#page=6"
+     },
+     {
+      "version": "2401.06751v2",
+      "page": 6,
+      "lines": [
+       46,
+       56
+      ],
+      "text": "Training Size Controls. For all experiments\nwith linear probing and QLoRA, we use n = 160\ntrain points. While we would prefer to use more\nfinetuning data, the bottleneck we face is that\nfairly comparing easy-to-hard with hard-to-hard\ngeneralization requires both fixing the amount of\nfinetuning data and leaving enough hard data left\nover for testing. Since we have as few as n = 603\nhard test points for MMLU, we have to limit\nfinetuning data to n = 160 points to leave enough\ntest data for reasonably small confidence intervals.",
+      "pdf_page": "https://arxiv.org/pdf/2401.06751v2#page=6"
+     },
+     {
+      "version": "2401.06751v2",
+      "page": 17,
+      "lines": [
+       223,
+       225
+      ],
+      "text": "Figure 13: The Supervision Gap Recovered (SGR) shown by training method. Easy-to-hard generalization varies\nsomewhat by training method used, but SGR remains surprisingly high across datasets for the two most effective\ntraining methods, ICL and QLoRA.",
+      "pdf_page": "https://arxiv.org/pdf/2401.06751v2#page=17"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "n = 160 training points, fixed so that enough hard test data remain.",
+     "StrategyQA and GSM8k are run with chain-of-thought (QLoRA+CoT using the datasets' reasoning chains)."
+    ],
+    "passages": [
+     {
+      "version": "2401.06751v2",
+      "page": 5,
+      "lines": [
+       78,
+       84
+      ],
+      "text": "et al., 2023). StrategyQA and GSM8k benefit\nheavily from utilizing chain-of-thought reasoning\n(CoT; Wei et al., 2022), so we primarily conduct\nexperiments for these datasets with ICL+CoT and\nQLoRA+CoT (using reasoning chains from the\ndatasets for supervision). See descriptions of each\nmethod below, with full detail in Appendix D.",
+      "pdf_page": "https://arxiv.org/pdf/2401.06751v2#page=5"
+     },
+     {
+      "version": "2401.06751v2",
+      "page": 5,
+      "lines": [
+       110,
+       115
+      ],
+      "text": "Models. Apart from Fig. 1, we report results in\nthe main paper on the Llama-2 70b base model\n(Touvron et al., 2023b). In Appendix B, we show\nresults for Llama-2 7b and 13b, an RLHF version\nof Llama-2-70b (“Llama-2-chat”), Qwen-72b (Bai\net al., 2023), and Mixtral-8x7b (Jiang et al., 2024).",
+      "pdf_page": "https://arxiv.org/pdf/2401.06751v2#page=5"
+     },
+     {
+      "version": "2401.06751v2",
+      "page": 16,
+      "lines": [
+       248,
+       253
+      ],
+      "text": "Figure 11: Easy-to-hard generalization measured on all test data (not subsetting to hard test data), while training on\neasy/hard data defined according to each hardness measure\n(using Llama-2-70b prompted with k ≤ 10 examples).\n0\nResults are similar to testing on hard data, except for GSM8k, where accuracy on the whole data distribution\nbecomes comparable (training on easy data outperforms hard data on easy/medium test data).",
+      "pdf_page": "https://arxiv.org/pdf/2401.06751v2#page=16"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Llama-2-70b base finetuned with QLoRA",
+    "task_data": "ARC, MMLU, StrategyQA and GSM8k, hard test data",
+    "judge": "Model answers are scored against ground-truth dataset labels",
+    "regime": "mixed",
+    "scale": "Llama-2-70b; n = 160 training points"
+   },
+   "quantitative": {
+    "n": "n = 160 training points",
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2401.06751v2:LIM-GT-LABELS",
+     "N2:DSOFT:ARXIV-2401.06751v2:LIM-CONTAMINATION"
+    ],
+    "notes": "The GSM8k QLoRA value is not given in these passages; the remark that easy-to-all equals hard-to-all on GSM8k cites Fig. 11, whose caption describes Llama-2-70b prompted with k ≤ 10 examples (in-context learning), not QLoRA; no uncertainty is reported for the QLoRA SGR values."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "Several datasets, but the passages report no uncertainty for the QLoRA SGR values, which the rubric grades EMPIRICAL_SINGLE_SETTING."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2401.06751v2:RES-COST-NOISE",
+   "paper": "2401.06751v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2401.06751v2:DEF-E2H"
+    ],
+    "description": "Linear probes on frozen Llama-2-70b hidden states are fit to easy or hard data with training sets of 10 to 320 points, and hard-test accuracy is compared at equal labelling cost assuming hard data costs twice as much (Fig. 5), and with easy data mislabelled p% and hard data 2p% of the time (Fig. 6, MMLU-STEM-5).",
+    "passages": [
+     {
+      "version": "2401.06751v2",
+      "page": 8,
+      "lines": [
+       33,
+       42
+      ],
+      "text": "Design. For (1) the budget assumption, we fit linear\nprobes on either easy or hard data using datasets of\nsizes in {10, 20, 40, 80, 160, 320}. We then show\nhard data test performance vs. training cost, assuming hard data costs twice as much as easy data to\ncollect, meaning labeling 40 easy training points\nis equivalent in cost to labeling 20 hard training\npoints. For (2) the noise assumption, we assume\nthat easy data is mislabeled p% of the time, while\nhard data is mislabeled 2p% of the time. Here,\nwe measure test performance on hard data given",
+      "pdf_page": "https://arxiv.org/pdf/2401.06751v2#page=8"
+     },
+     {
+      "version": "2401.06751v2",
+      "page": 8,
+      "lines": [
+       43,
+       48
+      ],
+      "text": "different values of p. Note the 1:2 data collection\ncost ratio is almost exactly the ratio observed in\nMMLU-STEM-5, which contains 603 college level\nquestions and 1143 high school questions, and a 1:2\nlabeling error ratio is plausible as well given expert\nhuman accuracy on datasets like MMLU (estimated",
+      "pdf_page": "https://arxiv.org/pdf/2401.06751v2#page=8"
+     },
+     {
+      "version": "2401.06751v2",
+      "page": 8,
+      "lines": [
+       1,
+       3
+      ],
+      "text": "Figure 6: When hard data has noisier labels than easy\ndata, finetuning on easy data can give better hard test\nperformance (shown for MMLU-STEM-5 using Llama2-70b with a linear probe).",
+      "pdf_page": "https://arxiv.org/pdf/2401.06751v2#page=8"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "Budget assumption: a fixed budget buys more easy than hard data; hard data is assumed to cost twice as much, close to the ratio of college to high-school questions in MMLU-STEM-5.",
+     "Noise assumption: easy data is mislabelled p% of the time and hard data 2p%; the authors call the 1:2 error ratio plausible."
+    ],
+    "passages": [
+     {
+      "version": "2401.06751v2",
+      "page": 8,
+      "lines": [
+       24,
+       29
+      ],
+      "text": "sivan et al., 2021). Hence, we test the hypothesis\nthat finetuning on easy data outperforms hard data\nunder two possible assumptions: (1) that one can\ncollect more easy data than hard data given a fixed\nbudget (i.e., time, money), and (2) that easy data\nis less noisily labeled than hard data.",
+      "pdf_page": "https://arxiv.org/pdf/2401.06751v2#page=8"
+     },
+     {
+      "version": "2401.06751v2",
+      "page": 8,
+      "lines": [
+       20,
+       22
+      ],
+      "text": "Figure 5: Hard test accuracy is often higher when training on comparable amounts (costs) of easy rather than\nhard data. Here, we suppose hard data is 2x costlier to\ncollect. Results are for Llama-2-70b with linear probes.",
+      "pdf_page": "https://arxiv.org/pdf/2401.06751v2#page=8"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Llama-2-70b with linear probes",
+    "task_data": "MMLU-STEM-5 for the noise result (Fig. 6); the dataset of the budget result (Fig. 5) is not named in these passages",
+    "judge": "Model answers are scored against ground-truth dataset labels",
+    "regime": "mixed",
+    "scale": "Training sets of 10, 20, 40, 80, 160 and 320 points"
+   },
+   "quantitative": {
+    "n": "Training sets of 10-320 points",
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2401.06751v2:LIM-GT-LABELS",
+     "N2:DSOFT:ARXIV-2401.06751v2:LIM-CONTAMINATION"
+    ],
+    "notes": "The cost and error ratios are assumptions, not measured labelling costs or noise; the budget result is stated as 'more often than not'; no uncertainty is reported."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "One model with one fitting method (linear probes), the noise result on one dataset, and no uncertainty reported."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2401.06751v2:RES-SCALE-GAP",
+   "paper": "2401.06751v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2401.06751v2:DEF-E2H",
+     "N2:DSOFT:ARXIV-2401.06751v2:DEF-SGR"
+    ],
+    "description": "For scale, easy-to-hard and hard-to-hard performance on MMLU is measured for Llama-2 7b, 13b and 70b with in-context learning (k = 10); for the hardness gap, Llama-2-70b is tested on college-level MMLU STEM questions after fitting to high-school MMLU or to 8th-grade or 3rd-grade ARC questions (Fig. 7).",
+    "passages": [
+     {
+      "version": "2401.06751v2",
+      "page": 8,
+      "lines": [
+       62,
+       65
+      ],
+      "text": "Design. For question (1), we measure easy-tohard and hard-to-hard performance on MMLU for\nLlama-2 at three different model sizes: 7b, 13b,\nand 70b. For question (2), we test models on\nhard MMLU data (college STEM questions), while",
+      "pdf_page": "https://arxiv.org/pdf/2401.06751v2#page=8"
+     },
+     {
+      "version": "2401.06751v2",
+      "page": 9,
+      "lines": [
+       1,
+       5
+      ],
+      "text": "Figure 7: Performance on hard test data may begin to decline when finetuning on very easy data. Results shown for\ncollege-level STEM questions using Llama-2-70b (see other hardness measures, models in Appendix Figs. 16, 17).\n\nfinetuning them on even easier datasets than high\nschool MMLU: 3rd and 8th grade ARC questions.",
+      "pdf_page": "https://arxiv.org/pdf/2401.06751v2#page=9"
+     },
+     {
+      "version": "2401.06751v2",
+      "page": 18,
+      "lines": [
+       120,
+       121
+      ],
+      "text": "Figure 15: Models perform as well on hard MMLU data when prompted with easy MMLU data as they do when\nprompted with hard data, regardless of model size (k = 10 examples used for ICL).",
+      "pdf_page": "https://arxiv.org/pdf/2401.06751v2#page=18"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "The model-size comparison uses MMLU only.",
+     "The gap comparison tests on college STEM questions and trains on easier sources, including ARC questions from a different dataset."
+    ],
+    "passages": []
+   },
+   "setting": {
+    "systems": "Llama-2 7b, 13b and 70b (scale); Llama-2-70b (gap)",
+    "task_data": "MMLU with college STEM questions as hard test data; training on high-school MMLU or 3rd/8th-grade ARC",
+    "judge": "Model answers are scored against ground-truth dataset labels",
+    "regime": "mixed",
+    "scale": "7b, 13b and 70b parameters"
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2401.06751v2:LIM-GT-LABELS",
+     "N2:DSOFT:ARXIV-2401.06751v2:LIM-CONTAMINATION"
+    ],
+    "notes": "The decline is stated with hedges ('may', 'some decline'); the passages report no uncertainty for these comparisons; evaluations stop at college-level questions with reliable labels."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "Both comparisons use MMLU test questions with one model family, and the passages report no uncertainty for them."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2401.06751v2:CONCL-OVERSIGHT",
+   "paper": "2401.06751v2",
+   "evidence_type": "argument",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2401.06751v2:DEF-E2H",
+     "N2:DSOFT:ARXIV-2401.06751v2:DEF-SGR"
+    ],
+    "description": "A conclusion the authors draw from their easy-to-hard experiments (70-100% SGR, the cost and noise trade-offs, stability across scale), using easy-to-hard generalization as context for the scalable oversight problem; it is not a separate test of oversight.",
+    "passages": [
+     {
+      "version": "2401.06751v2",
+      "page": 9,
+      "lines": [
+       51,
+       62
+      ],
+      "text": "We study the problem of easy-to-hard generalization, showing that (1) several meaningful human\nand model-based hardness measures disagree about\nwhich data is hardest; (2) LMs trained on easy data\noften perform nearly as well as those trained on\nhard data, recovering 70-100% of the Supervision\nGap between an unsupervised lower bound and\nhard-to-hard upper bound; (3) practically, one can\nperform better on hard test data by collecting and\ntraining on easy data rather than hard data when\nthe hard data is noisier or costlier to collect; and (4)\nSGR may begin to decline when the gap between\ntrain and test hardness becomes sufficiently large.",
+      "pdf_page": "https://arxiv.org/pdf/2401.06751v2#page=9"
+     },
+     {
+      "version": "2401.06751v2",
+      "page": 3,
+      "lines": [
+       19,
+       25
+      ],
+      "text": "Easy-to-Hard Generalization. Amodei et al.\n(2016) motivate the scalable oversight problem by\npointing out how it could be challenging to give\na proper reward signal to a model when it is difficult to assess if its outputs are correct. Assessing\neasy-to-hard generalization provides useful context for understanding the difficulty of the scalable\noversight problem, as it tells us how we can expect models to generalize from a setting where we\ncan properly supervise them to one where we cannot. Past work evaluates easy-to-hard generalization in NLP using model-based hardness measures",
+      "pdf_page": "https://arxiv.org/pdf/2401.06751v2#page=3"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "The inference treats generalization from easy, reliably labelled data to harder labelled data as informative about supervising models where humans cannot give a proper signal.",
+     "The model-based (MDL) measure is used to simulate a setting where humans cannot label hard problems."
+    ],
+    "passages": [
+     {
+      "version": "2401.06751v2",
+      "page": 4,
+      "lines": [
+       61,
+       66
+      ],
+      "text": "some amount of training data. Ultimately, we use\nour MDL metric to capture how well a stronger\nmodel generalizes to data that is hard according\nto a weaker model, in order to simulate a setting\nwhere humans cannot label hard problems that\nthey would like for a strong model to solve.",
+      "pdf_page": "https://arxiv.org/pdf/2401.06751v2#page=4"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Language models in the paper's easy-to-hard experiments",
+    "task_data": "Easy-to-hard generalization experiments across datasets, training methods, hardness measures and model sizes",
+    "judge": "Model answers are scored against ground-truth dataset labels",
+    "regime": "mixed",
+    "scale": null
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2401.06751v2:LIM-GT-LABELS",
+     "N2:DSOFT:ARXIV-2401.06751v2:LIM-CONTAMINATION"
+    ],
+    "notes": "Hedged ('suggest', 'may'); the evaluations are limited to data humans have reliably labelled, while scalable oversight concerns settings where they cannot; test contamination cannot be ruled out."
+   },
+   "strength": {
+    "grade": "ARGUMENT_ONLY",
+    "reason": "The statement extrapolates from easy-to-hard experiments to the scalable oversight problem; no passage tests oversight where humans cannot label, which the linked limitation says lies outside the evaluations."
+   },
+   "review_status": "provisional_ai_draft"
+  }
+ ]
+}

@@ -1,0 +1,161 @@
+{
+ "schema": "ASRA-GAP-CLOSING-AGENT-v1",
+ "id": "Q21",
+ "question": "Will obfuscated arguments become an obstacle for debate on harder questions?",
+ "asked_by": "Michael et al., Debate Helps Supervise Unreliable Experts",
+ "rank": 8,
+ "status": "NARROWED",
+ "status_check": "AI_CHECKED",
+ "remaining_question": "In multi-turn free-text debates on questions hard enough that honest debaters must argue from long decompositions, with strong debaters (human, prompted or RL-trained models) and human or LLM judges, how often does the dishonest side win by presenting arguments whose flaw the honest side cannot locate, and does restricting debates to stable, low-sensitivity decompositions reduce that rate?",
+ "remaining_type": "EMPIRICAL",
+ "safety_case": [
+  {
+   "node": "SC-OP-EMPIRICAL",
+   "relation": "INDIRECT",
+   "reason": "An answer would settle one of the node's listed key questions, whether obfuscated arguments actually emerge as predicted, and only that part.",
+   "node_evidence": "WEAK",
+   "branch": "deployment and low stakes",
+   "score": 1.0
+  },
+  {
+   "node": "SC-ASM-NO-OBFUSCATION",
+   "relation": "INDIRECT",
+   "reason": "An answer would show how often a dishonest debater wins on hard questions with arguments whose flaw the honest side cannot locate, evidence on whether debate avoids the obfuscated arguments problem, but in free-text debate rather than the prover-estimator protocol the assumption relies on.",
+   "node_evidence": "SUPPORTED",
+   "branch": "the equilibrium is correct (debate structure and judges)",
+   "score": 0.5
+  }
+ ],
+ "findings": [
+  {
+   "id": "Q21:F1",
+   "later_paper": "arXiv 2610.02557v1: How to Have a Sensitive Debate: An Instance-Optimal Protocol for AI Debate",
+   "first_submitted": "2026-10-01",
+   "effect": "NARROWS",
+   "claim": "In the complexity-theoretic recursive-decomposition model with black-box access to human judgments, the authors prove an instance-wise lower bound: if the best decomposition of a claim has fractional block sensitivity rho at each step, any protocol needs on the order of rho^d queries to find a flawed sub-claim, matched by their FBS debate protocol; they state fractional block sensitivity precisely characterizes the problems debate can efficiently solve in this framework, and contrast their protocol (the opponent only samples sensitive subproblems) with Irving et al.'s original result, whose requirement that the opponent identify flawed subproblems they call a serious obstacle if debaters are computationally bounded.",
+   "setting": "Theory (complexity theory). Black-box access to human judgments; recursive decomposition of a claim into a tree of sub-claims; computationally bounded debaters for the obstacle remark. No experiments, no free-text debates, no human or LLM judges.",
+   "bears_on": "Whether obfuscated arguments must become an obstacle on harder questions: in theory, an obfuscation-type cost is unavoidable (for black-box-judgment protocols) exactly on instances lacking low-sensitivity decompositions, and avoidable in the worst case for stable ones. Does not address whether this happens in practice in free-text debates.",
+   "passages": [
+    {
+     "version": "2610.02557v1",
+     "page": 5,
+     "lines": [
+      1,
+      9
+     ],
+     "text": "Instance-wise optimality. Finally, we show in Section 5 that any protocol with only black-box\naccess to human judgments must make at least Ω(ρd ) queries to find a flawed sub-claim with constant\nprobability, matching the cost of our FBS debate protocol. This lower bound holds instance-wise: if\nthe best decomposition of an original claim x into a tree of sub-claims has fractional block sensitivity\nρ in each step, then ρd queries are required on that particular instance x. The assumption of\nblack-box access to human judgments is critical for the lower bound to hold. One can view this\ninstance-wise optimality as demonstrating that the black-box judgment assumption, which is common\nto all prior theoretical work on debate, must be relaxed in order to make further progress on debate\nprotocols.",
+     "pdf_page": "https://arxiv.org/pdf/2610.02557v1#page=5"
+    },
+    {
+     "version": "2610.02557v1",
+     "page": 14,
+     "lines": [
+      36,
+      46
+     ],
+     "text": "Our protocol and matching lower bound show that fractional block sensitivity precisely characterizes\nthe set of problems that can be efficiently solved by debate within this recursive-decomposition\nframework. Notably, the protocol does not require Bob to determine whether or not Alice’s answers\nto subproblems are correct, but only to understand the structure of the argument well enough to\nsample subproblems to which the outcome is sufficiently sensitive. This stands in contrast to the\noriginal Debate = PSPACE result of Irving et al. [2018], which requires Bob to actually directly\ndetermine which of Alice’s subproblems are flawed. Of course, this comes with the limitation that\nthe identification of flawed subproblems might actually have much greater computational complexity\nthan creating the subproblems. This is not an issue if we assume that both Alice and Bob have the\npower to solve any problem in PSPACE, but is a serious obstacle if the debaters are assumed to be\ncomputationally bounded (as they will be in practice).",
+     "pdf_page": "https://arxiv.org/pdf/2610.02557v1#page=14"
+    }
+   ]
+  },
+  {
+   "id": "Q21:F2",
+   "later_paper": "arXiv 2608.17776v1: Debate Training Reduces Reward Hacking in RLAIF",
+   "first_submitted": "2026-08-18",
+   "effect": "RELATED_ONLY",
+   "claim": "In RL fine-tuning of an LLM with debate (a generator and a critic adjudicated by a weaker LLM judge) on mathematics tasks, the authors report that in preliminary experiments without constraints on the critique turn the critic quickly dominated the game by generating verbose outputs that exploited the judge's verbosity bias. With current models and protocols, they think hacking the judge is the default outcome from training with debate unless measures to restrict the players are added; word limits (tested up to 150 words) prevented this exploitation and stabilized training, but restrict the critic from being able to explain subtle errors in sufficient depth.",
+   "setting": "Experiment (RL fine-tuning). Debate between a generator and a critic adjudicated by a weaker LLM judge: a Gemini 2.5 Flash-class policy trained with a frozen, weaker Gemini 2.5 Flash Lite judge on mathematics tasks with verifiable final-answer correctness, which the authors call challenging (unsaturated mathematics questions); the verbosity observation comes from preliminary experiments without word limits on the critiques. LLM judge only, no human judges.",
+   "bears_on": "A judge-exploiting strategy (verbosity) emerged in preliminary debate-training experiments on challenging (unsaturated) mathematics questions with an LLM judge; this is related to, but is not, the obfuscated-arguments failure (no hard-to-locate flaw in a decomposition is reported).",
+   "passages": [
+    {
+     "version": "2608.17776v1",
+     "page": 1,
+     "lines": [
+      12,
+      19
+     ],
+     "text": "We demonstrate that RL finetuning an LLM using debate, a two-player adversarial game between a\ngenerator and a critic adjudicated by a weaker LLM judge, reduces reward hacking compared to a\nreinforcement learning from AI feedback (RLAIF) baseline. Reward hacking is a central obstacle in\nRLAIF: as training progresses, the policy learns to exploit systematic errors in its AI judge, degrading task\nperformance, a problem that worsens precisely when the judge is weaker than the policy, the setting most\nrelevant to overseeing increasingly capable AI systems. We study mathematics tasks, where final-answer\ncorrectness is verifiable, allowing us to measure reward hacking dynamics. We train a Gemini 2.5\nFlash-class policy with a frozen, weaker Gemini 2.5 Flash Lite judge, comparing a single-player RLAIF",
+     "pdf_page": "https://arxiv.org/pdf/2608.17776v1#page=1"
+    },
+    {
+     "version": "2608.17776v1",
+     "page": 3,
+     "lines": [
+      26,
+      33
+     ],
+     "text": "Our results indicate a positive empirical update on the feasibility of debate training for scalable\noversight, showing significant robustness benefits in the realistic regime of full-parameter RL training\nof a large, highly capable model on challenging training data (unsaturated mathematics questions).\nCrucially, achieving these benefits requires careful attention to the quality and balance of the debate\ngame: in preliminary experiments without word limits on the critiques, Bob’s output length grew\nsubstantially and Bob quickly dominated the game by winning on almost all prompts, exploiting\nverbosity bias in the judge. We think that hacking the judge is probably the default result from training\nwith debate unless measures to restrict the players are added (in our case, word limits up to 150",
+     "pdf_page": "https://arxiv.org/pdf/2608.17776v1#page=3"
+    },
+    {
+     "version": "2608.17776v1",
+     "page": 14,
+     "lines": [
+      12,
+      19
+     ],
+     "text": "Game balance, critic hacking, and word limits. Without constraints on the critique turn, preliminary experiments observed that the critic quickly dominated the game by generating verbose outputs\nthat exploited the judge’s verbosity bias. With current models and protocols, we think that hacking\nthe judge is the default outcome from training with debate unless measures to restrict the players are\nadded. While word limits (tested up to 150 words) successfully prevent this exploitation and stabilize\ntraining, they also carry an inherent trade-off: they restrict the critic from being able to explain subtle\nerrors in sufficient depth or with adequate expressive nuance when that could plausibly help the\njudge. Developing protocols, or using strong enough judges, that allow richer expressive dialogue\nwithout opening avenues for judge exploitation is a important future work.",
+     "pdf_page": "https://arxiv.org/pdf/2608.17776v1#page=14"
+    }
+   ]
+  },
+  {
+   "id": "Q21:F3",
+   "later_paper": "arXiv 2605.27483v1: Debate Helps Weak Judges Reward Stronger Models",
+   "first_submitted": "2026-05-26",
+   "effect": "RELATED_ONLY",
+   "claim": "In a study of proposer-critic debate with weaker judges on programmatically verifiable code and logic tasks, the authors state that the obfuscated-arguments concern [Brown-Cohen et al., 2025] does not directly apply to their protocol, since that analysis assumes a single-argument, single-rebuttal structure with computational asymmetries at specific complexity classes; they leave multi-turn benchmarks, easily verifiable “fuzzy” tasks and rubric-based grading to future work.",
+   "setting": "Experiment: proposer-critic debate versus a consultancy baseline in a stronger-debater/weaker-judge, visible-information setting, on programmatically verifiable code and logic tasks (CodeContests+ and ARC-AGI-2), across five pairings; the passages report no test for obfuscated arguments.",
+   "bears_on": "Shows that a 2026 debate study on programmatically verifiable code and logic tasks reports no test for obfuscated arguments, its authors judging the concern not directly applicable to their protocol; leaves the question open.",
+   "passages": [
+    {
+     "version": "2605.27483v1",
+     "page": 1,
+     "lines": [
+      16,
+      23
+     ],
+     "text": "Despite theoretical promise, debate as a scalable oversight protocol has produced\nmixed empirical results: gains in some settings, and null effects in others, especially\nwhen the judge does not have information hidden from it. We study proposer-critic\ndebate in a stronger-debater/weaker-judge setting on programmatically verifiable\ncode and logic tasks. Debate helps the judge over a consultancy baseline when the\ncritic provides a usable advantage: the critic’s classification ability must exceed\nthe judge’s, and the judge must treat critic speeches as claims to verify rather than\ntestimony to summarize.",
+     "pdf_page": "https://arxiv.org/pdf/2605.27483v1#page=1"
+    },
+    {
+     "version": "2605.27483v1",
+     "page": 2,
+     "lines": [
+      37,
+      39
+     ],
+     "text": "• In a visible-information weak-judge setting, proposer–critic debate lifts macro-F1 by 7–16pp\non three of five CodeContests+ and ARC-AGI-2 pairings, and gives no benefit on the other\ntwo.",
+     "pdf_page": "https://arxiv.org/pdf/2605.27483v1#page=2"
+    },
+    {
+     "version": "2605.27483v1",
+     "page": 10,
+     "lines": [
+      18,
+      25
+     ],
+     "text": "Debate failed on two of our five pairings, and judge verification behavior predicts the split better\nthan raw judge capability (§4.1). Practitioners should audit critic–judge classifier gaps on their\ntarget distribution before using debate as a reward labeler. Magnitudes are also prompt-sensitive\n(Appendix G). The obfuscated-arguments concern [Brown-Cohen et al., 2025] does not directly apply:\nthat analysis assumes a single-argument, single-rebuttal structure with computational asymmetries at\nspecific complexity classes, neither of which fits our protocol. We leave multi-turn benchmarks, easily\nverifiable “fuzzy” tasks, and rubric-based grading to future work; pilot debates on final-answer-graded\nmath (Appendix I) suggest rubric grading is the natural next testbed.",
+     "pdf_page": "https://arxiv.org/pdf/2605.27483v1#page=10"
+    }
+   ]
+  }
+ ],
+ "findings_drafted": 3,
+ "maths": [
+  {
+   "folder": "formal",
+   "label": null,
+   "settled": "In the idealized black-box model (2506.13609v2 Section 7, 2610.02557v1 Section 5), naive recursive debate on a depth-d, width-q AND decomposition with one uniformly hidden flawed leaf catches the dishonest debater with probability at most (m+1)/q^d, for any Bob making m adaptive oracle queries; 1/q^d is attained at m = 0. The model assumes Alice's visible argument does not depend on where the flaw is. Theorem 5.3 of 2610.02557v1 holds in packing form for randomized checkers that are finite mixtures of deterministic decision trees, with Alice folded in as oracle-independent: some root-flipping block changes the acceptance probability by at most m/R. For AND trees with one flaw this gives m >= (1 - 2 eps) q^d. Lemma 5.4 of that paper (local fbs >= rho implies global >= rho^d) is not re-proved; the AND case does not need it.",
+   "remains": "(1) The question as posed (2311.08702v1 p14 L12-13) is empirical: whether obfuscated arguments appear in harder free-text debates. Nothing here bears on that. (2) Computational form F3: whether any recursive protocol with Bob's cost polynomial in Alice's avoids computationally obfuscated arguments beyond stable / low-FBS decompositions (2610.02557v1 p14 L47-56; 2311.14125v1 p9 L40-46); in the black-box model the answer is negative by F2. (3) Not formalized here: Lemma 5.4 of 2610.02557v1 (local to global fractional block sensitivity, needed beyond AND trees), debaters that query the oracle themselves, and any complexity model (so 'efficient' is an abstract class in Q21_conjecture_computational). (4) Which natural 'harder questions' admit low-FBS decompositions (the stability questions Q51/Q47, handled by another worker)."
+  }
+ ],
+ "experiment_package": null,
+ "review_status": "provisional_ai_draft",
+ "rules": [
+  "Everything here is an AI draft (provisional_ai_draft): each counted item passed two blind AI checks that were tested on planted errors, and no person has reviewed it.",
+  "A finding counts only in the setting its own quoted lines show; read `setting` before carrying it to another setting.",
+  "A question's status is a label from fixed rules over its counted findings; `status_check` says whether that label itself passed its check.",
+  "Cite the paper and page from the passage, and read the PDF page before relying on a claim."
+ ]
+}

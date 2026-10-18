@@ -1,0 +1,692 @@
+{
+ "schema": "ASRA-GAP-CLOSING-AGENT-v1",
+ "paper": "2506.02175v2",
+ "review_status": "provisional_ai_draft",
+ "rules": [
+  "Everything here is an AI draft (provisional_ai_draft): each counted item passed two blind AI checks that were tested on planted errors, and no person has reviewed it.",
+  "A finding counts only in the setting its own quoted lines show; read `setting` before carrying it to another setting.",
+  "A question's status is a label from fixed rules over its counted findings; `status_check` says whether that label itself passed its check.",
+  "Cite the paper and page from the passage, and read the PDF page before relying on a claim."
+ ],
+ "notes": "RES-PRIOR-BELIEF-EQUALIZE and RES-PERSONA-LLM-JUDGES have two-column quotes interleaved with Table 3 and the Figure 6 caption; the numbers can still be read. RES-PRIOR-BELIEF-EQUALIZE: the section heading says debate 'equalizes performance', but all three effects are non-significant (p = 0.11, 0.66, 0.13/0.136), so it is graded EMPIRICAL_PRELIMINARY. RES-CALIBRATION: 'significantly better calibrated' is not tied to any test or interval. RES-PERSUASION-STRATEGIES is a descriptive LLM-rated content analysis with moderate rater agreement and no tests. CORE: the abstract's '4-10%' range matches Figure 1's +3.8% (climate) to +10.0% (COVID-19) only after rounding. CORE's quote ends mid-sentence on Study II, so the card covers Study I. The p-values in RES-ACCURACY-COVID and RES-CLIMATE do not name their test.",
+ "cards": [
+  {
+   "record_id": "N2:DSOFT:ARXIV-2506.02175v2:CORE",
+   "paper": "2506.02175v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2506.02175v2:DEF-PROTOCOLS",
+     "N2:DSOFT:ARXIV-2506.02175v2:METHOD-HUMAN-JUDGES"
+    ],
+    "description": "Prolific judges recruited for mainstream or skeptical prior beliefs give an initial true/false judgment and confidence on a COVID-19 or climate claim, interact with either two GPT-4o debaters arguing opposite sides or a single GPT-4o consultant for three rounds, then give a final judgment and confidence; final accuracy and confidence are compared between protocols.",
+    "passages": [
+     {
+      "version": "2506.02175v2",
+      "page": 4,
+      "lines": [
+       5,
+       11
+      ],
+      "text": "We implemented two AI intervention protocols using GPT-4o (temperature t = 0.2) to evaluate\nfactuality claims. Both protocols provide AI systems with relevant reference sources for evidencebased arguments that use proper citations. To ensure fair comparison, we provided equal numbers\nof reference sources supporting both correct and incorrect positions for each claim, collected via\nweb search and manually curated. Sources supporting incorrect claims were selected from credibleappearing outlets to ensure both sides had comparable persuasive material (details in Appendix §B.3).\nIn both protocols, human judges begin by recording their initial judgment (true/false), confidence\nrating (0-100), and AI literacy score, and conclude by providing their final judgment with a confidence\nrating and written justification.",
+      "pdf_page": "https://arxiv.org/pdf/2506.02175v2#page=4"
+     },
+     {
+      "version": "2506.02175v2",
+      "page": 4,
+      "lines": [
+       49,
+       59
+      ],
+      "text": "Debate achieves higher accuracy for verifying claim factuality than consultancy across belief\ngroups. Figure 1 compares the accuracy (percentage of correct judgments against factual ground\ntruth) of human judges evaluating factuality claims after debate versus consultancy interventions.\nDebate consistently outperforms consultancy across all groups, achieving 70.1% final accuracy (up\nfrom 63.2% initially) compared to consultancy’s 60.0% (down from 61.4% initially), a 10% advantage\noverall (p < 0.01). The difference is most pronounced among judges with mainstream prior beliefs,\nwhere debate improves accuracy from an initial 64.2% to 71.1% (a 6.9% gain) while consultancy\ndrops from an initial 63.4% to 55.9% (a 7.5% decline), resulting in a 15.2% advantage for debate\n(p < 0.01). Judges with skeptical prior beliefs show improvement with both protocols, but debate\n(from initial 62.0% to 69.0%) outperforms consultancy (from initial 59.3% to 64.3%) by a 4.7%\nmargin, though this difference is not statistically significant (p = 0.2). These results generalize to",
+      "pdf_page": "https://arxiv.org/pdf/2506.02175v2#page=4"
+     },
+     {
+      "version": "2506.02175v2",
+      "page": 2,
+      "lines": [
+       53,
+       58
+      ],
+      "text": "Figure 1: Human judge accuracy before and after debate versus consultancy interventions across\nCOVID-19 and climate change domains. Each panel shows results for both domains side-byside. Debate consistently outperforms consultancy: COVID-19 shows +10.0% overall advantage\n(p < 0.01), with largest gains for mainstream believers (+15.2%, p < 0.01) versus skeptical believers\n(+4.7%, p ≮ 0.01); Climate shows +3.8% overall advantage even when consultants argue for their\npreferred position (correct 92.5% of time) rather than randomly assigned positions (50% correct in\nCOVID-19). Error bars show standard error.",
+      "pdf_page": "https://arxiv.org/pdf/2506.02175v2#page=2"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "Both protocols give the AI advisors equal numbers of curated reference sources for the correct and the incorrect position.",
+     "COVID-19 consultants were randomly assigned the true or false side (50% correct); climate consultants chose their preferred side and argued for the correct answer 92.5% of the time.",
+     "Judges see no underlying articles or sources and rely only on the AI agents' arguments; true and false claims were balanced across participants and conditions.",
+     "Claims are binary with expert-verified labels (CheckCOVID) and were filtered by a GPT-4o judge against six scalable-oversight desiderata plus manual curation; climate claims come from Climate-Fever curated by the same criteria."
+    ],
+    "passages": [
+     {
+      "version": "2506.02175v2",
+      "page": 3,
+      "lines": [
+       29,
+       40
+      ],
+      "text": "we identified COVID-19 factuality claims as a promising test domain, and collected claims from\nCheckCOVID [53, 55], a carefully constructed dataset where labels are established through expert\nverification and documentation against scientific journal articles from the CORD-19 dataset [56].\nEach claim presents a binary factuality question (true or false). We filtered them using a LLM\njudge (GPT-4o) to evaluate each claim against six of the nine established desiderata for scalable\noversight datasets [26, 44]: (1) plausibility of incorrect versions, (2) potential for belief testing\n(allowing examination of prior belief effects), (3) verifiability with reliable sources, (4) absence of\nstylistic \"tells\", (5) realism, reflecting authentic scientific questions experts face in practice, and\n(6) avoidance of highly time-dependent content, ensuring claims remain relevant over time. This\nLLM-based filtering was followed by manual curation, resulting in 121 COVID-19-related claims.\nTo validate generalization, we conducted an additional human study using climate change claims\nfrom Climate-Fever [17, 19], curated following the same criteria. Details about the data screening",
+      "pdf_page": "https://arxiv.org/pdf/2506.02175v2#page=3"
+     },
+     {
+      "version": "2506.02175v2",
+      "page": 16,
+      "lines": [
+       52,
+       56
+      ],
+      "text": "To ensure unbiased evaluation, we balanced the assignment of true and false claims across participants in both debate and consultancy conditions. In our study, judges evaluate these claims without\naccess to the underlying scientific articles or sources. Both consultants and debaters can reference\nevidence in their arguments, but judges must rely solely on the arguments presented to them by\nthe AI agents. This setup mirrors real-world scenarios where humans must evaluate AI-generated\narguments without direct access to primary sources. We define judge accuracy as the percentage of",
+      "pdf_page": "https://arxiv.org/pdf/2506.02175v2#page=16"
+     },
+     {
+      "version": "2506.02175v2",
+      "page": 5,
+      "lines": [
+       94,
+       96
+      ],
+      "text": "climate change claims, where debate maintains its advantage (72.1% vs 68.3%, p < 0.01) even\nwhen consultants argue for the correct answer 92.5% of the time (versus 50% random assignment in\nCOVID-19), as shown in Figure 1.",
+      "pdf_page": "https://arxiv.org/pdf/2506.02175v2#page=5"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "GPT-4o (temperature 0.2) as the two debaters or the single consultant; Study II (not detailed in this card) uses AI judges with and without human-like personas",
+    "task_data": "Binary factuality claims on COVID-19 (121 CheckCOVID claims after filtering and curation) and on climate change (Climate-Fever claims)",
+    "judge": "Prolific human judges with mainstream or skeptical prior beliefs; accuracy scored against the claims' ground-truth labels",
+    "regime": "evaluation",
+    "scale": "COVID-19: 68 judges (34 per belief group), 448 debate and 448 consultancy sessions; climate: 146 judges (73 per group), 421 debate and 424 consultancy sessions"
+   },
+   "quantitative": {
+    "n": "COVID-19: 448 debate and 448 consultancy sessions from 68 judges; climate: 421 debate and 424 consultancy sessions from 146 judges",
+    "uncertainty": "COVID-19 overall advantage +10.0% (p < 0.01), mainstream +15.2% (p < 0.01), skeptical +4.7% (p = 0.2, not significant); climate overall +3.8% (72.1% vs 68.3%, p < 0.01); Figure 1 error bars show standard error. The test behind the p-values is not named in these passages."
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2506.02175v2:LIM-CONTROLLED-SIMULATION"
+    ],
+    "notes": "Controlled simulation that may not match in-the-wild deployment; U.S.-based English-speaking annotators; only two scientific domains. The skeptical-judge advantage on COVID-19 is not statistically significant."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_MULTI_SETTING",
+    "reason": "The debate-vs-consultancy accuracy comparison is reported on two datasets (COVID-19 and climate claims) with p-values (p < 0.01 for both overall comparisons: COVID-19 +10.0%, climate 72.1% vs 68.3%) and standard-error bars, though with one advisor model (GPT-4o)."
+   },
+   "review_status": "provisional_ai_draft",
+   "check_history": [
+    "card-1: flagged or undecided by two blind checks; rewritten from the checkers' suggested fix (quotes unchanged)"
+   ]
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2506.02175v2:RES-ACCURACY-COVID",
+   "paper": "2506.02175v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2506.02175v2:DEF-PROTOCOLS",
+     "N2:DSOFT:ARXIV-2506.02175v2:METHOD-HUMAN-JUDGES"
+    ],
+    "description": "Human judges' final true/false accuracy on COVID-19 claims, scored against ground truth, is compared after three-round debate between two GPT-4o debaters versus three-round consultancy with one randomly assigned GPT-4o consultant, overall and by prior-belief group.",
+    "passages": [
+     {
+      "version": "2506.02175v2",
+      "page": 4,
+      "lines": [
+       5,
+       11
+      ],
+      "text": "We implemented two AI intervention protocols using GPT-4o (temperature t = 0.2) to evaluate\nfactuality claims. Both protocols provide AI systems with relevant reference sources for evidencebased arguments that use proper citations. To ensure fair comparison, we provided equal numbers\nof reference sources supporting both correct and incorrect positions for each claim, collected via\nweb search and manually curated. Sources supporting incorrect claims were selected from credibleappearing outlets to ensure both sides had comparable persuasive material (details in Appendix §B.3).\nIn both protocols, human judges begin by recording their initial judgment (true/false), confidence\nrating (0-100), and AI literacy score, and conclude by providing their final judgment with a confidence\nrating and written justification.",
+      "pdf_page": "https://arxiv.org/pdf/2506.02175v2#page=4"
+     },
+     {
+      "version": "2506.02175v2",
+      "page": 2,
+      "lines": [
+       53,
+       58
+      ],
+      "text": "Figure 1: Human judge accuracy before and after debate versus consultancy interventions across\nCOVID-19 and climate change domains. Each panel shows results for both domains side-byside. Debate consistently outperforms consultancy: COVID-19 shows +10.0% overall advantage\n(p < 0.01), with largest gains for mainstream believers (+15.2%, p < 0.01) versus skeptical believers\n(+4.7%, p ≮ 0.01); Climate shows +3.8% overall advantage even when consultants argue for their\npreferred position (correct 92.5% of time) rather than randomly assigned positions (50% correct in\nCOVID-19). Error bars show standard error.",
+      "pdf_page": "https://arxiv.org/pdf/2506.02175v2#page=2"
+     },
+     {
+      "version": "2506.02175v2",
+      "page": 16,
+      "lines": [
+       56,
+       59
+      ],
+      "text": "arguments without direct access to primary sources. We define judge accuracy as the percentage of\ncorrect true/false judgments made after each intervention (consultancy or debate), measured against\nthe factual ground truth of the claim. Judge belief updates are calculated as the difference between\nthe initial judgment (before intervention) and the final judgment (after intervention).",
+      "pdf_page": "https://arxiv.org/pdf/2506.02175v2#page=16"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "The COVID-19 consultant was randomly assigned to argue the true or false side, so it argued the correct answer 50% of the time.",
+     "Debaters and consultants received equal numbers of curated sources supporting the correct and the incorrect position.",
+     "Judges see no underlying sources and rely only on the agents' arguments; true and false claims were balanced across participants and conditions.",
+     "Claims were filtered by a GPT-4o judge against six scalable-oversight desiderata and manually curated (121 COVID-19 claims)."
+    ],
+    "passages": [
+     {
+      "version": "2506.02175v2",
+      "page": 3,
+      "lines": [
+       29,
+       40
+      ],
+      "text": "we identified COVID-19 factuality claims as a promising test domain, and collected claims from\nCheckCOVID [53, 55], a carefully constructed dataset where labels are established through expert\nverification and documentation against scientific journal articles from the CORD-19 dataset [56].\nEach claim presents a binary factuality question (true or false). We filtered them using a LLM\njudge (GPT-4o) to evaluate each claim against six of the nine established desiderata for scalable\noversight datasets [26, 44]: (1) plausibility of incorrect versions, (2) potential for belief testing\n(allowing examination of prior belief effects), (3) verifiability with reliable sources, (4) absence of\nstylistic \"tells\", (5) realism, reflecting authentic scientific questions experts face in practice, and\n(6) avoidance of highly time-dependent content, ensuring claims remain relevant over time. This\nLLM-based filtering was followed by manual curation, resulting in 121 COVID-19-related claims.\nTo validate generalization, we conducted an additional human study using climate change claims\nfrom Climate-Fever [17, 19], curated following the same criteria. Details about the data screening",
+      "pdf_page": "https://arxiv.org/pdf/2506.02175v2#page=3"
+     },
+     {
+      "version": "2506.02175v2",
+      "page": 16,
+      "lines": [
+       52,
+       56
+      ],
+      "text": "To ensure unbiased evaluation, we balanced the assignment of true and false claims across participants in both debate and consultancy conditions. In our study, judges evaluate these claims without\naccess to the underlying scientific articles or sources. Both consultants and debaters can reference\nevidence in their arguments, but judges must rely solely on the arguments presented to them by\nthe AI agents. This setup mirrors real-world scenarios where humans must evaluate AI-generated\narguments without direct access to primary sources. We define judge accuracy as the percentage of",
+      "pdf_page": "https://arxiv.org/pdf/2506.02175v2#page=16"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "GPT-4o (temperature 0.2) as two debaters or one consultant",
+    "task_data": "121 binary COVID-19 factuality claims from CheckCOVID",
+    "judge": "68 Prolific human judges (34 mainstream-prior, 34 skeptical-prior); accuracy against fact-checked ground truth",
+    "regime": "evaluation",
+    "scale": "68 judges; 448 debate and 448 consultancy sessions"
+   },
+   "quantitative": {
+    "n": "448 debate and 448 consultancy sessions from 68 judges",
+    "uncertainty": "Overall +10.0%, p < 0.01; mainstream-prior +15.2%, p < 0.01; skeptical-prior +4.7%, p = 0.2 (not significant); Figure 1 error bars show standard error; the test is not named."
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2506.02175v2:LIM-CONTROLLED-SIMULATION"
+    ],
+    "notes": "The skeptical-prior advantage (4.7%) is not statistically significant (p = 0.2). Controlled simulation with U.S.-based English-speaking annotators."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "One dataset (COVID-19 claims) and one advisor model (GPT-4o), with p-values and standard errors for the overall and mainstream comparisons; the skeptical-judge sub-result on its own is not significant."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2506.02175v2:RES-CLIMATE",
+   "paper": "2506.02175v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2506.02175v2:DEF-PROTOCOLS",
+     "N2:DSOFT:ARXIV-2506.02175v2:METHOD-HUMAN-JUDGES"
+    ],
+    "description": "The COVID-19 human-judge comparison is repeated on climate-change claims with new judges, except that the single GPT-4o consultant chose its preferred side instead of being randomly assigned; final accuracy after debate and after consultancy is compared.",
+    "passages": [
+     {
+      "version": "2506.02175v2",
+      "page": 4,
+      "lines": [
+       5,
+       11
+      ],
+      "text": "We implemented two AI intervention protocols using GPT-4o (temperature t = 0.2) to evaluate\nfactuality claims. Both protocols provide AI systems with relevant reference sources for evidencebased arguments that use proper citations. To ensure fair comparison, we provided equal numbers\nof reference sources supporting both correct and incorrect positions for each claim, collected via\nweb search and manually curated. Sources supporting incorrect claims were selected from credibleappearing outlets to ensure both sides had comparable persuasive material (details in Appendix §B.3).\nIn both protocols, human judges begin by recording their initial judgment (true/false), confidence\nrating (0-100), and AI literacy score, and conclude by providing their final judgment with a confidence\nrating and written justification.",
+      "pdf_page": "https://arxiv.org/pdf/2506.02175v2#page=4"
+     },
+     {
+      "version": "2506.02175v2",
+      "page": 4,
+      "lines": [
+       18,
+       24
+      ],
+      "text": "Consultancy (Baseline) This protocol features a single GPT-4o consultant arguing for an assigned\nposition (true or false) in a non-adversarial setting. The three structured rounds consist of: (1) a\nconsultant presents initial arguments and the judge raises questions, (2) the consultant responds to the\njudge’s questions, and (3) the consultant provides final evidence. For COVID-19 claims, consultants\nwere randomly assigned to argue for either the true or false position (50% correct). For climate\nchange claims, to create a more challenging baseline, consultants chose their preferred position,\narguing for the correct answer 92.5% of the time.",
+      "pdf_page": "https://arxiv.org/pdf/2506.02175v2#page=4"
+     },
+     {
+      "version": "2506.02175v2",
+      "page": 2,
+      "lines": [
+       53,
+       58
+      ],
+      "text": "Figure 1: Human judge accuracy before and after debate versus consultancy interventions across\nCOVID-19 and climate change domains. Each panel shows results for both domains side-byside. Debate consistently outperforms consultancy: COVID-19 shows +10.0% overall advantage\n(p < 0.01), with largest gains for mainstream believers (+15.2%, p < 0.01) versus skeptical believers\n(+4.7%, p ≮ 0.01); Climate shows +3.8% overall advantage even when consultants argue for their\npreferred position (correct 92.5% of time) rather than randomly assigned positions (50% correct in\nCOVID-19). Error bars show standard error.",
+      "pdf_page": "https://arxiv.org/pdf/2506.02175v2#page=2"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "Climate consultants chose their preferred position (correct 92.5% of the time) to make a harder baseline, unlike the 50% random assignment for COVID-19.",
+     "Both protocols receive equal numbers of curated sources for the correct and incorrect positions.",
+     "Climate claims come from Climate-Fever and were curated with the same scalable-oversight criteria as the COVID-19 claims."
+    ],
+    "passages": [
+     {
+      "version": "2506.02175v2",
+      "page": 3,
+      "lines": [
+       29,
+       40
+      ],
+      "text": "we identified COVID-19 factuality claims as a promising test domain, and collected claims from\nCheckCOVID [53, 55], a carefully constructed dataset where labels are established through expert\nverification and documentation against scientific journal articles from the CORD-19 dataset [56].\nEach claim presents a binary factuality question (true or false). We filtered them using a LLM\njudge (GPT-4o) to evaluate each claim against six of the nine established desiderata for scalable\noversight datasets [26, 44]: (1) plausibility of incorrect versions, (2) potential for belief testing\n(allowing examination of prior belief effects), (3) verifiability with reliable sources, (4) absence of\nstylistic \"tells\", (5) realism, reflecting authentic scientific questions experts face in practice, and\n(6) avoidance of highly time-dependent content, ensuring claims remain relevant over time. This\nLLM-based filtering was followed by manual curation, resulting in 121 COVID-19-related claims.\nTo validate generalization, we conducted an additional human study using climate change claims\nfrom Climate-Fever [17, 19], curated following the same criteria. Details about the data screening",
+      "pdf_page": "https://arxiv.org/pdf/2506.02175v2#page=3"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "GPT-4o (temperature 0.2) as two debaters or one self-positioning consultant",
+    "task_data": "Climate-change factuality claims from Climate-Fever",
+    "judge": "146 Prolific human judges (73 per belief group, recruited on human-caused vs natural-cycle climate beliefs)",
+    "regime": "evaluation",
+    "scale": "146 judges; 421 debate and 424 consultancy sessions"
+   },
+   "quantitative": {
+    "n": "421 debate and 424 consultancy sessions from 146 judges",
+    "uncertainty": "72.1% vs 68.3%, p < 0.01 (Figure 1 reports a +3.8% overall advantage); error bars show standard error; the test is not named."
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2506.02175v2:LIM-CONTROLLED-SIMULATION"
+    ],
+    "notes": "The consultancy baseline differs from the COVID-19 study (self-chosen side, 92.5% correct), so the two domains' consultancy conditions are not identical. Controlled simulation; U.S.-based English-speaking annotators."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "A single dataset (climate claims) with one advisor model, reported with a p-value and standard-error bars."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2506.02175v2:RES-BELIEF-REVERSALS",
+   "paper": "2506.02175v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2506.02175v2:DEF-PROTOCOLS",
+     "N2:DSOFT:ARXIV-2506.02175v2:METHOD-HUMAN-JUDGES"
+    ],
+    "description": "For COVID-19 sessions, each judge's change between initial and final true/false answer is classified as a transition (correct to correct, correct to incorrect, and so on), and transition rates are compared between debate and consultancy per prior-belief group with chi-square and z statistics.",
+    "passages": [
+     {
+      "version": "2506.02175v2",
+      "page": 16,
+      "lines": [
+       56,
+       59
+      ],
+      "text": "arguments without direct access to primary sources. We define judge accuracy as the percentage of\ncorrect true/false judgments made after each intervention (consultancy or debate), measured against\nthe factual ground truth of the claim. Judge belief updates are calculated as the difference between\nthe initial judgment (before intervention) and the final judgment (after intervention).",
+      "pdf_page": "https://arxiv.org/pdf/2506.02175v2#page=16"
+     },
+     {
+      "version": "2506.02175v2",
+      "page": 5,
+      "lines": [
+       90,
+       93
+      ],
+      "text": "Figure 3: Percentage of debate/consultancy sessions for COVID-19 claims where judges transitioned\nbetween truthful (✓) and non-truthful (×) answers for (a) skeptical and (b) mainstream priors; (c)-(d)\nshow confidence changes for each transition type for skeptical and mainstream priors. Error bars\nshow standard error.",
+      "pdf_page": "https://arxiv.org/pdf/2506.02175v2#page=5"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "The COVID-19 consultant argued a randomly assigned side (50% correct).",
+     "Debaters and consultants had equal numbers of curated sources for both sides.",
+     "Belief updates are the difference between the judge's initial and final judgment."
+    ],
+    "passages": [
+     {
+      "version": "2506.02175v2",
+      "page": 4,
+      "lines": [
+       5,
+       11
+      ],
+      "text": "We implemented two AI intervention protocols using GPT-4o (temperature t = 0.2) to evaluate\nfactuality claims. Both protocols provide AI systems with relevant reference sources for evidencebased arguments that use proper citations. To ensure fair comparison, we provided equal numbers\nof reference sources supporting both correct and incorrect positions for each claim, collected via\nweb search and manually curated. Sources supporting incorrect claims were selected from credibleappearing outlets to ensure both sides had comparable persuasive material (details in Appendix §B.3).\nIn both protocols, human judges begin by recording their initial judgment (true/false), confidence\nrating (0-100), and AI literacy score, and conclude by providing their final judgment with a confidence\nrating and written justification.",
+      "pdf_page": "https://arxiv.org/pdf/2506.02175v2#page=4"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "GPT-4o (temperature 0.2) debaters vs a single GPT-4o consultant",
+    "task_data": "COVID-19 factuality claims",
+    "judge": "Human judges with mainstream or skeptical prior beliefs",
+    "regime": "evaluation",
+    "scale": "COVID-19 study: 68 judges, 448 debate and 448 consultancy sessions (per-group counts for this analysis are not stated)"
+   },
+   "quantitative": {
+    "n": "Not stated separately for this analysis; the COVID-19 study had 448 debate and 448 consultancy sessions",
+    "uncertainty": "Overall chi2 = 19.81, p < 0.01; mainstream judges: correct-to-incorrect 8.6% vs 22.9% (z = -4.21, p < 0.01), correct-to-correct 55.6% vs 40.5% (z = 3.23, p < 0.01), chi2 = 20.39, p < 0.01; skeptical judges chi2 = 3.02, p = 0.39; Figure 3 error bars show standard error."
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2506.02175v2:LIM-CONTROLLED-SIMULATION"
+    ],
+    "notes": "No significant protocol difference for skeptical-prior judges (p = 0.39). COVID-19 claims only."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "One dataset (COVID-19 claims) and one advisor model, with chi-square and z tests reported; the effect is significant for mainstream judges only."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2506.02175v2:RES-CALIBRATION",
+   "paper": "2506.02175v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2506.02175v2:DEF-PROTOCOLS",
+     "N2:DSOFT:ARXIV-2506.02175v2:METHOD-HUMAN-JUDGES"
+    ],
+    "description": "Judges' final confidence ratings (0-100) on COVID-19 claims are binned and plotted against the accuracy within each bin, and Brier scores are compared between debate and consultancy (and with the judges' initial ratings).",
+    "passages": [
+     {
+      "version": "2506.02175v2",
+      "page": 24,
+      "lines": [
+       9,
+       16
+      ],
+      "text": "Confidence calibration before and after interventions. We conducted calibration analysis to\nassess how well judges’ initial and final confidence levels matched their actual performance on our\ntask. To create the calibration plot, we binned confidence ratings (0-100%), calculated actual accuracy\nwithin each bin, and plotted these values against each other, with perfect calibration represented by\nthe diagonal line. In Figure 13, shows that debate improves calibration from initial (Brier: 0.272) to\nfinal judgments (Brier: 0.231). In contrast, consultancy worsens calibration (initial Brier: 0.266, final:\n0.335), with judges showing inconsistent calibration patterns and significant overconfidence at higher\nconfidence levels.",
+      "pdf_page": "https://arxiv.org/pdf/2506.02175v2#page=24"
+     },
+     {
+      "version": "2506.02175v2",
+      "page": 24,
+      "lines": [
+       105,
+       109
+      ],
+      "text": "Figure 13: Calibration plots for COVID-19 claims showing judges’ accuracy versus confidence for\ndebate (a) and consultancy (b) protocols. Dotted lines represent pre-intervention judgments; solid\nlines show post-intervention judgments. The diagonal represents perfect calibration, with points\nabove showing underconfidence and points below showing overconfidence. Brier scores indicate\noverall calibration quality (lower is better).",
+      "pdf_page": "https://arxiv.org/pdf/2506.02175v2#page=24"
+     },
+     {
+      "version": "2506.02175v2",
+      "page": 4,
+      "lines": [
+       9,
+       11
+      ],
+      "text": "In both protocols, human judges begin by recording their initial judgment (true/false), confidence\nrating (0-100), and AI literacy score, and conclude by providing their final judgment with a confidence\nrating and written justification.",
+      "pdf_page": "https://arxiv.org/pdf/2506.02175v2#page=4"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "Judges self-report a confidence rating (0-100) with each initial and final judgment.",
+     "The COVID-19 consultant argued a randomly assigned side (50% correct)."
+    ],
+    "passages": []
+   },
+   "setting": {
+    "systems": "GPT-4o debaters vs a single GPT-4o consultant",
+    "task_data": "COVID-19 factuality claims",
+    "judge": "Human judges with mainstream or skeptical prior beliefs",
+    "regime": "evaluation",
+    "scale": null
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2506.02175v2:LIM-CONTROLLED-SIMULATION"
+    ],
+    "notes": "Both protocols leave judges overconfident, most at confidence above 80%. The text calls debate's calibration 'significantly' better, but no test, p-value or interval is given for the Brier comparison (0.231 vs 0.335; debate improved from an initial 0.272, consultancy worsened from 0.266)."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "One dataset (COVID-19 claims) and one advisor model, and no uncertainty is reported for the Brier-score difference."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2506.02175v2:RES-PRIOR-BELIEF-EQUALIZE",
+   "paper": "2506.02175v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2506.02175v2:DEF-PROTOCOLS",
+     "N2:DSOFT:ARXIV-2506.02175v2:METHOD-HUMAN-JUDGES"
+    ],
+    "description": "Three mixed-effects logistic regressions with a random effect per participant predict whether a judge correctly judged a COVID-19 claim: a consultancy model (belief, LLM experience, political stance), a debate model (belief, LLM experience, residence type) and a combined model with a belief-by-intervention interaction.",
+    "passages": [
+     {
+      "version": "2506.02175v2",
+      "page": 7,
+      "lines": [
+       62,
+       73
+      ],
+      "text": "liefs influence judgment across interventions, we use three mixed-effects logistic regression models:\n(1) a consultancy-specific model controlling for LLM experience (how familiar the user is with\nLLMs) and political stance (conservative, liberal, moderate) [11, 48]:\nlogit(pij ) = β0 + β1 Beliefi + β2 LLMExpi + β3 Politicsi + ui ;\n(2) a debate-specific model with similar controls but including location type (urban/suburban/rural)\ninstead of political stance, based on stepwise model selection and evidence that residential location\nshapes COVID-19 beliefs [3, 45]:\nlogit(pij ) = β0 + β1 Beliefi + β2 LLMExpi + β3 Residencei + ui ;\nand (3) a combined interaction model testing whether intervention type moderates belief effects\nlogit(pij ) = β0 + β1 Beliefi + β2 Interveni + β3 Beliefi × Interveni + β4 LLMExpi + ui .\nIn all equations, pij represents the probability of participant i correctly judging claim j, while ui\nrepresents the random effect for participant i. All models include the participant ID to account for",
+      "pdf_page": "https://arxiv.org/pdf/2506.02175v2#page=7"
+     },
+     {
+      "version": "2506.02175v2",
+      "page": 25,
+      "lines": [
+       1,
+       12
+      ],
+      "text": "Consultancy\n\np = 0.114 (n = 448)\n\nDebate\n\np = 0.666 (n = 448)\n\nInteraction Effect\n.25 .5\n\np = 0.136 (n = 896)",
+      "pdf_page": "https://arxiv.org/pdf/2506.02175v2#page=25"
+     },
+     {
+      "version": "2506.02175v2",
+      "page": 24,
+      "lines": [
+       111,
+       118
+      ],
+      "text": "Mixed-Effects Logistic Regression Analysis of Belief-Protocol Interactions. The odds ratios\ndisplayed in Figure 14 show a substantial belief-intervention interaction. The reversal of odds ratio\ndirection between consultancy (OR = 0.70) and debate (OR = 1.10) conditions suggests that debate\nneutralizes the disadvantage experienced by participants with mainstream beliefs in consultancy\nsettings. The interaction term (OR = 1.55) quantifies this moderating effect, though it does not reach\nstatistical significance (p = 0.136). These findings align with our accuracy measurements in Figure 1,\nwhere debate’s improvement over consultancy was more than three times larger for participants with\nmainstream beliefs compared to those with skeptical beliefs (15.17% vs. 4.73%).",
+      "pdf_page": "https://arxiv.org/pdf/2506.02175v2#page=24"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "A per-participant random effect accounts for within-subject correlation, since each participant completed several evaluations.",
+     "The consultancy model controls for LLM experience and political stance; the debate model controls for LLM experience and residence type, chosen by stepwise model selection."
+    ],
+    "passages": [
+     {
+      "version": "2506.02175v2",
+      "page": 7,
+      "lines": [
+       73,
+       74
+      ],
+      "text": "represents the random effect for participant i. All models include the participant ID to account for\nwithin-subject correlation, as each participant completed multiple evaluations.",
+      "pdf_page": "https://arxiv.org/pdf/2506.02175v2#page=7"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "GPT-4o debaters vs a single GPT-4o consultant",
+    "task_data": "COVID-19 factuality claims",
+    "judge": "Human judges with mainstream or skeptical prior beliefs",
+    "regime": "evaluation",
+    "scale": "448 consultancy and 448 debate observations; 896 for the interaction model (Figure 14)"
+   },
+   "quantitative": {
+    "n": "n = 448 (consultancy model), 448 (debate model), 896 (interaction model)",
+    "uncertainty": "Consultancy OR = 0.70 (95% CI [0.42, 1.10], p = 0.11); debate OR = 1.10 (95% CI [0.71, 1.71], p = 0.66); interaction OR = 1.55, p = 0.136."
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2506.02175v2:LIM-CONTROLLED-SIMULATION"
+    ],
+    "notes": "None of the three belief effects is statistically significant, so 'equalizes' rests on a non-significant pattern; COVID-19 only."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_PRELIMINARY",
+    "reason": "The odds ratios come with 95% CIs and p-values, but none is significant (p = 0.11, 0.66 and 0.136), which the rubric grades as preliminary."
+   },
+   "review_status": "provisional_ai_draft",
+   "check_history": [
+    "card-1: flagged or undecided by two blind checks; rewritten from the checkers' suggested fix (quotes unchanged)"
+   ]
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2506.02175v2:RES-PERSUASION-STRATEGIES",
+   "paper": "2506.02175v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2506.02175v2:DEF-PROTOCOLS",
+     "N2:DSOFT:ARXIV-2506.02175v2:METHOD-HUMAN-JUDGES"
+    ],
+    "description": "GPT-4o and Gemini-2.0-Flash each rate how strongly debater and consultant arguments use each strategy of a published persuasion taxonomy on an ordinal scale; a strategy counts as detected when the two raters' average shows moderate to high use, and Table 3 gives the percentage of COVID-19 claims where it was detected, by protocol, judge prior and correct or incorrect advisor.",
+    "passages": [
+     {
+      "version": "2506.02175v2",
+      "page": 46,
+      "lines": [
+       142,
+       146
+      ],
+      "text": "Persuasion Prompt. We prompt GPT-4o and Gemini-2.0-Flash to detect persuasion strategies in the\ndebater and consultant arguments. We use the default temperature for each model and use the prompt\nshown in Figure F [15, 16] with the strategy description from Table 6. For our analysis, we consider\nthe strategy to be detected in given arguments only if the average score given by both evaluators\nshows moderate to high prevalence of the strategy usage.",
+      "pdf_page": "https://arxiv.org/pdf/2506.02175v2#page=46"
+     },
+     {
+      "version": "2506.02175v2",
+      "page": 47,
+      "lines": [
+       43,
+       47
+      ],
+      "text": "Table 6: Persuasion Strategies and descriptions from [15]. We prompt GPT-4o and Gemini-2.0-Flash\nindividually for each strategy and aggregate the predictions based on the predicted score.\nAgreement Analysis. We show the label agreement between GPT-4o and Gemini-2.0-Flash for each\npersuasion strategy in Figure 17. Overall, we find that the Pearson’s coefficient ranges from 0.56 to\n0.68 across the various strategies showing moderate agreement.",
+      "pdf_page": "https://arxiv.org/pdf/2506.02175v2#page=47"
+     },
+     {
+      "version": "2506.02175v2",
+      "page": 7,
+      "lines": [
+       75,
+       82
+      ],
+      "text": "Our findings indicate differential effects of prior Table 3: Percentage of COVID-19 claims where\nbeliefs across intervention types. In consultancy both GPT-4o and Gemini-2.0-flash detected the\nsettings, participants with mainstream prior be- persuasion strategy. Most frequent strategy is\nliefs about COVID-19 demonstrated lower ac- bold and the second most frequent strategy is\ncuracy in evaluating factual claims compared underlined. I refers to \"Incorrect\" Consultant that\nto those with skeptical prior beliefs, with an is arguing for the factually incorrect answer; C\nodds ratio of 0.70 (95% CI [0.42, 1.10], p = refers to \"Correct\" consultant that are arguing for\n0.11). In contrast, debate settings showed virtu- the factually correct answer.",
+      "pdf_page": "https://arxiv.org/pdf/2506.02175v2#page=7"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "A strategy counts as used only when both LLM raters' average score shows moderate to high prevalence."
+    ],
+    "passages": []
+   },
+   "setting": {
+    "systems": "Transcripts of GPT-4o debaters and consultants; GPT-4o and Gemini-2.0-Flash as raters",
+    "task_data": "COVID-19 debate and consultancy transcripts; persuasion taxonomy from prior work ([15])",
+    "judge": "LLM raters (GPT-4o, Gemini-2.0-Flash)",
+    "regime": "evaluation",
+    "scale": null
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2506.02175v2:LIM-CONTROLLED-SIMULATION"
+    ],
+    "notes": "The two LLM raters agree only moderately (Pearson's coefficient 0.56 to 0.68); no test is given for the differences in strategy use; 'likely to cast doubts' is the authors' interpretation."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "A descriptive LLM-rated analysis of one dataset's transcripts (COVID-19) with no uncertainty reported for the percentages."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2506.02175v2:RES-PERSONA-LLM-JUDGES",
+   "paper": "2506.02175v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2506.02175v2:DEF-PROTOCOLS"
+    ],
+    "description": "GPT-4o judges are given personas matching the demographics and COVID-19 beliefs of the human participants, with debaters and consultants either aware (public) or unaware (private) of the persona, and their final accuracy on COVID-19 claims after debate is compared with human judges and with default GPT-4o and Qwen2.5-7B judges without personas.",
+    "passages": [
+     {
+      "version": "2506.02175v2",
+      "page": 8,
+      "lines": [
+       30,
+       41
+      ],
+      "text": "Persona-based LLM judges. To emulate human Table 4: Human-LLM agreement rates (%) for\njudgment realistically, we assign each LLM judge COVID-19 claims\n(GPT-4o) a persona matching the demographic attributes and COVID-19 beliefs from our human Condition\nOverall Mainstream Skeptical\nstudy (Section 2.1.3). These personas incorpo- Consultancy\nrate demographic factors (age, gender, education, Non-Personalized 52.2\n53.7\n50.7\nlocation type, political stance) and COVID-19 Personalized\n64.7*\n67.4*\n62.0*",
+      "pdf_page": "https://arxiv.org/pdf/2506.02175v2#page=8"
+     },
+     {
+      "version": "2506.02175v2",
+      "page": 8,
+      "lines": [
+       42,
+       53
+      ],
+      "text": "beliefs (origin, vaccine efficacy, mask effectiveness). We evaluate two setups: (1) Public Per- Debate\nNon-Personalized 67.9*\n65.5*\n70.4*\nsonalized where debaters/consultants are aware of Personalized\n66.1*\n67.2*\n64.8*\nthe judge’s persona and can adapt their strategies\naccordingly, and (2) Private Personalized where *Significantly different from 50% chance (p < 0.01)\ndebaters/consultants have no information about\nthe judge’s persona. This distinction measures the impact of expert adaptation to judge beliefs. We",
+      "pdf_page": "https://arxiv.org/pdf/2506.02175v2#page=8"
+     },
+     {
+      "version": "2506.02175v2",
+      "page": 9,
+      "lines": [
+       49,
+       53
+      ],
+      "text": "reaching 70.7% (not statistically sig- debater and consultant across all conditions. Error bars show\nnificant, p = 0.88). Qwen-7B ex- standard error.\nhibits the largest gap between protocols, with debate performing 19.0 percentage points better than consultancy (p < 0.01). These results\ndemonstrate that persona-based LLM judges have the potential for effective oversight in controversial\nfactuality assessment tasks, particularly when debates are personalized to judge characteristics.",
+      "pdf_page": "https://arxiv.org/pdf/2506.02175v2#page=9"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "Personas copy the demographic attributes and COVID-19 beliefs of the human study's participants.",
+     "In the public personalized setting debaters and consultants know the judge's persona; in the private setting they do not.",
+     "GPT-4o (temperature 0.2) is the debater and consultant in all conditions; human judges worked in non-personalized settings."
+    ],
+    "passages": []
+   },
+   "setting": {
+    "systems": "GPT-4o debaters and consultants; LLM judges: GPT-4o with public or private personas, GPT-4o and Qwen2.5-7B without personas; human judges for comparison",
+    "task_data": "COVID-19 factuality claims",
+    "judge": "Persona-conditioned and default LLM judges compared with human judges",
+    "regime": "evaluation",
+    "scale": null
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": "Persona judges (78.5%, 77.3%) vs human judges (70.1%): p < 0.01 for both; default judges vs humans not significant (p = 0.88); Figure 6 error bars show standard error."
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2506.02175v2:LIM-CONTROLLED-SIMULATION"
+    ],
+    "notes": "The persona-vs-human comparison mixes conditions: humans were not given persona-aware debaters. The number of LLM-judged claims is not stated in these passages."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "One dataset (COVID-19 claims) with persona judges from one model (GPT-4o); p-values and standard errors are reported."
+   },
+   "review_status": "provisional_ai_draft"
+  }
+ ]
+}

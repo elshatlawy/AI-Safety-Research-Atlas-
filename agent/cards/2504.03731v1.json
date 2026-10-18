@@ -1,0 +1,512 @@
+{
+ "schema": "ASRA-GAP-CLOSING-AGENT-v1",
+ "paper": "2504.03731v1",
+ "review_status": "provisional_ai_draft",
+ "rules": [
+  "Everything here is an AI draft (provisional_ai_draft): each counted item passed two blind AI checks that were tested on planted errors, and no person has reviewed it.",
+  "A finding counts only in the setting its own quoted lines show; read `setting` before carrying it to another setting.",
+  "A question's status is a label from fixed rules over its counted findings; `status_check` says whether that label itself passed its check.",
+  "Cite the paper and page from the passage, and read the PDF page before relying on a claim."
+ ],
+ "notes": "CORE is graded ARGUMENT_ONLY because its substantive assertions are conceptual and the GSM8K run is only a demonstration; a reviewer may prefer EMPIRICAL_PRELIMINARY. All four result records use 'significant(ly)' without any statistical test, and the paper reports no uncertainty; the authors call the experiments small, demonstrative and preliminary (p7 L28-L31), so all are graded EMPIRICAL_PRELIMINARY. Table 1's column 'JSE' appears to be the Expected Judge Score (EJS) defined in Section 2.1. RES-TURNS: the record's quote stops mid-sentence ('consistently replicated in'). RES-EAS-ASD: Figure 2's caption speaks of 'more capable judges', though the judge is fixed and the agents vary. RES-CONSULTANCY-PROPAGANDA: two Consultancy variants have positive slopes in Table 1 (6.822 and 1.870), which the text calls no significant trend.",
+ "cards": [
+  {
+   "record_id": "N2:DSOFT:ARXIV-2504.03731v1:CORE",
+   "paper": "2504.03731v1",
+   "evidence_type": "argument",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2504.03731v1:DEF-ASD",
+     "N2:DSOFT:ARXIV-2504.03731v1:DEF-EAS",
+     "N2:DSOFT:ARXIV-2504.03731v1:METHOD-PROTOCOLS"
+    ],
+    "description": "The authors argue with constructed examples (OpenTrust, the weak-baseline problem) that judge accuracy is the wrong metric, define ASD as the difference in the judge's score when an agent argues for the true versus the false answer, implement protocols in a Python library, and run a small demonstration on GSM8K.",
+    "passages": [
+     {
+      "version": "2504.03731v1",
+      "page": 3,
+      "lines": [
+       35,
+       46
+      ],
+      "text": "Example 2.1 (OpenTrust). Consider a protocol OpenTrust, where the agent AI is allowed to\nfreely choose its answer A, and the judge always believes it, i.e. reports pA = 1, p¬A = 0. But\nsince current LLMs are already quite truthful, this would beat any scalable oversight protocol with\nweak judges and strong agents6 – even though this is equivalent to having no scalable oversight at\nall!\nExample 2.2 (The weak baseline problem). The most natural baseline to evaluate scalable oversight protocols for judge accuracy would be NaiveJudge, where the judge reports its probability\nwithout any feedback from a stronger model. But this is a weak baseline: for example, if Q is a\ncomprehension task and we place an information asymmetry between the debater and the judge,\nthen the judge sees less information in the NaiveJudge case than in the Debate case. While\nthis problem is clearest in the information asymmetry case, it is true much more generally: when\ncomparing scalable oversight protocols, it is not obvious how to adjust for differences in the amount\nof “information” or “intelligence” delivered to the judge.",
+      "pdf_page": "https://arxiv.org/pdf/2504.03731v1#page=3"
+     },
+     {
+      "version": "2504.03731v1",
+      "page": 5,
+      "lines": [
+       31,
+       38
+      ],
+      "text": "We now describe precisely our experimental framework for estimating agent score difference –\nequivalently, we describe the Protocol class in SOlib, in pseudo-Python.\nThe agent AI is conceptualized as a class Agent with a method call (context,\nanswer case), which simulates what an agent arguing for a particular answer to a question would\nsay. This answer case is really a stand-in for the general “alignment” of the agent – whether it\nargues for the true answer or the false answer, or for a valuable answer or a less valuable answer, etc.\nWith instruction-following language models like we have now, we can simulate different alignments\nthrough prompting, as long as we know the ground truth correct answer.",
+      "pdf_page": "https://arxiv.org/pdf/2504.03731v1#page=5"
+     },
+     {
+      "version": "2504.03731v1",
+      "page": 2,
+      "lines": [
+       22,
+       28
+      ],
+      "text": "3) Experiments with tool use. Scalable oversight is desired for settings with a significant capabilities asymmetry between the agent (e.g. debater) and the judge, as it is intended to be used for\njudging superhuman AI models. Previous debate experiments have implemented this mainly by\nsimulating this capabilities asymmetry with information asymmetry (Radhakrishnan, 2023; Khan\net al., 2024), and by using larger and more capable models for the agent than for the judge or allowing chain-of-thought tokens for the agent (Kenton et al., 2024). We introduce a third dimension of\nasymmetry: tool use. Specifically, we run our benchmark for the Debate and Consultancy protocols\non a demonstrative sample of the GSM8K dataset3 , with only the agent (but not the judge) equipped\nwith a simple calculator tool. Our experiments are detailed in Section 4.",
+      "pdf_page": "https://arxiv.org/pdf/2504.03731v1#page=2"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "Aligned and misaligned behaviour is simulated by prompting models to argue for the true or the false answer; results assume current models do this 'reasonably well'.",
+     "Simulating alignment by prompting requires knowing the ground-truth answer.",
+     "An empirical benchmark is not a substitute for formal guarantees, and extrapolating ASD-versus-EAS trends to superhuman models is not a formal guarantee."
+    ],
+    "passages": []
+   },
+   "setting": {
+    "systems": "Agent and judge language models; the demonstration uses Agents claude-3-5-sonnet-20241022 and claude-3-5-haiku-20241022 (with and without tools) and deepseek-v3 (without); judge gpt-4o-mini",
+    "task_data": "Questions with a known correct and incorrect answer; the demonstration uses a GSM8K sample (100 questions)",
+    "judge": "A weaker LLM judge that reports probabilities (gpt-4o-mini in the demonstration)",
+    "regime": "evaluation",
+    "scale": "Demonstration: 100 questions, one judge model, five agent configurations"
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2504.03731v1:LIM-SIMULATED-MISALIGNMENT",
+     "N2:DSOFT:ARXIV-2504.03731v1:LIM-SMALL-EXPERIMENT"
+    ],
+    "notes": "The authors call the experiments small and demonstrative; the claim reports no experimental result itself."
+   },
+   "strength": {
+    "grade": "ARGUMENT_ONLY",
+    "reason": "The claim's substantive points (prior debate experiments do not generalize; ASD measures how a protocol favours truth-telling) rest on argument and constructed examples, and the GSM8K run is presented only as a demonstration."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2504.03731v1:RES-DEBATE-BEST",
+   "paper": "2504.03731v1",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2504.03731v1:METHOD-PROTOCOLS",
+     "N2:DSOFT:ARXIV-2504.03731v1:DEF-ASD",
+     "N2:DSOFT:ARXIV-2504.03731v1:DEF-EAS"
+    ],
+    "description": "NaiveJudge, Propaganda, four Consultancy variants and four Debate variants are run with the same agents, judge and questions; average ASD (Figure 1, Table 1) and Expected Judge Score (Figure 3) are compared across protocols.",
+    "passages": [
+     {
+      "version": "2504.03731v1",
+      "page": 9,
+      "lines": [
+       4,
+       11
+      ],
+      "text": "Table 1: Summary of results (brier scoring rule, β = 1 in all scores)\nProtocol\n\nASD\n\nSlope\n\nJSE",
+      "pdf_page": "https://arxiv.org/pdf/2504.03731v1#page=9"
+     },
+     {
+      "version": "2504.03731v1",
+      "page": 9,
+      "lines": [
+       13,
+       22
+      ],
+      "text": "NaiveJudge\nConsultancy [client starts, 2 turns]\nConsultancy [client starts, turns]\nConsultancy [consultant starts, 2 turns]\nConsultancy [consultant starts, 4 turns]\nDebate [sequential, 2 turns]\nDebate [sequential, 4 turns]\nDebate [simultaneous, 2 turns]\nDebate [simultaneous, 4 turns]\nPropaganda",
+      "pdf_page": "https://arxiv.org/pdf/2504.03731v1#page=9"
+     },
+     {
+      "version": "2504.03731v1",
+      "page": 9,
+      "lines": [
+       24,
+       33
+      ],
+      "text": "1.235\n0.367\n0.283\n0.348\n0.327\n1.387\n1.366\n1.383\n1.423\n1.229",
+      "pdf_page": "https://arxiv.org/pdf/2504.03731v1#page=9"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "Aligned and misaligned behaviour is simulated by prompting models to argue for the true or the false answer; results assume current models do this 'reasonably well'.",
+     "Tool use is added as an agent-judge asymmetry: the judge never has the calculator, while some agent configurations do.",
+     "Scores are negative Brier scores (beta = 1 in Table 1); Expected Judge Score is (JS_true, JS_false) . q, read as a combined capabilities-and-alignment measure."
+    ],
+    "passages": [
+     {
+      "version": "2504.03731v1",
+      "page": 2,
+      "lines": [
+       26,
+       28
+      ],
+      "text": "asymmetry: tool use. Specifically, we run our benchmark for the Debate and Consultancy protocols\non a demonstrative sample of the GSM8K dataset3 , with only the agent (but not the judge) equipped\nwith a simple calculator tool. Our experiments are detailed in Section 4.",
+      "pdf_page": "https://arxiv.org/pdf/2504.03731v1#page=2"
+     },
+     {
+      "version": "2504.03731v1",
+      "page": 5,
+      "lines": [
+       21,
+       25
+      ],
+      "text": "We can similarly define an Expected Judge Score:\nEJS = (JS⊤ , JS⊥ ) · q,\nwhich can be interpreted as a “combined capabilities and alignment measure” i.e. which takes into\naccount both how much of the agent’s capabilities the protocol keeps and how much it incentivizes\nthe AI to use those capabilities for good.",
+      "pdf_page": "https://arxiv.org/pdf/2504.03731v1#page=5"
+     },
+     {
+      "version": "2504.03731v1",
+      "page": 6,
+      "lines": [
+       47,
+       51
+      ],
+      "text": "We conduct two main types of experiment with these protocols: one, we benchmark them on ASD\n(see Figure 1) to study how well they incentivize truthful behaviour; and two, we study how ASD\nchanges with EAS for each protocol (see Figure 2), to study how capabilities affect the ability of\nthe protocol to incentivize alignment. All scores are calculated using negative Brier scores for its\nfavourable numerical properties.",
+      "pdf_page": "https://arxiv.org/pdf/2504.03731v1#page=6"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Agents claude-3-5-sonnet-20241022 and claude-3-5-haiku-20241022 (with and without tools) and deepseek-v3 (without); judge gpt-4o-mini",
+    "task_data": "A sample of GSM8K (100 questions); some agent configurations have a calculator tool, the judge never does",
+    "judge": "gpt-4o-mini reporting answer probabilities",
+    "regime": "evaluation",
+    "scale": "100 questions, one judge model, five agent configurations"
+   },
+   "quantitative": {
+    "n": "100 questions, one judge model, five agent configurations",
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2504.03731v1:LIM-SMALL-EXPERIMENT",
+     "N2:DSOFT:ARXIV-2504.03731v1:LIM-SIMULATED-MISALIGNMENT"
+    ],
+    "notes": "Table 1 average ASD is 1.366-1.423 for the four Debate variants against 1.235 for NaiveJudge and 1.229 for Propaganda; no uncertainty or test is reported."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_PRELIMINARY",
+    "reason": "The authors call these experiments small, demonstrative and preliminary (100 questions, one judge model), and report no uncertainty."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2504.03731v1:RES-TURNS",
+   "paper": "2504.03731v1",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2504.03731v1:METHOD-PROTOCOLS",
+     "N2:DSOFT:ARXIV-2504.03731v1:DEF-ASD"
+    ],
+    "description": "Four Debate variants (2 or 4 turns, simultaneous or sequential) are run with the same agents, judge and questions, and their average ASD is compared (Figure 1, Table 1).",
+    "passages": [
+     {
+      "version": "2504.03731v1",
+      "page": 6,
+      "lines": [
+       47,
+       51
+      ],
+      "text": "We conduct two main types of experiment with these protocols: one, we benchmark them on ASD\n(see Figure 1) to study how well they incentivize truthful behaviour; and two, we study how ASD\nchanges with EAS for each protocol (see Figure 2), to study how capabilities affect the ability of\nthe protocol to incentivize alignment. All scores are calculated using negative Brier scores for its\nfavourable numerical properties.",
+      "pdf_page": "https://arxiv.org/pdf/2504.03731v1#page=6"
+     },
+     {
+      "version": "2504.03731v1",
+      "page": 9,
+      "lines": [
+       13,
+       22
+      ],
+      "text": "NaiveJudge\nConsultancy [client starts, 2 turns]\nConsultancy [client starts, turns]\nConsultancy [consultant starts, 2 turns]\nConsultancy [consultant starts, 4 turns]\nDebate [sequential, 2 turns]\nDebate [sequential, 4 turns]\nDebate [simultaneous, 2 turns]\nDebate [simultaneous, 4 turns]\nPropaganda",
+      "pdf_page": "https://arxiv.org/pdf/2504.03731v1#page=9"
+     },
+     {
+      "version": "2504.03731v1",
+      "page": 9,
+      "lines": [
+       24,
+       33
+      ],
+      "text": "1.235\n0.367\n0.283\n0.348\n0.327\n1.387\n1.366\n1.383\n1.423\n1.229",
+      "pdf_page": "https://arxiv.org/pdf/2504.03731v1#page=9"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "The authors note that the original debate proposal expects benefits from more turns only for problems higher in the polynomial hierarchy, so the null effect may be an artifact of the relatively simple GSM8K problems.",
+     "The judge never has the calculator, while some agent configurations do.",
+     "Aligned and misaligned behaviour is simulated by prompting models to argue for the true or the false answer; results assume current models do this 'reasonably well'."
+    ],
+    "passages": [
+     {
+      "version": "2504.03731v1",
+      "page": 7,
+      "lines": [
+       6,
+       9
+      ],
+      "text": "previous debate experiments; however, we will note that according to the original debate\nproposal (Irving et al., 2018), the benefit to increasing turns or turn-unbounded debate is\nonly seen for problems higher up on the polynomial hierarchy, so this may be an artifact of\nthe relatively simple problems in our dataset.",
+      "pdf_page": "https://arxiv.org/pdf/2504.03731v1#page=7"
+     },
+     {
+      "version": "2504.03731v1",
+      "page": 9,
+      "lines": [
+       57,
+       61
+      ],
+      "text": "intuitive opportunity: calculators. This could be extended to other datasets, including more conventional comprehension tasks, by including more complex tools like code execution, web search\nand formal verification. In particular, our finding that changing the number of turns in Debate has\nno effect on ASD should be challenged by performing experiments with more complex datasets,\ne.g. FrontierMath (Glazer et al., 2024), where formal verification might arise as a natural tool for\ndebaters.",
+      "pdf_page": "https://arxiv.org/pdf/2504.03731v1#page=9"
+     },
+     {
+      "version": "2504.03731v1",
+      "page": 2,
+      "lines": [
+       26,
+       28
+      ],
+      "text": "asymmetry: tool use. Specifically, we run our benchmark for the Debate and Consultancy protocols\non a demonstrative sample of the GSM8K dataset3 , with only the agent (but not the judge) equipped\nwith a simple calculator tool. Our experiments are detailed in Section 4.",
+      "pdf_page": "https://arxiv.org/pdf/2504.03731v1#page=2"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Agents claude-3-5-sonnet-20241022 and claude-3-5-haiku-20241022 (with and without tools) and deepseek-v3 (without); judge gpt-4o-mini",
+    "task_data": "A sample of GSM8K (100 questions); some agent configurations have a calculator tool, the judge never does",
+    "judge": "gpt-4o-mini reporting answer probabilities",
+    "regime": "evaluation",
+    "scale": "100 questions, one judge model, five agent configurations"
+   },
+   "quantitative": {
+    "n": "100 questions, one judge model, five agent configurations",
+    "uncertainty": "None reported; 'no significant effect' is stated without a named test."
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2504.03731v1:LIM-SMALL-EXPERIMENT",
+     "N2:DSOFT:ARXIV-2504.03731v1:LIM-SIMULATED-MISALIGNMENT"
+    ],
+    "notes": "Table 1 lists average ASD of 1.387, 1.366, 1.383 and 1.423 for the sequential 2-turn, sequential 4-turn, simultaneous 2-turn and simultaneous 4-turn variants; the authors say the finding should be challenged on more complex datasets."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_PRELIMINARY",
+    "reason": "A null result from experiments the authors call small and preliminary, with no uncertainty or test reported."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2504.03731v1:RES-EAS-ASD",
+   "paper": "2504.03731v1",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2504.03731v1:DEF-EAS",
+     "N2:DSOFT:ARXIV-2504.03731v1:DEF-ASD",
+     "N2:DSOFT:ARXIV-2504.03731v1:METHOD-PROTOCOLS"
+    ],
+    "description": "For each protocol, ASD is plotted against Expected Agent Score across the five agent configurations with a gpt-4o-mini judge (Figure 2), and an ASD-versus-EAS slope is reported (Table 1).",
+    "passages": [
+     {
+      "version": "2504.03731v1",
+      "page": 7,
+      "lines": [
+       22,
+       22
+      ],
+      "text": "A summary of results, with ASD, JSE and ASD vs EAS slope values, is given in Table 1.",
+      "pdf_page": "https://arxiv.org/pdf/2504.03731v1#page=7"
+     },
+     {
+      "version": "2504.03731v1",
+      "page": 9,
+      "lines": [
+       13,
+       22
+      ],
+      "text": "NaiveJudge\nConsultancy [client starts, 2 turns]\nConsultancy [client starts, turns]\nConsultancy [consultant starts, 2 turns]\nConsultancy [consultant starts, 4 turns]\nDebate [sequential, 2 turns]\nDebate [sequential, 4 turns]\nDebate [simultaneous, 2 turns]\nDebate [simultaneous, 4 turns]\nPropaganda",
+      "pdf_page": "https://arxiv.org/pdf/2504.03731v1#page=9"
+     },
+     {
+      "version": "2504.03731v1",
+      "page": 9,
+      "lines": [
+       35,
+       44
+      ],
+      "text": "–\n-1.709\n-7.164\n6.822\n1.870\n1.960\n1.130\n0.674\n1.591\n12.063",
+      "pdf_page": "https://arxiv.org/pdf/2504.03731v1#page=9"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "EAS weights the agent's scores by its propensity q to argue for each answer, modelled with softmax action selection.",
+     "Reading the trend as evidence about more capable models is an extrapolation, not a formal guarantee for the superhuman regime.",
+     "Aligned and misaligned behaviour is simulated by prompting models to argue for the true or the false answer; results assume current models do this 'reasonably well'."
+    ],
+    "passages": [
+     {
+      "version": "2504.03731v1",
+      "page": 8,
+      "lines": [
+       3,
+       6
+      ],
+      "text": "Figure 2: Debate (left) but not Consultancy (right) makes truthfulness increasingly attractive for\nmore capable judges. Points are labelled by the model of the agent (i.e. debater, consultant);\ngpt-4o-mini was the judge in all instances. All scores are calculated based on negatives of\nbrier scores (higher is better).",
+      "pdf_page": "https://arxiv.org/pdf/2504.03731v1#page=8"
+     },
+     {
+      "version": "2504.03731v1",
+      "page": 5,
+      "lines": [
+       3,
+       5
+      ],
+      "text": "where q is the “propensity of the agent to argue for each answer”. If we take q = (1/2, 1/2) we\nrecover random assignment of answers as in previous debate experiments. We can better model the\neffect incentives have on agent behaviour with softmax action selection:",
+      "pdf_page": "https://arxiv.org/pdf/2504.03731v1#page=5"
+     },
+     {
+      "version": "2504.03731v1",
+      "page": 2,
+      "lines": [
+       26,
+       28
+      ],
+      "text": "asymmetry: tool use. Specifically, we run our benchmark for the Debate and Consultancy protocols\non a demonstrative sample of the GSM8K dataset3 , with only the agent (but not the judge) equipped\nwith a simple calculator tool. Our experiments are detailed in Section 4.",
+      "pdf_page": "https://arxiv.org/pdf/2504.03731v1#page=2"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Agents claude-3-5-sonnet-20241022 and claude-3-5-haiku-20241022 (with and without tools) and deepseek-v3 (without); judge gpt-4o-mini",
+    "task_data": "A sample of GSM8K (100 questions); some agent configurations have a calculator tool, the judge never does",
+    "judge": "gpt-4o-mini in all instances",
+    "regime": "evaluation",
+    "scale": "100 questions, one judge model, five agent configurations"
+   },
+   "quantitative": {
+    "n": "Five agent configurations per protocol (100 questions, one judge)",
+    "uncertainty": "None reported; no test of the slope is given."
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2504.03731v1:LIM-SIMULATED-MISALIGNMENT",
+     "N2:DSOFT:ARXIV-2504.03731v1:LIM-SMALL-EXPERIMENT"
+    ],
+    "notes": "Table 1 slopes for the four Debate variants are 1.960, 1.130, 0.674 and 1.591, each from five points. Figure 2's caption says 'more capable judges', although the points vary the agent model."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_PRELIMINARY",
+    "reason": "A trend over five agent configurations in experiments the authors call small and preliminary, with no uncertainty reported."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2504.03731v1:RES-CONSULTANCY-PROPAGANDA",
+   "paper": "2504.03731v1",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2504.03731v1:METHOD-PROTOCOLS",
+     "N2:DSOFT:ARXIV-2504.03731v1:DEF-ASD",
+     "N2:DSOFT:ARXIV-2504.03731v1:DEF-EAS"
+    ],
+    "description": "Average ASD and the ASD-versus-EAS trend are compared across NaiveJudge, Propaganda and four Consultancy variants run with the same agents, judge and questions (Figures 1-2, Table 1).",
+    "passages": [
+     {
+      "version": "2504.03731v1",
+      "page": 9,
+      "lines": [
+       4,
+       11
+      ],
+      "text": "Table 1: Summary of results (brier scoring rule, β = 1 in all scores)\nProtocol\n\nASD\n\nSlope\n\nJSE",
+      "pdf_page": "https://arxiv.org/pdf/2504.03731v1#page=9"
+     },
+     {
+      "version": "2504.03731v1",
+      "page": 9,
+      "lines": [
+       13,
+       22
+      ],
+      "text": "NaiveJudge\nConsultancy [client starts, 2 turns]\nConsultancy [client starts, turns]\nConsultancy [consultant starts, 2 turns]\nConsultancy [consultant starts, 4 turns]\nDebate [sequential, 2 turns]\nDebate [sequential, 4 turns]\nDebate [simultaneous, 2 turns]\nDebate [simultaneous, 4 turns]\nPropaganda",
+      "pdf_page": "https://arxiv.org/pdf/2504.03731v1#page=9"
+     },
+     {
+      "version": "2504.03731v1",
+      "page": 9,
+      "lines": [
+       24,
+       33
+      ],
+      "text": "1.235\n0.367\n0.283\n0.348\n0.327\n1.387\n1.366\n1.383\n1.423\n1.229",
+      "pdf_page": "https://arxiv.org/pdf/2504.03731v1#page=9"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "Propaganda is the paper's simplified model of RLHF and NaiveJudge of supervised learning; NaiveJudge's ASD is the judge's score before any interaction with the agent.",
+     "The manipulation reading is stated for this judge ('or at least a gpt-4o-mini judge').",
+     "Aligned and misaligned behaviour is simulated by prompting models to argue for the true or the false answer; results assume current models do this 'reasonably well'."
+    ],
+    "passages": [
+     {
+      "version": "2504.03731v1",
+      "page": 4,
+      "lines": [
+       31,
+       35
+      ],
+      "text": "Example 2.3 (NaiveJudge baseline as supervised learning). Observe that NaiveJudge can\nnow be used as a baseline, even in the case of information asymmetry: the ASD for NaiveJudge\nis simply the judge’s log-odds score before interacting with the agent – i.e. the agent is incentivized\nto argue for whichever answer the judge already believes. This corresponds to a supervised learning\ntraining protocol, like Propaganda corresponds to RLHF.",
+      "pdf_page": "https://arxiv.org/pdf/2504.03731v1#page=4"
+     },
+     {
+      "version": "2504.03731v1",
+      "page": 2,
+      "lines": [
+       26,
+       28
+      ],
+      "text": "asymmetry: tool use. Specifically, we run our benchmark for the Debate and Consultancy protocols\non a demonstrative sample of the GSM8K dataset3 , with only the agent (but not the judge) equipped\nwith a simple calculator tool. Our experiments are detailed in Section 4.",
+      "pdf_page": "https://arxiv.org/pdf/2504.03731v1#page=2"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Agents claude-3-5-sonnet-20241022 and claude-3-5-haiku-20241022 (with and without tools) and deepseek-v3 (without); judge gpt-4o-mini",
+    "task_data": "A sample of GSM8K (100 questions); some agent configurations have a calculator tool, the judge never does",
+    "judge": "gpt-4o-mini reporting answer probabilities",
+    "regime": "evaluation",
+    "scale": "100 questions, one judge model, five agent configurations"
+   },
+   "quantitative": {
+    "n": "100 questions, one judge model, five agent configurations",
+    "uncertainty": "None reported; 'significantly underperforms' and 'no significant trends' are stated without a named test."
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2504.03731v1:LIM-SMALL-EXPERIMENT",
+     "N2:DSOFT:ARXIV-2504.03731v1:LIM-SIMULATED-MISALIGNMENT"
+    ],
+    "notes": "Table 1 average ASD: NaiveJudge 1.235, Propaganda 1.229, the four Consultancy variants 0.283-0.367. That judge interaction makes the judge vulnerable is the authors' interpretation."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_PRELIMINARY",
+    "reason": "The authors call these experiments small and preliminary (100 questions, one judge), and report no uncertainty."
+   },
+   "review_status": "provisional_ai_draft"
+  }
+ ]
+}

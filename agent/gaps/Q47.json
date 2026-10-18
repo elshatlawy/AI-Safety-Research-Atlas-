@@ -1,0 +1,204 @@
+{
+ "schema": "ASRA-GAP-CLOSING-AGENT-v1",
+ "id": "Q47",
+ "question": "Can a debate protocol avoid needing stability, for example by targeting honesty instead of correctness?",
+ "asked_by": "Buhl et al., An alignment safety case sketch based on debate",
+ "rank": 16,
+ "status": "PARTLY_ANSWERED_BY_LATER_WORK",
+ "status_check": "AI_CHECKED",
+ "remaining_question": "Can a recursive debate protocol that rewards honest reporting of the debaters' beliefs (rather than deciding L(x)), or that uses non-black-box access to human judgment or the debaters' bounded computation, achieve completeness on decompositions whose fractional block sensitivity rho makes rho^d superpolynomial, while keeping prover-estimator debate's soundness without stability (an average-case guarantee)?",
+ "remaining_type": "MATHEMATICAL",
+ "safety_case": [
+  {
+   "node": "SC-C4.6",
+   "relation": "INDIRECT",
+   "reason": "A debate protocol that does not need stability, e.g. by targeting honesty instead of correctness (a route the node's passages name), would be evidence on whether the case must argue stability at all.",
+   "node_evidence": "WEAK",
+   "branch": "the equilibrium is correct (debate structure and judges)",
+   "score": 1.0
+  }
+ ],
+ "findings": [
+  {
+   "id": "Q47:F1",
+   "later_paper": "arXiv 2506.13609v2: Avoiding Obfuscation with Prover-Estimator Debate",
+   "first_submitted": "2025-06-16",
+   "effect": "PARTLY_ANSWERS",
+   "claim": "The authors introduce rho-stability (the validity of arguments cannot hinge on arbitrarily small changes in subclaim probabilities) for prover-estimator debate and state that they require it only for usefulness, not safety: even if stability does not hold, an honest estimator can still win against any incorrect argument by a dishonest prover. They note that a rho-stable decomposition is required only in the completeness case, so the protocol must ensure B can still win when a dishonest debater A produces an unstable decomposition. Their results hold in an average-case rather than a worst-case sense: they do not prove that the judge can always tell which debater is correct on every question.",
+   "setting": "Theory. Prover-estimator debate: the prover (Alice) decomposes a problem into subclaims, the estimator (Bob) assigns probabilities to them, and the prover uses these to choose which subclaim to debate further; stability is required only in the completeness case; results hold in an average-case, not a worst-case, sense.",
+   "bears_on": "Whether a protocol can avoid needing stability: for this protocol, yes for safety (soundness, in an average-case sense), no for usefulness (completeness); does not address an honesty-targeting variant.",
+   "passages": [
+    {
+     "version": "2506.13609v2",
+     "page": 3,
+     "lines": [
+      10,
+      21
+     ],
+     "text": "the prover (Alice) decomposes a problem into subclaims. The estimator (Bob) has the sole task of assigning\nprobabilities to the prover’s subclaims. The prover uses these probabilities to decide which subclaim to\nrecursively debate further. This departs from previous debate protocols, where the opponent selects which\nsubclaim to challenge. We show that Bob can always produce probabilities that are indistinguishable from\nthe truth by Alice, while expending computational effort not too much greater than Alice. Alice cannot\ntherefore (on average) select a subproblem where Bob is non-trivially wrong. However, prover-estimator\ndebate has limitations. Alice’s task becomes harder because Bob can defeat an argument by assigning low\nprobabilities to many subclaims. This rules out certain delicate, yet correct arguments that are highly\nsensitive to the probabilities assigned to subproblems. We formalize this condition by introducing a stability\nrequirement, ρ-stability, which demands that the validity of arguments cannot hinge on arbitrarily small\nchanges in subclaim probabilities1 . We require stability only for usefulness, not safety: even if stability does\nnot hold, an honest estimator can still win against any incorrect argument by a dishonest prover.",
+     "pdf_page": "https://arxiv.org/pdf/2506.13609v2#page=3"
+    },
+    {
+     "version": "2506.13609v2",
+     "page": 9,
+     "lines": [
+      41,
+      45
+     ],
+     "text": "Notice that we only require that L admits an A-provable, ρ-stable decomposition in the completeness case.\nThis means that a dishonest debater A may produce an incorrect decomposition into queries y k for some input\nx such that MD (x, y k , z k ) is not ρ-stable, with answers to queries that cannot be answered by any function\nin A. Therefore, our protocol must account for situations where A produces an unstable decomposition into\nhard-to-answer queries, and ensure B is still able to win.",
+     "pdf_page": "https://arxiv.org/pdf/2506.13609v2#page=9"
+    },
+    {
+     "version": "2506.13609v2",
+     "page": 13,
+     "lines": [
+      13,
+      17
+     ],
+     "text": "Another limitation is that our results hold in an average-case rather than a worst-case sense: we do not\nprove the judge is always able to tell which debater is correct on every question. Rather, we show that the\npayoffs given by the judge incentivize the debaters to converge to answering correctly. Thus, the payoff\nassigned by the judge is a random variable that is correlated with correctness, but imperfectly so. We believe\nsuch an average-case analysis is necessary, and formalizing this is an interesting open question. We are also",
+     "pdf_page": "https://arxiv.org/pdf/2506.13609v2#page=13"
+    }
+   ]
+  },
+  {
+   "id": "Q47:F2",
+   "later_paper": "arXiv 2610.02557v1: How to Have a Sensitive Debate: An Instance-Optimal Protocol for AI Debate",
+   "first_submitted": "2026-10-01",
+   "effect": "NARROWS",
+   "claim": "The authors show that any protocol with only black-box access to human judgments must make at least Omega(rho^d) queries to find a flawed sub-claim with constant probability, matching the cost of their FBS debate protocol; the bound holds instance-wise: if the best decomposition of an original claim x into a tree of sub-claims has fractional block sensitivity rho in each step, then rho^d queries are required on that instance. In their lower-bound model an honest Bob and the judge form one adaptive checker that receives the full visible tree and outputs a bit intended to equal L(x), with pairwise-distinct leaf queries. They say the black-box assumption is critical for the lower bound and view the result as showing it must be relaxed to make further progress, and they leave open whether a protocol can go beyond this barrier by using Bob's ability to solve the same problems as Alice or some other relaxation of the black-box oracle assumption.",
+   "setting": "Theory. Debate over a recursive decomposition of a claim into a tree of sub-claims of depth d; human judgment modelled as a black box accessible only via queries; instance-wise lower bound on the queries needed to find a flawed sub-claim, in a model where an honest Bob and the judge form one adaptive checker that receives the full visible tree, makes adaptive queries to the oracle O and outputs a bit intended to equal L(x); leaf queries assumed pairwise distinct.",
+   "bears_on": "Narrows how a stability-free protocol could work: with black-box judgment, a checker that must output L(x) needs Omega(rho^d) queries when the best decomposition has fractional block sensitivity rho in each step, leaving non-black-box judgment or exploiting the debaters' computation as routes. The bound concerns deciding L(x); it does not address a protocol that targets honesty instead of correctness.",
+   "passages": [
+    {
+     "version": "2610.02557v1",
+     "page": 5,
+     "lines": [
+      1,
+      9
+     ],
+     "text": "Instance-wise optimality. Finally, we show in Section 5 that any protocol with only black-box\naccess to human judgments must make at least Ω(ρd ) queries to find a flawed sub-claim with constant\nprobability, matching the cost of our FBS debate protocol. This lower bound holds instance-wise: if\nthe best decomposition of an original claim x into a tree of sub-claims has fractional block sensitivity\nρ in each step, then ρd queries are required on that particular instance x. The assumption of\nblack-box access to human judgments is critical for the lower bound to hold. One can view this\ninstance-wise optimality as demonstrating that the black-box judgment assumption, which is common\nto all prior theoretical work on debate, must be relaxed in order to make further progress on debate\nprotocols.",
+     "pdf_page": "https://arxiv.org/pdf/2610.02557v1#page=5"
+    },
+    {
+     "version": "2610.02557v1",
+     "page": 14,
+     "lines": [
+      47,
+      56
+     ],
+     "text": "Given this discussion, the question remains: is it possible to design a protocol that goes beyond\nthe fractional block sensitivity barrier we identify? One might hope that utilizing Bob’s ability\nto solve the same problems as Alice could help with this issue, perhaps by allowing Bob to take\nadvantage of Alice’s computational limitations in some way. Alternatively, our lower bounds only\napply when human judgment is modeled as a black box, accessible only via queries. Classical\nresults in interactive proofs like IP = PSPACE show that opening up the black box yields much\nstronger protocols. It seems implausible that these methods can be adapted to the case of human\njudgment—one would need to essentially be able to “read the code” that implements the human\njudgment. However, it is still possible that some other relaxation of the black-box oracle assumption\ncould lead to better debate protocols.",
+     "pdf_page": "https://arxiv.org/pdf/2610.02557v1#page=14"
+    },
+    {
+     "version": "2610.02557v1",
+     "page": 11,
+     "lines": [
+      46,
+      57
+     ],
+     "text": "where u1 , . . . , uq are the children of u. For the lower bound, we treat T as a syntactic transcript\nwhose truth value under O is valO (root).\nWe assume that the leaf queries qℓ are pairwise distinct. This assumption is needed for a\nnon-trivial lower bound: for example, if all q leaves of a q-ary AND root query the same string, then\nthe decomposition tree T computes only a one-bit identity function.\nAdaptive checker. To strengthen the lower bound, we assume that the second debater Bob is\nhonest and assists the judge, while Alice may use an arbitrary strategy. We model Bob and the\njudge together as a single adaptive checker. Specifically, an m-query adaptive checker V for T is a\nrandomized algorithm that receives the full visible tree T , makes at most m adaptive queries to O,\nmay communicate arbitrarily with Alice, and finally outputs a bit intended to equal L(x). Giving\nthe checker an honest Bob and the full visible tree can only make its task easier, so a lower bound in\nthis model also applies to the original debate protocol.",
+     "pdf_page": "https://arxiv.org/pdf/2610.02557v1#page=11"
+    }
+   ]
+  },
+  {
+   "id": "Q47:F3",
+   "later_paper": "arXiv 2610.02557v1: How to Have a Sensitive Debate: An Instance-Optimal Protocol for AI Debate",
+   "first_submitted": "2026-10-01",
+   "effect": "RELATED_ONLY",
+   "claim": "The authors state that their new debate protocol provides worst-case guarantees for the original, stronger dominant-strategy equilibrium concept and handles exactly the same class of sufficiently stable problems as prover-estimator debate. In FBS debate, an honest Alice can always win (completeness, Theorem 4.1) if there exists a decomposition tree for x in which Alice can calculate the children of any non-leaf node in time T_D, can solve L at any node in time T and Q queries to O, and every non-leaf node has fractional block sensitivity at most rho at the correct answers to its sub-problems. Honestly and correctly following the protocol is a dominant strategy for each debater, in contrast to prover-estimator debate, which only guarantees soundness under a Stackelberg equilibrium condition.",
+   "setting": "Theory. FBS debate over a decomposition tree T of a claim x, with queries to an oracle O; completeness and soundness hold whatever strategy the opponent uses (soundness with overwhelming probability); for completeness Alice must compute each non-leaf node's children in time T_D, solve each node (Solvability) in time T with Q queries to O, and meet the fractional block sensitivity bound at every non-leaf node. That the protocol handles the same class of sufficiently stable problems as prover-estimator debate is the authors' statement; the quoted lines do not prove it.",
+   "bears_on": "By the authors' account, a later protocol handles exactly the same class of sufficiently stable problems as prover-estimator debate, and its completeness theorem assumes a decomposition with bounded fractional block sensitivity; it changes the guarantees (worst-case, with honesty and correctness as dominant strategies) rather than dropping the stability restriction, so it does not show a protocol that avoids needing stability.",
+   "passages": [
+    {
+     "version": "2610.02557v1",
+     "page": 2,
+     "lines": [
+      38,
+      42
+     ],
+     "text": "In this paper we design a new debate protocol that provides worst-case guarantees for the original,\nstronger dominant-strategy equilibrium concept. The protocol handles exactly the same class of\nsufficiently stable problems as prover-estimator debate, while also being simpler to execute and\nanalyze. We further prove that this protocol is instance optimal unless further structural assumptions\nare made on the human judgments used to verify debates.",
+     "pdf_page": "https://arxiv.org/pdf/2610.02557v1#page=2"
+    },
+    {
+     "version": "2610.02557v1",
+     "page": 9,
+     "lines": [
+      12,
+      23
+     ],
+     "text": "Theorem 4.1 (Completeness). Let T, TD , Q be three\nparameters. An honest Alice can always win\n\u0001\nin the FBS debate on input x in O d · (TD + q · T ) time and O(d · q · Q) queries to O if there exists\na decomposition tree T for x such that\n• Alice can calculate the children of any non-leaf node in T in time TD .\n• Alice can solve L(x̂u ) at any node u in T in time T and Q queries to O;\n\n(Solvability)\n\n• For every non-leaf node u in T , if y are the sub-problems in the child nodes of u and z are the\ncorrect answers to y, then fbsz (MD (x̂u , y, ·)) ≤ ρ.",
+     "pdf_page": "https://arxiv.org/pdf/2610.02557v1#page=9"
+    },
+    {
+     "version": "2610.02557v1",
+     "page": 4,
+     "lines": [
+      27,
+      38
+     ],
+     "text": "Honesty and correctness are dominant strategies. Our protocol for fractional block sensitivity\n(FBS) debate satisfies the key properties of completeness and soundness. Completeness requires that\nif the original claim x is correct, then no matter what strategy Bob employs, Alice can always win\nby honestly and correctly decomposing every claim. Similarly, soundness requires that if the original\nclaim x is incorrect, then no matter what strategy Alice employs, Bob can win with overwhelming\nprobability by honestly following the prescribed protocol. In other words, honestly and correctly\nfollowing the prescribed protocol is a dominant strategy for each player in the debate game. This is\nin contrast to the prior prover-estimator debate protocol, which only guarantees soundness under the\nfollowing Stackelberg equilibrium condition: for any dishonest strategy selected by Alice, there exists\na winning strategy by Bob, which in general depends on Alice’s strategy in a potentially complicated\nway. This is a technically much weaker condition, and in practice training for dominant strategy\nequilibria is much more stable and tractable than Stackelberg equilibria.",
+     "pdf_page": "https://arxiv.org/pdf/2610.02557v1#page=4"
+    }
+   ]
+  },
+  {
+   "id": "Q47:F4",
+   "later_paper": "arXiv 2607.03561v1: How to Avoid Debate: Scalable AI Safety via Doubly-Efficient Interactive Proofs",
+   "first_submitted": "2026-07-03",
+   "effect": "RELATED_ONLY",
+   "claim": "In work that presents single-prover interactive proofs as a way to avoid debate, the authors suggest that many natural tasks may be able to be made robust (output unchanged when a small fraction of answers to oracle queries are modified) using redundancy, e.g. rephrasing the question or asking multiple people and taking the majority answer, and pose formalising this intuition as a theoretical model as an open question.",
+   "setting": "Theory: doubly-efficient single-prover interactive proofs and arguments for oracle-aided computations (the oracle may be human judgment) that are robust, i.e. the output does not change if at most a small fraction of oracle answers are incorrect; not a debate protocol. The suggestion about redundancy is informal.",
+   "bears_on": "The 'transform an unstable computation into a stable one' route: raised as an open direction in a neighbouring model, not achieved.",
+   "passages": [
+    {
+     "version": "2607.03561v1",
+     "page": 4,
+     "lines": [
+      28,
+      35
+     ],
+     "text": "Robust computation. We say that a computation is robust if the output does not change even if\na small fraction of answers to oracle queries are modified. Intuitively, robustness allows a verifier to\n“spot-check” oracle calls instead of having to evaluate all of them. It seems natural to assume that the\ncomputation is robust, especially in the setting where the oracle is taken to represent human judgment:\nhuman judgment is already error-prone, so as a safeguard, the output of the computation should not\nchange if a small number of the human answers change, otherwise the output is not very meaningful.\nMore broadly, many natural tasks may be able to be made robust using redundancy, e.g., in the case of\nhuman judgment, we might rephrase the question or ask multiple people and take the majority answer.",
+     "pdf_page": "https://arxiv.org/pdf/2607.03561v1#page=4"
+    },
+    {
+     "version": "2607.03561v1",
+     "page": 32,
+     "lines": [
+      90,
+      92
+     ],
+     "text": "• Scope of robust computation. As mentioned previously, many natural tasks may be able to\nbe made robust using redundancy. Can we formalize this intuition as some theoretical model (and\nthen apply our protocol for robust computation)?",
+     "pdf_page": "https://arxiv.org/pdf/2607.03561v1#page=32"
+    },
+    {
+     "version": "2607.03561v1",
+     "page": 1,
+     "lines": [
+      17,
+      25
+     ],
+     "text": "In this work, we show how to avoid debate: we initiate the study of single-prover interactive proofs\nfor AI safety. Prior results in single-prover interactive proofs do not immediately carry over to the AI\nsafety setting: for example, they do not work when the computation has access to an oracle, such as\nto human judgment or an external database such as the web. We present doubly-efficient single-prover\ninteractive proofs and arguments for oracle-aided computations (also known as relativizing proofs),\nin the settings where (1) the computation is robust, in the sense that the output does not change if\nat most a small fraction of the answers to oracle queries are incorrect, or (2) the oracle is a low-degree\npolynomial. These results suggest that interactive verification is possible even without debate, under\nstructured or noise-tolerant oracle access.",
+     "pdf_page": "https://arxiv.org/pdf/2607.03561v1#page=1"
+    }
+   ]
+  }
+ ],
+ "findings_drafted": 4,
+ "maths": [
+  {
+   "folder": "stability",
+   "label": "Partly settled in the pilot (per instance and per tree; see results)",
+   "settled": "Q47: in Figure 2, a coherent estimator makes every intermediate consistency reward 0 whatever the prover does; the only signal against a coherent dishonest estimator is the leaf reward, bounded by the largest leaf error.",
+   "remains": "(1) Exact characterization of completeness for Figure 2 on a fixed tree: an unstable sensitive cut is sufficient for failure (derived) and all-nodes-stable is sufficient for success (Theorem 6.1); the conjecture that 'no unstable sensitive cut' is also sufficient for success (exact for all q = 2, d = 2 trees computed) needs a proof and tests for q >= 3; a closed form for Val(x,T,1/rho) on non-uniform trees is open. (2) Adaptive provers: our necessity results fix the prover's tree; whether a prover that changes decomposition in response to B's estimates can beat the barrier min(r^(d+1), 1/fbs_alpha(F_T)) of its realised tree is not settled here. (3) Beyond black-box judges and unbounded opponents: 2610.02557v1 settles the query lower bound for black-box judges (fixed revealed tree, distinct leaves); protocols with structured or partly transparent judgments, and opponents that cannot find sensitive blocks, remain open, as that paper also states (p14 L47-56). (4) Q51(b) converse: does a decomposition with small global fbs_alpha(F_T) <= R imply one of depth O(d) with local fbs <= C R^(1/d)? And which natural problem classes (beyond weighted thresholds, Lipschitz aggregators, AND-like proofs) have small global fbs for some A-provable decomposition? (5) Q47: a protocol that provably elicits coherent, leaf-calibrated reports with an fbs-independent incentive gap, and a useful notion of honesty whose conversion to correctness costs less than fbs_alpha(F_T), are open; the unstable-to-stable transformation route (M to M*) is not addressed here. (6) General-q proofs of the phi-uniform closed form and of the unstable-cut statement (both only derived and checked for q = 2, 3)."
+  }
+ ],
+ "experiment_package": null,
+ "review_status": "provisional_ai_draft",
+ "rules": [
+  "Everything here is an AI draft (provisional_ai_draft): each counted item passed two blind AI checks that were tested on planted errors, and no person has reviewed it.",
+  "A finding counts only in the setting its own quoted lines show; read `setting` before carrying it to another setting.",
+  "A question's status is a label from fixed rules over its counted findings; `status_check` says whether that label itself passed its check.",
+  "Cite the paper and page from the passage, and read the PDF page before relying on a claim."
+ ]
+}

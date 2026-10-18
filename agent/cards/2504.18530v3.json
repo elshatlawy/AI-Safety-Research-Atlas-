@@ -1,0 +1,659 @@
+{
+ "schema": "ASRA-GAP-CLOSING-AGENT-v1",
+ "paper": "2504.18530v3",
+ "review_status": "provisional_ai_draft",
+ "rules": [
+  "Everything here is an AI draft (provisional_ai_draft): each counted item passed two blind AI checks that were tested on planted errors, and no person has reviewed it.",
+  "A finding counts only in the setting its own quoted lines show; read `setting` before carrying it to another setting.",
+  "A question's status is a label from fixed rules over its counted findings; `status_check` says whether that label itself passed its check.",
+  "Cite the paper and page from the passage, and read the PDF page before relying on a claim."
+ ],
+ "notes": "CORE is a composite claim (framework, Counting-to-21 validation, four games, NSO theory); it is graded by its empirical part. RES-DEBATE-SCALING and three citation records (XREF-KENTON-DEBATE-SETUP, XREF-KHAN-JUDGE-ACCURACY, XREF-MICHAEL-JUDGE-ACCURACY, XREF-KENTON-JUDGE-ACCURACY) share the same quoted lines. Its grade depends on reading 'uncertainty reported for the result': the paper computes bootstrap CIs for Elo points (Section D.2) but reports none for the scaling trend; a reviewer may prefer EMPIRICAL_MULTI_SETTING. RES-SINGLE-STEP-SLOPES: Section 3.3 says both Guard and Houdini Elos scale with general intelligence in Backdoor Code, while Section 3.5 calls the Guard slope 'nearly flat'; 'vary significantly' has no test. CLAIM-NSO-NUMERICAL is a deterministic numerical study, which the rubric's grades do not fit cleanly; graded EMPIRICAL_SINGLE_SETTING because the paper calls these numerical experiments. THM-NSO-ASYMPTOTICS: the formula in the record's quote is garbled by extraction; case (1) rests on a first-order approximation. RES-NSO-GAMES: estimates assume all players on the fitted lines and no saturation.",
+ "cards": [
+  {
+   "record_id": "N2:DSOFT:ARXIV-2504.18530v3:CORE",
+   "paper": "2504.18530v3",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2504.18530v3:METHOD-NSO",
+     "N2:DSOFT:ARXIV-2504.18530v3:DEF-NSO"
+    ],
+    "description": "LLMs prompted as Houdinis and Guards play each game in all pairings; Guard and Houdini Elo ratings are fit to the win-rate matrix and related to Chatbot Arena Elo with a Double ReLU or a simpler fit chosen by AIC (first tested on Counting-to-21), and NSO success is then computed from the fitted lines numerically and, in some cases, analytically.",
+    "passages": [
+     {
+      "version": "2504.18530v3",
+      "page": 2,
+      "lines": [
+       61,
+       72
+      ],
+      "text": "Since we are interested in oversight games, we will refer to the two players as the Houdini (H)\n(whose goal is to thwart oversight) and the Guard (G) (a typically less capable agent whose goal is to\nprevent this). Each game ends with H or G winning. We defer formal definitions to Section D.1.\nFor each oversight game, we begin by collecting empirical win-rate statistics between all pairs of\nGuard and Houdini models. This results in a square win-rate matrix P, where Pij ∈ [0, 1] is the\nfraction of the time that Guard i defeats Houdini j. Using this matrix, each model is assigned two\nseparate Elo (Elo, 1967) scores: one score EG for performance when acting as a Guard, and another\nscore EH when acting as Houdini. The expected win probability for a Guard with Elo EG against a\nHoudini with Elo EH is given by the standard Elo formula\n\u0010\n\u0011−1\nEH −EG",
+      "pdf_page": "https://arxiv.org/pdf/2504.18530v3#page=2"
+     },
+     {
+      "version": "2504.18530v3",
+      "page": 4,
+      "lines": [
+       33,
+       37
+      ],
+      "text": "In subsequent experiments, not all Double ReLU parameters (Eq. (2)) may be relevant, particularly if\nsaturation at extreme intelligence levels is not observed. We employ the Akaike Information Criterion\n(AIC; Cavanaugh & Neath, 2019) to systematically select between simplified linear and saturated fits,\nbalancing model complexity and data fit (see Section D.3 for details). This allows us to adapt the\ncomplexity of our Elo model to the observed data across various domains.",
+      "pdf_page": "https://arxiv.org/pdf/2504.18530v3#page=4"
+     },
+     {
+      "version": "2504.18530v3",
+      "page": 3,
+      "lines": [
+       91,
+       99
+      ],
+      "text": "To test our Double ReLU hypothesis in a controlled setting, we first analyze a toy combinatorial game,\nCounting-to-21. Players alternate incrementing a count between 1 and 4 times, aiming to be the first\nto say \"21.\" This game is a simplified instance of Nim (Bouton, 1901), known to be fully solvable\nwith clear optimal strategies. We describe the rules to various LLMs, prompting them to generate\nexecutable game-playing code, and then play these programs against each other. We use Chatbot\nArena Elo scores as a proxy for general intelligence in these experiments. Although imperfect (Singh\net al., 2025), Chatbot Arena Elo provides a reasonable aggregate measure of model capability.\nOur results (see Fig. 2) confirm the predicted three-phase pattern of domain-specific Elo scores as a\nfunction of general intelligence: an initial plateau below threshold g1 , linear improvement between",
+      "pdf_page": "https://arxiv.org/pdf/2504.18530v3#page=3"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2504.18530v3:ASM-DOUBLE-RELU"
+    ],
+    "stated_hypotheses": [
+     "Domain Elo is a piecewise-linear (Double ReLU) function of general Elo, with plateaus for task incompetence and task saturation.",
+     "Chatbot Arena Elo is used as an imperfect proxy for general intelligence.",
+     "Domain skill is captured on one axis (Elo) per game and is not taken to transfer between games.",
+     "The NSO analysis assumes a positive general-Elo gap between the starting Guard and the target Houdini and considers only the sloped parts of the Elo curves.",
+     "The simple form of debate used in the Debate game assumes that both debaters faithfully engage in an adversarial debate (the authors note advanced agents might instead collaborate to deceive the judge)."
+    ],
+    "passages": [
+     {
+      "version": "2504.18530v3",
+      "page": 3,
+      "lines": [
+       77,
+       80
+      ],
+      "text": "Note that we assume here that domain intelligence can be captured along a single axis (Elo), but\nmodels have many different oversight relevant capabilities that scale at different rates. Domain Elos\nthus make sense when applied to a single game, but should not be viewed as transferring between\ngames (and indeed, in Fig. 3 the Ed slope is different across games).",
+      "pdf_page": "https://arxiv.org/pdf/2504.18530v3#page=3"
+     },
+     {
+      "version": "2504.18530v3",
+      "page": 7,
+      "lines": [
+       91,
+       94
+      ],
+      "text": "domain and general intelligence gaps between the initial Guard and the target Houdini. We assume\n∆general > 0, as otherwise oversight is unnecessary because we have a trusted Guard stronger than\nthe target Houdini. We do case analysis in Section G.1 to show that we can safely ignore cases where\nthe Guard or Houdini are on the flat task incompetence or saturation regions.",
+      "pdf_page": "https://arxiv.org/pdf/2504.18530v3#page=7"
+     },
+     {
+      "version": "2504.18530v3",
+      "page": 4,
+      "lines": [
+       30,
+       32
+      ],
+      "text": "thresholds, and saturation above g2 once models discover the optimal strategy. Some deviations,\nparticularly at lower general intelligence levels, highlight limitations of Chatbot Arena Elo as a metric,\npossibly reflecting human preference alignment in Elos rather than intelligence.",
+      "pdf_page": "https://arxiv.org/pdf/2504.18530v3#page=4"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Various LLMs prompted as Houdini (overseen) and Guard (overseer), with Chatbot Arena Elo as their general-intelligence score",
+    "task_data": "Counting-to-21 (a simplified Nim) and the oversight games Mafia, Debate, Backdoor Code and Wargames; NSO theory built on the fitted Elo curves",
+    "judge": "Each game ends with a Houdini or a Guard win",
+    "regime": "mixed",
+    "scale": null
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2504.18530v3:LIM-SIMPLIFIED-SETTINGS",
+     "N2:DSOFT:ARXIV-2504.18530v3:LIM-DEBATE-COLLUSION"
+    ],
+    "notes": "On Counting-to-21 the authors see deviations at lower general intelligence that they attribute to limits of Chatbot Arena Elo; the games simulate single-step oversight with deception induced by prompting."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "The scaling laws are fits across several games, but the passages report no uncertainty for the fitted relations, and the NSO part is numerical, with only some cases derived analytically."
+   },
+   "review_status": "provisional_ai_draft",
+   "check_history": [
+    "card-1: flagged or undecided by two blind checks; rewritten from the checkers' suggested fix (quotes unchanged)"
+   ]
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2504.18530v3:RES-DEBATE-SCALING",
+   "paper": "2504.18530v3",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [],
+    "description": "Two LLM debaters (Houdinis) argue opposing stances for three rounds and an LLM judge (Guard) without access to the source article picks the winner; Guard and Houdini Elo ratings are fit from the pairwise win rates and compared with Chatbot Arena Elo, on 20 question-answer pairs from each of four datasets.",
+    "passages": [
+     {
+      "version": "2504.18530v3",
+      "page": 14,
+      "lines": [
+       31,
+       40
+      ],
+      "text": "We study a scenario where two LLM debater agents (denoted Alice and Bob) engage in a debate\nto convince the judge. The debaters are Houdinis and the judges are Guards. The debaters are\nassigned opposing stances on a given question and asked to present their arguments and rebuttals over\nthree rounds. Alice starts first, and each debater has access to all previous arguments in the debate.\nAfter three rounds, the judge reviews the transcript to determine the winner. Following prior work\n(Kenton et al., 2024), the judge does not have access to the ground-truth article, simulating real-world\ninformation asymmetry between Houdinis and Guards. Both debaters and judges are asked to think\nbefore they present their statement. We derive 20 question-answer pairs from each of the following\ndatasets: TruthfulQA (Lin et al., 2021), BoolQ (Clark et al., 2019), QuaLITY (Pang et al., 2022), and\nPrOntoQA (Saparov & He, 2023).",
+      "pdf_page": "https://arxiv.org/pdf/2504.18530v3#page=14"
+     },
+     {
+      "version": "2504.18530v3",
+      "page": 17,
+      "lines": [
+       38,
+       41
+      ],
+      "text": "where p̂GH is the empirical win rate of Guard G against Houdini H. Optimization is performed\nusing the L-BFGS-B algorithm. Confidence intervals on Elo estimates are computed via statistical\nbootstrapping with 200 random seeds. Note that Elo ratings are inherently relative, meaning that they\nare identifiable only up to a constant offset.",
+      "pdf_page": "https://arxiv.org/pdf/2504.18530v3#page=17"
+     },
+     {
+      "version": "2504.18530v3",
+      "page": 18,
+      "lines": [
+       52,
+       54
+      ],
+      "text": "Fig. 11 shows additional debate results on different datasets. We observe similar trends across\ndifferent datasets: the judge’s domain Elo scales with general Elo, but the debaters’ domain Elo does\nnot.",
+      "pdf_page": "https://arxiv.org/pdf/2504.18530v3#page=18"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2504.18530v3:ASM-DOUBLE-RELU"
+    ],
+    "stated_hypotheses": [
+     "Domain Elo is fitted as a linear or saturating (Double ReLU) function of general Elo, the form chosen by AIC.",
+     "Chatbot Arena Elo is used as a proxy for general intelligence.",
+     "Both debaters are assumed to engage faithfully in adversarial debate; collusion and arguing-side biases are out of scope.",
+     "The judge lacks the ground-truth article, simulating information asymmetry."
+    ],
+    "passages": [
+     {
+      "version": "2504.18530v3",
+      "page": 4,
+      "lines": [
+       33,
+       37
+      ],
+      "text": "In subsequent experiments, not all Double ReLU parameters (Eq. (2)) may be relevant, particularly if\nsaturation at extreme intelligence levels is not observed. We employ the Akaike Information Criterion\n(AIC; Cavanaugh & Neath, 2019) to systematically select between simplified linear and saturated fits,\nbalancing model complexity and data fit (see Section D.3 for details). This allows us to adapt the\ncomplexity of our Elo model to the observed data across various domains.",
+      "pdf_page": "https://arxiv.org/pdf/2504.18530v3#page=4"
+     },
+     {
+      "version": "2504.18530v3",
+      "page": 3,
+      "lines": [
+       94,
+       97
+      ],
+      "text": "with clear optimal strategies. We describe the rules to various LLMs, prompting them to generate\nexecutable game-playing code, and then play these programs against each other. We use Chatbot\nArena Elo scores as a proxy for general intelligence in these experiments. Although imperfect (Singh\net al., 2025), Chatbot Arena Elo provides a reasonable aggregate measure of model capability.",
+      "pdf_page": "https://arxiv.org/pdf/2504.18530v3#page=3"
+     },
+     {
+      "version": "2504.18530v3",
+      "page": 15,
+      "lines": [
+       51,
+       54
+      ],
+      "text": "Table 1 shows the full list of models used in the experiment. These models were chosen to cover most\nof the Elo range in Chatbot Arena. Claude-3.5-Haiku was excluded from the Wargames setup since it\noften refused to play. Also, Gemini-Pro was excluded from the debate setup because OpenRouter\nhad ceased support for this model by the time we conducted our debate experiments.",
+      "pdf_page": "https://arxiv.org/pdf/2504.18530v3#page=15"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "LLMs chosen to cover most of the Chatbot Arena Elo range (Gemini-Pro excluded from debate), as debaters (Houdinis) and judges (Guards)",
+    "task_data": "TruthfulQA (Fig. 3), with QuALITY, PrOntoQA and BoolQ in Section F.2",
+    "judge": "The LLM judge (Guard) reads the three-round transcript without the source article",
+    "regime": "evaluation",
+    "scale": "20 question-answer pairs per dataset"
+   },
+   "quantitative": {
+    "n": "20 question-answer pairs from each of TruthfulQA, BoolQ, QuALITY and PrOntoQA",
+    "uncertainty": "Section D.2 says confidence intervals on Elo estimates come from bootstrapping with 200 random seeds; no interval, standard error or test for the Guard or Houdini slope is given in the text."
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2504.18530v3:LIM-DEBATE-COLLUSION",
+     "N2:DSOFT:ARXIV-2504.18530v3:LIM-SIMPLIFIED-SETTINGS"
+    ],
+    "notes": "BoolQ shows mostly flat performance for both roles; 'promising for scalable oversight' is the authors' interpretation."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "The trend appears on three of four datasets, but no uncertainty is reported for the trend itself (only that bootstrap intervals are computed for individual Elo estimates), so the rubric's multi-setting grade is not met."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2504.18530v3:RES-SINGLE-STEP-SLOPES",
+   "paper": "2504.18530v3",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [],
+    "description": "For each of the four oversight games, Guard and Houdini Elo ratings are fit from pairwise win rates and regressed on Chatbot Arena Elo (Fig. 3), and the fitted slopes and intercepts are compared across games.",
+    "passages": [
+     {
+      "version": "2504.18530v3",
+      "page": 4,
+      "lines": [
+       43,
+       43
+      ],
+      "text": "Results for our oversight settings (Mafia, Debate, Backdoor Code, Wargames) are shown in Fig. 3.",
+      "pdf_page": "https://arxiv.org/pdf/2504.18530v3#page=4"
+     },
+     {
+      "version": "2504.18530v3",
+      "page": 5,
+      "lines": [
+       57,
+       62
+      ],
+      "text": "In Fig. 3, we see that both Guard and Houdini Elos scale with general intelligence. The Guard intercept\nis higher than the Houdini intercept, indicating that the game is more difficult for Houdinis—i.e., even\nthe strongest Houdinis fail to significantly exceed a 50% success rate against the weakest Guards.\nMoreover, the Houdini slope is steeper than the Guard slope, suggesting that general intelligence\nyields greater returns for generating malicious code than detecting it. However, smarter Houdinis do\nnot craft more deceptive backdoors—they are simply more likely to produce functionally valid ones.",
+      "pdf_page": "https://arxiv.org/pdf/2504.18530v3#page=5"
+     },
+     {
+      "version": "2504.18530v3",
+      "page": 17,
+      "lines": [
+       38,
+       41
+      ],
+      "text": "where p̂GH is the empirical win rate of Guard G against Houdini H. Optimization is performed\nusing the L-BFGS-B algorithm. Confidence intervals on Elo estimates are computed via statistical\nbootstrapping with 200 random seeds. Note that Elo ratings are inherently relative, meaning that they\nare identifiable only up to a constant offset.",
+      "pdf_page": "https://arxiv.org/pdf/2504.18530v3#page=17"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2504.18530v3:ASM-DOUBLE-RELU"
+    ],
+    "stated_hypotheses": [
+     "Domain Elo is fitted as a linear or saturating (Double ReLU) function of general Elo, the form chosen by AIC.",
+     "Chatbot Arena Elo is used as a proxy for general intelligence.",
+     "Only single-step oversight is simulated, and deception is induced by prompting.",
+     "The two design properties are a suggestion the authors draw from these fits ('These results suggest')."
+    ],
+    "passages": [
+     {
+      "version": "2504.18530v3",
+      "page": 4,
+      "lines": [
+       33,
+       37
+      ],
+      "text": "In subsequent experiments, not all Double ReLU parameters (Eq. (2)) may be relevant, particularly if\nsaturation at extreme intelligence levels is not observed. We employ the Akaike Information Criterion\n(AIC; Cavanaugh & Neath, 2019) to systematically select between simplified linear and saturated fits,\nbalancing model complexity and data fit (see Section D.3 for details). This allows us to adapt the\ncomplexity of our Elo model to the observed data across various domains.",
+      "pdf_page": "https://arxiv.org/pdf/2504.18530v3#page=4"
+     },
+     {
+      "version": "2504.18530v3",
+      "page": 3,
+      "lines": [
+       94,
+       97
+      ],
+      "text": "with clear optimal strategies. We describe the rules to various LLMs, prompting them to generate\nexecutable game-playing code, and then play these programs against each other. We use Chatbot\nArena Elo scores as a proxy for general intelligence in these experiments. Although imperfect (Singh\net al., 2025), Chatbot Arena Elo provides a reasonable aggregate measure of model capability.",
+      "pdf_page": "https://arxiv.org/pdf/2504.18530v3#page=3"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "LLMs prompted as Houdinis and Guards, scored against Chatbot Arena Elo",
+    "task_data": "Mafia, Debate, Backdoor Code and Wargames",
+    "judge": "Game outcomes (Houdini or Guard win)",
+    "regime": "evaluation",
+    "scale": null
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": "Bootstrap confidence intervals are computed for Elo estimates (Section D.2); no interval or test is given for the slope and intercept differences, which the text says 'vary significantly'."
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2504.18530v3:LIM-SIMPLIFIED-SETTINGS",
+     "N2:DSOFT:ARXIV-2504.18530v3:LIM-DEBATE-COLLUSION"
+    ],
+    "notes": "For Backdoor Code, smarter Houdinis are simply more likely to produce functionally valid backdoors, not more deceptive ones; the design properties are a suggestion drawn from the fits."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "Four games are compared, but no uncertainty is reported for the slopes and intercepts being compared."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2504.18530v3:CLAIM-NSO-NUMERICAL",
+   "paper": "2504.18530v3",
+   "evidence_type": "simulation",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2504.18530v3:METHOD-NSO"
+    ],
+    "description": "Eq. (4), the product of the stepwise Guard win probabilities, is evaluated numerically for n from 1 to 20 on a grid of domain and general Elo gaps with mG = mH = 1, and n* is the maximiser (Fig. 7).",
+    "passages": [
+     {
+      "version": "2504.18530v3",
+      "page": 8,
+      "lines": [
+       1,
+       5
+      ],
+      "text": "Figure 7: Optimal NSO when both Guard and Houdini game specific Elo slopes are 1. Left: Log\nodds of the optimal Guard win. Mid: Difference in log odds with optimal NSO vs. a single step of\noversight. Right: Optimal number of oversight steps.\nAll n steps of oversight must be successful for oversight to work, so the overall success probability is\npwin (n) =",
+      "pdf_page": "https://arxiv.org/pdf/2504.18530v3#page=8"
+     },
+     {
+      "version": "2504.18530v3",
+      "page": 8,
+      "lines": [
+       16,
+       17
+      ],
+      "text": "We numerically evaluate this equation for n ∈ [1, . . . , 20] to get the optimal n∗ :\nn∗ = arg max pwin (n)",
+      "pdf_page": "https://arxiv.org/pdf/2504.18530v3#page=8"
+     },
+     {
+      "version": "2504.18530v3",
+      "page": 8,
+      "lines": [
+       23,
+       30
+      ],
+      "text": "4.2\n\nTakeaways From Numerical Experiments\n\nIn Fig. 7, we show results for the optimal strategy found from Eq. (5) with fixed mG = mH = 1,\n∆domain ∈ [−2000, 2000], and ∆general ∈ [0, 2000] (with a step size of 10 for the ∆ ranges). The\nleft plot shows the resulting log odds log(p∗win /(1 − p∗win )), the right plot shows the optimal n∗ , and\nthe middle plot shows log odds difference between the n∗ oversight protocol and the n = 1 protocol.",
+      "pdf_page": "https://arxiv.org/pdf/2504.18530v3#page=8"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2504.18530v3:ASM-DOUBLE-RELU"
+    ],
+    "stated_hypotheses": [
+     "Guard and Houdini Elo slopes are both 1 (mG = mH = 1).",
+     "Delta_domain ranges over [-2000, 2000] and Delta_general over [0, 2000] in steps of 10, with n from 1 to 20.",
+     "Delta_general > 0, and only the sloped parts of the Double ReLU curves are considered.",
+     "All n oversight steps must succeed, so the overall success probability is the product of the stepwise win probabilities."
+    ],
+    "passages": [
+     {
+      "version": "2504.18530v3",
+      "page": 7,
+      "lines": [
+       88,
+       94
+      ],
+      "text": "are then used to align even stronger AIs recursively. We build on Eq. (2) to parameterize NSO with\nthe variables mG , mH , ∆domain , and ∆general (shown in Fig. 5). mG and mH are the slopes of\nthe linear regions of the Guard and Houdini Elo curves, respectively. ∆domain and ∆general are the\ndomain and general intelligence gaps between the initial Guard and the target Houdini. We assume\n∆general > 0, as otherwise oversight is unnecessary because we have a trusted Guard stronger than\nthe target Houdini. We do case analysis in Section G.1 to show that we can safely ignore cases where\nthe Guard or Houdini are on the flat task incompetence or saturation regions.",
+      "pdf_page": "https://arxiv.org/pdf/2504.18530v3#page=7"
+     },
+     {
+      "version": "2504.18530v3",
+      "page": 8,
+      "lines": [
+       45,
+       46
+      ],
+      "text": "We show plots for different mG and mH in Section F.4; overall patterns are similar, with a notable\nexception that the diagonal asymptote runs along the average of the Guard and Houdini slopes.",
+      "pdf_page": "https://arxiv.org/pdf/2504.18530v3#page=8"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Abstract Guard and Houdini players on linear Elo curves (no LLMs)",
+    "task_data": "The parameterized NSO model (Eqs. 3-5)",
+    "judge": null,
+    "regime": "simulation",
+    "scale": "Grid of Delta_domain in [-2000, 2000] and Delta_general in [0, 2000], step 10; n from 1 to 20"
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2504.18530v3:LIM-SIMPLIFIED-SETTINGS"
+    ],
+    "notes": "The findings are read off numerical plots ('appears optimal'); Section F.4 reports similar patterns for other slopes, with the diagonal asymptote moving to the average slope."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "The paper presents these as numerical experiments (Section 4.2) in one parameter setting (mG = mH = 1), with no proof and no uncertainty."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2504.18530v3:THM-NSO-ASYMPTOTICS",
+   "paper": "2504.18530v3",
+   "evidence_type": "theorem",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2504.18530v3:METHOD-NSO"
+    ],
+    "description": "With mG = mH = 1 the authors write pwin(n) = (1+q)^(-n), set its derivative in n to zero, and analyse extremal regimes in Section G.2: case (1) by a first-order Taylor approximation of log(1+q) as q -> 0 (Delta_domain -> -infinity); case (2) by the sign of the derivative as q -> infinity (Delta_domain -> infinity); case (3) in Section G.2.3 by simplifying q under Delta_general = Delta_domain and showing, as before, that the derivative's first term is positive and its second term negative, so the asymptote has n* = 1.",
+    "passages": [
+     {
+      "version": "2504.18530v3",
+      "page": 22,
+      "lines": [
+       215,
+       223
+      ],
+      "text": "We can now try to solve for n∗ by taking the derivative and setting it equal to 0. Let q equal the\nexponential term inside the parenthesis, so pwin (n) = (1 + q)−n . Then we have\n\u0012\n\u0013\nδpwin\nq∆general log(10)\n= (1 + q)−n\n− log(1 + q) = 0\nδn",
+      "pdf_page": "https://arxiv.org/pdf/2504.18530v3#page=22"
+     },
+     {
+      "version": "2504.18530v3",
+      "page": 23,
+      "lines": [
+       74,
+       85
+      ],
+      "text": "This regime represents very hard games for Houdini, where q → 0, so we can replace log(1 + q) in\nEq. (15) with its first order Taylor approximation q. We can then cancel two of the q from Eq. (15)\nand set the other equal to 0:\n∆general log(10)\n∆general log(10)\nq∆general log(10)\n= q =⇒\n= 1 =⇒ n∗ =\n(1 + q)400n\n400n\n400\n",
+      "pdf_page": "https://arxiv.org/pdf/2504.18530v3#page=23"
+     },
+     {
+      "version": "2504.18530v3",
+      "page": 23,
+      "lines": [
+       96,
+       107
+      ],
+      "text": "This regime represents very hard games for the Guard. In this regime q → ∞. Examining the\nderivative in Eq. (16), we see that (1 + q)−n is always positive, while for any fixed n the second term\nis always negative (we show that the first part of the subtraction operation is less than the second):\nq∆general log(10)\n∆general log(10)\n<\n< log(1 + q) as q → ∞\n(1 + q)400n\n400n\n\n(18)\n",
+      "pdf_page": "https://arxiv.org/pdf/2504.18530v3#page=23"
+     },
+     {
+      "version": "2504.18530v3",
+      "page": 23,
+      "lines": [
+       114,
+       119
+      ],
+      "text": "G.2.3\n\n∆general = ∆domain\n\nThis line corresponds to the empirical diagonal asymptote we observed in the last section. We first\nobserve that because ∆general = ∆domain , we can simplify q:",
+      "pdf_page": "https://arxiv.org/pdf/2504.18530v3#page=23"
+     },
+     {
+      "version": "2504.18530v3",
+      "page": 23,
+      "lines": [
+       141,
+       142
+      ],
+      "text": "Like before, the first term of Eq. (16) is positive, while the second term is always negative (we show\nthat the first part of the subtraction operation is less than the second):",
+      "pdf_page": "https://arxiv.org/pdf/2504.18530v3#page=23"
+     },
+     {
+      "version": "2504.18530v3",
+      "page": 24,
+      "lines": [
+       1,
+       4
+      ],
+      "text": "where the last step is by Eq. (19). Thus the asymptote we observe in Fig. 7 indeed always has n∗ = 1.\nFurthermore, the inequality in Eq. (20) will tend towards equality as ∆general = ∆domain grows,\nimplying that it is a “true” asymptote; that is, the region right next to it visually will have n∗ ̸= 1,\nwhich is indeed what we observe in Fig. 7.",
+      "pdf_page": "https://arxiv.org/pdf/2504.18530v3#page=24"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2504.18530v3:ASM-DOUBLE-RELU"
+    ],
+    "stated_hypotheses": [
+     "mG = mH = 1 is assumed for simplicity (mG and mH are the slopes of the linear regions of the Guard and Houdini Elo curves).",
+     "Delta_general > 0, and players on the flat parts of the curves can be set aside by case analysis.",
+     "n is treated as continuous when the derivative is set to zero, while Fig. 7 uses integer n, so the plotted n* is a step-function approximation.",
+     "Case (1) uses a first-order Taylor approximation of log(1+q) as q -> 0."
+    ],
+    "passages": [
+     {
+      "version": "2504.18530v3",
+      "page": 8,
+      "lines": [
+       51,
+       53
+      ],
+      "text": "We now analyze Eq. (4) to theoretically explain observations from the last section. For simplicity, we\nassume that mG = mH = 1. The derivative of Eq. (4) has no closed form solution when set it equal\nto 0, so we instead examine n∗ in extremal regimes. Proofs are deferred to Section G.2.",
+      "pdf_page": "https://arxiv.org/pdf/2504.18530v3#page=8"
+     },
+     {
+      "version": "2504.18530v3",
+      "page": 7,
+      "lines": [
+       89,
+       94
+      ],
+      "text": "the variables mG , mH , ∆domain , and ∆general (shown in Fig. 5). mG and mH are the slopes of\nthe linear regions of the Guard and Houdini Elo curves, respectively. ∆domain and ∆general are the\ndomain and general intelligence gaps between the initial Guard and the target Houdini. We assume\n∆general > 0, as otherwise oversight is unnecessary because we have a trusted Guard stronger than\nthe target Houdini. We do case analysis in Section G.1 to show that we can safely ignore cases where\nthe Guard or Houdini are on the flat task incompetence or saturation regions.",
+      "pdf_page": "https://arxiv.org/pdf/2504.18530v3#page=7"
+     },
+     {
+      "version": "2504.18530v3",
+      "page": 23,
+      "lines": [
+       88,
+       91
+      ],
+      "text": "This precisely explains the vertical lines for n∗ as ∆domain → −∞ in Fig. 7. For example, plugging\nin ∆general = 1500 tells us n∗ should be 8.63; in the picture, 1500 has 9 steps of oversight for very\nnegative ∆domain . Indeed, because we only allow integer n in Fig. 7, we can view the pattern as a\nstep function that approximates the true value for n∗ in Eq. (17).",
+      "pdf_page": "https://arxiv.org/pdf/2504.18530v3#page=23"
+     }
+    ],
+    "check": "not verified: the blind checks miss some dropped conditions on theorem cards; read the theorem's statement at the cited page"
+   },
+   "setting": {
+    "systems": "Abstract Guard and Houdini players on linear Elo curves (no LLMs)",
+    "task_data": "The parameterized NSO model (Eq. 4) with mG = mH = 1",
+    "judge": null,
+    "regime": "theory",
+    "scale": null
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [],
+    "notes": "Case (1) is an approximation as q -> 0 rather than an exact closed form; the derivative has no closed-form root in general."
+   },
+   "strength": {
+    "grade": "PROVED_IN_PAPER",
+    "reason": "The paper states the three limits (p. 9) with proofs deferred to Section G.2; the quoted proof lines derive case (1) via a first-order Taylor approximation, case (2) via the sign of the derivative, and case (3) (Section G.2.3) via a simplified q and the same sign argument, concluding n* = 1."
+   },
+   "review_status": "provisional_ai_draft",
+   "check_history": [
+    "card-1: flagged or undecided by two blind checks; rewritten from the checkers' suggested fix (quotes unchanged)",
+    "card-2: flagged by the checks; rewritten from the checkers' suggested fix (quotes unchanged)"
+   ]
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2504.18530v3:RES-NSO-GAMES",
+   "paper": "2504.18530v3",
+   "evidence_type": "simulation",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2504.18530v3:METHOD-NSO"
+    ],
+    "description": "Eq. (5) is evaluated numerically for each game, using the Guard and Houdini slopes and intercepts fitted in Section 3, as Delta_general varies, giving n* and the success probability p*win (Fig. 8).",
+    "passages": [
+     {
+      "version": "2504.18530v3",
+      "page": 9,
+      "lines": [
+       52,
+       53
+      ],
+      "text": "Figure 8: Optimal number of oversight steps (n∗ ) and win rate estimate (p∗win ) as a function of\n∆general for different oversight games from Section 3, assuming all players lie along fitted Elo curves.",
+      "pdf_page": "https://arxiv.org/pdf/2504.18530v3#page=9"
+     },
+     {
+      "version": "2504.18530v3",
+      "page": 1,
+      "lines": [
+       36,
+       40
+      ],
+      "text": "number of oversight levels to maximize the probability of oversight success. We\nalso apply our theory to our four oversight games, where we find that NSO success\nrates at a general Elo gap of 400 are 13.5% for Mafia, 51.7% for Debate, 10.0%\nfor Backdoor Code, and 9.4% for Wargames; these rates decline further when\noverseeing stronger systems.",
+      "pdf_page": "https://arxiv.org/pdf/2504.18530v3#page=1"
+     },
+     {
+      "version": "2504.18530v3",
+      "page": 8,
+      "lines": [
+       16,
+       17
+      ],
+      "text": "We numerically evaluate this equation for n ∈ [1, . . . , 20] to get the optimal n∗ :\nn∗ = arg max pwin (n)",
+      "pdf_page": "https://arxiv.org/pdf/2504.18530v3#page=8"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2504.18530v3:ASM-DOUBLE-RELU"
+    ],
+    "stated_hypotheses": [
+     "All Guards and Houdinis lie on the empirical slope and intercept estimates from Section 3.",
+     "No Elo-rating saturation.",
+     "For the auditing games (Mafia, Backdoor Code), the theory assumes the worst case that all models are misaligned and that a detected misaligned model can then be aligned."
+    ],
+    "passages": [
+     {
+      "version": "2504.18530v3",
+      "page": 9,
+      "lines": [
+       84,
+       89
+      ],
+      "text": "We note that although our theory of NSO most naturally applies to alignment games, it remains valid\nwhen applied to some of our setups that do not directly simulate alignment: (1) Mafia and Backdoor\nCode represent auditing setup. In these cases, catching deceptive behavior is actually neither winning\nnor losing, since one would simply continue attempting to align the Houdini. Nevertheless, our theory\nis still applicable, as it reflects a worst-case assumption that all models are misaligned, combined\nwith the assumption that once a misaligned model is detected, it can subsequently be aligned. (2)",
+      "pdf_page": "https://arxiv.org/pdf/2504.18530v3#page=9"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Fitted Guard and Houdini Elo lines from Section 3's LLM games (no new LLM runs)",
+    "task_data": "Mafia, Debate, Backdoor Code and Wargames",
+    "judge": null,
+    "regime": "simulation",
+    "scale": "Headline estimates at a 400-point general Elo gap"
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2504.18530v3:LIM-SIMPLIFIED-SETTINGS",
+     "N2:DSOFT:ARXIV-2504.18530v3:LIM-DEBATE-COLLUSION"
+    ],
+    "notes": "The rates are model predictions, not observed oversight outcomes; Debate's 51.7% sits near the 50% that a random judge gets. The abstract gives 13.5% for Mafia and 10.0% for Backdoor Code."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "Predictions computed from empirical fits across four games, with no uncertainty propagated to the success estimates."
+   },
+   "review_status": "provisional_ai_draft"
+  }
+ ]
+}

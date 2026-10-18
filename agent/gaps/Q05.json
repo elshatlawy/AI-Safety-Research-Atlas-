@@ -1,0 +1,127 @@
+{
+ "schema": "ASRA-GAP-CLOSING-AGENT-v1",
+ "id": "Q05",
+ "question": "Can Iterated Amplification be applied to complex real-world beyond-human-scale tasks?",
+ "asked_by": "Christiano et al., Supervising strong learners by amplifying weak experts",
+ "rank": 23,
+ "status": "NARROWED",
+ "status_check": "AI_CHECKED",
+ "remaining_question": "Can a full amplify-and-distill loop, with humans (or a learned model of them) decomposing, be trained on a real-world task where neither demonstrations nor reliable evaluations of the final output are available, and how would success be verified there?",
+ "remaining_type": "MIXED",
+ "safety_case": [],
+ "findings": [
+  {
+   "id": "Q05:F1",
+   "later_paper": "arXiv 2406.04604v4: Learning Task Decomposition to Assist Humans in Competitive Programming",
+   "first_submitted": "2024-06-07",
+   "effect": "NARROWS",
+   "claim": "In a 177-hour human study on competitive programming problems, decomposed solutions produced by critique, refine and rank steps that learn in context from collected human repair data let non-experts solve 33.3% more problems, sped them up by 3.3x, and let them match unassisted experts. The objective, assistive value, summarizes solution quality over the human repair process, with solution quality set to the passing rates on unit test cases. The authors read this as showing that even when LMs cannot solve the problem themselves, they can still learn to assist humans by learning from human repair experiences, and say the results highlight the potential of learning-based methods to assist humans with scalable oversight.",
+   "setting": "Human-subject experiment (177 hours of human study) on competitive programming problems: non-experts repair decomposed solutions whose critique, refine and rank steps learn in context from a collected dataset of human repair experiences; objective is assistive value (feasibility and speed of human repair), with solution quality measured as passing rates on unit test cases; assisted non-experts are compared with unassisted experts. One assistance step only; no amplify-and-distill loop. Differs from the question's setting: a task on which unassisted experts are the reference and unit tests give an automatic quality check, not a beyond-human-scale task lacking other training signals.",
+   "bears_on": "The amplification step of the question (a human aided by a model that decomposes) on a hard real task, not the full iterated loop and not a task lacking any other training signal.",
+   "passages": [
+    {
+     "version": "2406.04604v4",
+     "page": 1,
+     "lines": [
+      52,
+      63
+     ],
+     "text": "corresponding to specific subtasks. We introduce a novel objective for learning task decomposition, termed assistive value (AssistV),\nwhich measures the feasibility and speed for\nhumans to repair the decomposed solution. We\ncollect a dataset of human repair experiences on\ndifferent decomposed solutions. Utilizing the\ncollected data as in-context examples, we then\nlearn to critique, refine, and rank decomposed\nsolutions to improve AssistV. We validate our\nmethod under competitive programming problems: under 177 hours of human study, our\nmethod enables non-experts to solve 33.3%\nmore problems, speeds them up by 3.3x, and\nempowers them to match unassisted experts.",
+     "pdf_page": "https://arxiv.org/pdf/2406.04604v4#page=1"
+    },
+    {
+     "version": "2406.04604v4",
+     "page": 9,
+     "lines": [
+      5,
+      12
+     ],
+     "text": "results demonstrate that our method can effectively\nassist humans in providing higher-quality supervision with significantly less time. Notably, our\nmethod assists non-experts in matching unassisted\nexperts. Overall, we show that even when LMs\ncannot solve the problem themselves, they can still\nlearn to assist humans by learning from human\nrepair experiences. These results highlight the potential of learning-based methods to assist humans\nwith scalable oversight.",
+     "pdf_page": "https://arxiv.org/pdf/2406.04604v4#page=9"
+    },
+    {
+     "version": "2406.04604v4",
+     "page": 2,
+     "lines": [
+      120,
+      124
+     ],
+     "text": "where Atd denotes the solution repaired by humans\nafter spending time t from its initial solution Ad ,\nand eval(·) is a metric of solution quality. In competitive programming, we set eval(·) as the passing rates on unit test cases. Assistive value η(Ad )\nsummarizes the solution quality over the human\nrepairing process starting from Ad (Bradley, 1997),",
+     "pdf_page": "https://arxiv.org/pdf/2406.04604v4#page=2"
+    }
+   ]
+  },
+  {
+   "id": "Q05:F2",
+   "later_paper": "arXiv 2309.08589v2: Chain-of-Thought Reasoning is a Policy Improvement Operator",
+   "first_submitted": "2023-09-15",
+   "effect": "RELATED_ONLY",
+   "claim": "An amplify-then-distill loop (solve with chain-of-thought, then train the next model to answer directly) let language models teach themselves addition up to 29 digits without ground-truth examples beyond an initial supervised phase on numbers of 6 or fewer digits. The authors say this is far from showing models can self-learn in general and ask whether it extends to more complex tasks such as multiplication, general mathematics or programming.",
+   "setting": "Experiment: language models trained with the SECToR self-learning loop (solve with chain-of-thought, then train the next model to answer directly) on addition problems only; no human expert or decomposer. Differs from the question's setting: one arithmetic task, not a complex real-world or beyond-human-scale task.",
+   "bears_on": "Whether an iterated amplify-then-distill loop works beyond the training distribution without external labels; it does not address real-world tasks.",
+   "passages": [
+    {
+     "version": "2309.08589v2",
+     "page": 1,
+     "lines": [
+      19,
+      24
+     ],
+     "text": "demonstration that language models can teach themselves new skills using chainof-thought reasoning. During the self-learning loop, SECToR asks models to solve\naddition problems using chain-of-thought reasoning before training the next version of the model to solve those same problems directly without using such reasoning. This process often results in an improved model which can, when again\naugmented with chain-of-thought reasoning, solve even harder problems than the\noriginal model, allowing the self-learning loop to continue. Language models\ntrained via SECToR autonomously learn to add up to 29-digit numbers without access to any ground truth examples beyond an initial supervised fine-tuning phase\nconsisting only of numbers with 6 or fewer digits. Our central hypothesis is that",
+     "pdf_page": "https://arxiv.org/pdf/2309.08589v2#page=1"
+    },
+    {
+     "version": "2309.08589v2",
+     "page": 10,
+     "lines": [
+      1,
+      4
+     ],
+     "text": "Limitations. While SECToR demonstrates the possibility of self-learning in addition with language\nmodels, it is far from showing that models can self-learn in general. A natural question is whether\nmethods like SECToR can generalize to more complex tasks, such as multiplication or perhaps\neven general mathematics or programming. Secondly, models trained with SECToR do not improve",
+     "pdf_page": "https://arxiv.org/pdf/2309.08589v2#page=10"
+    }
+   ]
+  },
+  {
+   "id": "Q05:F3",
+   "later_paper": "arXiv 2512.24601v3: Recursive Language Models",
+   "first_submitted": "2025-12-31",
+   "effect": "RELATED_ONLY",
+   "claim": "Recursive Language Models let an LLM programmatically examine, decompose and recursively call itself over snippets of a long prompt; the authors report processing inputs over an order of magnitude beyond the context window and median gains over compaction and coding-agent baselines on four long-context tasks, and a small post-trained RLM-Qwen3-8B improving on Qwen3-8B. They state that evaluations on more difficult and natural long-context tasks remain highly underexplored.",
+   "setting": "Experiment: inference-time scaffold with frontier LLMs (e.g. GPT-5) as the recursive caller; small-scale post-training of Qwen3-8B; four long-context tasks; no human expert, no iterated amplify-and-distill training. Differs from the question's setting: a model recursively calling itself over long inputs, not Iterated Amplification with human decomposition and distillation.",
+   "bears_on": "Loosely parallels the 2018 paper's idea of decomposing questions over contexts too large to observe at once, applied to real long-input tasks by a model calling copies of itself; it is not Iterated Amplification as defined there.",
+   "passages": [
+    {
+     "version": "2512.24601v3",
+     "page": 1,
+     "lines": [
+      12,
+      23
+     ],
+     "text": "We study allowing large language models (LLMs) to process arbitrarily long\nprompts through the lens of inference-time scaling. We propose Recursive Language Models (RLMs), a general inference paradigm that treats long prompts\nas part of an external environment and allows the LLM to programmatically examine, decompose, and recursively call itself over snippets of the prompt. We\nfind that RLMs can successfully process inputs more than an order of magnitude\nbeyond model context window limits and, even for shorter prompts, dramatically\noutperform the quality of vanilla frontier LLMs and common long-context and\ncoding scaffolds (e.g., on GPT-5 by a median across the evaluated benchmarks of\n26% against compaction, 130% against CodeAct with sub-calls, and 13% against\nClaude Code) across four diverse long-context tasks while having comparable\ncost. At a small scale, we post-train the first model around the RLM. Our model,\nRLM-Qwen3-8B, outperforms the underlying Qwen3-8B model by a median of\n28% and even approaches the quality of vanilla GPT-5 on three long-context tasks.",
+     "pdf_page": "https://arxiv.org/pdf/2512.24601v3#page=1"
+    },
+    {
+     "version": "2512.24601v3",
+     "page": 9,
+     "lines": [
+      39,
+      42
+     ],
+     "text": "While RLMs show strong performance on tasks beyond the context window limitations of existing\nLMs at reasonable inference costs, evaluations for more difficult and natural long-context processing\ntasks and the best mechanisms for implementing guardrails for RLMs both remain highly underexplored. Broadly, RLMs add a layer of complexity on top of existing LMs that may lead to\nunintentional side-effects like exploding sub-call costs, which we leave for future work to solve.",
+     "pdf_page": "https://arxiv.org/pdf/2512.24601v3#page=9"
+    }
+   ]
+  }
+ ],
+ "findings_drafted": 3,
+ "maths": [],
+ "experiment_package": null,
+ "review_status": "provisional_ai_draft",
+ "rules": [
+  "Everything here is an AI draft (provisional_ai_draft): each counted item passed two blind AI checks that were tested on planted errors, and no person has reviewed it.",
+  "A finding counts only in the setting its own quoted lines show; read `setting` before carrying it to another setting.",
+  "A question's status is a label from fixed rules over its counted findings; `status_check` says whether that label itself passed its check.",
+  "Cite the paper and page from the passage, and read the PDF page before relying on a claim."
+ ]
+}

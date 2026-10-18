@@ -2,7 +2,7 @@
 
 > A source-pinned research database that connects AI-safety questions to theories, assumptions, formal results and evidence. Every record names its source and location, and every connection keeps its review state. This file tells AI agents how to use it.
 
-Snapshot 344ef93a663150baee049fa77e9aff01ffa7897f69b1ea4dd4d990e1001834db (canonical commit 0532218f305544351ea17883176b7d20853b84f6): 1,750 records, 5,821 recorded links, 245 sources. Static files only; no login, no rate limit beyond the host's.
+Snapshot 4571dcd419e477499ca46ce8a3d785a33972a650fff46446afb7a9c16d9a22a3 (canonical commit f196efd449cdb2fa065ca6d6178f781bfcc2cafa): 1,750 records, 5,821 recorded links, 245 sources. Static files only; no login, no rate limit beyond the host's.
 
 ## Rules
 
@@ -21,7 +21,7 @@ Snapshot 344ef93a663150baee049fa77e9aff01ffa7897f69b1ea4dd4d990e1001834db (canon
 
 ## Recipes
 
-Record cards give each record's `type` and, for records drafted from full texts, its `kind` (for example FULLTEXT_EMPIRICAL_RESULT_CANDIDATE). Links between papers in the debate and scalable oversight batch have relation `candidate_mapping`; their `scope` starts with the proposed relation, such as "proposed SUPPORTS", "proposed CHALLENGES", "proposed CRITIQUES", "proposed EXTENDS" or "proposed ADDRESSES".
+Record cards give each record's `type` and, for records drafted from full texts, its `kind` (for example FULLTEXT_EMPIRICAL_RESULT_CANDIDATE). Links between papers in the debate and scalable oversight batch have relation `candidate_mapping`; their `scope` starts with the proposed relation, such as "proposed SUPPORTS", "proposed CHALLENGES", "proposed CRITIQUES", "proposed EXTENDS" or "proposed ADDRESSES". A scope starting "proposed SHARES_TOPIC" marks a navigation-only link: the two records discuss the same topic and neither bears on the other's claim, so never count it as evidence.
 
 - Theory discovery ("Which information-theoretic results are relevant to monitoring limits?"): scan titles, types and domains in agent/index.json, open the candidate cards, and follow links with relation candidate_mapping, curated_context, analogous_to or outcome_transfer. Report each link's state and scope.
 - Assumption tracing ("What must hold for this claim to apply?"): open the claim's card and read links with relation application_requires or formal_statement_requires; in agent/papers.json, list the same paper's records with type ASSUMPTION or kind FULLTEXT_ASSUMPTION_CANDIDATE. List every open_obligations entry.
@@ -32,6 +32,22 @@ Record cards give each record's `type` and, for records drafted from full texts,
 - Learning paths ("Which concepts and results do I need to understand this research problem?"): start from problem_routes.json and follow each stage's records in order.
 - Programmatic research ("Export the relevant subgraph for my tool or agent"): load atlas_data.json and select records and links by id. Keep each record's state and source_refs with whatever you export.
 
+## Open questions and discoveries (gap-closing pilot, AI drafts)
+
+The pilot ranked 33 open questions from the debate and scalable-oversight papers by the step of the debate safety case (Buhl et al. 2025, arXiv 2505.03989) each one affects, and recorded what later work, Lean proofs and pooled results settle. Ledger: 6 Proved, 52 Paper problem, 11 Derived, 12 Partly answered by later work, 15 Narrowed. Everything here passed two blind AI checks tested on planted errors; no person has reviewed it.
+
+- [agent/gaps.json](https://elshatlawy.github.io/AI-Safety-Research-Atlas-/agent/gaps.json): the ranked questions with status, the safety-case steps each affects and how well supported those steps are, and the file for each question.
+- agent/gaps/<id>.json: one question with its counted later-work findings (claim, setting, effect, exact quoted lines with a link to the PDF page), what remains, and the experiment package if one is drafted (agent/packages/<id>.json: hypothesis, design, outcomes and how each would be read, resources, risks).
+- [agent/cards.json](https://elshatlawy.github.io/AI-Safety-Research-Atlas-/agent/cards.json): result cards for the 42 papers: each result, theorem or claim with its evidence type, the method that produced it, its stated hypotheses and assumption records, its setting (systems, task, judge, regime, scale) and a strength grade; agent/cards/<arXiv id>.json holds one paper's cards with the quoted lines behind them. Only cards whose latest check passed are listed. A theorem card's hypothesis list is marked not verified: the checks miss some dropped conditions there, so read the theorem's statement at the cited page.
+- [agent/ledger.json](https://elshatlawy.github.io/AI-Safety-Research-Atlas-/agent/ledger.json): every result the pilot counts, labelled Proved, Paper problem, Derived, Answered by later work, Partly answered by later work or Narrowed.
+
+Recipes:
+- "Is this question still open?": find it in agent/gaps.json, then read `status`, `status_check` and the counted findings in its file. A finding settles only what its quoted setting shows.
+- "Which gaps matter most for a debate safety case?": sort agent/gaps.json by `rank`; each question's `safety_case_steps` names the steps it affects, and the top-level `safety_case_steps` map gives each step's evidence label (NONE, WEAK, CONTESTED, SUPPORTED) and wording.
+- "What holds, by what method, under which assumptions, and how strongly?": filter agent/cards.json by paper, grade or regime, then open the paper's file and read `assumptions` (stated hypotheses and assumption records) before carrying a result elsewhere; on theorem cards the list is not verified (`hypotheses_verified` is false), so check the theorem's own statement at the cited page.
+- "What would settle this gap?": read `remaining_question` and `remaining_type` in its file; an empirical gap may carry an experiment package with hypothesis, design, sample size and cost estimates.
+- "What did the pilot find that is not easy to find elsewhere?": read agent/ledger.json; Paper problem entries are flaws in a paper's own statements found by Lean audits.
+
 ## Humans
 
-The same records are browsable at https://elshatlawy.github.io/AI-Safety-Research-Atlas-/ (a card's human_url opens one record). Corrections and new sources go to the research repository through its maintainer.
+The visual atlas is at the site root, https://elshatlawy.github.io/AI-Safety-Research-Atlas-/. Every record is browsable at https://elshatlawy.github.io/AI-Safety-Research-Atlas-/explore.html (a card's human_url opens one record). Corrections and new sources go to the research repository through its maintainer.

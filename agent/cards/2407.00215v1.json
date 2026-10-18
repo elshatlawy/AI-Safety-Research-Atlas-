@@ -1,0 +1,571 @@
+{
+ "schema": "ASRA-GAP-CLOSING-AGENT-v1",
+ "paper": "2407.00215v1",
+ "review_status": "provisional_ai_draft",
+ "rules": [
+  "Everything here is an AI draft (provisional_ai_draft): each counted item passed two blind AI checks that were tested on planted errors, and no person has reviewed it.",
+  "A finding counts only in the setting its own quoted lines show; read `setting` before carrying it to another setting.",
+  "A question's status is a label from fixed rules over its counted findings; `status_check` says whether that label itself passed its check.",
+  "Cite the paper and page from the passage, and read the PDF page before relying on a claim."
+ ],
+ "notes": "CORE's 63% corresponds to Table 3's CriticGPT vs Human win rate of 62.8% (60.5, 65.1) on Human Detected Bugs; the extracted column header reads 'winrate (69% CI)'. The introduction's 'more than 80%' preference (p2 L49-L51) is for inserted bugs (Figure 1a), a different distribution. The paper gives no evaluation-set sizes. RES-HUMAN-MACHINE-TEAMS: Figure 6's caption says teams 'do not increase comprehensiveness', which sits oddly with the text's 'substantially more comprehensive' (probably relative to models versus humans). RES-NO-TAMPER-ABLATION reports no numbers. RES-FLAWLESS-DATA: the 24% and 6% come from different procedures. RES-JUDGE-ACCURACY-NEGATIVE: the record's quote stops mid-sentence; the result is in Appendix 7.8 and graded preliminary because the paper calls the effect not significant. RES-SCALE-30X: the record title says RL training 'equals' 30x compute; the paper calls this a naive estimate.",
+ "cards": [
+  {
+   "record_id": "N2:DSOFT:ARXIV-2407.00215v1:CORE",
+   "paper": "2407.00215v1",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2407.00215v1:DEF-CRITIQUE-ATTRIBUTES",
+     "N2:DSOFT:ARXIV-2407.00215v1:METHOD-ADVERSARIAL-TAMPERING"
+    ],
+    "description": "Critic LLMs are trained with an RLHF pipeline (contractor ratings of sampled critiques, a reward model, PPO, then FSBS search), much of it on code into which contractors inserted bugs, and contractors compare their critiques with contractor-written critiques on code with naturally detected bugs and with inserted bugs.",
+    "passages": [
+     {
+      "version": "2407.00215v1",
+      "page": 5,
+      "lines": [
+       48,
+       54
+      ],
+      "text": "We follow an RLHF pipeline similar to ChatGPT to train our LLM critics:\nStep 1: We sample several critiques for each (question, answer) pair in the dataset.\nStep 2: Contractors rate the attributes of the sampled critiques, including overall quality.\nStep 3: We train a reward model to predict the human overall quality rankings.\nStep 4: We optimize a policy against the reward model using PPO [31, 27].\nStep 5: We apply an inference-time sampling strategy that we call Force Sampling Beam Search\n(FSBS) as described in 2.3.",
+      "pdf_page": "https://arxiv.org/pdf/2407.00215v1#page=5"
+     },
+     {
+      "version": "2407.00215v1",
+      "page": 20,
+      "lines": [
+       9,
+       19
+      ],
+      "text": "winrate (69% CI)\n\nDetected Bugs\nDetected Bugs\nDetected Bugs\n\nCriticGPT vs Human\nHuman + CriticGPT vs Human\nCriticGPT vs ChatGPT\n\n62.8% (60.5, 65.1)",
+      "pdf_page": "https://arxiv.org/pdf/2407.00215v1#page=20"
+     },
+     {
+      "version": "2407.00215v1",
+      "page": 20,
+      "lines": [
+       20,
+       23
+      ],
+      "text": "60.4% (58.0, 62.8)\n62.7% (59.6, 65.8)\n\nTable 3: This table summarizes preference rates between critics on the Human Detected Bugs distribution.",
+      "pdf_page": "https://arxiv.org/pdf/2407.00215v1#page=20"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2407.00215v1:ASM-MORE-BUGS-BETTER-POLICY"
+    ],
+    "stated_hypotheses": [
+     "Almost all inputs come from the OpenAI RLHF pipeline, kept only when the model response is at least 50% Python by line count, with the largest code block taken as the answer.",
+     "The human comparison group is a representative sample of experienced production contractors; the authors expect that some people could outperform current models.",
+     "Helping contractors catch more bugs is assumed to give better RLHF data and policies; critics might introduce new consistent label biases."
+    ],
+    "passages": [
+     {
+      "version": "2407.00215v1",
+      "page": 5,
+      "lines": [
+       27,
+       35
+      ],
+      "text": "Almost all of our training and evaluation inputs originate from the OpenAI RLHF pipeline. They\nconsist of (question, answer) pairs. We down-sampled to cases where the model responded with code\nusing a heuristic: examples were included if the model response was at least 50% Python by line\ncount. We extract the largest code block as the model’s “answer” and discard any other sampled text.\nWe report results on two sets containing known bugs based on this data stream:\n• Human Inserted Bugs: We pay contractors to insert bugs into answers in a “tampering”\nprocess (2.2) and hold out a subset for evaluation.\n• Human Detected Bugs: A set of programming tasks from the ChatGPT labelling pipeline\nwhere the original rater gave the response a low score and pointed out a clear issue.",
+      "pdf_page": "https://arxiv.org/pdf/2407.00215v1#page=5"
+     },
+     {
+      "version": "2407.00215v1",
+      "page": 2,
+      "lines": [
+       33,
+       37
+      ],
+      "text": "(b) Both ChatGPT and CriticGPT catch substantially more inserted bugs than human contractors\nwhen writing critiques. In our view it is surely\npossible to find some people that could outperform current models, but this is a representative\nsample of the experienced contractors used in\nproduction for both ChatGPT and CriticGPT.",
+      "pdf_page": "https://arxiv.org/pdf/2407.00215v1#page=2"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "RLHF-trained LLM critics (CriticGPT), ChatGPT, and human contractors writing critiques",
+    "task_data": "Model-written code from the OpenAI RLHF pipeline: Human Detected Bugs (flagged by the original rater) and Human Inserted Bugs (contractor tampering)",
+    "judge": "Human contractors comparing and rating critiques",
+    "regime": "mixed",
+    "scale": null
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": "Table 3: CriticGPT vs Human win rate 62.8% (60.5, 65.1) on Human Detected Bugs, under a column headed 'winrate (69% CI)'; no interval is quoted for the bug-catching comparison."
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2407.00215v1:LIM-INSERTED-DISTRIBUTION",
+     "N2:DSOFT:ARXIV-2407.00215v1:LIM-SINGLE-STEP-SETTING"
+    ],
+    "notes": "The 63% matches Table 3's 62.8% on Human Detected Bugs; 'models catch more bugs' is shown on inserted bugs, whose distribution differs from natural LLM errors. Snippets are short and single-file."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "Each part is measured on one bug distribution within one task (critiquing ChatGPT code): the 63% preference has a CI on Human Detected Bugs, and the bug-catching comparison on Human Inserted Bugs has no interval in the passages."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2407.00215v1:RES-INSERTED-BUGS",
+   "paper": "2407.00215v1",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2407.00215v1:DEF-CRITIQUE-ATTRIBUTES",
+     "N2:DSOFT:ARXIV-2407.00215v1:METHOD-ADVERSARIAL-TAMPERING"
+    ],
+    "description": "Contractors, blind to the source, rate several critiques of the same problem side by side; overall-rating preferences are summarised as Elo scores with bootstrap confidence intervals, and critique-bug inclusion gives how often the inserted bug is caught, for CriticGPT, prompted ChatGPT and contractor-written critiques (Figure 1).",
+    "passages": [
+     {
+      "version": "2407.00215v1",
+      "page": 4,
+      "lines": [
+       99,
+       110
+      ],
+      "text": "critiques of the same problem simultaneously. They are always blind to the source of the critique.\nFor a given critique comparison task we can compare the scores to get a preference rate for any given\nattribute. For example, if critique A gets a score of 1/7 for comprehensiveness and critique B gets\na score of 2/7, then B is more comprehensive than A. Because human ratings are more consistent\nwithin a comparison than globally this gives us a less noisy estimate of how the models perform\nrelative to each other [29].\nIn order to summarize these pairwise preference rates between models we report Elo scores. Elo\nscores are computed by using BFGS to fit a pairwise model to the comparisons from our data\ncollection. The probability of a contractor preferring a response produced by a model with Elo RA\nover a response from model with Elo RB is estimated as 1+10(RB1−RA )/400 . This is the estimated\nwin-rate of model A over model B. Ties are included as half a win and half a loss. Confidence\nintervals are reported from a nonparametric bootstrap.",
+      "pdf_page": "https://arxiv.org/pdf/2407.00215v1#page=4"
+     },
+     {
+      "version": "2407.00215v1",
+      "page": 4,
+      "lines": [
+       115,
+       120
+      ],
+      "text": "In addition to paying contractors to rate model-written critiques, we also had them review answers to\nwrite their own critiques. Contractors were drawn from the same pool used for ChatGPT training and\nhad a median of five years experience with Python (self-reported). They took a median of around\nfifty minutes per example to write their critique. They were able to execute code, look up reference\nmanuals, and to decline rating examples. Overall however only 4% of tasks were declined, typically\nbecause they were not in English or because they were broken.",
+      "pdf_page": "https://arxiv.org/pdf/2407.00215v1#page=4"
+     },
+     {
+      "version": "2407.00215v1",
+      "page": 7,
+      "lines": [
+       23,
+       23
+      ],
+      "text": "Unless otherwise noted, CriticGPT refers to RL+FSBS at the 50th percentile (producing four highlights on average).",
+      "pdf_page": "https://arxiv.org/pdf/2407.00215v1#page=7"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2407.00215v1:ASM-MORE-BUGS-BETTER-POLICY"
+    ],
+    "stated_hypotheses": [
+     "The human critiques come from a contractor cohort representative of ChatGPT's contractors, which does not represent the best possible human performance.",
+     "Inserted bugs are harder for humans to catch and more severe on average, but are not from the natural distribution of model errors; raters see the original bug description as context.",
+     "No contractor rated their own critiques.",
+     "Helping contractors catch more bugs is assumed to improve the resulting RLHF policy."
+    ],
+    "passages": [
+     {
+      "version": "2407.00215v1",
+      "page": 5,
+      "lines": [
+       36,
+       43
+      ],
+      "text": "These two distributions have different characteristics: Human Detected Bugs are more “natural” but\ntypically easier for humans to spot. After all, they were emitted by a model and already caught by\na person once! Inserted Bugs by contrast are both harder for humans to catch and more severe on\naverage but are not from the natural distribution of model errors. These differences are illustrated\nin Appendix Figure 10. When rating critiques in both of these settings, contractors were shown the\noriginal bug descriptions (written when the bug was inserted or first detected) as context. We find\nthat the critique comparisons that also include a reference bug description have better inter-annotator\nagreement than critique rating without a reference, with details in Appendix 7.5.",
+      "pdf_page": "https://arxiv.org/pdf/2407.00215v1#page=5"
+     },
+     {
+      "version": "2407.00215v1",
+      "page": 5,
+      "lines": [
+       20,
+       22
+      ],
+      "text": "These critiques are evaluated similarly to LLM critiques as described in 2.1.1. The same contractor\npool completed both critique comparisons and critique demonstrations, but we ensured for evaluation\nthat no contractor rated their own critiques to avoid overestimation of quality.",
+      "pdf_page": "https://arxiv.org/pdf/2407.00215v1#page=5"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "CriticGPT (RL+FSBS at the 50th percentile unless noted), prompted ChatGPT, and contractor critics",
+    "task_data": "Human Inserted Bugs: model-written code into which contractors inserted bugs",
+    "judge": "Contractors, blind to the critique source, rating critiques on 1-7 scales",
+    "regime": "evaluation",
+    "scale": "Contractor critics had a median of five years of Python experience (self-reported) and took about fifty minutes per critique"
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": "Elo confidence intervals come from a nonparametric bootstrap (Section 2.1.2); no interval values for Figure 1 appear in the text."
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2407.00215v1:LIM-INSERTED-DISTRIBUTION",
+     "N2:DSOFT:ARXIV-2407.00215v1:LIM-SINGLE-STEP-SETTING"
+    ],
+    "notes": "Inserted bugs differ from natural LLM errors, and the human baseline does not represent the best possible human performance."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "One evaluation distribution (Human Inserted Bugs) in one task; bootstrap intervals are said to be computed but none is quoted for this result."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2407.00215v1:RES-SCALE-30X",
+   "paper": "2407.00215v1",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2407.00215v1:DEF-CRITIQUE-ATTRIBUTES",
+     "N2:DSOFT:ARXIV-2407.00215v1:METHOD-ADVERSARIAL-TAMPERING"
+    ],
+    "description": "GPT-4-family models at several pre-training compute sizes are trained with RLHF, and at each scale CriticGPT (RL only) is compared with prompted ChatGPT; contractors indicate how often each misses the inserted bug, and the 30x figure is a naive extrapolation of how much more pre-training compute ChatGPT would need to match CriticGPT (RL only) (Figure 5).",
+    "passages": [
+     {
+      "version": "2407.00215v1",
+      "page": 8,
+      "lines": [
+       53,
+       64
+      ],
+      "text": "code, CriticGPT (RL only) is substantially preferred\nover prompted ChatGPT across model scales on\nHuman Inserted Bugs\n\nChatGPT\n\n(b) Contractors indicate that CriticGPT (RL only)\nmisses inserted bugs substantially less often than ChatGPT. Training a larger model also reduces the rate at\nwhich inserted bugs are missed, but naive extrapolation\nimplies that to match the performance of CriticGPT\n(RL only) on this distribution would require around a\n30x increase in pre-training compute.",
+      "pdf_page": "https://arxiv.org/pdf/2407.00215v1#page=8"
+     },
+     {
+      "version": "2407.00215v1",
+      "page": 6,
+      "lines": [
+       53,
+       56
+      ],
+      "text": "Our LLM critics are GPT-4 family Transformer language models pre-trained with next-token prediction following [30]. To understand how much specific training for critique impacts model performance\nwe aimed to keep our methods similar to ChatGPT. To highlight similarities and differences:\n• All versions of CriticGPT and ChatGPT used in this work were initialized from the same\ncheckpoint (both policies and reward models).",
+      "pdf_page": "https://arxiv.org/pdf/2407.00215v1#page=6"
+     },
+     {
+      "version": "2407.00215v1",
+      "page": 7,
+      "lines": [
+       1,
+       6
+      ],
+      "text": "• Our reward model was trained on a mix of ChatGPT and CriticGPT data tuned to maximize\nperformance on the CriticGPT validation set. In practice this included all of our critique\ncomparison data and as much ChatGPT data as the compute budget allowed.\n• CriticGPT was fine-tuned with less compute than ChatGPT.\n• The PPO prompt distribution for CriticGPT consisted only of prompts asking for a critique\nfrom the reward modelling dataset.",
+      "pdf_page": "https://arxiv.org/pdf/2407.00215v1#page=7"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "The 30x figure is a naive estimate that assumes no additional data or modification to the ChatGPT pipeline.",
+     "Model size is recorded as the fraction of GPT-4 pre-training compute.",
+     "The comparison uses CriticGPT (RL only) and is measured on Human Inserted Bugs.",
+     "CriticGPT and ChatGPT start from the same checkpoint, and CriticGPT was fine-tuned with less compute than ChatGPT."
+    ],
+    "passages": []
+   },
+   "setting": {
+    "systems": "GPT-4-family Transformers at several pre-training compute sizes, as prompted ChatGPT and as CriticGPT (RL only)",
+    "task_data": "Human Inserted Bugs",
+    "judge": "Contractors indicating whether each critique catches the inserted bug",
+    "regime": "mixed",
+    "scale": "Model sizes given only as fractions of GPT-4 pre-training compute (values not readable in the text)"
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2407.00215v1:LIM-INSERTED-DISTRIBUTION"
+    ],
+    "notes": "The authors call the extrapolation naive; it rests on one distribution of inserted bugs."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "One model family on one bug distribution, with no uncertainty reported for the curves or the 30x estimate."
+   },
+   "review_status": "provisional_ai_draft",
+   "check_history": [
+    "card-1: flagged or undecided by two blind checks; rewritten from the checkers' suggested fix (quotes unchanged)"
+   ]
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2407.00215v1:RES-HUMAN-MACHINE-TEAMS",
+   "paper": "2407.00215v1",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2407.00215v1:DEF-CRITIQUE-ATTRIBUTES"
+    ],
+    "description": "Contractors write critiques either alone or starting from a pre-filled CriticGPT critique whose comments they may keep, reject or add to, and contractor ratings of comprehensiveness and of nitpicks or hallucinated bugs are compared for Human, Human+CriticGPT, CriticGPT and ChatGPT on Human Detected and Human Inserted Bugs (Figures 6 and 7).",
+    "passages": [
+     {
+      "version": "2407.00215v1",
+      "page": 4,
+      "lines": [
+       121,
+       126
+      ],
+      "text": "During this task contractors can also be given access to an LLM critic to study the impact of model\nassistance on human performance. In practice this was done by pre-seeding the contractor response\nwith the output of the LLM critic. Figure 4 shows how these pre-filled critiques were used by the\ncontractors when available. When looking at the statistics of how model-written comments are used\nwe find that it was common to reject some of the suggested comments from the critique. Adding\nadditional comments was rarer but also occurred.",
+      "pdf_page": "https://arxiv.org/pdf/2407.00215v1#page=4"
+     },
+     {
+      "version": "2407.00215v1",
+      "page": 9,
+      "lines": [
+       21,
+       22
+      ],
+      "text": "Figure 6: Humans write substantially more comprehensive critiques with help from LLM critics.. Humanmachine teams do not increase comprehensiveness, but see Section 3.4 for their positive impact on hallucination\nrate.",
+      "pdf_page": "https://arxiv.org/pdf/2407.00215v1#page=9"
+     },
+     {
+      "version": "2407.00215v1",
+      "page": 9,
+      "lines": [
+       49,
+       51
+      ],
+      "text": "Figure 7: Human critiques contain many fewer nitpicks and hallucinations than LLM critiques. CriticGPT\nalso substantially reduces the rates from the ChatGPT baseline. Human-machine teams hallucinate and nitpick\nless than both CriticGPT and ChatGPT.",
+      "pdf_page": "https://arxiv.org/pdf/2407.00215v1#page=9"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2407.00215v1:ASM-MORE-BUGS-BETTER-POLICY"
+    ],
+    "stated_hypotheses": [
+     "Human Detected Bugs are more natural but easier for humans to spot; Human Inserted Bugs are harder and more severe but not from the natural error distribution; raters see the original bug descriptions.",
+     "No contractor rated their own critiques.",
+     "Helping contractors catch more bugs is assumed to improve the resulting RLHF policy."
+    ],
+    "passages": [
+     {
+      "version": "2407.00215v1",
+      "page": 5,
+      "lines": [
+       36,
+       43
+      ],
+      "text": "These two distributions have different characteristics: Human Detected Bugs are more “natural” but\ntypically easier for humans to spot. After all, they were emitted by a model and already caught by\na person once! Inserted Bugs by contrast are both harder for humans to catch and more severe on\naverage but are not from the natural distribution of model errors. These differences are illustrated\nin Appendix Figure 10. When rating critiques in both of these settings, contractors were shown the\noriginal bug descriptions (written when the bug was inserted or first detected) as context. We find\nthat the critique comparisons that also include a reference bug description have better inter-annotator\nagreement than critique rating without a reference, with details in Appendix 7.5.",
+      "pdf_page": "https://arxiv.org/pdf/2407.00215v1#page=5"
+     },
+     {
+      "version": "2407.00215v1",
+      "page": 5,
+      "lines": [
+       20,
+       22
+      ],
+      "text": "These critiques are evaluated similarly to LLM critiques as described in 2.1.1. The same contractor\npool completed both critique comparisons and critique demonstrations, but we ensured for evaluation\nthat no contractor rated their own critiques to avoid overestimation of quality.",
+      "pdf_page": "https://arxiv.org/pdf/2407.00215v1#page=5"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Contractors alone, contractors pre-seeded with CriticGPT output, CriticGPT, and ChatGPT",
+    "task_data": "Human Detected Bugs and Human Inserted Bugs in model-written code",
+    "judge": "Contractor raters",
+    "regime": "evaluation",
+    "scale": null
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2407.00215v1:LIM-SINGLE-STEP-SETTING",
+     "N2:DSOFT:ARXIV-2407.00215v1:LIM-INSERTED-DISTRIBUTION"
+    ],
+    "notes": "Figure 6's caption says human-machine teams 'do not increase comprehensiveness' while the text says they are substantially more comprehensive than humans alone; the absolute rate of nitpicks and hallucinated bugs remains quite high."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "Two bug distributions within one task, with no uncertainty reported for the comprehensiveness or hallucination rates."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2407.00215v1:RES-NO-TAMPER-ABLATION",
+   "paper": "2407.00215v1",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2407.00215v1:METHOD-ADVERSARIAL-TAMPERING",
+     "N2:DSOFT:ARXIV-2407.00215v1:DEF-CRITIQUE-ATTRIBUTES"
+    ],
+    "description": "Critics trained only on critique comparisons of unmodified code (dropping the tampering step) are scored with automated GPT-4 evaluations that replicate the human rating protocol, on inserted and detected bugs; no human evaluation is reported.",
+    "passages": [
+     {
+      "version": "2407.00215v1",
+      "page": 6,
+      "lines": [
+       44,
+       48
+      ],
+      "text": "Data collection ran for several months over many iterations of models and model sizes. Collected data\nwas merged into one large training set, with details included in Appendix 7.2. In addition to collecting\ncritique comparisons on code with human-inserted bugs we also collected training data from critiques\nof unmodified samples. We found unmodified inputs had lower inter-annotator agreement rates on\ncritique comparisons and resulted in worse-performing critics (section 3.5).",
+      "pdf_page": "https://arxiv.org/pdf/2407.00215v1#page=6"
+     },
+     {
+      "version": "2407.00215v1",
+      "page": 17,
+      "lines": [
+       189,
+       197
+      ],
+      "text": "We also investigate agreement on preference between two critiques. We calculate this by examining\neach pair of critiques assessed by two different raters, measuring the agreement in their pairwise\npreference, and randomly resolving any ties. The results in 11b reveal that contractors often disagree\nwhen they compare two critiques on overall quality. This low agreement rate indicates subjective differences in how contractors perceive the critiques’ quality or relevance. This is especially pronounced\non low-rated code responses drawn IID from the ChatGPT training set, which unlike our evaluation\nHuman Detected Bugs set was not curated for contractors having previously written high-quality bug\ndescriptions. Agreement improves significantly on data with Human Inserted Bugs which includes a\nreference bug description. This suggests that having clearly identified bugs provides a more concrete\ncontext, allowing contractors to make more consistent judgements.",
+      "pdf_page": "https://arxiv.org/pdf/2407.00215v1#page=17"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "The finding is stated for the authors' compute budget.",
+     "Evaluation is automated with GPT-4 replicating the human evaluations of Section 2.1.1, not by humans."
+    ],
+    "passages": []
+   },
+   "setting": {
+    "systems": "CriticGPT-style critics trained without tamper data",
+    "task_data": "Code with inserted bugs and with detected bugs",
+    "judge": "GPT-4 automated evaluations replicating the human rating protocol",
+    "regime": "mixed",
+    "scale": null
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [],
+    "notes": "No numbers are given; the cause (lower inter-annotator agreement without reference bugs giving a worse reward model) is stated as a suspicion."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "A single ablation reported only qualitatively from automated evaluations, with no numbers or uncertainty."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2407.00215v1:RES-FLAWLESS-DATA",
+   "paper": "2407.00215v1",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [],
+    "description": "CriticGPT (RL only) critiques were sampled for a large subset of ChatGPT training data rated 'flawless' by a first annotator; where a critique flagged a problem, contractors reviewed the completion with the critique, and a separate replication had a second contractor re-rate 'flawless' completions without critiques.",
+    "passages": [
+     {
+      "version": "2407.00215v1",
+      "page": 1,
+      "lines": [
+       26,
+       29
+      ],
+      "text": "than human contractors paid for code review. We further confirm that our fine-tuned\nLLM critics can successfully identify hundreds of errors in ChatGPT training data\nrated as “flawless”, even though the majority of those tasks are non-code tasks\nand thus out-of-distribution for the critic model. Critics can have limitations of",
+      "pdf_page": "https://arxiv.org/pdf/2407.00215v1#page=1"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "Most of these tasks are non-code and out of distribution for the critic.",
+     "The 24% is among critique-flagged items reviewed with the critique, while the 6% comes from a separate re-rating without critiques."
+    ],
+    "passages": []
+   },
+   "setting": {
+    "systems": "CriticGPT (RL only) critiques; contractors",
+    "task_data": "ChatGPT training data rated 'flawless' by a first annotator, mostly non-code tasks",
+    "judge": "Contractors",
+    "regime": "evaluation",
+    "scale": "'A large subset' of ChatGPT training data; the abstract says hundreds of errors were found"
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [],
+    "notes": "The 24% and 6% come from different procedures, so they are not a matched comparison; no counts or uncertainty are given."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "One data source and one critic, with no sample size or uncertainty reported."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2407.00215v1:RES-JUDGE-ACCURACY-NEGATIVE",
+   "paper": "2407.00215v1",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [],
+    "description": "On paired passing and failing ChatGPT-4 solutions to hard problems from a dataset like DeepMind Code Contests, LLM critiques were sampled for both solutions and contractors had 20 minutes, without code execution, to pick the passing one; human accuracy with and without critiques is compared (Figure 14).",
+    "passages": [
+     {
+      "version": "2407.00215v1",
+      "page": 19,
+      "lines": [
+       37,
+       47
+      ],
+      "text": "Figure 14: Current LLM critics did not help significantly when applied to challenging competition\ncode (a small effect is visible in the plot, but is\nnot significant). In this setting, contractors had to\npick the passing solution from a pair in which one\npassed and one failed. With enough sampling we\ncould find cases where this binary task was challenging for humans, but could not produce a critic\nthat helped here with one sampled critique. Results\nare shown for an early GPT-4 sized critic model\nwithout FSBS. Because of the strong negative trend\nin human accuracy with problem difficulty we believe this setting could give signal with sufficiently\ncapable critics.",
+      "pdf_page": "https://arxiv.org/pdf/2407.00215v1#page=19"
+     },
+     {
+      "version": "2407.00215v1",
+      "page": 19,
+      "lines": [
+       20,
+       22
+      ],
+      "text": "no critique\n\nwith LLM",
+      "pdf_page": "https://arxiv.org/pdf/2407.00215v1#page=19"
+     },
+     {
+      "version": "2407.00215v1",
+      "page": 19,
+      "lines": [
+       70,
+       76
+      ],
+      "text": "the compute used to produce the critiques. To get solutions to problems hard enough for pairwise\ndiscrimination to be challenging for contractors under reasonable time constraints (i.e., not extremely\nshort), we had to take many samples. But critics couldn’t spot the resulting bugs (we did not study\nscaling critic compute significantly in this setting). However, we did find that with enough compute,\nit was possible to create datasets of LLM samples where humans struggled to distinguish passing\nsolutions from failing ones, as shown in Figure 14. As models improve, this direction will become\nincreasingly appealing.",
+      "pdf_page": "https://arxiv.org/pdf/2407.00215v1#page=19"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "One sampled critique per solution, from an early GPT-4-sized critic without FSBS.",
+     "Contractors had a 20-minute limit and no code execution.",
+     "Solutions came from heavy sampling on problems hard enough for pairwise discrimination to be hard; critic compute was not scaled much in this setting."
+    ],
+    "passages": []
+   },
+   "setting": {
+    "systems": "An early GPT-4-sized critic (no FSBS); ChatGPT-4 solutions; contractor judges",
+    "task_data": "Paired passing and failing solutions to challenging problems from a dataset similar to DeepMind Code Contests, checked by test suites",
+    "judge": "Contractors from the same pool, 20-minute limit, no code execution",
+    "regime": "evaluation",
+    "scale": null
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": "Figure 14 caption: a small effect is visible but is not significant; no test statistic is given."
+   },
+   "limits": {
+    "record_ids": [],
+    "notes": "The compute-asymmetry explanation is a suspicion; the result is an appendix lesson with one early critic."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_PRELIMINARY",
+    "reason": "The authors report the critiques' effect as not significant (Figure 14), in one setting with one early critic model."
+   },
+   "review_status": "provisional_ai_draft"
+  }
+ ]
+}

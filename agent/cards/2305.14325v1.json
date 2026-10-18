@@ -1,0 +1,654 @@
+{
+ "schema": "ASRA-GAP-CLOSING-AGENT-v1",
+ "paper": "2305.14325v1",
+ "review_status": "provisional_ai_draft",
+ "rules": [
+  "Everything here is an AI draft (provisional_ai_draft): each counted item passed two blind AI checks that were tested on planted errors, and no person has reviewed it.",
+  "A finding counts only in the setting its own quoted lines show; read `setting` before carrying it to another setting.",
+  "A question's status is a label from fixed rules over its counted findings; `status_check` says whether that label itself passed its check.",
+  "Cite the paper and page from the passage, and read the PDF page before relying on a claim."
+ ],
+ "notes": "DEF-CONTRAST-IRVING carries a DEF- id and kind claim but is a related-work statement describing Irving et al.'s debate procedure and contrasting it with this paper; it states no result of its own, so its card is graded CITED_FROM_OTHER_WORK. RES-FACTUALITY's quote is a garbled fragment of Table 2 (header plus the three Biographies values, no caption); the numbers map to rows only by order, and the MMLU and Chess Move Validity values (p7 L56-62) are not in the quote, so the card covers the Biographies result only. RES-REASONING's quote states the result in words; the Table 1 values are added as passages. The ± values in Tables 1 and 2 are never defined in the paper; the EMPIRICAL_MULTI_SETTING grades for CORE and RES-REASONING read them as reported uncertainty, and would drop to EMPIRICAL_SINGLE_SETTING if an unlabelled ± is not accepted. 'Significantly' (p1 L34, p7 L78) is not tied to any stated test. All experiments use chatGPT agents in cooperative consensus debate with no separate judge.",
+ "cards": [
+  {
+   "record_id": "N2:DSOFT:ARXIV-2305.14325v1:CORE",
+   "paper": "2305.14325v1",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2305.14325v1:DEF-MULTIAGENT-DEBATE"
+    ],
+    "description": "Several copies of one language model each answer a question, then over several rounds each reads the other agents' responses and updates its own; the answers are compared with single-model baselines such as zero-shot chain of thought and reflection on six reasoning, factuality and question-answering tasks.",
+    "passages": [
+     {
+      "version": "2305.14325v1",
+      "page": 2,
+      "lines": [
+       33,
+       40
+      ],
+      "text": "We find that our debate approach outperforms single model baselines such as zero-shot chain of\nthought [11] and reflection [26, 18] on a variety of six reasoning, factuality, and question-answering\ntasks. Using both multiple model agents and multiple rounds of debate are important to achieve\nthe best performance. Given an initial query, we find that individual model instances propose a\ndiverse range of answers despite being the same model class (although we also investigate the case of\nmixing different model types, such as chatGPT [21] and Bard [23]). After debating and examining\nthe responses of other model instances, we find that the population almost always converges on a\nsingle and more accurate common answer. Debate results are also less likely to include false facts",
+      "pdf_page": "https://arxiv.org/pdf/2305.14325v1#page=2"
+     },
+     {
+      "version": "2305.14325v1",
+      "page": 5,
+      "lines": [
+       184,
+       188
+      ],
+      "text": "We use chatGPT-based language model [21] in all our experiments except those in Figure 11 where\nwe compare multiple language models.\nDue to computational expense, we evaluate our approach across benchmarks mainly using three\nagents with two rounds of debates, although we found further gains with both more agents and rounds\nof debate (Figure 10). Additional evaluation details are found in the Appendix.",
+      "pdf_page": "https://arxiv.org/pdf/2305.14325v1#page=5"
+     },
+     {
+      "version": "2305.14325v1",
+      "page": 6,
+      "lines": [
+       18,
+       29
+      ],
+      "text": "77.0 ± 4.2\n75.0 ± 4.3\n81.0 ± 3.9\n85.0 ± 3.5\n\n91.4 ± 10.6\n102.1 ± 11.9\n102.2 ± 6.2\n122.9 ± 7.6\n\nTable 1: Multiagent Debate Improves Reasoning Multi-agent debate improves the reasoning abilities of\nlanguage models. Multi-agent results in the table are run with 3 agents and two rounds of debate.",
+      "pdf_page": "https://arxiv.org/pdf/2305.14325v1#page=6"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "The approach needs only black-box access to existing models and uses the same procedure and prompts for every task investigated.",
+     "Because of computational expense, the benchmarks are run mainly with three agents and two rounds of debate."
+    ],
+    "passages": [
+     {
+      "version": "2305.14325v1",
+      "page": 7,
+      "lines": [
+       56,
+       64
+      ],
+      "text": "63.9 ± 4.8\n57.7 ± 5.0\n71.1 ± 4.6\n\n29.3 ± 2.6\n38.8 ± 2.9\n45.2 ± 2.9\n\nTable 2: Multiagent Debate Improves Factual Accuracy Multi-agent debate improves the factual accuracy.",
+      "pdf_page": "https://arxiv.org/pdf/2305.14325v1#page=7"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Multiple instances of a chatGPT-based language model (other models only in the Figure 11 comparison)",
+    "task_data": "Six reasoning, factuality and question-answering tasks (mathematical and strategic reasoning, factual validity)",
+    "judge": null,
+    "regime": "evaluation",
+    "scale": "Mainly three agents and two rounds of debate; model size not stated"
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": "The Table 1 and Table 2 entries shown in the passages each carry a ± value (e.g. '85.0 ± 3.5'); the passages do not say whether these are standard errors, standard deviations or intervals"
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2305.14325v1:LIM-COST-CONTEXT",
+     "N2:DSOFT:ARXIV-2305.14325v1:LIM-WRONG-CONSENSUS"
+    ],
+    "notes": "Debate is more computationally expensive than other prompting techniques, models sometimes failed to process long debates, and debates can converge confidently on an incorrect answer."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_MULTI_SETTING",
+    "reason": "The claim rests on experiments over several tasks (Tables 1 and 2), and the table entries shown carry ± uncertainty values."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2305.14325v1:DEF-CONTRAST-IRVING",
+   "paper": "2305.14325v1",
+   "evidence_type": "cited",
+   "method": {
+    "record_ids": [],
+    "description": "A related-work statement: the authors describe the debate procedure of Irving et al. [9] and contrast it with their own use of a language model to combine different answers.",
+    "passages": []
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [],
+    "passages": []
+   },
+   "setting": {
+    "systems": "As described: in Irving et al.'s procedure, agents alternately provide proof of an input; in this paper, language models combine different answers",
+    "task_data": null,
+    "judge": "Humans assess the debates in Irving et al.'s procedure (as described here)",
+    "regime": null,
+    "scale": null
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [],
+    "notes": null
+   },
+   "strength": {
+    "grade": "CITED_FROM_OTHER_WORK",
+    "reason": "The statement reports what another paper (Irving et al. [9]) proposes and contrasts it with this paper's approach; it carries no proof or experiment of its own."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2305.14325v1:RES-REASONING",
+   "paper": "2305.14325v1",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2305.14325v1:DEF-MULTIAGENT-DEBATE"
+    ],
+    "description": "On three reasoning tasks, chatGPT-based agents answer as a single agent, as a single agent with self-reflection, by multi-agent majority vote, or by multiagent debate (3 agents, 2 rounds); final answers are scored by accuracy (arithmetic, GSM8K) or by Stockfish pawn score of the predicted move (chess).",
+    "passages": [
+     {
+      "version": "2305.14325v1",
+      "page": 5,
+      "lines": [
+       145,
+       155
+      ],
+      "text": "• Arithmetic. We first evaluate the ability of models to correctly evaluate an arithmetic expression\n(containing addition, multiplication, and subtraction) consisting of six different two-digit numbers.\nFor example: What is the result of 12+15*21+0-3*27?\n• GSM8K. Next, we consider harder mathematical reasoning tasks. Using the GSM8K dataset [3],\nthe models must correctly solve grade school mathematical reasoning tasks.\n• Chess Move Prediction. Finally, we consider the strategic reasoning of the ability of models,\nand ask models to predict the best next move in a game of chess, given the first 14 moves of a chess\ngame between two chess grand-masters described in PGN notation [6].\nWe report the accuracy of final answers in arithmetic and GSM8K tasks and report the pawn score\n(advantage) of predicted moves, as estimated by Stockfish in the Chess move prediction tasks.\nAdditional details may be found in the Appendix.",
+      "pdf_page": "https://arxiv.org/pdf/2305.14325v1#page=5"
+     },
+     {
+      "version": "2305.14325v1",
+      "page": 5,
+      "lines": [
+       184,
+       188
+      ],
+      "text": "We use chatGPT-based language model [21] in all our experiments except those in Figure 11 where\nwe compare multiple language models.\nDue to computational expense, we evaluate our approach across benchmarks mainly using three\nagents with two rounds of debates, although we found further gains with both more agents and rounds\nof debate (Figure 10). Additional evaluation details are found in the Appendix.",
+      "pdf_page": "https://arxiv.org/pdf/2305.14325v1#page=5"
+     },
+     {
+      "version": "2305.14325v1",
+      "page": 13,
+      "lines": [
+       54,
+       63
+      ],
+      "text": "Arithmetic. To evaluate the arithmetic task, we generated six random integers for each task between\n0 and 30. We then evaluated the extent to which the correct integer answer was correctly obtained.\nWe evaluated models on one hundred generated arithmetic tasks.\nGrade School Math. To evaluate the GSM8K task, we evaluated the accuracy at which models\nwere able to obtain the final correct answer, as extracted from a box. We evaluated models on one\nhundred grade school math problems.\nChess. To evaluate the chess reasoning task, we used chess games from https://www.pgnmentor.\ncom/players/Adams.zip. We asked chatGPT to predict the next move for white to move at turn\n14 and reported the relative Stockfish pawn score with search depth 20 after executing the suggested\nmove from chatGPT. We evaluated models on three hundred selected chess games.",
+      "pdf_page": "https://arxiv.org/pdf/2305.14325v1#page=13"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "Multi-agent results in Table 1 use 3 agents and two rounds of debate.",
+     "Further gains with more agents and rounds are reported separately (Figure 10), not in Table 1."
+    ],
+    "passages": [
+     {
+      "version": "2305.14325v1",
+      "page": 6,
+      "lines": [
+       1,
+       11
+      ],
+      "text": "Model\nSingle Agent\nSingle Agent (Reflection)\nMulti-Agent (Majority)\nMulti-Agent (Debate)\n\nArithmetic (%) ↑\n\nGrade School Math (%) ↑\n\nChess (∆PS) ↑",
+      "pdf_page": "https://arxiv.org/pdf/2305.14325v1#page=6"
+     },
+     {
+      "version": "2305.14325v1",
+      "page": 6,
+      "lines": [
+       13,
+       21
+      ],
+      "text": "67.0 ± 4.7\n72.1 ± 4.5\n69.0 ± 4.6\n81.8 ± 2.3\n\n77.0 ± 4.2\n75.0 ± 4.3\n81.0 ± 3.9\n85.0 ± 3.5",
+      "pdf_page": "https://arxiv.org/pdf/2305.14325v1#page=6"
+     },
+     {
+      "version": "2305.14325v1",
+      "page": 6,
+      "lines": [
+       23,
+       29
+      ],
+      "text": "91.4 ± 10.6\n102.1 ± 11.9\n102.2 ± 6.2\n122.9 ± 7.6\n\nTable 1: Multiagent Debate Improves Reasoning Multi-agent debate improves the reasoning abilities of\nlanguage models. Multi-agent results in the table are run with 3 agents and two rounds of debate.",
+      "pdf_page": "https://arxiv.org/pdf/2305.14325v1#page=6"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Copies of a chatGPT-based language model as agents (3 agents, 2 rounds of debate)",
+    "task_data": "Arithmetic expressions with addition, multiplication and subtraction; GSM8K grade school math; chess move prediction after the first 14 moves of grandmaster games (PGN)",
+    "judge": "Automatic scoring: accuracy of final answers (arithmetic, GSM8K) and Stockfish-estimated pawn score of the predicted move (chess)",
+    "regime": "evaluation",
+    "scale": "100 generated arithmetic tasks, 100 GSM8K problems, 300 chess games"
+   },
+   "quantitative": {
+    "n": "100 arithmetic tasks, 100 GSM8K problems and 300 chess games (Appendix A.2)",
+    "uncertainty": "Every Table 1 entry carries a ± value; for debate 81.8 ± 2.3 (arithmetic, %), 85.0 ± 3.5 (grade school math, %) and 122.9 ± 7.6 (chess, ∆PS); the passages do not say what the ± denotes"
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2305.14325v1:LIM-COST-CONTEXT",
+     "N2:DSOFT:ARXIV-2305.14325v1:LIM-WRONG-CONSENSUS"
+    ],
+    "notes": "Mainly three agents and two rounds were used because of computational expense; debates can converge confidently on an incorrect answer."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_MULTI_SETTING",
+    "reason": "Table 1 reports the comparison on three tasks (arithmetic, grade school math, chess) with a ± value for every entry."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2305.14325v1:RES-FACTUALITY",
+   "paper": "2305.14325v1",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2305.14325v1:DEF-MULTIAGENT-DEBATE"
+    ],
+    "description": "Agents write bullet-point biographies of 524 well-known computer scientists as a single agent, as a single agent with reflection, or by multiagent debate; chatGPT is asked whether each ground-truth fact (extracted from Wikipedia) is consistent with the generated biography, and the accuracy with which ground-truth bullets agree with the generated bullets is reported.",
+    "passages": [
+     {
+      "version": "2305.14325v1",
+      "page": 6,
+      "lines": [
+       111,
+       118
+      ],
+      "text": "Tasks. We evaluate the factuality of language models in three different settings:\n• Biographies. To evaluate the factuality of language models, we introduce a novel task of\naccurately generating historical biographies of people. In preliminary testing, we found that\nexisting language models had a tendency to hallucinate many facts on this task. We constructed\nground truth bullet point biographies of 524 well-known computer scientists. We then asked\nlanguage models to generate bullet point biographies for each person, and evaluated the accuracy at\nwhich each ground truth bullet point agreed with generated bullets. We report additional evaluation\ndetails in the Appendix.",
+      "pdf_page": "https://arxiv.org/pdf/2305.14325v1#page=6"
+     },
+     {
+      "version": "2305.14325v1",
+      "page": 13,
+      "lines": [
+       64,
+       71
+      ],
+      "text": "Biographies. To evaluate the biographies task, we compare each generated bullet point biography\nfor a person with a ground truth set of facts about the person extracted from Wikipedia. We iteratively\nloop through each ground truth fact, and validate the extent to which the generated biography matches\na particular bullet by prompting chatGPT with the prompt: Consider the following biography of\n<person>: <generated biography> Is the above biography above consistent with the fact below?\n<ground truth bullet> Give a single-word answer, yes, no, or uncertain. We then evaluate and report\nthe percentage of ground bullets that chatGPT returns either yes or no on. We ignored ground truth\nbullets that chatGPT returns returned uncertain.",
+      "pdf_page": "https://arxiv.org/pdf/2305.14325v1#page=13"
+     },
+     {
+      "version": "2305.14325v1",
+      "page": 5,
+      "lines": [
+       184,
+       188
+      ],
+      "text": "We use chatGPT-based language model [21] in all our experiments except those in Figure 11 where\nwe compare multiple language models.\nDue to computational expense, we evaluate our approach across benchmarks mainly using three\nagents with two rounds of debates, although we found further gains with both more agents and rounds\nof debate (Figure 10). Additional evaluation details are found in the Appendix.",
+      "pdf_page": "https://arxiv.org/pdf/2305.14325v1#page=5"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "The majority-vote baseline is omitted in this setting because individual responses are not easily comparable.",
+     "Ground-truth bullets that chatGPT marks 'uncertain' are ignored."
+    ],
+    "passages": [
+     {
+      "version": "2305.14325v1",
+      "page": 7,
+      "lines": [
+       73,
+       75
+      ],
+      "text": "Baselines. We use the same baselines as in Section 3.1. The multiagent (majority) is not directly\napplicable in this setting as individual responses are not easily comparable, and so we omit baseline\ncomparison with the majority voting in this setting.",
+      "pdf_page": "https://arxiv.org/pdf/2305.14325v1#page=7"
+     },
+     {
+      "version": "2305.14325v1",
+      "page": 13,
+      "lines": [
+       72,
+       76
+      ],
+      "text": "We found this evaluation metric provided a fast way to evaluate how relatively correct a generated\nbullet point biography is. However, we found that generated facts could contain incorrect information\nthat was not captured in the ground truth bullet and thus could not be validated through this metric.\nNevertheless, we believe this evaluation scheme estimates the relative accuracy of a generated\nbiography.",
+      "pdf_page": "https://arxiv.org/pdf/2305.14325v1#page=13"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "chatGPT-based agents: single agent, single agent with reflection, multi-agent debate",
+    "task_data": "Biographies benchmark: bullet-point biographies of 524 well-known computer scientists, checked against ground-truth facts extracted from Wikipedia",
+    "judge": "chatGPT, prompted to answer yes, no or uncertain on whether the generated biography is consistent with each ground-truth fact",
+    "regime": "evaluation",
+    "scale": "524 computer scientists"
+   },
+   "quantitative": {
+    "n": "524 computer scientists (ground-truth bullet-point biographies)",
+    "uncertainty": "The results table gives ± values in the order of its rows: 66.0 ± 2.2 (single agent), 68.3 ± 2.9 (reflection), 73.8 ± 2.3 (debate); the passages do not say what the ± denotes"
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2305.14325v1:LIM-WRONG-CONSENSUS"
+    ],
+    "notes": "Generated facts that are wrong but not covered by a ground-truth bullet cannot be caught by this metric; the authors say it estimates relative accuracy."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "The record's result is one task (Biographies) with one model family; the results table attaches ± values, but a result in a single task is graded single-setting."
+   },
+   "review_status": "provisional_ai_draft",
+   "check_history": [
+    "card-1: flagged or undecided by two blind checks; rewritten from the checkers' suggested fix (quotes unchanged)"
+   ]
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2305.14325v1:RES-ALL-WRONG-TO-RIGHT",
+   "paper": "2305.14325v1",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2305.14325v1:DEF-MULTIAGENT-DEBATE"
+    ],
+    "description": "Qualitative inspection of debate transcripts, illustrated in Figure 4 (arithmetic) and Figure 5 (grade school math), for cases in which every agent's first answer was wrong.",
+    "passages": [
+     {
+      "version": "2305.14325v1",
+      "page": 5,
+      "lines": [
+       103,
+       103
+      ],
+      "text": "Figure 4: Illustration of Solving Math. Reasoning between agents is omitted.",
+      "pdf_page": "https://arxiv.org/pdf/2305.14325v1#page=5"
+     },
+     {
+      "version": "2305.14325v1",
+      "page": 5,
+      "lines": [
+       143,
+       143
+      ],
+      "text": "Figure 5: Illustration of Solving Grade School Math. Reasoning between agents omitted.",
+      "pdf_page": "https://arxiv.org/pdf/2305.14325v1#page=5"
+     },
+     {
+      "version": "2305.14325v1",
+      "page": 5,
+      "lines": [
+       184,
+       188
+      ],
+      "text": "We use chatGPT-based language model [21] in all our experiments except those in Figure 11 where\nwe compare multiple language models.\nDue to computational expense, we evaluate our approach across benchmarks mainly using three\nagents with two rounds of debates, although we found further gains with both more agents and rounds\nof debate (Figure 10). Additional evaluation details are found in the Appendix.",
+      "pdf_page": "https://arxiv.org/pdf/2305.14325v1#page=5"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [],
+    "passages": []
+   },
+   "setting": {
+    "systems": "Debating agents built on a chatGPT-based language model",
+    "task_data": "Arithmetic and grade school math questions shown in Figures 4 and 5",
+    "judge": null,
+    "regime": "evaluation",
+    "scale": null
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2305.14325v1:LIM-WRONG-CONSENSUS"
+    ],
+    "notes": "Debates can also converge confidently on an incorrect answer."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_PRELIMINARY",
+    "reason": "The finding rests on qualitative examples (Figures 4 and 5); no frequency or statistics are given."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2305.14325v1:RES-UNCERTAINTY-PERSUASION",
+   "paper": "2305.14325v1",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2305.14325v1:DEF-MULTIAGENT-DEBATE"
+    ],
+    "description": "Observation of how agents' answers differed on factual questions, how confident agents said they were when asked directly, and how readily they changed answers in debate, illustrated by one example in Figure 9.",
+    "passages": [
+     {
+      "version": "2305.14325v1",
+      "page": 8,
+      "lines": [
+       1,
+       9
+      ],
+      "text": "Prompt: What country was the computer scientist Tomas Lozano-Perez born in?\nRound 1\nRound 2\n\nAgent 1: Tomas Lozano-Perez, a renowned\ncomputer scientist, was born in Spain.\n\nAgent 2: Tomas Lozano-Perez, a renowned\ncomputer scientist, was born in Havana, Cuba. ✓",
+      "pdf_page": "https://arxiv.org/pdf/2305.14325v1#page=8"
+     },
+     {
+      "version": "2305.14325v1",
+      "page": 8,
+      "lines": [
+       24,
+       26
+      ],
+      "text": "Figure 9: Expressing Uncertainty with Multiple Answers. For facts that a language model is uncertain about,\ndifferent language agents generate different facts. Debate causes agents to converge to one fact that is more\naccurate, but not necessarily always factually correct.",
+      "pdf_page": "https://arxiv.org/pdf/2305.14325v1#page=8"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "Facts the model is 'confident in' are those on which many instances of the same model give the same answer.",
+     "The authors only suggest that 'ease of persuasion' may be a method to assess factual confidence."
+    ],
+    "passages": []
+   },
+   "setting": {
+    "systems": "Instances of the same language model acting as debating agents",
+    "task_data": "Factual questions; the Figure 9 example asks in which country a computer scientist was born",
+    "judge": null,
+    "regime": "evaluation",
+    "scale": null
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2305.14325v1:LIM-WRONG-CONSENSUS"
+    ],
+    "notes": "Figure 9's caption says debate makes agents converge to a fact that is more accurate but not necessarily always factually correct."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_PRELIMINARY",
+    "reason": "A qualitative observation illustrated by one example (Figure 9), with no counts or statistics."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2305.14325v1:RES-AGENTS-ROUNDS",
+   "paper": "2305.14325v1",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2305.14325v1:DEF-MULTIAGENT-DEBATE"
+    ],
+    "description": "Ablations on the arithmetic task: the number of agents is varied with debate length fixed at two rounds (Figure 10a), and the number of rounds is varied with three agents (Figure 10b); for larger agent counts the other agents' responses are first summarized by chatGPT.",
+    "passages": [
+     {
+      "version": "2305.14325v1",
+      "page": 8,
+      "lines": [
+       32,
+       34
+      ],
+      "text": "Figure 10: (a) Performance with Increased Agents. Performance improves as the number of underlying agents\ninvolved in debate increases. (b) Performance with Increased Rounds. Performance rises as the number of\nrounds of underlying debate increases.",
+      "pdf_page": "https://arxiv.org/pdf/2305.14325v1#page=8"
+     },
+     {
+      "version": "2305.14325v1",
+      "page": 5,
+      "lines": [
+       184,
+       188
+      ],
+      "text": "We use chatGPT-based language model [21] in all our experiments except those in Figure 11 where\nwe compare multiple language models.\nDue to computational expense, we evaluate our approach across benchmarks mainly using three\nagents with two rounds of debates, although we found further gains with both more agents and rounds\nof debate (Figure 10). Additional evaluation details are found in the Appendix.",
+      "pdf_page": "https://arxiv.org/pdf/2305.14325v1#page=5"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "Agent-count runs fix debate length at two rounds; round-count runs fix the number of agents at three.",
+     "For larger numbers of agents, responses are summarized by chatGPT instead of concatenated, because of context length errors."
+    ],
+    "passages": []
+   },
+   "setting": {
+    "systems": "Debating agents built on a chatGPT-based language model",
+    "task_data": "Arithmetic task",
+    "judge": null,
+    "regime": "evaluation",
+    "scale": "Two rounds when varying agents; three agents when varying rounds; rounds above four compared with four"
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2305.14325v1:LIM-COST-CONTEXT"
+    ],
+    "notes": "Context length forced summarization for larger agent counts; rounds above four gave performance similar to four rounds."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "Ablations on one task (arithmetic) with one model family, with no uncertainty reported in the passages."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2305.14325v1:RES-STUBBORN-PROMPTS",
+   "paper": "2305.14325v1",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2305.14325v1:DEF-MULTIAGENT-DEBATE"
+    ],
+    "description": "Two consensus prompts that differ in how much agents are told to rely on other agents' answers (the 'short' and 'long' debate prompts of Figure 3) are compared by performance over debate rounds (Figure 12).",
+    "passages": [
+     {
+      "version": "2305.14325v1",
+      "page": 4,
+      "lines": [
+       5,
+       16
+      ],
+      "text": "Short\n\n\" These are the solutions to the problem from other agents: [other answers]\nBased off the opinion of other agents, can you give an updated response . . .\"\n\nLong\n\n\" These are the solutions to the problem from other agents: [other answers]\nUsing the opinion of other agents as additional advice, can you give an updated response . . .\"\n\nFigure 3: Prompts to induce long and short form debate. Responses of other agents to questions are are\ninserted in the middle of the prompt (indicated with [other answers])",
+      "pdf_page": "https://arxiv.org/pdf/2305.14325v1#page=4"
+     },
+     {
+      "version": "2305.14325v1",
+      "page": 8,
+      "lines": [
+       47,
+       56
+      ],
+      "text": "to which agents are encouraged to maintain their opin77.5\nions. In Figure 12, we consider the effect of short\n75.0\nand long-form prompts discussed in Figure 3. We find\n72.5\nthat debates using longer prompts lead to slower con70.0\nvergence to correct answers, but also lead to a better\n1.0 1.5 2.0 2.5 3.0 3.5 4.0\nDebate Rounds\nfinal consensus on the correct answer. We provide an",
+      "pdf_page": "https://arxiv.org/pdf/2305.14325v1#page=8"
+     },
+     {
+      "version": "2305.14325v1",
+      "page": 5,
+      "lines": [
+       184,
+       188
+      ],
+      "text": "We use chatGPT-based language model [21] in all our experiments except those in Figure 11 where\nwe compare multiple language models.\nDue to computational expense, we evaluate our approach across benchmarks mainly using three\nagents with two rounds of debates, although we found further gains with both more agents and rounds\nof debate (Figure 10). Additional evaluation details are found in the Appendix.",
+      "pdf_page": "https://arxiv.org/pdf/2305.14325v1#page=5"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "The authors conjecture ('perhaps') that the agents' agreeableness results from instruction tuning or reinforcement learning from human feedback."
+    ],
+    "passages": []
+   },
+   "setting": {
+    "systems": "Debating agents built on a chatGPT-based language model",
+    "task_data": null,
+    "judge": null,
+    "regime": "evaluation",
+    "scale": null
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2305.14325v1:LIM-COST-CONTEXT"
+    ],
+    "notes": "Longer-prompt debates converge more slowly, and models sometimes struggled to process long debates."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "One comparison of two prompts (Figure 12) with one model family and no reported uncertainty."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2305.14325v1:RES-CHATGPT-BARD",
+   "paper": "2305.14325v1",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2305.14325v1:DEF-MULTIAGENT-DEBATE"
+    ],
+    "description": "The multiagent debate procedure is run between two different language models, chatGPT and Bard, on 20 GSM8K problems, and the number of problems solved by Bard, by chatGPT and by the joint debate is counted.",
+    "passages": [
+     {
+      "version": "2305.14325v1",
+      "page": 8,
+      "lines": [
+       97,
+       98
+      ],
+      "text": "Utilizing Different Language Models Our existing\ndebate results are reported using multiple instances of a chatGPT language model. We further assess",
+      "pdf_page": "https://arxiv.org/pdf/2305.14325v1#page=8"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [],
+    "passages": []
+   },
+   "setting": {
+    "systems": "chatGPT and Bard (two different language models)",
+    "task_data": "20 GSM8K math problems",
+    "judge": null,
+    "regime": "evaluation",
+    "scale": "20 problems"
+   },
+   "quantitative": {
+    "n": "20 GSM8K problems",
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2305.14325v1:LIM-WRONG-CONSENSUS"
+    ],
+    "notes": null
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "One task (20 GSM8K problems) reported as counts (11, 14, 17) with no uncertainty; the paper does not call the sample small or preliminary."
+   },
+   "review_status": "provisional_ai_draft"
+  }
+ ]
+}

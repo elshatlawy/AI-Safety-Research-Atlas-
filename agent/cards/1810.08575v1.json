@@ -1,0 +1,308 @@
+{
+ "schema": "ASRA-GAP-CLOSING-AGENT-v1",
+ "paper": "1810.08575v1",
+ "review_status": "provisional_ai_draft",
+ "rules": [
+  "Everything here is an AI draft (provisional_ai_draft): each counted item passed two blind AI checks that were tested on planted errors, and no person has reviewed it.",
+  "A finding counts only in the setting its own quoted lines show; read `setting` before carrying it to another setting.",
+  "A question's status is a label from fixed rules over its counted findings; `status_check` says whether that label itself passed its check.",
+  "Cite the paper and page from the passage, and read the PDF page before relying on a claim."
+ ],
+ "notes": "DEF-VS-DEBATE carries a DEF- id and kind 'claim' but is a related-work conceptual comparison of amplification and debate, not a result; its quote stops mid-sentence (the contrast continues at p6 L1-3, added as a passage). RES-ORACLE-CALLS mixes measured query counts (Table 2) with an argued extrapolation to realistic tasks. CORE mixes the method proposal with the empirical claim. No uncertainty (seeds, error bars) is reported for any experiment. Table 2's column headers are garbled in the text, so the card does not map counts to individual tasks.",
+ "cards": [
+  {
+   "record_id": "N2:DSOFT:ARXIV-1810.08575v1:CORE",
+   "paper": "1810.08575v1",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-1810.08575v1:DEF-AMPLIFY",
+     "N2:DSOFT:ARXIV-1810.08575v1:METHOD-DELEGATION",
+     "N2:DSOFT:ARXIV-1810.08575v1:METHOD-HUMAN-PREDICTOR",
+     "N2:DSOFT:ARXIV-1810.08575v1:METHOD-LARGE-CONTEXT"
+    ],
+    "description": "X is trained by supervised learning to predict the answers of Amplify_H(X), in which a decomposer (here a hard-coded algorithm, imitated by a learned predictor H') splits each question into subquestions answered by copies of X; this is run on 5 toy algorithmic tasks with a curriculum and compared with supervised learning from ground truth.",
+    "passages": [
+     {
+      "version": "1810.08575v1",
+      "page": 6,
+      "lines": [
+       25,
+       36
+      ],
+      "text": "We study Iterated Amplification in a set of 5 toy algorithmic tasks. For each task, the agent X is\ngiven a large combinatorial context and asked questions about that context:\n• Given a permutation σ : {1, . . . , 64} → {1, . . . , 64}, compute σ k (x) for k up to 64.\n2\n\n• Given a function f : {1, . . . , 8} → {1, . . . , 8} and a sequence of 64 assignments of the\nform x := 3 or x := f (y, z), evaluate a particular variable.\n6\n\n• Given a function f : {0, 1} → {−1, 0, 1}, answer questions of the form “What is the sum\nof f (x) over all x matching the wildcard expression 0 ∗ ∗ 1 ∗ ∗?”\n• Given a directed graph with 64 vertices and 128 edges, find the distance from s to t.",
+      "pdf_page": "https://arxiv.org/pdf/1810.08575v1#page=6"
+     },
+     {
+      "version": "1810.08575v1",
+      "page": 6,
+      "lines": [
+       38,
+       44
+      ],
+      "text": "More detailed descriptions of the tasks are available in Appendix C. We train each task using a\ncurriculum of smaller instances, which is unrelated to our use of Iterated Amplification (supervised\nlearning also needs a curriculum to learn these tasks in a reasonable amount of time even given\nground truth labels).\nRather than having a human perform the decomposition, we provide a hard-coded algorithm H which\ndecomposes each task (though we minimize the number of times we call this algorithm). Using these\ndecompositions directly as a recursive algorithm is not efficient for any of the tasks.",
+      "pdf_page": "https://arxiv.org/pdf/1810.08575v1#page=6"
+     },
+     {
+      "version": "1810.08575v1",
+      "page": 6,
+      "lines": [
+       49,
+       51
+      ],
+      "text": "In order to evaluate Iterated Amplification, we compare it to supervised learning from the ground\ntruth data. The results are presented in Fig. 2. Iterated Amplification is able to solve these tasks\neffectively with at worst a modest slowdown, achieving our main goal.",
+      "pdf_page": "https://arxiv.org/pdf/1810.08575v1#page=6"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-1810.08575v1:ASM-COORDINATION"
+    ],
+    "stated_hypotheses": [
+     "The decomposer can coordinate several copies of X to do better than a single copy, so Amplify_H(X) outperforms X and gives a useful training signal.",
+     "The question distribution must cover every subquestion asked while computing Amplify_H(X); in the experiments it could be used directly."
+    ],
+    "passages": [
+     {
+      "version": "1810.08575v1",
+      "page": 3,
+      "lines": [
+       12,
+       16
+      ],
+      "text": "could solve it. (Once X is very sophisticated, even tasks like “identify a useful subquestion” might\nbe delegated.) As long as it is possible for multiple agents to collaboratively solve problems more\neffectively than a single agent (perhaps using human expertise to coordinate their efforts), then\nAmplifyH (X) can outperform X and hence provide a useful training signal. We discuss this\nassumption in Section 5.",
+      "pdf_page": "https://arxiv.org/pdf/1810.08575v1#page=3"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "An autoregressive question-answering agent X trained by supervised learning, and a learned predictor H' of the decomposer",
+    "task_data": "5 toy algorithmic tasks posed over large combinatorial contexts (e.g. permutation powering, sequential assignments, wildcard sums, shortest paths in a 64-vertex graph)",
+    "judge": "A hard-coded decomposition algorithm stands in for the human expert H",
+    "regime": "training",
+    "scale": null
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-1810.08575v1:LIM-HANDCODED-DECOMP",
+     "N2:DSOFT:ARXIV-1810.08575v1:LIM-QUESTION-DISTRIBUTION"
+    ],
+    "notes": "The human is replaced by a hand-coded algorithm, so the experiments say nothing about whether humans can decompose real tasks; the domains admit an algorithmic training signal; X is trained by supervised learning, not RL."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "Experiments cover 5 toy algorithmic tasks in one setup with no uncertainty reported; the broader proposal is not tested on real tasks."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-1810.08575v1:RES-ALGORITHMIC-TASKS",
+   "paper": "1810.08575v1",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-1810.08575v1:DEF-AMPLIFY",
+     "N2:DSOFT:ARXIV-1810.08575v1:METHOD-DELEGATION",
+     "N2:DSOFT:ARXIV-1810.08575v1:METHOD-HUMAN-PREDICTOR",
+     "N2:DSOFT:ARXIV-1810.08575v1:METHOD-LARGE-CONTEXT"
+    ],
+    "description": "Iterated Amplification (X trained to predict Amplify_H(X), with a hard-coded decomposer H imitated by a learned H') is compared with supervised learning from ground-truth answers on 5 toy algorithmic tasks, both trained with a curriculum, by performance on a held-out test set (Figure 2).",
+    "passages": [
+     {
+      "version": "1810.08575v1",
+      "page": 6,
+      "lines": [
+       25,
+       36
+      ],
+      "text": "We study Iterated Amplification in a set of 5 toy algorithmic tasks. For each task, the agent X is\ngiven a large combinatorial context and asked questions about that context:\n• Given a permutation σ : {1, . . . , 64} → {1, . . . , 64}, compute σ k (x) for k up to 64.\n2\n\n• Given a function f : {1, . . . , 8} → {1, . . . , 8} and a sequence of 64 assignments of the\nform x := 3 or x := f (y, z), evaluate a particular variable.\n6\n\n• Given a function f : {0, 1} → {−1, 0, 1}, answer questions of the form “What is the sum\nof f (x) over all x matching the wildcard expression 0 ∗ ∗ 1 ∗ ∗?”\n• Given a directed graph with 64 vertices and 128 edges, find the distance from s to t.",
+      "pdf_page": "https://arxiv.org/pdf/1810.08575v1#page=6"
+     },
+     {
+      "version": "1810.08575v1",
+      "page": 6,
+      "lines": [
+       38,
+       44
+      ],
+      "text": "More detailed descriptions of the tasks are available in Appendix C. We train each task using a\ncurriculum of smaller instances, which is unrelated to our use of Iterated Amplification (supervised\nlearning also needs a curriculum to learn these tasks in a reasonable amount of time even given\nground truth labels).\nRather than having a human perform the decomposition, we provide a hard-coded algorithm H which\ndecomposes each task (though we minimize the number of times we call this algorithm). Using these\ndecompositions directly as a recursive algorithm is not efficient for any of the tasks.",
+      "pdf_page": "https://arxiv.org/pdf/1810.08575v1#page=6"
+     },
+     {
+      "version": "1810.08575v1",
+      "page": 12,
+      "lines": [
+       43,
+       45
+      ],
+      "text": "Figure 2 shows the performance on a held out test set, which has 1/3 of its examples at size 64, 1/3\nat size 8, and 1/3 distributed uniformly between the two. This distribution is chosen to give a useful\nrepresentation of progress throughout the learning process. The graphs look essentially the same (and",
+      "pdf_page": "https://arxiv.org/pdf/1810.08575v1#page=12"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "The tasks can be decomposed algorithmically, and a hard-coded algorithm replaces the human decomposer.",
+     "Both methods use a curriculum of smaller instances, which supervised learning also needs."
+    ],
+    "passages": []
+   },
+   "setting": {
+    "systems": "An autoregressive question-answering agent X trained by supervised learning, and a learned predictor H' of the decomposer",
+    "task_data": "5 toy algorithmic tasks posed over large combinatorial contexts (e.g. permutation powering, sequential assignments, wildcard sums, distances in a 64-vertex directed graph)",
+    "judge": "Performance on a held-out test set (1/3 of examples at size 64, 1/3 at size 8, 1/3 in between); the decomposer is a hard-coded algorithm",
+    "regime": "training",
+    "scale": "Task instances up to size 64"
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-1810.08575v1:LIM-HANDCODED-DECOMP",
+     "N2:DSOFT:ARXIV-1810.08575v1:LIM-QUESTION-DISTRIBUTION"
+    ],
+    "notes": "Amplification is 'at worst' modestly slower than supervised learning; no uncertainty is reported; the hand-coded decomposer and algorithmic training signal limit what the result shows about real tasks."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "Five toy tasks in one setup, with learning curves but no reported uncertainty."
+   },
+   "review_status": "provisional_ai_draft",
+   "check_history": [
+    "card-1: flagged or undecided by two blind checks; rewritten from the checkers' suggested fix (quotes unchanged)",
+    "card-2: flagged by the checks; rewritten from the checkers' suggested fix (quotes unchanged)"
+   ]
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-1810.08575v1:RES-ORACLE-CALLS",
+   "paper": "1810.08575v1",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-1810.08575v1:METHOD-HUMAN-PREDICTOR",
+     "N2:DSOFT:ARXIV-1810.08575v1:DEF-AMPLIFY",
+     "N2:DSOFT:ARXIV-1810.08575v1:METHOD-DELEGATION"
+    ],
+    "description": "The number of queries to the hard-coded decomposition oracle H collected over training (with a learned predictor H' used to limit calls) is counted for each task and compared with the tens of millions of ground-truth examples supervised learning needed.",
+    "passages": [
+     {
+      "version": "1810.08575v1",
+      "page": 10,
+      "lines": [
+       1,
+       12
+      ],
+      "text": "Table 2: Total number of queries to the decomposition oracle H for each task. These experiments\ninvolve algorithmic tasks where these decompositions are straightforward; the sample complexity\nwill likely be much larger for more realistic tasks.\nPermutation Expression\nWildcard\nTask\nUnion find Shortest path\npowering\nevaluation\nsearch\nOracle calls\n7,000",
+      "pdf_page": "https://arxiv.org/pdf/1810.08575v1#page=10"
+     },
+     {
+      "version": "1810.08575v1",
+      "page": 10,
+      "lines": [
+       13,
+       22
+      ],
+      "text": "6,000\n20,000\n24,000\n10,000\n\nA\n\nTraining dynamics\n\nTable 2 shows how many queries were collected over the course of training for each of our tasks.",
+      "pdf_page": "https://arxiv.org/pdf/1810.08575v1#page=10"
+     },
+     {
+      "version": "1810.08575v1",
+      "page": 6,
+      "lines": [
+       38,
+       44
+      ],
+      "text": "More detailed descriptions of the tasks are available in Appendix C. We train each task using a\ncurriculum of smaller instances, which is unrelated to our use of Iterated Amplification (supervised\nlearning also needs a curriculum to learn these tasks in a reasonable amount of time even given\nground truth labels).\nRather than having a human perform the decomposition, we provide a hard-coded algorithm H which\ndecomposes each task (though we minimize the number of times we call this algorithm). Using these\ndecompositions directly as a recursive algorithm is not efficient for any of the tasks.",
+      "pdf_page": "https://arxiv.org/pdf/1810.08575v1#page=6"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "The decompositions in these algorithmic tasks are straightforward; the authors expect much larger sample complexity for realistic tasks.",
+     "Carrying the result to realistic tasks rests on the authors' argument that decomposition is strictly easier than solving the task without X's help."
+    ],
+    "passages": []
+   },
+   "setting": {
+    "systems": "An autoregressive question-answering agent X trained by supervised learning, and a learned predictor H' of the decomposer",
+    "task_data": "The paper's toy algorithmic tasks (Table 2 headers: permutation powering, expression evaluation, wildcard search, union find, shortest path)",
+    "judge": "A hard-coded decomposition oracle H stands in for the human",
+    "regime": "training",
+    "scale": "6,000 to 24,000 oracle calls per task (Table 2)"
+   },
+   "quantitative": {
+    "n": "6,000 to 24,000 oracle calls per task (Table 2) vs tens of millions of examples for supervised learning",
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-1810.08575v1:LIM-HANDCODED-DECOMP"
+    ],
+    "notes": "The oracle is a hand-coded algorithm, not a human; the extension to realistic tasks is argued, not tested."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "Query counts come from 5 toy tasks in one setup with no uncertainty; the claim about realistic tasks is argument only."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-1810.08575v1:DEF-VS-DEBATE",
+   "paper": "1810.08575v1",
+   "evidence_type": "argument",
+   "method": {
+    "record_ids": [],
+    "description": "A conceptual comparison in the related-work section: both methods help humans with relevant subquestions, but in Iterated Amplification an independent copy of X answers each subquestion, while in debate one of the debaters answers it.",
+    "passages": [
+     {
+      "version": "1810.08575v1",
+      "page": 6,
+      "lines": [
+       1,
+       3
+      ],
+      "text": "subquestion is answered by an independent copy of X trained by AmplifyH (X), while in a debate\nthe subquestions are answered by one of the debaters (who are trained to defend a particular answer\nto the top-level question).",
+      "pdf_page": "https://arxiv.org/pdf/1810.08575v1#page=6"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "Both approaches target question answering where a human expert cannot evaluate answers directly."
+    ],
+    "passages": []
+   },
+   "setting": {
+    "systems": "Iterated Amplification agents and debate agents (Irving et al., 2018), described conceptually",
+    "task_data": "Question answering where a human expert cannot evaluate answers directly",
+    "judge": null,
+    "regime": "theory",
+    "scale": null
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [],
+    "notes": null
+   },
+   "strength": {
+    "grade": "ARGUMENT_ONLY",
+    "reason": "A conceptual comparison of two proposals, with no proof or experiment."
+   },
+   "review_status": "provisional_ai_draft"
+  }
+ ]
+}

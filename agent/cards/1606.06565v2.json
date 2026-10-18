@@ -1,0 +1,136 @@
+{
+ "schema": "ASRA-GAP-CLOSING-AGENT-v1",
+ "paper": "1606.06565v2",
+ "review_status": "provisional_ai_draft",
+ "rules": [
+  "Everything here is an AI draft (provisional_ai_draft): each counted item passed two blind AI checks that were tested on planted errors, and no person has reviewed it.",
+  "A finding counts only in the setting its own quoted lines show; read `setting` before carrying it to another setting.",
+  "A question's status is a label from fixed rules over its counted findings; `status_check` says whether that label itself passed its check.",
+  "Cite the paper and page from the passage, and read the PDF page before relying on a claim."
+ ],
+ "notes": "Both records are claims in a conceptual agenda paper and are graded ARGUMENT_ONLY. DEF-SCALABLE-OVERSIGHT (kind concept) is linked as a definition because it states the expensive-objective versus cheap-proxy setting the transparency argument relies on. No assumption or limitation records of this paper apply to these two claims (LIM-HUMAN-OVERSIGHT concerns safe exploration).",
+ "cards": [
+  {
+   "record_id": "N2:DSOFT:ARXIV-1606.06565v2:CORE",
+   "paper": "1606.06565v2",
+   "evidence_type": "argument",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-1606.06565v2:DEF-SO-CATEGORY"
+    ],
+    "description": "A position paper that categorizes accident risks by where in the design process things go wrong, illustrates them with a fictional office-cleaning robot, reviews prior work, and proposes research directions with proposals for experiments for each of the five problems.",
+    "passages": [
+     {
+      "version": "1606.06565v2",
+      "page": 2,
+      "lines": [
+       20,
+       26
+      ],
+      "text": "Our goal in this document is to highlight a few concrete safety problems that are ready for experimentation today and relevant to the cutting edge of AI systems, as well as reviewing existing\nliterature on these problems. In Section 2, we frame mitigating accident risk (often referred to as\n“AI safety” in public discussions) in terms of classic methods in machine learning, such as supervised\nclassification and reinforcement learning. We explain why we feel that recent directions in machine\nlearning, such as the trend toward deep reinforcement learning and agents acting in broader environments, suggest an increasing relevance for research around accidents. In Sections 3-7, we explore five\nconcrete problems in AI safety. Each section is accompanied by proposals for relevant experiments.\nSection 8 discusses related efforts, and Section 9 concludes.",
+      "pdf_page": "https://arxiv.org/pdf/1606.06565v2#page=2"
+     },
+     {
+      "version": "1606.06565v2",
+      "page": 2,
+      "lines": [
+       36,
+       39
+      ],
+      "text": "We can categorize safety problems according to where in the process things went wrong.\nFirst, the designer may have specified the wrong formal objective function, such that maximizing that\nobjective function leads to harmful results, even in the limit of perfect learning and infinite data.\nNegative side effects (Section 3) and reward hacking (Section 4) describe two broad mechanisms",
+      "pdf_page": "https://arxiv.org/pdf/1606.06565v2#page=2"
+     },
+     {
+      "version": "1606.06565v2",
+      "page": 3,
+      "lines": [
+       14,
+       17
+      ],
+      "text": "For concreteness, we will illustrate many of the accident risks with reference to a fictional robot\nwhose job is to clean up messes in an office using common cleaning tools. We return to the example\nof the cleaning robot throughout the document, but here we begin by illustrating how it could behave\nundesirably if its designers fall prey to each of the possible failure modes:",
+      "pdf_page": "https://arxiv.org/pdf/1606.06565v2#page=3"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "Accident risk is framed in terms of practical issues with modern machine learning techniques (such as supervised classification and reinforcement learning) rather than extreme scenarios about superintelligent agents."
+    ],
+    "passages": [
+     {
+      "version": "1606.06565v2",
+      "page": 2,
+      "lines": [
+       9,
+       14
+      ],
+      "text": "There has been a great deal of public discussion around accidents. To date much of this discussion has\nhighlighted extreme scenarios such as the risk of misspecified objective functions in superintelligent\nagents [27]. However, in our opinion one need not invoke these extreme scenarios to productively\ndiscuss accidents, and in fact doing so can lead to unnecessarily speculative discussions that lack\nprecision, as noted by some critics [38, 85]. We believe it is usually most productive to frame accident\nrisk in terms of practical (though often quite general) issues with modern ML techniques. As AI",
+      "pdf_page": "https://arxiv.org/pdf/1606.06565v2#page=2"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Modern machine learning systems, including reinforcement learning agents, illustrated with a fictional office-cleaning robot",
+    "task_data": null,
+    "judge": null,
+    "regime": "theory",
+    "scale": null
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [],
+    "notes": "The passages offer a categorization, a literature review and proposals for experiments, not results."
+   },
+   "strength": {
+    "grade": "ARGUMENT_ONLY",
+    "reason": "A research agenda and categorization; the passages contain proposals for experiments but no experiment or proof supporting the claim."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-1606.06565v2:CLAIM-PROXIES-TRANSPARENCY",
+   "paper": "1606.06565v2",
+   "evidence_type": "argument",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-1606.06565v2:DEF-SEMI-SUPERVISED-RL",
+     "N2:DSOFT:ARXIV-1606.06565v2:DEF-SCALABLE-OVERSIGHT"
+    ],
+    "description": "A conceptual argument within the semi-supervised reinforcement learning framing, illustrated with the cleaning robot: an agent whose true reward is a sparse detailed human evaluation could learn cheaper proxies, and would be incentivized to seek proxy feedback rather than break the link between the user's reaction and the real reward.",
+    "passages": []
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "The agent's true reward is a reliable detailed human evaluation that is available only sparsely.",
+     "The agent wants as much cheap proxy feedback as it can get about whether its decisions will ultimately receive high reward."
+    ],
+    "passages": []
+   },
+   "setting": {
+    "systems": "A reinforcement learning agent in semi-supervised RL, illustrated by the fictional cleaning robot",
+    "task_data": null,
+    "judge": "A human whose detailed evaluation gives the sparse true reward",
+    "regime": "theory",
+    "scale": null
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [],
+    "notes": "Hedged ('could', 'may'); no experiment or formal analysis supports it in the passages."
+   },
+   "strength": {
+    "grade": "ARGUMENT_ONLY",
+    "reason": "A conceptual argument with an illustrative example; the passages give no proof or experiment."
+   },
+   "review_status": "provisional_ai_draft"
+  }
+ ]
+}

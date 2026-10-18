@@ -1,0 +1,562 @@
+{
+ "schema": "ASRA-GAP-CLOSING-AGENT-v1",
+ "paper": "2312.04792v4",
+ "review_status": "provisional_ai_draft",
+ "rules": [
+  "Everything here is an AI draft (provisional_ai_draft): each counted item passed two blind AI checks that were tested on planted errors, and no person has reviewed it.",
+  "A finding counts only in the setting its own quoted lines show; read `setting` before carrying it to another setting.",
+  "A question's status is a label from fixed rules over its counted findings; `status_check` says whether that label itself passed its check.",
+  "Cite the paper and page from the passage, and read the PDF page before relying on a claim."
+ ],
+ "notes": "THM-PURE-VS-SMOOTH is labelled 'theorem' but restates results of other work ([21] lower bound; Corollary 3 'of Theorem 1.1 in [24]'); graded CITED_FROM_OTHER_WORK. Its quote ends at the corollary's heading, so the card adds the full statement from Appendix B (p12 L54-L61). THM-5's quote begins mid-statement ('T , then with probability ...'); the card adds the theorem's opening with its hypotheses (p7 L4-L13). THM-SMALL-SUPPORT (Corollary 7): the paper gives a one-sentence justification and relies on Corollary 6; Appendix C.2 proves Lemma 4 and Theorem 5 (with Lemmas 9-11) but no proof of Corollary 6 or 7 was found, so it is graded ARGUMENT_ONLY by its weaker part; a reviewer may judge the in-text derivation sufficient for PROVED_IN_PAPER. The debate experiments are called 'proof-of-concept experiments' (p2 L40) and use 100 questions 'due to funding resources'; RES-COMBINED, RES-JUDGE-INDECISION and CORE are graded EMPIRICAL_PRELIMINARY on that basis. CORE mixes a proved algorithmic result and these experiments; its evidence_type is 'theorem' but it is graded by the weaker experimental part.",
+ "cards": [
+  {
+   "record_id": "N2:DSOFT:ARXIV-2312.04792v4:CORE",
+   "paper": "2312.04792v4",
+   "evidence_type": "theorem",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2312.04792v4:DEF-ORACLES",
+     "N2:DSOFT:ARXIV-2312.04792v4:METHOD-DEBATE-SETUP",
+     "N2:DSOFT:ARXIV-2312.04792v4:METHOD-SMOOTHING"
+    ],
+    "description": "Regret bounds for repeated games with N actions are analysed under pure and smooth optimization oracles, a new oracle-based algorithm (Algorithm 1, Theorem 5) minimizes internal and external regret together, and LLM debates on QuALITY-Easy compare noise-injected settings modelling a smooth oracle with a greedy control.",
+    "passages": [
+     {
+      "version": "2312.04792v4",
+      "page": 2,
+      "lines": [
+       51,
+       60
+      ],
+      "text": "We study efficient regret minimization in large games with access to optimization oracles. We consider\ntwo types of oracles, pure optimization oracles and smooth optimization oracles. A pure optimization\noracle outputs the best response given a set of strategies, and a smooth optimization oracle can\noutput the best response given noisy feedback. We characterize the external and internal regret of\nplaying large games with each type of oracle. In particular, we propose an efficient, oracle-based\nalgorithm for minimizing internal and external regret simultaneously, described in Algorithm 1, and\ngive its accompanying guarantee in Theorem 5. As far as we know, this is the first oracle-based\nmethod that achieves both external and internal regret, and per-iteration computational complexity\nwith logarithmic dependence on the size of the action space N . A comparison of our results and\nprevious methods is given in Table 1.",
+      "pdf_page": "https://arxiv.org/pdf/2312.04792v4#page=2"
+     },
+     {
+      "version": "2312.04792v4",
+      "page": 2,
+      "lines": [
+       40,
+       46
+      ],
+      "text": "Finally, we present proof-of-concept experiments in the AI Safety via Debate setting [23]. In AI\nSafety via Debate, two AI agents debate a question and a judge must determine which agent provided\na better answer. This model aims to address alignment problems where the agent’s behavior is too\ncomplex for humans to understand without assistance, and it is held that optimal play in this game can\nproduce aligned and truthful agents. We show that using the insight from our algorithmic analysis,\nnamely the benefit of a smooth best response oracle, shows clear improvement in gameplay when\napplied to the AI Debate setting as compared to the baselines.",
+      "pdf_page": "https://arxiv.org/pdf/2312.04792v4#page=2"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2312.04792v4:ASM-ZERO-SUM"
+    ],
+    "stated_hypotheses": [
+     "Access to an optimization (best-response) oracle; with only a pure oracle, existing lower bounds rule out efficient low-regret algorithms in general, so the efficient results use a smooth (noisy) oracle.",
+     "Each oracle call takes unit time.",
+     "In the experiments, the expertise gap is simulated by revealing the passage only to the debaters, and debate is treated as a zero-sum game so that external-regret minimization suffices."
+    ],
+    "passages": [
+     {
+      "version": "2312.04792v4",
+      "page": 5,
+      "lines": [
+       66,
+       68
+      ],
+      "text": "Existing lower bounds [21] show that given access to pure optimization oracles, in general we cannot\ndesign efficient algorithms with low regret. We thus consider an augmented oracle: the smooth\noptimization oracle.",
+      "pdf_page": "https://arxiv.org/pdf/2312.04792v4#page=5"
+     },
+     {
+      "version": "2312.04792v4",
+      "page": 5,
+      "lines": [
+       134,
+       135
+      ],
+      "text": "We assume that a call to an optimization oracle, as defined above, takes unit time. For more discussion\non runtime complexity and efficient representation of mixed strategies, see Appendix A.",
+      "pdf_page": "https://arxiv.org/pdf/2312.04792v4#page=5"
+     },
+     {
+      "version": "2312.04792v4",
+      "page": 7,
+      "lines": [
+       61,
+       64
+      ],
+      "text": "Our debate set-up is similar to that of Michael et al. [27], in which two expert debaters assist a\nnon-expert judge in determining the correct answer to a difficult long-context question-answering\ntask. We simulate the expertise gap by revealing the passage only to the debaters, whereas the judge\nmust select an answer using only the debaters’ presented arguments and evidence.",
+      "pdf_page": "https://arxiv.org/pdf/2312.04792v4#page=7"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Two-player repeated games with N actions (theory); gpt-3.5-turbo-16k as both debaters and judge, 1-shot prompts (experiments)",
+    "task_data": "Abstract large-action games; 100 randomly sampled questions from QuALITY-Easy; one debater argues the gold answer, the other the best distractor",
+    "judge": "gpt-3.5-turbo-16k judge that sees only the debaters' arguments and evidence, not the passage (experiments)",
+    "regime": "mixed",
+    "scale": "100 QuALITY-Easy questions in the experiments"
+   },
+   "quantitative": {
+    "n": "100 QuALITY-Easy questions (experiments)",
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2312.04792v4:LIM-ZERO-SUM"
+    ],
+    "notes": "The experiments are limited to zero-sum debate games and are presented as proof-of-concept experiments with one model on 100 questions."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_PRELIMINARY",
+    "reason": "The algorithmic guarantee is proved in the paper, but the claim also says the debate experiments show the benefit, and those are proof-of-concept runs with one model on 100 QuALITY-Easy questions, so the claim is graded by that weaker part."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2312.04792v4:THM-PURE-VS-SMOOTH",
+   "paper": "2312.04792v4",
+   "evidence_type": "cited",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2312.04792v4:DEF-ORACLES"
+    ],
+    "description": "A restatement of prior results: the lower bound for efficient algorithms with a pure optimization oracle is attributed to [21], and the Follow-the-Perturbed-Leader bound with a smooth oracle is stated as a corollary of Theorem 1.1 in [24], with the algorithm reproduced in Appendix B 'for completeness'.",
+    "passages": [
+     {
+      "version": "2312.04792v4",
+      "page": 12,
+      "lines": [
+       23,
+       25
+      ],
+      "text": "For completeness, we give the Follow-the-Perturbed-Leader [24] algorithm for efficient external\nregret minimization. Note that the oracle Osmooth is called once per round on Line 6: by definition\n∇fs (xs ) = Ajs .",
+      "pdf_page": "https://arxiv.org/pdf/2312.04792v4#page=12"
+     },
+     {
+      "version": "2312.04792v4",
+      "page": 12,
+      "lines": [
+       54,
+       61
+      ],
+      "text": "Corollary 8 (of Theorem 1.1 in [24]).\nFollow-the-Perturbed-Leader (Algorithm 2) calls Osmooth\nq\n\nonce per time step. If we set η = lnTN and D to be the exponential distribution: D(x) ∼ e−ηx , it\nproduces pure strategies x1 , . . . , xT that satisfy\n√\nE [ExternalRegret(A)] = O( T ln N ).",
+      "pdf_page": "https://arxiv.org/pdf/2312.04792v4#page=12"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "Lower bound: for an efficient algorithm (running time poly(log N)) given a pure (even precise) best-response oracle, without additional structure in the game.",
+     "Upper bound: FTPL calls the smooth optimization oracle once per step, with step size eta = sqrt(ln N / T) (garbled in the extracted text) and exponentially distributed perturbations; the O(sqrt(T ln N)) bound is on expected external regret.",
+     "Two-player games with N actions and reward matrices in [0,1]^{N x N}; each oracle call takes unit time."
+    ],
+    "passages": [
+     {
+      "version": "2312.04792v4",
+      "page": 2,
+      "lines": [
+       75,
+       79
+      ],
+      "text": "The second direction is more applicable to adversarial environments, and allows access to the reward\nmatrix via an optimization oracle. In this context, [21] shows that even with a precise best response\noracle,\n√the optimal regret for an efficient algorithm (one that runs in time proportional to poly(log N ))\nis Θ( N ). On the other hand, the work of [24] demonstrate that a smooth optimization oracle can",
+      "pdf_page": "https://arxiv.org/pdf/2312.04792v4#page=2"
+     },
+     {
+      "version": "2312.04792v4",
+      "page": 3,
+      "lines": [
+       56,
+       57
+      ],
+      "text": "We consider two-player general-sum games with N available actions, where player I has reward\nmatrix A ∈ [0, 1]N ×N and player II has reward matrix B ∈ [0, 1]N ×N . In a language game, for",
+      "pdf_page": "https://arxiv.org/pdf/2312.04792v4#page=3"
+     },
+     {
+      "version": "2312.04792v4",
+      "page": 5,
+      "lines": [
+       134,
+       135
+      ],
+      "text": "We assume that a call to an optimization oracle, as defined above, takes unit time. For more discussion\non runtime complexity and efficient representation of mixed strategies, see Appendix A.",
+      "pdf_page": "https://arxiv.org/pdf/2312.04792v4#page=5"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "A player in a two-player repeated game with N actions, with pure or smooth optimization-oracle access",
+    "task_data": null,
+    "judge": null,
+    "regime": "theory",
+    "scale": null
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [],
+    "notes": "Both bounds are results of other work ([21] and [24]) that the paper restates."
+   },
+   "strength": {
+    "grade": "CITED_FROM_OTHER_WORK",
+    "reason": "The passages attribute the lower bound to [21] and the FTPL bound to Theorem 1.1 in [24], restated 'for completeness'."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2312.04792v4:THM-5",
+   "paper": "2312.04792v4",
+   "evidence_type": "theorem",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2312.04792v4:DEF-ORACLES"
+    ],
+    "description": "Algorithm 1 approximates a Follow-the-Perturbed-Leader update over convex combinations of internal and external modifications by drawing S perturbation samples, each a call to the smooth oracle, and plays an approximate fixed point of the resulting sparse combination; the proof of Theorem 5 (PDF p. 14) bounds the FTPL regret (Lemma 10) and the sampling error (Lemma 9) and adds them.",
+    "passages": [
+     {
+      "version": "2312.04792v4",
+      "page": 6,
+      "lines": [
+       87,
+       92
+      ],
+      "text": "Given the dependence of the fixed point computation on the sparsity of α, running the deterministic\nFTPL followed by fixed point computation is not efficient out of the box, since αt can be dense\nand we can incur a computational cost of poly(N ). Instead, we approximate αt′ in (1), which is an\nexpectation over the random variable v, by drawing S samples of v and computing each maximizer\n(Line 5). This yields a sparse estimate of αt′ in Line 6. Note that in Line 5, computing each αts is a\ncall to the oracle Õsmooth .",
+      "pdf_page": "https://arxiv.org/pdf/2312.04792v4#page=6"
+     },
+     {
+      "version": "2312.04792v4",
+      "page": 14,
+      "lines": [
+       15,
+       17
+      ],
+      "text": "Proof of Theorem 5. By definition, ∥∇ft (x)∥∞ = ∥Ayt ∥∞ ≤ 1 for all x ∈ ∆N . Since the αt ’s\nare S-sparse, by Lemma 4 we can efficiently compute the fixed points of αt with time complexity\nO(poly(T )). Henceforth, suppose the fixed points are computed up to precision ∥ϕαt (xt ) − xt ∥1 ≤",
+      "pdf_page": "https://arxiv.org/pdf/2312.04792v4#page=14"
+     },
+     {
+      "version": "2312.04792v4",
+      "page": 14,
+      "lines": [
+       142,
+       153
+      ],
+      "text": "√\nIn Lemma 10, we show that with updates αt′ , the modified FTPL algorithm has regret O( T ln N ).\nFurthermore,\nwith probability at least 1 − δ, the approximation error from sampling can be bounded\n√\nby O( T ) given the sample size S, as shown in Lemma 9. Putting everything together,\n√\n√\n√\nΦ-Regret(A) ≤ O( T ln N ) + O( T ) = O( T ln N ).\nThe theorem follows by noticing that Φ contains the mappings that characterize both internal and\nexternal regret.",
+      "pdf_page": "https://arxiv.org/pdf/2312.04792v4#page=14"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "The perturbation distribution D is coordinate-wise Gumbel(0,1), with sample size S = T log(T/delta) and step size eta = sqrt(ln N / T), as set in the theorem statement (garbled in the extracted text).",
+     "The player has a smooth optimization oracle that returns the best modification in the union of internal and external modification sets in hindsight, under random perturbation; each oracle call takes unit time.",
+     "The proof uses the bound on the reward gradient, ||A y_t||_inf <= 1, and fixed points computed to a set precision (Lemma 4).",
+     "The guarantee holds with probability at least 1 - delta."
+    ],
+    "passages": [
+     {
+      "version": "2312.04792v4",
+      "page": 7,
+      "lines": [
+       4,
+       13
+      ],
+      "text": "Theorem 5. Let D be the coordinate-wise Gumbel(0,\n1) distribution: for each coordinate i we have\nq\n−xi\n\nD(xi ) ∼ exi +e , and set S = T log Tδ , η =\n1 simultaneously satisfies:\n\nln N\nT , then with probability at least 1 − δ, Algorithm",
+      "pdf_page": "https://arxiv.org/pdf/2312.04792v4#page=7"
+     },
+     {
+      "version": "2312.04792v4",
+      "page": 5,
+      "lines": [
+       80,
+       84
+      ],
+      "text": "An analogous oracle is needed for simultaneous internal regret and external regret minimization.\nInstead of computing the best response given the opponent’s history, the oracle returns the best\nmodification ϕ ∈ ΦI ∪ΦE in hindsight. Given the opponent’s and the player’s history, the player gains\nthe most excess reward by applying this fixed modification ϕ at each iteration. The corresponding\npure optimization oracle outputs the following,",
+      "pdf_page": "https://arxiv.org/pdf/2312.04792v4#page=5"
+     },
+     {
+      "version": "2312.04792v4",
+      "page": 5,
+      "lines": [
+       134,
+       135
+      ],
+      "text": "We assume that a call to an optimization oracle, as defined above, takes unit time. For more discussion\non runtime complexity and efficient representation of mixed strategies, see Appendix A.",
+      "pdf_page": "https://arxiv.org/pdf/2312.04792v4#page=5"
+     }
+    ],
+    "check": "not verified: the blind checks miss some dropped conditions on theorem cards; read the theorem's statement at the cited page"
+   },
+   "setting": {
+    "systems": "A player in a two-player repeated game with N actions, running Algorithm 1 with smooth-oracle access",
+    "task_data": null,
+    "judge": null,
+    "regime": "theory",
+    "scale": null
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [],
+    "notes": "The guarantee needs the smooth (noisy) oracle; each iteration uses S oracle calls and a fixed-point computation with running time poly(T, log 1/delta), so per-round cost grows with T."
+   },
+   "strength": {
+    "grade": "PROVED_IN_PAPER",
+    "reason": "Theorem 5 is stated with its hypotheses and proved in the paper (proof of Theorem 5 on PDF p. 14), where the proof combines Lemma 10 and Lemma 9."
+   },
+   "review_status": "provisional_ai_draft",
+   "check_history": [
+    "card-1: flagged or undecided by two blind checks; rewritten from the checkers' suggested fix (quotes unchanged)"
+   ]
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2312.04792v4:THM-SMALL-SUPPORT",
+   "paper": "2312.04792v4",
+   "evidence_type": "theorem",
+   "method": {
+    "record_ids": [],
+    "description": "Derived in the text: Algorithm 1's external-regret guarantee gives the row player total reward at least T - O(sqrt(T ln N)), from which the authors infer the mass bound on R (Corollary 7), and the swap-regret bound follows by applying Corollary 6.",
+    "passages": [
+     {
+      "version": "2312.04792v4",
+      "page": 7,
+      "lines": [
+       34,
+       39
+      ],
+      "text": "Corollary 6. In the structured game, suppose an algorithm outputs strategies that satisfy\nPT P\nt=1\ni∈R\n/ xt (i) ≤ εA T , then it has swap regret guarantee\nSwapRegret(A) ≤ 2εA T + r · InternalRegret(A).",
+      "pdf_page": "https://arxiv.org/pdf/2312.04792v4#page=7"
+     },
+     {
+      "version": "2312.04792v4",
+      "page": 7,
+      "lines": [
+       28,
+       33
+      ],
+      "text": "Let the set of indices of the r nonzero rows be R. In this setting, a desirable behavior of the algorithm\nis to output strategies whose support converges quickly to R. In Corollary 6, we show that the swap\nregret can be upper bounded by the swap regret restricted to R, and the total probability of playing\nPT P\nactions outside of R over T iterations, quantified by t=1 i∈R\n/ xt (i).",
+      "pdf_page": "https://arxiv.org/pdf/2312.04792v4#page=7"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "Structured reward matrix A = A1 + eps*A2, where A1 has r rows of all ones and zeros elsewhere and A2 has entries in {0,1}; R is the set of the r nonzero rows, with A ∈ [0,1]^(N×N).",
+     "The row player plays according to Algorithm 1."
+    ],
+    "passages": [
+     {
+      "version": "2312.04792v4",
+      "page": 7,
+      "lines": [
+       24,
+       27
+      ],
+      "text": "Consider a game with a structured reward matrix A ∈ [0, 1]N ×N , where A = A1 + εA2 . A1 has r\nrows that are all ones, and the rest of the entries of A1 are zero; A2 is a matrix whose entries are in\n{0, 1}. The AI debate setting has similarities to this structured game, where given a question, only a\nsubset of relevant sentences can potentially yield rewards.",
+      "pdf_page": "https://arxiv.org/pdf/2312.04792v4#page=7"
+     }
+    ],
+    "check": "not verified: the blind checks miss some dropped conditions on theorem cards; read the theorem's statement at the cited page"
+   },
+   "setting": {
+    "systems": "Row player using Algorithm 1 in a structured two-player game with N actions",
+    "task_data": null,
+    "judge": null,
+    "regime": "theory",
+    "scale": null
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [],
+    "notes": "The swap-regret part rests on Corollary 6, which the passages state without a separate proof; the derivation of the mass bound is given in one sentence; the link to debate is an analogy. The authors say the AI debate setting 'has similarities to' this structured game, since only a subset of relevant sentences can yield rewards; this is an analogy, not a derivation."
+   },
+   "strength": {
+    "grade": "PROVED_IN_PAPER",
+    "reason": "Corollary 7 is derived in the text: Algorithm 1's external-regret guarantee gives the row player total reward at least T - O(sqrt(T ln N)), which implies the mass bound on R, and the swap-regret bound follows 'By Corollary 6', which the authors say 'we show'."
+   },
+   "review_status": "provisional_ai_draft",
+   "check_history": [
+    "card-1: flagged or undecided by two blind checks; rewritten from the checkers' suggested fix (quotes unchanged)",
+    "card-3: flagged by the checks under rubric v1.1; rewritten from the checkers' suggested fix (quotes unchanged)"
+   ]
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2312.04792v4:RES-COMBINED",
+   "paper": "2312.04792v4",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2312.04792v4:METHOD-DEBATE-SETUP",
+     "N2:DSOFT:ARXIV-2312.04792v4:METHOD-SMOOTHING"
+    ],
+    "description": "Debates of up to five rounds between gpt-3.5-turbo-16k debaters on 100 QuALITY-Easy questions are run under Reward Noise (independent noise on the judge reward each debater sees), Debater Sampling (temperature 0.8), both combined, and a greedy Control; the share of final judgments that are correct, incorrect or no answer is compared with the Control by a one-tailed proportion test.",
+    "passages": [
+     {
+      "version": "2312.04792v4",
+      "page": 8,
+      "lines": [
+       56,
+       66
+      ],
+      "text": "Modelling a smooth optimization oracle. To model smooth optimization in this setting, we use a\nfew different methods:\nB\nA\nB\n• Reward Noise: Given judge reward Jt = [pA\nt , pt ] for round t, where pt and pt are the\nA\nB\nrewards assigned to debaters A and B respectively, and pt = 1−pt , we independently noise\nthe judge reward that each debater sees. That is, Debater A receives JtA = [pA",
+      "pdf_page": "https://arxiv.org/pdf/2312.04792v4#page=8"
+     },
+     {
+      "version": "2312.04792v4",
+      "page": 8,
+      "lines": [
+       36,
+       47
+      ],
+      "text": "Debate set-up. Figure 1 gives an overview of our debate\nset-up. We run the debates for a maximum of five rounds.\nJudge: <VOTING> I continue to\nIn each round, each debater takes one turn to argue for their\nbe more convinced by Debater A –\nI think the answer is A.\nanswer and to select snippets from the text as evidence to\nProbabilities: [0.7, 0.3]\nsupport their argument. The judge then decides on one of\ntwo actions: 1) to continue the debate and give the debaters\nfeedback on their arguments, or 2) to end the debate and Figure 1: The experimental set-up for\nvote for an answer. To indicate which action it chose, the our debate experiments. The debaters",
+      "pdf_page": "https://arxiv.org/pdf/2312.04792v4#page=8"
+     },
+     {
+      "version": "2312.04792v4",
+      "page": 7,
+      "lines": [
+       61,
+       64
+      ],
+      "text": "Our debate set-up is similar to that of Michael et al. [27], in which two expert debaters assist a\nnon-expert judge in determining the correct answer to a difficult long-context question-answering\ntask. We simulate the expertise gap by revealing the passage only to the debaters, whereas the judge\nmust select an answer using only the debaters’ presented arguments and evidence.",
+      "pdf_page": "https://arxiv.org/pdf/2312.04792v4#page=7"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2312.04792v4:ASM-ZERO-SUM"
+    ],
+    "stated_hypotheses": [
+     "Adding noise to the rewards debaters see, or sampling debaters stochastically, is taken to model a smooth optimization oracle.",
+     "The experiment tests whether the theory's insight, the benefit of a smooth best-response oracle, carries over to LLM debate.",
+     "Debate is treated as a zero-sum game, so external-regret minimization suffices."
+    ],
+    "passages": [
+     {
+      "version": "2312.04792v4",
+      "page": 2,
+      "lines": [
+       40,
+       46
+      ],
+      "text": "Finally, we present proof-of-concept experiments in the AI Safety via Debate setting [23]. In AI\nSafety via Debate, two AI agents debate a question and a judge must determine which agent provided\na better answer. This model aims to address alignment problems where the agent’s behavior is too\ncomplex for humans to understand without assistance, and it is held that optimal play in this game can\nproduce aligned and truthful agents. We show that using the insight from our algorithmic analysis,\nnamely the benefit of a smooth best response oracle, shows clear improvement in gameplay when\napplied to the AI Debate setting as compared to the baselines.",
+      "pdf_page": "https://arxiv.org/pdf/2312.04792v4#page=2"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "gpt-3.5-turbo-16k as both debaters and judge, 1-shot prompts",
+    "task_data": "100 randomly sampled questions from QuALITY-Easy; one debater argues the gold answer, the other the best distractor",
+    "judge": "gpt-3.5-turbo-16k judge that sees only the debaters' arguments and evidence, not the passage; each round it continues or votes and gives probabilities for both answers",
+    "regime": "evaluation",
+    "scale": "100 questions; at most five rounds per debate"
+   },
+   "quantitative": {
+    "n": "100 QuALITY-Easy questions",
+    "uncertainty": "One-tailed proportion test against the Control: p = 0.045 for the rise in correct answers, p = 0.035 for the drop in abstentions"
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2312.04792v4:LIM-ZERO-SUM"
+    ],
+    "notes": "Proof-of-concept experiments with one model on the easy QuALITY subset (chosen because of gpt-3.5-turbo-16k's limited zero-shot performance on the hard subset) and a 100-question sample limited by funding; the test is one-tailed."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_PRELIMINARY",
+    "reason": "The authors present these as proof-of-concept experiments on a funding-limited sample of 100 questions with one model and one task, and the main effect is significant only on a one-tailed test (p = 0.045)."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2312.04792v4:RES-JUDGE-INDECISION",
+   "paper": "2312.04792v4",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2312.04792v4:METHOD-DEBATE-SETUP",
+     "N2:DSOFT:ARXIV-2312.04792v4:METHOD-SMOOTHING"
+    ],
+    "description": "In each setting the judge's probabilities for the correct and incorrect answers are tracked over the rounds (Figure 2b, shaded with plus or minus one standard error), along with its choice to continue or vote; in the last round the judge is reminded that it must make a final decision.",
+    "passages": [
+     {
+      "version": "2312.04792v4",
+      "page": 8,
+      "lines": [
+       44,
+       55
+      ],
+      "text": "support their argument. The judge then decides on one of\ntwo actions: 1) to continue the debate and give the debaters\nfeedback on their arguments, or 2) to end the debate and Figure 1: The experimental set-up for\nvote for an answer. To indicate which action it chose, the our debate experiments. The debaters\njudge prepends either <CONTINUE> or <VOTING> to its each have access to the text passage\nresponse. In either case, the judge ends its response with a (the book icon) corresponding to a quespair of probabilities indicating the likelihood that it assigns tion from the QuALITY [29] dataset and\nto each debater’s answer. We refer to these probabilities must convince the judge of their respecas the rewards. Finally, in the last round, we prompt the tive answers.\njudge with a reminder that this is the final round and the\njudge should make a final decision (see Appendix D.1\nfor the prompt format). We defer additional details about\njudge retries, parsing judge rewards, and truncating prompts exceeding the model’s context length to\nAppendix D.3.",
+      "pdf_page": "https://arxiv.org/pdf/2312.04792v4#page=8"
+     },
+     {
+      "version": "2312.04792v4",
+      "page": 9,
+      "lines": [
+       62,
+       63
+      ],
+      "text": "(b) The probabilities that the judge assigns to each\nanswer. The shading indicates ±1 standard error.",
+      "pdf_page": "https://arxiv.org/pdf/2312.04792v4#page=9"
+     },
+     {
+      "version": "2312.04792v4",
+      "page": 7,
+      "lines": [
+       61,
+       64
+      ],
+      "text": "Our debate set-up is similar to that of Michael et al. [27], in which two expert debaters assist a\nnon-expert judge in determining the correct answer to a difficult long-context question-answering\ntask. We simulate the expertise gap by revealing the passage only to the debaters, whereas the judge\nmust select an answer using only the debaters’ presented arguments and evidence.",
+      "pdf_page": "https://arxiv.org/pdf/2312.04792v4#page=7"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "Same proof-of-concept setup: gpt-3.5-turbo-16k debaters and judge, 100 QuALITY-Easy questions, at most five rounds.",
+     "In the final round the judge is prompted that this is the last round and it should decide."
+    ],
+    "passages": [
+     {
+      "version": "2312.04792v4",
+      "page": 2,
+      "lines": [
+       40,
+       46
+      ],
+      "text": "Finally, we present proof-of-concept experiments in the AI Safety via Debate setting [23]. In AI\nSafety via Debate, two AI agents debate a question and a judge must determine which agent provided\na better answer. This model aims to address alignment problems where the agent’s behavior is too\ncomplex for humans to understand without assistance, and it is held that optimal play in this game can\nproduce aligned and truthful agents. We show that using the insight from our algorithmic analysis,\nnamely the benefit of a smooth best response oracle, shows clear improvement in gameplay when\napplied to the AI Debate setting as compared to the baselines.",
+      "pdf_page": "https://arxiv.org/pdf/2312.04792v4#page=2"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "gpt-3.5-turbo-16k as both debaters and judge, 1-shot prompts",
+    "task_data": "100 randomly sampled questions from QuALITY-Easy; one debater argues the gold answer, the other the best distractor",
+    "judge": "gpt-3.5-turbo-16k judge that sees only the debaters' arguments and evidence, not the passage; each round it continues or votes and gives probabilities for both answers",
+    "regime": "evaluation",
+    "scale": "100 questions; at most five rounds per debate"
+   },
+   "quantitative": {
+    "n": "100 QuALITY-Easy questions",
+    "uncertainty": "Figure 2b shades plus or minus one standard error for the judge probabilities; no statistic is given for how often the judge continues"
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2312.04792v4:LIM-ZERO-SUM"
+    ],
+    "notes": "Descriptive observation with one judge model; 'nearly always' continuing is not quantified in these lines."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_PRELIMINARY",
+    "reason": "A descriptive observation from the authors' proof-of-concept runs with one model on 100 questions, with the frequency of continuing not quantified."
+   },
+   "review_status": "provisional_ai_draft"
+  }
+ ]
+}

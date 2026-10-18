@@ -1,0 +1,100 @@
+{
+ "schema": "ASRA-GAP-CLOSING-AGENT-v1",
+ "id": "Q19",
+ "question": "Can debate extract inductive or tacit knowledge that lacks short, citeable justifications?",
+ "asked_by": "Michael et al., Debate Helps Supervise Unreliable Experts",
+ "rank": 5,
+ "status": "STILL_OPEN",
+ "status_check": "AI_CHECKED",
+ "remaining_question": "On questions whose correct answers rest on knowledge the stronger models cannot back with short, judge-checkable evidence (e.g. expert intuitions or regularities induced from many examples), does debate raise a weaker judge's accuracy above direct QA and consultancy?",
+ "remaining_type": "EMPIRICAL",
+ "safety_case": [
+  {
+   "node": "SC-D5.4",
+   "relation": "INDIRECT",
+   "reason": "An answer would show whether debate can convey inductive or tacit knowledge that lacks short, citeable justifications, which is D5.4's worry that truths knowable only via heuristics learned from many examples cannot be argued compellingly, though for debate on general questions rather than recursive tree debate on AI research.",
+   "node_evidence": "WEAK",
+   "branch": "the equilibrium is correct (debate structure and judges)",
+   "score": 1.0
+  }
+ ],
+ "findings": [
+  {
+   "id": "Q19:F1",
+   "later_paper": "arXiv 2505.03989v3: An alignment safety case sketch based on debate",
+   "first_submitted": "2025-05-06",
+   "effect": "RELATED_ONLY",
+   "claim": "In their safety-case sketch the authors list as a defeater (D5.4) the worry that some truths might only be knowable via heuristics learned by encountering many examples and so cannot be argued for compellingly via deductive arguments, which would reduce the scope of questions recursive tree debate can answer, possibly especially for research taste in AI research; separately they say translating latent knowledge acquired via heuristics into deductive arguments might require very large argument trees (D5.1). Both are stated worries, not results.",
+   "setting": "Conceptual alignment safety-case sketch about recursive tree / prover-estimator debate, with the AI research domain as an example; the passages are defeaters (D5.1, D5.4) in the argument structure, not results, and describe no experiment, models or judges.",
+   "bears_on": "Restates the question's core (knowledge induced from many examples without short deductive justification) as an unresolved limitation of recursive debate, and adds a cost concern (very large argument trees).",
+   "passages": [
+    {
+     "version": "2505.03989v3",
+     "page": 14,
+     "lines": [
+      12,
+      17
+     ],
+     "text": "First, we need to argue that the structure of recursive tree debate is conducive to identifying truth (C4.4).\nThis is supported by theoretical arguments (E5.4). We might worry that some true statements cannot be\nargued for compellingly via deductive arguments. For example, some truths might only be knowable via\nheuristics learned by encountering many examples, reducing the scope of questions that can be answered\nwith recursive tree debate (D5.4). This might be an especially plausible defeater in the AI research domain,\nwhere research taste and plans may be hard to defend deductively. More worryingly, we might worry that",
+     "pdf_page": "https://arxiv.org/pdf/2505.03989v3#page=14"
+    },
+    {
+     "version": "2505.03989v3",
+     "page": 10,
+     "lines": [
+      72,
+      77
+     ],
+     "text": "uncertainty about whether stochastic gradient descent (SGD) can reach E in realistic training time. There\nare reasons to think that, in the case of debate, there are bad constants or exponents (i.e. the time it takes\nto solve E is on the higher end) – for example, translating latent knowledge acquired via heuristics into\ndeductive arguments might require very large argument trees (D5.1). However, we are hopeful that future\nresearch can prove tighter theoretical results linking prover-estimator debate – or other, improved debate\nprotocols – to realistic training methods.",
+     "pdf_page": "https://arxiv.org/pdf/2505.03989v3#page=10"
+    }
+   ]
+  },
+  {
+   "id": "Q19:F2",
+   "later_paper": "arXiv 2610.02557v1: How to Have a Sensitive Debate: An Instance-Optimal Protocol for AI Debate",
+   "first_submitted": "2026-10-01",
+   "effect": "RELATED_ONLY",
+   "claim": "The authors' protocol makes the first debater lose if the opponent shows her decomposition of a claim into sub-claims is too sensitive to errors in individual sub-claims, a restriction they call natural for claims that inherently involve fuzzy human judgment; they prove that any protocol with only black-box access to human judgments must make at least on the order of rho^d queries to find a flawed sub-claim with constant probability (rho the fractional block sensitivity at each step, d the depth), and read this as showing the black-box judgment assumption must be relaxed to make further progress.",
+   "setting": "Theory (complexity / query complexity). Debaters Alice and Bob; human judgment modelled as a black-box oracle on sub-claims; claims with stable (low fractional block sensitivity) decompositions; no experiments.",
+   "bears_on": "Indirect: characterises which claims resting on many individually judged pieces of evidence a black-box-judged debate can verify; it does not address knowledge that cannot be decomposed into individually judgeable sub-claims, which is the tacit case the question raises.",
+   "passages": [
+    {
+     "version": "2610.02557v1",
+     "page": 3,
+     "lines": [
+      42,
+      50
+     ],
+     "text": "On the other hand, suppose that Alice claims that 50 out of a total of 99 papers yi support the\noriginal claim x. In this case, Bob has no recourse but to check every single one of the 50 papers, as\neven a single incorrect paper would flip the majority vote and overturn the truth of the original claim.\nThe key to our protocol is that Bob is allowed to demonstrate that Alice has made an unreasonably\nsensitive claim of this form, in which case Alice will lose the debate. This in turn requires Alice\nto only decompose her claims in a way that is not too sensitive to errors in individual sub-claims.\nWe view this as a very natural restriction when arguing about claims that inherently involve fuzzy\nhuman judgment. Indeed, one should be very suspicious of any argument that is highly sensitive to\nchanges in individual pieces of evidence, and yet relies on fuzzy human judgments in each step.",
+     "pdf_page": "https://arxiv.org/pdf/2610.02557v1#page=3"
+    },
+    {
+     "version": "2610.02557v1",
+     "page": 5,
+     "lines": [
+      1,
+      9
+     ],
+     "text": "Instance-wise optimality. Finally, we show in Section 5 that any protocol with only black-box\naccess to human judgments must make at least Ω(ρd ) queries to find a flawed sub-claim with constant\nprobability, matching the cost of our FBS debate protocol. This lower bound holds instance-wise: if\nthe best decomposition of an original claim x into a tree of sub-claims has fractional block sensitivity\nρ in each step, then ρd queries are required on that particular instance x. The assumption of\nblack-box access to human judgments is critical for the lower bound to hold. One can view this\ninstance-wise optimality as demonstrating that the black-box judgment assumption, which is common\nto all prior theoretical work on debate, must be relaxed in order to make further progress on debate\nprotocols.",
+     "pdf_page": "https://arxiv.org/pdf/2610.02557v1#page=5"
+    }
+   ]
+  }
+ ],
+ "findings_drafted": 2,
+ "maths": [],
+ "experiment_package": {
+  "id": "PK-Q19",
+  "file": "agent/packages/PK-Q19.json",
+  "hypothesis": "Following the worry in premises 1 and 2, on tacit items (answers resting on a regularity the debater induced from many examples, with no short verified evidence that settles them) debate raises a weaker LLM judge's accuracy by less than 6 points over direct QA and over consultancy, and by less than on matched citeable items. The design is outcome-neutral: it can also show the opposite.",
+  "check_state": "AI_CHECKED"
+ },
+ "review_status": "provisional_ai_draft",
+ "rules": [
+  "Everything here is an AI draft (provisional_ai_draft): each counted item passed two blind AI checks that were tested on planted errors, and no person has reviewed it.",
+  "A finding counts only in the setting its own quoted lines show; read `setting` before carrying it to another setting.",
+  "A question's status is a label from fixed rules over its counted findings; `status_check` says whether that label itself passed its check.",
+  "Cite the paper and page from the passage, and read the PDF page before relying on a claim."
+ ]
+}

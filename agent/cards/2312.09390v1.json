@@ -1,0 +1,681 @@
+{
+ "schema": "ASRA-GAP-CLOSING-AGENT-v1",
+ "paper": "2312.09390v1",
+ "review_status": "provisional_ai_draft",
+ "rules": [
+  "Everything here is an AI draft (provisional_ai_draft): each counted item passed two blind AI checks that were tested on planted errors, and no person has reviewed it.",
+  "A finding counts only in the setting its own quoted lines show; read `setting` before carrying it to another setting.",
+  "A question's status is a label from fixed rules over its counted findings; `status_check` says whether that label itself passed its check.",
+  "Cite the paper and page from the passage, and read the PDF page before relying on a claim."
+ ],
+ "notes": "No uncertainty (seeds, error bars, tests) is reported for any of the main weak-to-strong results; the only s.e.m. in the paper is in Figure 13 (overfitting analysis), so multi-task results are graded EMPIRICAL_SINGLE_SETTING. RES-IMITATION's quote says students were trained 'not using early stopping', but Appendix A.1 (p28 L37-39) says the NLP weak-to-strong runs early-stop on weak-label accuracy; only the chess and reward-modeling runs use no early stopping. RES-RM ends with a general interpretation (naive weak supervision will be insufficient for superhuman models) that goes beyond the reward-modeling result. RES-BOOTSTRAP combines the main chess result with NLP and reward-modeling observations the authors call preliminary. CORE: 'GPT-2-level' and 'GPT-3.5-level' do not mean those models; the series excludes GPT-2, GPT-3 and GPT-3.5 (footnote p2 L33-34). RES-CHESS's quote ends mid-word ('The cor7') where the page breaks.",
+ "cards": [
+  {
+   "record_id": "N2:DSOFT:ARXIV-2312.09390v1:CORE",
+   "paper": "2312.09390v1",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2312.09390v1:DEF-W2S-SETUP",
+     "N2:DSOFT:ARXIV-2312.09390v1:DEF-PGR"
+    ],
+    "description": "Small GPT-4-family models finetuned on ground truth label a held-out set; larger GPT-4-family models are finetuned on those weak labels and compared with the weak supervisor and with a strong ceiling finetuned on ground truth, via performance gap recovered, on NLP classification, chess puzzles and ChatGPT reward modeling.",
+    "passages": [
+     {
+      "version": "2312.09390v1",
+      "page": 2,
+      "lines": [
+       27,
+       31
+      ],
+      "text": "We study our weak-to-strong learning setup (Section 3) by finetuning base (i.e. pretrained-only)\nlanguage models from the GPT-4 family (OpenAI, 2023),1 spanning 7 orders of magnitude (OOMs)\nof pretraining compute, across three settings: a large set of popular natural language processing\n(NLP) benchmarks, chess puzzles, and our internal ChatGPT reward modeling dataset. Our main\nfindings include:",
+      "pdf_page": "https://arxiv.org/pdf/2312.09390v1#page=2"
+     },
+     {
+      "version": "2312.09390v1",
+      "page": 6,
+      "lines": [
+       1,
+       3
+      ],
+      "text": "3. Train a strong model with ground truth labels as a ceiling. Finally, for comparison, we\nfinetune a strong model with ground truth labels.4 We call this model’s resulting performance the strong ceiling performance. Intuitively, this should correspond to “everything\nthe strong model knows,” i.e. the strong model applying its full capabilities to the task.",
+      "pdf_page": "https://arxiv.org/pdf/2312.09390v1#page=6"
+     },
+     {
+      "version": "2312.09390v1",
+      "page": 7,
+      "lines": [
+       15,
+       25
+      ],
+      "text": "Popular natural language processing benchmarks. We consider 22 popular NLP classification\ndatasets covering ethics, commonsense reasoning, natural language inference, sentiment analysis,\nand other domains. We convert all datasets to binary classification tasks and approximately balance\nthe classes. We produce soft labels from the weak model. See a full list of the datasets and their\nsources in Table 1.\nChess puzzles. We use the dataset originally introduced in Schwarzschild et al. (2021b), which\ncontains chess puzzles from the lichess.org website (Lichess Team, 2023). Each puzzle consists of a chess position, and a sequence of optimal moves to play to solve the puzzle. For our\nevaluation, we predict the first move played, which is the best move in the given chess position. We\nillustrate the data format in Appendix Figure 14. For weak labels, we sample from the weak model\nwith temperature 0. Note that unlike the other binary classification tasks we study in this paper, this\nis a generative task.",
+      "pdf_page": "https://arxiv.org/pdf/2312.09390v1#page=7"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "Weak model supervision stands in for human supervision of superhuman models; the setup is an analogy, not the target problem.",
+     "Ground-truth labels are available for training the weak supervisor and the ceiling and for evaluation, which would not hold for tasks humans cannot evaluate; GPT-4 and about half of the NLP tasks were held out while iterating on methods.",
+     "For reward modeling the RL step is not studied; the goal is taken to be reward-model accuracy.",
+     "The model series shares GPT-4's architecture and pretraining data but does not include the models known as GPT-2, GPT-3 and GPT-3.5."
+    ],
+    "passages": [
+     {
+      "version": "2312.09390v1",
+      "page": 6,
+      "lines": [
+       52,
+       56
+      ],
+      "text": "For tasks solved by superhuman models that humans cannot evaluate, we will not have access to ground\ntruth labels. However, we allow access to ground truth labels in our experimental setting today for scientific\nand evaluation purposes. Note that we evaluated weak-to-strong performance against ground truth many times\nwhile iterating on methods; however, we held out our largest model (GPT-4) and about half of NLP tasks\nthroughout the project.",
+      "pdf_page": "https://arxiv.org/pdf/2312.09390v1#page=6"
+     },
+     {
+      "version": "2312.09390v1",
+      "page": 7,
+      "lines": [
+       26,
+       35
+      ],
+      "text": "ChatGPT reward modeling. The standard approach to aligning models today is reinforcement\nlearning from human feedback (RLHF). A critical step of RLHF is to train a reward model (RM)\nto predict human preferences between model responses. Specifically, a reward model is trained\non a dataset consisting of dialogs between a human and an assistant model. For each query, the\nhumans compare multiple possible responses (completions) from the assistant, providing human\npreference data. Then, a reward model is trained to predict the results of pairwise comparisons\nbetween completions. Finally, the assistant model is trained by optimizing against the reward model\nwith reinforcement learning (RL). In our work, we do not study the RL step, and instead assume the\ngoal is to maximize reward model accuracy. For more details on reward models, see e.g. Ouyang\net al. (2022). We use a proprietary dataset used to train ChatGPT reward models.",
+      "pdf_page": "https://arxiv.org/pdf/2312.09390v1#page=7"
+     },
+     {
+      "version": "2312.09390v1",
+      "page": 2,
+      "lines": [
+       33,
+       34
+      ],
+      "text": "These models share the same general architecture and pretraining dataset as GPT-4. However, this model\nseries does not include the models known as GPT-2, GPT-3, and GPT-3.5.",
+      "pdf_page": "https://arxiv.org/pdf/2312.09390v1#page=2"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Pretrained base language models from the GPT-4 family (same general architecture and pretraining data as GPT-4) as weak supervisors and strong students",
+    "task_data": "22 NLP classification datasets (binarised), chess puzzles from lichess.org (predict the best first move), and a proprietary ChatGPT reward modeling dataset",
+    "judge": "Test accuracy against ground-truth labels",
+    "regime": "training",
+    "scale": "Models spanning 7 orders of magnitude of pretraining compute, up to GPT-4"
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2312.09390v1:LIM-DISANALOGIES",
+     "N2:DSOFT:ARXIV-2312.09390v1:LIM-METHODS"
+    ],
+    "notes": "Naive finetuning stays far from the strong ceiling; no method works consistently in all settings, especially reward modeling; disanalogies remain (imitation saliency, pretraining leakage)."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "Three task settings are tested, but all with one model family and with no uncertainty reported for the results, which the rubric grades as single-setting."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2312.09390v1:RES-NAIVE-NLP",
+   "paper": "2312.09390v1",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2312.09390v1:DEF-W2S-SETUP",
+     "N2:DSOFT:ARXIV-2312.09390v1:DEF-PGR"
+    ],
+    "description": "On 22 binarised NLP classification datasets, weak supervisors trained on one half of each dataset give soft labels on the other half, strong GPT-4-family students are finetuned on them (2 epochs, early-stopped on weak-label accuracy), and the median PGR across tasks is plotted against supervisor and student compute.",
+    "passages": [
+     {
+      "version": "2312.09390v1",
+      "page": 7,
+      "lines": [
+       15,
+       25
+      ],
+      "text": "Popular natural language processing benchmarks. We consider 22 popular NLP classification\ndatasets covering ethics, commonsense reasoning, natural language inference, sentiment analysis,\nand other domains. We convert all datasets to binary classification tasks and approximately balance\nthe classes. We produce soft labels from the weak model. See a full list of the datasets and their\nsources in Table 1.\nChess puzzles. We use the dataset originally introduced in Schwarzschild et al. (2021b), which\ncontains chess puzzles from the lichess.org website (Lichess Team, 2023). Each puzzle consists of a chess position, and a sequence of optimal moves to play to solve the puzzle. For our\nevaluation, we predict the first move played, which is the best move in the given chess position. We\nillustrate the data format in Appendix Figure 14. For weak labels, we sample from the weak model\nwith temperature 0. Note that unlike the other binary classification tasks we study in this paper, this\nis a generative task.",
+      "pdf_page": "https://arxiv.org/pdf/2312.09390v1#page=7"
+     },
+     {
+      "version": "2312.09390v1",
+      "page": 28,
+      "lines": [
+       37,
+       48
+      ],
+      "text": "Training hyperparameters. We finetune all models for 2 epochs using a batch size of 32. In\nthe weak-to-strong generalization experiments, we early stop training based on the accuracy with\nrespect to the weak labels on a held-out validation set. See Section 5.1.1 for relevant discussion.\nWe only tuned the hyper-parameters of our methods on smaller model sizes, and on a subset of 8\ndatasets. The full GPT-4 model and most of the datasets were held-out, except for datasets [5–12]\n(see Figure 12).\nWeak labels.\nTo produce the weak labels, we split the original dataset in half. We ensure that\nrelated datapoints, e.g. datapoints that share the same question or premise, are always grouped together into the same half. Then, we train the weak supervisor model on the first half of the dataset,\nand use its prediction on the other half as the weak labels. We additionally save the weak labels on\nthe test set to evaluate metrics such as agreement in Section 5.1.3. The weak labels are soft labels\non the training data, i.e. the class probabilities predicted by the supervisor.",
+      "pdf_page": "https://arxiv.org/pdf/2312.09390v1#page=28"
+     },
+     {
+      "version": "2312.09390v1",
+      "page": 8,
+      "lines": [
+       139,
+       148
+      ],
+      "text": "Figure 3: Promising weak-to-strong generalization with naive finetuning on NLP tasks and\nchess, but poor generalization on the ChatGPT reward modeling task. (a,b,c) Test accuracy\nas a function of strong student size on (a) NLP tasks, (b) chess puzzles, and (c) the ChatGPT\nreward modeling task. Accuracy of strong students trained with ground truth in black, accuracy\nof strong students trained with weak supervision shown with colored lines (hue indicates size of\nweak supervisor). (d,e,f) Same as panels a,b,c but for performance gap recovered (see Section 3\nfor details). For NLP settings, we compute the median across tasks (see Figure 12 for full details).\nWe find decent weak-to-strong generalization and even positive PGR scaling on NLP tasks, decent\ngeneralization for small supervisor-student gaps but negative PGR scaling on chess puzzles, and\nboth poor generalization and scaling for ChatGPT reward modeling.",
+      "pdf_page": "https://arxiv.org/pdf/2312.09390v1#page=8"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "Weak supervisors are small pretrained models finetuned on ground-truth labels.",
+     "Ground-truth labels are used for evaluation; hyperparameters were tuned only on smaller models and 8 datasets, with GPT-4 and most datasets held out."
+    ],
+    "passages": [
+     {
+      "version": "2312.09390v1",
+      "page": 6,
+      "lines": [
+       52,
+       56
+      ],
+      "text": "For tasks solved by superhuman models that humans cannot evaluate, we will not have access to ground\ntruth labels. However, we allow access to ground truth labels in our experimental setting today for scientific\nand evaluation purposes. Note that we evaluated weak-to-strong performance against ground truth many times\nwhile iterating on methods; however, we held out our largest model (GPT-4) and about half of NLP tasks\nthroughout the project.",
+      "pdf_page": "https://arxiv.org/pdf/2312.09390v1#page=6"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Pretrained language models from the GPT-4 family as weak supervisors and strong students",
+    "task_data": "22 NLP classification datasets covering ethics, commonsense reasoning, natural language inference, sentiment and other domains, converted to binary classification tasks with approximately balanced classes",
+    "judge": "Test accuracy against ground-truth labels",
+    "regime": "training",
+    "scale": "Student-supervisor compute gaps of many orders of magnitude within the GPT-4 family"
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2312.09390v1:LIM-DISANALOGIES"
+    ],
+    "notes": "PGR is a median across tasks; students early-stop on weak-label agreement; the setup's disanalogies (imitation saliency, pretraining leakage) apply."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "Many NLP datasets but one model family, and no uncertainty reported for the median PGR values."
+   },
+   "review_status": "provisional_ai_draft",
+   "check_history": [
+    "card-1: flagged or undecided by two blind checks; rewritten from the checkers' suggested fix (quotes unchanged)"
+   ]
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2312.09390v1:RES-CHESS",
+   "paper": "2312.09390v1",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2312.09390v1:DEF-W2S-SETUP",
+     "N2:DSOFT:ARXIV-2312.09390v1:DEF-PGR"
+    ],
+    "description": "GPT-4-family students are finetuned (5 epochs, no early stopping) on the greedy first-move predictions of smaller weak models for lichess chess puzzles and evaluated by greedy decoding on held-out puzzles; PGR is plotted against supervisor and student compute.",
+    "passages": [
+     {
+      "version": "2312.09390v1",
+      "page": 7,
+      "lines": [
+       15,
+       25
+      ],
+      "text": "Popular natural language processing benchmarks. We consider 22 popular NLP classification\ndatasets covering ethics, commonsense reasoning, natural language inference, sentiment analysis,\nand other domains. We convert all datasets to binary classification tasks and approximately balance\nthe classes. We produce soft labels from the weak model. See a full list of the datasets and their\nsources in Table 1.\nChess puzzles. We use the dataset originally introduced in Schwarzschild et al. (2021b), which\ncontains chess puzzles from the lichess.org website (Lichess Team, 2023). Each puzzle consists of a chess position, and a sequence of optimal moves to play to solve the puzzle. For our\nevaluation, we predict the first move played, which is the best move in the given chess position. We\nillustrate the data format in Appendix Figure 14. For weak labels, we sample from the weak model\nwith temperature 0. Note that unlike the other binary classification tasks we study in this paper, this\nis a generative task.",
+      "pdf_page": "https://arxiv.org/pdf/2312.09390v1#page=7"
+     },
+     {
+      "version": "2312.09390v1",
+      "page": 29,
+      "lines": [
+       66,
+       77
+      ],
+      "text": "also Schwarzschild et al., 2021a). We only evaluate the models ability to predict the first move of\nthe puzzle (some of the puzzles require making multiple moves). We follow the pretraining format, and convert each puzzle to a list of moves leading up to the puzzle position, as illustrated in\nFigure 14. We use 50k puzzles sampled randomly from the dataset as the training set for the weak\nmodels and another 50k for weak-to-strong finetuning, and evaluate on 5k puzzles. For bootstrapping (Section 4.3.1), we use a new set of 50k puzzles from the same distribution for each step of the\nprocess.\nTraining hyperparameters. We train (finetune) all models for 5 epochs using a batch size of 32.\nWe do not apply early-stopping.\nWeak labels. We produce weak labels by sampling predictions at temperature T = 0 (greedy\ndecoding) from the weak model on a held-out set of additional 50k puzzles. The weak labels are\ncompletions showing the highest likelihood move according to the weak model.\nEvaluation. To evaluate the models, we sample completions at temperature T = 0 on the held out\ntest set, and compute the fraction of datapoints where the model outputs the correct next move.",
+      "pdf_page": "https://arxiv.org/pdf/2312.09390v1#page=29"
+     },
+     {
+      "version": "2312.09390v1",
+      "page": 8,
+      "lines": [
+       139,
+       148
+      ],
+      "text": "Figure 3: Promising weak-to-strong generalization with naive finetuning on NLP tasks and\nchess, but poor generalization on the ChatGPT reward modeling task. (a,b,c) Test accuracy\nas a function of strong student size on (a) NLP tasks, (b) chess puzzles, and (c) the ChatGPT\nreward modeling task. Accuracy of strong students trained with ground truth in black, accuracy\nof strong students trained with weak supervision shown with colored lines (hue indicates size of\nweak supervisor). (d,e,f) Same as panels a,b,c but for performance gap recovered (see Section 3\nfor details). For NLP settings, we compute the median across tasks (see Figure 12 for full details).\nWe find decent weak-to-strong generalization and even positive PGR scaling on NLP tasks, decent\ngeneralization for small supervisor-student gaps but negative PGR scaling on chess puzzles, and\nboth poor generalization and scaling for ChatGPT reward modeling.",
+      "pdf_page": "https://arxiv.org/pdf/2312.09390v1#page=8"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "The GPT-4 pretraining data included chess games (PGN) from players rated Elo 1800 or higher, which record moves played rather than best moves.",
+     "Students and supervisors are pretrained-only base models from the GPT-4 family."
+    ],
+    "passages": [
+     {
+      "version": "2312.09390v1",
+      "page": 29,
+      "lines": [
+       61,
+       65
+      ],
+      "text": "Data preprocessing. The GPT-4 pretraining dataset included chess games in the format of move\nsequence known as Portable Game Notation (PGN). We note that only games with players of Elo\n1800 or higher were included in pretraining. These games still include the moves that were played ingame, rather than the best moves in the corresponding positions. On the other hand, the chess puzzles\nrequire the model to predict the best move. We use the dataset originally introduced in Schwarzschild\net al. (2021b) which is sourced from https://database.lichess.org/#puzzles (see",
+      "pdf_page": "https://arxiv.org/pdf/2312.09390v1#page=29"
+     },
+     {
+      "version": "2312.09390v1",
+      "page": 2,
+      "lines": [
+       27,
+       31
+      ],
+      "text": "We study our weak-to-strong learning setup (Section 3) by finetuning base (i.e. pretrained-only)\nlanguage models from the GPT-4 family (OpenAI, 2023),1 spanning 7 orders of magnitude (OOMs)\nof pretraining compute, across three settings: a large set of popular natural language processing\n(NLP) benchmarks, chess puzzles, and our internal ChatGPT reward modeling dataset. Our main\nfindings include:",
+      "pdf_page": "https://arxiv.org/pdf/2312.09390v1#page=2"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Pretrained language models from the GPT-4 family as weak supervisors and strong students",
+    "task_data": "Chess puzzles from lichess.org (Schwarzschild et al. dataset); predict the best first move (a generative task)",
+    "judge": "Fraction of held-out puzzles where the model outputs the correct next move",
+    "regime": "training",
+    "scale": "50k puzzles to train weak models, another 50k for weak-to-strong finetuning, 5k test puzzles"
+   },
+   "quantitative": {
+    "n": "5k test puzzles; 50k + 50k training puzzles",
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2312.09390v1:LIM-DISANALOGIES"
+    ],
+    "notes": "PGR is near zero for the smallest supervisors and falls with student size for a fixed supervisor (possible inverse scaling)."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "One task (chess puzzles) in one model family, with no uncertainty reported."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2312.09390v1:RES-RM",
+   "paper": "2312.09390v1",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2312.09390v1:DEF-W2S-SETUP",
+     "N2:DSOFT:ARXIV-2312.09390v1:DEF-PGR"
+    ],
+    "description": "GPT-4-family reward models (a single-logit head scoring each completion of a pair) trained on half of the ChatGPT comparison data give soft weak labels on the other half; stronger reward models are finetuned on those labels for 1 epoch without early stopping and scored by comparison accuracy against ground truth.",
+    "passages": [
+     {
+      "version": "2312.09390v1",
+      "page": 7,
+      "lines": [
+       26,
+       35
+      ],
+      "text": "ChatGPT reward modeling. The standard approach to aligning models today is reinforcement\nlearning from human feedback (RLHF). A critical step of RLHF is to train a reward model (RM)\nto predict human preferences between model responses. Specifically, a reward model is trained\non a dataset consisting of dialogs between a human and an assistant model. For each query, the\nhumans compare multiple possible responses (completions) from the assistant, providing human\npreference data. Then, a reward model is trained to predict the results of pairwise comparisons\nbetween completions. Finally, the assistant model is trained by optimizing against the reward model\nwith reinforcement learning (RL). In our work, we do not study the RL step, and instead assume the\ngoal is to maximize reward model accuracy. For more details on reward models, see e.g. Ouyang\net al. (2022). We use a proprietary dataset used to train ChatGPT reward models.",
+      "pdf_page": "https://arxiv.org/pdf/2312.09390v1#page=7"
+     },
+     {
+      "version": "2312.09390v1",
+      "page": 32,
+      "lines": [
+       97,
+       101
+      ],
+      "text": "Models. To adapt the language models to the reward modeling setting, we replace the unembedding layer of the model with a linear head with a single output, which is the logit for a given\ncompletion. The weights for this head are initialized to the unembedding weights of an arbitrary token in the original embedding layer. Similar to past work (Stiennon et al., 2020; Ouyang\net al., 2022), we run two forward passes for each comparison, and the model prediction is given\nby σ(Mw (d, c2 ) − Mw (d, c1 )), where σ is the sigmoid function and Mw (d, c) is the logit for\ncompletion c predicted by the model.",
+      "pdf_page": "https://arxiv.org/pdf/2312.09390v1#page=32"
+     },
+     {
+      "version": "2312.09390v1",
+      "page": 32,
+      "lines": [
+       102,
+       110
+      ],
+      "text": "Training hyperparameters.\nearly-stopping.\n\nWe train for 1 epoch with a batch size of 220. We do not apply\n\nWeak labels. We train the weak models on half of the available comparison data, and then\nmake predictions on the other half. The weak label yw for a comparison (d, c1 , c2 ) is given by\nyw = σ(Mw (d, c2 ) − Mw (d, c1 )), where σ is the sigmoid function and Mw (d, c) is the logit for\ncompletion c predicted by the weak model.",
+      "pdf_page": "https://arxiv.org/pdf/2312.09390v1#page=32"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "The RL step of RLHF is not studied; the goal is taken to be reward-model accuracy.",
+     "Weak supervisors are smaller pretrained models trained on ground-truth comparisons.",
+     "Students and supervisors are pretrained-only base models from the GPT-4 family."
+    ],
+    "passages": [
+     {
+      "version": "2312.09390v1",
+      "page": 2,
+      "lines": [
+       27,
+       31
+      ],
+      "text": "We study our weak-to-strong learning setup (Section 3) by finetuning base (i.e. pretrained-only)\nlanguage models from the GPT-4 family (OpenAI, 2023),1 spanning 7 orders of magnitude (OOMs)\nof pretraining compute, across three settings: a large set of popular natural language processing\n(NLP) benchmarks, chess puzzles, and our internal ChatGPT reward modeling dataset. Our main\nfindings include:",
+      "pdf_page": "https://arxiv.org/pdf/2312.09390v1#page=2"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Pretrained language models from the GPT-4 family as weak supervisors and strong students",
+    "task_data": "Proprietary ChatGPT reward modeling data: dialogs with pairwise human comparisons of assistant completions",
+    "judge": "Accuracy on ground-truth pairwise comparisons",
+    "regime": "training",
+    "scale": null
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2312.09390v1:LIM-METHODS",
+     "N2:DSOFT:ARXIV-2312.09390v1:LIM-DISANALOGIES"
+    ],
+    "notes": "The reward-modeling gap is far from recovered; the RL step is not studied. The record's closing sentence (naive weak supervision will be insufficient for superhuman models) is the authors' extrapolation from the analogy."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "One task (ChatGPT reward modeling) in one model family, with no uncertainty reported."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2312.09390v1:RES-CONF-LOSS",
+   "paper": "2312.09390v1",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2312.09390v1:DEF-W2S-SETUP",
+     "N2:DSOFT:ARXIV-2312.09390v1:DEF-PGR"
+    ],
+    "description": "Students are trained on a mix of the weak labels and their own hardened predictions, Lconf = (1-alpha) CE(f, fw) + alpha CE(f, f_t), with the threshold set so half of each batch is positive and alpha warmed up to 0.75 (largest students) or 0.5; median PGR across 22 NLP tasks is compared with naive finetuning.",
+    "passages": [
+     {
+      "version": "2312.09390v1",
+      "page": 33,
+      "lines": [
+       86,
+       97
+      ],
+      "text": "We use the following loss function:\nLconf (f ) = (1 − α) · CE(f (x), fw (x)) + α · CE(f (x), fˆt (x))\n\n(1)\n\nwhere CE(·, ·) is the cross-entropy loss between the predictive distributions on a given input x,\nfw (x) ∈ [0, 1] represents the weak label predictive distribution, f (x) ∈ [0, 1] is the strong model\npredictive distribution, α is a weight and t is a threshold. The predictions fˆt (x) correspond to\nhardened strong model predictions using a threshold t, i.e. fˆt (x) = I[f (x) > t] ∈ {0, 1} where I is\nthe indicator function. We set the threshold t adaptively, so that f (x) > t holds for exactly half of\nexamples in the batch7 . We set αmax = 0.75 for the largest student models and to 0.5 otherwise and\nlinearly warm-up α from 0 to αmax over the first 20% of training.",
+      "pdf_page": "https://arxiv.org/pdf/2312.09390v1#page=33"
+     },
+     {
+      "version": "2312.09390v1",
+      "page": 10,
+      "lines": [
+       57,
+       63
+      ],
+      "text": "Figure 5: Substantially improved generalization on NLP datasets with a simple auxiliary loss.\n(a) Test accuracy as a function of strong student size. Accuracy of a student trained with ground\ntruth in black, accuracy of students naively trained with weak supervision shown with dotted lines.\nAccuracies of students trained with auxiliary confidence loss shown with colored triangles. Median\ncomputed across 22 NLP tasks (hue indicates size of weak supervisor), see Figure 6 for individual\ndatasets. (b) Same as a with PGR. The confidence loss can improve generalization drastically,\nespecially for large supervisor-student gaps.",
+      "pdf_page": "https://arxiv.org/pdf/2312.09390v1#page=10"
+     },
+     {
+      "version": "2312.09390v1",
+      "page": 10,
+      "lines": [
+       75,
+       81
+      ],
+      "text": "In addition, we also plot generalization curves for a representative subset of NLP datasets in Figure 6,\nas well as the full panel of datasets in Figure 12. There are some settings in which the confidence\nloss does not help much or degrades performance, e.g. when the gap between the weak supervisor\nand strong student is small or when the dataset features inverse scaling even with ground truth\nsupervision. But the confidence loss improves performance on most NLP datasets dramatically, and\nfor many datasets we get almost perfect generalization, recovering nearly all the performance of the\nstrong model, even when using the smallest weak supervisors.",
+      "pdf_page": "https://arxiv.org/pdf/2312.09390v1#page=10"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "The adaptive threshold builds a prior over the label distribution into training and is practically feasible only in the low-n classification setting.",
+     "Hyperparameters were tuned on smaller models and 8 datasets, with GPT-4 and most datasets held out.",
+     "Students and supervisors are pretrained-only base models from the GPT-4 family."
+    ],
+    "passages": [
+     {
+      "version": "2312.09390v1",
+      "page": 33,
+      "lines": [
+       98,
+       101
+      ],
+      "text": "Our balancing mechanism incorporates a prior over the distribution of labels into training and is\nonly practically feasible in the low-n classification setting. For most weak-strong pairs and datasets,\nit had a small or neutral effect on weak-to-strong generalization; however, in a few settings it made\na significant improvement.",
+      "pdf_page": "https://arxiv.org/pdf/2312.09390v1#page=33"
+     },
+     {
+      "version": "2312.09390v1",
+      "page": 28,
+      "lines": [
+       37,
+       48
+      ],
+      "text": "Training hyperparameters. We finetune all models for 2 epochs using a batch size of 32. In\nthe weak-to-strong generalization experiments, we early stop training based on the accuracy with\nrespect to the weak labels on a held-out validation set. See Section 5.1.1 for relevant discussion.\nWe only tuned the hyper-parameters of our methods on smaller model sizes, and on a subset of 8\ndatasets. The full GPT-4 model and most of the datasets were held-out, except for datasets [5–12]\n(see Figure 12).\nWeak labels.\nTo produce the weak labels, we split the original dataset in half. We ensure that\nrelated datapoints, e.g. datapoints that share the same question or premise, are always grouped together into the same half. Then, we train the weak supervisor model on the first half of the dataset,\nand use its prediction on the other half as the weak labels. We additionally save the weak labels on\nthe test set to evaluate metrics such as agreement in Section 5.1.3. The weak labels are soft labels\non the training data, i.e. the class probabilities predicted by the supervisor.",
+      "pdf_page": "https://arxiv.org/pdf/2312.09390v1#page=28"
+     },
+     {
+      "version": "2312.09390v1",
+      "page": 2,
+      "lines": [
+       27,
+       31
+      ],
+      "text": "We study our weak-to-strong learning setup (Section 3) by finetuning base (i.e. pretrained-only)\nlanguage models from the GPT-4 family (OpenAI, 2023),1 spanning 7 orders of magnitude (OOMs)\nof pretraining compute, across three settings: a large set of popular natural language processing\n(NLP) benchmarks, chess puzzles, and our internal ChatGPT reward modeling dataset. Our main\nfindings include:",
+      "pdf_page": "https://arxiv.org/pdf/2312.09390v1#page=2"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Pretrained language models from the GPT-4 family as weak supervisors and strong students",
+    "task_data": "22 NLP binary classification datasets",
+    "judge": "Test accuracy against ground-truth labels",
+    "regime": "training",
+    "scale": "From the smallest weak supervisor to the largest strong student in the GPT-4 family"
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2312.09390v1:LIM-METHODS"
+    ],
+    "notes": "Slightly worse than naive finetuning for smaller students; little help or degradation when the supervisor-student gap is small or a dataset shows inverse scaling even with ground truth; no method works consistently across settings."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "Median over 22 NLP datasets in one model family, with no uncertainty reported for the PGR gain."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2312.09390v1:RES-BOOTSTRAP",
+   "paper": "2312.09390v1",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2312.09390v1:DEF-W2S-SETUP",
+     "N2:DSOFT:ARXIV-2312.09390v1:DEF-PGR"
+    ],
+    "description": "On chess puzzles, weak labels are passed along a sequence of increasing model sizes (each finetuned model labels data for the next); each bootstrapping round runs three weak-to-strong iterations, from a weak supervisor through two intermediate model sizes to the largest model (M1 -> M2 -> M3 -> M4), with a new 50k puzzles per step, and accuracy and PGR are compared with naive finetuning.",
+    "passages": [
+     {
+      "version": "2312.09390v1",
+      "page": 9,
+      "lines": [
+       58,
+       64
+      ],
+      "text": "Specifically, we can construct a sequence of model sizes M1 → M2 → . . . → Mn of increasing\nsizes. Then, we use the weak labels from M1 to finetune M2 , use M2 to generate new weak labels\nthat we can use to finetune the next model in the sequence, M3 , and so on.\nWe evaluate bootstrapping in the chess puzzle setting. When we naively finetune on weak labels for\nchess (Section 4.2), we see high PGR when we cross small supervisor-student gaps, but low PGR\nfor larger gaps. As a result, in this setting it may help to take multiple small steps—steps where\nPGR should be high—instead of one big step.",
+      "pdf_page": "https://arxiv.org/pdf/2312.09390v1#page=9"
+     },
+     {
+      "version": "2312.09390v1",
+      "page": 9,
+      "lines": [
+       49,
+       56
+      ],
+      "text": "Figure 4: Bootstrapping improves weak-to-strong generalization on chess puzzles. (a) Test\naccuracy as a function of strong student size. Accuracy of students trained with ground truth in\nblack, accuracy of students naively trained with weak supervision shown with dotted lines (hue\nindicates size of weak supervisor). Accuracies of students trained via bootstrapping shown with\ncolored squares (including both the final weak-to-strong performance and the performance of the\nintermediate models during bootstrapping). (b) Same as a with PGR. By taking multiple small steps\ninstead of one big step we see substantially improved generalization, especially for larger student\nmodels.",
+      "pdf_page": "https://arxiv.org/pdf/2312.09390v1#page=9"
+     },
+     {
+      "version": "2312.09390v1",
+      "page": 29,
+      "lines": [
+       66,
+       77
+      ],
+      "text": "also Schwarzschild et al., 2021a). We only evaluate the models ability to predict the first move of\nthe puzzle (some of the puzzles require making multiple moves). We follow the pretraining format, and convert each puzzle to a list of moves leading up to the puzzle position, as illustrated in\nFigure 14. We use 50k puzzles sampled randomly from the dataset as the training set for the weak\nmodels and another 50k for weak-to-strong finetuning, and evaluate on 5k puzzles. For bootstrapping (Section 4.3.1), we use a new set of 50k puzzles from the same distribution for each step of the\nprocess.\nTraining hyperparameters. We train (finetune) all models for 5 epochs using a batch size of 32.\nWe do not apply early-stopping.\nWeak labels. We produce weak labels by sampling predictions at temperature T = 0 (greedy\ndecoding) from the weak model on a held-out set of additional 50k puzzles. The weak labels are\ncompletions showing the highest likelihood move according to the weak model.\nEvaluation. To evaluate the models, we sample completions at temperature T = 0 on the held out\ntest set, and compute the fraction of datapoints where the model outputs the correct next move.",
+      "pdf_page": "https://arxiv.org/pdf/2312.09390v1#page=29"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "Bootstrapping is expected to help where naive PGR is high for small supervisor-student gaps and low for large ones, as on chess; on NLP and reward modeling naive PGR rose or stayed flat with larger gaps.",
+     "Students and supervisors are pretrained-only base models from the GPT-4 family."
+    ],
+    "passages": [
+     {
+      "version": "2312.09390v1",
+      "page": 2,
+      "lines": [
+       27,
+       31
+      ],
+      "text": "We study our weak-to-strong learning setup (Section 3) by finetuning base (i.e. pretrained-only)\nlanguage models from the GPT-4 family (OpenAI, 2023),1 spanning 7 orders of magnitude (OOMs)\nof pretraining compute, across three settings: a large set of popular natural language processing\n(NLP) benchmarks, chess puzzles, and our internal ChatGPT reward modeling dataset. Our main\nfindings include:",
+      "pdf_page": "https://arxiv.org/pdf/2312.09390v1#page=2"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Pretrained language models from the GPT-4 family as weak supervisors and strong students",
+    "task_data": "Chess puzzles (main result); NLP tasks and reward modeling in preliminary runs",
+    "judge": "Ground-truth test accuracy",
+    "regime": "training",
+    "scale": "A new set of 50k puzzles per bootstrapping step; 5k test puzzles"
+   },
+   "quantitative": {
+    "n": "5k test puzzles; 50k puzzles per bootstrapping step",
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2312.09390v1:LIM-METHODS"
+    ],
+    "notes": "Preliminary experiments gave only small gains on NLP tasks and none on reward modeling; no method works consistently in all settings."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "The chess result is one task in one model family with no uncertainty reported; the NLP and reward-modeling checks are described as preliminary."
+   },
+   "review_status": "provisional_ai_draft",
+   "check_history": [
+    "card-1: flagged or undecided by two blind checks; rewritten from the checkers' suggested fix (quotes unchanged)"
+   ]
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2312.09390v1:RES-IMITATION",
+   "paper": "2312.09390v1",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2312.09390v1:DEF-W2S-SETUP"
+    ],
+    "description": "Student-supervisor agreement (the fraction of test inputs where the strong student predicts the same as the weak supervisor) is plotted against strong-student size for naive finetuning on NLP tasks (Figure 8) and reward modeling (Figure 16), overall and separately where the supervisor is right or wrong.",
+    "passages": [
+     {
+      "version": "2312.09390v1",
+      "page": 12,
+      "lines": [
+       116,
+       122
+      ],
+      "text": "Another way to measure imitation is to directly measure the agreement between the student and the\nsupervisor: the fraction of test inputs where the strong student makes the same prediction as the\nweak supervisor. Note that if agreement were 100%, then weak-to-strong accuracy would be equal\nto supervisor accuracy, and PGR would be 0.\nIn general, we notice that for our naive finetuning baseline, student-supervisor agreement is consistently high—often noticeably higher than weak supervisor accuracy. This indicates that the student\nis imitating some of the supervisor’s errors. These phenomena hold across all tasks (NLP tasks,\nchess, and reward modeling) and all model sizes, for the naive method.",
+      "pdf_page": "https://arxiv.org/pdf/2312.09390v1#page=12"
+     },
+     {
+      "version": "2312.09390v1",
+      "page": 13,
+      "lines": [
+       69,
+       75
+      ],
+      "text": "Figure 8: Student-supervisor agreement decreases with larger student-supervisor gaps; the\nconfidence loss reduces imitation of supervisor mistakes. (a) Student-supervisor agreement as\na function of strong student size on NLP tasks, (b) a but only on samples where the supervisor is\ncorrect, (c) a but only on samples where the supervisor is mistaken. Dotted lines indicate naive\nfinetuning on weak labels, and triangles indicate results with the auxiliary confidence loss results\n(see Section 4.3). Hue of line indicates size of weak supervisor. For results on reward models, see\nFigure 16.",
+      "pdf_page": "https://arxiv.org/pdf/2312.09390v1#page=13"
+     },
+     {
+      "version": "2312.09390v1",
+      "page": 32,
+      "lines": [
+       111,
+       112
+      ],
+      "text": "Supervisor-student agreement results. In Figure 16, we report the supervisor-student agreement\non the RM task. Similar to the NLP tasks in Figure 8 and chess puzzles in Figure 15(c), the agreement decreases as the student gets larger.",
+      "pdf_page": "https://arxiv.org/pdf/2312.09390v1#page=32"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "The result concerns naive finetuning on weak labels.",
+     "The authors limit their reading to finetuning settings with relatively limited data.",
+     "Students and supervisors are pretrained-only base models from the GPT-4 family."
+    ],
+    "passages": [
+     {
+      "version": "2312.09390v1",
+      "page": 13,
+      "lines": [
+       89,
+       93
+      ],
+      "text": "These results suggest that pretrained models may have a hard time fitting errors of other (smaller)\npretrained models, at least in finetuning settings with relatively limited data. Stanton et al. (2021)\nand Furlanello et al. (2018) report a related observation in the context of knowledge distillation: it\nis surprisingly hard for models to fit the predictions of other models, even when they have sufficient\ncapacity to do so.",
+      "pdf_page": "https://arxiv.org/pdf/2312.09390v1#page=13"
+     },
+     {
+      "version": "2312.09390v1",
+      "page": 2,
+      "lines": [
+       27,
+       31
+      ],
+      "text": "We study our weak-to-strong learning setup (Section 3) by finetuning base (i.e. pretrained-only)\nlanguage models from the GPT-4 family (OpenAI, 2023),1 spanning 7 orders of magnitude (OOMs)\nof pretraining compute, across three settings: a large set of popular natural language processing\n(NLP) benchmarks, chess puzzles, and our internal ChatGPT reward modeling dataset. Our main\nfindings include:",
+      "pdf_page": "https://arxiv.org/pdf/2312.09390v1#page=2"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Pretrained language models from the GPT-4 family as weak supervisors and strong students",
+    "task_data": "NLP classification tasks and ChatGPT reward modeling (chess shows the same trend per the appendix)",
+    "judge": "Agreement with weak-supervisor predictions on test inputs",
+    "regime": "training",
+    "scale": null
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2312.09390v1:LIM-DISANALOGIES"
+    ],
+    "notes": "Imitation saliency: these strong models may lack features for imitating weak-model predictions, so avoiding imitation may be easier here than for future superhuman models imitating humans."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "Measured across NLP and reward-modeling tasks but in one model family, with no uncertainty reported."
+   },
+   "review_status": "provisional_ai_draft"
+  }
+ ]
+}

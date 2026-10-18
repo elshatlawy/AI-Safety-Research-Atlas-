@@ -1,0 +1,187 @@
+{
+ "schema": "ASRA-GAP-CLOSING-AGENT-v1",
+ "id": "Q49",
+ "question": "How would humans check that an unsupervised elicitation method reads a constitution as intended?",
+ "asked_by": "Wen et al., Unsupervised Elicitation of Language Models",
+ "rank": 13,
+ "status": "NARROWED",
+ "status_check": "AI_CHECKED",
+ "remaining_question": "For an ICM-trained reward model built from a stated constitution, which human-run checks (e.g. reviewing cross-model or cross-run label disagreements, critique-assisted audits of the elicited labels, small human-labelled probe sets per principle) detect labels that follow a reading other than the authors' intended one, and at what rate on deliberately planted misreadings?",
+ "remaining_type": "MIXED",
+ "safety_case": [
+  {
+   "node": "SC-C5.2",
+   "relation": "INDIRECT",
+   "reason": "Human-run checks that detect when a learned reward model's labels follow an unintended reading of a constitution would be one way to evidence that a model stand-in for human judgement has bounded systematic error, as C5.2 requires of the simulated judge, though for an unsupervised (ICM) reward model rather than a simulated debate judge.",
+   "node_evidence": "WEAK",
+   "branch": "the equilibrium is correct (debate structure and judges)",
+   "score": 1.0
+  }
+ ],
+ "findings": [
+  {
+   "id": "Q49:F1",
+   "later_paper": "arXiv 2509.01186v1: Statutory Construction and Interpretation for Artificial Intelligence",
+   "first_submitted": "2025-09-01",
+   "effect": "NARROWS",
+   "claim": "Using 56 rules adapted from Claude's constitution (each originally guidance for choosing between two responses), at least one judge model in a panel disagreed with the rest on more than 50% of tested scenarios for 20 of the rules, and on over 85% for some; for revised rules, the authors asked 7 human annotators whether the revision substantially shifted the rule's meaning.",
+   "setting": "A panel of judge models acting as interpreters of 56 rules adapted from Claude's constitution, on tested scenarios; 7 human annotators rate the meaning shift of rule revisions, not the correctness of model readings; experiment; no unsupervised elicitation.",
+   "bears_on": "Offers two human-in-the-loop checks applicable to Q49 (cross-interpreter disagreement to locate rules whose reading is unstable, and human review that a clarified rule keeps its intended meaning), and shows that reading a constitution's rules for pairwise choice is often ambiguous; it does not test ICM or whether humans catch a misreading.",
+   "passages": [
+    {
+     "version": "2509.01186v1",
+     "page": 12,
+     "lines": [
+      28,
+      33
+     ],
+     "text": "Rule set. To simulate real-world rule construction for AI agents, we adapt 56 rules from Claude’s\nfull constitutions [7]: each rule, designed as guidance for choosing a response between two proposed\nresponses, is paraphrased into declarative rule-like principles. For example, the original rule of “Please\nchoose the response that most supports and encourages freedom, equality, and a sense of brotherhood”\nwould be converted to “Your response must support and encourage freedom, equality, and a sense of\nbrotherhood.” This provides a realistic ruleset that we can evaluate scenarios on.",
+     "pdf_page": "https://arxiv.org/pdf/2509.01186v1#page=12"
+    },
+    {
+     "version": "2509.01186v1",
+     "page": 14,
+     "lines": [
+      13,
+      20
+     ],
+     "text": "Many rules in the constitution suffer judgment discrepancies across different models. Figure\n4 shows the fraction of tested scenarios where non-zero entropy was observed (i.e., at least one of\nthe models disagreed with the rest in its judgment). A significant number of rules exhibit judgment\ndiscrepancies across the panel of judge models. Of the 56 rules in the evaluation set, 20 rules\nexhibit non-zero entropy on more than 50% of the tested scenarios. For several rules, such as Rule 3\n(“clearly recognize a right to universal equality, recognition, fair treatment, and protection against\ndiscrimination”) and Rule 47 (“indicate a desire solely for humanity’s benefit”), this proportion of\ntested scenarios with non-zero entropy exceeds 85%.",
+     "pdf_page": "https://arxiv.org/pdf/2509.01186v1#page=14"
+    },
+    {
+     "version": "2509.01186v1",
+     "page": 18,
+     "lines": [
+      8,
+      12
+     ],
+     "text": "Human verification. To assess whether the revised rule introduced a substantial shift in meaning\ncompared to the original rule, we asked 7 human annotators to review the rule revisions shown in\nFigure 7. We ask humans to evaluate whether there is substantial shift in meaning between the original\nand the revised rules, and use integer scores to quantify the degree of meaning shift before and after\nthe revision. Further details on this process are provided in Appendix A5.",
+     "pdf_page": "https://arxiv.org/pdf/2509.01186v1#page=18"
+    }
+   ]
+  },
+  {
+   "id": "Q49:F2",
+   "later_paper": "arXiv 2510.07686v2: Stress-Testing Model Specs Reveals Character Differences among Language Models",
+   "first_submitted": "2025-10-09",
+   "effect": "NARROWS",
+   "claim": "Three frontier models judging 5,000 responses for compliance with a model specification reached only moderate agreement (Fleiss' kappa 0.42); the authors report having verified that most disagreements stem from different interpretations of specification principles, and propose such disagreement as a diagnostic that tells spec designers which principles need more precise definition.",
+   "setting": "Experiment: three LLM evaluator models (Claude 4 Sonnet, o3, Gemini 2.5 Pro) assessing compliance with the OpenAI model spec across 5,000 evaluated responses; the authors' verification of where the disagreements come from is reported without a procedure or numbers in the passages; no unsupervised elicitation.",
+   "bears_on": "A way for humans to find where a written spec is read differently by model judges (review the disagreement-flagged cases); not applied to ICM, and no measured rate at which humans detect misreadings.",
+   "passages": [
+    {
+     "version": "2510.07686v2",
+     "page": 9,
+     "lines": [
+      32,
+      35
+     ],
+     "text": "Given the complexity of interpreting model specifications, we further analyze disagreement patterns\namong our three evaluator models when assessing compliance with the OpenAI model spec. This\nanalysis reveals that specification ambiguity affects not only responding models but also evaluation\nsystems themselves.",
+     "pdf_page": "https://arxiv.org/pdf/2510.07686v2#page=9"
+    },
+    {
+     "version": "2510.07686v2",
+     "page": 9,
+     "lines": [
+      36,
+      45
+     ],
+     "text": "Across 5,000 evaluated responses, we observe substantial variation in compliance judgments. Claude\n4 Sonnet flags 48.1% of the responses as problematic, while o3 and Gemini 2.5 Pro flag 35.5%\nand 36.5% of the responses respectively. Pairwise agreement rates are moderate: Claude 4 Sonnet\nagrees with o3 67.52% of the time, with Gemini 2.5 Pro 72.39%, while o3 and Gemini achieve\nthe highest agreement at 76.84%. The overall Fleiss’ Kappa of 0.42 indicates moderate inter-rater\nreliability, suggesting that even sophisticated models struggle to consistently interpret specification\nrequirements.\nTable 3 illustrates three representative cases where evaluators reach opposing conclusions despite\nanalyzing identical query-response pairs. As the authors have verified, most disagreements stem from\nfundamentally different interpretations of specification principles rather than oversight or error.",
+     "pdf_page": "https://arxiv.org/pdf/2510.07686v2#page=9"
+    },
+    {
+     "version": "2510.07686v2",
+     "page": 10,
+     "lines": [
+      82,
+      87
+     ],
+     "text": "distinct interpretive frameworks. These interpretive disagreements serve as valuable diagnostic\nsignals for specification improvement: scenarios generating evaluator disagreement precisely identify\nwhere current specifications lack sufficient clarity or contain conflicting principles. By systematically\nanalyzing these disagreement patterns, model spec designers can identify which principles require\nmore precise definition, where additional examples would resolve ambiguity, and which edge cases\ndemand explicit coverage.",
+     "pdf_page": "https://arxiv.org/pdf/2510.07686v2#page=10"
+    }
+   ]
+  },
+  {
+   "id": "Q49:F3",
+   "later_paper": "arXiv 2605.24247v1: Improving Labeling Consistency with Detailed Constitutional Definitions and AI-Driven Evaluation",
+   "first_submitted": "2026-05-22",
+   "effect": "NARROWS",
+   "claim": "In a workflow where a frontier LLM applies a detailed per-category constitution to produce labels, cross-model disagreement is traced to specific constitutional sections and turned into patches for human review, with the human deciding what each category should mean; a hand-audit of residual disagreements found most were genuinely ambiguous cases that a human adjudicator resolved only by bringing an external prior.",
+   "setting": "Content-moderation labeling (harassment, hate speech, nonviolent crime) by frontier LLMs (Opus 4.6, GPT-5.4, Gemini 3.1 Pro) interpreting a per-category constitution, with cross-model disagreements traced to constitutional sections and patches drafted for human review; residual disagreements measured on WildChat and hand-audited on a random sub-sample; experiment; no unsupervised elicitation.",
+   "bears_on": "A concrete human-in-the-loop check of whether model-applied constitution labels match the intended meaning (disagreement triage plus human patch review); untested on ICM-style unsupervised labeling.",
+   "passages": [
+    {
+     "version": "2605.24247v1",
+     "page": 1,
+     "lines": [
+      54,
+      63
+     ],
+     "text": "We propose and demonstrate the efficacy of an\nAI-driven workflow in which AI helps write\na per-category constitution that defines the label in enough detail to cover edge cases, and\na frontier LLM interprets it on each input to\nproduce the golden label more consistently and\naccurately than humans reading the same document. We evaluate on three content moderation categories (harassment, hate speech, nonviolent crime) and show that the approach reduces cross-model inconsistency by up to 57×\ncompared to paragraph definitions, with crossmodel disagreement diagnosing specification\ngaps and the human responsible for high-level\ndecisions about what each category should\nmean rather than individual labeling calls. For",
+     "pdf_page": "https://arxiv.org/pdf/2605.24247v1#page=1"
+    },
+    {
+     "version": "2605.24247v1",
+     "page": 4,
+     "lines": [
+      10,
+      16
+     ],
+     "text": "judge. We use disagreement as a diagnostic for\nspecification gaps rather than a vote to aggregate.\nWhen models disagree on a conversation, the validation skill (Appendix G) traces the disagreement\nto a specific constitutional section, diagnoses the\nambiguity, and drafts a targeted patch for human\nreview; each round of this loop converts an implicit\nruling into an explicit one.",
+     "pdf_page": "https://arxiv.org/pdf/2605.24247v1#page=4"
+    },
+    {
+     "version": "2605.24247v1",
+     "page": 6,
+     "lines": [
+      38,
+      45
+     ],
+     "text": "Frontier models (Opus 4.6, GPT-5.4, Gemini 3.1\nPro) produced 191 residual disagreements under\nthe constitution on WildChat, summed across the\nintent and content axes. A hand-audit of a random\nsub-sample found that most are genuinely ambiguous cases rather than instruction-following failures:\neach model cites a specific constitutional provision\nand selects a different one from the same document, and a human adjudicator reaches a verdict\nonly by bringing an external prior about how suspicious to be of the user. The largest subcategories",
+     "pdf_page": "https://arxiv.org/pdf/2605.24247v1#page=6"
+    }
+   ]
+  },
+  {
+   "id": "Q49:F4",
+   "later_paper": "arXiv 2601.17728v1: Unsupervised Elicitation of Moral Values from Language Models",
+   "first_submitted": "2026-01-25",
+   "effect": "RELATED_ONLY",
+   "claim": "Applying ICM to moral-judgment labeling, ICM's unsupervised labels reach at least 81% accuracy on the Norm Bank benchmark across four open-source LMs, surpassing zero-shot and many-shot chat baselines; ICM outperforms all pretrained and chatbot baselines on Norm Bank and ETHICS, and fine-tuning on ICM labels performs on par with or surpasses fine-tuning on human labels.",
+   "setting": "Experiment: ICM on four open-source pretrained (base) LMs across three moral-judgment benchmark datasets, including Norm Bank and ETHICS; ICM labeling accuracy, and fine-tuning on ICM labels versus on human labels.",
+   "bears_on": "Illustrates the label-based check already used by the asking paper (scoring ICM's value labels against held-out human judgments), now for moral values; no constitution and no human check of how the method reads one.",
+   "passages": [
+    {
+     "version": "2601.17728v1",
+     "page": 1,
+     "lines": [
+      19,
+      25
+     ],
+     "text": "and pervasive biases. We investigate unsupervised elicitation as an alternative,\nasking whether pretrained (base) LMs possess intrinsic moral reasoning capability\nthat can be surfaced without human supervision. Using the Internal Coherence\nMaximization (ICM) algorithm across three benchmark datasets and four LMs,\nwe test whether ICM can reliably label moral judgments, generalize across moral\nframeworks, and mitigate social bias. Results show that ICM outperforms all pretrained and chatbot baselines on the Norm Bank and ETHICS benchmarks, while\nfine-tuning on ICM labels performs on par with or surpasses those of human labels.",
+     "pdf_page": "https://arxiv.org/pdf/2601.17728v1#page=1"
+    },
+    {
+     "version": "2601.17728v1",
+     "page": 5,
+     "lines": [
+      19,
+      29
+     ],
+     "text": "On the Norm Bank benchmark (Figure 1), results reveal a sharp contrast between pretrained and\npost-trained LMs. Across the four open-source LMs, pretrained models show markedly lower\nzero-shot accuracy than all chat variants, with Llama-3.1–8B performing only marginally above\nrandom chance. By contrast, chatbot-tuned models exhibit roughly 8 percentage points higher\nzero-shot accuracy in the Llama-3 series and slightly stronger performance in Mistral-V0.3 and\nOLMo2. Many-shot prompting (Prompt-Human (Chat)) produces only marginal gains across all\nchat models. Unsupervised labeling via the ICM algorithm achieves at least 81% accuracy across\nall models—surpassing both zero-shot and many-shot chat baselines and matching or exceeding the\nperformance of human fine-tuned counterparts. Furthermore, fine-tuning pretrained models on their\nown ICM-generated labels (FT-Unsupervised) yields modest but consistent improvements over the\nraw ICM predictions.",
+     "pdf_page": "https://arxiv.org/pdf/2601.17728v1#page=5"
+    }
+   ]
+  }
+ ],
+ "findings_drafted": 4,
+ "maths": [],
+ "experiment_package": null,
+ "review_status": "provisional_ai_draft",
+ "rules": [
+  "Everything here is an AI draft (provisional_ai_draft): each counted item passed two blind AI checks that were tested on planted errors, and no person has reviewed it.",
+  "A finding counts only in the setting its own quoted lines show; read `setting` before carrying it to another setting.",
+  "A question's status is a label from fixed rules over its counted findings; `status_check` says whether that label itself passed its check.",
+  "Cite the paper and page from the passage, and read the PDF page before relying on a claim."
+ ]
+}

@@ -1,0 +1,611 @@
+{
+ "schema": "ASRA-GAP-CLOSING-AGENT-v1",
+ "paper": "2508.17536v2",
+ "review_status": "provisional_ai_draft",
+ "rules": [
+  "Everything here is an AI draft (provisional_ai_draft): each counted item passed two blind AI checks that were tested on planted errors, and no person has reviewed it.",
+  "A finding counts only in the setting its own quoted lines show; read `setting` before carrying it to another setting.",
+  "A question's status is a label from fixed rules over its counted findings; `status_check` says whether that label itself passed its check.",
+  "Cite the paper and page from the passage, and read the PDF page before relying on a claim."
+ ],
+ "notes": "CORE bundles three claims (an empirical comparison, the martingale theorem and the intervention results); its card grades the empirical headline, and the theorem parts have their own cards (THM-1, THM-2, PROVED_IN_PAPER). ASM-DCM-AGENT and ASM-BAYES-UPDATE carry kind 'definition' but are the modelling assumptions of the theory, so they are linked as assumption records. In Table 1 only the single-agent baselines carry +/- values (averaged over 5 independent runs); the MAD and majority-voting entries carry none, so no empirical card reaches EMPIRICAL_MULTI_SETTING. The record settings of RES-ORACLE and RES-MV-GUIDED list Decentralized, Sparse and Centralized MAD, but the Table 2 row labels in the text show only Decentralized and Sparse MAD (T = 2, 3, 5); the cards do not name the variants beyond the quote. Reading the garbled Table 2 cells by order, MAD-Conformist and MAD-Follower fall slightly below MAD-vanilla in some benchmark cells (e.g. HH-RLHF for Follower with Decentralized T = 2), and MAD-oracle's Arithmetics accuracy (0.9400) appears below majority voting's in Table 1 (0.9900); 'consistently outperform' and 'always surpasses' may therefore refer to averages. The cards do not rely on these cell values. The appendix restatement of Theorem 1 (p18 L94-104) writes lowercase k. RES-MARTINGALE-EMPIRICAL's flatness is the authors' qualitative reading of Figure 4.",
+ "cards": [
+  {
+   "record_id": "N2:DSOFT:ARXIV-2508.17536v2:CORE",
+   "paper": "2508.17536v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2508.17536v2:DEF-MAD-VS-VOTING"
+    ],
+    "description": "Majority voting over five homogeneous agents' initial answers is compared with Decentralized, Sparse and Centralized MAD after 2, 3 or 5 rounds on seven benchmarks with Qwen2.5-7B-Instruct and Llama3.1-8B-Instruct, and a separate theoretical model of agents and debate is used to prove that debate induces a martingale over beliefs.",
+    "passages": [
+     {
+      "version": "2508.17536v2",
+      "page": 4,
+      "lines": [
+       288,
+       291
+      ],
+      "text": "Majority voting is surprisingly strong. In Table 1, we compare the performance of single-agent,\nMAD, and majority voting approaches across seven benchmark datasets using the Qwen2.5-7BInstruct [22] and Llama3.1-8B-Instruct [23] models. Consistent with the typical choice of existing\nliterature, we compare 2- and 3-round, along with a prolonged 5-round debate setting among five\nagents. Interestingly, while MAD consistently outperforms the single-agent baseline, it does not",
+      "pdf_page": "https://arxiv.org/pdf/2508.17536v2#page=4"
+     },
+     {
+      "version": "2508.17536v2",
+      "page": 4,
+      "lines": [
+       266,
+       275
+      ],
+      "text": "Baselines. The key distinction among multi-agent debate methods typically lies in the design\nof the debate function D, particularly in how agents communicate and the roles they assume. To\ncomprehensively evaluate these variations, we consider the following representative approaches: (1)\nDecentralized MAD [2], where each agent observes all other agents’ responses from the previous\nround. (2) Sparse MAD [10], a variant of Decentralized MAD with a sparse communication topology\nto enhance efficiency. (3) Centralized MAD [14], where a central agent aggregates peer responses\nand generates the updated response at each round. (4) Majority Voting, which selects the final answer\nby aggregating initial responses from multiple agents without any debate. This can be viewed as a\nspecial case with T = 0. For all the multi-agent approaches, we adopt N = 5 in our main comparison\nand will ablate on the effect of N . For single-agent baselines, we average across 5 independent runs.",
+      "pdf_page": "https://arxiv.org/pdf/2508.17536v2#page=4"
+     },
+     {
+      "version": "2508.17536v2",
+      "page": 4,
+      "lines": [
+       276,
+       283
+      ],
+      "text": "Benchmarks. Following previous MAD literature, we focus on solving six natural language\nquestion answering tasks by conducting extensive evaluations across benchmark datasets: (1)\nArithmetics, (2) Mathematical Reasoning (Grade School Math 8k [15]), (3) Factual Question\nAnswering (MMLU Professional Medicine and Formal Logics [16, 17]), (4) Natural Langauge\nInference (HellaSwag [18]), (5) Commonsense Reasoning (CommonsenseQA [19]), and (6) Alignment\nLabeling (HH-RLHF [20]), where we adopt the “AI labeler alignment” practice [21], similar to [10].\nFor fairness in comparison, all baselines are evaluated on the same data subsets. More details are\nprovided in Appendix A.2.",
+      "pdf_page": "https://arxiv.org/pdf/2508.17536v2#page=4"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2508.17536v2:ASM-DCM-AGENT",
+     "N2:DSOFT:ARXIV-2508.17536v2:ASM-BAYES-UPDATE"
+    ],
+    "stated_hypotheses": [
+     "Agents are homogeneous (same underlying model) and debate follows the simultaneous-talk protocol, in which all agents update in parallel from the previous round's responses.",
+     "The theory models each agent as a Dirichlet-Compound-Multinomial sampler and each debate round as adding the counts of neighbours' answers to the agent's Dirichlet parameters.",
+     "In the theory, the expected belief in the correct answer stays at its initial value when agents are homogeneous and fully connected."
+    ],
+    "passages": [
+     {
+      "version": "2508.17536v2",
+      "page": 3,
+      "lines": [
+       44,
+       50
+      ],
+      "text": "We adopt the simultaneous-talk protocol [3], where all agents update in parallel based on the previous\nround’s responses. Following the common setup in prior works, we focus on homogeneous agent\nsettings, i.e., all agents share the same underlying model architecture or behavior. This allows us\nto isolate the effect of inter-agent communication and contrast MAD directly with simple majority\nvoting. Our goal is to contrast the performance of MAD against simple majority voting and assess\nwhether iterative inter-agent communication provides measurable improvements beyond ensembling\nalone. We will extend to the heterogeneous setting in Section 6.",
+      "pdf_page": "https://arxiv.org/pdf/2508.17536v2#page=3"
+     },
+     {
+      "version": "2508.17536v2",
+      "page": 7,
+      "lines": [
+       10,
+       13
+      ],
+      "text": "the expected belief in the correct answer remains equal to the initial pi,0 = θ̄i,0 , without any debate,\nwhen agents are homogeneous and fully-connected (Appendix D.3.1). This implies that, under our\ntheoretical model, debate alone does not necessarily improve the initial accuracy–majority voting\naccounts for the primary performance gains. Our theory thus aligns well with our empirical findings",
+      "pdf_page": "https://arxiv.org/pdf/2508.17536v2#page=7"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Five homogeneous agents of Qwen2.5-7B-Instruct or Llama3.1-8B-Instruct in Decentralized, Sparse or Centralized MAD, compared with majority voting; idealized DCM agents in the theory",
+    "task_data": "Seven benchmarks: Arithmetics, GSM8K, MMLU Professional Medicine and Formal Logic, HellaSwag, CommonsenseQA and HH-RLHF",
+    "judge": "No judge; answers are aggregated by a voting function",
+    "regime": "mixed",
+    "scale": "N = 5 agents; 2-, 3- and 5-round debates; 7B and 8B models"
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": "None stated for the MAD and majority-voting comparison in these passages"
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2508.17536v2:LIM-1"
+    ],
+    "notes": "The study mainly covers the simultaneous-talk protocol, and the theory assumes homogeneous agents and may not directly generalize to heterogeneous ones; the authors say simple ensembling remains strong and more reliable 'in many practical settings'."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "The headline finding spans seven benchmarks and two model families, but no uncertainty is reported for the MAD and majority-voting accuracies, so the rubric grades it single-setting; the martingale part is proved separately (THM-2 card)."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2508.17536v2:RES-MV-VS-MAD",
+   "paper": "2508.17536v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2508.17536v2:DEF-MAD-VS-VOTING"
+    ],
+    "description": "Table 1 compares single-agent baselines, Decentralized, Sparse and Centralized MAD with 2, 3 or 5 rounds among five agents, and majority voting over initial answers, using Qwen2.5-7B-Instruct and Llama3.1-8B-Instruct on seven benchmarks; Section 6 repeats the comparison with Qwen2.5-32B-Instruct on GSM8K and HellaSwag.",
+    "passages": [
+     {
+      "version": "2508.17536v2",
+      "page": 4,
+      "lines": [
+       288,
+       291
+      ],
+      "text": "Majority voting is surprisingly strong. In Table 1, we compare the performance of single-agent,\nMAD, and majority voting approaches across seven benchmark datasets using the Qwen2.5-7BInstruct [22] and Llama3.1-8B-Instruct [23] models. Consistent with the typical choice of existing\nliterature, we compare 2- and 3-round, along with a prolonged 5-round debate setting among five\nagents. Interestingly, while MAD consistently outperforms the single-agent baseline, it does not",
+      "pdf_page": "https://arxiv.org/pdf/2508.17536v2#page=4"
+     },
+     {
+      "version": "2508.17536v2",
+      "page": 4,
+      "lines": [
+       266,
+       275
+      ],
+      "text": "Baselines. The key distinction among multi-agent debate methods typically lies in the design\nof the debate function D, particularly in how agents communicate and the roles they assume. To\ncomprehensively evaluate these variations, we consider the following representative approaches: (1)\nDecentralized MAD [2], where each agent observes all other agents’ responses from the previous\nround. (2) Sparse MAD [10], a variant of Decentralized MAD with a sparse communication topology\nto enhance efficiency. (3) Centralized MAD [14], where a central agent aggregates peer responses\nand generates the updated response at each round. (4) Majority Voting, which selects the final answer\nby aggregating initial responses from multiple agents without any debate. This can be viewed as a\nspecial case with T = 0. For all the multi-agent approaches, we adopt N = 5 in our main comparison\nand will ablate on the effect of N . For single-agent baselines, we average across 5 independent runs.",
+      "pdf_page": "https://arxiv.org/pdf/2508.17536v2#page=4"
+     },
+     {
+      "version": "2508.17536v2",
+      "page": 14,
+      "lines": [
+       70,
+       78
+      ],
+      "text": "Here, we provide dataset details and the number of samples utilized in our experiments.\nArithmetics comprises 100 arithmetic questions, in the form of “What is the result of a + b ∗ c + d −\ne/f ?\" The values a to f are randomly sampled from integers between 0 to 30.\nGSM8K [15] comprises high-quality grade school math word problems intended to test mathematical\nmulti-step reasoning. We randomly subsample 300 questions from the original test split.\nMMLU (Professional Medicine) [16, 17] is a benchmark specialized in evaluating reasoning abilities\nin medical domains at a professional level. Specifically, the dataset requires medical concepts, clinical\nreasoning, and biomedical knowledge to answer questions. We use the entire test split comprised of\n272 questions.",
+      "pdf_page": "https://arxiv.org/pdf/2508.17536v2#page=14"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "Agents are homogeneous and update in parallel under the simultaneous-talk protocol.",
+     "All baselines are evaluated on the same data subsets.",
+     "The larger-model check uses Qwen2.5-32B-Instruct on only two tasks, GSM8K and HellaSwag."
+    ],
+    "passages": [
+     {
+      "version": "2508.17536v2",
+      "page": 3,
+      "lines": [
+       44,
+       50
+      ],
+      "text": "We adopt the simultaneous-talk protocol [3], where all agents update in parallel based on the previous\nround’s responses. Following the common setup in prior works, we focus on homogeneous agent\nsettings, i.e., all agents share the same underlying model architecture or behavior. This allows us\nto isolate the effect of inter-agent communication and contrast MAD directly with simple majority\nvoting. Our goal is to contrast the performance of MAD against simple majority voting and assess\nwhether iterative inter-agent communication provides measurable improvements beyond ensembling\nalone. We will extend to the heterogeneous setting in Section 6.",
+      "pdf_page": "https://arxiv.org/pdf/2508.17536v2#page=3"
+     },
+     {
+      "version": "2508.17536v2",
+      "page": 4,
+      "lines": [
+       276,
+       283
+      ],
+      "text": "Benchmarks. Following previous MAD literature, we focus on solving six natural language\nquestion answering tasks by conducting extensive evaluations across benchmark datasets: (1)\nArithmetics, (2) Mathematical Reasoning (Grade School Math 8k [15]), (3) Factual Question\nAnswering (MMLU Professional Medicine and Formal Logics [16, 17]), (4) Natural Langauge\nInference (HellaSwag [18]), (5) Commonsense Reasoning (CommonsenseQA [19]), and (6) Alignment\nLabeling (HH-RLHF [20]), where we adopt the “AI labeler alignment” practice [21], similar to [10].\nFor fairness in comparison, all baselines are evaluated on the same data subsets. More details are\nprovided in Appendix A.2.",
+      "pdf_page": "https://arxiv.org/pdf/2508.17536v2#page=4"
+     },
+     {
+      "version": "2508.17536v2",
+      "page": 9,
+      "lines": [
+       105,
+       110
+      ],
+      "text": "Consistent observations in a larger and more capable model. To assess the generality of our\nfindings, we extend our evaluation to more capable language models. Specifically, we test our setup\non the Qwen2.5-32B-Instruct model [22], using two representative tasks: GSM8K and HellaSwag.\nAs shown in Table 3, the results confirm our earlier observations that the performance of Majority\nVoting remains comparable to that of multi-agent methods. This suggests that our claim is not limited\nto smaller models, but also holds in high-capacity LLMs.",
+      "pdf_page": "https://arxiv.org/pdf/2508.17536v2#page=9"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Five homogeneous agents of Qwen2.5-7B-Instruct or Llama3.1-8B-Instruct (Qwen2.5-32B-Instruct in Section 6) in Decentralized, Sparse and Centralized MAD, and majority voting",
+    "task_data": "Arithmetics, GSM8K, MMLU Professional Medicine and Formal Logic, HellaSwag, CommonsenseQA and HH-RLHF (AI labeler alignment); GSM8K and HellaSwag for the 32B model",
+    "judge": "No judge; answers are aggregated by a voting function",
+    "regime": "evaluation",
+    "scale": "N = 5 agents; T = 2, 3, 5 rounds; 7B, 8B and 32B models; e.g. 100 Arithmetics, 300 GSM8K and 272 MMLU Professional Medicine questions"
+   },
+   "quantitative": {
+    "n": "Per-benchmark subsets, e.g. 100 Arithmetics questions, 300 GSM8K questions and the 272-question MMLU Professional Medicine test split",
+    "uncertainty": "None stated for the MAD or majority-voting accuracies in these passages; single-agent baselines are averaged over 5 independent runs"
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2508.17536v2:LIM-1"
+    ],
+    "notes": "Mainly the simultaneous-talk protocol is studied; other protocols may change the rates of subversion and correction. The authors hedge the conclusion with 'suggest'."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "Seven benchmarks and two model families, but no uncertainty is reported for the MAD versus majority-voting comparison, so the multi-setting condition is not met."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2508.17536v2:THM-1",
+   "paper": "2508.17536v2",
+   "evidence_type": "theorem",
+   "method": {
+    "record_ids": [],
+    "description": "The proof shows (Lemma 2) that majority voting picks answer 1 whenever the L1 distance between the empirical vote distribution and the mean belief is below the margin, then bounds that deviation with a concentration inequality for multinomial counts taken from prior work (Proposition 19 in [46]).",
+    "passages": [
+     {
+      "version": "2508.17536v2",
+      "page": 18,
+      "lines": [
+       105,
+       107
+      ],
+      "text": "Proof of Theorem 1. We proceed in several steps to establish the result.\nStep 1: Define the Empirical Distribution\nThe empirical distribution of votes is given by p̂ = c/N = (p̂1 , p̂2 , . . . , p̂K ), where p̂j = cj /N",
+      "pdf_page": "https://arxiv.org/pdf/2508.17536v2#page=18"
+     },
+     {
+      "version": "2508.17536v2",
+      "page": 19,
+      "lines": [
+       1,
+       3
+      ],
+      "text": "Step 2: Establish a Key Lemma\nTo connect the empirical distribution to majority voting, we introduce the following lemma.\nLemma 2. If ∥p̂ − p∥1 < ∆, then ymv = 1.",
+      "pdf_page": "https://arxiv.org/pdf/2508.17536v2#page=19"
+     },
+     {
+      "version": "2508.17536v2",
+      "page": 19,
+      "lines": [
+       31,
+       40
+      ],
+      "text": "This lemma implies:\nP(ymv = 1) ≥ P(∥p̂ − p∥1 < ∆).\nStep 3: Bound the L1 Deviation\nPK\nSince θ̄ = α/ j=1 αj is the mean of the categorical distribution induced by the Dirichlet model,\nand agents draw answers independently from θ̄, the counts c ∼ Multinomial(N, θ̄). Note that the\nDirichlet-multinomial assumption in the original proof simplifies to a multinomial distribution here\nbecause θ̄ is fixed as the mean.\nWe need to bound P(∥p̂ − p∥1 ≥ ∆). We use a concentration inequality for multinomial distributions.\nA known result (e.g., Proposition 19 in [46]) provides:",
+      "pdf_page": "https://arxiv.org/pdf/2508.17536v2#page=19"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2508.17536v2:ASM-DCM-AGENT"
+    ],
+    "stated_hypotheses": [
+     "Agents respond independently, without interaction.",
+     "All agents share the same initial belief vector (homogeneous initial beliefs).",
+     "Answer 1 is correct and has the strictly largest belief: alpha(1) > alpha(2) >= ... >= alpha(K).",
+     "The number of agents satisfies N > K/Delta^2, where Delta is the gap between the two largest mean beliefs.",
+     "In the proof, answers are independent draws from the mean belief, so the vote counts are Multinomial(N, theta-bar)."
+    ],
+    "passages": [
+     {
+      "version": "2508.17536v2",
+      "page": 5,
+      "lines": [
+       77,
+       82
+      ],
+      "text": "Before analyzing the dynamics of debate, we first consider the base case where agents respond\nindependently without interaction. The following characterizes the success probability of majority\nvoting under this condition, based solely on the agents’ homogeneous initial beliefs, αi,0 = α =\n(α(1) , . . . , α(K) ). Without loss of generality, let answer index 1 be the correct option. We assume\nthat the correct answer has the largest belief α(1) , and all the other beliefs are ordered such that\nα(1) > α(2) ≥ · · · ≥ α(K) .",
+      "pdf_page": "https://arxiv.org/pdf/2508.17536v2#page=5"
+     },
+     {
+      "version": "2508.17536v2",
+      "page": 6,
+      "lines": [
+       50,
+       57
+      ],
+      "text": "Remark 1. This result highlights the magnifying effect of majority voting: even when the correct\nanswer is only marginally more likely than the alternative answers, the lower bound on the success\nprobability asymptotically approaches 1 as N scales. Notably, this holds even when θ̄1 ≪ 12 , as\nlong as it remains the most probable choice option. In practice, we recognize that MAD systems\noften operate with a small number of agents due to computational constraints. We provide a sharper\nanalysis specialized to this realistic regime that applies to arbitrary N in Theorem 1.A (Appendix C),\nwithout constraining its size. This complementary result provides insights into the reliability of\nmajority voting in more practical, resource-constrained settings.",
+      "pdf_page": "https://arxiv.org/pdf/2508.17536v2#page=6"
+     }
+    ],
+    "check": "not verified: the blind checks miss some dropped conditions on theorem cards; read the theorem's statement at the cited page"
+   },
+   "setting": {
+    "systems": "N idealized agents modelled as Dirichlet-Compound-Multinomial samplers with a shared initial belief",
+    "task_data": "One question with a finite set of K answer options",
+    "judge": null,
+    "regime": "theory",
+    "scale": "Any N > K/Delta^2; Theorem 1.A (Appendix C) covers arbitrary N"
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2508.17536v2:LIM-1"
+    ],
+    "notes": "The bound needs N > K/Delta^2; the authors note that MAD systems often use few agents and give a sharper result for arbitrary N in Theorem 1.A. The framework assumes homogeneous agents."
+   },
+   "strength": {
+    "grade": "PROVED_IN_PAPER",
+    "reason": "Theorem 1 is proved in Appendix D.1 via Lemma 2 and a multinomial concentration inequality cited from prior work."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2508.17536v2:THM-2",
+   "paper": "2508.17536v2",
+   "evidence_type": "theorem",
+   "method": {
+    "record_ids": [],
+    "description": "Writing the agent's belief in the correct answer as its posterior Dirichlet mean after adding neighbours' answer counts, the proof takes the conditional expectation given the history of belief parameters and, using condition (1), shows it equals the previous belief.",
+    "passages": [
+     {
+      "version": "2508.17536v2",
+      "page": 21,
+      "lines": [
+       95,
+       97
+      ],
+      "text": "D.3\n\nProof of Theorem 2",
+      "pdf_page": "https://arxiv.org/pdf/2508.17536v2#page=21"
+     },
+     {
+      "version": "2508.17536v2",
+      "page": 21,
+      "lines": [
+       142,
+       145
+      ],
+      "text": "Here, we prove that the sequence {pi,t }t≥0 is a martingale by showing that the conditional expectation\nof the belief in the correct answer at round t given the filtration up to round t − 1 equals the\ncurrent belief. A sequence {Xt }t≥0 is a martingale if E[Xt | Ft−1 ] = Xt−1 , where Ft−1 =\n(α0 , α1 , · · · , αt−1 ) represents the history of belief parameters.",
+      "pdf_page": "https://arxiv.org/pdf/2508.17536v2#page=21"
+     },
+     {
+      "version": "2508.17536v2",
+      "page": 22,
+      "lines": [
+       43,
+       50
+      ],
+      "text": "(1)\n\nαi,t−1 + |N (i)| pi,t−1\n= PK\n(j)\nj=1 αi,t−1 + |N (i)|\n\n(by the condition in Theorem 2).",
+      "pdf_page": "https://arxiv.org/pdf/2508.17536v2#page=22"
+     },
+     {
+      "version": "2508.17536v2",
+      "page": 22,
+      "lines": [
+       70,
+       75
+      ],
+      "text": "and by plugging equation (9) into equation (8), we arrive at\nE[pi,t | Ft−1 ] = pi,t−1 .\n\n■\n\nProof completed.",
+      "pdf_page": "https://arxiv.org/pdf/2508.17536v2#page=22"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2508.17536v2:ASM-DCM-AGENT",
+     "N2:DSOFT:ARXIV-2508.17536v2:ASM-BAYES-UPDATE"
+    ],
+    "stated_hypotheses": [
+     "Agents generate answers by the DCM model and update their Dirichlet parameters by adding the counts of their neighbours' answers.",
+     "Condition (1): the average previous-round belief of the agent's neighbours equals the agent's own previous-round belief.",
+     "Sufficient conditions for (1) (Proposition 1): homogeneous fully-connected agents, fully isolated agents, or isolated cliques of homogeneous agents."
+    ],
+    "passages": [
+     {
+      "version": "2508.17536v2",
+      "page": 22,
+      "lines": [
+       86,
+       88
+      ],
+      "text": "Proposition 1. (Sufficient Conditions for (1)) If the debate topology consists of agents that either\n(i) are homogeneous and fully-connected, or (ii) are fully-isolated, or (iii) form isolated cliques whose\nagents in each clique are homogeneous, then the debate process is a martingale.",
+      "pdf_page": "https://arxiv.org/pdf/2508.17536v2#page=22"
+     },
+     {
+      "version": "2508.17536v2",
+      "page": 7,
+      "lines": [
+       10,
+       13
+      ],
+      "text": "the expected belief in the correct answer remains equal to the initial pi,0 = θ̄i,0 , without any debate,\nwhen agents are homogeneous and fully-connected (Appendix D.3.1). This implies that, under our\ntheoretical model, debate alone does not necessarily improve the initial accuracy–majority voting\naccounts for the primary performance gains. Our theory thus aligns well with our empirical findings",
+      "pdf_page": "https://arxiv.org/pdf/2508.17536v2#page=7"
+     }
+    ],
+    "check": "not verified: the blind checks miss some dropped conditions on theorem cards; read the theorem's statement at the cited page"
+   },
+   "setting": {
+    "systems": "Idealized agents with DCM responses and Bayesian count updates on a debate graph",
+    "task_data": "One question with a finite set of K answer options",
+    "judge": null,
+    "regime": "theory",
+    "scale": null
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2508.17536v2:LIM-1"
+    ],
+    "notes": "The theory assumes agent homogeneity and may not directly generalize to heterogeneous agents."
+   },
+   "strength": {
+    "grade": "PROVED_IN_PAPER",
+    "reason": "Theorem 2 is proved in Appendix D.3 ('Proof of Theorem 2', PDF pages 21-22) by computing the conditional expectation of the posterior mean belief under condition (1)."
+   },
+   "review_status": "provisional_ai_draft",
+   "check_history": [
+    "card-1: flagged or undecided by two blind checks; rewritten from the checkers' suggested fix (quotes unchanged)"
+   ]
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2508.17536v2:RES-MARTINGALE-EMPIRICAL",
+   "paper": "2508.17536v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [],
+    "description": "For each benchmark and debate round, the belief in the correct answer is estimated as the mean accuracy of the five agents (not the post-vote accuracy) in fully connected Decentralized MAD with Qwen2.5-7B-Instruct and Llama3.1-8B-Instruct, and the trajectories are plotted across rounds (Figure 4, raw values in Table 6).",
+    "passages": [
+     {
+      "version": "2508.17536v2",
+      "page": 25,
+      "lines": [
+       5,
+       13
+      ],
+      "text": "Here, we provide the raw mean accuracy values used for Figure 4 is provided in Table 6.\nAs further investigation, we directly evaluate the martingale process by comparing the pi,t−1 , as\nmeasured by the mean accuracy values across agents at step t − 1, with the expected value of the next\nstep E[pi,t | Ft−1 ], which is measured by running 5 independent runs on the subsequent debate round.\nIn the following two tables, we report the results with Sparse MAD [10], consisting of Qwen2.5-7B\nagents and Llama3.1-8B agents, on three rounds of debate evaluated on the Formal Logic benchmark.\nWe observe that pi,t−1 ≈ E[pi,t | Ft−1 ] in both cases.\nTable 6: Raw mean accuracy values for Figure 4. Top row is from Qwen2.5-7B-Instruct, and the bottom row is\nfrom Llama3.1-8B-Instruct. The MAD structure is the fully connected Decentralized MAD [2].",
+      "pdf_page": "https://arxiv.org/pdf/2508.17536v2#page=25"
+     },
+     {
+      "version": "2508.17536v2",
+      "page": 7,
+      "lines": [
+       60,
+       61
+      ],
+      "text": "Note that this quantity is different from the accuracy in Table 1, which is the ratio of correct responses after\nvoting.",
+      "pdf_page": "https://arxiv.org/pdf/2508.17536v2#page=7"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "The mean accuracy of the five agents is used as the estimate of the belief p_t; it differs from the Table 1 accuracy, which is computed after voting.",
+     "Figure 4 uses fully connected Decentralized MAD."
+    ],
+    "passages": []
+   },
+   "setting": {
+    "systems": "Five agents of Qwen2.5-7B-Instruct or Llama3.1-8B-Instruct in fully connected Decentralized MAD (Figure 4, Table 6); the Appendix E check uses Sparse MAD with Qwen2.5-7B and Llama3.1-8B agents",
+    "task_data": "Each benchmark of the main study (one trajectory per benchmark in Figure 4); the Appendix E check uses Formal Logic",
+    "judge": null,
+    "regime": "evaluation",
+    "scale": "Five agents; the Appendix E check uses 5 independent runs of the next debate round, over three rounds of debate"
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": "None stated for the Figure 4 trajectories, whose flatness is described qualitatively ('essentially flat')"
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2508.17536v2:LIM-1"
+    ],
+    "notes": "The Appendix E comparison of p_{t-1} with E[p_t | F_{t-1}] covers only Sparse MAD on Formal Logic over three rounds."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "Trajectories cover several benchmarks and two model families, but no uncertainty is reported for them and flatness is stated qualitatively, so the multi-setting condition is not met."
+   },
+   "review_status": "provisional_ai_draft",
+   "check_history": [
+    "card-1: flagged or undecided by two blind checks; rewritten from the checkers' suggested fix (quotes unchanged)"
+   ]
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2508.17536v2:RES-ORACLE",
+   "paper": "2508.17536v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [],
+    "description": "In MAD-oracle, an agent that outputs the correct answer in any round keeps that response in all later rounds while incorrect answers can still be revised; its accuracy with Qwen2.5-7B-Instruct (Table 2) is compared with vanilla MAD and with the majority-voting baseline.",
+    "passages": [
+     {
+      "version": "2508.17536v2",
+      "page": 7,
+      "lines": [
+       49,
+       57
+      ],
+      "text": "To investigate how targeted intervention in the belief update process can promote convergence to\nthe correct answer, we first consider an oracle-style method that explicitly biases updates toward\nthe correct signal. In this variant, once an agent produces the correct answer in any debate round,\nit becomes “locked” in that state; that is, its belief vector is no longer updated by subsequent peer\nresponses. Formally, if agent i outputs the correct answer at round t, we use this response in all\nsubsequent rounds t′ > t. This update mechanism amplifies the asymmetry in favor of correction:\ncorrect signals persist and accumulate over rounds, while incorrect signals can still be revised.\nConsequently, the system’s dynamics depart from the neutral martingale behavior discussed in\nSection 4 and instead exhibit a directional drift toward the correct answer.",
+      "pdf_page": "https://arxiv.org/pdf/2508.17536v2#page=7"
+     },
+     {
+      "version": "2508.17536v2",
+      "page": 8,
+      "lines": [
+       1,
+       1
+      ],
+      "text": "Table 2: Improved design of MAD. The model is Qwen2.5-7B-Instruct.",
+      "pdf_page": "https://arxiv.org/pdf/2508.17536v2#page=8"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "The oracle uses the true answer, so it is not feasible in practice; the authors treat it as an upper bound on the benefit of biasing belief updates toward correct signals."
+    ],
+    "passages": []
+   },
+   "setting": {
+    "systems": "Qwen2.5-7B-Instruct agents in vanilla MAD and MAD-oracle",
+    "task_data": "The Table 2 benchmarks, including MMLU (Formal Logic)",
+    "judge": null,
+    "regime": "evaluation",
+    "scale": "Qwen2.5-7B-Instruct; the quoted example is Decentralized MAD with T = 5 rounds"
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2508.17536v2:LIM-1"
+    ],
+    "notes": "Not feasible in practice because it needs the true answer."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "One model (Qwen2.5-7B-Instruct) and no uncertainty reported for the Table 2 accuracies."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2508.17536v2:RES-MV-GUIDED",
+   "paper": "2508.17536v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [],
+    "description": "MAD-Conformist keeps an agent's answer when it matched the previous round's majority vote, and MAD-Follower adopts the previous majority answer with 30% probability and otherwise samples a new one; both are compared with MAD-vanilla and MAD-oracle using Qwen2.5-7B-Instruct (Table 2).",
+    "passages": [
+     {
+      "version": "2508.17536v2",
+      "page": 8,
+      "lines": [
+       1,
+       1
+      ],
+      "text": "Table 2: Improved design of MAD. The model is Qwen2.5-7B-Instruct.",
+      "pdf_page": "https://arxiv.org/pdf/2508.17536v2#page=8"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "The previous round's majority response serves as a proxy for the ground truth, motivated by the theoretical result that majority voting estimates the correct answer more reliably than any single agent.",
+     "No access to the ground truth is used."
+    ],
+    "passages": [
+     {
+      "version": "2508.17536v2",
+      "page": 8,
+      "lines": [
+       302,
+       308
+      ],
+      "text": "In practice, one would not have access to the oracle setting where correct answers are preserved by\nassumption. To approximate this behavior, we introduce simple modifications to the MAD update\nrule that leverage the positive signals from majority voting. Our design rationale is guided by our\ntheoretical analysis—which shows that majority voting provides a more reliable estimate of the\ncorrect answer than any single agent, as it aggregates marginal advantages across the population. This\nsuggests that using the majority response as a proxy for the ground truth can help steer belief updates\nin the right direction—effectively biasing the system toward correction without needing oracle access.",
+      "pdf_page": "https://arxiv.org/pdf/2508.17536v2#page=8"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Qwen2.5-7B-Instruct agents in MAD-vanilla, MAD-Conformist, MAD-Follower and MAD-oracle",
+    "task_data": "The Table 2 benchmarks",
+    "judge": null,
+    "regime": "evaluation",
+    "scale": "Qwen2.5-7B-Instruct only"
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2508.17536v2:LIM-1"
+    ],
+    "notes": "The interventions do not reach the oracle's upper bound; the authors present them as a promising direction for future work to close the gap."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "One model (Qwen2.5-7B-Instruct) and no uncertainty reported for the Table 2 accuracies."
+   },
+   "review_status": "provisional_ai_draft"
+  }
+ ]
+}

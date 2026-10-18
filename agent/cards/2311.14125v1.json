@@ -1,0 +1,411 @@
+{
+ "schema": "ASRA-GAP-CLOSING-AGENT-v1",
+ "paper": "2311.14125v1",
+ "review_status": "provisional_ai_draft",
+ "rules": [
+  "Everything here is an AI draft (provisional_ai_draft): each counted item passed two blind AI checks that were tested on planted errors, and no person has reviewed it.",
+  "A finding counts only in the setting its own quoted lines show; read `setting` before carrying it to another setting.",
+  "A question's status is a label from fixed rules over its counted findings; `status_check` says whether that label itself passed its check.",
+  "Cite the paper and page from the passage, and read the PDF page before relying on a claim."
+ ],
+ "notes": "CORE's quote stops mid-sentence at 'the debating'; the requirement it starts is the limitation LIM-HUMAN-VERIFIABLE, linked as a limit. Possible inconsistency in the paper: Theorem 7.1 states prover time O(T), but its proof (p.20 L19-20) says prover and verifier time are the same as Theorem 5.3, whose stated prover time is O(T log T); the THM-7 card keeps the statement as quoted. THM-6-2: the Lean 4 formalisation differs from Figure 1 in details and constants (p.8 L15-18). ASM-PROVER-ORACLE is stated in the conclusion as a modelling assumption; it is linked to every theorem card because the model gives provers and verifier the same oracle (p.5 L35-39). METHOD-TRAINING maps the model to training and inference practice and does not produce any of the results, so it is not linked as a method. No record seems mislabelled.",
+ "cards": [
+  {
+   "record_id": "N2:DSOFT:ARXIV-2311.14125v1:CORE",
+   "paper": "2311.14125v1",
+   "evidence_type": "theorem",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2311.14125v1:DEF-DOUBLY-EFFICIENT"
+    ],
+    "description": "The authors define doubly-efficient debate (honest provers running in time Ptime polynomial in n, a verifier V running in time Vtime and making q oracle queries) and prove theorems in settings where human judgements are modelled as deterministic (Section 5) or stochastic (Section 6), and where the models propose a solution themselves and justify it (Section 7); e.g. Theorem 5.3 (O(1) oracle queries, verifier time O(l log T), with cross-examination), whose proof appears in Section B.",
+    "passages": [
+     {
+      "version": "2311.14125v1",
+      "page": 3,
+      "lines": [
+       3,
+       9
+      ],
+      "text": "In the subsequent sections we prove theorems achieving this high-level goal in several settings. As a warmup, in Section 5 we give protocols achieving the goal when human judgements are modeled as deterministic,\nand the competing models are given explicit natural language instructions to follow. In order to better capture\nthe fuzzy nature of human judgement, we then extend these results to the setting where human judgements are\nstochastic in Section 6. Finally, in Section 7 we prove theorems achieving our goal in the case where the models\nare asked to come up with a proposed solution themselves, and then are required to justify the correctness of\nthe solution with a natural-language argument. We also formalize the main theorem of Section 6 in the Lean\n4 theorem prover [Moura and Ullrich, 2021]; see https://github.com/google-deepmind/debate.",
+      "pdf_page": "https://arxiv.org/pdf/2311.14125v1#page=3"
+     },
+     {
+      "version": "2311.14125v1",
+      "page": 6,
+      "lines": [
+       30,
+       35
+      ],
+      "text": "from the context. Our next theorem shows that doubly-efficient debate with cross-examination can decide\nany problem solvable in polynomial time, using only O(l log T ) verifier time, and only O(1) oracle queries.\nTheorem 5.3. Let L be any language decidable by an oracle Turing machine M in time T = T (n) with\noracle queries of length l. Then there is a (O(T log T ), O(l log T ), O(1))-debate protocol with cross-examination\ndeterministically deciding L.\nThe proof appears in Section B. The protocol achieving Theorem 5.3 is given in Figure 4 in Section A.",
+      "pdf_page": "https://arxiv.org/pdf/2311.14125v1#page=6"
+     },
+     {
+      "version": "2311.14125v1",
+      "page": 15,
+      "lines": [
+       1,
+       5
+      ],
+      "text": "Efficiency The current head position of M can be encoded in O(log T ) bits, so simulating one step of\nM requires at most O(log(T )) time. Both provers need only simulate M (x) once which takes O(T log T )\ntime. The verifier only needs to read the at most O(l) relevant bits aI(t) , the locations of which can each be\nencoded in O(log T ) bits, and execute one step of M (possibly making one query to O), which takes a total\nof O(l log T ) time.",
+      "pdf_page": "https://arxiv.org/pdf/2311.14125v1#page=15"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2311.14125v1:ASM-PROVER-ORACLE",
+     "N2:DSOFT:ARXIV-2311.14125v1:ASM-LIPSCHITZ"
+    ],
+    "stated_hypotheses": [
+     "Both provers and the verifier can query the oracle O; prover queries stand for the models' own knowledge of human judgement and verifier queries for actual human raters.",
+     "The honest prover must win the debate with higher probability while running in time Ptime, against any computationally unbounded strategy by the dishonest prover (the requirement stated with the definition of doubly-efficient debate).",
+     "The constant-query result for polynomial-time computations (Theorem 5.3) uses cross-examination.",
+     "For a stochastic oracle the machine must also be K-Lipschitz (ASM-LIPSCHITZ).",
+     "The debating models must be able to produce a (possibly long) natural-language reasoning trace that careful human analysis could judge correct (LIM-HUMAN-VERIFIABLE)."
+    ],
+    "passages": [
+     {
+      "version": "2311.14125v1",
+      "page": 5,
+      "lines": [
+       35,
+       39
+      ],
+      "text": "The oracle O: Our theoretical model gives both the provers and the verifier access to an oracle O\nrepresenting human judgement. The prover access to the oracle corresponds to the fact that the powerful\npre-trained models already have extensive knowledge of human judgement on many questions, and will gain\nmore knowledge throughout the training process. The verifier access to the oracle O corresponds to actual\njudgements by human raters.",
+      "pdf_page": "https://arxiv.org/pdf/2311.14125v1#page=5"
+     },
+     {
+      "version": "2311.14125v1",
+      "page": 6,
+      "lines": [
+       22,
+       26
+      ],
+      "text": "Definition 5.2. A debate with cross-examination is a debate where A, B, and V can query independent,\nnon-communicating copies of both A and B. Furthermore, the verifier is not required to read the entire\ntranscript of the debate, but can selectively query a subset of the transcript. A debate protocol with\ncross-examination is a debate protocol where the debates appearing in the completeness and soundness case\nallow cross-examination.",
+      "pdf_page": "https://arxiv.org/pdf/2311.14125v1#page=6"
+     }
+    ],
+    "check": "not verified: the blind checks miss some dropped conditions on theorem cards; read the theorem's statement at the cited page"
+   },
+   "setting": {
+    "systems": "Two polynomial-time provers A and B and a verifier V, all with access to an oracle O representing human judgement",
+    "task_data": "Problems decidable in polynomial time with access to the oracle, with human judgement modelled as deterministic (Section 5) or stochastic (Section 6), and problems where the models propose a solution and justify it (Section 7)",
+    "judge": "The verifier V, whose queries to O stand for human judgements",
+    "regime": "theory",
+    "scale": null
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2311.14125v1:LIM-HUMAN-VERIFIABLE"
+    ],
+    "notes": "The provers are assumed to simulate human judgement accurately on any query (ASM-PROVER-ORACLE), which the authors say may attribute too much power to them; applying the results needs a human-verifiable reasoning trace (LIM-HUMAN-VERIFIABLE)."
+   },
+   "strength": {
+    "grade": "PROVED_IN_PAPER",
+    "reason": "The claim summarises the paper's theorems, which the paper proves (e.g. Theorem 5.3: 'The proof appears in Section B'; the efficiency part of that proof is quoted), under the stated hypotheses."
+   },
+   "review_status": "provisional_ai_draft",
+   "check_history": [
+    "card-1: flagged or undecided by two blind checks; rewritten from the checkers' suggested fix (quotes unchanged)"
+   ]
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2311.14125v1:THM-5-1",
+   "paper": "2311.14125v1",
+   "evidence_type": "theorem",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2311.14125v1:DEF-DOUBLY-EFFICIENT"
+    ],
+    "description": "Recursive bisection protocol (given in Figure 3 in Section A): A outputs a supposed middle configuration of the computation of M(x), B decides whether to recurse on the first or the second half, the recursion bottoms out at a single transition of M, and V checks O(log T) configurations of size S and simulates one step of M (possibly issuing one query to O); the proof in Section B argues completeness, soundness and efficiency.",
+    "passages": [
+     {
+      "version": "2311.14125v1",
+      "page": 14,
+      "lines": [
+       29,
+       38
+      ],
+      "text": "Proof of Theorem 5.1.\nCompleteness If x ∈ L then an honest prover A can run M (x) once to get the transcript y and always\noutput the appropriate middle configuration in Step 1a, no matter which bits bk are chosen. The messages ak\nwill then pass all checks in Step 2.\nSoundness Suppose x ∈\n/ L. Then inductively in the k-th round a dishonest prover A′ must output a\nmiddle configuration ak for which either the first half (zk to ak ) or the second half (ak to zk′ ) is not a correct\nexecution of M . Then an honest prover B can run M for t2k steps from zk and from ak , and output the\nappropriate bit bk indicating which half was incorrect. Thus, in Step 3 either the last two configurations are\nnot a correct step of M or one of the configurations output by M is invalid, so V will reject.",
+      "pdf_page": "https://arxiv.org/pdf/2311.14125v1#page=14"
+     },
+     {
+      "version": "2311.14125v1",
+      "page": 14,
+      "lines": [
+       39,
+       42
+      ],
+      "text": "Efficiency The honest prover A only needs to run M (x) once. The honest prover B also only needs to run\nM for O(T ) total steps. The current head position of M can be encoded in O(log T ) bits, so simulating one\nstep of M requires at most O(log(T )) time. The verifier V checks O(log T ) configurations each of size S, and\nsimulates one step of M (possibly issuing one query to O), for a total time of O(S log T ).",
+      "pdf_page": "https://arxiv.org/pdf/2311.14125v1#page=14"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2311.14125v1:ASM-PROVER-ORACLE"
+    ],
+    "stated_hypotheses": [
+     "L is decidable by an oracle Turing machine M in time T = T(n) using space S = S(n).",
+     "'Deterministically deciding' L means completeness c = 1 and soundness s = 0 in Definition 4.1: A and B run in time Ptime; if x is in L, the honest A makes V accept against every unbounded-time oracle Turing machine B'; if x is not in L, the honest B makes V reject against every unbounded-time A'.",
+     "Both provers and the verifier can query the oracle O; prover queries stand for the models' own knowledge of human judgement and verifier queries for actual human raters."
+    ],
+    "passages": [
+     {
+      "version": "2311.14125v1",
+      "page": 5,
+      "lines": [
+       7,
+       15
+      ],
+      "text": "Definition 4.1. A (Ptime , Vtime , q)-debate protocol is given by a triple of oracle Turing machines (A, B, V )\nwhere A and B run in time Ptime , and V runs in time Vtime and makes q oracle queries. Let 1 ≥ c > 21 > s ≥ 0.\nA debate protocol decides a language L with completeness c and soundness s if:\n• Completeness: If x ∈ L then for all (unbounded time) oracle Turing machines B ′ the debate (A, B ′ , V ),\nwith oracle O, and input x satisfies P[V O (x, a, b) = 1] ≥ c.\n• Soundness: If x ∈\n/ L then for all (unbounded time) oracle Turing machines A′ the debate (A′ , B, V ),\nwith oracle O, and input x satisfies P[V O (x, a, b) = 1] ≤ s.\nWhen c = 1 and s = 0 we say that the debate protocol deterministically decides L.",
+      "pdf_page": "https://arxiv.org/pdf/2311.14125v1#page=5"
+     },
+     {
+      "version": "2311.14125v1",
+      "page": 5,
+      "lines": [
+       35,
+       39
+      ],
+      "text": "The oracle O: Our theoretical model gives both the provers and the verifier access to an oracle O\nrepresenting human judgement. The prover access to the oracle corresponds to the fact that the powerful\npre-trained models already have extensive knowledge of human judgement on many questions, and will gain\nmore knowledge throughout the training process. The verifier access to the oracle O corresponds to actual\njudgements by human raters.",
+      "pdf_page": "https://arxiv.org/pdf/2311.14125v1#page=5"
+     }
+    ],
+    "check": "not verified: the blind checks miss some dropped conditions on theorem cards; read the theorem's statement at the cited page"
+   },
+   "setting": {
+    "systems": "Two provers A and B and a verifier V, a triple of oracle Turing machines, with access to an oracle O representing human judgement",
+    "task_data": "Languages decidable by an oracle Turing machine M in time T and space S",
+    "judge": "The verifier V, which checks O(log T) configurations and one step of M (possibly one query to O)",
+    "regime": "theory",
+    "scale": null
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2311.14125v1:LIM-HUMAN-VERIFIABLE"
+    ],
+    "notes": "Verifier time O(S log T) depends on the space S of the computation; the authors compare this with single-prover doubly-efficient interactive proofs (Reingold et al.), which need O(S^2 polylog T) and do not apply with a black-box oracle."
+   },
+   "strength": {
+    "grade": "PROVED_IN_PAPER",
+    "reason": "Theorem 5.1 is proved in the paper: 'The proof appears in Section B', which gives the completeness, soundness and efficiency arguments."
+   },
+   "review_status": "provisional_ai_draft",
+   "check_history": [
+    "card-1: flagged or undecided by two blind checks; rewritten from the checkers' suggested fix (quotes unchanged)"
+   ]
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2311.14125v1:THM-5-3",
+   "paper": "2311.14125v1",
+   "evidence_type": "theorem",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2311.14125v1:DEF-DOUBLY-EFFICIENT"
+    ],
+    "description": "Cross-examination protocol (given in Figure 4 in Section A): A outputs the whole transcript of the computation M(x), B outputs the location of a supposed mistake by A, and V checks only this location (reading at most O(l) relevant bits and executing one step of M, possibly making one query to O); the proof in Section B argues completeness, soundness and efficiency.",
+    "passages": [
+     {
+      "version": "2311.14125v1",
+      "page": 14,
+      "lines": [
+       43,
+       50
+      ],
+      "text": "Proof of Theorem 5.3.\nCompleteness If x ∈ L the honest prover A can just output the true transcript of M on input x, and will\npass the test in Step 3 no matter which location t is checked by V .\nSoundness If x ∈\n/ L then a dishonest prover A′ must output a transcript A that does not correspond to a\ncorrect execution of M (x). In particular, there must be at least one location t where at is not correct given\nthe relevant bits aI(t) . An honest prover B can then execute M (x) and find such a location, which will in\nturn cause V to reject in Step 3.",
+      "pdf_page": "https://arxiv.org/pdf/2311.14125v1#page=14"
+     },
+     {
+      "version": "2311.14125v1",
+      "page": 15,
+      "lines": [
+       1,
+       5
+      ],
+      "text": "Efficiency The current head position of M can be encoded in O(log T ) bits, so simulating one step of\nM requires at most O(log(T )) time. Both provers need only simulate M (x) once which takes O(T log T )\ntime. The verifier only needs to read the at most O(l) relevant bits aI(t) , the locations of which can each be\nencoded in O(log T ) bits, and execute one step of M (possibly making one query to O), which takes a total\nof O(l log T ) time.",
+      "pdf_page": "https://arxiv.org/pdf/2311.14125v1#page=15"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2311.14125v1:ASM-PROVER-ORACLE"
+    ],
+    "stated_hypotheses": [
+     "L is decidable by an oracle Turing machine M in time T = T(n) with oracle queries of length l.",
+     "Debate with cross-examination: A, B and V can query independent, non-communicating copies of A and B, and V may read only part of the transcript (Definition 5.2).",
+     "'Deterministically deciding' L means completeness c = 1 and soundness s = 0 in Definition 4.1: A and B run in time Ptime; if x is in L, the honest A makes V accept against every unbounded-time oracle Turing machine B'; if x is not in L, the honest B makes V reject against every unbounded-time A'.",
+     "Both provers and the verifier can query the oracle O; prover queries stand for the models' own knowledge of human judgement and verifier queries for actual human raters."
+    ],
+    "passages": [
+     {
+      "version": "2311.14125v1",
+      "page": 6,
+      "lines": [
+       22,
+       26
+      ],
+      "text": "Definition 5.2. A debate with cross-examination is a debate where A, B, and V can query independent,\nnon-communicating copies of both A and B. Furthermore, the verifier is not required to read the entire\ntranscript of the debate, but can selectively query a subset of the transcript. A debate protocol with\ncross-examination is a debate protocol where the debates appearing in the completeness and soundness case\nallow cross-examination.",
+      "pdf_page": "https://arxiv.org/pdf/2311.14125v1#page=6"
+     },
+     {
+      "version": "2311.14125v1",
+      "page": 5,
+      "lines": [
+       7,
+       15
+      ],
+      "text": "Definition 4.1. A (Ptime , Vtime , q)-debate protocol is given by a triple of oracle Turing machines (A, B, V )\nwhere A and B run in time Ptime , and V runs in time Vtime and makes q oracle queries. Let 1 ≥ c > 21 > s ≥ 0.\nA debate protocol decides a language L with completeness c and soundness s if:\n• Completeness: If x ∈ L then for all (unbounded time) oracle Turing machines B ′ the debate (A, B ′ , V ),\nwith oracle O, and input x satisfies P[V O (x, a, b) = 1] ≥ c.\n• Soundness: If x ∈\n/ L then for all (unbounded time) oracle Turing machines A′ the debate (A′ , B, V ),\nwith oracle O, and input x satisfies P[V O (x, a, b) = 1] ≤ s.\nWhen c = 1 and s = 0 we say that the debate protocol deterministically decides L.",
+      "pdf_page": "https://arxiv.org/pdf/2311.14125v1#page=5"
+     },
+     {
+      "version": "2311.14125v1",
+      "page": 5,
+      "lines": [
+       35,
+       39
+      ],
+      "text": "The oracle O: Our theoretical model gives both the provers and the verifier access to an oracle O\nrepresenting human judgement. The prover access to the oracle corresponds to the fact that the powerful\npre-trained models already have extensive knowledge of human judgement on many questions, and will gain\nmore knowledge throughout the training process. The verifier access to the oracle O corresponds to actual\njudgements by human raters.",
+      "pdf_page": "https://arxiv.org/pdf/2311.14125v1#page=5"
+     }
+    ],
+    "check": "not verified: the blind checks miss some dropped conditions on theorem cards; read the theorem's statement at the cited page"
+   },
+   "setting": {
+    "systems": "Two provers A and B and a verifier V, a triple of oracle Turing machines, with access to an oracle O representing human judgement, with cross-examination",
+    "task_data": "Languages decidable by an oracle Turing machine M in time T with oracle queries of length l",
+    "judge": "The verifier V, which reads the O(l) relevant bits and checks one step of M (possibly one query to O)",
+    "regime": "theory",
+    "scale": null
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2311.14125v1:LIM-HUMAN-VERIFIABLE"
+    ],
+    "notes": "For LLMs, cross-examination is realised by running copies of the model or re-querying it with earlier debate messages removed; the honest prover A writes out the whole transcript of the computation."
+   },
+   "strength": {
+    "grade": "PROVED_IN_PAPER",
+    "reason": "Theorem 5.3 is proved in the paper: 'The proof appears in Section B', which gives the completeness, soundness and efficiency arguments."
+   },
+   "review_status": "provisional_ai_draft",
+   "check_history": [
+    "card-1: flagged or undecided by two blind checks; rewritten from the checkers' suggested fix (quotes unchanged)"
+   ]
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2311.14125v1:THM-6-2",
+   "paper": "2311.14125v1",
+   "evidence_type": "theorem",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2311.14125v1:DEF-DOUBLY-EFFICIENT"
+    ],
+    "description": "Protocol of Figure 1: over T rounds A proposes the probability of the next bit, A and B sample it by coin-flipping through cross-examination, and if B aborts V samples from O to check A's proposed probability; the proof in Section D uses a Chernoff bound, and the theorem is also formalised in Lean 4 with some differences in details and constants.",
+    "passages": [
+     {
+      "version": "2311.14125v1",
+      "page": 15,
+      "lines": [
+       28,
+       34
+      ],
+      "text": "D\n\nMissing Proofs for Stochastic Debate\n\nIn this section we give the missing proof for Theorem 6.2 on the power of stochastic debate protocols. For a\npair of oracles O,O′ we will use the notation ∥O − O′ ∥∞ = maxz P[O(z) = 1] − P[O′ (z) = 1]\nProof of Theorem 6.2. We will require the following version of the Chernoff bound throughout the proof:",
+      "pdf_page": "https://arxiv.org/pdf/2311.14125v1#page=15"
+     },
+     {
+      "version": "2311.14125v1",
+      "page": 20,
+      "lines": [
+       1,
+       5
+      ],
+      "text": "Efficiency Both honest provers A and B need to sample from O at most R = O(d2 log T ) = O(K 2 log T )\ntimes for each of the T steps of the machine M . The current head position of M can be encoded in O(log T )\nbits, so simulating one step of M requires at most O(log(T )) time. V needs to read the O(l) relevant\ncoordinates of aI(t) , the locations of which can each be encoded in O(log T ) bits, yielding a total of O(l log T )\nbits read. V must further sample at most O(d2 ) = O(K 2 ) times from O.",
+      "pdf_page": "https://arxiv.org/pdf/2311.14125v1#page=20"
+     },
+     {
+      "version": "2311.14125v1",
+      "page": 8,
+      "lines": [
+       15,
+       18
+      ],
+      "text": "Lean 4 formalization. https://github.com/google-deepmind/debate formalizes Theorem 6.2 using\nLean 4 and Mathlib [Moura and Ullrich, 2021, Mathlib Community, 2020]. (The purpose of the formalization\nwas primarily to learn Lean 4.) Our algorithm differs from Figure 1 in a few details; e.g., we use external\nrandomness rather than ztA + ztB , and the constants are different (if unsure, trust the formalized constants).",
+      "pdf_page": "https://arxiv.org/pdf/2311.14125v1#page=8"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2311.14125v1:ASM-LIPSCHITZ",
+     "N2:DSOFT:ARXIV-2311.14125v1:ASM-PROVER-ORACLE"
+    ],
+    "stated_hypotheses": [
+     "L is decided by a K-Lipschitz probabilistic oracle Turing machine M in time T with oracle queries of length l.",
+     "The oracle is stochastic: each query response is an independent {0,1}-valued random variable.",
+     "Cross-examination is allowed.",
+     "Savings in verifier time and query complexity are non-trivial whenever K = o(sqrt T), most interestingly K = O(1); every time-T stochastic oracle machine is K-Lipschitz for K = O(T)."
+    ],
+    "passages": [
+     {
+      "version": "2311.14125v1",
+      "page": 4,
+      "lines": [
+       5,
+       9
+      ],
+      "text": "queries z are answered by the oracle O. We will also consider the setting where the oracle O is stochastic, in\nwhich case the response to each oracle query O(z) is an independent {0, 1}-valued random variable. In the\nLLM setting, the machine M corresponds to a set of natural language rules and instructions, and the oracle\nO represents human judgement along with any other external black-box feedback the model may receive (e.g.\nresults from a search query, observations from a camera or sensor, outputs of API calls).",
+      "pdf_page": "https://arxiv.org/pdf/2311.14125v1#page=4"
+     },
+     {
+      "version": "2311.14125v1",
+      "page": 7,
+      "lines": [
+       29,
+       31
+      ],
+      "text": "In other words, if M is run with any oracle which assigns similar probabilities to O, the probability\nthat M outputs 1 should change by at most a K factor more than the maximum difference in the oracle\nprobabilities. Observe that every time-T stochastic oracle machine is K-Lipschitz for K = O(T ).",
+      "pdf_page": "https://arxiv.org/pdf/2311.14125v1#page=7"
+     }
+    ],
+    "check": "not verified: the blind checks miss some dropped conditions on theorem cards; read the theorem's statement at the cited page"
+   },
+   "setting": {
+    "systems": "Two provers A and B and a verifier V, all oracle Turing machines with access to an oracle O that stands for human judgement (stochastic oracle), with cross-examination",
+    "task_data": "Languages decided by K-Lipschitz probabilistic oracle machines with queries of length l",
+    "judge": "The verifier V, which samples O at most O(K^2) times when B aborts",
+    "regime": "theory",
+    "scale": null
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2311.14125v1:LIM-HUMAN-VERIFIABLE"
+    ],
+    "notes": "The guarantee has completeness 3/5 and soundness 2/5. The Lean formalisation differs from Figure 1 in details and constants, and the authors say to trust the formalised constants if unsure."
+   },
+   "strength": {
+    "grade": "PROVED_IN_PAPER",
+    "reason": "Theorem 6.2 is proved in Appendix D and is also formalised in Lean 4 (with different constants)."
+   },
+   "review_status": "provisional_ai_draft"
+  }
+ ]
+}

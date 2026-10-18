@@ -1,0 +1,732 @@
+{
+ "schema": "ASRA-GAP-CLOSING-AGENT-v1",
+ "paper": "2402.06782v4",
+ "review_status": "provisional_ai_draft",
+ "rules": [
+  "Everything here is an AI draft (provisional_ai_draft): each counted item passed two blind AI checks that were tested on planted errors, and no person has reviewed it.",
+  "A finding counts only in the setting its own quoted lines show; read `setting` before carrying it to another setting.",
+  "A question's status is a label from fixed rules over its counted findings; `status_check` says whether that label itself passed its check.",
+  "Cite the paper and page from the passage, and read the PDF page before relying on a claim."
+ ],
+ "notes": "No assumption records exist for this paper, so hypotheses are given in plain words with supporting lines. CORE is graded EMPIRICAL_SINGLE_SETTING by its weaker part (the persuasiveness effect carries no reported uncertainty in the lines read); its accuracy part is carded under RES-HEADLINE, graded EMPIRICAL_MULTI_SETTING. RES-INTERACTION's quote begins with the tail ('tively).') of a sentence whose p-values sit on p.7 line 70; the card adds that line. Appendix D.5 says Elo confidence intervals were bootstrapped, but no interval for the correct-side advantage or the Elo-accuracy correlation appears in the lines read, so those cards record no uncertainty. RES-HUMAN-ERRORS: the per-category percentages sit in a garbled table on p.24 and are not used; the card relies on the text of Appendix B.1. RES-HEADLINE: the 88%/76% figures are attributed to 'the most persuasive models'; the LLM-judge test sets (TH, TL) and the human test phase (953 judgements) are given separately.",
+ "cards": [
+  {
+   "record_id": "N2:DSOFT:ARXIV-2402.06782v4:CORE",
+   "paper": "2402.06782v4",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2402.06782v4:DEF-DEBATE",
+     "N2:DSOFT:ARXIV-2402.06782v4:DEF-PERSUASIVENESS"
+    ],
+    "description": "Two LLM expert debaters who can read a QuALITY story argue for opposing answers over a fixed number of rounds and a non-expert judge (an LLM or a human) without the story picks an answer; debaters are optimised for judge approval (persuasiveness) with inference-time best-of-N sampling and critique-and-refinement, and judge accuracy is compared with naive baselines.",
+    "passages": [
+     {
+      "version": "2402.06782v4",
+      "page": 2,
+      "lines": [
+       18,
+       29
+      ],
+      "text": "debate1 aid weaker judges in evaluating stronger models? To simulate stronger and weaker models, we use\ninformation-asymmetric debates in a reading comprehension task (Michael et al., 2023; Radhakrishnan, 2023). We\ngive the debaters full access to the underlying text while\njudges have no access to the text. This setup renders the\ndebaters experts (i.e. stronger) and the judges non-experts\n(i.e. weaker) in the task. Experts are provided with a quote\ntool, which allows them to present externally verified quotes\nfrom the text. The judges use the arguments from the debate\nto answer the reading comprehension question. We test this\nsetup for both human and LLM judges and evaluate against\na non-adversarial baseline called consultancy, in which a\nsingle expert model argues for one particular answer.",
+      "pdf_page": "https://arxiv.org/pdf/2402.06782v4#page=2"
+     },
+     {
+      "version": "2402.06782v4",
+      "page": 5,
+      "lines": [
+       163,
+       171
+      ],
+      "text": "Insight 1: Debate helps LLM judges answer hard\nquestions better than consultancy. We perform hyperparameter and prompt optimisation for debaters by optimising for win rate (see Appendix D.7). We evaluate each\nprotocol on test sets (TH , TL ), using GPT-4-Turbo and\nbest-of-16 sampling for both debaters and consultants. To\nevaluate performance, we report judge accuracy along with\nstandard error of the mean. We find that all protocols help\nnon-experts answer questions better than the naive judge\nbaseline (see Figure 1 and 8). Debate outperforms consultancy and, with stronger judges, reduces the gap with\nthe expert judge (75.6% vs 92.5%), demonstrating promis-",
+      "pdf_page": "https://arxiv.org/pdf/2402.06782v4#page=5"
+     },
+     {
+      "version": "2402.06782v4",
+      "page": 4,
+      "lines": [
+       22,
+       30
+      ],
+      "text": "To generate a large set of different debater capability levels\nfor our LLM judge experiments, we apply inference-time\noptimisation using best-of-N (boN ) sampling. With boN ,\nmodels are sampled N times, and a preference model is\nused to select the most persuasive arguments. The preference model is given a prompt to optimise for judge feedback.\nFor a subset of models, we additionally use critique-andrefinement (cN ) (Saunders et al., 2022), in which another\nmodel is used to produce N critiques; a preference model\nthen grades these and the most helpful is used to refine the\nanswer. For all preference models, we use the log probabilities from GPT-4-Turbo. We document prompt iteration in",
+      "pdf_page": "https://arxiv.org/pdf/2402.06782v4#page=4"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "Experts possess the information needed to answer and non-experts lack it but are otherwise as capable; the paper uses this information asymmetry as its analogue of stronger and weaker models.",
+     "Experts can present quotes from the text that a tool verifies externally.",
+     "Questions come from the QuALITY HARD subset of Project Gutenberg science-fiction stories (all untimed annotators chose the correct answer and rated it unambiguous), each with two answers: the correct answer and the best distractor.",
+     "Persuasiveness is measured by judge approval, so it needs no ground-truth labels."
+    ],
+    "passages": [
+     {
+      "version": "2402.06782v4",
+      "page": 3,
+      "lines": [
+       37,
+       48
+      ],
+      "text": "“Question Answering with Long Input Texts, Yes!” (QuALITY; Pang et al., 2022). Judges are not allowed access to\nthe original comprehension text, restricting their ability to\nanswer questions and inducing their non-expert status. We\nmotivate this setting and provide implementation recommendations in Appendix C. We use texts from the Project\nGutenberg science-fiction story subset, which have a median\nlength of approximately 7000 tokens. From these questions,\nwe select the HARD subset, where all untimed annotators\nchose the correct answer and rated the answer as unambiguous. For each question, we provide two answers: the correct\nanswer and the best distractor. We use two data splits for\nLLM judge experiments: TL (400 train set questions) and\nDL (291 development set questions). For human experiments, where a story can only appear once, we use TH (153\ndrawn from both sets) and DH (47 drawn from both sets).",
+      "pdf_page": "https://arxiv.org/pdf/2402.06782v4#page=3"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "LLM expert debaters optimised at inference time; the Insight 1 accuracy evaluation uses GPT-4-Turbo with best-of-16 sampling",
+    "task_data": "QuALITY reading comprehension, HARD subset of Project Gutenberg science-fiction stories, two answers per question",
+    "judge": "Non-expert LLM judges and non-expert human judges, without access to the story",
+    "regime": "evaluation",
+    "scale": "Question splits TL (400), DL (291), TH (153) and DH (47)"
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": "LLM-judge accuracy is reported with standard error of the mean (values not given in these lines); no uncertainty is given for the persuasiveness effect"
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2402.06782v4:LIM-INFO-GAP-RLHF",
+     "N2:DSOFT:ARXIV-2402.06782v4:LIM-VERIFIED-EVIDENCE"
+    ],
+    "notes": "In this setup the strong-weak difference is only access to information, the debaters are RLHF-tuned models with a propensity for honesty, and the results are limited to setups where debaters can give verified evidence (here the quote tool)."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "The debate-accuracy part is measured with LLM and human judges on the one QuALITY task with standard errors for LLM judges, but the persuasiveness part of the claim carries no reported uncertainty in these lines, so the claim as a whole is graded by its weaker part."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2402.06782v4:RES-HEADLINE",
+   "paper": "2402.06782v4",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2402.06782v4:DEF-DEBATE",
+     "N2:DSOFT:ARXIV-2402.06782v4:DEF-CONSULTANCY",
+     "N2:DSOFT:ARXIV-2402.06782v4:DEF-PERSUASIVENESS"
+    ],
+    "description": "Non-expert judges without the story choose between two answers after reading a debate between two experts or a consultancy with one expert; LLM judges are evaluated on test sets TH and TL with GPT-4-Turbo best-of-16 experts, human judges in a test phase of 953 judgements, and accuracy is compared with consultancy and naive performance.",
+    "passages": [
+     {
+      "version": "2402.06782v4",
+      "page": 5,
+      "lines": [
+       163,
+       171
+      ],
+      "text": "Insight 1: Debate helps LLM judges answer hard\nquestions better than consultancy. We perform hyperparameter and prompt optimisation for debaters by optimising for win rate (see Appendix D.7). We evaluate each\nprotocol on test sets (TH , TL ), using GPT-4-Turbo and\nbest-of-16 sampling for both debaters and consultants. To\nevaluate performance, we report judge accuracy along with\nstandard error of the mean. We find that all protocols help\nnon-experts answer questions better than the naive judge\nbaseline (see Figure 1 and 8). Debate outperforms consultancy and, with stronger judges, reduces the gap with\nthe expert judge (75.6% vs 92.5%), demonstrating promis-",
+      "pdf_page": "https://arxiv.org/pdf/2402.06782v4#page=5"
+     },
+     {
+      "version": "2402.06782v4",
+      "page": 7,
+      "lines": [
+       48,
+       55
+      ],
+      "text": "We conduct five weeks of iteration during which judges\nreceive seven batches of questions (see Appendix B.5). For\nthe test phase, we release a batch of 47 questions per judge,\nwhich is completed over a period of four weeks. Answer\nposition and assignment are randomised (see Appendix E).\nTo reduce learning effects, judges are not given feedback\nafter initial training. We collect 953 human judgements in\nthe test phase, 2362 in the iteration phase, and 6476 in total.",
+      "pdf_page": "https://arxiv.org/pdf/2402.06782v4#page=7"
+     },
+     {
+      "version": "2402.06782v4",
+      "page": 7,
+      "lines": [
+       66,
+       70
+      ],
+      "text": "\nInsight 6: Debate protocols produce higher accuracy\nthan consultancy protocols for human judges. We report\njudge accuracy over each protocol (Figure 6-left). We find\nthat in both static and interactive settings, debate outperforms consultancy significantly (p=0.001, p=0.048, respec-",
+      "pdf_page": "https://arxiv.org/pdf/2402.06782v4#page=7"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "Debaters have full access to the story and judges have none; this information asymmetry stands in for the gap between stronger and weaker models.",
+     "Experts can present quotes from the text that a tool verifies externally.",
+     "Questions are from the QuALITY HARD subset (all untimed annotators chose the correct answer and rated it unambiguous), each with two answers: the correct answer and the best distractor.",
+     "LLM judgements are run twice with the debater order swapped, and strict word limits are applied, to mitigate positional and verbosity biases.",
+     "Human test phase: answer position and assignment are randomised and judges get no feedback after initial training.",
+     "The figures are for the most persuasive expert models."
+    ],
+    "passages": [
+     {
+      "version": "2402.06782v4",
+      "page": 2,
+      "lines": [
+       18,
+       29
+      ],
+      "text": "debate1 aid weaker judges in evaluating stronger models? To simulate stronger and weaker models, we use\ninformation-asymmetric debates in a reading comprehension task (Michael et al., 2023; Radhakrishnan, 2023). We\ngive the debaters full access to the underlying text while\njudges have no access to the text. This setup renders the\ndebaters experts (i.e. stronger) and the judges non-experts\n(i.e. weaker) in the task. Experts are provided with a quote\ntool, which allows them to present externally verified quotes\nfrom the text. The judges use the arguments from the debate\nto answer the reading comprehension question. We test this\nsetup for both human and LLM judges and evaluate against\na non-adversarial baseline called consultancy, in which a\nsingle expert model argues for one particular answer.",
+      "pdf_page": "https://arxiv.org/pdf/2402.06782v4#page=2"
+     },
+     {
+      "version": "2402.06782v4",
+      "page": 3,
+      "lines": [
+       37,
+       48
+      ],
+      "text": "“Question Answering with Long Input Texts, Yes!” (QuALITY; Pang et al., 2022). Judges are not allowed access to\nthe original comprehension text, restricting their ability to\nanswer questions and inducing their non-expert status. We\nmotivate this setting and provide implementation recommendations in Appendix C. We use texts from the Project\nGutenberg science-fiction story subset, which have a median\nlength of approximately 7000 tokens. From these questions,\nwe select the HARD subset, where all untimed annotators\nchose the correct answer and rated the answer as unambiguous. For each question, we provide two answers: the correct\nanswer and the best distractor. We use two data splits for\nLLM judge experiments: TL (400 train set questions) and\nDL (291 development set questions). For human experiments, where a story can only appear once, we use TH (153\ndrawn from both sets) and DH (47 drawn from both sets).",
+      "pdf_page": "https://arxiv.org/pdf/2402.06782v4#page=3"
+     },
+     {
+      "version": "2402.06782v4",
+      "page": 4,
+      "lines": [
+       48,
+       56
+      ],
+      "text": "For LLM judging, we used GPT-4-Turbo, Mixtral-8x7B,\nGPT-3.5-Turbo and Claude 2.1. Prompts are provided in\nAppendix G.2. Similar to Zheng et al. (2023), we found\nstrong biases with LLM judges. To mitigate positional\nbiases, we run judgements over each debate twice - once\nwith the original transcript and once with the debater order\nswapped. To mitigate verbosity biases, we apply strict word\nlimits. We document judge biases in Appendix A.7 and\nmitigation techniques in Appendix D.6.",
+      "pdf_page": "https://arxiv.org/pdf/2402.06782v4#page=4"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "GPT-4-Turbo expert debaters and consultants with best-of-16 sampling (stated for the LLM-judge evaluation)",
+    "task_data": "QuALITY HARD subset (Project Gutenberg science-fiction stories), two answers per question; LLM-judge test sets TH and TL; human test phase with a batch of 47 questions per judge",
+    "judge": "Non-expert human judges and non-expert LLM judges (GPT-4-Turbo, Mixtral-8x7B, GPT-3.5-Turbo, Claude 2.1), neither with access to the story",
+    "regime": "evaluation",
+    "scale": "TH 153 and TL 400 questions for LLM judges; 953 human judgements in the test phase"
+   },
+   "quantitative": {
+    "n": "953 human judgements in the test phase (47 questions per judge); LLM judges on TH (153 questions) and TL (400 questions)",
+    "uncertainty": "LLM-judge accuracy is reported with standard error of the mean; for human judges debate outperforms consultancy significantly in static and interactive settings (p=0.001, p=0.048)"
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2402.06782v4:LIM-INFO-GAP-RLHF",
+     "N2:DSOFT:ARXIV-2402.06782v4:LIM-VERIFIED-EVIDENCE"
+    ],
+    "notes": "In this setup the strong-weak difference is only access to information, the debaters are RLHF-tuned models with a propensity for honesty, and the results are limited to setups where debaters can give verified evidence (here the quote tool)."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_MULTI_SETTING",
+    "reason": "The result is reported for human judges and for LLM judges from several model families, with standard errors for LLM-judge accuracy and significance tests against consultancy for human judges, although only on the QuALITY task."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2402.06782v4:RES-INTERACTION",
+   "paper": "2402.06782v4",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2402.06782v4:DEF-DEBATE",
+     "N2:DSOFT:ARXIV-2402.06782v4:DEF-CONSULTANCY"
+    ],
+    "description": "Human judges' accuracy is compared between static protocols (a fixed transcript and one judgement at the end) and interactive protocols (the judge may make a statement or ask questions after each round), for debate and for consultancy with correct or incorrect consultants; the human-versus-LLM comparison uses Figure 1.",
+    "passages": [
+     {
+      "version": "2402.06782v4",
+      "page": 3,
+      "lines": [
+       74,
+       79
+      ],
+      "text": "Interactive debate — Similar to debate, interactive debate\nuses two experts arguing for opposing answers. In addition to the mechanisms above, after each round, the judge\nmay make a statement. This enables the judge to highlight\nsub-problems, ask for clarifications, and direct questions to\neither debater. The statement is appended to the transcript\nand is visible to all players for the rest of the debate.",
+      "pdf_page": "https://arxiv.org/pdf/2402.06782v4#page=3"
+     },
+     {
+      "version": "2402.06782v4",
+      "page": 7,
+      "lines": [
+       29,
+       34
+      ],
+      "text": "To control for the amount of human interaction required, we\ninvestigate two variants of each protocol (see Table 1). In\nstatic protocols, there is a fixed transcript with just a single\nhuman judge interaction at the end to choose the answer.\nIn interactive protocols, the human judge interacts with the\nmodels throughout, e.g. by asking clarifying questions.",
+      "pdf_page": "https://arxiv.org/pdf/2402.06782v4#page=7"
+     },
+     {
+      "version": "2402.06782v4",
+      "page": 7,
+      "lines": [
+       66,
+       70
+      ],
+      "text": "\nInsight 6: Debate protocols produce higher accuracy\nthan consultancy protocols for human judges. We report\njudge accuracy over each protocol (Figure 6-left). We find\nthat in both static and interactive settings, debate outperforms consultancy significantly (p=0.001, p=0.048, respec-",
+      "pdf_page": "https://arxiv.org/pdf/2402.06782v4#page=7"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "The interaction finding is stated for information-asymmetric debates, in which debaters can read the story and judges cannot.",
+     "Experts can present quotes from the text that a tool verifies externally.",
+     "Human test phase: answer position and assignment are randomised and judges get no feedback after initial training."
+    ],
+    "passages": [
+     {
+      "version": "2402.06782v4",
+      "page": 2,
+      "lines": [
+       18,
+       29
+      ],
+      "text": "debate1 aid weaker judges in evaluating stronger models? To simulate stronger and weaker models, we use\ninformation-asymmetric debates in a reading comprehension task (Michael et al., 2023; Radhakrishnan, 2023). We\ngive the debaters full access to the underlying text while\njudges have no access to the text. This setup renders the\ndebaters experts (i.e. stronger) and the judges non-experts\n(i.e. weaker) in the task. Experts are provided with a quote\ntool, which allows them to present externally verified quotes\nfrom the text. The judges use the arguments from the debate\nto answer the reading comprehension question. We test this\nsetup for both human and LLM judges and evaluate against\na non-adversarial baseline called consultancy, in which a\nsingle expert model argues for one particular answer.",
+      "pdf_page": "https://arxiv.org/pdf/2402.06782v4#page=2"
+     },
+     {
+      "version": "2402.06782v4",
+      "page": 7,
+      "lines": [
+       48,
+       55
+      ],
+      "text": "We conduct five weeks of iteration during which judges\nreceive seven batches of questions (see Appendix B.5). For\nthe test phase, we release a batch of 47 questions per judge,\nwhich is completed over a period of four weeks. Answer\nposition and assignment are randomised (see Appendix E).\nTo reduce learning effects, judges are not given feedback\nafter initial training. We collect 953 human judgements in\nthe test phase, 2362 in the iteration phase, and 6476 in total.",
+      "pdf_page": "https://arxiv.org/pdf/2402.06782v4#page=7"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "LLM expert debaters and consultants",
+    "task_data": "QuALITY reading-comprehension questions; human test phase with a batch of 47 questions per judge",
+    "judge": "Non-expert human judges in static and interactive protocols; LLM judges for the human-versus-LLM comparison",
+    "regime": "evaluation",
+    "scale": "953 human judgements in the test phase"
+   },
+   "quantitative": {
+    "n": "953 human judgements in the test phase",
+    "uncertainty": "No test is reported in these lines for the static-versus-interactive debate comparison; debate outperforms consultancy for human judges with p=0.001 and p=0.048 (static and interactive)"
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2402.06782v4:LIM-INFO-GAP-RLHF",
+     "N2:DSOFT:ARXIV-2402.06782v4:LIM-VERIFIED-EVIDENCE"
+    ],
+    "notes": "The authors hedge the interaction finding ('suggests') and call it surprising. In this setup the strong-weak difference is only access to information, the debaters are RLHF-tuned models with a propensity for honesty, and the results are limited to setups where debaters can give verified evidence (here the quote tool)."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "A human-judge experiment on the one QuALITY task, and the equality of static and interactive debate accuracy is reported without any test or interval in these lines."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2402.06782v4:RES-CORRECT-ADVANTAGE",
+   "paper": "2402.06782v4",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2402.06782v4:DEF-DEBATE",
+     "N2:DSOFT:ARXIV-2402.06782v4:DEF-PERSUASIVENESS"
+    ],
+    "description": "A cross-play tournament on the DL split pits 20 debaters (four LLMs augmented with best-of-N and/or critique-and-refinement) against distinct opponents with a GPT-4-Turbo judge; the resulting win rates are fitted to Elo ratings overall and separately for correct and incorrect assignments, and the matches are re-judged with Claude 2.1 and GPT-3.5-Turbo.",
+    "passages": [
+     {
+      "version": "2402.06782v4",
+      "page": 5,
+      "lines": [
+       121,
+       132
+      ],
+      "text": "Insight 2: Arguing for the correct answer provides an\nadvantage to debaters, and this advantage increases with\npersuasiveness. In a cross-play tournament, we evaluate\n20 different debaters against distinct opponents (e.g. no\nmodel plays against itself). Each debater is one of four\ndifferent LLMs, augmented by a combination of critiqueand-refinement or best-of-N . In each augmentation, we\nuse a preference model without access to the text (like the\njudge model), thereby simulating optimising against the\njudge. Debaters play four matches each, with GPT-4-Turbo\nas a judge. Cross-play matches were generated on DL ,\nobtaining 80 win rates, which were used to generate Elo\nratings (outcomes listed in Appendix F).",
+      "pdf_page": "https://arxiv.org/pdf/2402.06782v4#page=5"
+     },
+     {
+      "version": "2402.06782v4",
+      "page": 5,
+      "lines": [
+       116,
+       119
+      ],
+      "text": "To understand truthfulness in debates, we also consider\nthe win rate ωC conditioned on being assigned all correct\nanswers (assuming ground truth labels). We calculate a\nplayers’ correct rating E C and incorrect rating E I as:",
+      "pdf_page": "https://arxiv.org/pdf/2402.06782v4#page=5"
+     },
+     {
+      "version": "2402.06782v4",
+      "page": 6,
+      "lines": [
+       163,
+       168
+      ],
+      "text": "Insight 5: More capable judges are better at identifying\ncorrect arguments across all debater strengths. To explore how different judge models affect debate performance,\nwe re-run the same cross-play matches with Claude 2.1 and\nGPT-3.5-Turbo judges. Each judge produces different win\nrates, aggregate ratings and judge accuracy for each debate\n(see Figure 5). Strong judges generate a larger range of",
+      "pdf_page": "https://arxiv.org/pdf/2402.06782v4#page=6"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "Win rates are averaged over flipped answer assignments, and one debater is called more persuasive than another assuming debaters perform equally well across all questions.",
+     "Win rates are parameterised by a latent Elo skill; aggregate rating is that skill independent of assignment.",
+     "Correct and incorrect ratings condition on the assigned answer and so assume ground-truth labels.",
+     "The preference models used to optimise debaters have no access to the text, like the judge.",
+     "The reading is restricted to debates in QuALITY."
+    ],
+    "passages": [
+     {
+      "version": "2402.06782v4",
+      "page": 4,
+      "lines": [
+       77,
+       84
+      ],
+      "text": "In practice, this win rate depends on the assignment of\nthe answer choice, which gives an unfair advantage, as\nsome assignments may be easier to argue for than others\n(e.g. some answers are easier to defend than others). To\nmitigate this, we flip assignments such that D1 and D2 argue\nfor the opposite assignments and then take the average,\nω̄1 . Assuming debaters perform equally well across all\nquestions, we say D1 is more persuasive than D2 if:",
+      "pdf_page": "https://arxiv.org/pdf/2402.06782v4#page=4"
+     },
+     {
+      "version": "2402.06782v4",
+      "page": 4,
+      "lines": [
+       102,
+       110
+      ],
+      "text": "Elo rating — To capture a general notion of persuasiveness,\nwe evaluate aggregate win rates for each debater across a\npopulation of co-debaters. We parameterise win rates by a\nlatent skill, using the Elo ranking metric (Elo, 1978). We\ncalculate ratings by minimising predicted win rate error (see\nAppendix D.5). Aggregate rating is defined as the latent\nskill for a debater independent of assignment. Given two\ndebaters, D1 and D2 , and a judge J, we define each player’s\naggregate rating, E1 and E2 , as the solution to the equality:",
+      "pdf_page": "https://arxiv.org/pdf/2402.06782v4#page=4"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "20 debaters, each one of four LLMs augmented with best-of-N or critique-and-refinement; GPT-4-Turbo is named as the strongest base LLM",
+    "task_data": "QuALITY questions of the DL split (cross-play matches)",
+    "judge": "GPT-4-Turbo; the same matches re-judged by Claude 2.1 and GPT-3.5-Turbo",
+    "regime": "evaluation",
+    "scale": "20 debaters, four matches each, 80 win rates"
+   },
+   "quantitative": {
+    "n": "80 win rates from the cross-play tournament",
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2402.06782v4:LIM-INFO-GAP-RLHF",
+     "N2:DSOFT:ARXIV-2402.06782v4:LIM-VERIFIED-EVIDENCE"
+    ],
+    "notes": "The authors hedge the truth-is-easier reading ('suggests'). In this setup the strong-weak difference is only access to information, the debaters are RLHF-tuned models with a propensity for honesty, and the results are limited to setups where debaters can give verified evidence (here the quote tool)."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "A cross-play experiment on the one QuALITY task, repeated with three LLM judges, with no uncertainty reported for the correct-side rating advantage in these lines."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2402.06782v4:RES-ELO-ACCURACY",
+   "paper": "2402.06782v4",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2402.06782v4:DEF-DEBATE",
+     "N2:DSOFT:ARXIV-2402.06782v4:DEF-PERSUASIVENESS"
+    ],
+    "description": "Each debater from the cross-play tournament debates a copy of itself (self-play) on the separate TL split, judged by GPT-4-Turbo, and judge accuracy is plotted against the debater's aggregate Elo rating from cross-play on DL.",
+    "passages": [
+     {
+      "version": "2402.06782v4",
+      "page": 6,
+      "lines": [
+       148,
+       149
+      ],
+      "text": "evaluate how aggregate Elo affects judge accuracy. We take\neach debater from the tournament and generate self-play",
+      "pdf_page": "https://arxiv.org/pdf/2402.06782v4#page=6"
+     },
+     {
+      "version": "2402.06782v4",
+      "page": 5,
+      "lines": [
+       143,
+       148
+      ],
+      "text": "Judge accuracy — In line with the original motivation for\ndebate, we calculate judge accuracy, α, as the accuracy over\na match between copies of the same model; α(D, J) =\nα(D, D, J). As the consultant’s intention is unknown to\na judge, we take accuracy over both potential matches for\nconsultancy α(D1 , J) = 12 (α(D1 , −, J) + α(−, D1 , J)).",
+      "pdf_page": "https://arxiv.org/pdf/2402.06782v4#page=5"
+     },
+     {
+      "version": "2402.06782v4",
+      "page": 5,
+      "lines": [
+       121,
+       132
+      ],
+      "text": "Insight 2: Arguing for the correct answer provides an\nadvantage to debaters, and this advantage increases with\npersuasiveness. In a cross-play tournament, we evaluate\n20 different debaters against distinct opponents (e.g. no\nmodel plays against itself). Each debater is one of four\ndifferent LLMs, augmented by a combination of critiqueand-refinement or best-of-N . In each augmentation, we\nuse a preference model without access to the text (like the\njudge model), thereby simulating optimising against the\njudge. Debaters play four matches each, with GPT-4-Turbo\nas a judge. Cross-play matches were generated on DL ,\nobtaining 80 win rates, which were used to generate Elo\nratings (outcomes listed in Appendix F).",
+      "pdf_page": "https://arxiv.org/pdf/2402.06782v4#page=5"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "Aggregate rating is a latent Elo skill fitted to cross-play win rates, independent of assignment.",
+     "Judge accuracy is the accuracy over a match between copies of the same model.",
+     "Separate questions are used for cross-play (DL) and self-play (TL) so that the result generalises.",
+     "The preference models used to optimise debaters have no access to the text, like the judge."
+    ],
+    "passages": [
+     {
+      "version": "2402.06782v4",
+      "page": 4,
+      "lines": [
+       102,
+       110
+      ],
+      "text": "Elo rating — To capture a general notion of persuasiveness,\nwe evaluate aggregate win rates for each debater across a\npopulation of co-debaters. We parameterise win rates by a\nlatent skill, using the Elo ranking metric (Elo, 1978). We\ncalculate ratings by minimising predicted win rate error (see\nAppendix D.5). Aggregate rating is defined as the latent\nskill for a debater independent of assignment. Given two\ndebaters, D1 and D2 , and a judge J, we define each player’s\naggregate rating, E1 and E2 , as the solution to the equality:",
+      "pdf_page": "https://arxiv.org/pdf/2402.06782v4#page=4"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "The 20 tournament debaters (four LLMs with best-of-N or critique-and-refinement) in self-play",
+    "task_data": "QuALITY TL split for self-play; DL split for the cross-play ratings",
+    "judge": "GPT-4-Turbo",
+    "regime": "evaluation",
+    "scale": "20 debaters"
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2402.06782v4:LIM-INFO-GAP-RLHF",
+     "N2:DSOFT:ARXIV-2402.06782v4:LIM-VERIFIED-EVIDENCE"
+    ],
+    "notes": "The authors call this weak evidence for the optimal-play claim and hedge with 'suggesting'. In this setup the strong-weak difference is only access to information, the debaters are RLHF-tuned models with a propensity for honesty, and the results are limited to setups where debaters can give verified evidence (here the quote tool)."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "One task and one judge, with the correlation called 'strong' but no statistic or interval reported in these lines; the authors themselves call it weak evidence for the optimal-play claim."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2402.06782v4:RES-CONSULTANT-OPT",
+   "paper": "2402.06782v4",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2402.06782v4:DEF-CONSULTANCY",
+     "N2:DSOFT:ARXIV-2402.06782v4:DEF-PERSUASIVENESS"
+    ],
+    "description": "Consultants are optimised with best-of-N (and, in a larger set, critique-and-refinement); win rate by assignment and consultancy judge accuracy, averaged over correct and incorrect assignments, are plotted against best-of-N and against consultant win rate, with GPT-4-Turbo as judge.",
+    "passages": [
+     {
+      "version": "2402.06782v4",
+      "page": 6,
+      "lines": [
+       71,
+       75
+      ],
+      "text": "Figure 4. Stronger consultants result in worse judge accuracy. (Left) Win rate vs best-of-N for consultants by assignment. Incorrect\nconsultants become relatively more persuasive than the correct consultants when under optimisation. (Middle) Judge Accuracy vs best-ofN: While optimising the consultants to be more persuasive, the overall accuracy of consultancy decreases. (Right) Consultancy accuracy\nagainst win rate. We take a larger set of consultants (including those with critique-and-refinement augmentations) and demonstrate that as\nconsultants improve their win rate, the accuracy of the consultancy protocol degrades. For p-values less than 0.05, we fit a line of best fit\naugmented with an extra data point: 50% accuracy at a win rate of 100%. We use GPT-4-Turbo as a judge.",
+      "pdf_page": "https://arxiv.org/pdf/2402.06782v4#page=6"
+     },
+     {
+      "version": "2402.06782v4",
+      "page": 5,
+      "lines": [
+       143,
+       148
+      ],
+      "text": "Judge accuracy — In line with the original motivation for\ndebate, we calculate judge accuracy, α, as the accuracy over\na match between copies of the same model; α(D, J) =\nα(D, D, J). As the consultant’s intention is unknown to\na judge, we take accuracy over both potential matches for\nconsultancy α(D1 , J) = 12 (α(D1 , −, J) + α(−, D1 , J)).",
+      "pdf_page": "https://arxiv.org/pdf/2402.06782v4#page=5"
+     },
+     {
+      "version": "2402.06782v4",
+      "page": 4,
+      "lines": [
+       22,
+       30
+      ],
+      "text": "To generate a large set of different debater capability levels\nfor our LLM judge experiments, we apply inference-time\noptimisation using best-of-N (boN ) sampling. With boN ,\nmodels are sampled N times, and a preference model is\nused to select the most persuasive arguments. The preference model is given a prompt to optimise for judge feedback.\nFor a subset of models, we additionally use critique-andrefinement (cN ) (Saunders et al., 2022), in which another\nmodel is used to produce N critiques; a preference model\nthen grades these and the most helpful is used to refine the\nanswer. For all preference models, we use the log probabilities from GPT-4-Turbo. We document prompt iteration in",
+      "pdf_page": "https://arxiv.org/pdf/2402.06782v4#page=4"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "Consultancy is run for both the correct and the incorrect answer, giving the same 50/50 prior as debate, and the judge does not know a priori which one the consultant argues.",
+     "Offered explanation, hedged with 'might': RLHF-tuned models already argue correct answers well, so optimisation disproportionately improves advocacy for incorrect answers."
+    ],
+    "passages": [
+     {
+      "version": "2402.06782v4",
+      "page": 3,
+      "lines": [
+       6,
+       14
+      ],
+      "text": "and judge sequentially make statements. At the end of\nconsultancy, the judge decides which answer to choose. At\nthe start of each round, the consultant is provided with a\nprompt containing the rules of the game, their assigned\nanswer and the current transcript. Consultancy builds up a\ntranscript of a dialogue between the consultant and judge as\nrounds continue. In all our evaluations, we run consultancy\nfor both the correct and incorrect answers; producing the\nsame 50/50 prior as debate.",
+      "pdf_page": "https://arxiv.org/pdf/2402.06782v4#page=3"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "LLM consultants optimised with best-of-N and critique-and-refinement",
+    "task_data": "QuALITY questions in the consultancy protocol",
+    "judge": "GPT-4-Turbo",
+    "regime": "evaluation",
+    "scale": null
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": "Figure 4 fits a line of best fit only where p-values are below 0.05; no p-value for the effect is given in these lines"
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2402.06782v4:LIM-INFO-GAP-RLHF",
+     "N2:DSOFT:ARXIV-2402.06782v4:LIM-VERIFIED-EVIDENCE"
+    ],
+    "notes": "In this setup the strong-weak difference is only access to information, the debaters are RLHF-tuned models with a propensity for honesty, and the results are limited to setups where debaters can give verified evidence (here the quote tool)."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "One task and one judge model; the only statistic mentioned is a p<0.05 threshold for drawing fit lines in Figure 4, with no test value reported for this effect."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2402.06782v4:RES-CONFIDENCE-REJECTION",
+   "paper": "2402.06782v4",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2402.06782v4:DEF-DEBATE",
+     "N2:DSOFT:ARXIV-2402.06782v4:DEF-CONSULTANCY"
+    ],
+    "description": "Human judges give confidences between 5% and 95%; judgements below a confidence threshold are rejected and accuracy on the retained questions (selective accuracy versus coverage) and calibration (Brier scores) are compared between debate and consultancy protocols.",
+    "passages": [
+     {
+      "version": "2402.06782v4",
+      "page": 7,
+      "lines": [
+       3,
+       8
+      ],
+      "text": "Figure 6. Human judges, using debate, achieve high accuracy and are well-calibrated. (Left) Judge accuracy of different protocols:\nDebate and Interactive Debate outperform their respective baselines. Human judges struggle when using incorrect consultants. (Middle)\nSelective accuracy vs coverage rate: If the cost of misclassification is high, we can threshold by judge confidence and reject judgements\nwith low confidence. Over all rejection thresholds, debate protocols achieve a higher judge accuracy on the remaining test set than\nconsultancy. (Right) Calibration plots for judge confidences: Judges in debate achieve lower Brier scores, indicating better calibration.\nAcross debate protocols, human judges are under-confident in their answers. Error bars are presented as 95% C.I.",
+      "pdf_page": "https://arxiv.org/pdf/2402.06782v4#page=7"
+     },
+     {
+      "version": "2402.06782v4",
+      "page": 7,
+      "lines": [
+       48,
+       55
+      ],
+      "text": "We conduct five weeks of iteration during which judges\nreceive seven batches of questions (see Appendix B.5). For\nthe test phase, we release a batch of 47 questions per judge,\nwhich is completed over a period of four weeks. Answer\nposition and assignment are randomised (see Appendix E).\nTo reduce learning effects, judges are not given feedback\nafter initial training. We collect 953 human judgements in\nthe test phase, 2362 in the iteration phase, and 6476 in total.",
+      "pdf_page": "https://arxiv.org/pdf/2402.06782v4#page=7"
+     },
+     {
+      "version": "2402.06782v4",
+      "page": 30,
+      "lines": [
+       10,
+       10
+      ],
+      "text": "We investigated how low-Elo models perform when judged by humans (Figure 30). Our test set experiments used GPT4-Turbo-bo16, which had an Elo rating of 141 across all of our LLM judges. For the low-Elo experiment, we use",
+      "pdf_page": "https://arxiv.org/pdf/2402.06782v4#page=30"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "Accuracy is computed on the questions retained after rejecting low-confidence judgements; the 94% figure uses a 75% threshold in static debate.",
+     "Human test phase: answer position and assignment are randomised and judges get no feedback after initial training."
+    ],
+    "passages": []
+   },
+   "setting": {
+    "systems": "GPT-4-Turbo best-of-16 experts (the test-set experiments)",
+    "task_data": "QuALITY questions, human test phase with a batch of 47 questions per judge",
+    "judge": "Non-expert human judges",
+    "regime": "evaluation",
+    "scale": "953 human judgements in the test phase"
+   },
+   "quantitative": {
+    "n": "953 human judgements in the test phase",
+    "uncertainty": "Figure 6 error bars are 95% confidence intervals; no interval is given for the 94% figure in the text"
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2402.06782v4:LIM-INFO-GAP-RLHF",
+     "N2:DSOFT:ARXIV-2402.06782v4:LIM-VERIFIED-EVIDENCE"
+    ],
+    "notes": "Figure 6 caption: across debate protocols human judges are under-confident. In this setup the strong-weak difference is only access to information, the debaters are RLHF-tuned models with a propensity for honesty, and the results are limited to setups where debaters can give verified evidence (here the quote tool)."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "Figure 6 shows 95% intervals, but the result comes from one task (QuALITY) and one judge population (human judges)."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2402.06782v4:RES-HUMAN-ERRORS",
+   "paper": "2402.06782v4",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2402.06782v4:DEF-DEBATE",
+     "N2:DSOFT:ARXIV-2402.06782v4:DEF-CONSULTANCY"
+    ],
+    "description": "The authors read the transcripts, judge explanations and relevant parts of the story for every test-set case where a human judge chose the wrong answer, and labelled each with the errors that contributed to it (several per judgement allowed).",
+    "passages": [
+     {
+      "version": "2402.06782v4",
+      "page": 24,
+      "lines": [
+       5,
+       8
+      ],
+      "text": "Human judges chose the wrong answer 161 times in our test set, out of 953 total annotations. Judges chose the wrong\nanswer in 22% of consultancies and 12% of debates. We investigate each of these judgements and label them based on the\nerrors which contributed to the wrong answer. Each incorrect judgement can be caused by multiple errors. To perform this\ninvestigation, we read the transcripts, judge explanations, and relevant portions of the underlying texts.",
+      "pdf_page": "https://arxiv.org/pdf/2402.06782v4#page=24"
+     },
+     {
+      "version": "2402.06782v4",
+      "page": 24,
+      "lines": [
+       132,
+       138
+      ],
+      "text": "Table 2. Causes of incorrect judgements in debate and consultancy. Static and interactive protocols are combined here.\n\nErrors in Debate — Most incorrect judgements in debate were attributable to poor performance by the correct debater,\nprimarily due to poor quote selection. Often the story would contain a quote that either clearly demonstrated the correct\nanswer, or clearly disproved a claim made by the incorrect debater, and the correct debater would fail to choose this quote.\nAnother common problem was repeating quotes that had already been used in earlier rounds, rather than presenting new\nevidence.",
+      "pdf_page": "https://arxiv.org/pdf/2402.06782v4#page=24"
+     },
+     {
+      "version": "2402.06782v4",
+      "page": 30,
+      "lines": [
+       10,
+       10
+      ],
+      "text": "We investigated how low-Elo models perform when judged by humans (Figure 30). Our test set experiments used GPT4-Turbo-bo16, which had an Elo rating of 141 across all of our LLM judges. For the low-Elo experiment, we use",
+      "pdf_page": "https://arxiv.org/pdf/2402.06782v4#page=30"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "Error causes are assigned by the authors' reading, one incorrect judgement can carry several error labels, and static and interactive protocols are combined."
+    ],
+    "passages": []
+   },
+   "setting": {
+    "systems": "GPT-4-Turbo best-of-16 debaters and consultants (the test-set experiments)",
+    "task_data": "QuALITY human test set",
+    "judge": "Human judges whose wrong answers are analysed; error labels assigned by the authors",
+    "regime": "evaluation",
+    "scale": "161 incorrect judgements out of 953 test-set annotations"
+   },
+   "quantitative": {
+    "n": "161 incorrect judgements out of 953 test-set annotations (wrong in 22% of consultancies and 12% of debates)",
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2402.06782v4:LIM-INFO-GAP-RLHF",
+     "N2:DSOFT:ARXIV-2402.06782v4:LIM-VERIFIED-EVIDENCE"
+    ],
+    "notes": "The authors hedge the conclusion ('This suggests that our debaters are far from optimal'). In this setup the strong-weak difference is only access to information, the debaters are RLHF-tuned models with a propensity for honesty, and the results are limited to setups where debaters can give verified evidence (here the quote tool)."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "A descriptive labelling of all 161 incorrect human judgements from one task, with no uncertainty reported."
+   },
+   "review_status": "provisional_ai_draft"
+  }
+ ]
+}

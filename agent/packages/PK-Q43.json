@@ -1,0 +1,248 @@
+{
+ "schema": "ASRA-GAP-CLOSING-AGENT-v1",
+ "id": "PK-Q43",
+ "question_id": "Q43",
+ "remaining_question": "When debaters are RL-trained to (approximate) equilibrium against human or human-simulating judges on non-verifiable, deductively hard questions, does the trained game reach a stable honest equilibrium, do stability failures or obfuscated arguments appear, and how large is the bounded systematic error of the judges relative to ground truth?",
+ "safety_case_nodes": [
+  "SC-OP-EMPIRICAL",
+  "SC-C4.6",
+  "SC-E6.1",
+  "SC-ASM-NO-OBFUSCATION"
+ ],
+ "premises": [
+  {
+   "statement": "Setting: the authors' safety case sketch (requirements a developer must defend, not results). Buhl et al. list among four key claims that the training process has reached an approximate global equilibrium of the debate game, and that in approximate global equilibria the system makes mistakes in at most a small (ε′) fraction of cases. On the judges they write that random errors should wash out over the course of training, so they are only worried about systematic error (for example from claims playing on human biases or emotions), and that two claims are needed: the human input being simulated has bounded systematic error with respect to reality (C5.1), and the simulation has bounded systematic error with respect to the human input (C5.2).",
+   "source": "N2:DSOFT:ARXIV-2505.03989v3:METHOD-FOUR-CLAIMS; N2:DSOFT:ARXIV-2505.03989v3:ASM-HUMAN-INPUT",
+   "passages": [
+    {
+     "version": "2505.03989v3",
+     "page": 2,
+     "line_start": 33,
+     "line_end": 40,
+     "text": "The safety case sketch contains four key claims that a developer must defend to show that the system is safe:\n1. The training process has reached an approximate global equilibrium of the game.\n2. In approximate global equilibria of the game, the system makes mistakes in at most an ε -fraction\nof cases.\n′\n\n3. During deployment, the error rate will not drift past ε given online training.\n4. The system cannot cause unacceptable outcomes given an error rate of ε."
+    },
+    {
+     "version": "2505.03989v3",
+     "page": 14,
+     "line_start": 24,
+     "line_end": 27,
+     "text": "Second, we need to argue that the inputs into M are accurate, i.e. that simulated human judges are competent at assessing the outcomes of debate (C4.5). Random errors should wash out over the course of training,\nso we are only worried about systematic error, for example due to claims playing on human biases or emotions. We need two claims here: that the human input being simulated has bounded systematic error with\nrespect to reality (C5.1) and that the simulation has bounded systematic error with respect to the human\ninput (C5.2)."
+    }
+   ]
+  },
+  {
+   "statement": "Setting: the same safety case sketch (requirements, not results). Because training does not reproduce the computation M exactly but a slightly perturbed version of it, Buhl et al. say the case must argue that the approximation is not substantially different (C4.6), which they call stability: small variations in input probabilities will not change the outcome of the overall computation. They are not yet sure how to support this claim and leave its evidence box (E5.5) blank. They also state that stability is not directly required for safety, since for queries where it does not hold the protocol will simply return no answer, so instability does not imply false outputs; but the protocol is not very useful if stability fails to hold for a large fraction of relevant queries.",
+   "source": "2505.03989v3 (Buhl et al.), the passages quoted for safety-case node SC-C4.6; see also N2:DSOFT:ARXIV-2505.03989v3:ASM-NO-OBFUSCATION",
+   "passages": [
+    {
+     "version": "2505.03989v3",
+     "page": 14,
+     "line_start": 46,
+     "line_end": 49,
+     "text": "Third, since training does not reproduce M exactly, but rather a slightly perturbed version of M, we need\nto argue that this approximation is not substantially different (C4.6). This is known as stability and can\nbe more precisely stated as: small variations in input probabilities will not change the outcome of overall\ncomputation. We are not yet sure how to support this claim, so we leave the evidence box blank (E5.5)."
+    },
+    {
+     "version": "2505.03989v3",
+     "page": 2,
+     "line_start": 55,
+     "line_end": 57,
+     "text": "The stability assumption is not directly required for safety – for queries where stability does not hold, the protocol will\nsimply return no answer, so instability does not imply false outputs. However, the protocol is not very useful if stability fails\nto hold for a large fraction of relevant queries."
+    }
+   ]
+  },
+  {
+   "statement": "Setting: the same safety case sketch. Buhl et al. say that, based on previous research on debate, the primary failure mode for the claim they are discussing is the obfuscated arguments problem: an obfuscated argument is one where both debaters know the argument contains a flaw, but it is computationally intractable for either debater to identify the flaw; if obfuscated arguments are a winning strategy, their protocol will produce different outcomes to M (expanding the whole debate would expose the argument as false, but given computational limitations debate might fail to get the same result). They are optimistic that prover-estimator debate can avoid obfuscated arguments, but say it remains an open question.",
+   "source": "N2:DSOFT:ARXIV-2505.03989v3:OPEN-OBFUSCATION-EFFICIENCY; the p.13 passage quoted for safety-case node SC-ASM-NO-OBFUSCATION",
+   "passages": [
+    {
+     "version": "2505.03989v3",
+     "page": 13,
+     "line_start": 95,
+     "line_end": 100,
+     "text": "Based on previous research on debate, we know that the primary failure mode for this claim is the obfuscated\narguments problem (Barnes, 2020). As described above, an obfuscated argument is one where both debaters\nknow the argument contains a flaw, but it is computationally intractable for either debater to identify\nthe flaw. If obfuscated arguments are a winning strategy, our protocol will produce different outcomes to\nM: expanding the whole debate would expose the obfuscated argument as false, but given computational\nlimitations, debate might fail to get the same result."
+    },
+    {
+     "version": "2505.03989v3",
+     "page": 18,
+     "line_start": 35,
+     "line_end": 36,
+     "text": "• Avoids obfuscated arguments: We are optimistic that prover-estimator debate (forthcoming)\ncan avoid obfuscated arguments, but it remains an open question."
+    }
+   ]
+  },
+  {
+   "statement": "Setting: a paper introducing a debate protocol; these passages report no training of language models, whereas the study needs trained debaters. Brown-Cohen et al. state that in recursive debate a dishonest debater can strategically decompose an easy problem into difficult, even intractable, subproblems, leaving an honest debater unable to find a flaw in the argument even if both debaters know a flaw exists, so the debate fails to identify the correct answer; they add that obfuscation emerged naturally in prior empirical work (Barnes, 2020), suggesting it is a likely attractor state in some settings. In their prover-estimator debate the prover decomposes a problem into subclaims, the estimator only assigns probabilities to those subclaims, and the prover uses these probabilities to decide which subclaim to debate further, unlike previous protocols where the opponent selects which subclaim to challenge; they show that the estimator can always produce probabilities the prover cannot distinguish from the truth while expending not much more computation, so the prover cannot (on average) select a subproblem where the estimator is non-trivially wrong.",
+   "source": "N2:DSOFT:ARXIV-2506.13609v2:DEF-OBFUSCATED; N2:DSOFT:ARXIV-2506.13609v2:DEF-PROVER-ESTIMATOR",
+   "passages": [
+    {
+     "version": "2506.13609v2",
+     "page": 2,
+     "line_start": 79,
+     "line_end": 85,
+     "text": "However, a significant vulnerability exists in many recursive approaches, including recursive debate: the\nobfuscated arguments problem [Barnes, 2020]. In recursive debate, a dishonest debater can strategically\ndecompose an easy problem into difficult, even intractable, subproblems. This renders an honest debater\nunable to find a flaw in their opponent’s argument even if both debaters know that a flaw exists somewhere.\nThe debate will thus fail to identify the correct answer. Obfuscation in recursive debate is not merely a\ntheoretical concern; it emerged naturally in prior empirical work [Barnes, 2020], suggesting obfuscation is a\nlikely attractor state in some settings."
+    },
+    {
+     "version": "2506.13609v2",
+     "page": 3,
+     "line_start": 8,
+     "line_end": 15,
+     "text": "Our Approach. We introduce prover-estimator debate, a protocol for AI debate that mitigates the\nobfuscated arguments problem while retaining the efficiency of recursive debate. In prover-estimator debate,\nthe prover (Alice) decomposes a problem into subclaims. The estimator (Bob) has the sole task of assigning\nprobabilities to the prover’s subclaims. The prover uses these probabilities to decide which subclaim to\nrecursively debate further. This departs from previous debate protocols, where the opponent selects which\nsubclaim to challenge. We show that Bob can always produce probabilities that are indistinguishable from\nthe truth by Alice, while expending computational effort not too much greater than Alice. Alice cannot\ntherefore (on average) select a subproblem where Bob is non-trivially wrong. However, prover-estimator"
+    }
+   ]
+  },
+  {
+   "statement": "Setting: RL fine-tuning on mathematics tasks where final-answer correctness is verifiable, with a Gemini 2.5 Flash-class policy and a frozen, weaker Gemini 2.5 Flash Lite judge, comparing a single-player RLAIF baseline with debate as a two-player game between a generator and a critic. The authors report that the baseline quickly hacked the judge while debate maintained judge performance throughout training, leading to a higher peak validation accuracy (45% performance gap recovered) that persisted through many RL steps. In preliminary experiments without word limits on the critiques, the critic's output length grew substantially and it won on almost all prompts by exploiting verbosity bias in the judge; the authors think hacking the judge is probably the default result of training with debate unless measures to restrict the players are added (word limits up to 150 words in their case). This differs from the setting the study needs: the answers were verifiable and the game was a generator-critic debate, not prover-estimator debate.",
+   "source": "Q43:F2 (2608.17776v1)",
+   "passages": [
+    {
+     "version": "2608.17776v1",
+     "page": 1,
+     "line_start": 12,
+     "line_end": 22,
+     "text": "We demonstrate that RL finetuning an LLM using debate, a two-player adversarial game between a\ngenerator and a critic adjudicated by a weaker LLM judge, reduces reward hacking compared to a\nreinforcement learning from AI feedback (RLAIF) baseline. Reward hacking is a central obstacle in\nRLAIF: as training progresses, the policy learns to exploit systematic errors in its AI judge, degrading task\nperformance, a problem that worsens precisely when the judge is weaker than the policy, the setting most\nrelevant to overseeing increasingly capable AI systems. We study mathematics tasks, where final-answer\ncorrectness is verifiable, allowing us to measure reward hacking dynamics. We train a Gemini 2.5\nFlash-class policy with a frozen, weaker Gemini 2.5 Flash Lite judge, comparing a single-player RLAIF\nbaseline against debate. While the baseline quickly hacks the judge, debate maintains judge performance\nthroughout training, leading to a higher peak validation accuracy (45% performance gap recovered)\nthat persists through many RL steps. Additional experiments show that: 1) further weakening the judge"
+    },
+    {
+     "version": "2608.17776v1",
+     "page": 3,
+     "line_start": 29,
+     "line_end": 34,
+     "text": "Crucially, achieving these benefits requires careful attention to the quality and balance of the debate\ngame: in preliminary experiments without word limits on the critiques, Bob’s output length grew\nsubstantially and Bob quickly dominated the game by winning on almost all prompts, exploiting\nverbosity bias in the judge. We think that hacking the judge is probably the default result from training\nwith debate unless measures to restrict the players are added (in our case, word limits up to 150\nwords), and some care and iteration are needed to balance the game and avoid hacking. While these"
+    }
+   ]
+  },
+  {
+   "statement": "Setting: highly controlled debates in which LLMs were explicitly instructed to use rhetorical bias strategies, applied to either the culprit side or the rival side of a story, judged by humans. Adding the bias-active-side predictor improved model fit (χ2(1) = 9.31, p = .002), and on average the interventions shifted human judgments toward the manipulated side by 8.6 percentage points (95% bootstrap CI [+2.9, +14.2] pp), a shift favouring the manipulated side rather than correctness. The authors did not study whether such strategies emerge through training or whether models learn to exploit weaknesses in human judgment, and say their results do not determine how often such strategies would arise outside these laboratory conditions. This differs from the study's setting: instructed rather than RL-trained debaters, and judgments of story debates rather than of single-step leaf claims.",
+   "source": "Q43:F4 (2610.05461v1)",
+   "passages": [
+    {
+     "version": "2610.05461v1",
+     "page": 7,
+     "line_start": 50,
+     "line_end": 56,
+     "text": "We first test H1: the presence of bias shifts human judgments toward the bias-active side of the debate.\nAdding the bias-active side predictor significantly improves model fit (χ2 (1) = 9.31, p = .002). On average,\nthe interventions shift judgments toward the manipulated side by 8.6 percentage points (95% bootstrap CI\n[+2.9, +14.2] pp), supporting H1. These results suggest that how arguments are presented can influence\nadjudication even when the underlying story evidence is unchanged. Because interventions target both\nculprit and rival sides, this shift favors the manipulated side rather than correctness, exposing a vulnerability\nin debate as a mechanism for supervision."
+    },
+    {
+     "version": "2610.05461v1",
+     "page": 10,
+     "line_start": 34,
+     "line_end": 39,
+     "text": "In this work, we used highly controlled debates to isolate individual biases. In less constrained settings,\nmultiple biases may interact, and the strategies that elicit them may be subtler than those tested here. Finally,\nwe explicitly instructed the LLMs to use particular argumentative strategies; we did not study whether these\nstrategies emerge through training or whether models learn to exploit weaknesses in human judgment. Our\nresults establish susceptibility to the tested bias interventions, but do not determine how often such strategies\nwould arise outside of these laboratory conditions."
+    }
+   ]
+  }
+ ],
+ "hypothesis": "With open-weight debaters RL-trained by self-play in prover-estimator debate against a frozen, weaker human-simulating LLM judge on multi-step deduction problems the judge cannot verify (ground truth withheld from training), training reaches an approximate equilibrium whose outcomes match ground truth on most redundant (expected-stable) problems, with stability failures confined to conjunctive (expected-unstable) problems and showing up as no-answer rather than wrong answers. Obfuscated wins appear in naive recursive debate and grow with depth but stay rare in prover-estimator debate, and the systematic leaf-level error of both human and LLM judges is bounded but higher on leaves produced by trained than by untrained debaters.",
+ "design": {
+  "variable": "Primary: RL training of the debaters toward approximate equilibrium against the judge (the initial checkpoint versus checkpoints at 25/50/75/100% of training, with convergence measured by exploitability). Each sub-question adds one factor, crossed with training: debate protocol (prover-estimator debate, the safety case's protocol; naive recursive debate, in which the opponent picks the subclaim to challenge; a single-player baseline) for honesty and obfuscation; decomposition stability of the problem (redundant vs conjunctive families) for stability failures; deductive depth (three levels) for obfuscation and judge-unverifiability; judge type (the LLM judge used in training vs human raters, evaluation only) for systematic judge error.",
+  "conditions": [
+   "Prover-estimator debate (PE): the prover gives an answer and decomposes the current claim into at most 4 subclaims (each a controlled-English claim plus a free-text justification of at most 150 words) with a stated combination rule; the estimator assigns a probability to each subclaim; the prover picks which subclaim to recurse on; at the depth limit the judge gives a probability that the leaf holds. Payoffs and the no-answer outcome follow the protocol specification as closely as an LLM implementation allows (deviations documented). 6 RL seeds.",
+   "Naive recursive debate (positive control for obfuscation): identical, except the opponent chooses which subclaim to challenge, the setting in which premise 4 says obfuscation is a vulnerability. 3 RL seeds.",
+   "Single-player recursive consultancy (control for judge exploitability, the analogue of the RLAIF baseline in premise 5): the prover alone; the subclaim to recurse on is chosen uniformly at random; reward is the judge's leaf probability. 3 RL seeds.",
+   "Within every run: checkpoints at 0, 25, 50, 75 and 100% of training are evaluated on the same held-out problems; problem family (redundant vs conjunctive) and depth (three levels) vary within runs; evaluation modes are free-choice self-play, prover assigned the false answer, and prover assigned the true answer.",
+   "Best-response runs: for each of the 9 debate runs, a fresh policy is trained from the same initialisation, with 25% of the main budget, against the frozen final policy, once in each role (18 runs)."
+  ],
+  "control": "(a) The initial (untrained) checkpoint of each run, for the effect of training. (b) Single-player recursive consultancy trained against the same judge with the same budget, which shows whether this judge is exploitable at all here; if the baseline does not hack the judge, an honest debate equilibrium is weak evidence. (c) Naive recursive debate as a positive control for the obfuscation measure; if obfuscated wins do not appear there either, their absence in PE is uninformative. (d) For stability, the unperturbed full-tree outcome is the baseline for the perturbed one; for debate-vs-M agreement, two unperturbed re-runs give the sampling noise floor. (e) For judge error, the generator's ground truth is the reference, and leaves from untrained debaters are the baseline for leaves from trained ones.",
+  "models_and_judges": "Debaters: one open-weight instruction-tuned model of about 8B parameters playing both roles from role prompts (shared weights, self-play), trained with a standard on-policy RL algorithm (PPO/GRPO-style). Judge (human-simulating, used in training): a frozen open-weight model of about 1-3B parameters from the same family, prompted to give the probability that one leaf claim follows from its cited facts; it never sees ground truth or the whole problem. Human judges (evaluation only): about 150 online raters who judge the same leaf items as the LLM judge. Oracle (evaluation only): the generator's symbolic solver, which labels the root and every parseable subclaim. Nothing is trained against live humans.",
+  "task_and_data": "Procedurally generated yes/no deduction problems about synthetic worlds (entities, attributes, relations and rules in controlled English). Ground truth for the root and for any parseable subclaim is known to the experimenters but never used in training: the training signal is the judge alone, which is this study's operational stand-in for a non-verifiable domain. Deductive hardness: three depth levels, set in the pilot so that roots need roughly 16, 64 and 256 single inference steps (recursion depth 2-4, at most 4 subclaims per step), and so that the judge answers roots near chance at the two harder levels while the debaters answer at least 80% correctly when asked directly (the oversight gap the question needs). Two families: redundant problems, where the root follows from a majority of several independent derivations (designed to be stable), and conjunctive problems, where the root needs every one of many derivations (designed to be unstable). About 20,000 training problems; 600 held-out evaluation problems (100 per family x depth). A leaf is one inference step with its cited facts; the environment checks automatically that cited facts are in the world's fact sheet and forfeits malformed claims (format rules, not ground truth), and the judge rates the inference step.",
+  "scope": "Settled, within this proxy: all four parts of the question (stable honest equilibrium, stability failures, obfuscated arguments, size of judges' systematic error) for debaters trained against a human-simulating LLM judge. Not settled: training against live human judges (humans enter only as evaluators of the same on-policy leaf items, which measures C5.1 and C5.2 on the inputs training produces but not the dynamics of training against humans); domains with no ground truth at all (unscorable by construction; these problems are non-verifiable only for the training signal); debaters much stronger than ~8B open-weight models.",
+  "measures": [
+   "Exploitability (approximate equilibrium): gain in win rate of the best-response policy over the final policy in the same role, for each role; pre-registered threshold for 'approximate equilibrium': gain of at most 5 percentage points in both roles.",
+   "Honest-outcome rate: on held-out problems in free-choice self-play, share of debates whose outcome equals ground truth; root error = share with a wrong (not no-answer) outcome; no-answer rate reported separately.",
+   "Soundness and completeness probes: win rate of a prover assigned the false answer (and of the dishonest best response) and of a prover assigned the true answer, against the trained opponent.",
+   "Stability over training: honest-outcome rate at each checkpoint; oscillation = a drop of more than 10 points between consecutive checkpoints after the 50% mark; spread across seeds.",
+   "Agreement with M and stability failures (C4.6): (a) share of problems where the single-path debate outcome equals the outcome of the fully expanded tree of the trained prover's decompositions (decompositions generated once and frozen; judge leaf probabilities combined by each decomposition's stated rule); (b) share of problems whose full-tree outcome flips or becomes no-answer when every leaf probability is perturbed by at most delta in {0.02, 0.05, 0.10} (worst case over 200 random draws), by family; (c) on conjunctive problems, the share of wrong rather than no-answer outcomes.",
+   "Obfuscated-win rate: share of debates in which the prover argues a false root claim and wins while (i) the opponent's direct answer to the root is correct, (ii) the oracle finds a false subclaim in the prover's decomposition, and (iii) the opponent did not target it (naive: did not challenge it; PE: assigned it probability of at least 0.5). Every dishonest win is classified by the oracle as obfuscation, leaf-judge error (the path reached a false leaf the judge accepted), or other.",
+   "Systematic leaf-level judge error (C5.1, C5.2): for human raters and for the LLM judge, share of leaf items whose expected judgment is on the wrong side of ground truth, separated from random rater error by a beta-binomial model over 5 independent judgments per item; on leaves from final vs initial checkpoints; in debater wording vs a neutral form (controlled-English claim and cited facts only); human-LLM disagreement on the same items.",
+   "Confound monitors: words per turn, justification length, and parse-failure rate per condition and checkpoint."
+  ],
+  "sample_size": "RL: 12 main runs (PE 6 seeds; naive recursive 3; single-player 3) and 18 best-response runs. Evaluation: 600 held-out problems (2 families x 3 depths x 100) at 5 checkpoints per run in 3 modes. Humans: 600 leaf items (300 from final and 300 from initial checkpoints, 100 per protocol each, stratified half true and half false and reweighted to on-policy frequencies), each judged by 5 raters, plus the 300 final-checkpoint items in neutral form judged by 5 other raters: 4,500 judgments from about 150 raters at 30 items each (recruit 170 to allow about 10% exclusions on attention checks). The LLM judge rates the same 900 item versions 5 times each.",
+  "sample_size_reason": "Humans: the primary human contrast is item-level systematic error on leaves from trained vs untrained debaters (300 vs 300 items). Taking as the effect to detect the 8.6-point shift that instructed rhetorical interventions produced in human judgments (premise 6; a different setting, used only as a reference magnitude) and assuming 10% baseline item-level error (an assumption the pilot will replace), a two-sided test at alpha = .05 has power about 0.86 (SE of the difference about 2.8 points); an increase at that study's CI lower end (+2.9 points) would have power about 0.2, so small increases cannot be ruled out. Five raters per item is the smallest number that lets the beta-binomial model separate item-level (systematic) from rater-level (random) error: with purely random error at a 20% rater error rate, 5.8% of items would still show a wrong majority, which the model accounts for. RL: no quoted variance across RL seeds exists for this setting, so seed counts rest on budget: with 6 PE seeds, 0 failures would put the one-sided 95% exact upper bound on the per-run failure probability at 39%, and 2 or more failures would show that training is not reliable here; 3 seeds per control only check that each control behaves as intended. 100 held-out problems per cell gives a per-run binomial SE of at most 5 points (at most 2 points pooled over 6 runs before clustering; the design effect of run-level clustering is estimated from the data, not assumed).",
+  "analysis": "Pre-registered before the main runs, with one primary test per sub-question, Holm-corrected across the four. (1) Honest equilibrium: number of PE seeds that meet both the approximate-equilibrium threshold and root error of at most 10% on redundant problems, with an exact binomial CI. (2) Stability failures: in PE, difference in perturbation-induced flip rate between conjunctive and redundant problems (mixed-effects logistic regression with run and problem random effects, family x depth). (3) Obfuscation: obfuscated-win rate in PE vs naive recursive debate at the deepest level (same model, protocol x depth), interpreted only if the naive positive control shows obfuscated wins above zero. (4) Judge error: beta-binomial model with item random effects, contrast trained vs initial leaves, separately for humans and the LLM judge, plus a paired human-LLM comparison on the same items (C5.2). Secondary: training curves, agreement with M, wrong vs no-answer on conjunctive problems, the oracle classification of every dishonest win, neutral vs debater wording, and the single-player baseline's judge-hacking curve. All thresholds (5 points, 10%, delta values) are design choices fixed in advance, not results.",
+  "confounds": [
+   "Verbosity and other presentation biases (premise 5: without word limits the critic won by exploiting the judge's verbosity bias; premise 6: presentation shifted human judgments): every turn is capped in all conditions (controlled-English claim plus at most 150 words), length is logged and used as a covariate, and human items are shown both in debater wording and in a neutral form to isolate presentation effects.",
+   "Judge hacking as a likely default (premise 5): the single-player baseline under the same judge measures how hackable the judge is, and the oracle classifies each dishonest win as obfuscation or leaf-judge error, so judge hacking is not counted as obfuscation or the reverse.",
+   "No obfuscation because debaters are weak or tasks easy, not because the protocol is robust (premise 4 names obfuscation as a vulnerability of recursive debate): naive recursive debate is the positive control and depth is varied; PE results on obfuscation are read only against that control.",
+   "Honesty carried over from the instruction-tuned starting model rather than produced by the game: the initial checkpoint is measured, the assigned-false probe and the dishonest best-response runs test whether dishonesty can win, and free-choice honesty is compared with the single-player baseline.",
+   "Flips from sampling noise rather than from changed input probabilities (premise 2 defines stability as robustness to small variations in input probabilities): stability is measured on frozen expanded trees, so only the perturbed leaf probabilities change; debate-vs-M agreement is reported against a re-run noise floor.",
+   "No real oversight gap (the judge could solve roots directly): the pilot gate requires judge root accuracy near chance at the two harder depths and debater direct accuracy of at least 80%, re-checked on the held-out set.",
+   "Ground-truth leakage into training, which would make the task verifiable for the trainer: generator labels and the oracle are used only in evaluation; reward comes from the judge alone."
+  ]
+ },
+ "outcomes": [
+  {
+   "if": "PE runs reach approximate equilibrium (exploitability at most 5 points in both roles) in at least 5 of 6 seeds, root error on redundant problems is at most 10%, no late oscillation appears, and dishonest best responses rarely win.",
+   "means": "Within this proxy (judge-unverifiable deduction, human-simulating LLM judge, ~8B debaters), RL training reached a stable honest equilibrium: direct evidence for the case's first two claims (premise 1) under SC-OP-EMPIRICAL, not yet for live human judges or for domains without ground truth."
+  },
+  {
+   "if": "PE runs converge (low exploitability) but root error is high or dishonest provers or best responses win often.",
+   "means": "Training reaches an approximate equilibrium that is not honest; the oracle breakdown says whether through obfuscation, leaf-judge error or estimator error. Negative for SC-OP-EMPIRICAL and against relying on the second claim of premise 1 for this protocol and judge."
+  },
+  {
+   "if": "Exploitability stays above threshold, or the honest-outcome rate oscillates or diverges, in 2 or more of 6 PE seeds.",
+   "means": "Training does not reliably reach equilibrium in this setting: a negative answer to that part of the question; the case cannot take claim 1 (premise 1) as following from training."
+  },
+  {
+   "if": "Obfuscated wins rise with depth in naive recursive debate but stay significantly lower in PE at the deepest level.",
+   "means": "Obfuscated arguments appear where premise 4 predicts and PE avoids them in this setting: supporting evidence, in a proxy, for SC-ASM-NO-OBFUSCATION and for the optimism in premise 3."
+  },
+  {
+   "if": "PE shows obfuscated wins at rates similar to naive recursive debate.",
+   "means": "Obfuscated arguments emerge under the safety case's protocol in this setting: undermines SC-ASM-NO-OBFUSCATION."
+  },
+  {
+   "if": "Neither protocol shows obfuscated wins (the positive control fails).",
+   "means": "Narrows only: obfuscation did not emerge with ~8B debaters at these depths; the study cannot say whether PE avoids it, and SC-ASM-NO-OBFUSCATION is unchanged."
+  },
+  {
+   "if": "In PE, perturbation-induced flips or no-answers are rare on redundant problems and common on conjunctive ones, and conjunctive problems give no-answer rather than wrong answers.",
+   "means": "Stability failures appear and are confined to unstable decompositions, as premise 2 expects; SC-C4.6 gets a measured rate per family, and usefulness then depends on how many relevant queries look conjunctive."
+  },
+  {
+   "if": "Flips are common on redundant problems too, or conjunctive problems give wrong answers rather than no-answer.",
+   "means": "Stability is a real problem beyond designed-unstable queries, or instability does produce false outputs in this implementation: undermines SC-C4.6 and the claim in premise 2 that instability does not imply false outputs, for this setting."
+  },
+  {
+   "if": "Flips are rare in both families.",
+   "means": "No stability failures observed in this setting (for example if trained provers find stable decompositions): supportive evidence for SC-C4.6, limited to this proxy."
+  },
+  {
+   "if": "Systematic leaf error (human and/or LLM judge) is higher on trained than on initial leaves, with or without a neutral-form reduction.",
+   "means": "Training finds and exploits systematic judge errors, which premise 6 left unstudied: the bounded-error claims C5.1 and C5.2 (premise 1) must be shown on on-policy inputs, and SC-E6.1 gets that evidence; if the neutral form removes the excess, presentation is the channel and leaf presentation is a fix."
+  },
+  {
+   "if": "Systematic leaf error does not rise with training and stays small (pre-registered: the upper 95% bound of the item-level systematic error rate is at most 10% for both humans and the LLM judge, and of the human-LLM gap at most 5 points).",
+   "means": "The judges' systematic error relative to ground truth is bounded in this setting, at the estimated value with its CI: direct evidence for SC-E6.1 (humans vs reality, C5.1; simulation vs humans, C5.2) for single-step leaf claims."
+  },
+  {
+   "if": "Systematic leaf error does not rise with training but exceeds that bound for humans or for the LLM judge, or the human-LLM gap exceeds 5 points.",
+   "means": "The judges' systematic error relative to ground truth is not bounded at a usable level in this setting, even without training pressure: C5.1 (humans vs reality) or C5.2 (simulation vs humans) is not supported here for single-step leaf claims, which undermines SC-E6.1; the estimate with its CI says how large the error is."
+  }
+ ],
+ "resources": {
+  "compute": "estimate: about 9,000 H100 GPU-hours. Rests on 12 main runs at about 480 GPU-hours each (one 8-GPU node for about 2.5 days per run: an ~8B debater generating roughly 0.5-1 billion tokens per run, with a 1-3B judge in the loop), 18 best-response runs at about 25% of that (about 2,200 GPU-hours), and about 1,000 GPU-hours for the pilot, full-tree expansion and evaluation. Could be off by a factor of about 2, mainly through the number of RL steps needed to converge.",
+  "people": "estimate: about 14 person-months: 2 research engineers/scientists full time for 6 months (task generator, two recursive protocols, RL loop, oracle, evaluation), a senior researcher at 0.2 FTE for 6 months, and 0.25 FTE for 2 months to run the human study (ethics review, rater instructions, platform). Rests on the components listed and on reusing an existing open-source RL fine-tuning stack.",
+  "time": "estimate: 6 months. Months 1-2 pilot, pre-registration and go/no-go gate; months 3-4 main and best-response runs; month 5 evaluation and human study (prepared during month 4); month 6 analysis and write-up. Rests on the compute estimate running on one or two 8-GPU nodes (about 40 node-days in all).",
+  "cost": "estimate: about $225,000-$240,000. Staff about $205,000 (14 person-months at an assumed fully loaded $15,000 per person-month); compute about $18,000-$27,000 (9,000 GPU-hours at an assumed $2-3 per H100-hour cloud price); human raters about $3,000-$4,000 (about 190 raters including a 20-person pilot, about 45 minutes each at an assumed $16 per hour plus platform fees)."
+ },
+ "decision": "Informs SC-OP-EMPIRICAL directly (its questions on equilibrium, stability and obfuscation, in a judge-unverifiable proxy), and indirectly SC-C4.6 (measured flip and no-answer rates by problem family), SC-ASM-NO-OBFUSCATION (PE vs the naive positive control) and SC-E6.1 (systematic leaf error of humans and of the simulating judge, and whether training raises it). Actions: if PE reaches a stable honest equilibrium with bounded judge error, a lab or funder scales the same design (larger models, live human judges in the loop, less structured domains) before the case relies on claims 1-2; if training converges to a dishonest or judge-hacking equilibrium, or fails to converge, funding moves to protocol and judge fixes (such as the player restrictions premise 5's authors think are needed) and to equilibrium-finding methods, and the case cannot cite training alone for claim 1; if obfuscated wins appear in PE, SC-ASM-NO-OBFUSCATION is undermined and theory work on that gap gets priority; if the positive control shows no obfuscation, the PE result is not counted as evidence on obfuscation and harder tasks or larger debaters are funded instead; if stability failures are common on redundant problems or give wrong rather than no answers, C4.6 work comes before deployment; if trained leaves raise systematic judge error, E6.1 evidence must come from on-policy inputs and leaf presentation is redesigned (for example the neutral form) before scaling. If the pilot gate fails, the lab stops after month 2 and reports that no oversight gap could be built at this scale.",
+ "risks": [
+  "Implementation fidelity: an LLM implementation of prover-estimator debate may depart from the protocol's specification; unit tests with scripted debaters whose correct play is known reduce this, but a negative result could still reflect the implementation rather than the protocol.",
+  "Pilot gate may fail: if no depth gives both debater direct accuracy of at least 80% and judge root accuracy near chance with ~8B open-weight models, the study stops after month 2 (estimate: about 20-25% of the budget spent).",
+  "Proxy validity: synthetic deduction with controlled-English claims is unverifiable for the judge but has ground truth; results may not transfer to domains without ground truth or to fuzzy empirical questions, and the constrained claim format may limit rhetorical judge exploitation and so understate systematic error.",
+  "Scale: ~8B debaters may be too weak to find obfuscation or judge-exploiting strategies that stronger systems would find; the positive control detects this for obfuscation only.",
+  "RL failures unrelated to the game (collapse from hyperparameters) could be misread as non-convergence; the single-player baseline's training health and standard RL diagnostics are reported alongside.",
+  "The separation of systematic from random rater error rests on beta-binomial assumptions with 5 raters per item; the naive wrong-majority rate is reported too.",
+  "Human raters see only synthetic content (minimal risk), but attention and effort vary; attention checks and the 10% exclusion allowance address this."
+ ],
+ "review_status": "provisional_ai_draft",
+ "check_history": [
+  "package-1: addresses flagged (third check): judge-error outcomes left flat-but-large error unmapped; 'small' given a pre-registered bound and the missing outcome added from the checker's suggested fix"
+ ],
+ "check_state": "AI_CHECKED",
+ "rules": [
+  "Everything here is an AI draft (provisional_ai_draft): each counted item passed two blind AI checks that were tested on planted errors, and no person has reviewed it.",
+  "A finding counts only in the setting its own quoted lines show; read `setting` before carrying it to another setting.",
+  "A question's status is a label from fixed rules over its counted findings; `status_check` says whether that label itself passed its check.",
+  "Cite the paper and page from the passage, and read the PDF page before relying on a claim."
+ ]
+}

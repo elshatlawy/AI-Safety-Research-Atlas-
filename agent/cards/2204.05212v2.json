@@ -1,0 +1,374 @@
+{
+ "schema": "ASRA-GAP-CLOSING-AGENT-v1",
+ "paper": "2204.05212v2",
+ "review_status": "provisional_ai_draft",
+ "rules": [
+  "Everything here is an AI draft (provisional_ai_draft): each counted item passed two blind AI checks that were tested on planted errors, and no person has reviewed it.",
+  "A finding counts only in the setting its own quoted lines show; read `setting` before carrying it to another setting.",
+  "A question's status is a label from fixed rules over its counted findings; `status_check` says whether that label itself passed its check.",
+  "Cite the paper and page from the passage, and read the PDF page before relying on a claim."
+ ],
+ "notes": "No statistical test is reported for the main condition comparison (CORE, RES-CONDITIONS); both are graded EMPIRICAL_PRELIMINARY on the authors' own 'case study' and 'limited in its scope' wording (linked LIM-SCOPE). The number of judged questions is not stated in the lines read, so n is null for those cards. The main text says 194 MTurk workers were recruited, while Appendix C reports that 57 qualified for and 55 took part in the main judging task; the cards use only the main-text figure, labelled 'recruited'. RES-LENGTH-BIAS comes from an exploratory appendix analysis. No record seems mislabelled.",
+ "cards": [
+  {
+   "record_id": "N2:DSOFT:ARXIV-2204.05212v2:CORE",
+   "paper": "2204.05212v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2204.05212v2:DEF-SINGLE-TURN-DEBATE",
+     "N2:DSOFT:ARXIV-2204.05212v2:METHOD-WRITING",
+     "N2:DSOFT:ARXIV-2204.05212v2:METHOD-JUDGING",
+     "N2:DSOFT:ARXIV-2204.05212v2:DEF-CONDITIONS"
+    ],
+    "description": "Writers who had read a QuALITY passage wrote one argument with 1-3 supporting snippets for either the correct or a preselected incorrect option of a 2-option question; MTurk judges with 90 seconds of passage access chose an answer when shown passage, snippets and arguments (PSA), passage and snippets (PS), or the passage only (P), and accuracy was compared across these conditions.",
+    "passages": [
+     {
+      "version": "2204.05212v2",
+      "page": 3,
+      "lines": [
+       106,
+       108
+      ],
+      "text": "increase engagement. Each question is judged by\nthree unique workers, and we ensure workers are\npaying attention with catch trials (Appendix E).",
+      "pdf_page": "https://arxiv.org/pdf/2204.05212v2#page=3"
+     },
+     {
+      "version": "2204.05212v2",
+      "page": 4,
+      "lines": [
+       59,
+       65
+      ],
+      "text": "Comparison Across Conditions Workers are\nmore accurate when they have access to text snippets, and they are the most accurate in the PS condition, indicating no clear effect of the arguments.\nFigure 1 shows the accuracy rates by question in\neach of the conditions. Both unanimous agreement\n(3/3 workers correct) and majority vote agreement\n(≥2/3 workers correct) show that workers are most\naccurate in PS and least accurate in P.",
+      "pdf_page": "https://arxiv.org/pdf/2204.05212v2#page=4"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "Judges get only 90 seconds of passage access so that they cannot simply read the passage to find the answer.",
+     "The incorrect option is the distractor judged best suited to a convincing argument: chosen by time-limited humans at least 3/5 times and/or picked as best distractor by more than half of full-passage readers; questions with no such option are discarded.",
+     "Writers are paid a bonus each time a judge selects the answer they argued for."
+    ],
+    "passages": [
+     {
+      "version": "2204.05212v2",
+      "page": 2,
+      "lines": [
+       90,
+       93
+      ],
+      "text": "We test the effectiveness of the arguments by having human judges answer the multiple-choice question. To ensure that the judges cannot simply read\nthe passage to find the answer themselves, we give\nthem only 90 seconds of access to the passage along\nwith the arguments and text snippets. To determine",
+      "pdf_page": "https://arxiv.org/pdf/2204.05212v2#page=2"
+     },
+     {
+      "version": "2204.05212v2",
+      "page": 2,
+      "lines": [
+       43,
+       51
+      ],
+      "text": "Passage and Question Selection We use passages and questions from a draft version of the recent long-document QA dataset, QuALITY (Pang\net al., 2021). In QuALITY, most passages are science fiction stories of about 5k words with 20 fouroption multiple-choice questions. We determine\nwhich of the three incorrect options is best suited\nto have a convincing argument by identifying cases\nwhere (i) humans in a time-limited setting incorrectly selected that choice at least 3/5 times, and/or\n(ii) humans who read the entire passage selected\nthat choice as the best distractor item more than\nhalf the time. We discard questions without an\nincorrect answer option meeting either criteria.",
+      "pdf_page": "https://arxiv.org/pdf/2204.05212v2#page=2"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "No AI models: arguments and snippets are written and selected by 14 human writers recruited on Upwork",
+    "task_data": "2-option questions from a draft version of QuALITY; most passages are science-fiction stories of about 5k words",
+    "judge": "MTurk crowdworkers with 90 seconds of passage access (194 workers recruited)",
+    "regime": "evaluation",
+    "scale": "14 writers; 194 MTurk workers recruited; each question judged by three unique workers"
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2204.05212v2:LIM-TIME-LIMIT",
+     "N2:DSOFT:ARXIV-2204.05212v2:LIM-SCOPE"
+    ],
+    "notes": "The time limit makes the task more artificial than the authors would like (pilot limits of 60-120 s made virtually no difference); the authors call the study limited in scope, a case study, and not strong evidence against the broad potential usefulness of a debate-style set-up."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_PRELIMINARY",
+    "reason": "No statistical test is reported for the condition comparison in these lines, and the authors call the experiments a case study of limited scope that is not strong evidence against debate-style set-ups."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2204.05212v2:RES-CONDITIONS",
+   "paper": "2204.05212v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2204.05212v2:DEF-CONDITIONS",
+     "N2:DSOFT:ARXIV-2204.05212v2:METHOD-JUDGING",
+     "N2:DSOFT:ARXIV-2204.05212v2:METHOD-WRITING",
+     "N2:DSOFT:ARXIV-2204.05212v2:DEF-SINGLE-TURN-DEBATE"
+    ],
+    "description": "MTurk workers with 90 seconds of passage access judged questions in three conditions (passage only, passage+snippets, passage+snippets+arguments), each question being judged by three unique workers, and the proportion of workers answering each question correctly is compared across conditions by unanimous and majority-vote agreement.",
+    "passages": [
+     {
+      "version": "2204.05212v2",
+      "page": 3,
+      "lines": [
+       106,
+       108
+      ],
+      "text": "increase engagement. Each question is judged by\nthree unique workers, and we ensure workers are\npaying attention with catch trials (Appendix E).",
+      "pdf_page": "https://arxiv.org/pdf/2204.05212v2#page=3"
+     },
+     {
+      "version": "2204.05212v2",
+      "page": 4,
+      "lines": [
+       30,
+       32
+      ],
+      "text": "Figure 1: Proportion of workers who answered each\nquestion correctly in each condition. P is passage; S is\nsnippets; A is arguments",
+      "pdf_page": "https://arxiv.org/pdf/2204.05212v2#page=4"
+     },
+     {
+      "version": "2204.05212v2",
+      "page": 4,
+      "lines": [
+       56,
+       58
+      ],
+      "text": "In addition to the primary comparison across conditions, we conduct exploratory analyses to better\nunderstand effects of the task set-up on workers’ response behavior. Results on features of arguments\nand text snippets are in Appendix I.",
+      "pdf_page": "https://arxiv.org/pdf/2204.05212v2#page=4"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "Judges get only 90 seconds of passage access so that they cannot simply read the passage to find the answer.",
+     "The incorrect option is the distractor judged best suited to a convincing argument: chosen by time-limited humans at least 3/5 times and/or picked as best distractor by more than half of full-passage readers; questions with no such option are discarded.",
+     "No worker judges the same question in more than one condition, and workers alternate through conditions in a counterbalanced way."
+    ],
+    "passages": [
+     {
+      "version": "2204.05212v2",
+      "page": 2,
+      "lines": [
+       90,
+       93
+      ],
+      "text": "We test the effectiveness of the arguments by having human judges answer the multiple-choice question. To ensure that the judges cannot simply read\nthe passage to find the answer themselves, we give\nthem only 90 seconds of access to the passage along\nwith the arguments and text snippets. To determine",
+      "pdf_page": "https://arxiv.org/pdf/2204.05212v2#page=2"
+     },
+     {
+      "version": "2204.05212v2",
+      "page": 2,
+      "lines": [
+       43,
+       51
+      ],
+      "text": "Passage and Question Selection We use passages and questions from a draft version of the recent long-document QA dataset, QuALITY (Pang\net al., 2021). In QuALITY, most passages are science fiction stories of about 5k words with 20 fouroption multiple-choice questions. We determine\nwhich of the three incorrect options is best suited\nto have a convincing argument by identifying cases\nwhere (i) humans in a time-limited setting incorrectly selected that choice at least 3/5 times, and/or\n(ii) humans who read the entire passage selected\nthat choice as the best distractor item more than\nhalf the time. We discard questions without an\nincorrect answer option meeting either criteria.",
+      "pdf_page": "https://arxiv.org/pdf/2204.05212v2#page=2"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "No AI models: arguments and snippets are written and selected by 14 human writers recruited on Upwork",
+    "task_data": "2-option questions from a draft version of QuALITY; most passages are science-fiction stories of about 5k words",
+    "judge": "MTurk crowdworkers with 90 seconds of passage access (194 workers recruited)",
+    "regime": "evaluation",
+    "scale": "14 writers; 194 MTurk workers recruited; each question judged by three unique workers"
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2204.05212v2:LIM-TIME-LIMIT",
+     "N2:DSOFT:ARXIV-2204.05212v2:LIM-SCOPE"
+    ],
+    "notes": "The time limit makes the task more artificial than the authors would like (pilot limits of 60-120 s made virtually no difference); the authors call the study limited in scope, a case study, and not strong evidence against the broad potential usefulness of a debate-style set-up."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_PRELIMINARY",
+    "reason": "The comparison is reported as per-question agreement proportions with no statistical test in these lines, and the authors call the experiments a case study of limited scope."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2204.05212v2:RES-SURVEY-MISTRUST",
+   "paper": "2204.05212v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2204.05212v2:DEF-CONDITIONS",
+     "N2:DSOFT:ARXIV-2204.05212v2:METHOD-JUDGING"
+    ],
+    "description": "A paid follow-up survey asked workers who completed at least 10 tasks in each condition about the strategies they used and their reactions to the arguments; self-reported reading of snippets or arguments, and mistrust of the arguments, were compared with the workers' accuracy.",
+    "passages": [
+     {
+      "version": "2204.05212v2",
+      "page": 12,
+      "lines": [
+       51,
+       56
+      ],
+      "text": "in the passage (i.e., the text snippets). In the survey, nearly a quarter of workers explicitly report\nmistrusting and then choosing to ignore the arguments (51 report choosing to use them, 21 say they\neither chose not to use the arguments from the beginning or changed tactics halfway through after\nfinding the arguments too misleading, and 19 give\nresponses that can’t be coded as either generally\ntrustful/mistrustful). Although adopting a stance of",
+      "pdf_page": "https://arxiv.org/pdf/2204.05212v2#page=12"
+     },
+     {
+      "version": "2204.05212v2",
+      "page": 12,
+      "lines": [
+       33,
+       38
+      ],
+      "text": "Survey Results Discussion: Mistrust Workers\nare fairly split in whether they found the arguments\nhelpful or generally mistrusted them. Though the\nresponses in this survey about the arguments are\nnot predictive of accuracy in any of the three conditions, the responses are useful for considering\nthe more psychological effects of presenting people with arguments we know to be false. Having",
+      "pdf_page": "https://arxiv.org/pdf/2204.05212v2#page=12"
+     },
+     {
+      "version": "2204.05212v2",
+      "page": 4,
+      "lines": [
+       37,
+       40
+      ],
+      "text": "Follow-up Survey We release a paid survey to\nworkers who completed at least 10 tasks in each\ncondition to ask about what strategies they used\nand to better understand their reactions to the arguments. 102 workers qualified for the survey, and",
+      "pdf_page": "https://arxiv.org/pdf/2204.05212v2#page=4"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "Reading strategies and mistrust are self-reported by the workers.",
+     "Survey answers were coded as using the arguments (51), not using them or giving up on them as too misleading (21), or not codable as trustful or mistrustful (19)."
+    ],
+    "passages": [
+     {
+      "version": "2204.05212v2",
+      "page": 2,
+      "lines": [
+       52,
+       58
+      ],
+      "text": "Writing Task We recruit 14 experienced writers\nvia the freelancing platform Upwork (writer selection details are in Appendix A). We assign each\nwriter up to 26 passages. Each passage has 7–15\n2-option multiple choice questions (avg. of 13.3).\nWe have writers construct an argument (max 500\ncharacters) and select 1–3 supporting text snippets\n(max 250 characters) for one of those two options",
+      "pdf_page": "https://arxiv.org/pdf/2204.05212v2#page=2"
+     },
+     {
+      "version": "2204.05212v2",
+      "page": 2,
+      "lines": [
+       43,
+       44
+      ],
+      "text": "Passage and Question Selection We use passages and questions from a draft version of the recent long-document QA dataset, QuALITY (Pang\net al., 2021). In QuALITY, most passages are science fiction stories of about 5k words with 20 fouroption multiple-choice questions. We determine",
+      "pdf_page": "https://arxiv.org/pdf/2204.05212v2#page=2"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Arguments (max 500 characters) with 1-3 supporting text snippets, each written for one answer option by one of 14 human writers recruited via Upwork",
+    "task_data": "Two-option multiple-choice questions on passages from a draft version of QuALITY, judged in the PS and PSA conditions",
+    "judge": "MTurk workers who completed at least 10 tasks in each condition",
+    "regime": "evaluation",
+    "scale": "102 qualifying workers, 91 survey responses"
+   },
+   "quantitative": {
+    "n": "91 of 102 qualifying workers completed the survey",
+    "uncertainty": "Differences are described as significant or not significant; no test statistic or p-value is given in these lines"
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2204.05212v2:LIM-TIME-LIMIT"
+    ],
+    "notes": "The survey responses about the arguments are not predictive of accuracy in any of the three conditions; the time limit makes the task more artificial than the authors would like."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "A survey of one worker pool on one task, with significance stated but no statistic given, so the multi-setting condition is not met."
+   },
+   "review_status": "provisional_ai_draft",
+   "check_history": [
+    "card-1: flagged or undecided by two blind checks; rewritten from the checkers' suggested fix (quotes unchanged)"
+   ]
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2204.05212v2:RES-LENGTH-BIAS",
+   "paper": "2204.05212v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2204.05212v2:DEF-CONDITIONS",
+     "N2:DSOFT:ARXIV-2204.05212v2:METHOD-WRITING"
+    ],
+    "description": "In an exploratory appendix analysis a linear model predicts the rate at which workers choose an answer option from the length of its argument (and from its number of snippets) in each condition, with effects compared against the passage-only condition P.",
+    "passages": [
+     {
+      "version": "2204.05212v2",
+      "page": 12,
+      "lines": [
+       1,
+       5
+      ],
+      "text": "Length of Arguments and Snippets Workers\nare slightly more likely to choose a longer argument. We fit a linear model to predict the rate at\nwhich workers choose an answer option from the\nlength of the argument associated with that option\nin each condition. The effect is small, only about a",
+      "pdf_page": "https://arxiv.org/pdf/2204.05212v2#page=12"
+     },
+     {
+      "version": "2204.05212v2",
+      "page": 4,
+      "lines": [
+       56,
+       58
+      ],
+      "text": "In addition to the primary comparison across conditions, we conduct exploratory analyses to better\nunderstand effects of the task set-up on workers’ response behavior. Results on features of arguments\nand text snippets are in Appendix I.",
+      "pdf_page": "https://arxiv.org/pdf/2204.05212v2#page=4"
+     },
+     {
+      "version": "2204.05212v2",
+      "page": 12,
+      "lines": [
+       44,
+       45
+      ],
+      "text": "There’s no significant difference in argument length based\non whether it’s arguing for a correct or incorrect answer option.",
+      "pdf_page": "https://arxiv.org/pdf/2204.05212v2#page=12"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "A linear relation between argument length (or snippet count) and the option's choice rate, with effects measured relative to the passage-only condition P.",
+     "Argument length does not differ significantly between arguments for correct and incorrect options (footnote 6)."
+    ],
+    "passages": []
+   },
+   "setting": {
+    "systems": "No AI models: human-written arguments (at most 500 characters) with 1-3 snippets",
+    "task_data": "QuALITY 2-option questions",
+    "judge": "MTurk workers in the P, PS and PSA conditions",
+    "regime": "evaluation",
+    "scale": null
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": "p = 0.001 for the argument-length effect (PSA vs P); p < 0.001 and p = 0.01 for the snippet effect in PSA and PS vs P"
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2204.05212v2:LIM-TIME-LIMIT"
+    ],
+    "notes": "The authors call the length effect small and the analysis exploratory."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "Significance tests are reported, but on one task with one judge population."
+   },
+   "review_status": "provisional_ai_draft"
+  }
+ ]
+}

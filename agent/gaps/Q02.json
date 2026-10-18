@@ -1,0 +1,281 @@
+{
+ "schema": "ASRA-GAP-CLOSING-AGENT-v1",
+ "id": "Q02",
+ "question": "Proposed experiments: can RL learn nearly as fast with reward on 10% of episodes?",
+ "asked_by": "Amodei et al., Concrete Problems in AI Safety",
+ "rank": 22,
+ "status": "NARROWED",
+ "status_check": "AI_CHECKED",
+ "remaining_question": "In simple continuous-control tasks (cartpole balance, pendulum swing-up) with deep RL, when the true reward is revealed on only a random 10% of episodes, does an agent that also learns from the unlabeled episodes (e.g. via a learned reward model) match the learning curve of an agent given reward on every episode, and how much does actively choosing the labeled episodes change this?",
+ "remaining_type": "EMPIRICAL",
+ "safety_case": [],
+ "findings": [
+  {
+   "id": "Q02:F1",
+   "later_paper": "arXiv 1706.03741v4: Deep reinforcement learning from human preferences",
+   "first_submitted": "2017-06-12",
+   "effect": "NARROWS",
+   "claim": "The authors report solving Atari games and simulated robot locomotion without access to the reward function while providing feedback (human preferences between pairs of trajectory segments) on less than 1% of the agent's interactions. On the simulated robotics tasks (eight tasks implemented in MuJoCo; the authors also say they included a simple cartpole task, 'pendulum', for comparison) they are 'able to nearly match reinforcement learning' on the real reward with 700 labels; training with learned reward functions tends to be less stable and higher variance, while having a comparable mean performance.",
+   "setting": "Experiment: RL from preferences between pairs of trajectory segments, without access to the reward function; 700 queries to a human rater, or 350, 700 or 1400 synthetic queries; compared with RL learning from the real reward; eight simulated robotics tasks in MuJoCo (OpenAI Gym, slightly modified) and a simple cartpole task the authors say they included for comparison. Differs from Q02: the feedback is pairwise comparisons of segments, not the true reward revealed on a random 10% of episodes.",
+   "bears_on": "Q02's core question (can RL do nearly as well with feedback on a small fraction of experience), but with pairwise segment comparisons instead of reward on 10% of episodes, and the passages compare performance ('nearly match'), not explicitly learning speed.",
+   "passages": [
+    {
+     "version": "1706.03741v4",
+     "page": 1,
+     "lines": [
+      29,
+      34
+     ],
+     "text": "In this work, we explore goals defined in terms of (non-expert) human preferences\nbetween pairs of trajectory segments. We show that this approach can effectively\nsolve complex RL tasks without access to the reward function, including Atari\ngames and simulated robot locomotion, while providing feedback on less than\n1% of our agent’s interactions with the environment. This reduces the cost of\nhuman oversight far enough that it can be practically applied to state-of-the-art",
+     "pdf_page": "https://arxiv.org/pdf/1706.03741v4#page=1"
+    },
+    {
+     "version": "1706.03741v4",
+     "page": 6,
+     "lines": [
+      48,
+      56
+     ],
+     "text": "The first tasks we consider are eight simulated robotics tasks, implemented in MuJoCo (Todorov\net al., 2012), and included in OpenAI Gym (Brockman et al., 2016). We made small modifications\nto these tasks in order to avoid encoding information about the task in the environment itself (the\nmodifications are described in detail in Appendix A). The reward functions in these tasks are linear\nfunctions of distances, positions and velocities, and all are a quadratic function of the features. We\nincluded a simple cartpole task (“pendulum”) for comparison, since this is representative of the\ncomplexity of tasks studied in prior work.\nFigure 2 shows the results of training our agent with 700 queries to a human rater, compared to\nlearning from 350, 700, or 1400 synthetic queries, as well as to RL learning from the real reward.",
+     "pdf_page": "https://arxiv.org/pdf/1706.03741v4#page=6"
+    },
+    {
+     "version": "1706.03741v4",
+     "page": 7,
+     "lines": [
+      10,
+      12
+     ],
+     "text": "With 700 labels we are able to nearly match reinforcement learning on all of these tasks. Training\nwith learned reward functions tends to be less stable and higher variance, while having a comparable\nmean performance.",
+     "pdf_page": "https://arxiv.org/pdf/1706.03741v4#page=7"
+    }
+   ]
+  },
+  {
+   "id": "Q02:F2",
+   "later_paper": "arXiv 1706.03741v4: Deep reinforcement learning from human preferences",
+   "first_submitted": "2017-06-12",
+   "effect": "RELATED_ONLY",
+   "claim": "On Atari games the preference-based method has more difficulty matching RL on the true reward: synthetic labels match or come close to RL on BeamRider and Pong, eventually reach near RL but learn more slowly on Seaquest and Qbert, and never match RL on SpaceInvaders and Breakout.",
+   "setting": "Experiment: RL from preferences between pairs of trajectory segments, without access to the reward function, on seven Atari games in the Arcade Learning Environment (results named for BeamRider, Pong, Seaquest, Qbert, SpaceInvaders, Breakout); 5,500 queries to a human rater or a limited number of synthetic queries; compared with RL learning from the real reward. Differs from Q02: pairwise comparisons, not reward revealed on 10% of episodes.",
+   "bears_on": "Same topic as Q02 (learning from sparse feedback compared with full reward, on Atari), but the feedback is segment comparisons rather than reward on a fraction of episodes, so it does not bear directly on whether RL with reward on 10% of episodes learns nearly as fast.",
+   "passages": [
+    {
+     "version": "1706.03741v4",
+     "page": 1,
+     "lines": [
+      29,
+      34
+     ],
+     "text": "In this work, we explore goals defined in terms of (non-expert) human preferences\nbetween pairs of trajectory segments. We show that this approach can effectively\nsolve complex RL tasks without access to the reward function, including Atari\ngames and simulated robot locomotion, while providing feedback on less than\n1% of our agent’s interactions with the environment. This reduces the cost of\nhuman oversight far enough that it can be practically applied to state-of-the-art",
+     "pdf_page": "https://arxiv.org/pdf/1706.03741v4#page=1"
+    },
+    {
+     "version": "1706.03741v4",
+     "page": 7,
+     "lines": [
+      28,
+      37
+     ],
+     "text": "The second set of tasks we consider is a set of seven Atari games in the Arcade Learning Environment (Bellemare et al., 2013), the same games presented in Mnih et al., 2013.\nFigure 3 shows the results of training our agent with 5,500 queries to a human rater, compared to\nlearning from 350, 700, or 1400 synthetic queries, as well as to RL learning from the real reward.\nOur method has more difficulty matching RL in these challenging environments, but nevertheless it\ndisplays substantial learning on most of them and matches or even exceeds RL on some. Specifically,\non BeamRider and Pong, synthetic labels match or come close to RL even with only 3,300 such\nlabels. On Seaquest and Qbert synthetic feedback eventually performs near the level of RL but learns\nmore slowly. On SpaceInvaders and Breakout synthetic feedback never matches RL, but nevertheless\nthe agent improves substantially, often passing the first level in SpaceInvaders and reaching a score of\n20 on Breakout, or 50 with enough labels.",
+     "pdf_page": "https://arxiv.org/pdf/1706.03741v4#page=7"
+    }
+   ]
+  },
+  {
+   "id": "Q02:F3",
+   "later_paper": "arXiv 2406.13909v2: Beyond Optimism: Exploration With Partially Observable Rewards",
+   "first_submitted": "2024-06-20",
+   "effect": "NARROWS",
+   "claim": "In Mon-MDPs, baselines that learn relatively quickly when rewards are fully observable drop drastically in performance when rewards are partially observable; even random observability (positive and negative rewards unobservable with probability 50%, zero rewards always observable) is enough to make Optimism converge to suboptimal policies, and the Q-Counts, UCB, Intrinsic Reward and Naive baselines learn suboptimal policies in most seeds, especially in harder Mon-MDPs; the authors' exploration is reported to be only slightly affected.",
+   "setting": "Experiment: Q-Learning with six exploration policies (the authors'; greedy with optimistic initialization; naive, count-based intrinsic-reward, UCB-bonus and Q-Counts epsilon-greedy) on Mon-MDPs (e.g. River Swim); every algorithm learns a reward model to replace unobserved rewards. In the 'Random Monitor' version positive and negative environment rewards are unobservable with probability 50% at each step (r̂tE = ⊥), zero rewards always observable; compared with fully observable rewards. Differs from Q02: half of the non-zero rewards are hidden per step, rather than reward being given on only 10% of episodes.",
+   "bears_on": "The closest direct test of Q02's random case, though with non-zero rewards hidden on 50% of steps rather than reward given on 10% of episodes: whether learning with randomly withheld rewards is nearly as fast as with full reward. In this setting the answer depends on the exploration strategy (baselines degrade drastically under partial observability, and random hiding alone makes Optimism converge to suboptimal policies; the authors' method is only slightly affected).",
+   "passages": [
+    {
+     "version": "2406.13909v2",
+     "page": 16,
+     "lines": [
+      79,
+      81
+     ],
+     "text": "• Random Monitor. There is no monitor state, action, nor reward. Positive (coin) and negative\n(toxic cloud) environment rewards are unobservable with probability 50% (r̂tE = ⊥) and fully\nobservable otherwise (r̂tE = rtE ). Zero-rewards in other cells are always observable.",
+     "pdf_page": "https://arxiv.org/pdf/2406.13909v2#page=16"
+    },
+    {
+     "version": "2406.13909v2",
+     "page": 8,
+     "lines": [
+      44,
+      51
+     ],
+     "text": "Baselines. We evaluate Q-Learning with the following exploration policies (details in Appendix A.5):\n(1) ours; (2) greedy with optimistic initialization; (3) naive ϵ-greedy; (4) ϵ-greedy with count-based\nintrinsic reward [9]; (5) ϵ-greedy with UCB bonus [4]; (6) ϵ-greedy with Q-Counts [54]. Note that\nif rewards and transitions are deterministic and fully observable, then (2) is very efficient [17, 75, 77],\nthus serves as best-case scenario baseline. For all algorithms, γ = 0.99 and ϵt starts at 1 and linearly\ndecays to 0. Because in Mon-MDPs environment rewards are always unobservable for some monitor\nstate-action pairs (e.g., when the monitor is OFF), all algorithms learn a reward model to replace\nr̂tE = ⊥, initialized to random values in [−0.1, 0.1] and updated when r̂tE ̸= ⊥.7",
+     "pdf_page": "https://arxiv.org/pdf/2406.13909v2#page=8"
+    },
+    {
+     "version": "2406.13909v2",
+     "page": 9,
+     "lines": [
+      25,
+      36
+     ],
+     "text": "95% confidence interval). Our exploration clearly outperforms all baselines, as it is the only one\nlearning in all Mon-MDPs. Indeed, while all baselines learn relatively quickly when rewards are fully\nobservable (first column), their performance drastically decreases with rewards partial observability.\nthe environment is deterministic and rewards are always observable (first column), pure Optimism\nis optimal (as expected). However, if the environment is stochastic (River Swim) or rewards are\nunobservable, Optimism fails. Even just random observability of the reward (second column) is\nenough to cause convergence to suboptimal policies — without observing rewards the agent must rely\nb updates, preventing exploration.\non its model estimates, but these are initially wrong and mislead Q\nEven though mitigated by the ϵ-randomness, exploration with Q-Counts, UCB, Intrinsic Reward,\nand Naive is suboptimal as well, as these baselines learn suboptimal policies in most of the seeds,\nespecially in harder Mon-MDPs. On the contrary, Our exploration is only slightly affected by the",
+     "pdf_page": "https://arxiv.org/pdf/2406.13909v2#page=9"
+    }
+   ]
+  },
+  {
+   "id": "Q02:F4",
+   "later_paper": "arXiv 2510.00144v1: Which Rewards Matter? Reward Selection for Reinforcement Learning under Limited Feedback",
+   "first_submitted": "2025-09-30",
+   "effect": "NARROWS",
+   "claim": "When only a budgeted subset of states in an offline dataset gets reward labels, the authors find that effective selection of which rewards to label yields near-optimal policies with significantly fewer reward labels than full supervision; critical rewards are those guiding the agent along optimal trajectories and supporting recovery after deviations.",
+   "setting": "Experiment: offline RL from a dataset collected by a data-collecting policy that contains no reward; environment rewards are obtained only at a selected subset of states under a labeling budget; selection by heuristics (state visitation, partial value functions) or by strategies pre-trained using auxiliary evaluative feedback; six prototypical domains (Graph, Tree, TwoRooms, TwoRooms-Trap, FrozenLake, CliffWalk) and four MinAtar games (Breakout, Freeway, Seaquest, Asterix).",
+   "bears_on": "Q02's active case (choosing which samples get reward) and its Atari-like step: carefully chosen labels can approach full supervision, but offline, per state, and in final policy return rather than online learning speed with reward on random episodes.",
+   "passages": [
+    {
+     "version": "2510.00144v1",
+     "page": 1,
+     "lines": [
+      27,
+      37
+     ],
+     "text": "relying on human feedback. When reinforcement learning must proceed with limited feedback—only\na fraction of samples get rewards labeled—a fundamental question arises: which samples should\nbe labeled to maximize policy performance? We formalize this problem of reward selection for\nreinforcement learning from limited feedback (RLLF), introducing a new problem formulation that\nfacilitates the study of strategies for selecting impactful rewards. Two types of selection strategies are\ninvestigated: (i) heuristics that rely on reward-free information such as state visitation and partial\nvalue functions, and (ii) strategies pre-trained using auxiliary evaluative feedback. We find that\ncritical subsets of rewards are those that (1) guide the agent along optimal trajectories, and (2)\nsupport recovery toward near-optimal behavior after deviations. Effective selection methods yield\nnear-optimal policies with significantly fewer reward labels than full supervision, establishing reward\nselection as a powerful paradigm for scaling reinforcement learning in feedback-limited settings.",
+     "pdf_page": "https://arxiv.org/pdf/2510.00144v1#page=1"
+    },
+    {
+     "version": "2510.00144v1",
+     "page": 3,
+     "lines": [
+      10,
+      15
+     ],
+     "text": "We study the problem of reinforcement learning from limited feedback (RLLF) in the offline setting. An offline dataset\nDn = {(St , At , St+1 )(i) }ni=1 of n samples is obtained by the interaction of a data-collecting policy πD with M .1 The\ndataset contains no reward, i.e., evaluative feedback. To emulate the limited feedback setting, the restriction imposed\nby the problem setup is that environment rewards are permitted to be obtained at only a subset B of the states. Let\nS[B] denote the states that are reward-labeled. For samples in D where St ∈ S[B] , reward labels are assigned; the\nremaining samples in D are unlabeled. In practice, since the labeling budget is smaller than the total number of states",
+     "pdf_page": "https://arxiv.org/pdf/2510.00144v1#page=3"
+    },
+    {
+     "version": "2510.00144v1",
+     "page": 6,
+     "lines": [
+      12,
+      14
+     ],
+     "text": "Domains: We evaluate performance across six prototypical domains and four large-scale MinAtar domains [Young\nand Tian, 2019] (Breakout, Freeway, Seaquest, Asterix). Of the prototypical domains, some (Graph, Tree, TwoRooms,\nTwoRooms-Trap) are purpose-built; others (FrozenLake, CliffWalk) are standard Gymnasium benchmarks [Brockman",
+     "pdf_page": "https://arxiv.org/pdf/2510.00144v1#page=6"
+    }
+   ]
+  },
+  {
+   "id": "Q02:F5",
+   "later_paper": "arXiv 2512.13106v1: TraPO: A Semi-Supervised Reinforcement Learning Framework for Boosting LLM Reasoning",
+   "first_submitted": "2025-12-15",
+   "effect": "RELATED_ONLY",
+   "claim": "In semi-supervised RLVR, where a small labeled set guides RL on unlabeled samples, the method with 4K labeled and 12K unlabeled samples is reported to outperform the fully supervised model trained on the full 45K labeled samples on all benchmarks, using only 10% of the labeled data.",
+   "setting": "Experiment: semi-supervised RL with verifiable rewards (RLVR) for LLM mathematical reasoning; six mathematical reasoning benchmarks (AIME24/25, AMC, MATH-500, Minerva, Olympiad) and three out-of-distribution tasks (ARC-c, GPQA-diamond, MMLU-pro); labels on a small subset of training samples; accuracy compared, not learning curves; the fully supervised model is trained on the full 45K labeled samples, the semi-supervised run on 4K labeled and 12K unlabeled samples. Differs from Q02: LLM reasoning, final accuracy, labeled samples rather than rewarded episodes.",
+   "bears_on": "An analogue of Q02's 'reward on 10% of episodes' question in LLM RLVR, about final performance rather than speed in control tasks.",
+   "passages": [
+    {
+     "version": "2512.13106v1",
+     "page": 1,
+     "lines": [
+      18,
+      22
+     ],
+     "text": "reasoning patterns in the absence of external supervision. In this work, we investigate a novel\nsemi-supervised RLVR paradigm that utilizes a small labeled set to guide RLVR training on unlabeled\nsamples. Our key insight is that supervised rewards are essential for stabilizing consistency-based\ntraining on unlabeled samples, ensuring that only reasoning patterns verified on labeled instances\nare incorporated into RL training. Technically, we propose an effective policy optimization algorithm",
+     "pdf_page": "https://arxiv.org/pdf/2512.13106v1#page=1"
+    },
+    {
+     "version": "2512.13106v1",
+     "page": 1,
+     "lines": [
+      25,
+      30
+     ],
+     "text": "on six widely used mathematical reasoning benchmarks (AIME24/25, AMC, MATH-500, Minerva,\nand Olympiad) and three out-of-distribution tasks (ARC-c, GPQA-diamond, and MMLU-pro). With\nonly 1K labeled and 3K unlabeled samples, T RA PO reaches 42.6% average accuracy, surpassing\nthe best unsupervised method trained on 45K unlabeled samples (38.3%). Notably, when using 4K\nlabeled and 12K unlabeled samples, T RA PO even outperforms the fully supervised model trained\non the full 45K labeled samples on all benchmarks, while using only 10% of the labeled data. The",
+     "pdf_page": "https://arxiv.org/pdf/2512.13106v1#page=1"
+    }
+   ]
+  },
+  {
+   "id": "Q02:F6",
+   "later_paper": "arXiv 2011.06709v2: Active Reinforcement Learning: Observing Rewards at a Cost",
+   "first_submitted": "2020-11-13",
+   "effect": "RELATED_ONLY",
+   "claim": "Formalises active RL, where the agent sees the reward only if it pays a query cost, and evaluates heuristic query strategies in multi-armed bandits and tabular MDPs with known dynamics; the authors say the results show the value of online, state-dependent querying but are not a rigorous evaluation, and leave large state spaces to future work.",
+   "setting": "Heuristic query strategies for active RL (the agent observes the reward only if it pays a query cost c > 0), evaluated in multi-armed bandits and tabular MDPs (e.g. a chain environment) with known dynamics; experiments the authors say should not be taken as a rigorous evaluation.",
+   "bears_on": "Q02's active-learning variant (agent requests reward where most useful); no comparison of learning speed with full-reward RL on control or Atari tasks.",
+   "passages": [
+    {
+     "version": "2011.06709v2",
+     "page": 1,
+     "lines": [
+      24,
+      30
+     ],
+     "text": "Active reinforcement learning (ARL) is a variant on reinforcement learning where\nthe agent does not observe the reward unless it chooses to pay a query cost c > 0.\nThe central question of ARL is how to quantify the long-term value of reward\ninformation. Even in multi-armed bandits, computing the value of this information\nis intractable and we have to rely on heuristics. We propose and evaluate several\nheuristic approaches for ARL in multi-armed bandits and (tabular) Markov decision\nprocesses, and discuss and illustrate some challenging aspects of the ARL problem.",
+     "pdf_page": "https://arxiv.org/pdf/2011.06709v2#page=1"
+    },
+    {
+     "version": "2011.06709v2",
+     "page": 7,
+     "lines": [
+      57,
+      61
+     ],
+     "text": "encourage earlier querying. Not querying at all performs remarkably well in the chain environment\nwhen the query cost is high, likely due to the difficulty of the task and the optimism of the agent’s\nreward prior. Overall, these results demonstrate the value of updating query strategies online, and of\ndifferentially querying different state-actions, but should not be taken as a rigorous evaluation of the\nstrength of the proposed algorithms.",
+     "pdf_page": "https://arxiv.org/pdf/2011.06709v2#page=7"
+    },
+    {
+     "version": "2011.06709v2",
+     "page": 8,
+     "lines": [
+      18,
+      19
+     ],
+     "text": "focuses on multi-armed bandits and tabular MDPs with known dynamics. Future work will investigate\nMDPs with unknown dynamics and large state spaces (for which function approximate is necessary).",
+     "pdf_page": "https://arxiv.org/pdf/2011.06709v2#page=8"
+    }
+   ]
+  },
+  {
+   "id": "Q02:F7",
+   "later_paper": "arXiv 2012.06899v1: Semi-supervised reward learning for offline reinforcement learning",
+   "first_submitted": "2020-12-12",
+   "effect": "RELATED_ONLY",
+   "claim": "In experiments with a simulated robotic arm, semi-supervised reward learning from limited annotations plus unlabelled data greatly improves upon behavioural cloning and closely approaches the performance achieved with ground-truth rewards; with episode-level annotations, semi-supervised reward learning techniques greatly reduce the gap to ground truth compared to behavioural cloning while using exactly the same annotations.",
+   "setting": "Experiment: offline RL (agents trained on a logged dataset; CRR policies) on a simulated robotic arm (tasks including box, insertion, slide); supervision is limited timestep annotations or demonstrations (and, in passage 2, episode-level annotations) plus unlabelled data; policy score compared with a CRR policy given ground-truth rewards and with behavioural cloning.",
+   "bears_on": "Q02's challenge of using unlabeled episodes to approach fully labeled performance, but offline and in final score, not learning speed, and the passages do not say what fraction of episodes is annotated.",
+   "passages": [
+    {
+     "version": "2012.06899v1",
+     "page": 1,
+     "lines": [
+      23,
+      34
+     ],
+     "text": "In offline reinforcement learning (RL) agents are trained using a logged dataset.\nIt appears to be the most natural route to attack real-life applications because in\ndomains such as healthcare and robotics interactions with the environment are\neither expensive or unethical. Training agents usually requires reward functions,\nbut unfortunately, rewards are seldom available in practice and their engineering\nis challenging and laborious. To overcome this, we investigate reward learning\nunder the constraint of minimizing human reward annotations. We consider two\ntypes of supervision: timestep annotations and demonstrations. We propose semisupervised learning algorithms that learn from limited annotations and incorporate\nunlabelled data. In our experiments with a simulated robotic arm, we greatly\nimprove upon behavioural cloning and closely approach the performance achieved\nwith ground truth rewards. We further investigate the relationship between the\nquality of the reward model and the final policies. We notice, for example, that the",
+     "pdf_page": "https://arxiv.org/pdf/2012.06899v1#page=1"
+    },
+    {
+     "version": "2012.06899v1",
+     "page": 6,
+     "lines": [
+      125,
+      132
+     ],
+     "text": "In Fig. 3 we show the performance of the policies that use episode-level annotations for determining\nrewards as described in Sec. 3.2 and Tab. 1. BC policy reaches only between 1/3 and 2/3 of the score\nattained by a CRR policy with ground truth rewards (GT). SQIL with memorized reward values\nworks well in some cases (box), but its performance is worse than BC in other cases (insertion, slide).\nLearning a reward function from flat reward assumption with regularisation as in ORIL improves\nsignificantly over BC. Finally, TGR-i further improves the results making it to be among the best\nperforming strategies across all tasks. To sum up, semi-supervised reward learning techniques greatly\nreduce the gap to GT compared to BC while using exactly the same annotations.",
+     "pdf_page": "https://arxiv.org/pdf/2012.06899v1#page=6"
+    }
+   ]
+  }
+ ],
+ "findings_drafted": 7,
+ "maths": [],
+ "experiment_package": null,
+ "review_status": "provisional_ai_draft",
+ "rules": [
+  "Everything here is an AI draft (provisional_ai_draft): each counted item passed two blind AI checks that were tested on planted errors, and no person has reviewed it.",
+  "A finding counts only in the setting its own quoted lines show; read `setting` before carrying it to another setting.",
+  "A question's status is a label from fixed rules over its counted findings; `status_check` says whether that label itself passed its check.",
+  "Cite the paper and page from the passage, and read the PDF page before relying on a claim."
+ ]
+}

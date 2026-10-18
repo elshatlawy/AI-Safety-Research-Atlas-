@@ -1,0 +1,281 @@
+{
+ "schema": "ASRA-GAP-CLOSING-AGENT-v1",
+ "id": "Q18",
+ "question": "Open question: does process supervision's advantage generalize beyond math?",
+ "asked_by": "Lightman et al., Let's Verify Step by Step",
+ "rank": 31,
+ "status": "PARTLY_ANSWERED_BY_LATER_WORK",
+ "status_check": "AI_CHECKED",
+ "remaining_question": "With step labels of comparable quality to PRM800K's human labels, does process supervision beat outcome supervision outside math (e.g. law, medicine, open-ended writing), and which task properties (how definable steps are, chain-of-thought length, label noise) decide the sign of the effect?",
+ "remaining_type": "EMPIRICAL",
+ "safety_case": [],
+ "findings": [
+  {
+   "id": "Q18:F1",
+   "later_paper": "arXiv 2501.01290v1: ToolComp: A Multi-Tool Reasoning & Process Supervision Benchmark",
+   "first_submitted": "2025-01-02",
+   "effect": "PARTLY_ANSWERS",
+   "claim": "In what the authors call a preliminary analysis on multi-step tool use, their best PRM beat an ORM at picking the best of 30 trajectories (rank@1 42.65% vs 23.89% on base-model generations; the PRM reached 60.25% on fine-tuned-model generations) and outperformed the ORM at every training-data scale tested.",
+   "setting": "Experiment (preliminary): PRM and ORM trained on additionally generated synthetic data for multi-step tool use, a non-math domain; rank@1 selection over base-model and SFT-model generations, compared with the generator's pass@30; training-data scale varied.",
+   "bears_on": "Whether the PRM-over-ORM advantage in best-of-N reranking appears outside math, here in multi-step tool use.",
+   "passages": [
+    {
+     "version": "2501.01290v1",
+     "page": 8,
+     "lines": [
+      12,
+      17
+     ],
+     "text": "Recent works have demonstrated the power of process supervision signals in domains such as mathematical reasoning (Lightman et al., 2023; Wang et al., 2024a). Despite this, the application of\nprocess-supervised signals towards tool-augmented LLMs remains under-explored. By focusing on\nthe process rather than just the outcome, process-supervised models could provide more granular\nfeedback during multi-step tool-use, leading to faster convergence, especially in complex applications where each step is associated with dynamic feedback from the environment. In this section,\nwe provide a preliminary analysis to assess the value of process supervision for multi-step tool-use\nby training PRM and ORM models using additionally generated synthetic data.",
+     "pdf_page": "https://arxiv.org/pdf/2501.01290v1#page=8"
+    },
+    {
+     "version": "2501.01290v1",
+     "page": 9,
+     "lines": [
+      21,
+      29
+     ],
+     "text": "PRM outperforms ORM in selecting the best trajectory In Figure 3, we observe that for both\nthe base model generations and the SFT model generations, our best PRM model (see Table 4)\noutperforms the ORM in rank@1 accuracy. On the base model generations, the PRM achieves an\naccuracy of 42.65% compared to the ORM accuracy of 23.89%. Moreover, towards enhancing an\nalready fine-tuned model, we see that the PRM is able to push rank@1 accuracy to 60.25%, nearly\nmatching the generator’s pass@30 performance. Overall, these results suggest that PRMs are able\nto efficiently translate these per tool call step-level signals to provide superior performance than\nutilizing just outcome-level signals. In Appendix B, we also find the PRM scales better than the\nORM on increasing prompt complexity.",
+     "pdf_page": "https://arxiv.org/pdf/2501.01290v1#page=9"
+    },
+    {
+     "version": "2501.01290v1",
+     "page": 9,
+     "lines": [
+      54,
+      56
+     ],
+     "text": "PRM scales better than ORM with increasing data Part of the design of our experiment is to\nmeasure the scaling performance of PRMs versus ORMs as we incorporate more training data. In\nFigure 3, we find that the PRM rank@1 performance consistently outperforms the ORM at all training data scales in ranking both the base model completions as well as the SFT model completions.",
+     "pdf_page": "https://arxiv.org/pdf/2501.01290v1#page=9"
+    }
+   ]
+  },
+  {
+   "id": "Q18:F2",
+   "later_paper": "arXiv 2412.12583v3: Process-Supervised Reward Models for Verifying Clinical Note Generation: A Scalable Approach Guided by Domain Expertise",
+   "first_submitted": "2024-12-17",
+   "effect": "PARTLY_ANSWERS",
+   "claim": "For verifying clinical notes, the authors' PRM outperformed all baselines across all tasks, including a vanilla ORM, Gemini Pro 1.5 and SOTA reasoning models. Scoring the same checkpoint as a PRM or as an ORM gave comparable results on verification tasks, while the PRM was better on the preference-based A-Prefer evaluation (56.2% vs 51.2%). Scored as an ORM, the model also significantly outperformed the vanilla ORM, which predicts only overall correctness without learning step-level reward signals; the authors say this suggests that learning to predict step-level correctness during training is essential for strong performance.",
+   "setting": "Experiment: a reward model usable as a PRM or an ORM (step-wise vs note-level aggregation) for verifying generated clinical notes; two in-distribution verification tasks (Dialogue-G, A-Validate) and two OOD tasks (A-Verify, preference-based A-Prefer); baselines are a vanilla ORM, Gemini Pro 1.5 and SOTA reasoning models.",
+   "bears_on": "Process vs outcome supervision outside math, in clinical note generation, for verification and best-of-N style selection.",
+   "passages": [
+    {
+     "version": "2412.12583v3",
+     "page": 6,
+     "lines": [
+      140,
+      147
+     ],
+     "text": "Comparison with Baselines We present the\nmain results in Figure 3. Our PRM consistently\noutperforms all baselines across all tasks, including the vanilla ORM, Gemini Pro 1.5, and\nSOTA reasoning models. Our analysis focuses\non PRM performance in OOD settings (A-Verify\nand A-Prefer), given its near-perfect accuracy in\nthe two ID verification tasks (Dialogue-G and AValidate). Despite the inherent challenges of OOD\ntasks, PRM exhibits strong generalization, achieving 98.8% accuracy on the A-Verify task (compared to 93.8% for Gemini Pro 1.5). Among all",
+     "pdf_page": "https://arxiv.org/pdf/2412.12583v3#page=6"
+    },
+    {
+     "version": "2412.12583v3",
+     "page": 6,
+     "lines": [
+      159,
+      165
+     ],
+     "text": "PRM vs. ORM Our model can function as either\nan ORM or a PRM, differing in the aggregation\nstrategy from step-wise to note-level scoring, as\ndetailed in Section 3.4. In verification tasks, PRMs\nperform comparably to our ORMs when using the\nsame model checkpoint, aligning with prior findings (Beeching et al.; Snell et al., 2024). However, in preference-based evaluations (A-Prefer),\nPRM surpasses our ORM, achieving 56.2% accuracy compared to 51.2%.",
+     "pdf_page": "https://arxiv.org/pdf/2412.12583v3#page=6"
+    },
+    {
+     "version": "2412.12583v3",
+     "page": 6,
+     "lines": [
+      166,
+      172
+     ],
+     "text": "Comparison with Vanilla ORM Interestingly,\nour ORM implementation significantly outperforms the vanilla ORM, which predicts only the\noverall correctness of a generation without learning\nto estimate step-level reward signals. This suggests\nthat even when functioning as an ORM and relying solely on the end-of-note score, learning to\npredict step-level correctness during training is\nessential for achieving strong performance.",
+     "pdf_page": "https://arxiv.org/pdf/2412.12583v3#page=6"
+    }
+   ]
+  },
+  {
+   "id": "Q18:F3",
+   "later_paper": "arXiv 2510.00492v3: Rethinking Reward Models for Multi-Domain Test-Time Scaling",
+   "first_submitted": "2025-10-01",
+   "effect": "PARTLY_ANSWERS",
+   "claim": "Across 14 MMLU-Pro domains, discriminative ORMs performed on par with discriminative PRMs, generative PRMs were not competitive (which the authors note is contrary to Lightman et al. and to their own math-domain results) and generative ORMs were most robust in best-of-N; they attribute the generative PRM's weaker performance to label noise from LLM-based automatic step labelling and to stepwise aggregation compounding errors as reasoning length grows.",
+   "setting": "Experiment plus a theoretical analysis of stepwise aggregation: R1-Distill-Qwen-14B reward-model backbone in the quoted results; training chains of thought from Llama-3.1-8B-Instruct with process labels auto-annotated by Llama-3.1-70B-Instruct (no human step labels); best-of-N with five generator LLMs; MMLU-Pro is multiple choice.",
+   "bears_on": "Directly tests whether the PRM advantage over ORM holds outside math under one protocol; in this setting it did not.",
+   "passages": [
+    {
+     "version": "2510.00492v3",
+     "page": 1,
+     "lines": [
+      24,
+      35
+     ],
+     "text": "answer, and process reward models (PRMs), which score intermediate reasoning steps. Although PRMs are often viewed as advantageous due to their finer-grained supervision, much\nof the supporting evidence comes from math-adjacent settings, and their relative benefits\nacross broader domains remain unclear. We present the first unified evaluation of four reward model variants, discriminative ORM and PRM (dORM, dPRM) and generative ORM\nand PRM (gORM, gPRM), across 14 diverse domains. Contrary to conventional wisdom,\nwe find that (i) dORM performs on par with dPRM, (ii) gPRM is not competitive, and\n(iii) overall, gORM is the most robust, yielding significant and consistent gains across every\ntested domain. We attribute the worse performance of gPRM to the stepwise scoring process, which inherits label noise from LLM-based automatic labeling, leading to difficulties\nin evaluating long reasoning trajectories, including those involving self-correcting reasoning.\nBoth our theoretical analysis and empirical observations indicate that stepwise aggregation\ncompounds errors as reasoning length increases. These findings challenge the common assumption that fine-grained supervision is always better and support generative outcome\nverification for multi-domain deployment. Our code is publicly available to facilitate future\nresearch in multi-domain settings.",
+     "pdf_page": "https://arxiv.org/pdf/2510.00492v3#page=1"
+    },
+    {
+     "version": "2510.00492v3",
+     "page": 8,
+     "lines": [
+      144,
+      150
+     ],
+     "text": "Multi-domain and specialized-domain results. Next, we compare the four variants in the multidomain setting. Fig. 5 reports F1 scores (%) for outcome-verification, with a 0.5 decision threshold, using\nR1-Distill-Qwen-14B as the reward model backbone. dO/dP/gO/gP denote dORM/dPRM/gORM/gPRM. In\ncontrast to the math domain results in Fig. 3, ORM variants achieve higher F1 scores than PRM variants.\nFig. 6a shows the overall BoN performance using five different pLLM and R1-Distill-Qwen-14B as the reward\nmodel backbone. In this setting, dORM performs comparably to dPRM, while gPRM lags behind the other\nvariants, which is contrary to Lightman et al. (2024); Khalifa et al. (2025) and our math-domain results in\nFig. 4. Overall, gORM outperforms dORM/dPRM/gPRM, without notable degradation in any domain relative",
+     "pdf_page": "https://arxiv.org/pdf/2510.00492v3#page=8"
+    },
+    {
+     "version": "2510.00492v3",
+     "page": 6,
+     "lines": [
+      183,
+      186
+     ],
+     "text": "Multi-domain and specialized-domain datasets. Following Zeng et al. (2025), we primarily use\nMMLU-Pro (Wang et al., 2024c), a 10-choice benchmark covering 14 domains. Each question is paired with\n16 CoTs for training and 128 for evaluation, generated by Llama-3.1-8B-Instruct (Dubey et al., 2024), where\nprocess labels z1:T are automatically annotated by Llama-3.1-70B-Instruct. To assess generalization across",
+     "pdf_page": "https://arxiv.org/pdf/2510.00492v3#page=6"
+    }
+   ]
+  },
+  {
+   "id": "Q18:F4",
+   "later_paper": "arXiv 2410.17621v2: Process Supervision-Guided Policy Optimization for Code Generation",
+   "first_submitted": "2024-10-23",
+   "effect": "PARTLY_ANSWERS",
+   "claim": "In RL for code generation, a line-level PRM, whose labels were produced automatically (a code prefix is labelled correct if some completion of it passes all unit tests), used both as a dense reward and for value initialisation improved pass@1 over an RL baseline trained on unit-test rewards alone (e.g. Qwen2.5-7B-RL: MBPP 62.4% to 65.4%, LiveCodeBench 27.5% to 30.1%).",
+   "setting": "Experiment: RL fine-tuning of Qwen2.5-7B and Doubao-Lite with unit-test rewards; PRM labels from automated completion and testing of code prefixes, not human labels; evaluation pass@1 on HumanEval, MBPP and LiveCodeBench.",
+   "bears_on": "Process supervision outside math and in RL training, a setting the asking paper did not test (it used best-of-N only).",
+   "passages": [
+    {
+     "version": "2410.17621v2",
+     "page": 1,
+     "lines": [
+      26,
+      37
+     ],
+     "text": "Reinforcement learning (RL) with unit test\nfeedback has enhanced large language models’\n(LLMs) code generation, but relies on sparse rewards provided only after complete code evaluation, limiting learning efficiency and incremental improvements. When generated code fails\nall unit tests, no learning signal is received, hindering progress on complex tasks. To address\nthis, we propose a Process Reward Model (PRM)\nthat delivers dense, line-level feedback on code\ncorrectness during generation, mimicking human\ncode refinement and providing immediate guidance. We explore various strategies for training\nPRMs and integrating them into the RL framework, finding that using PRMs both as dense rewards and for value function initialization significantly boosts performance. Our experimental\nresults also highlight the effectiveness of PRMs in\nenhancing RL-driven code generation, especially\nfor long-horizon scenarios.",
+     "pdf_page": "https://arxiv.org/pdf/2410.17621v2#page=1"
+    },
+    {
+     "version": "2410.17621v2",
+     "page": 3,
+     "lines": [
+      119,
+      126
+     ],
+     "text": "costly and not scalable. Instead, we employ an automated\napproach inspired by techniques used in recent works (Wang\net al., 2024a;b; Luo et al., 2024). Our method leverages the\nmodel’s own capabilities to generate completions for partial code prefixes and uses automated testing to assess their\ncorrectness. The key idea is to determine whether a partial\ncode prefix can be extended—by any means—into a complete program that passes all unit tests. If so, we consider\nthe prefix as potentially correct; otherwise, it is labeled as\nincorrect.",
+     "pdf_page": "https://arxiv.org/pdf/2410.17621v2#page=3"
+    },
+    {
+     "version": "2410.17621v2",
+     "page": 6,
+     "lines": [
+      188,
+      192
+     ],
+     "text": "Combining PRM for both dense rewards and value initialization yields significant performance improvements.\nIn Qwen2.5-7B-RL, Pass@1 increases from 62.4% to\n65.4% on MBPP and from 27.5% to 30.1% on LiveCodeBench. Similarly, in Doubao-Lite-RL, Pass@1\nimproves from 65.1% to 70.9% on HumanEval, 61.9% to\n63.8% on MBPP, and 28.2% to 29.8% on LiveCodeBench.",
+     "pdf_page": "https://arxiv.org/pdf/2410.17621v2#page=6"
+    }
+   ]
+  },
+  {
+   "id": "Q18:F5",
+   "later_paper": "arXiv 2502.06737v2: VersaPRM: Multi-Domain Process Reward Model via Synthetic Reasoning Data",
+   "first_submitted": "2025-02-10",
+   "effect": "NARROWS",
+   "claim": "The authors report that existing PRMs trained on math data perform poorly in other domains, and that a multi-domain PRM trained on synthetic reasoning data gives consistent gains across domains, e.g. 7.9% over majority voting in MMLU-Pro Law via weighted majority voting versus 1.3% for Qwen2.5-Math-PRM.",
+   "setting": "Experiment: diverse domains including MMLU-Pro Law; PRM trained on synthetic chain-of-thought data whose step labels come from Llama-3.1-70B-Instruct evaluating each chain step by step to locate the earliest erroneous step (LLM labels, not human labels); PRMs used for weighted majority voting and compared with majority voting; the quoted lines include no ORM comparison.",
+   "bears_on": "Whether math-trained process supervision transfers to other domains (it largely did not) and whether domain-matched process labels help.",
+   "passages": [
+    {
+     "version": "2502.06737v2",
+     "page": 1,
+     "lines": [
+      22,
+      33
+     ],
+     "text": "Process Reward Models (PRMs) have proven\neffective at enhancing mathematical reasoning\nfor Large Language Models (LLMs) by leveraging increased inference-time computation. However, they are predominantly trained on mathematical data and their generalizability to nonmathematical domains has not been rigorously\nstudied. In response, this work first shows that\ncurrent PRMs have poor performance in other\ndomains. To address this limitation, we introduce VersaPRM, a multi-domain PRM trained\non synthetic reasoning data generated using our\nnovel data generation and annotation method. VersaPRM achieves consistent performance gains\nacross diverse domains. For instance, in the\nMMLU-Pro category of Law, VersaPRM via\nweighted majority voting, achieves a 7.9% performance gain over the majority voting baseline—\nsurpassing Qwen2.5-Math-PRM’s gain of 1.3%.",
+     "pdf_page": "https://arxiv.org/pdf/2502.06737v2#page=1"
+    },
+    {
+     "version": "2502.06737v2",
+     "page": 5,
+     "lines": [
+      13,
+      19
+     ],
+     "text": "5.2. Auto-Labeling\nTo annotate our synthetic CoT data, we adopt an approach\ninspired by the critic models in the work of Zheng et al.\n(2024). Specifically, we utilize Llama-3.1-70B-Instruct as a\nstrong LLM to evaluate each CoT using step-by-step reasoning, locating the earliest erroneous step, if any. To enhance\naccuracy and consistency, we identified two key additional\ncomponents.",
+     "pdf_page": "https://arxiv.org/pdf/2502.06737v2#page=5"
+    }
+   ]
+  },
+  {
+   "id": "Q18:F6",
+   "later_paper": "arXiv 2306.01693v2: Fine-Grained Human Feedback Gives Better Rewards for Language Model Training",
+   "first_submitted": "2023-06-02",
+   "effect": "NARROWS",
+   "claim": "On long-form question answering, RL with dense per-segment rewards learned from fine-grained human error labels produced fewer factual, irrelevance, repetition and incoherence errors than RL with a holistic preference reward; in overall comparisons annotators preferred it in 30.5% of examples, preferred preference-RLHF in 24.5%, and judged 45% ties.",
+   "setting": "Experiment: policy trained with RL; human annotators mark erroneous sentences or sub-sentences by error type; tasks are long-form QA and detoxification; the dense units are output segments, not reasoning steps, and the comparison also changes the feedback type (error labels vs preference feedback).",
+   "bears_on": "Whether finer-grained, step-like human supervision beats outcome-level feedback outside math, in RL training.",
+   "passages": [
+    {
+     "version": "2306.01693v2",
+     "page": 1,
+     "lines": [
+      19,
+      27
+     ],
+     "text": "e.g., which parts contain what type(s) of errors. In this paper, we use fine-grained\nhuman feedback (e.g., which sentence is false, which sub-sentence is irrelevant) as\nan explicit training signal. We introduce F INE -G RAINED R LHF, a framework that\nenables training and learning from reward functions that are fine-grained in two\nrespects: (1) density, providing a reward after every segment (e.g., a sentence) is\ngenerated; and (2) incorporating multiple reward models associated with different\nfeedback types (e.g., factual incorrectness, irrelevance, and information incompleteness). We conduct experiments on detoxification and long-form question\nanswering to illustrate how learning with such reward functions leads to improved\nperformance, supported by both automatic and human evaluation. Additionally,",
+     "pdf_page": "https://arxiv.org/pdf/2306.01693v2#page=1"
+    },
+    {
+     "version": "2306.01693v2",
+     "page": 7,
+     "lines": [
+      60,
+      69
+     ],
+     "text": "F INE -G RAINED R LHF outperforms SFT and Preference RLHF on all error types. Figure 3\nand Table 2 show that our F INE -G RAINED R LHF leads to generation that is much more factually\ncorrect and contains more complete information, compared to all other systems. It generates fewer\nirrelevance, repetition, andincoherence errors, compared with SFT and Preference RLHF. In the\nmeantime, Preference RLHF, despite greatly reducing factual errors compared to the initial policy\nmodel SFT, generates even more irrelevance, repetition, and incoherence errors than SFT. F INE G RAINED R LHF outperforms Preference RLHF potentially due to more specific and localized training\nsignals. In addition, we ask annotators to compare the overall generation quality of F INE -G RAINED\nR LHF and preference RLHF. Although Preference RLHF is trained directly with such preference\nfeedback, F INE -G RAINED R LHF was rated better than Preference RLHF in 30.5% of all examples and\nworse in 24.5% of examples. The annotators indicate a tie in the remaining 45% of cases. Surprisingly,",
+     "pdf_page": "https://arxiv.org/pdf/2306.01693v2#page=7"
+    }
+   ]
+  },
+  {
+   "id": "Q18:F7",
+   "later_paper": "arXiv 2501.12948v2: DeepSeek-R1: Incentivizing Reasoning Capability in LLMs via Reinforcement Learning",
+   "first_submitted": "2025-01-22",
+   "effect": "NARROWS",
+   "claim": "Reporting it as an unsuccessful attempt, the DeepSeek-R1 authors say a PRM faces three practical limits (defining fine-grained steps in general reasoning, judging step correctness without scalable annotation, and reward hacking) and that, while PRMs rerank top-N responses well, their advantages were limited relative to the added compute during large-scale RL in their experiments; they add that this does not imply such approaches cannot work.",
+   "setting": "Experience report from training large reasoning models with large-scale RL; no controlled PRM vs ORM numbers in these lines; domains are not separated in the quoted text.",
+   "bears_on": "Whether process supervision pays off in large-scale RL for general reasoning, beyond best-of-N reranking.",
+   "passages": [
+    {
+     "version": "2501.12948v2",
+     "page": 63,
+     "lines": [
+      21,
+      23
+     ],
+     "text": "In the early stages of developing DeepSeek-R1, we also encountered failures and setbacks along\nthe way. We share our failure experiences here to provide insights, but this does not imply that\nthese approaches are incapable of developing effective reasoning models.",
+     "pdf_page": "https://arxiv.org/pdf/2501.12948v2#page=63"
+    },
+    {
+     "version": "2501.12948v2",
+     "page": 63,
+     "lines": [
+      24,
+      34
+     ],
+     "text": "Process Reward Model (PRM) PRM is a reasonable method to guide the model toward better\napproaches for solving reasoning tasks (Lightman et al., 2024; Uesato et al., 2022; Wang et al.,\n2023a). However, in practice, PRM has three main limitations that may hinder its ultimate\nsuccess. First, it is challenging to explicitly define a fine-grain step in general reasoning. Second,\ndetermining whether the current intermediate step is correct is a challenging task. Automated\nannotation using models may not yield satisfactory results, while manual annotation is not conducive to scaling up. Third, once a model-based PRM is introduced, it inevitably leads to reward\nhacking (Gao et al., 2022), and retraining the reward model needs additional training resources\nand it complicates the whole training pipeline. In conclusion, while PRM demonstrates a good\nability to rerank the top-N responses generated by the model or assist in guided search (Snell\net al., 2024), its advantages are limited compared to the additional computational overhead it\nintroduces during the large-scale reinforcement learning process in our experiments.",
+     "pdf_page": "https://arxiv.org/pdf/2501.12948v2#page=63"
+    }
+   ]
+  }
+ ],
+ "findings_drafted": 7,
+ "maths": [],
+ "experiment_package": null,
+ "review_status": "provisional_ai_draft",
+ "rules": [
+  "Everything here is an AI draft (provisional_ai_draft): each counted item passed two blind AI checks that were tested on planted errors, and no person has reviewed it.",
+  "A finding counts only in the setting its own quoted lines show; read `setting` before carrying it to another setting.",
+  "A question's status is a label from fixed rules over its counted findings; `status_check` says whether that label itself passed its check.",
+  "Cite the paper and page from the passage, and read the PDF page before relying on a claim."
+ ]
+}

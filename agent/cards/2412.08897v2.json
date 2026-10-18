@@ -1,0 +1,547 @@
+{
+ "schema": "ASRA-GAP-CLOSING-AGENT-v1",
+ "paper": "2412.08897v2",
+ "review_status": "provisional_ai_draft",
+ "rules": [
+  "Everything here is an AI draft (provisional_ai_draft): each counted item passed two blind AI checks that were tested on planted errors, and no person has reviewed it.",
+  "A finding counts only in the setting its own quoted lines show; read `setting` before carrying it to another setting.",
+  "A question's status is a label from fixed rules over its counted findings; `status_check` says whether that label itself passed its check.",
+  "Cite the paper and page from the passage, and read the PDF page before relying on a claim."
+ ],
+ "notes": "CORE is a summary of the paper's contributions (framework, protocols, theory and experiments) rather than one result; its card grades its empirical part, and the theory is graded in the three theorem cards. The record settings of RES-GRAPH-PROTOCOLS and RES-GRAPH-VERIFIER-SIZE say '10,000 Erdos-Renyi graph pairs', but the main text (p8 L40-41) says '10,000 graphs'. RES-CODE-VALIDATION says protocols perform 'significantly better' without naming a test. All error bars in Section 6 are one standard deviation across 10 seeds (p8 L34-35), not a standard error or confidence interval, so no experimental card is graded multi-setting.",
+ "cards": [
+  {
+   "record_id": "N2:DSOFT:ARXIV-2412.08897v2:CORE",
+   "paper": "2412.08897v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2412.08897v2:DEF-PVG",
+     "N2:DSOFT:ARXIV-2412.08897v2:DEF-NIP"
+    ],
+    "description": "The authors define a prover-verifier game framework and new protocols, give a theoretical comparison with proofs in Appendix C, and run experiments in two domains: a toy graph isomorphism problem and an APPS code validation task with GPT-4o provers and GPT-4o-mini verifiers fine-tuned by expert iteration.",
+    "passages": [
+     {
+      "version": "2412.08897v2",
+      "page": 8,
+      "lines": [
+       26,
+       35
+      ],
+      "text": "Having characterised the theoretical power of various PVG protocols, it remains to be seen whether\nthey are sufficient for solving real-world problems empirically. Indeed, until very recently (Kenton\net al., 2024; Arnesen et al., 2024; Khan et al., 2024), no previous study has attempted to rigorously\ncompare different protocols, and despite this recent progress, it remains unclear what their relative\nstrengths and weaknesses are in practice. To provide further clarity, we conduct experiments in two\ndomains: a toy graph isomorphism problem that illustrates the key ideas, and a code validation task\nusing large language models. Further details about the setup of our experiments can be found in\nAppendix D, and we release a comprehensive codebase that supports the easy specification of new\nprotocols and their evaluation in new domains. Throughout this section, error bars represent one\nstandard deviation, taken across 10 seeds.",
+      "pdf_page": "https://arxiv.org/pdf/2412.08897v2#page=8"
+     },
+     {
+      "version": "2412.08897v2",
+      "page": 9,
+      "lines": [
+       28,
+       38
+      ],
+      "text": "Our second experiment involves a much more complex problem: checking that a given Python\nprogram satisfies a natural language specification. In particular, we make use of the Automated\nProgramming Progress Standard (APPS) dataset (Hendrycks et al., 2021), which consists of Python\ncoding challenges with ground-truth solutions written by humans, as well as test cases for checking\nthe solutions. We create a new dataset by drawing two solutions for each problem, one of which we\ninsert a subtle bug into using GPT-4o-mini (OpenAI, 2024), checking that the result is still valid\nPython code but that it fails on at least one of the test cases. An example is given in Appendix D.2.1,\nand the median (Levenshtein) edit distance when inserting a bug is seven. We use GPT-4o as the\nprovers and GPT-4o-mini as the verifiers, fine-tuning both using eight rounds of expert iteration\n(Anthony et al., 2017). In each iteration, we fine-tune the models from scratch using all previous\nrollouts, following Kirchner et al. (2024). The models are then evaluated on a held-out test set.",
+      "pdf_page": "https://arxiv.org/pdf/2412.08897v2#page=9"
+     },
+     {
+      "version": "2412.08897v2",
+      "page": 11,
+      "lines": [
+       35,
+       36
+      ],
+      "text": "about the data generation processes, agent architectures, and training processes can be found in\nAppendix D. Finally, we provide proofs for all of our results in Appendix C.",
+      "pdf_page": "https://arxiv.org/pdf/2412.08897v2#page=11"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "The verifier is trusted but computationally bounded; the provers are powerful but untrusted.",
+     "The agents are represented by neural networks.",
+     "Unlike standard interactive proofs, the verifier has a dataset of labelled examples drawn i.i.d. from P and learns an interaction strategy meant to generalise to any input."
+    ],
+    "passages": [
+     {
+      "version": "2412.08897v2",
+      "page": 5,
+      "lines": [
+       128,
+       132
+      ],
+      "text": "Unlike in the case of standard interactive proofs, we assume that the verifier has some access to a\ndataset of labelled examples and aims to learn a strategy for interacting with the prover that generalises\nto any input. More formally, we assume that the verifier has access to a dataset D = {(xj , yj )}1⩽j⩽m\nwith each xj ∼iid P and yj = 1S (xj ). Letting ℓ(σ, x) := Eσ [mT ̸= y], the verifier’s aim is to\nminimise ℓ across inputs x ∈ X.",
+      "pdf_page": "https://arxiv.org/pdf/2412.08897v2#page=5"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Neural-network provers and verifiers; in code validation, GPT-4o provers and GPT-4o-mini verifiers",
+    "task_data": "A toy graph isomorphism problem and a code validation task built from the APPS dataset",
+    "judge": "The learned verifier makes the decision",
+    "regime": "mixed",
+    "scale": "GPT-4o provers and GPT-4o-mini verifiers; error bars over 10 seeds"
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": "Error bars are one standard deviation across 10 seeds; no confidence interval, standard error or statistical test is stated."
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2412.08897v2:LIM-1"
+    ],
+    "notes": "The authors list simplified training algorithms, evaluation on only two domains, and protocol variants left untested."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "The claim's empirical support is experiments in two domains whose error bars are one standard deviation across seeds, with no confidence interval, standard error or test, which the rubric grades single-setting; the theory it mentions is proved in Appendix C and graded in the theorem cards."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2412.08897v2:THM-NIP-STACKELBERG",
+   "paper": "2412.08897v2",
+   "evidence_type": "theorem",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2412.08897v2:DEF-NIP",
+     "N2:DSOFT:ARXIV-2412.08897v2:DEF-PVG"
+    ],
+    "description": "Proof (PDF page 23, where Theorem 8 is restated): the completeness and soundness errors are written as worst-case losses over positive and negative inputs, approximation tolerances ep and ev are defined for the prover and verifier, and the proof shows that σ is a valid IP system if and only if it is a strict verifier-leading e-Stackelberg equilibrium of the nip game.",
+    "passages": [
+     {
+      "version": "2412.08897v2",
+      "page": 23,
+      "lines": [
+       44,
+       48
+      ],
+      "text": "We next prove the correspondence result for nip games, which avoids the issues with Proposition 16\nby considering approximate equilibria and by not blurring the distinction between soundness and\ncompleteness when considering worst-case outcomes. Alongside these theoretical results (and\nexisting complexity-theoretic arguments), we note that our experimental results also suggest that\nusing nip over adp leads to improved performance (see, e.g. Figure 3).",
+      "pdf_page": "https://arxiv.org/pdf/2412.08897v2#page=23"
+     },
+     {
+      "version": "2412.08897v2",
+      "page": 23,
+      "lines": [
+       49,
+       56
+      ],
+      "text": "Theorem 8. Let (X, S, P) be a probabilistic decision problem that has a valid proof system and G a\nnip game. Then σ is a valid IP system if and only if it is an approximate verifier-leading Stackelberg\nequilibrium of G.\nProof. Before beginning the proof notice that for any σ ′ , the least upper bound of the resulting completeness and soundness errors are given by ϵc (σ ′ ) := supx:y=1 ℓ(σ ′ , x) and ϵs (σ ′ ) :=\nsupx:y=0 ℓ(σ ′ , x) respectively.\nIn an approximate equilibrium, the prover and verifier each select their strategies in a way that brings\nthem within some ep or ev of the loss from their optimal strategy, respectively. We will show that σ\nis a valid IP system if and only if it is a (strict) verifier-leading e-SE of G. Concretely, we set:",
+      "pdf_page": "https://arxiv.org/pdf/2412.08897v2#page=23"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "The probabilistic decision problem (X, S, P) has a valid proof system.",
+     "G is a nip game: one prover and one verifier exchanging alternating messages, with the prover's loss the worst-case loss on positive instances minus that on negative instances and the verifier's loss their sum.",
+     "Equilibria are approximate (verifier-leading Stackelberg within tolerances set in the proof).",
+     "Validity means completeness and soundness errors summing to less than 1, with soundness against any prover (Definition 2)."
+    ],
+    "passages": [
+     {
+      "version": "2412.08897v2",
+      "page": 3,
+      "lines": [
+       36,
+       44
+      ],
+      "text": "Definition 2 (Goldwasser et al., 1985; Goldreich, 2001). An interactive proof system ⟨p, v⟩ for\nS ⊆ X comprises a prover p and verifier v which, given an input x ∈ X, interact to (stochastically)\ngenerate a sequence of messages m1:T (a ‘ proof’). The (finite) sequence length T is determined by v,\nwhose eventual output is given by mT ∈ {1, 0}, corresponding to ‘accept’ and ‘reject’, respectively.\nWe denote this (stochastic) proof m1:T produced by ⟨p, v⟩ on input x as ⟨p, v⟩(x). We say that ⟨p, v⟩\nis (ϵc , ϵs )-valid (or simply ‘valid’) for ϵc + ϵs < 1 if it satisfies:2\n• Completeness: If x ∈ S, then ⟨p, v⟩(x)T = 1 w.p. ⩾ 1 − ϵc ;\n• Soundness: If x ∈\n/ S, then ⟨p′ , v⟩(x)T = 0 w.p. ⩾ 1 − ϵs for any prover p′ .",
+      "pdf_page": "https://arxiv.org/pdf/2412.08897v2#page=3"
+     }
+    ],
+    "check": "not verified: the blind checks miss some dropped conditions on theorem cards; read the theorem's statement at the cited page"
+   },
+   "setting": {
+    "systems": "Abstract prover and verifier strategies in a one-prover, one-verifier nip prover-verifier game",
+    "task_data": "Any probabilistic decision problem (X, S, P) that has a valid proof system",
+    "judge": "The verifier agent of the game",
+    "regime": "theory",
+    "scale": null
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [],
+    "notes": "The authors note the theorem reduces finding a valid proof system to finding an equilibrium, which is far from straightforward: it requires learning to minimise the worst-case rather than expected loss, and finding a Stackelberg equilibrium."
+   },
+   "strength": {
+    "grade": "PROVED_IN_PAPER",
+    "reason": "Theorem 8 is stated on PDF page 6 and restated with its proof on PDF page 23."
+   },
+   "review_status": "provisional_ai_draft",
+   "check_history": [
+    "card-1: flagged or undecided by two blind checks; rewritten from the checkers' suggested fix (quotes unchanged)"
+   ]
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2412.08897v2:THM-MNIP",
+   "paper": "2412.08897v2",
+   "evidence_type": "theorem",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2412.08897v2:DEF-NIP",
+     "N2:DSOFT:ARXIV-2412.08897v2:DEF-PVG"
+    ],
+    "description": "Proof in Appendix C.1 that follows the proof of Theorem 8, redefining the approximation bounds for two provers and using correlated equilibria because the provers can agree a joint strategy and shared randomness beforehand.",
+    "passages": [
+     {
+      "version": "2412.08897v2",
+      "page": 25,
+      "lines": [
+       20,
+       25
+      ],
+      "text": "We now prove the correspondence result for mnip games. The proof is very similar to that of the\ncorrespondence for nip games, so we limit ourselves to noting the differences.\nTheorem 11. Let (X, S, P) be a probabilistic decision problem that has a valid proof system and\nG a mnip game. Then σ is a valid MIP system if and only if it is an approximate verifier-leading\ncorrelated Stackelberg equilibrium of G.\nProof. We follow the proof of Theorem 8. This time we define the approximation bound e as follows.",
+      "pdf_page": "https://arxiv.org/pdf/2412.08897v2#page=25"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "The probabilistic decision problem (X, S, P) has a valid proof system.",
+     "G is an mnip game: the nip protocol with two provers that have the same loss.",
+     "Soundness must hold against any choice of both provers (p′1, p′2).",
+     "The provers may agree on a joint strategy and a shared random signal beforehand but cannot communicate during their interactions with the verifier, so correlated equilibria are used.",
+     "Equilibria are approximate verifier-leading correlated Stackelberg equilibria."
+    ],
+    "passages": [
+     {
+      "version": "2412.08897v2",
+      "page": 25,
+      "lines": [
+       45,
+       50
+      ],
+      "text": "In the mnip protocol, the provers are assumed to be able to agree on a joint strategy σ p = (σ p1 , σ p2 )\nbeforehand – including a commonly observed source of randomness – though their interactions\nwith the verifier during the game are independent. The source of randomness then essentially forms\na correlation device for the provers, allowing them to sample their actions using the agreed upon\njoint strategy σ p . If neither prover has an incentive to deviate from this agreement given their\naction (provided by this ‘correlation device’), then we say that they are playing as in a correlated",
+      "pdf_page": "https://arxiv.org/pdf/2412.08897v2#page=25"
+     },
+     {
+      "version": "2412.08897v2",
+      "page": 7,
+      "lines": [
+       44,
+       47
+      ],
+      "text": "Multi-prover interactive proofs (MIPs) are a natural generalisation of classical IPs (Ben-Or et al.,\n1988), whose additional power results from the fact that while the two provers may correlate their\nstrategies, they are prevented from communicating with one another during their interactions with the\nverifier (Babai et al., 1991). This allows the verifier to ‘cross-examine’ the provers.",
+      "pdf_page": "https://arxiv.org/pdf/2412.08897v2#page=7"
+     }
+    ],
+    "check": "not verified: the blind checks miss some dropped conditions on theorem cards; read the theorem's statement at the cited page"
+   },
+   "setting": {
+    "systems": "Abstract strategies for two provers and one verifier in an mnip prover-verifier game",
+    "task_data": "Any probabilistic decision problem (X, S, P) that has a valid proof system",
+    "judge": "The verifier agent of the game",
+    "regime": "theory",
+    "scale": null
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [],
+    "notes": null
+   },
+   "strength": {
+    "grade": "PROVED_IN_PAPER",
+    "reason": "Theorem 11 is proved in Appendix C.1, where the proof follows that of Theorem 8 and notes only the differences."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2412.08897v2:RES-GRAPH-PROTOCOLS",
+   "paper": "2412.08897v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2412.08897v2:DEF-NIP"
+    ],
+    "description": "Provers and verifiers with a graph neural network and transformer body were trained with independent PPO under the adp, debate, nip and mnip protocols on a synthetic graph isomorphism dataset, and their accuracies compared on a held-out test set (Figure 2a).",
+    "passages": [
+     {
+      "version": "2412.08897v2",
+      "page": 8,
+      "lines": [
+       40,
+       49
+      ],
+      "text": "As a warm-up exercise, we consider the problem of testing for graph isomorphism using a synthetic\ndataset of 10,000 graphs (each with approximately ten vertices) generated via the Erdős-Rényi model.\nThe verifiers and provers are implemented using a graph neural network (GNN) and transformer\nbody, with standard feedforward heads used for sending messages and estimating the value of each\nstate. Agents are trained using independent PPO (Schulman et al., 2017; Schroeder de Witt et al.,\n2020) and evaluated on a held-out test set. This simple setting has the benefit that by varying the\nnumber of GNN layers we can precisely calibrate the capability of the agents to distinguish between\nisomorphic and non-isomorphic graphs. By controlling the number of rounds of the Weisfeiler-Leman\ntest (Weisfeiler & Leman, 1968) needed to distinguish non-isomorphic graph pairs in the dataset, we\nensure a theoretical limit on the accuracy attainable by the verifier alone.",
+      "pdf_page": "https://arxiv.org/pdf/2412.08897v2#page=8"
+     },
+     {
+      "version": "2412.08897v2",
+      "page": 30,
+      "lines": [
+       25,
+       28
+      ],
+      "text": "Agents are trained using independent PPO (Schulman et al., 2017; Schroeder de Witt et al., 2020).\nWe use a clipped objective with value ϵ = 0.2, with hyperparameters γ = 0.95 and λ = 0.95. We\nadditionally use advantage normalisation and entropy regularisation with coefficient 0.001. The\nlearning rate is 0.003. For each protocol we train across 10 seeds for 5, 000 steps.",
+      "pdf_page": "https://arxiv.org/pdf/2412.08897v2#page=30"
+     },
+     {
+      "version": "2412.08897v2",
+      "page": 8,
+      "lines": [
+       34,
+       35
+      ],
+      "text": "protocols and their evaluation in new domains. Throughout this section, error bars represent one\nstandard deviation, taken across 10 seeds.",
+      "pdf_page": "https://arxiv.org/pdf/2412.08897v2#page=8"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "The dataset is built so that the accuracy the verifier can reach alone is limited, by controlling the number of Weisfeiler-Leman rounds needed to tell non-isomorphic pairs apart.",
+     "The authors attribute the lack of gain for adp, debate and mnip mainly to the task: a simple random-node query algorithm solves it, which adp cannot express (the verifier sends no messages) and which is harder to learn with multiple provers."
+    ],
+    "passages": []
+   },
+   "setting": {
+    "systems": "Provers and verifiers with a graph neural network and transformer body, trained with independent PPO",
+    "task_data": "Graph isomorphism on a synthetic dataset of 10,000 Erdős-Rényi graphs with about ten vertices each; held-out test set",
+    "judge": "The trained verifier makes the decision; test accuracy is reported",
+    "regime": "training",
+    "scale": "10,000 graphs; 10 seeds of 5,000 training steps per protocol"
+   },
+   "quantitative": {
+    "n": "10,000 graphs in the dataset (test-set size not stated in these passages); 10 seeds",
+    "uncertainty": "Error bars are one standard deviation across 10 seeds; no confidence interval, standard error or statistical test is stated."
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2412.08897v2:LIM-1"
+    ],
+    "notes": "A toy warm-up task; the authors attribute the other protocols' lack of gain mainly to the task's simple query algorithm, and their training omits the more advanced methods of Sections 4.1 and 4.2."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "One synthetic task with one agent architecture, and only standard-deviation error bars across seeds."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2412.08897v2:RES-GRAPH-VERIFIER-SIZE",
+   "paper": "2412.08897v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2412.08897v2:DEF-NIP"
+    ],
+    "description": "Under the nip protocol on the graph isomorphism task, the verifier's network width and number of layers were varied, and test accuracy with a trained prover was compared with running the protocol with a random prover (Figure 2b).",
+    "passages": [
+     {
+      "version": "2412.08897v2",
+      "page": 8,
+      "lines": [
+       40,
+       49
+      ],
+      "text": "As a warm-up exercise, we consider the problem of testing for graph isomorphism using a synthetic\ndataset of 10,000 graphs (each with approximately ten vertices) generated via the Erdős-Rényi model.\nThe verifiers and provers are implemented using a graph neural network (GNN) and transformer\nbody, with standard feedforward heads used for sending messages and estimating the value of each\nstate. Agents are trained using independent PPO (Schulman et al., 2017; Schroeder de Witt et al.,\n2020) and evaluated on a held-out test set. This simple setting has the benefit that by varying the\nnumber of GNN layers we can precisely calibrate the capability of the agents to distinguish between\nisomorphic and non-isomorphic graphs. By controlling the number of rounds of the Weisfeiler-Leman\ntest (Weisfeiler & Leman, 1968) needed to distinguish non-isomorphic graph pairs in the dataset, we\nensure a theoretical limit on the accuracy attainable by the verifier alone.",
+      "pdf_page": "https://arxiv.org/pdf/2412.08897v2#page=8"
+     },
+     {
+      "version": "2412.08897v2",
+      "page": 8,
+      "lines": [
+       57,
+       59
+      ],
+      "text": "Figure 2: Test accuracies on the graph isomorphism task across (a) interaction protocols and (b)\nmodel sizes for nip, compared to the baseline of running the protocol with a random prover; and (c)\ndifferences in message sequence likelihood for varying prover reward coefficients in zk-nip.",
+      "pdf_page": "https://arxiv.org/pdf/2412.08897v2#page=8"
+     },
+     {
+      "version": "2412.08897v2",
+      "page": 8,
+      "lines": [
+       34,
+       35
+      ],
+      "text": "protocols and their evaluation in new domains. Throughout this section, error bars represent one\nstandard deviation, taken across 10 seeds.",
+      "pdf_page": "https://arxiv.org/pdf/2412.08897v2#page=8"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "Verifier capability is calibrated by its size (network width and number of layers); the dataset is built so that the accuracy the verifier can reach alone is limited.",
+     "The baseline is the same protocol run with a random prover."
+    ],
+    "passages": []
+   },
+   "setting": {
+    "systems": "nip protocol; graph neural network and transformer agents, with verifiers of varied width and depth, trained with independent PPO",
+    "task_data": "Graph isomorphism on a synthetic dataset of 10,000 Erdős-Rényi graphs with about ten vertices each; held-out test set",
+    "judge": "The trained verifier makes the decision; test accuracy is reported",
+    "regime": "training",
+    "scale": "Verifier width and number of layers varied (values not stated in these passages); 10,000 graphs; 10 seeds"
+   },
+   "quantitative": {
+    "n": "10,000 graphs in the dataset (test-set size not stated in these passages); 10 seeds",
+    "uncertainty": "Error bars are one standard deviation across 10 seeds; no confidence interval, standard error or statistical test is stated."
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2412.08897v2:LIM-1"
+    ],
+    "notes": "A toy warm-up task; Figure 2b shows the nip protocol only."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "One synthetic task, one protocol and one agent architecture, with only standard-deviation error bars across seeds."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2412.08897v2:RES-CODE-VALIDATION",
+   "paper": "2412.08897v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2412.08897v2:DEF-NIP"
+    ],
+    "description": "On a dataset built from APPS (two solutions per problem, one given a subtle bug by GPT-4o-mini), GPT-4o provers and GPT-4o-mini verifiers were fine-tuned with eight rounds of expert iteration under each protocol and compared on a held-out test set with a verifier trained in isolation, by mean accuracy, the share of test points where the verifier is wrong in all 10 sampled rollouts, and precision and recall.",
+    "passages": [
+     {
+      "version": "2412.08897v2",
+      "page": 9,
+      "lines": [
+       28,
+       38
+      ],
+      "text": "Our second experiment involves a much more complex problem: checking that a given Python\nprogram satisfies a natural language specification. In particular, we make use of the Automated\nProgramming Progress Standard (APPS) dataset (Hendrycks et al., 2021), which consists of Python\ncoding challenges with ground-truth solutions written by humans, as well as test cases for checking\nthe solutions. We create a new dataset by drawing two solutions for each problem, one of which we\ninsert a subtle bug into using GPT-4o-mini (OpenAI, 2024), checking that the result is still valid\nPython code but that it fails on at least one of the test cases. An example is given in Appendix D.2.1,\nand the median (Levenshtein) edit distance when inserting a bug is seven. We use GPT-4o as the\nprovers and GPT-4o-mini as the verifiers, fine-tuning both using eight rounds of expert iteration\n(Anthony et al., 2017). In each iteration, we fine-tune the models from scratch using all previous\nrollouts, following Kirchner et al. (2024). The models are then evaluated on a held-out test set.",
+      "pdf_page": "https://arxiv.org/pdf/2412.08897v2#page=9"
+     },
+     {
+      "version": "2412.08897v2",
+      "page": 30,
+      "lines": [
+       46,
+       49
+      ],
+      "text": "• Finally, we clean the data by removing all comments and split the data into a train and test\nset, where each instance (x, y) contains input x = (p, a), the problem description and the\nanswer, and the (in)correctness label y.\nThe train-test split of the eventual dataset is 90:10. An example of an edit made to generate the buggy",
+      "pdf_page": "https://arxiv.org/pdf/2412.08897v2#page=30"
+     },
+     {
+      "version": "2412.08897v2",
+      "page": 8,
+      "lines": [
+       34,
+       35
+      ],
+      "text": "protocols and their evaluation in new domains. Throughout this section, error bars represent one\nstandard deviation, taken across 10 seeds.",
+      "pdf_page": "https://arxiv.org/pdf/2412.08897v2#page=8"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "Buggy solutions are made by GPT-4o-mini and kept only if they are still valid Python but fail at least one test case.",
+     "The baseline is a verifier trained in isolation.",
+     "Worst-case performance is measured, in line with Theorem 8, as the share of test points where the verifier guesses wrong in all 10 sampled rollouts."
+    ],
+    "passages": []
+   },
+   "setting": {
+    "systems": "GPT-4o provers and GPT-4o-mini verifiers, fine-tuned with eight rounds of expert iteration",
+    "task_data": "Code validation: APPS Python problems, each with a human solution and a subtly bugged one; 90:10 train-test split",
+    "judge": "The trained GPT-4o-mini verifier decides; each instance carries an (in)correctness label",
+    "regime": "training",
+    "scale": "GPT-4o and GPT-4o-mini; 10 rollouts per test point for the worst-case metric"
+   },
+   "quantitative": {
+    "n": "10 sampled rollouts per test data point; the test-set size is not stated in these passages (90:10 split)",
+    "uncertainty": "Error bars are one standard deviation across 10 seeds; 'significantly better' is stated without a named test, confidence interval or standard error."
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2412.08897v2:LIM-1"
+    ],
+    "notes": "The code-validation training does not use RL-based learning; only two domains and not all protocol variants are evaluated."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "One task (APPS code validation) with one prover-verifier model pairing, and only standard-deviation error bars with no named test."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2412.08897v2:RES-STABILISED-EI",
+   "paper": "2412.08897v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [],
+    "description": "In the code validation setup, vanilla expert iteration was compared with a 'stabilised' variant in which, in an annealed share of the verifier's rollouts (80% falling linearly to 0%), the verifier's guess is replaced with the true label, and the resulting mode-collapse dynamics, mean test accuracy and worst-case performance were compared (Figure 4).",
+    "passages": [
+     {
+      "version": "2412.08897v2",
+      "page": 33,
+      "lines": [
+       28,
+       34
+      ],
+      "text": "In addition, we test a variation of expert iteration with verifier guess replacement that we refer to as\n‘stabilised’ expert iteration. In this scheme, the prover agents are trained normally, while the verifier\nagent is trained with a modified method. In each iterations the rollouts are divided into two partitions.\nFrom the first partition we select those rollouts where the verifier receives positive reward. We then\nselect all rollouts from the second partition, but in each case we replace the verifier’s guess with the\ntrue label. The proportional size of the second partition in annealed throughout training, starting at\n80% and decreasing linearly to 0%.",
+      "pdf_page": "https://arxiv.org/pdf/2412.08897v2#page=33"
+     },
+     {
+      "version": "2412.08897v2",
+      "page": 9,
+      "lines": [
+       28,
+       38
+      ],
+      "text": "Our second experiment involves a much more complex problem: checking that a given Python\nprogram satisfies a natural language specification. In particular, we make use of the Automated\nProgramming Progress Standard (APPS) dataset (Hendrycks et al., 2021), which consists of Python\ncoding challenges with ground-truth solutions written by humans, as well as test cases for checking\nthe solutions. We create a new dataset by drawing two solutions for each problem, one of which we\ninsert a subtle bug into using GPT-4o-mini (OpenAI, 2024), checking that the result is still valid\nPython code but that it fails on at least one of the test cases. An example is given in Appendix D.2.1,\nand the median (Levenshtein) edit distance when inserting a bug is seven. We use GPT-4o as the\nprovers and GPT-4o-mini as the verifiers, fine-tuning both using eight rounds of expert iteration\n(Anthony et al., 2017). In each iteration, we fine-tune the models from scratch using all previous\nrollouts, following Kirchner et al. (2024). The models are then evaluated on a held-out test set.",
+      "pdf_page": "https://arxiv.org/pdf/2412.08897v2#page=9"
+     },
+     {
+      "version": "2412.08897v2",
+      "page": 8,
+      "lines": [
+       34,
+       35
+      ],
+      "text": "protocols and their evaluation in new domains. Throughout this section, error bars represent one\nstandard deviation, taken across 10 seeds.",
+      "pdf_page": "https://arxiv.org/pdf/2412.08897v2#page=8"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "Vanilla expert iteration includes only rollouts where the verifier guesses correctly, which the authors find exacerbates an initially low acceptance rate for debate and the solo verifier.",
+     "The authors hypothesise that the solo verifier's higher mean accuracy under the new scheme is because it is closer to standard supervised fine-tuning."
+    ],
+    "passages": []
+   },
+   "setting": {
+    "systems": "GPT-4o provers and GPT-4o-mini verifiers, fine-tuned with vanilla or stabilised expert iteration",
+    "task_data": "Code validation on an APPS-based dataset with a human solution and a subtly bugged one per problem; held-out test set",
+    "judge": "The trained GPT-4o-mini verifier decides",
+    "regime": "training",
+    "scale": "GPT-4o and GPT-4o-mini; eight rounds of expert iteration"
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": "Error bars are one standard deviation across 10 seeds; no confidence interval, standard error or statistical test is stated."
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2412.08897v2:LIM-1"
+    ],
+    "notes": "The effect on mean accuracy is small and mixed across protocols; only one task is used for this comparison."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "One task (APPS code validation) and one model pairing, with only standard-deviation error bars across seeds."
+   },
+   "review_status": "provisional_ai_draft"
+  }
+ ]
+}

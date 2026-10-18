@@ -1,0 +1,198 @@
+{
+ "schema": "ASRA-GAP-CLOSING-AGENT-v1",
+ "id": "Q11",
+ "question": "How far can critique training be pushed relative to discriminator performance, and what stops models from explaining what they know?",
+ "asked_by": "Saunders et al., Self-critiquing models for assisting human evaluators",
+ "rank": 7,
+ "status": "NARROWED",
+ "status_check": "AI_CHECKED",
+ "remaining_question": "On a task with verifiable flaws (e.g. tampered code), what fraction of the flaws a model can be shown to detect (by its best discriminator, a probe on its activations or a generative verifier) do its trained critiques articulate to humans, does that fraction rise with critique-training compute and model scale, and what prevents the remaining detected flaws from being articulated (given that fine-tuning on ground-truth explanations left freeform rule articulation at 0% for 7/10 rules)?",
+ "remaining_type": "EMPIRICAL",
+ "safety_case": [
+  {
+   "node": "SC-D5.4",
+   "relation": "INDIRECT",
+   "reason": "An answer on what stops models from putting into critiques the flaws they can detect would be evidence on whether a model's knowledge resists being argued compellingly, the D5.4 worry, but for single-model critiques on tasks with verifiable flaws rather than recursive tree debate.",
+   "node_evidence": "WEAK",
+   "branch": "the equilibrium is correct (debate structure and judges)",
+   "score": 1.0
+  }
+ ],
+ "findings": [
+  {
+   "id": "Q11:F1",
+   "later_paper": "arXiv 2407.00215v1: LLM Critics Help Catch LLM Bugs",
+   "first_submitted": "2024-06-28",
+   "effect": "NARROWS",
+   "claim": "To study Saunders et al.'s DC gap, the authors trained LLM discriminators to classify tampered vs untampered code and found discriminator scores were not especially predictive of critique-model performance: on the 10% of cases where the largest discriminator was most confidently wrong, critics still caught the inserted bug around 54% of the time. Their 'tentative conclusion' is that discriminator training was an insufficient means to extract 'what the model knows', and they leave investigation of the DC gap to future work.",
+   "setting": "Experiment in a code setting: LLM discriminators trained with binary log-loss on pairs of good and bad code to predict whether code has been tampered with (inserted bugs); compared with how often critic models catch the inserted bug. No DC-gap figure is reported (the authors leave the DC gap to future work), and critique training is not varied in these lines.",
+   "bears_on": "First part (critique training relative to discriminator performance): questions whether a trained discriminator is an adequate yardstick for 'what the model knows' against which critiques are compared.",
+   "passages": [
+    {
+     "version": "2407.00215v1",
+     "page": 18,
+     "lines": [
+      47,
+      57
+     ],
+     "text": "Saunders et al. introduced the notion of a “Discriminator Critique Gap” (DC-Gap). The goal was to\nunderstand what fraction of “what the model knows” had successfully been elicited by the critique\nmethod. Quoting that work directly:\n“[I]f a model can tell an answer is poor, can it also point out the flaw to a human?\nIf we could train models to always point out when they notice flaws, this could go\na long way towards having trustworthy and aligned models...”\nTo investigate this we trained discriminators: in our setting, these are classifiers that predict whether\ncode has been tampered with or not. This was also a convenient method to confirm that there are no\ntrivial means by which inserted bugs can be detected. Our discriminators are LLMs trained on pairs\nof good and bad code with binary classification: for each input they predict the log-probability that it\nis “good” and we minimize the log-loss.",
+     "pdf_page": "https://arxiv.org/pdf/2407.00215v1#page=18"
+    },
+    {
+     "version": "2407.00215v1",
+     "page": 19,
+     "lines": [
+      49,
+      53
+     ],
+     "text": "we also found that discriminator scores were not especially predictive of critique model performance.\nOn the 10% cases where the largest discriminator was most confidently wrong, critics still catch the\ninserted bug around 54% of the time. Our tentative conclusion was that discriminator training was an\ninsufficient means to extract “what the model knows” as there were so many cases where the critic\nsucceeded but the discriminator fails. We therefore leave investigation of the DC gap to future work.",
+     "pdf_page": "https://arxiv.org/pdf/2407.00215v1#page=19"
+    }
+   ]
+  },
+  {
+   "id": "Q11:F2",
+   "later_paper": "arXiv 2405.07436v1: Can Language Models Explain Their Own Classification Behavior?",
+   "first_submitted": "2024-05-13",
+   "effect": "NARROWS",
+   "claim": "On simple few-shot text-classification rules, in-context freeform articulation accuracy was 1%, 7% and 72% for Curie, GPT-3 and GPT-4; GPT-3 fine-tuned to classify at >=95% in and out of distribution articulated 0% of the rules approximating its behaviour, and further fine-tuning on ground-truth explanations left freeform articulation at 0% for 7/10 rules and above 15% for only 1/10. The authors note articulation tasks are likely harder than classification, citing Saunders et al.",
+   "setting": "Experiment: ArticulateRules classification rules; Curie (13B), GPT-3 (175B) and GPT-4 evaluated in context; GPT-3 fine-tuned on adversarially crafted inputs for a subset of 10 tasks, then further fine-tuned on ground-truth explanations; freeform and 2-way multiple-choice articulation. Classification-rule articulation, not critique training.",
+   "bears_on": "Second part (what stops models from explicating what they know): shows a classify-versus-articulate gap that supervised fine-tuning on explanations barely closed for GPT-3, while a larger model (GPT-4) did much better in context.",
+   "passages": [
+    {
+     "version": "2405.07436v1",
+     "page": 2,
+     "lines": [
+      160,
+      168
+     ],
+     "text": "1. Applying our evaluation in-context, we find articulation accuracy improves with scale;\nCurie (13B), GPT-3 (175B) and GPT-4 (unknown) achieved 1%, 7% and 72% average\naccuracy respectively on the in-context freeform articulation task (Figure 2).\n2. GPT-3 can be finetuned to achieve high classification accuracy (≥ 95% both in- and out-ofdistribution) on a subset of 10 tasks in ArticulateRules by training on adversarially\ncrafted inputs. However, this finetuned GPT-3 failed to articulate rules R that closely approximated its behavior (0% accuracy for n = 200 instances of rules) (Figure 5).\n3. Further finetuning on ground-truth explanations of rules R marginally improved performance. However, articulation accuracy remained at 0% for 7/10 rules and exceeded 15%\nfor only 1/10 rules (Figure 4).\n4. The finetuned model described in point (2) performed above random chance when articulating rules R in an easier 2-way multiple choice setting for 5/10 rules. Further finetuning\nincreased this to above chance for 9/10 rules, but only above 95% for 2/10 (Figure 4).",
+     "pdf_page": "https://arxiv.org/pdf/2405.07436v1#page=2"
+    },
+    {
+     "version": "2405.07436v1",
+     "page": 7,
+     "lines": [
+      87,
+      91
+     ],
+     "text": "GPT-3-c achieved > 50% test accuracy on the multiple choice articulation task for only 6 out of 10\nrule functions, despite its classification behavior being closely approximated by the correct option.\nThis suggests that it struggles to articulate simple classification rules, even when presented with an\nunambiguously correct articulation.\nSince the articulation tasks are likely harder than the classification tasks (Saunders et al., 2022), we",
+     "pdf_page": "https://arxiv.org/pdf/2405.07436v1#page=7"
+    }
+   ]
+  },
+  {
+   "id": "Q11:F3",
+   "later_paper": "arXiv 2310.00378v4: ValueDCG: Measuring Comprehensive Human Value Understanding Ability of Language Models",
+   "first_submitted": "2023-09-30",
+   "effect": "RELATED_ONLY",
+   "claim": "Adapting the discriminator-critique gap to human values ('know what' vs 'know why'), the authors report that across three sizes of Llama2-Chat (including 7B and 13B) both scores generally rose but the critique-side 'know why' score rose faster, so larger models had higher ValueDCG scores; they caution that the two scores have different distributions, so they can be compared only between models, not within one model.",
+   "setting": "Evaluation only (no critique training): three sizes of Llama2-Chat models; ValueDCG evaluates whether LLMs can identify the human values contained in a text (discriminator, 'know what') and explain to humans why they are present (critique, 'know why'); the two scores share a scale but are quantized differently, so they are compared only between models. Differs from the question: value understanding rather than flaws in answers, and no critique training.",
+   "bears_on": "First part, in a different task (value understanding) and without critique training; its gap compares two differently quantized scores, not Saunders' CD gap after critique training.",
+   "passages": [
+    {
+     "version": "2310.00378v4",
+     "page": 7,
+     "lines": [
+      17,
+      24
+     ],
+     "text": "also worth noting that, although Qdis and Qcri have\nthe same scale, their distributions are not the same\ndue to certain differences in the quantization methods. Therefore, strictly speaking, we can only compare this value between models, and we cannot\ncompare the strength of “know what” and “know\nwhy” within the same model solely based on the\nnumerical value. For example, we can say that\nLlame2-7B-Chat has a weaker average “know why”\nability for human value compared to Llama2-13BChat, but this does not guarantee that Llama2-7BChat itself has a weaker “know what” ability compared to “know why”.",
+     "pdf_page": "https://arxiv.org/pdf/2310.00378v4#page=7"
+    },
+    {
+     "version": "2310.00378v4",
+     "page": 7,
+     "lines": [
+      28,
+      39
+     ],
+     "text": "As the number of model parameters increases,\nboth the “know what” and “know why” abilities\ngenerally improve, but the understanding of human values continuously declines. By comparing\nthree versions of the same Llama2 models in Table 2, we observed that as the number of parameters\nincreased, although both continued to rise, the ability to “know why” significantly improved, while\nthe growth of the ability to “know what” was much\nslower. This inconsistency leads to larger models\nhaving higher ValueDCG scores, while their ability\nto understand human values continues to decline.\nThis may suggest that although the models might\nnot be able to comprehend the underlying values\nin the text, they can “fabricate” plausible reasons",
+     "pdf_page": "https://arxiv.org/pdf/2310.00378v4#page=7"
+    },
+    {
+     "version": "2310.00378v4",
+     "page": 4,
+     "lines": [
+      51,
+      56
+     ],
+     "text": "We discovered that this structure is inherently\nsuitable for considering both aspects of value understanding: “know what” and “know why”, where the\ndiscriminator represents “know what” and the critique represents “know why”. It evaluates whether\nLLMs can autonomously identify the human values\ncontained in the text and explain to humans why\nthey are present.",
+     "pdf_page": "https://arxiv.org/pdf/2310.00378v4#page=4"
+    }
+   ]
+  },
+  {
+   "id": "Q11:F4",
+   "later_paper": "arXiv 2306.03341v6: Inference-Time Intervention: Eliciting Truthful Answers from a Language Model",
+   "first_submitted": "2023-06-06",
+   "effect": "RELATED_ONLY",
+   "claim": "Citing Saunders et al.'s generation-discrimination gap, the authors operationalise 'knowing' as probe accuracy (a classifier on intermediate activations) and report, for LLaMA 7B on TruthfulQA, a 40% difference between probe accuracy and generation accuracy, which they read as a major gap between information present at intermediate layers and what appears in the output.",
+   "setting": "Experiment: LLaMA-7B; TruthfulQA; probe classifiers on intermediate activations vs the model's generated answers (probes, not critiques; no critique training).",
+   "bears_on": "Second part, by analogy: a 'knowing vs telling' gap measured with probes rather than critiques; it does not say what causes the gap.",
+   "passages": [
+    {
+     "version": "2306.03341v6",
+     "page": 2,
+     "lines": [
+      1,
+      1
+     ],
+     "text": "Saunders et al. (2022) coin the term generation-discrimination gap (G-D gap) and use language",
+     "pdf_page": "https://arxiv.org/pdf/2306.03341v6#page=2"
+    },
+    {
+     "version": "2306.03341v6",
+     "page": 2,
+     "lines": [
+      6,
+      13
+     ],
+     "text": "To investigate this area further, we begin by operationalizing what it means for a network to “know”\nthe right answer to a question, even if it doesn’t produce that answer. We focus on the difference\nbetween generation accuracy (measured by a model’s output) and probe accuracy (classifying a\nsentence using a classifier with a model’s intermediate activations as input). Using the LLaMA\n7B model, applied to the TruthfulQA benchmark from Lin et al. (2021)—a difficult, adversarially\ndesigned test for truthful behavior—we observe a full 40% difference between probe accuracy and\ngeneration accuracy. This statistic points to a major gap between what information is present at\nintermediate layers and what appears in the output.",
+     "pdf_page": "https://arxiv.org/pdf/2306.03341v6#page=2"
+    }
+   ]
+  },
+  {
+   "id": "Q11:F5",
+   "later_paper": "arXiv 2408.15240v3: Generative Verifiers: Reward Modeling as Next-Token Prediction",
+   "first_submitted": "2024-08-27",
+   "effect": "RELATED_ONLY",
+   "claim": "Verifiers trained with the next-token prediction objective jointly on verification and solution generation (GenRM, especially GenRM-CoT) outperform discriminative verifiers, both in reward-modelling accuracy and Best-of-N performance, and across model sizes; the authors also report that training GenRM with synthetic verification rationales is sufficient to pick out subtle errors on math problems.",
+   "setting": "Experiment: LLM verifiers of several model sizes; algorithmic tasks, GSM8K, easy-to-hard MATH and MMLU abstract algebra; Best-of-N selection. The passages report reward-modelling accuracy and Best-of-N performance and do not describe critiques shown to humans.",
+   "bears_on": "First part, indirectly: a critique-style verifier was not bounded by a discriminatively trained verifier in these tasks; it does not measure the CD gap or critique helpfulness to humans.",
+   "passages": [
+    {
+     "version": "2408.15240v3",
+     "page": 1,
+     "lines": [
+      9,
+      20
+     ],
+     "text": "are ranked by a verifier, and the best one is selected. While LLM-based verifiers are typically trained as\ndiscriminative classifiers to score solutions, they do not utilize the text generation capabilities of pretrained\nLLMs. To overcome this limitation, we instead propose training verifiers using the ubiquitous next-token\nprediction objective, jointly on verification and solution generation. Compared to standard verifiers, such\ngenerative verifiers (GenRM) can benefit from several advantages of LLMs: they integrate seamlessly with\ninstruction tuning, enable chain-of-thought reasoning, and can utilize additional test-time compute via\nmajority voting for better verification. We demonstrate that GenRM outperforms discriminative, DPO\nverifiers, and LLM-as-a-Judge, resulting in large performance gains with Best-of-N, namely 5% → 45.3%\non algorithmic tasks and 73% → 93.4% on GSM8K. In easy-to-hard generalization settings, we observe\nimprovements of 28% → 44.6% on MATH, and 37.9% → 53.5% on MMLU abstract algebra. Furthermore, we\nfind that training GenRM with synthetic verification rationales is sufficient to pick out subtle errors on math\nproblems. Finally, we demonstrate that GenRM scales favorably with model size and test-time compute.",
+     "pdf_page": "https://arxiv.org/pdf/2408.15240v3#page=1"
+    },
+    {
+     "version": "2408.15240v3",
+     "page": 11,
+     "lines": [
+      95,
+      99
+     ],
+     "text": "Scaling model size. In Figure 12, we show that generative verifiers, especially GenRM-CoT, perform\nbetter than discriminative RMs across model sizes, both in terms of reward modeling accuracy and Bestof-N performance. Intuitively, bigger models are more capable of text generation, allowing GenRM-CoT\nfinetuning to better tap into its chain-of-thought reasoning ability for verification. Furthermore, these\nresults demonstrate that larger models generalize better using the same data, which matches what we\nexpect from scaling model parameter counts under the next-token prediction loss.",
+     "pdf_page": "https://arxiv.org/pdf/2408.15240v3#page=11"
+    }
+   ]
+  }
+ ],
+ "findings_drafted": 5,
+ "maths": [],
+ "experiment_package": null,
+ "review_status": "provisional_ai_draft",
+ "rules": [
+  "Everything here is an AI draft (provisional_ai_draft): each counted item passed two blind AI checks that were tested on planted errors, and no person has reviewed it.",
+  "A finding counts only in the setting its own quoted lines show; read `setting` before carrying it to another setting.",
+  "A question's status is a label from fixed rules over its counted findings; `status_check` says whether that label itself passed its check.",
+  "Cite the paper and page from the passage, and read the PDF page before relying on a claim."
+ ]
+}

@@ -1,0 +1,586 @@
+{
+ "schema": "ASRA-GAP-CLOSING-AGENT-v1",
+ "paper": "2506.10139v2",
+ "review_status": "provisional_ai_draft",
+ "rules": [
+  "Everything here is an AI draft (provisional_ai_draft): each counted item passed two blind AI checks that were tested on planted errors, and no person has reviewed it.",
+  "A finding counts only in the setting its own quoted lines show; read `setting` before carrying it to another setting.",
+  "A question's status is a label from fixed rules over its counted findings; `status_check` says whether that label itself passed its check.",
+  "Cite the paper and page from the passage, and read the PDF page before relying on a claim."
+ ],
+ "notes": "No uncertainty of the rubric's kind (statistical test, confidence interval or standard error) is attached to any result in the lines read: Figure 1 reports 'variance across three runs', and Appendix Table 3 (p.14) gives +/- values whose type is not stated; following the rubric literally, the multi-dataset results are graded EMPIRICAL_SINGLE_SETTING. RES-CLAUDE-ASSISTANT: the experiment used a scalable ICM variant (Sec. 4.4, Appendix G) that replaces the simulated-annealing search of DEF-ICM with fold-based fine-tuning and a max-probability consistency fix, so DEF-ICM is not linked as its method; the card cites the variant's lines instead. RES-CHAT-SCALE joins two findings (Finding 3: chat models; Finding 4: scaling on TruthfulQA). CORE says ICM 'outperforms training on crowdsourced human supervision'; the body shows this on Alpaca (the only benchmark compared with human labels in Sec. 4.1) and on the gender task. RES-GENDER: Sec. 4.3 does not name the model used for ICM. The authors also report checks against accidental label leakage (re-runs, a label-free copy of the data, an independent replication on Claude 3.5 Haiku base, p.6 L34-p.7 L4); these are not used in the cards. No record seems mislabelled.",
+ "cards": [
+  {
+   "record_id": "N2:DSOFT:ARXIV-2506.10139v2:CORE",
+   "paper": "2506.10139v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2506.10139v2:DEF-ICM"
+    ],
+    "description": "ICM labels the task inputs with the pretrained model itself by a search, inspired by simulated annealing, for labels that are mutually predictable and logically consistent; the labels are used for many-shot prompting or fine-tuning and compared with zero-shot, golden-label and human-label baselines, and for the assistant an unsupervised reward model trained on such labels is used for reinforcement learning of a Claude 4 Sonnet-based assistant, scored on RewardBench prompts by a Claude 4 Opus reward model.",
+    "passages": [
+     {
+      "version": "2506.10139v2",
+      "page": 5,
+      "lines": [
+       56,
+       67
+      ],
+      "text": "We adopt the following four baselines in our main experiments. Appendix E compares ICM with\nmore baselines (e.g. distilling from GPT-4o), and ICM consistently yields better performance.\n• Zero-shot indicates zero-shot prompting on pretrained models. In particular, we use a highly\noptimized prompt that has been used for Anthropic’s pretrained models (Askell et al., 2021). which\nconverts pretrained models into general assistants, significantly improving zero-shot performance.\n• Zero-shot (Chat) indicates zero-shot prompting on commercial chat models, which have been\nthrough heavily optimized post-training. For example, Llama 2 chat models are post-trained on\nnearly 30K human demonstrations and 3 million human preference feedback (Touvron et al., 2023).\n• Golden Label indicates many-shot prompting or fine-tuning with golden labels. We use as many\nexamples as possible that can fit into the model’s context, e.g., 160 examples for Alpaca.\n• Human Label indicates many-shot prompting or fine-tuning with real-world human labels, e.g.,\nlabels from the Alpaca training set, which contains only one human annotation per datapoint.",
+      "pdf_page": "https://arxiv.org/pdf/2506.10139v2#page=5"
+     },
+     {
+      "version": "2506.10139v2",
+      "page": 1,
+      "lines": [
+       28,
+       31
+      ],
+      "text": "Figure 1: Our unsupervised algorithm (ICM) matches the performance of fine-tuning on golden\nsupervision and outperforms crowdsourced human supervision. We report average test accuracy\nand variance across three runs on three classification tasks: mathematical correctness (GSM8Kverification), common misconceptions (TruthfulQA), and helpfulness and harmlessness (Alpaca).\nResults are based on Llama 3 pretrained models, 8B for GSM8K, 70B for TruthfulQA and Alpaca.",
+      "pdf_page": "https://arxiv.org/pdf/2506.10139v2#page=1"
+     },
+     {
+      "version": "2506.10139v2",
+      "page": 8,
+      "lines": [
+       174,
+       179
+      ],
+      "text": "Figure 7: Assistant trained with our unsupervised method matches its counterparts trained on\nproduction-grade human supervision. We score the assistants’ responses to RewardBench prompts\nwith the production-grade Claude 4 Opus RM. RL against our unsupervised RM learns faster than\nthe human-supervised RM (e.g., 2.5x the speed on Chat and Chat-Hard).\n\ntasks.Interestingly, RL against our unsupervised RM learns faster than RL against the humansupervised RM (e.g., 2.5x the speed on Chat and Chat-Hard).",
+      "pdf_page": "https://arxiv.org/pdf/2506.10139v2#page=8"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2506.10139v2:ASM-CONSISTENCY"
+    ],
+    "stated_hypotheses": [
+     "A simple logical consistency check between label pairs is supplied per task: 'two different answers cannot both be true' for GSM8K and TruthfulQA, and 'A > B contradicts B > A' for Alpaca.",
+     "Unless stated otherwise the models are pretrained models with no post-training (Llama 3.1 8B, Llama 3.1 70B, Claude 4 Sonnet).",
+     "The authors focus on classification tasks (for example reward modeling), using reinforcement learning for open-ended generation."
+    ],
+    "passages": [
+     {
+      "version": "2506.10139v2",
+      "page": 5,
+      "lines": [
+       40,
+       51
+      ],
+      "text": "• TruthfulQA (Truthfulness): For each question, multiple answer choices are provided in TruthfulQA. The task is to classify each answer choice as correct or incorrect.\n• GSM8K-verification (Mathematical Correctness): For each question, we sample multiple\nsolutions from LMs. The task is to classify each solution as correct or incorrect. To determine\ngolden labels, we evaluate both final answers and intermediate reasoning steps. Specifically, we\nprompt Claude 3.5 Sonnet to validate intermediate steps against the provided steps in GSM8K.\n• Alpaca (Helpfulness and Harmlessness): For each user query, two assistant responses are provided\nin Alpaca. The task is to classify which response is more helpful and harmless.\nSee Table 1 for dataset examples. Regarding logical consistency checks, for GSM8K and TruthfulQA,\nwe use “two different answers cannot both be true”. For Alpaca, we use ”A > B contradicts B > A”.\nWe use accuracy as the main metric, which measures the agreement between model predictions and\ngolden benchmark labels. In particular, for Alpaca, we establish test golden labels by doing majority\nvoting over four human labels.",
+      "pdf_page": "https://arxiv.org/pdf/2506.10139v2#page=5"
+     },
+     {
+      "version": "2506.10139v2",
+      "page": 13,
+      "lines": [
+       37,
+       39
+      ],
+      "text": "We use Llama 3.1 8B, Llama 3.1 70B, and Claude 4 Sonnet in our experiments. Unless stated\notherwise, we always use pretrained models that have received no additional training, i.e. no\nsupervised fine-tuning on demonstrations, RLHF, RL on outcomes, or any other post-training.",
+      "pdf_page": "https://arxiv.org/pdf/2506.10139v2#page=13"
+     },
+     {
+      "version": "2506.10139v2",
+      "page": 2,
+      "lines": [
+       43,
+       45
+      ],
+      "text": "In particular, we are mainly focused on classification tasks (e.g. reward modeling) in this paper,\nas we can naturally use reinforcement learning to optimize for open-ended generation tasks. We\ndemonstrate this by training a version of genreal Claude 4 Sonnet assistant in Sec. 4.4.",
+      "pdf_page": "https://arxiv.org/pdf/2506.10139v2#page=2"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Llama 3 pretrained models (8B for GSM8K, 70B for TruthfulQA and Alpaca); Claude 4 Sonnet pretrained models for the assistant experiment",
+    "task_data": "GSM8K-verification, TruthfulQA and Alpaca reward modeling cast as classification; tasks the authors call strongly superhuman for LMs; RL training of a chat assistant",
+    "judge": "Accuracy against golden benchmark labels (Alpaca test labels by majority vote over four human labels); for the assistant, a production-grade Claude 4 Opus reward model scoring RewardBench responses",
+    "regime": "mixed",
+    "scale": "Llama 3 8B and 70B; Claude 4 Sonnet; benchmark results averaged over three runs (Figure 1)"
+   },
+   "quantitative": {
+    "n": "Three runs per benchmark (Figure 1); dataset sizes are not given in these passages",
+    "uncertainty": "Figure 1 reports variance across three runs; no confidence interval, standard error or statistical test is stated, and none for the assistant comparison."
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2506.10139v2:LIM-1"
+    ],
+    "notes": "ICM cannot elicit concepts that are not salient to the pretrained model, and pretraining contamination cannot be checked directly for Llama (LIM-1). The assistant matches its human-supervised counterpart only on average, with lower scores on math and coding."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "The claim rests on experiments over several tasks and two model families, but the only uncertainty given is variance across three runs for the benchmark results, which is not a statistical test, confidence interval or standard error, and none is given for the assistant comparison."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2506.10139v2:RES-GOLDEN",
+   "paper": "2506.10139v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2506.10139v2:DEF-ICM"
+    ],
+    "description": "ICM-generated labels are used for many-shot prompting or fine-tuning of Llama 3 pretrained models, and test accuracy is compared with zero-shot prompting and with prompting or fine-tuning on golden labels or on crowdsourced human labels (Figure 3; fine-tuning results summarised in Figure 1).",
+    "passages": [
+     {
+      "version": "2506.10139v2",
+      "page": 5,
+      "lines": [
+       56,
+       67
+      ],
+      "text": "We adopt the following four baselines in our main experiments. Appendix E compares ICM with\nmore baselines (e.g. distilling from GPT-4o), and ICM consistently yields better performance.\n• Zero-shot indicates zero-shot prompting on pretrained models. In particular, we use a highly\noptimized prompt that has been used for Anthropic’s pretrained models (Askell et al., 2021). which\nconverts pretrained models into general assistants, significantly improving zero-shot performance.\n• Zero-shot (Chat) indicates zero-shot prompting on commercial chat models, which have been\nthrough heavily optimized post-training. For example, Llama 2 chat models are post-trained on\nnearly 30K human demonstrations and 3 million human preference feedback (Touvron et al., 2023).\n• Golden Label indicates many-shot prompting or fine-tuning with golden labels. We use as many\nexamples as possible that can fit into the model’s context, e.g., 160 examples for Alpaca.\n• Human Label indicates many-shot prompting or fine-tuning with real-world human labels, e.g.,\nlabels from the Alpaca training set, which contains only one human annotation per datapoint.",
+      "pdf_page": "https://arxiv.org/pdf/2506.10139v2#page=5"
+     },
+     {
+      "version": "2506.10139v2",
+      "page": 6,
+      "lines": [
+       3,
+       3
+      ],
+      "text": "Figure 3: Prompting or fine-tuning results with Llama 3 models, 8B for GSM8K, 70B for the others.",
+      "pdf_page": "https://arxiv.org/pdf/2506.10139v2#page=6"
+     },
+     {
+      "version": "2506.10139v2",
+      "page": 1,
+      "lines": [
+       28,
+       31
+      ],
+      "text": "Figure 1: Our unsupervised algorithm (ICM) matches the performance of fine-tuning on golden\nsupervision and outperforms crowdsourced human supervision. We report average test accuracy\nand variance across three runs on three classification tasks: mathematical correctness (GSM8Kverification), common misconceptions (TruthfulQA), and helpfulness and harmlessness (Alpaca).\nResults are based on Llama 3 pretrained models, 8B for GSM8K, 70B for TruthfulQA and Alpaca.",
+      "pdf_page": "https://arxiv.org/pdf/2506.10139v2#page=1"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2506.10139v2:ASM-CONSISTENCY"
+    ],
+    "stated_hypotheses": [
+     "A simple logical consistency check between label pairs is supplied per task: 'two different answers cannot both be true' for GSM8K and TruthfulQA, and 'A > B contradicts B > A' for Alpaca.",
+     "Golden labels for GSM8K-verification check final answers and intermediate steps (intermediate steps validated by prompting Claude 3.5 Sonnet against GSM8K's steps); Alpaca test golden labels are a majority vote over four human labels.",
+     "The human-label baseline uses real-world labels, e.g. the Alpaca training set with one human annotation per datapoint.",
+     "Unless stated otherwise the models are pretrained models with no post-training (Llama 3.1 8B, Llama 3.1 70B, Claude 4 Sonnet)."
+    ],
+    "passages": [
+     {
+      "version": "2506.10139v2",
+      "page": 5,
+      "lines": [
+       40,
+       51
+      ],
+      "text": "• TruthfulQA (Truthfulness): For each question, multiple answer choices are provided in TruthfulQA. The task is to classify each answer choice as correct or incorrect.\n• GSM8K-verification (Mathematical Correctness): For each question, we sample multiple\nsolutions from LMs. The task is to classify each solution as correct or incorrect. To determine\ngolden labels, we evaluate both final answers and intermediate reasoning steps. Specifically, we\nprompt Claude 3.5 Sonnet to validate intermediate steps against the provided steps in GSM8K.\n• Alpaca (Helpfulness and Harmlessness): For each user query, two assistant responses are provided\nin Alpaca. The task is to classify which response is more helpful and harmless.\nSee Table 1 for dataset examples. Regarding logical consistency checks, for GSM8K and TruthfulQA,\nwe use “two different answers cannot both be true”. For Alpaca, we use ”A > B contradicts B > A”.\nWe use accuracy as the main metric, which measures the agreement between model predictions and\ngolden benchmark labels. In particular, for Alpaca, we establish test golden labels by doing majority\nvoting over four human labels.",
+      "pdf_page": "https://arxiv.org/pdf/2506.10139v2#page=5"
+     },
+     {
+      "version": "2506.10139v2",
+      "page": 13,
+      "lines": [
+       37,
+       39
+      ],
+      "text": "We use Llama 3.1 8B, Llama 3.1 70B, and Claude 4 Sonnet in our experiments. Unless stated\notherwise, we always use pretrained models that have received no additional training, i.e. no\nsupervised fine-tuning on demonstrations, RLHF, RL on outcomes, or any other post-training.",
+      "pdf_page": "https://arxiv.org/pdf/2506.10139v2#page=13"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Llama 3 pretrained models: 8B for GSM8K, 70B for TruthfulQA and Alpaca",
+    "task_data": "TruthfulQA (classify answer choices as correct or incorrect), GSM8K-verification (classify sampled solutions), Alpaca (which of two responses is more helpful and harmless)",
+    "judge": "Accuracy against golden benchmark labels (Alpaca test labels by majority vote over four human labels)",
+    "regime": "mixed",
+    "scale": "Llama 3 8B and 70B; averages over three runs (Figure 1); many-shot prompting uses as many examples as fit in context (e.g. 160 for Alpaca in the golden-label baseline)"
+   },
+   "quantitative": {
+    "n": "Three runs per benchmark (Figure 1); train and test set sizes are not given in these passages",
+    "uncertainty": "Figure 1 reports variance across three runs; no confidence interval, standard error or statistical test is stated, and no Figure 3 numbers appear in these passages."
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2506.10139v2:LIM-1"
+    ],
+    "notes": "Matching golden supervision is reported for TruthfulQA and GSM8K; on Alpaca the comparison is with crowdsourced human labels (one annotation per datapoint), not with golden labels. Possible pretraining contamination cannot be checked for Llama (LIM-1)."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "Three datasets are used, but the only uncertainty stated is variance across three runs (Figure 1), not a statistical test, confidence interval or standard error, so the rubric's multi-setting grade is not met."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2506.10139v2:RES-CHAT-SCALE",
+   "paper": "2506.10139v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2506.10139v2:DEF-ICM"
+    ],
+    "description": "ICM-labelled prompting or fine-tuning of Llama 3 pretrained models is compared with zero-shot prompting of commercial chat models on the three benchmarks (Figure 3), and ICM is compared with the golden-label baseline at Llama 8B and 70B on TruthfulQA (Figure 4).",
+    "passages": [
+     {
+      "version": "2506.10139v2",
+      "page": 5,
+      "lines": [
+       56,
+       67
+      ],
+      "text": "We adopt the following four baselines in our main experiments. Appendix E compares ICM with\nmore baselines (e.g. distilling from GPT-4o), and ICM consistently yields better performance.\n• Zero-shot indicates zero-shot prompting on pretrained models. In particular, we use a highly\noptimized prompt that has been used for Anthropic’s pretrained models (Askell et al., 2021). which\nconverts pretrained models into general assistants, significantly improving zero-shot performance.\n• Zero-shot (Chat) indicates zero-shot prompting on commercial chat models, which have been\nthrough heavily optimized post-training. For example, Llama 2 chat models are post-trained on\nnearly 30K human demonstrations and 3 million human preference feedback (Touvron et al., 2023).\n• Golden Label indicates many-shot prompting or fine-tuning with golden labels. We use as many\nexamples as possible that can fit into the model’s context, e.g., 160 examples for Alpaca.\n• Human Label indicates many-shot prompting or fine-tuning with real-world human labels, e.g.,\nlabels from the Alpaca training set, which contains only one human annotation per datapoint.",
+      "pdf_page": "https://arxiv.org/pdf/2506.10139v2#page=5"
+     },
+     {
+      "version": "2506.10139v2",
+      "page": 6,
+      "lines": [
+       3,
+       5
+      ],
+      "text": "Figure 3: Prompting or fine-tuning results with Llama 3 models, 8B for GSM8K, 70B for the others.\n\nFigure 4: Scaling properties of ICM on TruthfulQA.",
+      "pdf_page": "https://arxiv.org/pdf/2506.10139v2#page=6"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2506.10139v2:ASM-CONSISTENCY"
+    ],
+    "stated_hypotheses": [
+     "A simple logical consistency check between label pairs is supplied per task: 'two different answers cannot both be true' for GSM8K and TruthfulQA, and 'A > B contradicts B > A' for Alpaca.",
+     "The chat-model baseline is zero-shot prompting of commercial chat models; the passages name Llama 2 chat (about 30K human demonstrations and 3 million preference feedback) only as an example of their post-training."
+    ],
+    "passages": [
+     {
+      "version": "2506.10139v2",
+      "page": 5,
+      "lines": [
+       40,
+       51
+      ],
+      "text": "• TruthfulQA (Truthfulness): For each question, multiple answer choices are provided in TruthfulQA. The task is to classify each answer choice as correct or incorrect.\n• GSM8K-verification (Mathematical Correctness): For each question, we sample multiple\nsolutions from LMs. The task is to classify each solution as correct or incorrect. To determine\ngolden labels, we evaluate both final answers and intermediate reasoning steps. Specifically, we\nprompt Claude 3.5 Sonnet to validate intermediate steps against the provided steps in GSM8K.\n• Alpaca (Helpfulness and Harmlessness): For each user query, two assistant responses are provided\nin Alpaca. The task is to classify which response is more helpful and harmless.\nSee Table 1 for dataset examples. Regarding logical consistency checks, for GSM8K and TruthfulQA,\nwe use “two different answers cannot both be true”. For Alpaca, we use ”A > B contradicts B > A”.\nWe use accuracy as the main metric, which measures the agreement between model predictions and\ngolden benchmark labels. In particular, for Alpaca, we establish test golden labels by doing majority\nvoting over four human labels.",
+      "pdf_page": "https://arxiv.org/pdf/2506.10139v2#page=5"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "ICM on Llama 3 pretrained models (8B and 70B) versus zero-shot commercial chat models, which the passages do not name",
+    "task_data": "TruthfulQA, GSM8K-verification and Alpaca for the chat-model comparison; TruthfulQA only for the scaling comparison",
+    "judge": "Accuracy against golden benchmark labels",
+    "regime": "mixed",
+    "scale": "Llama 8B and 70B for the scaling comparison"
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2506.10139v2:LIM-1"
+    ],
+    "notes": "The authors note the three benchmarks are popular measures of LLM capability, suggesting production chat models are already heavily optimized for such tasks. The scaling evidence is two model sizes on one dataset."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "The chat-model comparison spans three benchmarks and the scaling comparison one benchmark at two sizes, with no uncertainty reported for either in these passages."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2506.10139v2:RES-SALIENCE-FAIL",
+   "paper": "2506.10139v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2506.10139v2:DEF-ICM"
+    ],
+    "description": "A poem-comparison dataset is generated with Claude 3.5 Sonnet so that only one poem per pair mentions 'sun' and that poem is always preferred; ICM with Llama 70B is given only the instruction to judge which poem is better, and its result is compared with random guessing (Figure 5).",
+    "passages": []
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "By construction the preference (poems mentioning 'sun' are better) is not conveyed by the task description and is unrelated to the model's concept of poem quality, i.e. the concept is not 'salient' to the pretrained model."
+    ],
+    "passages": []
+   },
+   "setting": {
+    "systems": "Llama 70B with ICM; Claude 3.5 Sonnet used to generate the poem pairs",
+    "task_data": "Constructed pairs of poems in which only one mentions 'sun' and is labelled as preferred",
+    "judge": "The constructed preference labels",
+    "regime": "evaluation",
+    "scale": "Llama 70B"
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2506.10139v2:LIM-1"
+    ],
+    "notes": "The task is designed to be impossible for unsupervised elicitation, so it illustrates a limit of ICM (non-salient concepts, LIM-1) rather than measuring a general failure rate."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "One constructed task with one model (Llama 70B), with no sample size or uncertainty reported in these passages."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2506.10139v2:RES-GENDER",
+   "paper": "2506.10139v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2506.10139v2:DEF-ICM"
+    ],
+    "description": "On pairs of Blog Authorship Corpus posts (one by a male and one by a female author) ICM labels which post is more likely written by a male, using the asymmetry consistency check; results are compared with golden supervision, prompting with weak human labels, commercial post-training, and human accuracy estimated from 5 recruited annotators on 100 test examples (Figure 6).",
+    "passages": [
+     {
+      "version": "2506.10139v2",
+      "page": 17,
+      "lines": [
+       222,
+       225
+      ],
+      "text": "In Sec. 4.3, we study an author gender prediction task. To establish a human baseline, we recruit 5\nannotators from upwork.com, who are all native speakers with extensive experience in reading and\nwriting. Given two blog posts, the annotator is required to review them and select which one is more\nlikely to be written by a male. Overall, we collect 5 human labels for each example.",
+      "pdf_page": "https://arxiv.org/pdf/2506.10139v2#page=17"
+     },
+     {
+      "version": "2506.10139v2",
+      "page": 2,
+      "lines": [
+       59,
+       60
+      ],
+      "text": "We use a widely-adopted academic dataset (Schler et al., 2006) for studying AI fairness (Coavoux et al.,\n2018; Lyu et al., 2020), which consists of self-reported author information.",
+      "pdf_page": "https://arxiv.org/pdf/2506.10139v2#page=2"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2506.10139v2:ASM-CONSISTENCY"
+    ],
+    "stated_hypotheses": [
+     "Simple asymmetry consistency: A > B contradicts B > A.",
+     "Human performance on the whole test set is estimated from 100 test examples labelled by the recruited annotators."
+    ],
+    "passages": []
+   },
+   "setting": {
+    "systems": "A pretrained model with ICM (not named in these passages); commercial post-trained models as a comparison",
+    "task_data": "Author gender prediction on pairs of blog posts from the Blog Authorship Corpus, whose author information is self-reported",
+    "judge": "Golden labels from the corpus's self-reported author information; 5 Upwork annotators (native speakers experienced in reading and writing) provide the human baseline",
+    "regime": "evaluation",
+    "scale": "5 annotators; 48 human-labelled training examples for prompting; 100 test examples for the human estimate"
+   },
+   "quantitative": {
+    "n": "100 test examples for estimating human accuracy and 48 human-labelled training examples; the size of the test set used for ICM is not stated in these passages",
+    "uncertainty": "None stated; 'significantly outperforming' is not tied to a test, interval or standard error in these passages."
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2506.10139v2:LIM-1"
+    ],
+    "notes": "The 60% human accuracy is an estimate from 100 test examples; the human training labels were 53.8% accurate."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "One task, with no confidence interval, standard error or named test for the 80% versus 60% comparison."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2506.10139v2:RES-CLAUDE-ASSISTANT",
+   "paper": "2506.10139v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [],
+    "description": "A scalable variant of ICM (fine-tuning instead of in-context learning to measure mutual predictability, labelling in parallel batches) labels 5,000 pairwise preference examples with Claude 4 Sonnet pretrained models, which are fine-tuned into a reward model; two assistants are trained by RL for 250,000 episodes against this RM or against an RM trained on production-grade human labels, and their RewardBench responses are scored by a production-grade Claude 4 Opus RM (Figure 7).",
+    "passages": [
+     {
+      "version": "2506.10139v2",
+      "page": 7,
+      "lines": [
+       41,
+       45
+      ],
+      "text": "After verifying ICM on standard benchmarks, we investigate whether it can scale to commercial\nproduction runs and improve frontier assistant chatbots. Specifically, we aim to train a helpful,\nharmless, and honest chat assistant based on Claude 4 Sonnet, without introducing any external\nsupervision labels. In these experiments, we use a scalable variant of ICM that particularly tackles\nlong-context challenge when applied to proudction data. See Appendix G for more details.",
+      "pdf_page": "https://arxiv.org/pdf/2506.10139v2#page=7"
+     },
+     {
+      "version": "2506.10139v2",
+      "page": 15,
+      "lines": [
+       62,
+       67
+      ],
+      "text": "Our algorithm 1 has two scalability limitations. First, it measures mutual predictability with in-context\nlearning and thus requires all labeled examples to fit in the model’s context window. However, for\nproduction assitant training data, each example could take thousands of tokens. Second, it sequentially\nlabels one example at a time, which is inefficient. To overcome these limitations, we propose a\nscalable variant of ICM (Algorithm 3): it uses fine-tuning to measure mutual predictability, and\nlabels examples in parallel batches.",
+      "pdf_page": "https://arxiv.org/pdf/2506.10139v2#page=15"
+     },
+     {
+      "version": "2506.10139v2",
+      "page": 8,
+      "lines": [
+       174,
+       179
+      ],
+      "text": "Figure 7: Assistant trained with our unsupervised method matches its counterparts trained on\nproduction-grade human supervision. We score the assistants’ responses to RewardBench prompts\nwith the production-grade Claude 4 Opus RM. RL against our unsupervised RM learns faster than\nthe human-supervised RM (e.g., 2.5x the speed on Chat and Chat-Hard).\n\ntasks.Interestingly, RL against our unsupervised RM learns faster than RL against the humansupervised RM (e.g., 2.5x the speed on Chat and Chat-Hard).",
+      "pdf_page": "https://arxiv.org/pdf/2506.10139v2#page=8"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2506.10139v2:ASM-CONSISTENCY"
+    ],
+    "stated_hypotheses": [
+     "The scalable variant enforces consistency within each consistency group by adjusting labels to agree with the model's most confident prediction in the group (Algorithm 4).",
+     "No external supervision labels are used to train the unsupervised reward model."
+    ],
+    "passages": [
+     {
+      "version": "2506.10139v2",
+      "page": 16,
+      "lines": [
+       57,
+       62
+      ],
+      "text": "Enforce logical consistency. Algorithm 1 fixes inconsistency by assigning the consistent labeling that\nachieves highest scores, i.e., maximizing mutual predictability and consistency. However, measuring\nthe mutual predictability for every consistent labeling is expensive: it requires separate fine-tuning on\neach consistent labeling. We introduce a simpler algorithm to fix inconsistency. For each consistency\ngroup, it first identifies the examples where the model’s prediction is most confident, and then adjusts\nthe labels on other examples in the same consistency group to be consistent with it (Algorithm 4).",
+      "pdf_page": "https://arxiv.org/pdf/2506.10139v2#page=16"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Claude 4 Sonnet pretrained models (labelling and reward model); two Claude 4 Sonnet-based assistants trained by RL; production-grade Claude 4 Opus reward model as scorer",
+    "task_data": "5,000 pairwise preference examples built from the description 'Output A is more helpful, harmless, and honest than Output B'; RL on a mix of math, code and instruction-following tasks; evaluation on RewardBench prompts",
+    "judge": "Production-grade Claude 4 Opus reward model",
+    "regime": "training",
+    "scale": "5,000 preference pairs; 250,000 RL episodes per policy"
+   },
+   "quantitative": {
+    "n": "5,000 preference pairs; 250,000 RL episodes per policy; the number of RewardBench prompts is not stated in these passages",
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2506.10139v2:LIM-1"
+    ],
+    "notes": "The unsupervised assistant matches the human-supervised one only on average: it scores lower on math and code, which the authors suspect reflects higher-quality production human labels on these crisp reasoning tasks. Scores come from a reward model, not from human raters."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "One comparison of two RL runs in one model family (Claude 4), scored by one reward model, with no uncertainty reported."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2506.10139v2:RES-PERTURBED",
+   "paper": "2506.10139v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2506.10139v2:DEF-ICM"
+    ],
+    "description": "Randomly perturbed labels with the same accuracy as ICM's labels are constructed, and many-shot prompting of Llama pretrained models with each label set is compared (Figure 8).",
+    "passages": []
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "The randomly perturbed labels are matched to ICM's labels in accuracy."
+    ],
+    "passages": []
+   },
+   "setting": {
+    "systems": "Llama pretrained models (sizes not stated in these lines)",
+    "task_data": "The paper's benchmarks, referred to as 'these benchmarks' (not listed in these lines)",
+    "judge": null,
+    "regime": "evaluation",
+    "scale": null
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [],
+    "notes": "The authors only suspect why ICM labels do better ('more aligned with the model's understanding of correct labels for the task')."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "An ablation with many-shot prompting of Llama models, with no uncertainty reported and the benchmarks not specified in these lines."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2506.10139v2:RES-CONSISTENCY-ABLATION",
+   "paper": "2506.10139v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2506.10139v2:DEF-ICM"
+    ],
+    "description": "ICM is run with and without the logical-consistency term I(D) of its score U(D) = alpha * P(D) - I(D), and the results are compared on TruthfulQA and Alpaca (Figure 10).",
+    "passages": [
+     {
+      "version": "2506.10139v2",
+      "page": 3,
+      "lines": [
+       110,
+       112
+      ],
+      "text": "Overall Scoring Function. Combining the two terms, our scoring function is defined as follows:\nU (D) = α · Pθ (D) − I(D)\nwhere α is a hyperparameter to balance the strength of mutual predictability and logical consistency.",
+      "pdf_page": "https://arxiv.org/pdf/2506.10139v2#page=3"
+     },
+     {
+      "version": "2506.10139v2",
+      "page": 9,
+      "lines": [
+       30,
+       35
+      ],
+      "text": "The role of logical consistency. As Sec. 5 shows, removing consistency often does not degrade\nthe maximal performance, but increases the variance. Specifically, the algorithm becomes more\nlikely to collapse into degenerate solutions that have low logical consistency, like assigning the same\nlabel to all data points. Therefore, we understand mutual predictability as the most important term\nthat leads to our empirical success. In particular, mutual predictability also likely enforces complex\n(probabilistic) consistencies, which cannot be easily captured by general axiomatic logical checks.",
+      "pdf_page": "https://arxiv.org/pdf/2506.10139v2#page=9"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2506.10139v2:ASM-CONSISTENCY"
+    ],
+    "stated_hypotheses": [
+     "Only simple, generally applicable consistency checks are used, because fine-grained consistency relations across examples are hard to determine."
+    ],
+    "passages": []
+   },
+   "setting": {
+    "systems": "Pretrained model not named in these lines",
+    "task_data": "TruthfulQA and Alpaca",
+    "judge": null,
+    "regime": "evaluation",
+    "scale": null
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [],
+    "notes": "The discussion adds that removing consistency often does not lower the maximal performance but increases variance, with more collapse into degenerate solutions such as assigning the same label to all data points."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "Two datasets with no reported uncertainty, and the model is not named in these lines."
+   },
+   "review_status": "provisional_ai_draft"
+  }
+ ]
+}

@@ -1,0 +1,137 @@
+{
+ "schema": "ASRA-GAP-CLOSING-AGENT-v1",
+ "id": "Q30",
+ "question": "Open question: how do strong models perceive the knowledge boundaries of weak supervisors?",
+ "asked_by": "Yang et al., Super(ficial)-alignment: Strong Models May Deceive Weak Models in Weak-to-Strong Generalization",
+ "rank": 26,
+ "status": "NARROWED",
+ "status_check": "AI_CHECKED",
+ "remaining_question": "In Yang et al.'s weak-to-strong preference-alignment setup with a conflicting target, given that correctness of weak preference orders alone lets the strong model perceive weak-unknown samples, does it do so by checking each weak order against its own knowledge (as F2's stronger model predicting the weaker model's correctness suggests) or by inferring per-domain weak competence from the portion and distribution of supervised samples across domains, as would be tested by ablations that equalize the per-domain distribution while holding the correctness of the orders and the strong model fixed?",
+ "remaining_type": "EMPIRICAL",
+ "safety_case": [],
+ "findings": [
+  {
+   "id": "Q30:F1",
+   "later_paper": "arXiv 2604.25077v3: Evaluating Risks in Weak-to-Strong Alignment: A Bias-Variance Perspective",
+   "first_submitted": "2026-04-28",
+   "effect": "RELATED_ONLY",
+   "claim": "Across four weak-to-strong pipelines spanning SFT, RLHF and RLAIF on PKU-SafeRLHF and HH-RLHF, the authors find that, among the BVC quantities they study, strong-model variance is the one most strongly associated with 'blind-spot deception' (cases where the strong model is confidently wrong while the weak model is uncertain); covariance provides additional but weaker information, indicating that weak-strong dependence matters but does not by itself explain the observed failures. They treat a cross-dataset reversal as exploratory evidence for their claim that blind-spot deception also depends on how the weak model's training procedure shapes the regions where weak supervision is uncertain. They interpret the correlation results, based on only eight pipeline-dataset settings, as exploratory diagnostic evidence, and their experiments use only Llama-family models and harmlessness-style preference datasets.",
+   "setting": "Empirical; four weak-to-strong pipelines spanning SFT, RLHF and RLAIF on the harmlessness-style preference datasets PKU-SafeRLHF and HH-RLHF; only Llama-family models; correlations over eight pipeline-dataset settings. 'Deception' here is the blind-spot metric (strong model confidently wrong where the weak model is uncertain), not Yang et al.'s measure, so the result is not obtained in the question's own setup.",
+   "bears_on": "Whether strong-model errors in weak-unknown regions track weak-strong dependence (a perception channel) or the strong model's own confidence dispersion.",
+   "passages": [
+    {
+     "version": "2604.25077v3",
+     "page": 1,
+     "lines": [
+      26,
+      33
+     ],
+     "text": "confidence scores. We evaluate four weak-to-strong pipelines\nspanning supervised fine-tuning (SFT), reinforcement learning from human feedback (RLHF), and reinforcement learning\nfrom AI feedback (RLAIF) on the PKU-SafeRLHF and HHRLHF datasets. Using a blind-spot deception metric that isolates cases where the strong model is confidently wrong while\nthe weak model is uncertain, we find that strong-model variance is the quantity most strongly associated with blind-spot\ndeception among the BVC quantities we study. Covariance\nprovides additional but weaker information, indicating that\nweak–strong dependence matters, but does not by itself explain the observed failures. These results suggest that strongmodel variance can serve as an early-warning signal for weakto-strong deception, while blind-spot evaluation helps distinguish whether failures are inherited from weak supervision or\narise in regions of weak-model uncertainty.",
+     "pdf_page": "https://arxiv.org/pdf/2604.25077v3#page=1"
+    },
+    {
+     "version": "2604.25077v3",
+     "page": 5,
+     "lines": [
+      25,
+      27
+     ],
+     "text": "We organize the results around three questions: which empirical quantities are most strongly associated with blind-spot\ndeception, whether deception can be explained by strongmodel confidence dispersion alone, and whether weak-model\ntraining changes where blind spots occur. Because this analysis is based on only eight pipeline–dataset settings, we interpret the correlation results as exploratory diagnostic evidence rather than definitive statistical laws. To test whether",
+     "pdf_page": "https://arxiv.org/pdf/2604.25077v3#page=5"
+    },
+    {
+     "version": "2604.25077v3",
+     "page": 7,
+     "lines": [
+      39,
+      47
+     ],
+     "text": "Because our experiments use only Llama-family models and harmlessness-style preference datasets, we treat\nthis cross-dataset reversal as exploratory evidence. A more\ncomplete analysis would require additional model families,\ndatasets, and controlled ablations of the weak-model training\n\nstage. Nevertheless, the observed reversal supports our main\ndiagnostic claim: blind-spot deception is not only a property of the strong model, but also depends on how the weak\nmodel’s training procedure shapes the regions where weak\nsupervision is uncertain.",
+     "pdf_page": "https://arxiv.org/pdf/2604.25077v3#page=7"
+    }
+   ]
+  },
+  {
+   "id": "Q30:F2",
+   "later_paper": "arXiv 2509.24988v2: Generalized Correctness Models: Learning Calibrated and Model-Agnostic Correctness Predictors from Historical Patterns",
+   "first_submitted": "2025-09-29",
+   "effect": "NARROWS",
+   "claim": "The authors find that an LLM predicting the correctness of its own outputs generally does no better than an unrelated LLM, and hypothesise that exposure to a target model's historical predictions is key. When Qwen2.5-72B and Llama3-70B are finetuned on MMLU to predict each other's and their own correctness, Qwen2.5-72B predicts Llama3-70B's correctness, as well as its own, better than Llama3-70B does, which they attribute to Qwen2.5-72B being stronger with more knowledge of the true answers.",
+   "setting": "Correctness prediction trained with explicit correctness labels on MMLU; Qwen2.5-72B vs Llama3-70B (small capability gap); no weak-to-strong training and no conflicting objective.",
+   "bears_on": "Whether a stronger model can learn a weaker model's knowledge boundary from its track record and its own knowledge of the answers, one channel Yang et al. suggest.",
+   "passages": [
+    {
+     "version": "2509.24988v2",
+     "page": 1,
+     "lines": [
+      18,
+      22
+     ],
+     "text": "itself. However, we find that whether trained\nor training-free, an LLM attempting to predict\nthe correctness of its own outputs generally performs no better than an unrelated LLM attempting the same task. Moreover, we hypothesize that\na key factor in predicting model correctness, i.e.,\nbuilding a “Correctness Model” (CM), is exposure to a target model’s historical predictions.",
+     "pdf_page": "https://arxiv.org/pdf/2509.24988v2#page=1"
+    },
+    {
+     "version": "2509.24988v2",
+     "page": 4,
+     "lines": [
+      125,
+      127
+     ],
+     "text": "that LLMs lack special information about their own correctness. We demonstrate this claim through several experimental settings, highlighting the two most illustrative settings. Given MMLU questions and responses, we first finetune both Qwen2.5-72B and Llama3-70B models to predict\neach other’s correctness as well their own, with the results\nsummarized in the Answerful setting of Figure 2. We find",
+     "pdf_page": "https://arxiv.org/pdf/2509.24988v2#page=4"
+    },
+    {
+     "version": "2509.24988v2",
+     "page": 5,
+     "lines": [
+      139,
+      147
+     ],
+     "text": "that Qwen2.5-72B consistently predicts Llama3-70B’s as\nwell as its own correctness better than Llama3-70B does.\nWe attribute this to Qwen2.5-72B being a stronger model\nwith greater parametric knowledge of the true answer to the\nMMLU questions. (Qwen2.5-72B achieves 83.5% average\nMMLU accuracy whereas Llama3-70B achieves 78.3%).\nThis shows that using a stronger model is more critical\nto correctness prediction than “self-knowledge” stemming\nfrom using the same model for generation and verification.",
+     "pdf_page": "https://arxiv.org/pdf/2509.24988v2#page=5"
+    }
+   ]
+  },
+  {
+   "id": "Q30:F3",
+   "later_paper": "arXiv 2410.13787v1: Looking Inward: Language Models Can Learn About Themselves by Introspection",
+   "first_submitted": "2024-10-17",
+   "effect": "RELATED_ONLY",
+   "claim": "For GPT-4o, GPT-4 and Llama 70B, self-prediction models consistently outperform their cross-prediction counterparts on a set of held-out tasks: e.g. Llama 70B predicts its own behavior more accurately (48.5%) than GPT-4o does (31.8%), despite GPT-4o's superior capabilities, and GPT-4o predicts itself better (49.4%) than Llama 70B does (36.6%); GPT-3.5 has a statistically significant but very small (+0.8%) self-prediction advantage. In a data-scaling analysis, GPT-4o's cross-prediction of Llama 70B does not meaningfully increase after 10,000 samples and plateaus at 35.2%, far below the 48.5% self-prediction accuracy.",
+   "setting": "Self- vs cross-prediction finetuning among GPT-4o, GPT-4, GPT-3.5 and Llama 70B on held-out behavior-property tasks; predicts behavior properties, not knowledge or correctness; no weak-to-strong training.",
+   "bears_on": "Limits on how well a more capable model can model another model from observed behavior; contrasts with 2509.24988's finding for correctness.",
+   "passages": [
+    {
+     "version": "2410.13787v1",
+     "page": 7,
+     "lines": [
+      74,
+      82
+     ],
+     "text": "Self-prediction models consistently outperform their cross-prediction counterparts for GPT-4o,\nGPT-4, and Llama 70B on a set of held-out tasks, as shown in Figure 5. For instance, Llama\n70B predicts its own behavior more accurately (48.5%) than GPT-4o (31.8%), despite GPT-4o’s\nsuperior capabilities (Chiang et al., 2024). The same pattern holds the other way around: GPT-4o\npredicts itself better (49.4%) than Llama 70B does (36.6%). GPT-3.5 has a statistically significant\nbut very small (+0.8%) self-prediction advantage (p = 0.002). For models other than GPT-3.5, the\nself-prediction advantage holds across most datasets and behavior properties (see Figure 14). This\nprovides evidence that these models use introspection. Further evidence is that the self-prediction\nadvantage also holds on the set of tasks used in self-/cross-training (A.2.2).",
+     "pdf_page": "https://arxiv.org/pdf/2410.13787v1#page=7"
+    },
+    {
+     "version": "2410.13787v1",
+     "page": 8,
+     "lines": [
+      49,
+      50
+     ],
+     "text": "Another possibility is that cross-prediction training requires more training samples and would eventually improve over self-prediction. We conduct a data-scaling analysis on GPT-4o predicting Llama\n70B (Section A.2.7). Cross-prediction accuracy does not meaningfully increase after 10,000 samples: it plateaus at 35.2%, far below the self-prediction accuracy of 48.5%.",
+     "pdf_page": "https://arxiv.org/pdf/2410.13787v1#page=8"
+    }
+   ]
+  }
+ ],
+ "findings_drafted": 3,
+ "maths": [],
+ "experiment_package": null,
+ "review_status": "provisional_ai_draft",
+ "rules": [
+  "Everything here is an AI draft (provisional_ai_draft): each counted item passed two blind AI checks that were tested on planted errors, and no person has reviewed it.",
+  "A finding counts only in the setting its own quoted lines show; read `setting` before carrying it to another setting.",
+  "A question's status is a label from fixed rules over its counted findings; `status_check` says whether that label itself passed its check.",
+  "Cite the paper and page from the passage, and read the PDF page before relying on a claim."
+ ]
+}

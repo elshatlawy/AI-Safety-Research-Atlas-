@@ -1,0 +1,655 @@
+{
+ "schema": "ASRA-GAP-CLOSING-AGENT-v1",
+ "paper": "2502.04675v4",
+ "review_status": "provisional_ai_draft",
+ "rules": [
+  "Everything here is an AI draft (provisional_ai_draft): each counted item passed two blind AI checks that were tested on planted errors, and no person has reviewed it.",
+  "A finding counts only in the setting its own quoted lines show; read `setting` before carrying it to another setting.",
+  "A question's status is a label from fixed rules over its counted findings; `status_check` says whether that label itself passed its check.",
+  "Cite the paper and page from the passage, and read the PDF page before relying on a claim."
+ ],
+ "notes": "No result in this paper reports a confidence interval, standard error or statistical test, so all empirical cards are single-setting. RES-HUMAN-C3: its quote says majority voting 'reaching 67.19% for CET-6 and 93.75% for GAOKAO Math', but those numbers are Table 2's C3 accuracies; Table 2's Majority Voting@E7 column reads 57.03/63.28/63.02 (CET-6, p6 L32-34) and 85.94/88.28/91.15 (GAOKAO Math, p6 L64-66); the record text repeats the misstatement. RES-HUMAN-AI: the quote says humans 'consistently' exceed the AI's previous-stage accuracy, but Table 3 has negative cells for TEM4 (Qwen2.5-7B at C3, p7 L85; Qwen2.5-72B at C2, p7 L112). RES-HUMAN-AI-C3 is a reading of one Table 3 row that the text does not discuss; its quote shows the numbers but not the column headers. The Human-AI setup (p6 L109-111) mentions self-critique at orders C1 and C2 although Table 3 also reports C3. The number of Human-AI questions is not stated in the passages read. Appendix C (p16 L119-122) reports that current models' self-critique gains are limited and modest, a further limit on the AI results.",
+ "cards": [
+  {
+   "record_id": "N2:DSOFT:ARXIV-2502.04675v4:CORE",
+   "paper": "2502.04675v4",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2502.04675v4:DEF-RECURSIVE-CRITIQUE",
+     "N2:DSOFT:ARXIV-2502.04675v4:METHOD-BASELINES"
+    ],
+    "description": "Human-Human experiments compare response, critique, critique-of-critique (C2) and C3 stages by accuracy under similar effort, completion time and confidence; Human-AI experiments have humans evaluate AI self-critique chains; AI-AI experiments pair supervised and critic models of different capability.",
+    "passages": [
+     {
+      "version": "2502.04675v4",
+      "page": 2,
+      "lines": [
+       19,
+       25
+      ],
+      "text": "To systematically verify these hypotheses, we first conduct\nHuman-Human experiments where humans evaluate human\noutputs. We examine the progression from response to critique and then to critique-of-critique (C 2 ). By comparing\naccuracy under similar computational effort, completion\ntime, and confidence levels, we find that higher-order critiques contribute to more effective evaluation than direct\nassessment. Furthermore, we demonstrate the recursive nature of this relationship by extending experiments to deeper\ncritique chains, i.e., critique of critique of critique (C 3 ).",
+      "pdf_page": "https://arxiv.org/pdf/2502.04675v4#page=2"
+     },
+     {
+      "version": "2502.04675v4",
+      "page": 2,
+      "lines": [
+       26,
+       35
+      ],
+      "text": "Inspired by these human-human findings, we further investigate their applicability for supervising AI: when AI\ngenerates self-recursive critiques, can humans provide effective oversight by evaluating these critique chains? To answer\nthis question, we conduct Human-AI experiments, where\nhumans evaluate AI outputs on tasks where AI outperforms\naverage humans. The results are promising across models\nof varying capabilities. Finally, we examine whether AI can\nachieve effective oversight through recursive self-critiques\nin AI-AI experiments across models of different capabilities. Our results demonstrate that recursive self-critiquing is\neffective in weak-to-strong scenarios, while the optimal critique strategy depends on the relative capabilities between\nsupervised and critic models.",
+      "pdf_page": "https://arxiv.org/pdf/2502.04675v4#page=2"
+     },
+     {
+      "version": "2502.04675v4",
+      "page": 6,
+      "lines": [
+       120,
+       128
+      ],
+      "text": "5.1. Setup\nModel Preparation We investigate the dynamics of supervisory effectiveness across pairings of supervised and\ncritic models with different capability levels. We use models from the Qwen2.5 series (Qwen et al., 2025), operating\nunder the premise that model capability generally correlates with parameter size. However, different variants of\nthe Qwen2.5-Instruct series may have undergone different\npost-training procedures, which could introduce confounding factors. To ensure fair comparison, we randomly sample\n282K instances from the open-source TULU-3-SFT dataset\n(Lambert et al., 2024) and fine-tune all models from the\nQwen2.5-Base series using the same data.",
+      "pdf_page": "https://arxiv.org/pdf/2502.04675v4#page=6"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2502.04675v4:ASM-HIGHER-ORDER-EASIER"
+    ],
+    "stated_hypotheses": [
+     "Hypothesis 1: critique of critique can be easier than critique itself, extending 'verification is easier than generation'.",
+     "Hypothesis 2: this difficulty relation holds recursively, so higher-order critiques offer a more tractable supervision pathway when direct evaluation is infeasible.",
+     "AI-AI experiments pair supervised and critic models from the Qwen2.5 series, under the premise that model capability generally correlates with parameter size."
+    ],
+    "passages": []
+   },
+   "setting": {
+    "systems": "Human annotators; Qwen2.5-Base models, all fine-tuned on the same 282K TULU-3-SFT instances (AI-AI)",
+    "task_data": "Human-Human experiments, Human-AI experiments on tasks where AI outperforms average humans, and AI-AI experiments across models of different capabilities",
+    "judge": "Human annotators (Human-Human, Human-AI) or critic models (AI-AI)",
+    "regime": "mixed",
+    "scale": "282K TULU-3-SFT instances used to fine-tune every Qwen2.5-Base model (AI-AI)"
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2502.04675v4:LIM-RISKS"
+    ],
+    "notes": "The authors name risks of false confidence in oversight effectiveness and vulnerability to adversarial examples, and say their experiments reveal limits in AI models' recursive self-critiquing."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "The claim rests on Human-Human, Human-AI and AI-AI experiments over several tasks, but no confidence interval, standard error or statistical test is reported in these passages, so the rubric grades it single-setting; the authors frame it as hypotheses and a 'promising' approach."
+   },
+   "review_status": "provisional_ai_draft",
+   "check_history": [
+    "card-1: flagged or undecided by two blind checks; rewritten from the checkers' suggested fix (quotes unchanged)",
+    "card-2: flagged by the checks; rewritten from the checkers' suggested fix (quotes unchanged)"
+   ]
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2502.04675v4:RES-HUMAN-C2",
+   "paper": "2502.04675v4",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2502.04675v4:DEF-RECURSIVE-CRITIQUE",
+     "N2:DSOFT:ARXIV-2502.04675v4:METHOD-BASELINES"
+    ],
+    "description": "Human annotators answered five 64-question multiple-choice tasks (response stage), then compared pairs of responses (critique) and pairs of critiques (C2); accuracy, confidence and completion time were compared across stages and against majority voting at about five responses' effort (Majority Voting@E5) and naive voting (Table 1).",
+    "passages": [
+     {
+      "version": "2502.04675v4",
+      "page": 4,
+      "lines": [
+       66,
+       77
+      ],
+      "text": "We select five representative tasks that require diverse cognitive capabilities while maintaining moderate difficulty.\nThese tasks span multiple domains, including language comprehension, mathematical reasoning, logical analysis, and\nvisual reasoning, to test the generalizability of recursive critique framework across different cognitive skills. All tasks\ninclude 64 multiple-choice questions. Each task consists of\n64 multiple-choice questions.\n\nParticipants We recruit 32 participants with bachelor’s\ndegrees: 22 from STEM backgrounds and 10 from liberal\narts backgrounds. Most participants passed CET-4 and\nscored approximately 100 out of 150 on their high school\nmathematics exams. All participants have prior experience\nin data annotation and are employed full-time for this study.",
+      "pdf_page": "https://arxiv.org/pdf/2502.04675v4#page=4"
+     },
+     {
+      "version": "2502.04675v4",
+      "page": 5,
+      "lines": [
+       2,
+       4
+      ],
+      "text": "Table 1. Human experiment results across response, critique, and C 2 stages for five tasks. Bold numbers indicate best performance.\nMajority Voting@E5 represents voting results with computational effort equivalent to 5 times of response. Metrics include average\naccuracy, voting accuracy, naive voting, confidence (1-5), and completion time (minutes).",
+      "pdf_page": "https://arxiv.org/pdf/2502.04675v4#page=5"
+     },
+     {
+      "version": "2502.04675v4",
+      "page": 5,
+      "lines": [
+       159,
+       164
+      ],
+      "text": "Metrics We assess the effectiveness of recursive critique\nthrough three metrics: (1) accuracy measures consistency\nwith ground truth answers; (2) completion time records the\nduration of the entire evaluation process; (3) confidence\nreflects participants’ self-assessed certainty in their final\nanswers on a five-point scale.",
+      "pdf_page": "https://arxiv.org/pdf/2502.04675v4#page=5"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "The experiment tests the hypothesis that critique of critique is easier than critique.",
+     "Annotators are of similar abilities and are randomly assigned across critique levels, with a 20-minute limit per question at each stage.",
+     "Majority-voting baselines are compared at approximately equal computational effort, with effort estimated as about 3, 5 and 7 response-equivalents for C1, C2 and C3."
+    ],
+    "passages": [
+     {
+      "version": "2502.04675v4",
+      "page": 4,
+      "lines": [
+       50,
+       55
+      ],
+      "text": "In this section, we validate the hypothesis that critique of\ncritique is easier than direct critique and examine whether\nthis difficulty relationship holds recursively. We conduct\nexperiments across diverse tasks with human annotators of\nsimilar abilities, and record their accuracy, completion time,\nand annotator confidence for analysis.",
+      "pdf_page": "https://arxiv.org/pdf/2502.04675v4#page=4"
+     },
+     {
+      "version": "2502.04675v4",
+      "page": 4,
+      "lines": [
+       82,
+       93
+      ],
+      "text": "Execution We develop standardized guidelines for all\ntasks using instructions and examples, detailed in Appendix\nA. Tasks are organized into data packages with specified\nsubmission deadlines, and annotators are randomly assigned\nacross different critique levels to ensure participation in all\nstages. To maintain efficiency, we set a 20-minute time limit\nfor each question at every stage, managed through flexible\npackage-level deadlines that allow annotators to allocate\ntime as needed. Annotators complete a predetermined number of tasks daily within their scheduled working hours. We\nconduct regular feedback sessions to gather suggestions for\nrefining procedures and guidelines, and assign dedicated\nstaff to oversee process management and quality control.",
+      "pdf_page": "https://arxiv.org/pdf/2502.04675v4#page=4"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Human annotators (32 bachelor's-degree participants with prior annotation experience)",
+    "task_data": "Five multiple-choice tasks of 64 questions each, spanning language comprehension, mathematical reasoning, logical analysis and visual reasoning (including CET-6 and GAOKAO Math)",
+    "judge": "Accuracy against ground-truth answers; annotators judge pairs of lower-stage outputs",
+    "regime": "evaluation",
+    "scale": "32 annotators; 64 questions per task; five tasks"
+   },
+   "quantitative": {
+    "n": "64 multiple-choice questions per task, five tasks; 32 annotators",
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [],
+    "notes": null
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "A human experiment across five tasks, but no confidence interval, standard error or statistical test is reported for the accuracies, which the rubric grades single-setting."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2502.04675v4:RES-HUMAN-C3",
+   "paper": "2502.04675v4",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2502.04675v4:DEF-RECURSIVE-CRITIQUE",
+     "N2:DSOFT:ARXIV-2502.04675v4:METHOD-BASELINES"
+    ],
+    "description": "The Human-Human protocol was extended to third-order critique (C3) on CET-6 and GAOKAO Math, with accuracy, confidence and completion time compared across stages and against majority voting at about seven responses' effort (Majority Voting@E7) and naive voting (Table 2).",
+    "passages": [
+     {
+      "version": "2502.04675v4",
+      "page": 5,
+      "lines": [
+       199,
+       201
+      ],
+      "text": "3.4. Recursive Critique Remains Consistently Easier\nWe extend recursive critique to third-order critique (C 3 )\non two representative tasks. As shown in Table 2, accu5",
+      "pdf_page": "https://arxiv.org/pdf/2502.04675v4#page=5"
+     },
+     {
+      "version": "2502.04675v4",
+      "page": 6,
+      "lines": [
+       2,
+       4
+      ],
+      "text": "Table 2. Human experiment results across response, critique, C 2 , and C 3 stages for two tasks. Bold numbers indicate best performance.\nMajority Voting@E7 represents voting results with computational effort equivalent to 7 times of response. Metrics include accuracy,\nmajority voting accuracy, naive voting, confidence (1-5), and completion time (minutes).",
+      "pdf_page": "https://arxiv.org/pdf/2502.04675v4#page=6"
+     },
+     {
+      "version": "2502.04675v4",
+      "page": 4,
+      "lines": [
+       66,
+       77
+      ],
+      "text": "We select five representative tasks that require diverse cognitive capabilities while maintaining moderate difficulty.\nThese tasks span multiple domains, including language comprehension, mathematical reasoning, logical analysis, and\nvisual reasoning, to test the generalizability of recursive critique framework across different cognitive skills. All tasks\ninclude 64 multiple-choice questions. Each task consists of\n64 multiple-choice questions.\n\nParticipants We recruit 32 participants with bachelor’s\ndegrees: 22 from STEM backgrounds and 10 from liberal\narts backgrounds. Most participants passed CET-4 and\nscored approximately 100 out of 150 on their high school\nmathematics exams. All participants have prior experience\nin data annotation and are employed full-time for this study.",
+      "pdf_page": "https://arxiv.org/pdf/2502.04675v4#page=4"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "The experiment tests whether the difficulty relation holds recursively, i.e. whether C3 remains easier.",
+     "Annotators are of similar abilities and are randomly assigned across critique levels, with a 20-minute limit per question at each stage.",
+     "Majority-voting baselines are compared at approximately equal effort, with C3 estimated at about 7 response-equivalents."
+    ],
+    "passages": [
+     {
+      "version": "2502.04675v4",
+      "page": 4,
+      "lines": [
+       50,
+       55
+      ],
+      "text": "In this section, we validate the hypothesis that critique of\ncritique is easier than direct critique and examine whether\nthis difficulty relationship holds recursively. We conduct\nexperiments across diverse tasks with human annotators of\nsimilar abilities, and record their accuracy, completion time,\nand annotator confidence for analysis.",
+      "pdf_page": "https://arxiv.org/pdf/2502.04675v4#page=4"
+     },
+     {
+      "version": "2502.04675v4",
+      "page": 4,
+      "lines": [
+       82,
+       93
+      ],
+      "text": "Execution We develop standardized guidelines for all\ntasks using instructions and examples, detailed in Appendix\nA. Tasks are organized into data packages with specified\nsubmission deadlines, and annotators are randomly assigned\nacross different critique levels to ensure participation in all\nstages. To maintain efficiency, we set a 20-minute time limit\nfor each question at every stage, managed through flexible\npackage-level deadlines that allow annotators to allocate\ntime as needed. Annotators complete a predetermined number of tasks daily within their scheduled working hours. We\nconduct regular feedback sessions to gather suggestions for\nrefining procedures and guidelines, and assign dedicated\nstaff to oversee process management and quality control.",
+      "pdf_page": "https://arxiv.org/pdf/2502.04675v4#page=4"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Human annotators (32 bachelor's-degree participants with prior annotation experience)",
+    "task_data": "Two multiple-choice tasks of 64 questions each: CET-6 and GAOKAO Math",
+    "judge": "Human annotators judge pairs of lower-stage outputs; accuracy, confidence and completion time are reported",
+    "regime": "evaluation",
+    "scale": "64 questions per task; two tasks"
+   },
+   "quantitative": {
+    "n": "64 multiple-choice questions per task, two tasks",
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [],
+    "notes": "Only two of the five tasks are extended to C3."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "A human experiment on two tasks with no confidence interval, standard error or statistical test reported, which the rubric grades single-setting."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2502.04675v4:RES-HUMAN-AI",
+   "paper": "2502.04675v4",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2502.04675v4:DEF-RECURSIVE-CRITIQUE"
+    ],
+    "description": "Qwen 7B and 72B Instruct models generated responses and recursive self-critiques; the same human annotators answered independently at the response stage and evaluated the AI's outputs at each later stage, and human accuracy was compared with the AI's previous-stage accuracy (Table 3).",
+    "passages": [
+     {
+      "version": "2502.04675v4",
+      "page": 6,
+      "lines": [
+       105,
+       114
+      ],
+      "text": "4.2. Setup\nWe employ the same annotators, annotation procedures, and\nevaluation metrics as in Human-Human experiments. The\nannotation process follows the Human-Human procedure,\nwith AI outputs replacing human ones. To obtain AI responses, we utilize both Qwen-7B-Instruct and Qwen-72BInstruct models (Qwen et al., 2025) to examine recursive critique across different AI capability levels. For each question,\nthe AI model first generates initial responses, then performs\nself-critique recursively at multiple orders (C 1 , C 2 ). Human\nannotators evaluate AI outputs at each corresponding stage,\nexcept for the Response stage where humans complete tasks\nindependently without relying on AI outputs.",
+      "pdf_page": "https://arxiv.org/pdf/2502.04675v4#page=6"
+     },
+     {
+      "version": "2502.04675v4",
+      "page": 7,
+      "lines": [
+       2,
+       4
+      ],
+      "text": "Table 3. Performance comparison across recursive critique stages, with human accuracy subscripts showing difference from previous-stage\nAI accuracy. Results from Qwen2.5-7B/72B-Instruct on mathematics and English tests, including accuracy, confidence (1-5), and\ncompletion time (minutes).",
+      "pdf_page": "https://arxiv.org/pdf/2502.04675v4#page=7"
+     },
+     {
+      "version": "2502.04675v4",
+      "page": 7,
+      "lines": [
+       102,
+       113
+      ],
+      "text": "TEM4\n(Qwen2.5-72B)\n\nResponse\nCritique\nC2\nC3\n\n34.38\n67.19+1.57\n64.06−1.56\n71.88+3.91",
+      "pdf_page": "https://arxiv.org/pdf/2502.04675v4#page=7"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "Tasks are chosen so that humans find them challenging while AI is reasonable but not perfect; both tasks are beyond most annotators' abilities.",
+     "Questions on which the models score 0% or 100% are filtered out.",
+     "Annotators, procedures and metrics are those of the Human-Human experiments, with AI outputs replacing human ones."
+    ],
+    "passages": [
+     {
+      "version": "2502.04675v4",
+      "page": 5,
+      "lines": [
+       190,
+       197
+      ],
+      "text": "We select tasks based on the criterion that humans find\nthem challenging while AI demonstrates reasonable but not\nperfect performance, creating suitable conditions for meaningful evaluation of human oversight when AI capabilities\nexceed human performance. Following this criterion, we\nselect two challenging task types for our experiments:\n• GAOKAO Math comprises the last two multiple-choice\nquestions from the high school mathematics examination\n(Zhang et al., 2023), which demand advanced problemsolving skills and mathematical reasoning abilities.",
+      "pdf_page": "https://arxiv.org/pdf/2502.04675v4#page=5"
+     },
+     {
+      "version": "2502.04675v4",
+      "page": 6,
+      "lines": [
+       84,
+       86
+      ],
+      "text": "• TEM4 (Test for English Majors Grade Four) includes reading comprehension questions that require\nprofessional-level English proficiency and complex text\nanalysis capabilities.",
+      "pdf_page": "https://arxiv.org/pdf/2502.04675v4#page=6"
+     },
+     {
+      "version": "2502.04675v4",
+      "page": 6,
+      "lines": [
+       97,
+       100
+      ],
+      "text": "Both tasks are beyond most annotators’ abilities while remaining moderately challenging for AI models. We filter\nout questions where models achieve either 0% or 100%\naccuracy, as these overly easy or difficult cases produce\nuniform outputs that are unsuitable for our validation.",
+      "pdf_page": "https://arxiv.org/pdf/2502.04675v4#page=6"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Qwen2.5-7B-Instruct and Qwen2.5-72B-Instruct generating responses and self-critiques; human annotators evaluating them",
+    "task_data": "GAOKAO Math (last two multiple-choice questions of the high-school mathematics exam) and TEM4 English reading comprehension",
+    "judge": "Human annotators evaluate the AI's outputs; human accuracy is reported",
+    "regime": "evaluation",
+    "scale": "Two models (7B and 72B); two tasks; number of questions not stated in these passages"
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2502.04675v4:LIM-RISKS"
+    ],
+    "notes": "Not every Table 3 cell is positive: for TEM4 with Qwen2.5-72B, human accuracy at C2 (64.06) is 1.56 points below the AI's previous-stage accuracy."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "Two tasks and two model sizes from one family, with no confidence interval, standard error or test reported, which the rubric grades single-setting."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2502.04675v4:RES-HUMAN-AI-C3",
+   "paper": "2502.04675v4",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2502.04675v4:DEF-RECURSIVE-CRITIQUE"
+    ],
+    "description": "Reading of the GAOKAO Math (Qwen2.5-7B) row of Table 3, where human annotators evaluated the model's outputs at each critique stage; subscripts give the difference from the AI's previous-stage accuracy.",
+    "passages": [
+     {
+      "version": "2502.04675v4",
+      "page": 7,
+      "lines": [
+       2,
+       4
+      ],
+      "text": "Table 3. Performance comparison across recursive critique stages, with human accuracy subscripts showing difference from previous-stage\nAI accuracy. Results from Qwen2.5-7B/72B-Instruct on mathematics and English tests, including accuracy, confidence (1-5), and\ncompletion time (minutes).",
+      "pdf_page": "https://arxiv.org/pdf/2502.04675v4#page=7"
+     },
+     {
+      "version": "2502.04675v4",
+      "page": 6,
+      "lines": [
+       105,
+       114
+      ],
+      "text": "4.2. Setup\nWe employ the same annotators, annotation procedures, and\nevaluation metrics as in Human-Human experiments. The\nannotation process follows the Human-Human procedure,\nwith AI outputs replacing human ones. To obtain AI responses, we utilize both Qwen-7B-Instruct and Qwen-72BInstruct models (Qwen et al., 2025) to examine recursive critique across different AI capability levels. For each question,\nthe AI model first generates initial responses, then performs\nself-critique recursively at multiple orders (C 1 , C 2 ). Human\nannotators evaluate AI outputs at each corresponding stage,\nexcept for the Response stage where humans complete tasks\nindependently without relying on AI outputs.",
+      "pdf_page": "https://arxiv.org/pdf/2502.04675v4#page=6"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "Questions on which the models score 0% or 100% are filtered out.",
+     "Humans answer independently at the response stage and evaluate the AI's outputs at later stages."
+    ],
+    "passages": [
+     {
+      "version": "2502.04675v4",
+      "page": 6,
+      "lines": [
+       97,
+       100
+      ],
+      "text": "Both tasks are beyond most annotators’ abilities while remaining moderately challenging for AI models. We filter\nout questions where models achieve either 0% or 100%\naccuracy, as these overly easy or difficult cases produce\nuniform outputs that are unsuitable for our validation.",
+      "pdf_page": "https://arxiv.org/pdf/2502.04675v4#page=6"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Qwen2.5-7B-Instruct responses and self-critiques evaluated by human annotators",
+    "task_data": "GAOKAO Math questions",
+    "judge": "Human annotators evaluate the AI's outputs; human accuracy is reported",
+    "regime": "evaluation",
+    "scale": "One 7B model; number of questions not stated in these passages"
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [],
+    "notes": null
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "One task with one model, read from a table with no confidence interval, standard error or test."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2502.04675v4:RES-AI-W2S",
+   "paper": "2502.04675v4",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2502.04675v4:DEF-RECURSIVE-CRITIQUE"
+    ],
+    "description": "The supervised model performs recursive self-critique at varying orders, a critic model gives a final higher-order critique, those critiques build preference pairs that train a Llama3.1-8B reward model used for Best-of-N sampling, and the PR metric (this Best-of-N performance against the oracle Pass@N performance) is compared across critique orders with a fixed 7B critic (Figure 2) or a fixed 7B supervised model (Figure 3).",
+    "passages": [
+     {
+      "version": "2502.04675v4",
+      "page": 7,
+      "lines": [
+       141,
+       152
+      ],
+      "text": "Experiment Setting In our experiments, the supervised\nmodel first performs recursive self-critique at varying orders.\nSubsequently, a critic model conducts a final higher-order\ncritique based on the supervised model’s outputs. Prompts\nand sampling strategies are detailed in Appendix B. Following established RLHF methodologies (Ouyang et al., 2022),\nwe use these final critiques to construct preference pairs\nand train reward models. To avoid potential confounding\neffects from architectural similarities, we select Llama3.18B (Meta, 2024)—a different architecture with comparable\nmodel capacity—as the foundation for the reward model.\nThis reward model is then used for Best-of-N sampling to\nsystematically evaluate supervisory efficacy across diverse\nmodel-critic combinations.",
+      "pdf_page": "https://arxiv.org/pdf/2502.04675v4#page=7"
+     },
+     {
+      "version": "2502.04675v4",
+      "page": 7,
+      "lines": [
+       155,
+       164
+      ],
+      "text": "Figures 2 and 3 present our experimental results under two\nsettings: (1) Figure 2 shows results where supervised models of varying sizes first perform recursive self-critique, followed by evaluation from a fixed 7B critic model at each\nstage. The critic’s judgments are used to train reward models specific to each supervised model size, which then guide\nBest-of-N sampling on the corresponding supervised models. The PR metric compares this Best-of-N performance\nagainst the oracle Pass@N performance for each model\nsize. (2) Figure 3 shows results where a fixed 7B supervised model first performs recursive self-critique, followed\nby evaluation from critic models of varying sizes at each\nstage. The critics’ judgments are used to train reward models specific to each critic size, which then guide Best-of-N\nsampling on the same 7B supervised model. The PR metric compares this Best-of-N performance against the oracle\nPass@N of this fixed 7B model across different critic sizes.",
+      "pdf_page": "https://arxiv.org/pdf/2502.04675v4#page=7"
+     },
+     {
+      "version": "2502.04675v4",
+      "page": 6,
+      "lines": [
+       140,
+       143
+      ],
+      "text": "Data Preperation To ensure objective measurement of supervision quality, we select mathematical tasks due to their\nverifiable nature. The experimental data are drawn from the\nDeepScaleR dataset (Luo et al., 2025), with 512 randomly\nsampled instances as the test set and the remainder as train6",
+      "pdf_page": "https://arxiv.org/pdf/2502.04675v4#page=6"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2502.04675v4:ASM-HIGHER-ORDER-EASIER"
+    ],
+    "stated_hypotheses": [
+     "Model capability is assumed to correlate with parameter size; all Qwen2.5-Base models are fine-tuned on the same 282K TULU-3-SFT samples to limit confounds from different post-training.",
+     "Answer correctness from the Math-Verify library is taken as reliable ground truth.",
+     "Weak-to-strong pairings only: supervised models larger than the 7B critic, or critic models smaller than the 7B supervised model."
+    ],
+    "passages": [
+     {
+      "version": "2502.04675v4",
+      "page": 6,
+      "lines": [
+       120,
+       128
+      ],
+      "text": "5.1. Setup\nModel Preparation We investigate the dynamics of supervisory effectiveness across pairings of supervised and\ncritic models with different capability levels. We use models from the Qwen2.5 series (Qwen et al., 2025), operating\nunder the premise that model capability generally correlates with parameter size. However, different variants of\nthe Qwen2.5-Instruct series may have undergone different\npost-training procedures, which could introduce confounding factors. To ensure fair comparison, we randomly sample\n282K instances from the open-source TULU-3-SFT dataset\n(Lambert et al., 2024) and fine-tune all models from the\nQwen2.5-Base series using the same data.",
+      "pdf_page": "https://arxiv.org/pdf/2502.04675v4#page=6"
+     },
+     {
+      "version": "2502.04675v4",
+      "page": 7,
+      "lines": [
+       130,
+       132
+      ],
+      "text": "ing data. We employ the Math-Verify library (Kydlíček &\nGandenberger, 2025) to determine answer correctness and\nobtain reliable ground truth signals.",
+      "pdf_page": "https://arxiv.org/pdf/2502.04675v4#page=7"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Qwen2.5 models fine-tuned from Qwen2.5-Base as supervised and critic models; Llama3.1-8B reward model",
+    "task_data": "DeepScaleR math problems, 512 randomly sampled test instances",
+    "judge": "A critic model's final critique trains the reward model; correctness checked with Math-Verify",
+    "regime": "mixed",
+    "scale": "Fixed 7B critic with supervised models of varying sizes, or fixed 7B supervised model with critics of varying sizes; 512 test instances"
+   },
+   "quantitative": {
+    "n": "512 test instances",
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2502.04675v4:LIM-RISKS"
+    ],
+    "notes": "The authors hedge that higher-order critiques 'generally' improve performance; only one math dataset (DeepScaleR) and one family of supervised and critic models (Qwen2.5) are used."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "One math dataset and one model family (Qwen2.5), with no confidence interval, standard error or test reported for the PR scores."
+   },
+   "review_status": "provisional_ai_draft",
+   "check_history": [
+    "card-1: flagged or undecided by two blind checks; rewritten from the checkers' suggested fix (quotes unchanged)"
+   ]
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2502.04675v4:RES-AI-S2W",
+   "paper": "2502.04675v4",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2502.04675v4:DEF-RECURSIVE-CRITIQUE"
+    ],
+    "description": "In the same AI-AI setup (recursive self-critique by the supervised model, final critique by a critic model, Llama3.1-8B reward model, Best-of-N scored by Performance Recovered), strong-to-weak pairings from Figures 2 and 3 compare direct critique with letting the supervised model self-critique first.",
+    "passages": [
+     {
+      "version": "2502.04675v4",
+      "page": 7,
+      "lines": [
+       141,
+       152
+      ],
+      "text": "Experiment Setting In our experiments, the supervised\nmodel first performs recursive self-critique at varying orders.\nSubsequently, a critic model conducts a final higher-order\ncritique based on the supervised model’s outputs. Prompts\nand sampling strategies are detailed in Appendix B. Following established RLHF methodologies (Ouyang et al., 2022),\nwe use these final critiques to construct preference pairs\nand train reward models. To avoid potential confounding\neffects from architectural similarities, we select Llama3.18B (Meta, 2024)—a different architecture with comparable\nmodel capacity—as the foundation for the reward model.\nThis reward model is then used for Best-of-N sampling to\nsystematically evaluate supervisory efficacy across diverse\nmodel-critic combinations.",
+      "pdf_page": "https://arxiv.org/pdf/2502.04675v4#page=7"
+     },
+     {
+      "version": "2502.04675v4",
+      "page": 7,
+      "lines": [
+       155,
+       164
+      ],
+      "text": "Figures 2 and 3 present our experimental results under two\nsettings: (1) Figure 2 shows results where supervised models of varying sizes first perform recursive self-critique, followed by evaluation from a fixed 7B critic model at each\nstage. The critic’s judgments are used to train reward models specific to each supervised model size, which then guide\nBest-of-N sampling on the corresponding supervised models. The PR metric compares this Best-of-N performance\nagainst the oracle Pass@N performance for each model\nsize. (2) Figure 3 shows results where a fixed 7B supervised model first performs recursive self-critique, followed\nby evaluation from critic models of varying sizes at each\nstage. The critics’ judgments are used to train reward models specific to each critic size, which then guide Best-of-N\nsampling on the same 7B supervised model. The PR metric compares this Best-of-N performance against the oracle\nPass@N of this fixed 7B model across different critic sizes.",
+      "pdf_page": "https://arxiv.org/pdf/2502.04675v4#page=7"
+     },
+     {
+      "version": "2502.04675v4",
+      "page": 6,
+      "lines": [
+       140,
+       143
+      ],
+      "text": "Data Preperation To ensure objective measurement of supervision quality, we select mathematical tasks due to their\nverifiable nature. The experimental data are drawn from the\nDeepScaleR dataset (Luo et al., 2025), with 512 randomly\nsampled instances as the test set and the remainder as train6",
+      "pdf_page": "https://arxiv.org/pdf/2502.04675v4#page=6"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "Model capability is assumed to correlate with parameter size; all Qwen2.5-Base models are fine-tuned on the same 282K TULU-3-SFT samples to limit confounds from different post-training.",
+     "Answer correctness from the Math-Verify library is taken as reliable ground truth.",
+     "Strong-to-weak pairings only: critic models stronger than the supervised model."
+    ],
+    "passages": [
+     {
+      "version": "2502.04675v4",
+      "page": 6,
+      "lines": [
+       120,
+       128
+      ],
+      "text": "5.1. Setup\nModel Preparation We investigate the dynamics of supervisory effectiveness across pairings of supervised and\ncritic models with different capability levels. We use models from the Qwen2.5 series (Qwen et al., 2025), operating\nunder the premise that model capability generally correlates with parameter size. However, different variants of\nthe Qwen2.5-Instruct series may have undergone different\npost-training procedures, which could introduce confounding factors. To ensure fair comparison, we randomly sample\n282K instances from the open-source TULU-3-SFT dataset\n(Lambert et al., 2024) and fine-tune all models from the\nQwen2.5-Base series using the same data.",
+      "pdf_page": "https://arxiv.org/pdf/2502.04675v4#page=6"
+     },
+     {
+      "version": "2502.04675v4",
+      "page": 7,
+      "lines": [
+       130,
+       132
+      ],
+      "text": "ing data. We employ the Math-Verify library (Kydlíček &\nGandenberger, 2025) to determine answer correctness and\nobtain reliable ground truth signals.",
+      "pdf_page": "https://arxiv.org/pdf/2502.04675v4#page=7"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Qwen2.5 models fine-tuned from Qwen2.5-Base as supervised and critic models; Llama3.1-8B reward model",
+    "task_data": "DeepScaleR math problems, 512 randomly sampled test instances",
+    "judge": "A critic model's final critique trains the reward model; correctness checked with Math-Verify",
+    "regime": "mixed",
+    "scale": "Fixed 7B critic or fixed 7B supervised model paired with models of varying sizes; 512 test instances"
+   },
+   "quantitative": {
+    "n": "512 test instances",
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2502.04675v4:LIM-RISKS"
+    ],
+    "notes": "The authors read the asymmetry as self-critique from weaker models possibly misleading stronger critics; only one math dataset and one model family are used."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "One math dataset and one model family (Qwen2.5), with no confidence interval, standard error or test reported for the PR scores."
+   },
+   "review_status": "provisional_ai_draft"
+  }
+ ]
+}

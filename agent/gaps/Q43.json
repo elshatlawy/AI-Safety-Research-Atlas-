@@ -1,0 +1,288 @@
+{
+ "schema": "ASRA-GAP-CLOSING-AGENT-v1",
+ "id": "Q43",
+ "question": "Open empirical questions: does debate help, reach equilibrium, show obfuscation?",
+ "asked_by": "Buhl et al., An alignment safety case sketch based on debate",
+ "rank": 1,
+ "status": "PARTLY_ANSWERED_BY_LATER_WORK",
+ "status_check": "AI_CHECKED",
+ "remaining_question": "With debaters RL-trained against human (or human-simulating) judges on tasks beyond QuALITY, does debate measurably raise judge accuracy over consultancy, does training reliably reach a stable honest equilibrium, do obfuscated arguments emerge, how large are the judges' systematic errors relative to ground truth and in which domains, and how many questions in the target domain are hard to settle by deductive argument?",
+ "remaining_type": "EMPIRICAL",
+ "safety_case": [
+  {
+   "node": "SC-OP-EMPIRICAL",
+   "relation": "DIRECT",
+   "reason": "The question is this node's own list of empirical questions (does debate help, does training reach equilibrium, do obfuscated arguments emerge), so a full answer would close the gap the node names in its own setting.",
+   "node_evidence": "WEAK",
+   "branch": "deployment and low stakes",
+   "score": 2
+  },
+  {
+   "node": "SC-C4.6",
+   "relation": "INDIRECT",
+   "reason": "Whether stability failures appear in trained debates would be empirical evidence on whether stability is a real problem, i.e. on C4.6, which the authors do not yet know how to support.",
+   "node_evidence": "WEAK",
+   "branch": "the equilibrium is correct (debate structure and judges)",
+   "score": 1.0
+  },
+  {
+   "node": "SC-E6.1",
+   "relation": "INDIRECT",
+   "reason": "Measuring how large the judges' systematic error is relative to ground truth would supply part of the human-error evidence E6.1 says is needed.",
+   "node_evidence": "WEAK",
+   "branch": "the equilibrium is correct (debate structure and judges)",
+   "score": 1.0
+  },
+  {
+   "node": "SC-ASM-NO-OBFUSCATION",
+   "relation": "INDIRECT",
+   "reason": "The remaining question's test of whether obfuscated arguments appear when debaters are RL-trained against human or human-simulating judges on deductively hard questions would be empirical evidence on the assumption, which the node says still needs a protocol shown to avoid them.",
+   "node_evidence": "SUPPORTED",
+   "branch": "the equilibrium is correct (debate structure and judges)",
+   "score": 0.5
+  }
+ ],
+ "findings": [
+  {
+   "id": "Q43:F1",
+   "later_paper": "arXiv 2605.27483v1: Debate Helps Weak Judges Reward Stronger Models",
+   "first_submitted": "2026-05-26",
+   "effect": "PARTLY_ANSWERS",
+   "claim": "In a visible-information weak-judge setting, proposer-critic debate raised judge macro-F1 by 7-16pp on three of five CodeContests+ and ARC-AGI-2 pairings and gave no benefit on the other two; the authors frame this as testing a narrower prerequisite of the Buhl et al. safety case (whether debate gives a weaker judge a more accurate correctness signal in verifiable domains), not the full safety case, and attribute most test-time lift to the critic's opening stance.",
+   "setting": "Experiment at test time (training-time value out of scope). Stronger debaters paired with smaller judges across open-source and frontier model families (five pairings), so the judges are models, not humans; CodeContests+ and ARC-AGI-2 in a visible-information weak-judge setting (verifiable domains); proposer-critic debate vs consultancy and answer-only evaluation.",
+   "bears_on": "'Whether debate measurably improves performance': yes on 3 of 5 pairings, at test time, on CodeContests+ and ARC-AGI-2 with model (not human) judges, when the critic provides a usable advantage; says nothing about training, equilibrium, stability or obfuscation.",
+   "passages": [
+    {
+     "version": "2605.27483v1",
+     "page": 2,
+     "lines": [
+      37,
+      46
+     ],
+     "text": "• In a visible-information weak-judge setting, proposer–critic debate lifts macro-F1 by 7–16pp\non three of five CodeContests+ and ARC-AGI-2 pairings, and gives no benefit on the other\ntwo.\n• A single condition governs when debate helps—the critic provides a usable advantage—\nwith two sub-parts that must jointly hold: (i) the critic’s classifier macro-F1 exceeds the\nopening-only consultancy judge’s (the more obvious generator–verifier gap does not predict\nthe split), and (ii) the judge treats the critic’s stance as a claim to verify rather than testimony\nto summarize. On the two non-responder pairings, both sub-parts fail together.\n• At test time, almost all of the lift comes from the critic’s opening stance; rebuttals neither\nhelp nor hurt. Their training-time value is out of scope here.",
+     "pdf_page": "https://arxiv.org/pdf/2605.27483v1#page=2"
+    },
+    {
+     "version": "2605.27483v1",
+     "page": 4,
+     "lines": [
+      3,
+      8
+     ],
+     "text": "Our reward-labeling framing is relevant to safety-case arguments for debate. Buhl et al. [2025] sketch\nan alignment safety case in which debate training helps produce honest systems. That argument\ndepends on debate supplying a trusted reward signal, plus further assumptions about convergence,\nexploration, and obfuscated arguments. We do not test that full safety case. We test a narrower\nprerequisite: in verifiable domains, does debate give a weaker judge a more accurate correctness\nsignal than consultancy or answer-only evaluation?",
+     "pdf_page": "https://arxiv.org/pdf/2605.27483v1#page=4"
+    },
+    {
+     "version": "2605.27483v1",
+     "page": 5,
+     "lines": [
+      32,
+      35
+     ],
+     "text": "To test whether weaker models can supervise stronger ones, we pair stronger debaters with smaller\njudges across open-source and frontier model families. We characterize each pairing by the debater’s\nDirect QA solve rate (DDQA) and the judge’s Direct QA solve rate (JDQA); Table 1 reports pairings\nand these capabilities.",
+     "pdf_page": "https://arxiv.org/pdf/2605.27483v1#page=5"
+    }
+   ]
+  },
+  {
+   "id": "Q43:F2",
+   "later_paper": "arXiv 2608.17776v1: Debate Training Reduces Reward Hacking in RLAIF",
+   "first_submitted": "2026-08-18",
+   "effect": "PARTLY_ANSWERS",
+   "claim": "RL fine-tuning with a generator-critic debate judged by a frozen weaker LLM kept judge performance stable and reached higher peak validation accuracy (45% performance gap recovered) than an RLAIF baseline that quickly hacked the judge; the authors call this a positive update while stressing that balancing the multi-agent game is critical, since without word limits the critic dominated by exploiting verbosity bias, and they think judge hacking is probably the default unless players are restricted.",
+   "setting": "Experiment (RL fine-tuning of an LLM with debate, a two-player game between a generator and a critic adjudicated by a weaker LLM judge). Gemini 2.5 Flash-class policy, frozen weaker Gemini 2.5 Flash Lite judge; mathematics tasks where final-answer correctness is verifiable, used to measure reward hacking; single-player RLAIF baseline vs debate; critique word limits (effective up to 150 words). The judge is an LLM, not a human.",
+   "bears_on": "'Whether debate measurably improves performance' (in training, yes in this setting) and 'whether training reliably reaches equilibrium' (narrowed: training was not reliable without game-balancing constraints; equilibrium itself not measured).",
+   "passages": [
+    {
+     "version": "2608.17776v1",
+     "page": 1,
+     "lines": [
+      12,
+      22
+     ],
+     "text": "We demonstrate that RL finetuning an LLM using debate, a two-player adversarial game between a\ngenerator and a critic adjudicated by a weaker LLM judge, reduces reward hacking compared to a\nreinforcement learning from AI feedback (RLAIF) baseline. Reward hacking is a central obstacle in\nRLAIF: as training progresses, the policy learns to exploit systematic errors in its AI judge, degrading task\nperformance, a problem that worsens precisely when the judge is weaker than the policy, the setting most\nrelevant to overseeing increasingly capable AI systems. We study mathematics tasks, where final-answer\ncorrectness is verifiable, allowing us to measure reward hacking dynamics. We train a Gemini 2.5\nFlash-class policy with a frozen, weaker Gemini 2.5 Flash Lite judge, comparing a single-player RLAIF\nbaseline against debate. While the baseline quickly hacks the judge, debate maintains judge performance\nthroughout training, leading to a higher peak validation accuracy (45% performance gap recovered)\nthat persists through many RL steps. Additional experiments show that: 1) further weakening the judge",
+     "pdf_page": "https://arxiv.org/pdf/2608.17776v1#page=1"
+    },
+    {
+     "version": "2608.17776v1",
+     "page": 3,
+     "lines": [
+      29,
+      34
+     ],
+     "text": "Crucially, achieving these benefits requires careful attention to the quality and balance of the debate\ngame: in preliminary experiments without word limits on the critiques, Bob’s output length grew\nsubstantially and Bob quickly dominated the game by winning on almost all prompts, exploiting\nverbosity bias in the judge. We think that hacking the judge is probably the default result from training\nwith debate unless measures to restrict the players are added (in our case, word limits up to 150\nwords), and some care and iteration are needed to balance the game and avoid hacking. While these",
+     "pdf_page": "https://arxiv.org/pdf/2608.17776v1#page=3"
+    },
+    {
+     "version": "2608.17776v1",
+     "page": 1,
+     "lines": [
+      23,
+      30
+     ],
+     "text": "leads to faster hacking, but this can be compensated by adding an additional debate round; 2) debate\nincentives override prompted misalignment; 3) RL using an LLM judge has a smaller train/validation\nreward gap than RL from verifiable rewards; 4) learning to critique to convince the judge using ground\ntruth labels is possible but slow. Taken together, our results are a positive update on the feasibility of\ndebate, while highlighting that balancing multi-agent training is critical: without player constraints,\nadversarial training risks defaulting to critic judge-hacking. We show that critique word limits (effective\nup to 150 words) successfully balance the game and avoid judge hacking, though this introduces a\ntrade-off by restricting critic expressive clarity.",
+     "pdf_page": "https://arxiv.org/pdf/2608.17776v1#page=1"
+    }
+   ]
+  },
+  {
+   "id": "Q43:F3",
+   "later_paper": "arXiv 2510.26518v2: Human-AI Complementarity: A Goal for Amplified Oversight",
+   "first_submitted": "2025-10-30",
+   "effect": "NARROWS",
+   "claim": "On a factuality verification task, human raters were shown an 'AI Debate' assistance in which two AI traces argued for different overall factuality ratings, a set-up the authors call analogous to one-turn, simultaneous debate. The authors report that debate led to low over-reliance yet also low overall accuracy: it increased under-reliance and did not increase accuracy over the baseline; on the Post-Hybridized Human Set, Search and Evidence assistance performed significantly better than Debate (p = .003). They say their debate method could be improved significantly and that their model was not trained to give arguments for both sides.",
+   "setting": "Human study (evaluation). Human raters on a factuality verification task, given different assistant presentation styles (Evidence+Reasoning, Judgments, Confidence, Search and Evidence, Debate) and compared with a baseline; accuracy on the Post-Hybridized Human Set (280 examples). The Debate condition shows two AI traces arguing for different overall factuality ratings, analogous to one-turn simultaneous debate; the model was not trained to give arguments for both sides. Differs from the question's setting: an untrained one-turn debate presentation, not trained debaters.",
+   "bears_on": "'Whether debate measurably improves performance': one negative data point for human raters on fact verification with an untrained one-turn debate presentation, which the authors say could be improved; it sharpens but does not settle the question.",
+   "passages": [
+    {
+     "version": "2510.26518v2",
+     "page": 15,
+     "lines": [
+      40,
+      49
+     ],
+     "text": "Our results on debate showed that it led to\nlow over-reliance, yet also low overall accuracy.\nOn the one hand, this might point to debate as\na promising method for reducing over-reliance.\nOn the other hand, it didn’t lead to appropriate\nreliance as it increased under-reliance, and didn’t\nincrease accuracy over the baseline. Our debate\nmethod could be improved significantly though.\nOur model was not trained to give arguments for\nboth sides. Also, there was a lot of text shown",
+     "pdf_page": "https://arxiv.org/pdf/2510.26518v2#page=15"
+    },
+    {
+     "version": "2510.26518v2",
+     "page": 9,
+     "lines": [
+      4,
+      14
+     ],
+     "text": "Fig 3 shows how the different assistant presentation styles affect the average human rater accuracy on the Post-Hybridized Human Set (T=.62,\n280 examples). We use bootstrap resampling to\ncalculate confidence intervals on the Mean Individual Rater Accuracy for visual benefit. A mixed\neffects logistic regression on the Post-Hybridized\nHuman Set revealed that most forms of assistance\n(including Evidence+Reasoning, Judgments, and\nConfidence) did not yield statistically significant\nimprovements over the baseline (all 𝑝 > .22).\nThe only exception was Search and Evidence\nassistance, which led to significantly higher average accuracy (73.3%, 𝑝 = .023), and performed\nsignificantly better than both Judgments & Confidence ( 𝑝 = .043) and Debate ( 𝑝 = .003). See",
+     "pdf_page": "https://arxiv.org/pdf/2510.26518v2#page=9"
+    },
+    {
+     "version": "2510.26518v2",
+     "page": 8,
+     "lines": [
+      42,
+      49
+     ],
+     "text": "We showed 8 different subsets of the full AI output to the human rater, to understand how these\nhelp them at the factuality verification task. See\nFigure 3 for our full list of experiments. We also\nincluded an \"AI Debate\" experiment, where we\nshow the full output (Search, Evidence, Reasoning, and Judgments, but without Confidence), arguing for different overall factuality ratings (i.e.,\none trace argued for \"Accurate\" while the other\nargued for \"Inaccurate\") - this set-up is analogous\nto one-turn, simultaneous debate.",
+     "pdf_page": "https://arxiv.org/pdf/2510.26518v2#page=8"
+    }
+   ]
+  },
+  {
+   "id": "Q43:F4",
+   "later_paper": "arXiv 2610.05461v1: AI Safety via Debate is Compromised by Cognitive Biases",
+   "first_submitted": "2026-10-04",
+   "effect": "NARROWS",
+   "claim": "In a study with 369 participants judging 68 LLM-generated debate dialogues about detective mysteries with known culprits, rhetorical interventions targeting anchoring, fallacy oversight, pro-jargon and verbosity, pooled across bias types, shifted judgments toward the manipulated side by 8.6 percentage points on average (95% bootstrap CI [+2.9, +14.2] pp; adding the bias-active-side predictor improved model fit, p = .002), favouring the manipulated side rather than correctness. The LLMs were explicitly instructed to use the strategies; the authors did not study whether they emerge through training and do not determine how often they would arise outside laboratory conditions.",
+   "setting": "Human-subject experiment (evaluation). 369 participants as judges; 68 LLM-generated debate dialogues about detective mysteries with known culprits; interventions (anchoring, fallacy oversight, pro-jargon, verbosity) applied to either the side advocating for the true culprit or the side advocating for an innocent suspect; LLMs explicitly instructed to use the strategies in highly controlled debates. Differs from the question's setting: debaters were instructed, not trained.",
+   "bears_on": "'Whether debate measurably improves performance', only as a vulnerability: human judges of debates can be shifted toward whichever side uses instructed rhetorical bias strategies, rather than toward correctness; also the asking paper's companion question on common systematic human errors. Says nothing on equilibrium or obfuscation from training.",
+   "passages": [
+    {
+     "version": "2610.05461v1",
+     "page": 1,
+     "lines": [
+      17,
+      23
+     ],
+     "text": "we investigate whether this advantage persists when debaters use rhetorical strategies that exploit biases\nin human judgment. Inspired by competitive debate, we construct 68 LLM-generated dialogues about\ndetective mysteries with known culprits, spanning four interventions: anchoring, fallacy oversight, projargon, and verbosity. We apply each intervention to either the side advocating for the true culprit or\nthe side advocating for an innocent suspect, allowing us to distinguish influence on adjudication from\ncorrectness. In a study with 369 participants, we find that, pooled across bias types, these interventions\nsignificantly shift judgments toward the manipulated side. These findings expose a vulnerability in\ndebate-based supervision: human adjudication is sensitive to manipulative rhetorical strategies.",
+     "pdf_page": "https://arxiv.org/pdf/2610.05461v1#page=1"
+    },
+    {
+     "version": "2610.05461v1",
+     "page": 7,
+     "lines": [
+      50,
+      56
+     ],
+     "text": "We first test H1: the presence of bias shifts human judgments toward the bias-active side of the debate.\nAdding the bias-active side predictor significantly improves model fit (χ2 (1) = 9.31, p = .002). On average,\nthe interventions shift judgments toward the manipulated side by 8.6 percentage points (95% bootstrap CI\n[+2.9, +14.2] pp), supporting H1. These results suggest that how arguments are presented can influence\nadjudication even when the underlying story evidence is unchanged. Because interventions target both\nculprit and rival sides, this shift favors the manipulated side rather than correctness, exposing a vulnerability\nin debate as a mechanism for supervision.",
+     "pdf_page": "https://arxiv.org/pdf/2610.05461v1#page=7"
+    },
+    {
+     "version": "2610.05461v1",
+     "page": 10,
+     "lines": [
+      34,
+      39
+     ],
+     "text": "In this work, we used highly controlled debates to isolate individual biases. In less constrained settings,\nmultiple biases may interact, and the strategies that elicit them may be subtler than those tested here. Finally,\nwe explicitly instructed the LLMs to use particular argumentative strategies; we did not study whether these\nstrategies emerge through training or whether models learn to exploit weaknesses in human judgment. Our\nresults establish susceptibility to the tested bias interventions, but do not determine how often such strategies\nwould arise outside of these laboratory conditions.",
+     "pdf_page": "https://arxiv.org/pdf/2610.05461v1#page=10"
+    }
+   ]
+  },
+  {
+   "id": "Q43:F5",
+   "later_paper": "arXiv 2507.19486v1: Confirmation bias: A challenge for scalable oversight",
+   "first_submitted": "2025-05-17",
+   "effect": "NARROWS",
+   "claim": "In two studies where evaluators knew the model was 'correct most of the time, but not all of the time', the tested simple oversight protocols gave no overall advantage; participants routinely deferred to the LLM and did not exceed its overall performance; in Study 1, showing arguments for both answers improved accuracy in cases where the model was incorrect, and in Study 2 participants became more confident in the system's answers after conducting online research, even when those answers were wrong.",
+   "setting": "Human studies (evaluation). Two studies of simple oversight protocols in which human participants evaluate an LLM's answers knowing the model is 'correct most of the time, but not all of the time'; Study 1 with or without arguments in favor of both answers (akin to a static one-turn debate); Study 2 with online research, in two groups. Differs from the question's setting: simple oversight protocols, not trained debate.",
+   "bears_on": "'Whether debate measurably improves performance', for simple oversight protocols rather than trained debate: no overall advantage and routine deference to the model; also the asking paper's companion questions on how good humans are at giving correct answers and on common systematic errors (evaluator biases).",
+   "passages": [
+    {
+     "version": "2507.19486v1",
+     "page": 1,
+     "lines": [
+      24,
+      35
+     ],
+     "text": "than themselves. However, human evaluators are subject to biases that can lead to systematic errors.\nWe conduct two studies examining the performance of simple oversight protocols where evaluators know\nthat the model is “correct most of the time, but not all of the time”. We find no overall advantage\nfor the tested protocols, although in Study 1, showing arguments in favor of both answers improves\naccuracy in cases where the model is incorrect. In Study 2, participants in both groups become more\nconfident in the system’s answers after conducting online research, even when those answers are incorrect.\nWe also reanalyze data from prior work that was more optimistic about simple protocols, finding that\nhuman evaluators possessing knowledge absent from models likely contributed to their positive results—\nan advantage that diminishes as models continue to scale in capability. These findings underscore the\nimportance of testing the degree to which oversight protocols are robust to evaluator biases, whether\nthey outperform simple deference to the model under evaluation, and whether their performance scales\nwith increasing problem difficulty and model capability.",
+     "pdf_page": "https://arxiv.org/pdf/2507.19486v1#page=1"
+    },
+    {
+     "version": "2507.19486v1",
+     "page": 13,
+     "lines": [
+      19,
+      23
+     ],
+     "text": "Under what conditions do participants defer to the LLM’s answer? Participants routinely deferred to the\nlanguage model and did not manage to exceed its overall performance, even in the incentive-aware and\narguments-present conditions. That said, we did observe that participants updated in the direction of the\nLLM’s “guess” (its response to being asked the question directly prior to the experiment) less frequently for\ncases where its guess was wrong than when it was correct. Plausible contributing factors included the fact",
+     "pdf_page": "https://arxiv.org/pdf/2507.19486v1#page=13"
+    }
+   ]
+  },
+  {
+   "id": "Q43:F6",
+   "later_paper": "arXiv 2610.02557v1: How to Have a Sensitive Debate: An Instance-Optimal Protocol for AI Debate",
+   "first_submitted": "2026-10-01",
+   "effect": "NARROWS",
+   "claim": "For problems with sufficiently stable decompositions, a new debate protocol gives worst-case correctness with honesty as a dominant-strategy equilibrium, and a matching instance-wise lower bound shows no protocol with only black-box queries to human judgment can do better; the authors relate stability to fractional block sensitivity.",
+   "setting": "Theory (complexity theory). Human judgment as a black-box oracle; recursive decomposition of a claim into a tree of sub-claims; no training or experiments.",
+   "bears_on": "'Whether stability is a real problem': in theory, a stability-type (low fractional block sensitivity) condition is necessary for efficient debate under black-box judgments; whether real questions have such decompositions is not addressed.",
+   "passages": [
+    {
+     "version": "2610.02557v1",
+     "page": 1,
+     "lines": [
+      30,
+      39
+     ],
+     "text": "to complex problems with limited supervision. Specifically, the current best protocol has been\nshown to work for all problems that have sufficiently stable decompositions into subproblems.\nIn this paper, we design a new protocol for this same class of problems that improves on the\nprior work in several ways. First, correctness holds in a worst-case rather than an average-case\nsense. Second, being honest and correct is a dominant-strategy equilibrium for both debaters,\nrather than a Stackelberg equilibrium. Finally, we prove black-box lower bounds, showing that\nour new protocol is instance-wise optimal. That is, no protocol for this class of problems can\noutperform ours while making only black-box queries to human judgments. We obtain these\nresults by relating the notion of stable problem decompositions to the concept of fractional block\nsensitivity from query complexity.",
+     "pdf_page": "https://arxiv.org/pdf/2610.02557v1#page=1"
+    },
+    {
+     "version": "2610.02557v1",
+     "page": 5,
+     "lines": [
+      1,
+      9
+     ],
+     "text": "Instance-wise optimality. Finally, we show in Section 5 that any protocol with only black-box\naccess to human judgments must make at least Ω(ρd ) queries to find a flawed sub-claim with constant\nprobability, matching the cost of our FBS debate protocol. This lower bound holds instance-wise: if\nthe best decomposition of an original claim x into a tree of sub-claims has fractional block sensitivity\nρ in each step, then ρd queries are required on that particular instance x. The assumption of\nblack-box access to human judgments is critical for the lower bound to hold. One can view this\ninstance-wise optimality as demonstrating that the black-box judgment assumption, which is common\nto all prior theoretical work on debate, must be relaxed in order to make further progress on debate\nprotocols.",
+     "pdf_page": "https://arxiv.org/pdf/2610.02557v1#page=5"
+    }
+   ]
+  }
+ ],
+ "findings_drafted": 6,
+ "maths": [],
+ "experiment_package": {
+  "id": "PK-Q43",
+  "file": "agent/packages/PK-Q43.json",
+  "hypothesis": "With open-weight debaters RL-trained by self-play in prover-estimator debate against a frozen, weaker human-simulating LLM judge on multi-step deduction problems the judge cannot verify (ground truth withheld from training), training reaches an approximate equilibrium whose outcomes match ground truth on most redundant (expected-stable) problems, with stability failures confined to conjunctive (expected-unstable) problems and showing up as no-answer rather than wrong answers. Obfuscated wins appear in naive recursive debate and grow with depth but stay rare in prover-estimator debate, and the systematic leaf-level error of both human and LLM judges is bounded but higher on leaves produced by trained than by untrained debaters.",
+  "check_state": "AI_CHECKED"
+ },
+ "review_status": "provisional_ai_draft",
+ "rules": [
+  "Everything here is an AI draft (provisional_ai_draft): each counted item passed two blind AI checks that were tested on planted errors, and no person has reviewed it.",
+  "A finding counts only in the setting its own quoted lines show; read `setting` before carrying it to another setting.",
+  "A question's status is a label from fixed rules over its counted findings; `status_check` says whether that label itself passed its check.",
+  "Cite the paper and page from the passage, and read the PDF page before relying on a claim."
+ ]
+}

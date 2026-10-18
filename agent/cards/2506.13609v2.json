@@ -1,0 +1,523 @@
+{
+ "schema": "ASRA-GAP-CLOSING-AGENT-v1",
+ "paper": "2506.13609v2",
+ "review_status": "provisional_ai_draft",
+ "rules": [
+  "Everything here is an AI draft (provisional_ai_draft): each counted item passed two blind AI checks that were tested on planted errors, and no person has reviewed it.",
+  "A finding counts only in the setting its own quoted lines show; read `setting` before carrying it to another setting.",
+  "A question's status is a label from fixed rules over its counted findings; `status_check` says whether that label itself passed its check.",
+  "Cite the paper and page from the passage, and read the PDF page before relying on a claim."
+ ],
+ "notes": "THM-STACKELBERG's quote is the 'consequences for training' paragraph (p.10 L29-37), not the statement of Theorem 6.2; the card adds the statement lines (p.10 L1-23), whose fractions are garbled in the extracted text. ASM-A-PROVABLE has kind 'definition' (it is Definition 5.2) but serves as the A-provability hypothesis of Theorems 6.1 and 6.2, so it is linked under assumptions. RES-COST (kind claim) is a prose cost comparison resting on the soundness circuit-size bound; it is graded ARGUMENT_ONLY because the comparison with doubly-efficient and naive recursive debate has no proof. DEF-OBFUSCATED defines the problem being mitigated, not how any result was produced, so it is not linked as a method. Footnote 1 (p.3 L46-48) says an earlier preprint's main theorem was wrong because of the stability definition; this version (v2) uses the corrected marginal-probability definition. THM-SOUNDNESS: the estimator is shown to exist via a non-runnable online gradient descent (p.16 L5-11).",
+ "cards": [
+  {
+   "record_id": "N2:DSOFT:ARXIV-2506.13609v2:CORE",
+   "paper": "2506.13609v2",
+   "evidence_type": "theorem",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2506.13609v2:DEF-PROVER-ESTIMATOR"
+    ],
+    "description": "The authors define prover-estimator debate (A decomposes the problem into subproblems, B gives probabilities for their answers, A selects a subproblem for recursion, rewards grow by a factor 1/r per round, and the final round uses the human judgment oracle O) and prove Theorem 6.1 from a completeness lemma (Lemma A.5) and a soundness lemma (Lemma A.4). Completeness: because human judgement is used directly in the last round and the reward grows by 1/r each round, an honest A eventually gains a reward larger than its earlier losses even if B lies in the first rounds. Soundness: B's probabilities are constructed with online gradient descent so that A cannot distinguish them from the truth, and the convergence rate bounds B's complexity relative to A's.",
+    "passages": [
+     {
+      "version": "2506.13609v2",
+      "page": 9,
+      "lines": [
+       1,
+       7
+      ],
+      "text": "In this section we give our debate protocol and the main theorems that it correctly incentivizes debaters\nfor problems in ΓO . The intuition is as in Figure 1: debater A decomposes the problem into subproblems,\nand debater B gives probabilities for the answers to each subproblem. Debater A then selects a subproblem\nfor recursion where B’s probability is allegedly incorrectly estimated. Rewards are assigned in each round to\nA for correctly predicting inconsistencies between B’s probabilities in the current round versus the previous\nround, with the available reward growing by a factor of 1/r in each round. The final round uses the human\njudgment oracle O rather than B’s probabilities.",
+      "pdf_page": "https://arxiv.org/pdf/2506.13609v2#page=9"
+     },
+     {
+      "version": "2506.13609v2",
+      "page": 9,
+      "lines": [
+       53,
+       59
+      ],
+      "text": "The proof of Theorem 6.1 follows from the completeness lemma Lemma A.5 and the soundness lemma\nLemma A.4. The proof of completeness, that an honest debater A can always defeat a dishonest debater B,\nfollows from the intuition that human judgement is used directly in the last round, and the reward in each\nround increases by a factor of 1/r. Thus, even if B lies throughout the first k rounds, at some point B (or\neventually the human judgement oracle) must tell the truth, at which point a debater A that has always\nanswered honestly can pick up a positive reward that is larger than the sum of all negative rewards received\nso far.",
+      "pdf_page": "https://arxiv.org/pdf/2506.13609v2#page=9"
+     },
+     {
+      "version": "2506.13609v2",
+      "page": 9,
+      "lines": [
+       60,
+       65
+      ],
+      "text": "The key technical piece is in showing soundness: that regardless of the dishonest strategy employed by\ndebater A, debater B can gain an advantage while using only slightly more compute than A. We use methods\nfrom online convex optimization to construct probabilities for B that are indistinguishable by A from the\ntruth. The idea is to run online gradient descent on a sequence of loss functions which capture how well on\naverage A can distinguish B’s probabilities from the truth. The convergence rate of online gradient descent\nthen yields bounds on the complexity of B’s strategy relative to A’s.",
+      "pdf_page": "https://arxiv.org/pdf/2506.13609v2#page=9"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2506.13609v2:ASM-RHO-STABILITY",
+     "N2:DSOFT:ARXIV-2506.13609v2:ASM-A-PROVABLE"
+    ],
+    "stated_hypotheses": [
+     "L is in Gamma^O(T) = NTIME^O(T) intersect coNTIME^O(T), the class on which the main results focus: both x in L and x not in L can be verified with a proof checkable in time T given access to the ground-truth oracle.",
+     "Problems are recursively decomposable (the problem is decomposed into subproblems), and the rho-stability condition is the other structural assumption on the problems debated.",
+     "Completeness (an honest prover wins against any dishonest estimator) requires that the prover provides a stable decomposition into solvable subproblems (rho-stable and A-provable); soundness (an honest estimator wins on average against a dishonest prover) holds even if stability is violated."
+    ],
+    "passages": [
+     {
+      "version": "2506.13609v2",
+      "page": 5,
+      "lines": [
+       20,
+       23
+      ],
+      "text": "We use the notation ΓO (T ) = NTIMEO (T ) ∩ coNTIMEO (T ) for the set of problems where one can verify\nboth the cases x ∈ L and x ∈\n/ L with a proof that is checkable in time T given access to the ground-truth\noracle. Our main results focus on this class.",
+      "pdf_page": "https://arxiv.org/pdf/2506.13609v2#page=5"
+     },
+     {
+      "version": "2506.13609v2",
+      "page": 3,
+      "lines": [
+       31,
+       38
+      ],
+      "text": "Our Results. We provide rigorous theoretical guarantees demonstrating that prover-estimator debate,\ncombined with the stability requirement, mitigates the obfuscated arguments problem. Specifically, under reasonable assumptions about the structure of the problems being debated (formalized as recursively decomposable\nproblems and the ρ-stability condition), we show:\n1. Completeness: An honest prover, who correctly provides a stable decomposition into solvable\nsubproblems, can always win the debate against any dishonest estimator.\n2. Soundness: An honest estimator can win on average against a dishonest prover, even if stability is\nviolated and the subproblems are obfuscated, using computational effort comparable to their dishonest\nopponent.",
+      "pdf_page": "https://arxiv.org/pdf/2506.13609v2#page=3"
+     },
+     {
+      "version": "2506.13609v2",
+      "page": 3,
+      "lines": [
+       39,
+       45
+      ],
+      "text": "The requirement that it is possible for the prover to provide a stable decomposition is the primary\nrestriction on the class of problems that can be accurately judged by our protocol. That is, there can be\nproblems where the prover can efficiently decompose the original problem into solvable subproblems, but all\nsuch efficient decompositions are unstable. In this case, our protocol errs on the side of safety, and rejects the\nprover’s argument. This is necessary for the protocol to succeed, because it cannot distinguish between true\nand false arguments made via unstable decompositions. Note that all that is required is that the prover is\nable to find a single stable decomposition to use in the debate. Even if other, unstable decompositions exist,",
+      "pdf_page": "https://arxiv.org/pdf/2506.13609v2#page=3"
+     }
+    ],
+    "check": "not verified: the blind checks miss some dropped conditions on theorem cards; read the theorem's statement at the cited page"
+   },
+   "setting": {
+    "systems": "Two debaters: a prover A (Alice), who decomposes a problem into subclaims, and an estimator B (Bob), who assigns probabilities to them; A's strategies come from a set A of functions",
+    "task_data": "Languages L in Gamma^O(T) = NTIME^O(T) intersect coNTIME^O(T) with a recursive decomposition M_D; inputs x drawn from a distribution mu",
+    "judge": "The protocol's rewards; its final round uses the human judgment oracle O rather than B's probabilities",
+    "regime": "theory",
+    "scale": null
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2506.13609v2:LIM-AVERAGE-CASE"
+    ],
+    "notes": "Guarantees are average-case over inputs, not per question (LIM-AVERAGE-CASE). Problems whose efficient decompositions are all unstable are rejected rather than judged, which the authors call the primary restriction on the class of problems."
+   },
+   "strength": {
+    "grade": "PROVED_IN_PAPER",
+    "reason": "The claim is the content of Theorem 6.1, which the paper proves from Lemma A.5 (completeness) and Lemma A.4 (soundness) under the stated stability and provability conditions."
+   },
+   "review_status": "provisional_ai_draft",
+   "check_history": [
+    "card-1: flagged or undecided by two blind checks; rewritten from the checkers' suggested fix (quotes unchanged)"
+   ]
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2506.13609v2:THM-COMPLETENESS",
+   "paper": "2506.13609v2",
+   "evidence_type": "theorem",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2506.13609v2:DEF-PROVER-ESTIMATOR"
+    ],
+    "description": "Proved as Lemma A.5: the honest prover uses A*'s decomposition, a union bound gives probability at least 1 - 2gamma that the debate tree is rho-stable and every subproblem is solvable by A, and because the reward grows by a factor 1/r each round and the last round uses the human-judgement oracle, an honest prover collects a reward that outweighs earlier losses when the estimator is caught.",
+    "passages": [
+     {
+      "version": "2506.13609v2",
+      "page": 9,
+      "lines": [
+       53,
+       59
+      ],
+      "text": "The proof of Theorem 6.1 follows from the completeness lemma Lemma A.5 and the soundness lemma\nLemma A.4. The proof of completeness, that an honest debater A can always defeat a dishonest debater B,\nfollows from the intuition that human judgement is used directly in the last round, and the reward in each\nround increases by a factor of 1/r. Thus, even if B lies throughout the first k rounds, at some point B (or\neventually the human judgement oracle) must tell the truth, at which point a debater A that has always\nanswered honestly can pick up a positive reward that is larger than the sum of all negative rewards received\nso far.",
+      "pdf_page": "https://arxiv.org/pdf/2506.13609v2#page=9"
+     },
+     {
+      "version": "2506.13609v2",
+      "page": 20,
+      "lines": [
+       173,
+       177
+      ],
+      "text": "Proof. We take A to be same as A∗ when decomposing the current problem into sub-problems. Therefore,\nMD is also ρ-stable at x w.r.t. A with probability 1 − γ over x ∼ µ. By a union bound, with probability\n1 − 2γ over x ∼ µ,\n• MD is ρ-stable at x w.r.t. A;\n• every sub-problem under the debate tree of x generated by A can be solved by A.",
+      "pdf_page": "https://arxiv.org/pdf/2506.13609v2#page=20"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2506.13609v2:ASM-A-PROVABLE",
+     "N2:DSOFT:ARXIV-2506.13609v2:ASM-RHO-STABILITY"
+    ],
+    "stated_hypotheses": [
+     "M_D is A-provable with probability 1 - gamma over x ~ mu, achieved by some A* in the class A.",
+     "M_D is rho-stable at x with respect to A* with probability 1 - gamma; stability bounds the effect of changes in the marginal probabilities of subclaims (Definition 5.3).",
+     "0 < gamma < 1/2, and L is in Gamma^O(n^c) with a recursive decomposition of depth d and width q.",
+     "The estimator B may be of any size; the bound holds with probability at least 1 - 2gamma over inputs, with the expectation taken over the protocol's internal randomness only.",
+     "The guarantee is for the protocol of Figure 2 run on M_D, with A any set of functions on {0,1}^n and eta > 0, as fixed in Theorem 6.1."
+    ],
+    "passages": [
+     {
+      "version": "2506.13609v2",
+      "page": 7,
+      "lines": [
+       41,
+       46
+      ],
+      "text": "Definition 5.3 (ρ-stability). For any z ∈ {0, 1}q , let Dϵ (z) be the set of distribution p over {0, 1}q such that\nfor any i ∈ [q], Pz′ ∼p [zi′ ̸= zi ] ≤ ϵ.\nLet x ∈ {0, 1}n be an instance of a problem L ∈ ΓO (T ) and let MD define a width q recursive decomposition\nof L. MD is ρ-stable at node (x, y) if for any ϵ > 0 and any distribution p ∈ Dϵ (z), where z is the ground\ntruth solution to (x, y), there is\nP [MD (x, y, z ′ ) ̸= MD (x, y, z)] ≤ ρ · ϵ.",
+      "pdf_page": "https://arxiv.org/pdf/2506.13609v2#page=7"
+     },
+     {
+      "version": "2506.13609v2",
+      "page": 9,
+      "lines": [
+       29,
+       29
+      ],
+      "text": "where the expectation is over the internal randomness of the protocol only.",
+      "pdf_page": "https://arxiv.org/pdf/2506.13609v2#page=9"
+     },
+     {
+      "version": "2506.13609v2",
+      "page": 3,
+      "lines": [
+       46,
+       48
+      ],
+      "text": "1 An earlier preprint had an error in the main theorem due to an issue with the way stability was defined. At a high level, the\ncorrected definition bounds changes in marginal probabilities of subclaims, while the original mistaken definition used conditional\nprobabilities. This error was found and fixed by the last three authors.",
+      "pdf_page": "https://arxiv.org/pdf/2506.13609v2#page=3"
+     }
+    ],
+    "check": "not verified: the blind checks miss some dropped conditions on theorem cards; read the theorem's statement at the cited page"
+   },
+   "setting": {
+    "systems": "Two debaters: a prover A (Alice) whose strategy comes from a set A of functions on {0,1}^n, and an estimator B (Bob), against which the guarantee holds for all B of any size",
+    "task_data": "Languages L in Gamma^O(n^c) with a recursive decomposition M_D of depth d and width q; inputs x drawn from a distribution mu on {0,1}^n",
+    "judge": "The payoff V^{A,B}(x) of the protocol of Figure 2 run on M_D; the proof sketch says human judgement is used directly in the last round",
+    "regime": "theory",
+    "scale": null
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2506.13609v2:LIM-AVERAGE-CASE"
+    ],
+    "notes": "The guaranteed expected payoff is 1/rho^(d+1). An earlier preprint's main theorem was wrong because stability was defined with conditional rather than marginal probabilities; this version uses the corrected definition."
+   },
+   "strength": {
+    "grade": "PROVED_IN_PAPER",
+    "reason": "Completeness is proved in the paper as Lemma A.5 (Appendix A)."
+   },
+   "review_status": "provisional_ai_draft",
+   "check_history": [
+    "card-1: flagged or undecided by two blind checks; rewritten from the checkers' suggested fix (quotes unchanged)",
+    "card-3: flagged by the checks under rubric v1.1; rewritten from the checkers' suggested fix (quotes unchanged)"
+   ]
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2506.13609v2:THM-SOUNDNESS",
+   "paper": "2506.13609v2",
+   "evidence_type": "theorem",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2506.13609v2:DEF-PROVER-ESTIMATOR"
+    ],
+    "description": "Proved as Lemma A.4: for a fixed prover strategy, the estimator's probabilities are built by online gradient descent on losses measuring how well A can distinguish them from the truth, yielding a circuit of size O(q 2^(3q) n d^2 / eta^2) that queries A; this gradient descent cannot actually be run (it needs the truth) and serves only to bound the circuit's size.",
+    "passages": [
+     {
+      "version": "2506.13609v2",
+      "page": 9,
+      "lines": [
+       60,
+       65
+      ],
+      "text": "The key technical piece is in showing soundness: that regardless of the dishonest strategy employed by\ndebater A, debater B can gain an advantage while using only slightly more compute than A. We use methods\nfrom online convex optimization to construct probabilities for B that are indistinguishable by A from the\ntruth. The idea is to run online gradient descent on a sequence of loss functions which capture how well on\naverage A can distinguish B’s probabilities from the truth. The convergence rate of online gradient descent\nthen yields bounds on the complexity of B’s strategy relative to A’s.",
+      "pdf_page": "https://arxiv.org/pdf/2506.13609v2#page=9"
+     },
+     {
+      "version": "2506.13609v2",
+      "page": 16,
+      "lines": [
+       5,
+       11
+      ],
+      "text": "Fix a strategy A for the leader. Our approach is to construct a small circuit implementing B’s strategy via\nonline gradient descent on a sequence of loss functions chosen so that B’s probabilities will be indistinguishable\nby A from the truth. In each iteration of online gradient descent the loss is chosen by measuring, averaged\nover all queries, how well A can distinguish between B’s current strategy and the true answer.\nCrucially, our online gradient descent algorithm cannot be run: each step of gradient descent requires\naccess to the truth, which is available only with exponential compute. However, we will show that the\nresulting circuit B has complexity bounded in terms of number of iterations, which will be small.",
+      "pdf_page": "https://arxiv.org/pdf/2506.13609v2#page=16"
+     },
+     {
+      "version": "2506.13609v2",
+      "page": 18,
+      "lines": [
+       77,
+       78
+      ],
+      "text": "Lemma A.4 (Soundness). For any η > 0 and any strategy A ∈ A there exists a strategy B computable by\ncircuits of size O(q23q nd2 /η 2 ) that may query A at each gate such that",
+      "pdf_page": "https://arxiv.org/pdf/2506.13609v2#page=18"
+     },
+     {
+      "version": "2506.13609v2",
+      "page": 9,
+      "lines": [
+       5,
+       16
+      ],
+      "text": "A for correctly predicting inconsistencies between B’s probabilities in the current round versus the previous\nround, with the available reward growing by a factor of 1/r in each round. The final round uses the human\njudgment oracle O rather than B’s probabilities.\n\n6.1\n\nThe protocol\n\nOur protocol for two-player zero-sum debate is given in Figure 2. We can now state our main theorem.\nTheorem 6.1. Let A be any set of functions on {0, 1}n and η > 0. Let µ be a distribution on inputs\nx ∈ {0, 1}n , and L ∈ ΓO (nc ) be a language with a recursive decomposition MD of depth d and width q. Let 0\n< γ < 1/2 and take a stability parameter ρ. Then the protocol of Figure 2 run on MD satisfies:",
+      "pdf_page": "https://arxiv.org/pdf/2506.13609v2#page=9"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "Theorem 6.1's preamble: A is any set of functions on {0,1}^n, eta > 0, mu is a distribution on inputs x in {0,1}^n, L is in Gamma^O(n^c) with a recursive decomposition M_D of depth d and width q, 0 < gamma < 1/2, and a stability parameter rho is taken.",
+     "B ranges over circuits of size O(q 2^(3q) n d^2 / eta^2) that may query a function in A at each gate, and B is chosen after A is fixed ('for every strategy A there exists B'; B is the Stackelberg follower).",
+     "No A-provability or rho-stability is needed: a dishonest prover may use an unstable decomposition into hard-to-answer queries.",
+     "The bound is an average over inputs x ~ mu.",
+     "q is taken to be a constant independent of n, since the estimator's circuit size grows exponentially in q.",
+     "The bound holds for the protocol of Figure 2 run on M_D (final round judged by the oracle O)."
+    ],
+    "passages": [
+     {
+      "version": "2506.13609v2",
+      "page": 9,
+      "lines": [
+       41,
+       45
+      ],
+      "text": "Notice that we only require that L admits an A-provable, ρ-stable decomposition in the completeness case.\nThis means that a dishonest debater A may produce an incorrect decomposition into queries y k for some input\nx such that MD (x, y k , z k ) is not ρ-stable, with answers to queries that cannot be answered by any function\nin A. Therefore, our protocol must account for situations where A produces an unstable decomposition into\nhard-to-answer queries, and ensure B is still able to win.",
+      "pdf_page": "https://arxiv.org/pdf/2506.13609v2#page=9"
+     },
+     {
+      "version": "2506.13609v2",
+      "page": 5,
+      "lines": [
+       54,
+       59
+      ],
+      "text": "Some intuition is useful for why Alice-leading, Bob-following Stackelberg equilibria are the right setting.\nFor completeness, we will use a prover Alice that always gives correct answers: this will win against any Bob\nregardless of Bob’s computational complexity, and thus works as an Alice-leading strategy. For soundness,\nhowever, we must find an estimator Bob that uses computation not too much larger than Alice, which we do\nby repeatedly playing Alice against herself. This method of Bob construction works only once Alice is fixed,\nand thus requires Bob to be the Stackelberg follower.",
+      "pdf_page": "https://arxiv.org/pdf/2506.13609v2#page=5"
+     },
+     {
+      "version": "2506.13609v2",
+      "page": 11,
+      "lines": [
+       11,
+       14
+      ],
+      "text": "formal definition. To ensure that A has advantage at most δ in distinguishing, the size of B’s circuit must\ngrow as O(q23q /δ 2 ). The exponential factor in q appears because this type of indistinguishability requires\nexplicitly representing B’s probability distribution over the 2q possible answers for the q subclaims at each\nlevel. Hence, we will require that q is a constant independent of the input size n.",
+      "pdf_page": "https://arxiv.org/pdf/2506.13609v2#page=11"
+     }
+    ],
+    "check": "not verified: the blind checks miss some dropped conditions on theorem cards; read the theorem's statement at the cited page"
+   },
+   "setting": {
+    "systems": "Two debaters: a prover A (Alice) with any strategy from a set A of functions on {0,1}^n, and an estimator B (Bob) from the circuits of size O(q 2^(3q) n d^2 / eta^2) that may query A at each gate",
+    "task_data": "Languages L in Gamma^O(n^c) with a recursive decomposition M_D of depth d and width q; inputs x drawn from a distribution mu on {0,1}^n",
+    "judge": "The payoff V^{A,B}(x) of the protocol of Figure 2 run on M_D; the protocol's final round uses the human judgment oracle O rather than B's probabilities",
+    "regime": "theory",
+    "scale": null
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2506.13609v2:LIM-AVERAGE-CASE"
+    ],
+    "notes": "The estimator's construction is existential: the online gradient descent that defines it needs access to the truth (available only with exponential compute) and cannot be run, so the theorem bounds B's circuit size without giving a practical way to compute B. The guarantee is average-case (LIM-AVERAGE-CASE)."
+   },
+   "strength": {
+    "grade": "PROVED_IN_PAPER",
+    "reason": "Soundness is proved in the paper as Lemma A.4 (Appendix A) via an online-gradient-descent indistinguishability construction."
+   },
+   "review_status": "provisional_ai_draft",
+   "check_history": [
+    "card-1: flagged or undecided by two blind checks; rewritten from the checkers' suggested fix (quotes unchanged)",
+    "card-3: flagged by the checks under rubric v1.1; rewritten from the checkers' suggested fix (quotes unchanged)"
+   ]
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2506.13609v2:THM-STACKELBERG",
+   "paper": "2506.13609v2",
+   "evidence_type": "theorem",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2506.13609v2:DEF-PROVER-ESTIMATOR"
+    ],
+    "description": "Corollary of Theorem 6.1, proved in Appendix B: in any alpha-approximate, A-leading Stackelberg equilibrium, if A errs with probability gamma, the soundness lemma (A.4) and completeness lemma (A.5) are combined to bound gamma.",
+    "passages": [
+     {
+      "version": "2506.13609v2",
+      "page": 22,
+      "lines": [
+       21,
+       31
+      ],
+      "text": "Proof of Theorem 6.2\n\nThe proof of Theorem 6.2 follows from an analysis of Stackelberg equilibria via the soundness and completeness\nof Lemma A.4 and Lemma A.5.\nProof of Theorem 6.2. Let A ∈ A and B ∈ B be the respective strategies of debaters A and B in any\nα-approximate, A-leading Stackelberg equilibrium in the protocol of Figure 2. Suppose that A is dishonest\nwith probability γ i.e.\nP [A(x) ̸= L(x)] = γ > 0\nx∼µ\n\nThen by Lemma A.4 there exists a strategy B ′ ∈ B , such that",
+      "pdf_page": "https://arxiv.org/pdf/2506.13609v2#page=22"
+     },
+     {
+      "version": "2506.13609v2",
+      "page": 9,
+      "lines": [
+       5,
+       16
+      ],
+      "text": "A for correctly predicting inconsistencies between B’s probabilities in the current round versus the previous\nround, with the available reward growing by a factor of 1/r in each round. The final round uses the human\njudgment oracle O rather than B’s probabilities.\n\n6.1\n\nThe protocol\n\nOur protocol for two-player zero-sum debate is given in Figure 2. We can now state our main theorem.\nTheorem 6.1. Let A be any set of functions on {0, 1}n and η > 0. Let µ be a distribution on inputs\nx ∈ {0, 1}n , and L ∈ ΓO (nc ) be a language with a recursive decomposition MD of depth d and width q. Let 0\n< γ < 1/2 and take a stability parameter ρ. Then the protocol of Figure 2 run on MD satisfies:",
+      "pdf_page": "https://arxiv.org/pdf/2506.13609v2#page=9"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2506.13609v2:ASM-A-PROVABLE",
+     "N2:DSOFT:ARXIV-2506.13609v2:ASM-RHO-STABILITY"
+    ],
+    "stated_hypotheses": [
+     "Theorem 6.2's preamble: A is any set of functions on {0,1}^n; d, q and B are as in Theorem 6.1; mu is a distribution on inputs; L is in Gamma^O(n^c) with a recursive decomposition given by M_D; G is the two-player zero-sum game defined by the protocol of Figure 2 with decomposition M_D.",
+     "M_D is A-provable and rho-stable, each with probability close to 1 (one minus a term in epsilon and rho^(d+1); the fraction is split across lines in the extracted text), and eta and the approximation level alpha are likewise set from epsilon and rho^(d+1).",
+     "A-provability is required always, not only for completeness, which the authors call a definitional artifact.",
+     "The guarantee holds in every alpha-approximate, A-leading Stackelberg equilibrium of the game, with the prover as leader and the estimator as follower."
+    ],
+    "passages": [
+     {
+      "version": "2506.13609v2",
+      "page": 10,
+      "lines": [
+       1,
+       12
+      ],
+      "text": "As a corollary of Theorem 6.1, we show that answering correctly is an A-leading Stackelberg equilibrium\nin the prover-estimator debate game. The equilibrium result is weaker than Theorem 6.1, because it requires\nA-provability always rather than only for completeness (a definitional artifact).\nϵ\nTheorem 6.2. Let A be any set of functions on {0, 1}n and let d, q, B be as in Theorem 6.1, with η = ρd+1\n.\nn\nO\nc\nLet µ be a distribution on inputs x ∈ {0, 1} , and let L ∈ Γ (n ) be a language with a recursive decomposition\ngiven by MD . Let G be the two-player zero-sum game defined by the protocol of Figure 2 with decomposition\nϵ",
+      "pdf_page": "https://arxiv.org/pdf/2506.13609v2#page=10"
+     },
+     {
+      "version": "2506.13609v2",
+      "page": 10,
+      "lines": [
+       13,
+       23
+      ],
+      "text": "ϵ\nMD , and let α < ρd+1\n. If MD is A-provable and ρ-stable each with probability 1 − ρd+1\n, then in every\nα-approximate, A-leading Stackelberg equilibrium of G\n\nP [A(x) = L(x)] > 1 − 5ϵ.\n\nx∼µ\n\nWe prove Theorem 6.2 in Section B.",
+      "pdf_page": "https://arxiv.org/pdf/2506.13609v2#page=10"
+     },
+     {
+      "version": "2506.13609v2",
+      "page": 5,
+      "lines": [
+       54,
+       59
+      ],
+      "text": "Some intuition is useful for why Alice-leading, Bob-following Stackelberg equilibria are the right setting.\nFor completeness, we will use a prover Alice that always gives correct answers: this will win against any Bob\nregardless of Bob’s computational complexity, and thus works as an Alice-leading strategy. For soundness,\nhowever, we must find an estimator Bob that uses computation not too much larger than Alice, which we do\nby repeatedly playing Alice against herself. This method of Bob construction works only once Alice is fixed,\nand thus requires Bob to be the Stackelberg follower.",
+      "pdf_page": "https://arxiv.org/pdf/2506.13609v2#page=5"
+     }
+    ],
+    "check": "not verified: the blind checks miss some dropped conditions on theorem cards; read the theorem's statement at the cited page"
+   },
+   "setting": {
+    "systems": "Two debaters: a prover A (Alice, the Stackelberg leader) with strategies from a set A of functions on {0,1}^n, and an estimator B (Bob, the follower) with strategies from the set B of Theorem 6.1",
+    "task_data": "A language L in Gamma^O(n^c) with a recursive decomposition M_D (depth d, width q as in Theorem 6.1); inputs x drawn from a distribution mu on {0,1}^n",
+    "judge": "Payoffs of the two-player zero-sum game G defined by the protocol of Figure 2; the protocol's final round uses the human judgment oracle O rather than B's probabilities",
+    "regime": "theory",
+    "scale": null
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2506.13609v2:LIM-AVERAGE-CASE"
+    ],
+    "notes": "The theorem concerns equilibria; the record's training take-away also relies on training methods converging to Stackelberg equilibria, which the passages assert but do not prove. Correctness is probabilistic over inputs (at least 1 - 5 epsilon)."
+   },
+   "strength": {
+    "grade": "PROVED_IN_PAPER",
+    "reason": "Theorem 6.2 is proved in Appendix B from Lemmas A.4 and A.5."
+   },
+   "review_status": "provisional_ai_draft",
+   "check_history": [
+    "card-1: flagged or undecided by two blind checks; rewritten from the checkers' suggested fix (quotes unchanged)"
+   ]
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2506.13609v2:RES-COST",
+   "paper": "2506.13609v2",
+   "evidence_type": "argument",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2506.13609v2:DEF-PROVER-ESTIMATOR"
+    ],
+    "description": "A prose cost count: the dominant per-round cost is the estimator's probability estimates, whose circuit size comes from the soundness lemma, and the protocol is compared with doubly-efficient debate (O(n^c) debater queries) and naive recursive debate (which fails soundness or must expand the whole search tree; with random subclaim choice its reward gap is 1/q^d).",
+    "passages": [
+     {
+      "version": "2506.13609v2",
+      "page": 18,
+      "lines": [
+       77,
+       78
+      ],
+      "text": "Lemma A.4 (Soundness). For any η > 0 and any strategy A ∈ A there exists a strategy B computable by\ncircuits of size O(q23q nd2 /η 2 ) that may query A at each gate such that",
+      "pdf_page": "https://arxiv.org/pdf/2506.13609v2#page=18"
+     },
+     {
+      "version": "2506.13609v2",
+      "page": 12,
+      "lines": [
+       10,
+       17
+      ],
+      "text": "Ensuring large reward gap. This outlined argument ensures A receives some minimal reward when\ntelling the truth, and that B can spend more compute to ensure that A receives an amount ∆ less reward if\nA frequently lies. However, ∆ > 0 is insufficient for efficient debate training. To see why, observe that if we\nrun naive recursive debate with q subclaims per round and d rounds, we achieve ∆ = 1/q d if B uniformly\nrandomly selects subclaims for recursion. This does not enable efficient training, as in expectation one\nneeds to run q d debates before seeing a single one where B catches a flaw. In contrast, Theorem 6.1 obtains\n∆ = Ω(1/ρd ) and one need only see O(ρd ) debates before getting a non-trivial training signal, where ρ can be\nsignificantly smaller than q for stable decompositions.",
+      "pdf_page": "https://arxiv.org/pdf/2506.13609v2#page=12"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2506.13609v2:ASM-RHO-STABILITY"
+    ],
+    "stated_hypotheses": [
+     "q is a constant independent of n and q^d = O(n^c).",
+     "The polynomial improvement needs a very stable decomposition (rho much smaller than q)."
+    ],
+    "passages": []
+   },
+   "setting": {
+    "systems": "Prover-estimator debate compared with doubly-efficient debate and naive recursive debate",
+    "task_data": "Problems with a depth-d, width-q recursive decomposition M_D (q subclaims per round, d rounds), with q constant and q^d = O(n^c)",
+    "judge": null,
+    "regime": "theory",
+    "scale": null
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [],
+    "notes": "The comparison holds only when a very stable decomposition exists; cost is counted in queries to the debaters' functions, and the statements about doubly-efficient and naive recursive debate carry no proof in these passages. Theorem 6.1 gives a reward gap Omega(1/rho^d), against 1/q^d for naive recursive debate with random subclaim choice."
+   },
+   "strength": {
+    "grade": "ARGUMENT_ONLY",
+    "reason": "The per-debate cost and the comparison with other protocols are argued in a short prose count built on the soundness bound, with no separate theorem or proof for the comparison."
+   },
+   "review_status": "provisional_ai_draft",
+   "check_history": [
+    "card-1: flagged or undecided by two blind checks; rewritten from the checkers' suggested fix (quotes unchanged)"
+   ]
+  }
+ ]
+}

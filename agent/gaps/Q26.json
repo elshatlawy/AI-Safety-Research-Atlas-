@@ -1,0 +1,209 @@
+{
+ "schema": "ASRA-GAP-CLOSING-AGENT-v1",
+ "id": "Q26",
+ "question": "What makes a concept easy or hard for a strong model to learn from weak labels, and can weak-to-strong generalization error be estimated without labels?",
+ "asked_by": "Burns et al., Weak-to-Strong Generalization: Eliciting Strong Capabilities With Weak Supervision",
+ "rank": 32,
+ "status": "PARTLY_ANSWERED_BY_LATER_WORK",
+ "status_check": "AI_CHECKED",
+ "remaining_question": "Can the absolute test error of a weak-to-strong model (not only its trend across weak supervisors) be estimated with no ground-truth labels, including for hyperparameter selection, for fully finetuned models, for reward modeling and when realizability fails? And which property of a concept (expansion, overlap density, linear decodability, salience) causally determines whether it is easy or hard to learn from weak labels when manipulated directly rather than only correlated?",
+ "remaining_type": "MIXED",
+ "safety_case": [],
+ "findings": [
+  {
+   "id": "Q26:F1",
+   "later_paper": "arXiv 2502.00620v4: Representations Shape Weak-to-Strong Generalization: Theoretical Insights and Empirical Predictions",
+   "first_submitted": "2025-02-02",
+   "effect": "PARTLY_ANSWERS",
+   "claim": "The authors report that a representation-based metric derived from their theory, computed without the finetuning task's labels, predicts trends in weak-to-strong performance, with strong correlation across 8 datasets, 150 small transformers and 52 LLMs, including a replication of Burns et al.'s SciQ, Amazon Polarity and Cosmos QA setup with Qwen-7B fully finetuned and 28 smaller LLMs as weak models. In that full-finetuning experiment the metric's hyperparameters were tuned per dataset and the best result reported, so labels entered hyperparameter choice, and the metric is validated as a trend (correlation) predictor, not as an estimate of the error value.",
+   "setting": "Experiments across 8 datasets with 150 small transformers and 52 LLMs, including Exp. III: a replication of Burns et al.'s setup on SciQ, Amazon Polarity and Cosmos QA with Qwen-7B as the strong model (entire model finetuned, unembedding layer replaced by a linear head, CE loss) and 28 smaller LLMs as weak models; W2S error measured as classification error; the metric is evaluated by its correlation with W2SG performance; in Exp. III hyperparameters were tuned per dataset, reporting the best result.",
+   "bears_on": "Second half of the question: estimating weak-to-strong generalization error without labels.",
+   "passages": [
+    {
+     "version": "2502.00620v4",
+     "page": 2,
+     "lines": [
+      78,
+      86
+     ],
+     "text": "Our theory offers a metric that predicts trends in W2SG\nperformance in practice without having the finetuning task\nlabels. This metric, which measures the overlap between the\ntwo highlighted regions in Fig. 1, shows a strong correlation\nwith W2SG performance across various settings. The\nextensive experiments across 8 datasets, involving 150 small\ntransformers and 52 LLMs, not only validate our theoretical\ninsights but also suggest their potential applications in managing W2SG, providing a deeper understanding of LLM\nbehavior through their internal representation structures.",
+     "pdf_page": "https://arxiv.org/pdf/2502.00620v4#page=2"
+    },
+    {
+     "version": "2502.00620v4",
+     "page": 8,
+     "lines": [
+      205,
+      216
+     ],
+     "text": "Exp. III: NLP tasks with end-to-end finetuned LLMs.\nWe replicate a setup from (Burns et al., 2023) on three\ndatasets: (1) SciQ (Welbl et al., 2017), containing crowdsourced science exam questions; (2) Amazon Polarity\n(Zhang et al., 2015), consisting of Amazon reviews;\nand (3) Cosmos QA (Huang et al., 2019), involving\ncommonsense-based reading comprehension. Both data\npreprocessing and finetuning strictly follow (Burns et al.,\n2023). The entire model is finetuned with the unembedding\nlayer replaced with a linear head, using CE loss. We use\nQwen/Qwen-7B (Bai et al., 2023) as the strong model\nand 28 smaller LLMs as weak models (details in Appx.\nD.1). Errw2s is measured in terms of classification error.",
+     "pdf_page": "https://arxiv.org/pdf/2502.00620v4#page=8"
+    },
+    {
+     "version": "2502.00620v4",
+     "page": 37,
+     "lines": [
+      35,
+      38
+     ],
+     "text": "In Exp. I, we set αw = αs = 0.1 and βw = βs = 0.1 for all datasets. In Exp. II, we set αw = 0.001, αs = 0.05,\nλw = 0.0001, and λs = 0.01 for both datasets. In Exp. III, we tune the hyperparameters for each dataset, reporting the best\nresult. Specifically, we set αw = αs and vary them within the range {0.02, 0.05}, and vary βw and βs independently within\nthe range {0.2, 0.5, 0.8, 1.0, 2, 4, 8}.",
+     "pdf_page": "https://arxiv.org/pdf/2502.00620v4#page=37"
+    }
+   ]
+  },
+  {
+   "id": "Q26:F2",
+   "later_paper": "arXiv 2405.15116v2: Quantifying the Gain in Weak-to-Strong Generalization",
+   "first_submitted": "2024-05-24",
+   "effect": "NARROWS",
+   "claim": "Theorem 1 (weak-to-strong generalization under realizability) states that, for a convex set Fs of functions on the strong representation, if the strong model's function fsw minimises the distance dP to the weak model's function over Fs and there exists fs in Fs with fs∘hs = f⋆∘h⋆ (realizability), then the error of the weakly supervised strong model on the true data is at most the true error of the weak model minus the misfit (the strong model's error on data labeled by the weak model), i.e. it improves over the weak model by at least the misfit. The authors say this lets one predict the amount by which the strong model will improve over the weak model, and choose among weak models, based on the misfit; the bound still contains the weak model's true error.",
+   "setting": "Theory: ground-truth representation h⋆ and real-valued finetuning task f⋆; strong and weak representation maps hs and hw; the strong model's function chosen from a convex set Fs to minimise the distance dP to the weak model's function; realizability assumed (Theorem 1). The abstract mentions empirical assessments that the passages do not describe.",
+   "bears_on": "Label-free estimation: under these assumptions the W2S gain is bounded below by the misfit, which is measured against the weak model's labels rather than ground truth; also why gains vary with the weak model chosen.",
+   "passages": [
+    {
+     "version": "2405.15116v2",
+     "page": 1,
+     "lines": [
+      26,
+      32
+     ],
+     "text": "In this work, we present a theoretical framework for understanding weak-tostrong generalization. Specifically, we show that the improvement in performance\nachieved by strong models over their weaker counterparts is quantified by the misfit\nerror incurred by the strong model on labels generated by the weaker model. Our\ntheory reveals several curious algorithmic insights. For instance, we can predict\nthe amount by which the strong model will improve over the weak model, and also\nchoose among different weak models to train the strong model, based on its misfit\nerror. We validate our theoretical findings through various empirical assessments.",
+     "pdf_page": "https://arxiv.org/pdf/2405.15116v2#page=1"
+    },
+    {
+     "version": "2405.15116v2",
+     "page": 4,
+     "lines": [
+      14,
+      25
+     ],
+     "text": "Theorem 1 (Weak-to-Strong Generalization under Realizability). Let h⋆ : Rd → Rd be a ground\n⋆\ntruth representation map, and let f ⋆ : Rd → R be a finetuning task of interest. Let hs : Rd → Rds\nand hw : Rd → Rdw be the strong and weak model representation maps respectively. Given some\ndata labeled by f ⋆ ◦ h⋆ , let fw ◦ hw be the function learnt by the weak model, for some arbitrary\nfunction fw : Rdw → R. Now, for a convex set of functions Fs mapping Rds to R let\nfsw = argminf ∈Fs dP (f ◦ hs , fw ◦ hw )\n(1)\nbe the function learnt by the strong model under weak supervision. Lastly, let us assume that there\nexists fs ∈ Fs such that fs ◦ hs = f ⋆ ◦ h⋆ . Then, we have that\ndP (fsw ◦ hs , f ⋆ ◦ h⋆ ) ≤ dP (fw ◦ hw , f ⋆ ◦ h⋆ ) − dP (fsw ◦ hs , fw ◦ hw ).\n(2)",
+     "pdf_page": "https://arxiv.org/pdf/2405.15116v2#page=4"
+    },
+    {
+     "version": "2405.15116v2",
+     "page": 4,
+     "lines": [
+      26,
+      30
+     ],
+     "text": "On the left-hand side in (2) is the error of the weakly-supervised strong model on the true data. The\nfirst term on the right-hand side is the true error of the weak model, and the second term is the error\nof the weakly-supervised strong model on data labeled by the weak model (i.e., misfit). Thus, the\ninequality directly says that the weakly-supervised strong model improves over the weak model by (at\nleast) an amount equal to the misfit. Note again that in practice, a popular way to finetune a pretrained",
+     "pdf_page": "https://arxiv.org/pdf/2405.15116v2#page=4"
+    }
+   ]
+  },
+  {
+   "id": "Q26:F3",
+   "later_paper": "arXiv 2501.19105v2: Relating Misfit to Gain in Weak-to-Strong Generalization Beyond the Squared Loss",
+   "first_submitted": "2025-01-31",
+   "effect": "NARROWS",
+   "claim": "The authors extend the misfit-based characterization of the gain to losses that are Bregman divergences when the strong class is convex, which covers classification because the cross-entropy loss can be expressed as a Bregman divergence, and, for classification, to convex combinations of k strong models, up to an additional error term that vanishes as k gets large. In their plots (Figures 2, 3a, 3b) the gain is directly proportional to the misfit, but the theory's suggestion that the gain should be at least the misfit 'does not quite hold': the misfit is consistently larger than the difference between the weak and strong model loss; one significant reason, they say, is that their result assumes realizability, which they verified does not hold in their experiments.",
+   "setting": "Theory with Bregman-divergence losses, a convex strong class and assumed realizability; convex combinations of k strong models for classification; experiments on synthetic and real-world datasets (the passages do not name the models or datasets).",
+   "bears_on": "Label-free estimation in classification: whether the misfit (computable without ground truth) quantifies the W2S gain.",
+   "passages": [
+    {
+     "version": "2501.19105v2",
+     "page": 1,
+     "lines": [
+      18,
+      26
+     ],
+     "text": "misfit between the strong and weak model. We generalize such a characterization to learning tasks whose loss\nfunctions correspond to arbitrary Bregman divergences when the strong class is convex. This extends the\nmisfit-based characterization of performance gain in weak-to-strong generalization to classification tasks, as\nthe cross-entropy loss can be expressed in terms of a Bregman divergence. In most practical scenarios, however,\nthe strong model class may not be convex. We therefore weaken this assumption and study weak-to-strong\ngeneralization for convex combinations of k strong models in the strong class, in the concrete setting of\nclassification. This allows us to obtain a similar misfit-based characterization of performance gain, upto\nan additional error term that vanishes as k gets large. Our theoretical findings are supported by thorough\nexperiments on synthetic as well as real-world datasets.",
+     "pdf_page": "https://arxiv.org/pdf/2501.19105v2#page=1"
+    },
+    {
+     "version": "2501.19105v2",
+     "page": 9,
+     "lines": [
+      208,
+      213
+     ],
+     "text": "Finally, while the plots in Figure 2 and Figure 3a, 3b do illustrate that the gain in performance is directly proportional to the misfit as expected, our theory would also additionally suggest that the gain should quantitatively\nbe at least the misfit (up to an error term decreasing in k). This does not quite hold in the plots—we can\nobserve that the misfit is consistently larger than the difference between the weak model and strong model loss.\nOne significant reason for this is that our result assumes realizability; namely, the target task should be exactly\nrepresentable by the strong model. We verified that this does not actually hold in our experiments—even if we\ntrain the strong models on data with ground-truth labels, we see a non-trivial test loss at the end of training.",
+     "pdf_page": "https://arxiv.org/pdf/2501.19105v2#page=9"
+    }
+   ]
+  },
+  {
+   "id": "Q26:F4",
+   "later_paper": "arXiv 2412.03881v2: Weak-to-Strong Generalization Through the Data-Centric Lens",
+   "first_submitted": "2024-12-05",
+   "effect": "NARROWS",
+   "claim": "The authors propose that weak-to-strong generalization tracks the overlap density, the number of points containing both easy patterns (learnable by a weak model) and challenging patterns (only learnable by a stronger model), present a theoretical result showing that the generalization benefit is a function of the overlap density, and detect overlap points by thresholding weak-model confidence and using absolute inner products as overlap scores, with thresholds set by a change point detection technique. In their experiments, strong model performance improves as the overlap proportion increases, which they describe as providing evidence for the overlap density mechanism's role.",
+   "setting": "Theory and an overlap-detection algorithm on a stylised data model x = [x_easy, x_hard]; experiments following EleutherAI's replication of Burns et al., with Qwen1.5 0.5B as weak and Llama3 8B as strong model trained by linear probing (not full finetuning) on 19 datasets, and a weak-supervision setting (9 WRENCH datasets, Snorkel label model as weak model, 4-layer MLP as strong model).",
+   "bears_on": "First half: what properties of the data make weak-to-strong learning of a concept easy or hard.",
+   "passages": [
+    {
+     "version": "2412.03881v2",
+     "page": 1,
+     "lines": [
+      18,
+      26
+     ],
+     "text": "of data enable weak-to-strong generalization has been understudied. We propose a\nsimple data-centric mechanism that characterizes weak-to-strong generalization:\nthe overlap density. Intuitively, generalization tracks the number of points that contain overlaps, i.e., both easy patterns (learnable by a weak model) and challenging\npatterns (only learnable by a stronger model), as with such points, weak predictions can be used to learn challenging patterns by stronger models. We provide a\npractical overlap detection algorithm to find such points in datasets and leverage\nthem to learn, among multiple sources of data, which to query when seeking to\nmaximize overlap density and thereby enhance weak-to-strong generalization. We\npresent a theoretical result showing that the generalization benefit is a function of\nthe overlap density and a regret bound for our data selection algorithm. Empirically,",
+     "pdf_page": "https://arxiv.org/pdf/2412.03881v2#page=1"
+    },
+    {
+     "version": "2412.03881v2",
+     "page": 5,
+     "lines": [
+      42,
+      51
+     ],
+     "text": "To estimate the overlap densities, we must address C2. We propose an overlap detection algorithm\n(Algorithm 2) based on two insights from our data model in Section 3.1, i.e. x = [xeasy , xhard ].\n1. Weak models are less confident on hard-only points because they lacks access to hard features.\n2. Overlap points are more closely aligned with hard-only points than easy-only points are.\nWe provide theoretical support for these in Section 4.2. Based on these, we use confidence scores\nto separate hard-only data points first, and then use the absolute values of inner products as overlap\nscores to distinguish overlap points from easy-only points. In Algorithm 2, we first identify hard-only\npoints by thresholding weak model confidence scores, split the dataset, and detect overlap points\nusing inner products to distinguish them from easy-only points. We determine thresholds using a\nchange point detection technique (Sen & Srivastava, 1975). The intuitions underlying our algorithms",
+     "pdf_page": "https://arxiv.org/pdf/2412.03881v2#page=5"
+    },
+    {
+     "version": "2412.03881v2",
+     "page": 8,
+     "lines": [
+      40,
+      49
+     ],
+     "text": "For the language model experiments, we followed the setup described in EleutherAI (2021), which\nreplicates Burns et al. (2023). We used the Qwen1.5 0.5B model as the weak model and the Llama3\n8B model as the strong model. We used linear probing based on the observation in Appendix D.2 of\nBurns et al. (2023) that linear probing results often align with those from full fine-tuning. We used\n19 datasets from EleutherAI (2021). For the weak supervision setting, we used 9 datasets from the\nWRENCH weak supervision benchmark (Zhang et al., 2021). We used Snorkel (Ratner et al., 2018)\nas the label model (weak model), and a 4-layer MLP was used as the strong model.\nResults. Figure 2 presents the results of this experiment. As expected, we observe that the strong\nmodel performance improves as the overlap proportion increases, providing evidence for the overlap\ndensity mechanism’s role in weak-to-strong generalization. Also, we were able to observe three",
+     "pdf_page": "https://arxiv.org/pdf/2412.03881v2#page=8"
+    }
+   ]
+  },
+  {
+   "id": "Q26:F5",
+   "later_paper": "arXiv 2605.05710v1: On the Blessing of Pre-training in Weak-to-Strong Generalization",
+   "first_submitted": "2026-05-07",
+   "effect": "NARROWS",
+   "claim": "Across Pythia-6.9B and OLMo-7B pretraining checkpoints on reward-modeling tasks, the authors find a statistically significant positive correlation between a checkpoint's linear-probe accuracy and its final weak-to-strong performance (e.g. R2 about 0.90 for Pythia on CAI-Harmless), and report linear decodability as a more predictive indicator than pretraining evaluation loss; they suggest W2S becomes viable when the target concept is sufficiently linearly separable.",
+   "setting": "Empirical: Pythia-6.9B (154 checkpoints) and OLMo-7B (317 checkpoints) as strong students, weak supervisors such as Pythia-1B and OLMo-1B, reward modeling on HH-RLHF and CAI-Harmless, linear head on a frozen backbone, one epoch. Correlational; linear-probe accuracy uses ground-truth labels.",
+   "bears_on": "First half: what makes a concept easy to elicit, and an operational notion of salience (linear decodability in the pretrained representation).",
+   "passages": [
+    {
+     "version": "2605.05710v1",
+     "page": 8,
+     "lines": [
+      82,
+      91
+     ],
+     "text": "Experimental Setup. Consistent with established W2SG benchmarks [Burns et al., 2024, Yang\net al., 2025], we evaluate performance on reward modeling tasks covering two primary alignment\ndimensions: Harmlessness (CAI-Harmless [Bai et al., 2022a]) and Helpfulness (HH-RLHF [Bai\net al., 2022b]). To comprehensively trace the evolutionary dynamics of W2SG, our study spans an\nextensive range of intermediate pre-training checkpoints from two distinct model families: Pythia6.9B (154 checkpoints) and OLMo-7B (317 checkpoints). For each task, we partition the data into\nground-truth, weak supervision, and test sets. Strong ceiling models are fine-tuned on ground-truth\nlabels, while weak-to-strong models are trained on labels generated by a weak supervisor (e.g.,\nPythia-1B and OLMo-1B) for a single epoch to mitigate overfitting. We report the test accuracy using\na linear projection head attached to the frozen backbone. Detailed configurations regarding dataset\npartitioning and optimization hyperparameters are provided in Appendix C.5.",
+     "pdf_page": "https://arxiv.org/pdf/2605.05710v1#page=8"
+    },
+    {
+     "version": "2605.05710v1",
+     "page": 9,
+     "lines": [
+      73,
+      83
+     ],
+     "text": "Mechanistic Insights via Linear Representation Hypothesis. To further explore the geometric\nevolution accompanying these macroscopic trends, we investigate the linear separability [Park et al.,\n2024, Jiang et al., 2024] of the model’s internal representations during pre-training. As extensively\ndetailed in Appendix C.7, we find a statistically significant positive correlation between the linear\nprobe accuracy of the pre-trained checkpoints and their ultimate W2SG performance (e.g., achieving\nan R2 ≈ 0.90 for Pythia on CAI-Harmless, see Figure 13 and Table 1). Furthermore, our quantitative\nanalysis in Table 2 demonstrates that this linear decodability serves as a more predictive indicator\nof W2SG feasibility than standard pre-training evaluation loss. This suggests that the emergence of\nW2SG is closely associated with the linear decodability of the pre-trained manifold: the capability\nto properly mitigate supervision noise and surpass the weak supervisor becomes empirically viable\nwhen the latent geometric structure of the target concepts becomes sufficiently linearly separable.",
+     "pdf_page": "https://arxiv.org/pdf/2605.05710v1#page=9"
+    }
+   ]
+  }
+ ],
+ "findings_drafted": 5,
+ "maths": [],
+ "experiment_package": null,
+ "review_status": "provisional_ai_draft",
+ "rules": [
+  "Everything here is an AI draft (provisional_ai_draft): each counted item passed two blind AI checks that were tested on planted errors, and no person has reviewed it.",
+  "A finding counts only in the setting its own quoted lines show; read `setting` before carrying it to another setting.",
+  "A question's status is a label from fixed rules over its counted findings; `status_check` says whether that label itself passed its check.",
+  "Cite the paper and page from the passage, and read the PDF page before relying on a claim."
+ ]
+}

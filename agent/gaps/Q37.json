@@ -1,0 +1,172 @@
+{
+ "schema": "ASRA-GAP-CLOSING-AGENT-v1",
+ "id": "Q37",
+ "question": "Can learning-theoretic results say how the abilities of learning agents and available data affect a weaker agent's ability to verify a stronger one?",
+ "asked_by": "Hammond et al., Neural Interactive Proofs",
+ "rank": 12,
+ "status": "NARROWED",
+ "status_check": "AI_CHECKED",
+ "remaining_question": "For learned provers and verifiers (e.g. neural networks trained to equilibrium in a prover-verifier game), what bounds relate the verifier's hypothesis-class capacity and training-sample size, and the prover's capacity, to the soundness and completeness the trained protocol achieves?",
+ "remaining_type": "MATHEMATICAL",
+ "safety_case": [
+  {
+   "node": "SC-C4.1",
+   "relation": "INDIRECT",
+   "reason": "Learning-theoretic results on how learning agents' capacity and data affect what a trained verification protocol achieves would be the kind of theory linking a debate-like protocol to realistic training that C4.1 lacks, but for prover-verifier games and about soundness and completeness rather than training time.",
+   "node_evidence": "WEAK",
+   "branch": "training reaches the honest equilibrium",
+   "score": 1.0
+  },
+  {
+   "node": "SC-C2.2",
+   "relation": "INDIRECT",
+   "reason": "Bounds on the soundness of a protocol whose learned prover and verifier are trained to equilibrium would bear on key claim 2, that the game's approximate equilibria make mistakes in at most an epsilon-prime fraction of cases, though for prover-verifier games rather than the case's debate game.",
+   "node_evidence": "WEAK",
+   "branch": "the equilibrium is correct (debate structure and judges)",
+   "score": 1.0
+  }
+ ],
+ "findings": [
+  {
+   "id": "Q37:F1",
+   "later_paper": "arXiv 2607.15645v1: Testing Distributions Against Bounded Distinguishers",
+   "first_submitted": "2026-07-17",
+   "effect": "NARROWS",
+   "claim": "In the PAC verification model, where a computationally weak verifier wishes to agnostically learn a family F with assistance from a powerful but untrusted prover, using fewer labeled samples than it would need to learn F by itself, the paper gives a distribution-free verification protocol for unions of k disjoint rectangles in [0,1]^n whose verifier sample complexity is smaller than required for learning for every constant dimension n (Theorem 1.10). The authors focus only on verifier sample complexity and do not attempt to optimise prover or communication cost in their general reductions.",
+   "setting": "Learning theory; agnostic PAC learning of a family F by a computationally weak verifier with assistance from a powerful but untrusted prover; hand-designed protocols (not learned agents); simplified model in which the honest prover receives an explicit description of the input distribution; the verifier gets labeled samples. Only verifier sample complexity is analysed.",
+   "bears_on": "The 'amount of data' part of Q37: a learning-theoretic statement that a data-limited verifier can check a stronger prover's learning outcome with fewer samples than learning itself, for specific classes. It does not treat learned verifiers or provers, and the prover's computational ability is not modelled.",
+   "passages": [
+    {
+     "version": "2607.15645v1",
+     "page": 10,
+     "lines": [
+      13,
+      16
+     ],
+     "text": "In the PAC verification model [GRSY21, MS23, GJK+ 24], a computationally weak verifier V wishes\nto agnostically learn a family F with assistance from powerful but untrusted prover P . The goal\nis to design a protocol in which the verifier V uses fewer labeled samples than would be required\nfor it to agnostically learn F by itself (i.e., without the prover’s help). This model may be defined",
+     "pdf_page": "https://arxiv.org/pdf/2607.15645v1#page=10"
+    },
+    {
+     "version": "2607.15645v1",
+     "page": 11,
+     "lines": [
+      1,
+      5
+     ],
+     "text": "In this paper, we actually consider a simplification of Definition 1.8 whereby the honest prover\nreceives an explicit description of the input distribution, rather than just samples from it. This\nsimplification is benign for us because we only focus on verifier sample complexity, and do not\nattempt to optimize prover or communication cost in our general reductions. We suspect that our\nconcrete applications should enjoy doubly-efficient protocols. (See Remark 5.14.)",
+     "pdf_page": "https://arxiv.org/pdf/2607.15645v1#page=11"
+    },
+    {
+     "version": "2607.15645v1",
+     "page": 11,
+     "lines": [
+      37,
+      42
+     ],
+     "text": "Ak — which corresponds to unions of k disjoint rectangles in [0, 1]n — to obtain a distribution-free\nverification protocol for disjoint unions of multidimensional rectangles with sample-efficient verifier\n(i.e., smaller sample complexity than required for learning) for every constant dimension n:\nTheorem 1.10. There exists a distribution-free verification protocol for the family of unions of\nk disjoint rectangles in [0, 1]n with verifier sample complexity k 6/7 logn (k)polyn (1/ε), where the\ndependence on ε is a large polynomial that depends only on n.",
+     "pdf_page": "https://arxiv.org/pdf/2607.15645v1#page=11"
+    }
+   ]
+  },
+  {
+   "id": "Q37:F2",
+   "later_paper": "arXiv 2607.15645v1: Testing Distributions Against Bounded Distinguishers",
+   "first_submitted": "2026-07-17",
+   "effect": "NARROWS",
+   "claim": "Theorem 1.11: there is an absolute constant C > 0 such that, for all sufficiently small constants δ ∈ (0, 1), if F is a family of X → {0, 1} functions, D_X is a reference marginal distribution and m ≥ C/ε^4 is a parameter with R_m(F, D_X) > 4ε, then every testable verification protocol for F to error ε and confidence 1 − δ with respect to marginal D_X has verifier sample complexity Ω(√m). The authors present this as complementing a similar Ω(√d/ε²) lower bound by [MS23] for PAC verification in the distribution-free setting, where d is the VC dimension of F.",
+   "setting": "Learning theory; testable PAC verification with respect to a fixed reference marginal D_X; Boolean classes; theorem (the extracted text puts the square-root signs on separate lines).",
+   "bears_on": "Lower limits on how little data a weak verifier can use: verifier data must grow with the class's complexity even with a helpful prover.",
+   "passages": [
+    {
+     "version": "2607.15645v1",
+     "page": 12,
+     "lines": [
+      18,
+      26
+     ],
+     "text": "Theorem 1.11. There exists an absolute constant C > 0 such that the following holds for all\nsufficiently small constants δ ∈ (0, 1). Let F be a family of X → {0, 1} functions, DX be a\nreference marginal distribution, and m ⩾ C/ε4 be a parameter such that Rm (F, DX ) > 4ε. Then\nevery testable verification protocol for F to error ε and confidence 1 − δ with respect to marginal\n√\nDX has verifier sample complexity Ω( m).\n√\nThis lower bound complements a similar Ω( d/ε2 ) lower bound by [MS23] for PAC verification\nin the distribution-free setting, where d is the VC dimension of family F.",
+     "pdf_page": "https://arxiv.org/pdf/2607.15645v1#page=12"
+    }
+   ]
+  },
+  {
+   "id": "Q37:F3",
+   "later_paper": "arXiv 2505.22650v2: On Learning Verifiers and Implications to Chain-of-Thought Reasoning",
+   "first_submitted": "2025-05-28",
+   "effect": "NARROWS",
+   "claim": "Gives a PAC-learning framework for learning verifiers of step-by-step reasoning, with sample-complexity upper bounds for some verification goals and lower-bound and impossibility results for others without extra assumptions; shows a computational gap in which proof generation may not be efficiently computable while verification is polynomial-time; and names as open whether interactive verification can learn verifiers with better sample complexity, assuming provers with guarantees or using active learning.",
+   "setting": "Learning theory; PAC-learning of verifiers that, given a problem statement and a step-by-step solution (including natural-language Chain-of-Thought), output [Yes] if all reasoning steps are valid and [No] otherwise; non-interactive verifier learning (the authors say their work opens up questions for interactive verification); the computational gap between proving and verification is a remark.",
+   "bears_on": "How the data available to a learned verifier bounds its guarantees, and that verifying can be computationally easier than generating; it does not model a capability gap between a learned prover and a learned verifier, and leaves the interactive case open.",
+   "passages": [
+    {
+     "version": "2505.22650v2",
+     "page": 1,
+     "lines": [
+      29,
+      37
+     ],
+     "text": "statement can be challenging. Motivated by this fact, in this work we consider the problem of\nlearning reliable verifiers for sequential reasoning, including natural language Chain-of-Thought\nreasoning. That is, given a problem statement and step-by-step solution in natural language,\nthe aim of the verifier is to output [Yes] if the reasoning steps in the solution are all valid, and\n[No] otherwise. In this work we give a formal PAC-learning framework for studying this problem.\nWe propose and analyze several natural verification goals, at different levels of strength, in this\nframework. We provide sample complexity upper-bounds for learning verifiers satisfying these\ngoals, as well as lower-bound and impossibility results for learning other natural verification\nobjectives without additional assumptions.",
+     "pdf_page": "https://arxiv.org/pdf/2505.22650v2#page=1"
+    },
+    {
+     "version": "2505.22650v2",
+     "page": 11,
+     "lines": [
+      21,
+      24
+     ],
+     "text": "and does not hold for overall TVPAC verifiers. In the following remark, we show a computational\ngap between proving and verification. Namely, for the same problem space, the proof generation\nfunctions may not be efficiently evaluatable even though the verifier functions can be evaluated in\npolynomial time.",
+     "pdf_page": "https://arxiv.org/pdf/2505.22650v2#page=11"
+    },
+    {
+     "version": "2505.22650v2",
+     "page": 4,
+     "lines": [
+      5,
+      10
+     ],
+     "text": "[GRSY21] define a PAC model where the prover is able to convince the verifier on most typical\ninputs, analogous to our SVPAC model. [AGPR24] develop more powerful interactive provers that\nprovide per-instance guarantees, similar to our TVPAC models. In this context, our work opens\nup concrete questions for interactive verification—whether it is possible to achieve a better sample\ncomplexity of learning verifiers, either assuming provers with certain guarantees or with techniques\nfrom active learning [BBL06]. [BLM+ 25, RSS+ 25] show theoretical as well as practical advantages",
+     "pdf_page": "https://arxiv.org/pdf/2505.22650v2#page=4"
+    }
+   ]
+  },
+  {
+   "id": "Q37:F4",
+   "later_paper": "arXiv 2609.24895v2: Human-LLM Deliberation as Interactive Proof: Conditions for Verifiability Without Transparency",
+   "first_submitted": "2026-09-21",
+   "effect": "RELATED_ONLY",
+   "claim": "Pairing a computationally unbounded LLM prover with a resource-bounded human verifier, the authors prove anytime-valid soundness against adaptive provers given task-supplied bounds on false passes and human checking errors: the probability of ever accepting a false claim is at most a chosen error level. For a true claim, acceptance within the budget has probability at least the product of the per-round probabilities that the LLM responds adequately and the human checks correctly, provided the threshold is reachable in time. Which review lengths meet both error targets depends on the verifier's effort, cognitive load, expertise and fatigue.",
+   "setting": "Probabilistic/sequential-testing theory of interactive checking with error-rate assumptions on the human; not learning-theoretic; no learned agents or data-dependence.",
+   "bears_on": "Speaks to how a weaker verifier's resources affect its ability to check a stronger prover, but through statistical error bounds rather than learning-theoretic results about learned abilities or training data.",
+   "passages": [
+    {
+     "version": "2609.24895v2",
+     "page": 1,
+     "lines": [
+      29,
+      40
+     ],
+     "text": "When an LLM supplies an argument a user could not produce, how can the user decide\nwhether to accept its claim? Inspired by interactive proofs, we pair a computationally unbounded LLM prover with a resource-bounded human verifier. The verifier checks requested\ndetails without seeing the LLM’s internals; passed checks accumulate evidence toward an\nacceptance threshold. Given task-supplied bounds on false passes and human checking\nerrors, we prove anytime-valid soundness against adaptive provers: the probability of ever\naccepting a false claim is at most a chosen error level. For a true claim, acceptance within\nthe budget has probability at least the product of per-round probabilities that the LLM\nresponds adequately and the human checks correctly, provided the threshold is reachable\nin time. Each additional check guards against false claims but gives a true claim another\nchance to fail. Which review lengths meet both error targets depends on the verifier’s effort,\ncognitive load, expertise, and fatigue. With equal resources, we identify conditions under\nwhich the bounds certify a review by local checks but not a one-shot check. In LLM-only",
+     "pdf_page": "https://arxiv.org/pdf/2609.24895v2#page=1"
+    }
+   ]
+  }
+ ],
+ "findings_drafted": 4,
+ "maths": [
+  {
+   "folder": "formal",
+   "label": null,
+   "settled": "In a finite one-message model, a training procedure that can evaluate every prover of the class on training instances yields, with probability >= 1 - |V|(1 - eps)^m, a verifier whose completeness plus soundness error against every prover of the class is <= eps, whenever it is consistent on the data; m >= ln(|V|/delta)/eps suffices. The bound depends on the verifier class size but not on the prover class size. If training only sees a weaker prover class than deployment, no sample size and no learner suffices in general: in an explicit two-world example with a perfect verifier available in each world, every learner's expected deployment soundness errors in the two worlds sum to 1/2 for every m. A verifier class that cannot separate a dishonest message on a false instance from the honest message on a true instance has completeness plus soundness error at least the smaller of the two instances' probabilities, whatever the data: the verifier's ability sets a floor that data cannot remove.",
+   "remains": "(1) Q37_conjecture (prover ability must enter a proper verifier's sample complexity) and Q37_conjecture_improper are open. (2) Q37_agnostic is standard (Hoeffding plus union bound) but not proved in Lean here. (3) Multi-round protocols (nip, mnip, debate) and joint training: in neural interactive proofs the prover is itself learned from data, so its ability is a hypothesis class plus an optimiser; nothing here covers training dynamics or equilibrium finding. (4) Model differences: the nip loss in 2412.08897v2 is worst-case over inputs (Q37-p8, Q37-p9), while our errors are probabilities under P; they coincide only up to the minimum instance mass. (5) Computational abilities (circuit size, compute) rather than hypothesis classes, e.g. relative-complexity results like the soundness construction of 2506.13609v2, are not addressed."
+  }
+ ],
+ "experiment_package": null,
+ "review_status": "provisional_ai_draft",
+ "rules": [
+  "Everything here is an AI draft (provisional_ai_draft): each counted item passed two blind AI checks that were tested on planted errors, and no person has reviewed it.",
+  "A finding counts only in the setting its own quoted lines show; read `setting` before carrying it to another setting.",
+  "A question's status is a label from fixed rules over its counted findings; `status_check` says whether that label itself passed its check.",
+  "Cite the paper and page from the passage, and read the PDF page before relying on a claim."
+ ]
+}

@@ -1,0 +1,230 @@
+{
+ "schema": "ASRA-GAP-CLOSING-AGENT-v1",
+ "id": "Q15",
+ "question": "What is needed to automate decomposition, error analysis and program repair?",
+ "asked_by": "Reppert et al., Iterated Decomposition: Improving Science Q&A by Supervising Reasoning Processes",
+ "rank": 24,
+ "status": "NARROWED",
+ "status_check": "AI_CHECKED",
+ "remaining_question": "Can an LM revise the decomposition of a multi-step LM program, localize what causes a failure and repair it reliably enough to replace human iteration (e.g. a failed-to-success flip rate approaching a human developer's), both on tasks with automatic evaluation (where, on Who&When, the best of three attribution methods found the decisive failure step only 14.2% of the time and a trained tracer, AgenTracer-8B, only improved on frontier LLMs) and on tasks with subjective answers that have no ground-truth answers or automatic evaluation function?",
+ "remaining_type": "EMPIRICAL",
+ "safety_case": [],
+ "findings": [
+  {
+   "id": "Q15:F1",
+   "later_paper": "arXiv 2408.08435v2: Automated Design of Agentic Systems",
+   "first_submitted": "2024-08-15",
+   "effect": "NARROWS",
+   "claim": "A meta agent that iteratively programs new agentic systems in code, conditioned on an archive of earlier designs and scored on validation data from the target domain, discovered agents that outperformed hand-designed agents, by 13.6 F1 on reading comprehension and 14.4% accuracy on math, with smaller gains on multi-task and science. The authors note the search uses only numerical evaluation results and propose, as future work, letting the meta agent analyse running logs for debugging; they add that many tasks involve subjective answer evaluations that do not have ground-truth answers and that it is also important to design novel evaluation functions in ADAS to address these tasks.",
+   "setting": "Experiment: Meta Agent Search, in which a meta agent iteratively programs new agents in code, conditioned on an archive of earlier designs; Reading Comprehension, Math, Multi-task and Science domains; agents scored by numerical performance results on validation data from the target domain, with no analysis of running logs.",
+   "bears_on": "Automatically adapting LM programs (Reppert's end state; the passages do not mention decomposition as such): a meta agent can program agents in code that outperform hand-designed agents when candidate agents can be scored numerically on validation data from the target domain; analysis of running logs for debugging (items 3-4) is not used and is named as a future direction, and the authors call it important to design novel evaluation functions for tasks without ground-truth answers. Shown only where such a numerical score exists, so it settles no part of what automation needs without one.",
+   "passages": [
+    {
+     "version": "2408.08435v2",
+     "page": 4,
+     "lines": [
+      50,
+      57
+     ],
+     "text": "As shown in Figure 1, the core idea of Meta Agent Search is to have a meta agent iteratively program\nnew agents in code. The algorithm proceeds as follows: (1) The archive is (optionally) initialized\nwith baseline agents such as Chain-of-Thought (Wei et al., 2022) and Self-Refine (Madaan et al.,\n2024; Shinn et al., 2023). (2) Conditioned on the archive, the meta agent designs a new agent by\ngenerating a high-level description of the new idea for an agentic system and then implementing it in\ncode. The design then undergoes two self-reflection (Madaan et al., 2024; Shinn et al., 2023) steps by\nthe meta agent to ensure it is novel. (3) The generated agent is evaluated using validation data from\nthe target domain. If errors occur during evaluation, the meta agent performs a self-reflection step to",
+     "pdf_page": "https://arxiv.org/pdf/2408.08435v2#page=4"
+    },
+    {
+     "version": "2408.08435v2",
+     "page": 7,
+     "lines": [
+      86,
+      91
+     ],
+     "text": "Results and Analysis. The results across multiple domains demonstrate that Meta Agent Search\ncan discover agents that outperform state-of-the-art hand-designed agents (Table 1). We want to\nhighlight the substantial gap between the learned agents and hand-designed agents in the Reading\nComprehension and Math domains, with improvements in F1 scores by 13.6/100 and accuracy rates\nby 14.4%, respectively. While Meta Agent Search also outperforms baselines in the Multi-task and\nScience domains, the gap is smaller. We hypothesize that for challenging questions in the Science",
+     "pdf_page": "https://arxiv.org/pdf/2408.08435v2#page=7"
+    },
+    {
+     "version": "2408.08435v2",
+     "page": 11,
+     "lines": [
+      27,
+      34
+     ],
+     "text": "• More Intelligent Evaluation Functions. In this work, we simply evaluate discovered agents\non the evaluation set and use the numerical performance results. However, this approach is both\nexpensive and misses a lot of information. A promising future direction is to enable the meta\nagent to analyze detailed running logs during the evaluation, which contain rich information on\nthe failure and success modes for better debugging and improving agentic systems (Zhou et al.,\n2024b). Also, many tasks involve subjective answer evaluations (Chiang et al., 2024; Lu et al.,\n2024b) that do not have ground-truth answers. It is also important to design novel evaluation\nfunctions in ADAS to address these tasks. Finally, in this work, we targeted only one domain",
+     "pdf_page": "https://arxiv.org/pdf/2408.08435v2#page=11"
+    }
+   ]
+  },
+  {
+   "id": "Q15:F2",
+   "later_paper": "arXiv 2406.16218v2: Trace is the Next AutoDiff: Generative Optimization with Rich Feedback, Execution Traces, and LLMs",
+   "first_submitted": "2024-06-23",
+   "effect": "NARROWS",
+   "claim": "Trace jointly optimised the meta-prompt and two code functions (create_prompt and extract_answer) of a DSPy-based LLM agent on Big-Bench Hard beyond what DSPy's COPRO optimizer can, especially on algorithmic tasks; in another experiment, masking OptoPrime's execution trace led to a significant decline in performance and stability. The authors state that the debugging ability and context limits of the LLM used in OptoPrime crucially determine the scale of problems that can practically be addressed today.",
+   "setting": "Experiment: Trace optimizing a DSPy-based LLM agent's meta-prompt and two code functions on Big-Bench Hard (15 examples for training, 5 for validation, the rest for testing), with an automatic evaluation function comparing the outputs to ground truth, compared with DSPy's COPRO; a trace-masking ablation of the LLM-based optimizer OptoPrime in a separate experiment that includes a Push task.",
+   "bears_on": "Reppert items 3-4 (machine-accessible tooling from result to error source to fix proposals): in one experiment, masking the execution trace from the LLM-based optimizer OptoPrime caused a significant decline in performance and stability, and the authors say the LLM's debugging ability and context limits bound the scale of problems addressable today. The Big-Bench Hard result used automatic comparison to ground truth, unlike open-ended tasks without such a check.",
+   "passages": [
+    {
+     "version": "2406.16218v2",
+     "page": 8,
+     "lines": [
+      114,
+      124
+     ],
+     "text": "can be limiting. In this experiment, we test Trace’s ability in joint prompt optimization and code\ngeneration. Specifically, we optimize a given DSPy-based LLM agent and tune its three components:\nthe meta-prompt prompt_template, a function create_prompt that modifies the prompt with the\ncurrent question, and a function extract_answer that post-processes the output of an LLM call.\nWe set up an end-to-end prompt-and-code optimization pipeline. We use an automatic evaluation\nfunction to compare the LLM’s output with the ground truth, which requires the LLM agent to generate\noutputs not only with the correct answer but also in the correct format (following the guidelines\nof [30]). We use the Big-Bench Hard dataset [21] (15 examples for training, 5 for validation, and the\nrest for testing). We compare Trace with DSPy’s COPRO module (which optimizes the meta-prompt).\nIn Table 1, we show that Trace is able to optimize a DSPy program beyond what DSPy’s COPRO\noptimizer can, especially on algorithmic tasks. This result shows how Trace can concretely improve",
+     "pdf_page": "https://arxiv.org/pdf/2406.16218v2#page=8"
+    },
+    {
+     "version": "2406.16218v2",
+     "page": 9,
+     "lines": [
+      24,
+      27
+     ],
+     "text": "[13]) and gets a similar performance as OptoPrime (without memory) in Push. To validate that\nthe performance of OptoPrime is indeed due to using the execution trace, we include an ablation\nwhere we mask out the execution trace, which leads to a significant decline in performance and\nstability. This experiment features the most complex graph structures among all the experiments. The",
+     "pdf_page": "https://arxiv.org/pdf/2406.16218v2#page=9"
+    },
+    {
+     "version": "2406.16218v2",
+     "page": 10,
+     "lines": [
+      94,
+      96
+     ],
+     "text": "given a large token budget. The debugging ability and context limits of the LLM used in OptoPrime\ncrucially determine the scale of problems that we can practically address today. Consequently, more\nresearch is needed for designing token-efficient generative optimization algorithms.",
+     "pdf_page": "https://arxiv.org/pdf/2406.16218v2#page=10"
+    }
+   ]
+  },
+  {
+   "id": "Q15:F3",
+   "later_paper": "arXiv 2505.00212v3: Which Agent Causes Task Failures and When? On Automated Failure Attribution of LLM Multi-Agent Systems",
+   "first_submitted": "2025-04-30",
+   "effect": "NARROWS",
+   "claim": "On the Who&When dataset of annotated failure logs, the best of three automated failure-attribution methods identified the failure-responsible agent 53.5% of the time but the decisive failure step only 14.2%, some methods were below random, and reasoning models such as OpenAI o1 and DeepSeek R1 did not reach practical usability.",
+   "setting": "Benchmark evaluation (experiment) on the Who&When dataset: failure logs from 127 LLM multi-agent systems with fine-grained annotations linking failures to specific agents and decisive error steps; three automated failure-attribution methods, with the primary experiments using GPT-4o, and other open-source and closed-source models and the reasoning models OpenAI o1 and DeepSeek R1 also evaluated.",
+   "bears_on": "Error analysis (Reppert item 3): the automated failure-attribution methods tested, including with reasoning models, could not reliably localize the step causing a failure in LLM multi-agent systems.",
+   "passages": [
+    {
+     "version": "2505.00212v3",
+     "page": 1,
+     "lines": [
+      12,
+      16
+     ],
+     "text": "labor-intensive. In this paper, we propose and formulate a new research area: automated failure\nattribution for LLM multi-agent systems. To support this initiative, we introduce the Who&When\ndataset, comprising extensive failure logs from\n127 LLM multi-agent systems with fine-grained\nannotations linking failures to specific agents and",
+     "pdf_page": "https://arxiv.org/pdf/2505.00212v3#page=1"
+    },
+    {
+     "version": "2505.00212v3",
+     "page": 1,
+     "lines": [
+      17,
+      27
+     ],
+     "text": "decisive error steps. Using the Who&When, we\ndevelop and evaluate three automated failure attribution methods, summarizing their corresponding\npros and cons. The best method achieves 53.5%\naccuracy in identifying failure-responsible agents\nbut only 14.2% in pinpointing failure steps, with\nsome methods performing below random. Even\nSOTA reasoning models, such as OpenAI o1 and\nDeepSeek R1, fail to achieve practical usability.\nThese results highlight the task’s complexity and\nthe need for further research in this area. Code\nand dataset are available in the public repository.",
+     "pdf_page": "https://arxiv.org/pdf/2505.00212v3#page=1"
+    },
+    {
+     "version": "2505.00212v3",
+     "page": 5,
+     "lines": [
+      55,
+      62
+     ],
+     "text": "Models. The primary experiments are conducted using\nthe GPT-4o model, unless otherwise specified. Additionally, we also incorporate several other models, including\nboth open-source (such as the Llama and Qwen series)\nand closed-source models (GPT series), to ensure the consistency of the conclusions drawn from the experiments.\nAdditionally, we employ advanced reasoning models, i.e.,\nOpenAI o1 and DeepSeek R1, to assess the performance of\nreasoning models on failure attribution tasks. The results of\nthese evaluations are provided in Appendix 4.8.",
+     "pdf_page": "https://arxiv.org/pdf/2505.00212v3#page=5"
+    }
+   ]
+  },
+  {
+   "id": "Q15:F4",
+   "later_paper": "arXiv 2509.03312v2: AgenTracer: Who Is Inducing Failure in the LLM Agentic Systems?",
+   "first_submitted": "2025-09-03",
+   "effect": "NARROWS",
+   "claim": "The authors report that state-of-the-art reasoning LLMs score generally below 10% on agentic failure attribution, and that AgenTracer-8B, trained with multi-granular RL on trajectories annotated automatically by counterfactual replay and programmed fault injection, outperforms Gemini-2.5-Pro and Claude-4-Sonnet on Who&When by up to 18.18% and gives feedback that improves MetaGPT and MaAS by 4.8-14.2%.",
+   "setting": "Experiment: AgenTracer-8B trained with multi-granular RL on TracerTraj, failed multi-agent trajectories annotated automatically by counterfactual replay and programmed fault injection; evaluated on Who&When against proprietary LLMs (Gemini-2.5-Pro, Claude-4-Sonnet); feedback given to the multi-agent systems MetaGPT and MaAS.",
+   "bears_on": "Reppert item 4 (diagnosis learned by LMs): a lightweight failure tracer trained on automatically annotated failed trajectories outperformed large proprietary LLMs on Who&When by up to 18.18%; the quoted lines do not establish that its absolute accuracy is high enough to replace human analysis.",
+   "passages": [
+    {
+     "version": "2509.03312v2",
+     "page": 1,
+     "lines": [
+      20,
+      29
+     ],
+     "text": "system failure attribution. Current state-of-the-art reasoning LLMs, however,\nremain strikingly inadequate for this challenge, with accuracy generally below\n10%. To address this gap, we propose AgenTracer, the first automated framework for annotating failed multi-agent trajectories via counterfactual replay and\nprogrammed fault injection, producing the curated dataset TracerTraj. Leveraging this resource, we develop AgenTracer-8B, a lightweight failure tracer\ntrained with multi-granular reinforcement learning, capable of efficiently diagnosing errors in verbose multi-agent interactions. On Who&When benchmark,\nAgenTracer-8B outperforms giant proprietary LLMs like Gemini-2.5-Pro and\nClaude-4-Sonnet by up 18.18%, setting a new standard in LLM agentic failure\nattribution. More importantly, AgenTracer-8B delivers actionable feedback to\noff-the-shelf multi-agent systems like MetaGPT and MaAS with 4.8 ∼ 14.2%\nperformance gains, empowering self-correcting and self-evolving agentic AI. Our",
+     "pdf_page": "https://arxiv.org/pdf/2509.03312v2#page=1"
+    }
+   ]
+  },
+  {
+   "id": "Q15:F5",
+   "later_paper": "arXiv 2512.06749v3: DoVer: Intervention-Driven Auto Debugging for LLM Multi-Agent Systems",
+   "first_submitted": "2025-12-07",
+   "effect": "NARROWS",
+   "claim": "The authors argue that log-only LLM failure localization yields untested hypotheses and that single-step or single-agent attribution is often ill-posed because multiple distinct interventions can independently repair a failed task; their intervention-driven debugger (editing messages, altering plans) flipped 18-28% of failed trials into successes and validated or refuted 30-60% of failure hypotheses on GAIA- and AssistantBench-derived data in Magentic-One.",
+   "setting": "Experiment: Magentic-One multi-agent framework on datasets derived from GAIA and AssistantBench, plus GSMPlus with AG2; evaluation by task success and milestone progress rather than attribution accuracy.",
+   "bears_on": "Error analysis and repair (items 3-4): proposes intervention-verified hypotheses and outcome-based success, rather than attribution accuracy, as the target for automated debugging.",
+   "passages": [
+    {
+     "version": "2512.06749v3",
+     "page": 1,
+     "lines": [
+      23,
+      34
+     ],
+     "text": "errors to a specific agent and step. However, this paradigm has two key limitations:\n(i) log-only debugging lacks validation, producing untested hypotheses, and (ii)\nsingle-step or single-agent attribution is often ill-posed, as we find that multiple\ndistinct interventions can independently repair the failed task. To address the first\nlimitation, we introduce DoVer, an intervention-driven debugging framework,\nwhich augments hypothesis generation with active verification through targeted\ninterventions (e.g., editing messages, altering plans). For the second limitation,\nrather than evaluating on attribution accuracy, we focus on measuring whether the\nsystem resolves the failure or makes quantifiable progress toward task success,\nreflecting a more outcome-oriented view of debugging. Within the MagneticOne agent framework, on the datasets derived from GAIA and AssistantBench,\nDoVer flips 18–28% of failed trials into successes, achieves up to 16% milestone\nprogress, and validates or refutes 30-60% of failure hypotheses. DoVer also performs effectively on a different dataset (GSMPlus) and agent framework (AG2),",
+     "pdf_page": "https://arxiv.org/pdf/2512.06749v3#page=1"
+    }
+   ]
+  },
+  {
+   "id": "Q15:F6",
+   "later_paper": "arXiv 2603.23994v2: Understanding the Challenges in Iterative Generative Optimization with LLMs",
+   "first_submitted": "2026-03-25",
+   "effect": "NARROWS",
+   "claim": "The authors state that generative optimization, which uses LLMs to iteratively improve artifacts such as code, workflows or prompts using execution feedback, remains brittle in practice (only 9% of surveyed agents used any automated optimization). They argue this brittleness arises because setting up a learning loop requires 'hidden' design choices, and through case studies find that three such factors (the starting artifact, the credit horizon for execution traces, and batching trials and errors into learning evidence) can determine whether generative optimization succeeds. They argue the lack of adoption is not a consequence of inadequate infrastructure support or insufficient software abstraction, and conclude that the lack of a simple, universal way to set up learning loops across domains is a major hurdle for productionization and adoption.",
+   "setting": "Case studies (experiments) with LLM-based generative optimization on MLAgentBench, Atari and BigBench Extra Hard (BBEH); plus a survey figure the authors give (only 9% of surveyed agents used any automated optimization) and their argument, pointing to the ecosystem of agent-building libraries, that low adoption is not due to inadequate infrastructure or software.",
+   "bears_on": "Reppert items 3-4: the authors argue that a major hurdle for automated LLM-based improvement of code, workflows or prompts is setting up the learning loop rather than missing infrastructure or software; this is an argument plus case studies on benchmarks, not a test of LM-program repair in Reppert et al.'s open-ended setting.",
+   "passages": [
+    {
+     "version": "2603.23994v2",
+     "page": 1,
+     "lines": [
+      23,
+      26
+     ],
+     "text": "Generative optimization uses large language models (LLMs) to iteratively improve\nartifacts (such as code, workflows or prompts) using execution feedback. It is\na promising approach to building self-improving agents, yet in practice remains\nbrittle: despite active research, only 9% of surveyed agents used any automated",
+     "pdf_page": "https://arxiv.org/pdf/2603.23994v2#page=1"
+    },
+    {
+     "version": "2603.23994v2",
+     "page": 1,
+     "lines": [
+      27,
+      38
+     ],
+     "text": "optimization. We argue that this brittleness arises because, to set up a learning\nloop, an engineer must make “hidden” design choices: What can the optimizer edit\nand what is the “right” learning evidence to provide at each update? We investigate\nthree factors that affect most applications: the starting artifact, the credit horizon\nfor execution traces, and batching trials and errors into learning evidence. Through\ncase studies in MLAgentBench, Atari, and BigBench Extra Hard, we find that these\ndesign decisions can determine whether generative optimization succeeds, yet they\nare rarely made explicit in prior work. Different starting artifacts determine which\nsolutions are reachable in MLAgentBench, truncated traces can still improve Atari\nagents, and larger minibatches do not monotonically improve generalization on\nBBEH. We conclude that the lack of a simple, universal way to set up learning\nloops across domains is a major hurdle for productionization and adoption. We",
+     "pdf_page": "https://arxiv.org/pdf/2603.23994v2#page=1"
+    },
+    {
+     "version": "2603.23994v2",
+     "page": 2,
+     "lines": [
+      19,
+      26
+     ],
+     "text": "This lack of adoption is not a consequence of inadequate infrastructure support or insufficient software\nabstraction. On the contrary, over the past two years, a rich ecosystem of powerful libraries for\nbuilding agentic systems has emerged (Khattab et al., 2024; Wu et al., 2024; LangChain, 2024; Cheng\net al., 2024; Li et al., 2025). Many of these libraries offer mechanisms for automatically optimizing\ndifferent targets, ranging from tuning prompts (Khattab et al., 2024; Yuksekgonul et al., 2025) to\nprogram synthesis (Cheng et al., 2024). Most of them have received considerable attention from\nagent engineers, suggesting that the low adoption rate cannot be attributed solely to limited awareness\nor inadequate software.",
+     "pdf_page": "https://arxiv.org/pdf/2603.23994v2#page=2"
+    }
+   ]
+  }
+ ],
+ "findings_drafted": 6,
+ "maths": [],
+ "experiment_package": null,
+ "review_status": "provisional_ai_draft",
+ "rules": [
+  "Everything here is an AI draft (provisional_ai_draft): each counted item passed two blind AI checks that were tested on planted errors, and no person has reviewed it.",
+  "A finding counts only in the setting its own quoted lines show; read `setting` before carrying it to another setting.",
+  "A question's status is a label from fixed rules over its counted findings; `status_check` says whether that label itself passed its check.",
+  "Cite the paper and page from the passage, and read the PDF page before relying on a claim."
+ ]
+}

@@ -1,0 +1,143 @@
+{
+ "schema": "ASRA-GAP-CLOSING-AGENT-v1",
+ "id": "Q51",
+ "question": "Open: is stability necessary, and which problems admit stable decompositions?",
+ "asked_by": "Brown-Cohen et al., Avoiding Obfuscation with Prover-Estimator Debate",
+ "rank": 18,
+ "status": "PARTLY_ANSWERED_BY_LATER_WORK",
+ "status_check": "AI_CHECKED",
+ "remaining_question": "Outside the black-box judgment model of 2610.02557 (e.g. exploiting the debaters' equal computational power or a relaxed judgment oracle), can a debate protocol efficiently decide problems all of whose decompositions have large fractional block sensitivity, and which natural problem classes (proof-like vs evidence-aggregating claims) admit decompositions with rho^d polynomial in the input size?",
+ "remaining_type": "MIXED",
+ "safety_case": [
+  {
+   "node": "SC-C4.6",
+   "relation": "INDIRECT",
+   "reason": "An answer would show whether stability is necessary for debate to decide some problems and which problem classes admit stable decompositions, evidence on whether C4.6 can be supported or avoided, though the questions the case needs would still have to be placed in those classes.",
+   "node_evidence": "WEAK",
+   "branch": "the equilibrium is correct (debate structure and judges)",
+   "score": 1.0
+  }
+ ],
+ "findings": [
+  {
+   "id": "Q51:F1",
+   "later_paper": "arXiv 2610.02557v1: How to Have a Sensitive Debate: An Instance-Optimal Protocol for AI Debate",
+   "first_submitted": "2026-10-01",
+   "effect": "NARROWS",
+   "claim": "Theorem 5.1: let ρ ≥ 1 and suppose every internal node u satisfies fbs_{z_u}(ϕ_u) ≥ ρ, where z_u ∈ {0, 1}^q is the vector of child values induced by the reference oracle O_Y. Then for every m-query adaptive checker V for T there is an oracle O_N such that val_{O_N}(root) ≠ val_{O_Y}(root) and |P[Acc_Y] − P[Acc_N]| ≤ min{1, mρ^−d}, where Acc_Y and Acc_N are the events that V accepts under O_Y and O_N. Consequently, if a checker outputs the correct root value with probability at least 1 − ε under each oracle, for some ε < 1/2, then m ≥ (1 − 2ε)ρ^d. The authors assume that the leaf queries q_ℓ are pairwise distinct, which they say is needed for a non-trivial lower bound.",
+   "setting": "Theory (a lower bound). A decomposition tree T whose internal nodes u apply functions ϕ_u to {0,1}-valued child values and whose leaf queries go to an oracle, with pairwise-distinct leaf queries. The m-query adaptive checker models the judge together with an honest second debater Bob: it receives the full visible tree T, makes at most m adaptive queries to the oracle and may communicate with Alice, who may use an arbitrary strategy; the authors state that a lower bound in this model also applies to the original debate protocol. The bound counts oracle queries for one given tree, not the debaters' computation, and the quoted lines do not mention stability.",
+   "bears_on": "Whether stability is necessary, by narrowing only: for a given tree T in which every internal node satisfies fbs_{z_u}(ϕ_u) ≥ ρ ≥ 1, any checker that outputs the correct root value with probability at least 1 − ε under each oracle (ε < 1/2) needs at least (1 − 2ε)ρ^d oracle queries. The quoted lines do not mention stability, and the bound concerns query-limited checking of that tree, not other decompositions of the same problem or computationally bounded debaters.",
+   "passages": [
+    {
+     "version": "2610.02557v1",
+     "page": 12,
+     "lines": [
+      1,
+      7
+     ],
+     "text": "Theorem 5.1. Let ρ ≥ 1, and suppose every internal node u satisfies\nfbszu (ϕu ) ≥ ρ,\nwhere z u ∈ {0, 1}q is the vector of child values induced by OY . Then for every m-query adaptive\nchecker V for T , there is an oracle ON such that\nvalON (root) ̸= valOY (root)\nand\n|P[AccY ] − P[AccN ]| ≤ min{1, mρ−d }.",
+     "pdf_page": "https://arxiv.org/pdf/2610.02557v1#page=12"
+    },
+    {
+     "version": "2610.02557v1",
+     "page": 14,
+     "lines": [
+      22,
+      23
+     ],
+     "text": "Consequently, if a checker outputs the correct root value with probability at least 1 − ε under\neach oracle, for some ε < 1/2, then 1 − 2ε ≤ mρ−d and hence m ≥ (1 − 2ε)ρd .",
+     "pdf_page": "https://arxiv.org/pdf/2610.02557v1#page=14"
+    },
+    {
+     "version": "2610.02557v1",
+     "page": 11,
+     "lines": [
+      48,
+      59
+     ],
+     "text": "We assume that the leaf queries qℓ are pairwise distinct. This assumption is needed for a\nnon-trivial lower bound: for example, if all q leaves of a q-ary AND root query the same string, then\nthe decomposition tree T computes only a one-bit identity function.\nAdaptive checker. To strengthen the lower bound, we assume that the second debater Bob is\nhonest and assists the judge, while Alice may use an arbitrary strategy. We model Bob and the\njudge together as a single adaptive checker. Specifically, an m-query adaptive checker V for T is a\nrandomized algorithm that receives the full visible tree T , makes at most m adaptive queries to O,\nmay communicate arbitrarily with Alice, and finally outputs a bit intended to equal L(x). Giving\nthe checker an honest Bob and the full visible tree can only make its task easier, so a lower bound in\nthis model also applies to the original debate protocol.\nFix a reference oracle OY . For any alternative oracle ON , let AccY and AccN denote the events\nthat V accepts under OY and ON , respectively, with Alice using the same fixed strategy in both",
+     "pdf_page": "https://arxiv.org/pdf/2610.02557v1#page=11"
+    }
+   ]
+  },
+  {
+   "id": "Q51:F2",
+   "later_paper": "arXiv 2610.02557v1: How to Have a Sensitive Debate: An Instance-Optimal Protocol for AI Debate",
+   "first_submitted": "2026-10-01",
+   "effect": "PARTLY_ANSWERS",
+   "claim": "The authors state that their protocol and matching lower bound show that fractional block sensitivity precisely characterizes the set of problems efficiently solvable by debate within the recursive-decomposition framework, that prover-estimator stability is equivalent to fractional block sensitivity, and that their new protocol handles the same class of sufficiently stable problems with worst-case correctness and dominant-strategy honesty, and is instance-wise optimal among protocols making only black-box queries to human judgments.",
+   "setting": "Theory, as above (recursive decomposition, black-box judgment oracle); the equivalence with prover-estimator stability is asserted in the text, not proved in the quoted lines.",
+   "bears_on": "Second part ('which problems admit stable decompositions'): restates the class as problems with low-FBS decompositions and shows it is the right class for black-box debate, but gives no structural classification of natural problems (e.g. proofs vs noisy empirical evidence).",
+   "passages": [
+    {
+     "version": "2610.02557v1",
+     "page": 14,
+     "lines": [
+      36,
+      40
+     ],
+     "text": "Our protocol and matching lower bound show that fractional block sensitivity precisely characterizes\nthe set of problems that can be efficiently solved by debate within this recursive-decomposition\nframework. Notably, the protocol does not require Bob to determine whether or not Alice’s answers\nto subproblems are correct, but only to understand the structure of the argument well enough to\nsample subproblems to which the outcome is sufficiently sensitive. This stands in contrast to the",
+     "pdf_page": "https://arxiv.org/pdf/2610.02557v1#page=14"
+    },
+    {
+     "version": "2610.02557v1",
+     "page": 5,
+     "lines": [
+      20,
+      24
+     ],
+     "text": "but solves a more limited class of problems. Most closely related to our work is that of Brown-Cohen\net al. [2025], which introduced the prover-estimator debate protocol to handle a broader class of\nrecursively decomposable problems for computationally bounded debaters. Prover-estimator debate\nintroduced the notion of stability (equivalent to fractional block sensitivity) that we study in this\npaper.",
+     "pdf_page": "https://arxiv.org/pdf/2610.02557v1#page=5"
+    },
+    {
+     "version": "2610.02557v1",
+     "page": 1,
+     "lines": [
+      30,
+      39
+     ],
+     "text": "to complex problems with limited supervision. Specifically, the current best protocol has been\nshown to work for all problems that have sufficiently stable decompositions into subproblems.\nIn this paper, we design a new protocol for this same class of problems that improves on the\nprior work in several ways. First, correctness holds in a worst-case rather than an average-case\nsense. Second, being honest and correct is a dominant-strategy equilibrium for both debaters,\nrather than a Stackelberg equilibrium. Finally, we prove black-box lower bounds, showing that\nour new protocol is instance-wise optimal. That is, no protocol for this class of problems can\noutperform ours while making only black-box queries to human judgments. We obtain these\nresults by relating the notion of stable problem decompositions to the concept of fractional block\nsensitivity from query complexity.",
+     "pdf_page": "https://arxiv.org/pdf/2610.02557v1#page=1"
+    }
+   ]
+  },
+  {
+   "id": "Q51:F3",
+   "later_paper": "arXiv 2607.03561v1: How to Avoid Debate: Scalable AI Safety via Doubly-Efficient Interactive Proofs",
+   "first_submitted": "2026-07-03",
+   "effect": "RELATED_ONLY",
+   "claim": "The authors summarise Barbara, Chiesa and Guan (BCG25) as proving that no interactive proofs relativize for all computations, and explain it intuitively: if a computation makes many queries to a random oracle and its output is unstable, hinging on all oracle answers being correct, the verifier would need to check every oracle call.",
+   "setting": "Theory, single-prover relativizing interactive proofs; the cited impossibility is in the random oracle model; the 'intuitively' gloss is the authors'.",
+   "bears_on": "Necessity of a stability-like condition in a neighbouring model (single prover, no opposing debater), not in prover-estimator debate.",
+   "passages": [
+    {
+     "version": "2607.03561v1",
+     "page": 4,
+     "lines": [
+      15,
+      19
+     ],
+     "text": "Unfortunately, Barbara, Chiesa, and Guan [BCG25] prove that there do not exist interactive proofs\nthat relativize for all computations. Intuitively, their observation is that if the computation uses many\noracle gates to a random oracle, and the output of the computation is unstable, in the sense that it\nhinges on the answers of all the oracle queries being correct, then the verifier would need to check the\ncorrectness of every oracle call, and thus would not be efficient.",
+     "pdf_page": "https://arxiv.org/pdf/2607.03561v1#page=4"
+    }
+   ]
+  }
+ ],
+ "findings_drafted": 3,
+ "maths": [
+  {
+   "folder": "stability",
+   "label": "Partly settled in the pilot (per instance and per tree; see results)",
+   "settled": "Q51, depth 1: in the Figure 2 game with r = 1/rho (rho >= 1) on one instance, the honest bound (exists A, for all B, E[payoff] >= 1/rho^2) holds iff the root is rho-stable, i.e. iff fbs_z(f) <= rho; the exact value is 1/(rho max(rho, fbs)). Q51, any depth, Figure 2 with r = 1/rho: if the root node of the prover's tree is not rho-stable, every prover strategy is held below the Theorem 6.1 bound 1/rho^(d+1) by some estimator. So root stability is necessary for the conclusion of Theorem 6.1 on that tree. Q51, margin barrier: for every reward ratio r >= 0, every tree T and every prover using T, some valid estimator holds the expected payoff to <= min(r^(d+1), 1/W) for every fractional packing of sensitive blocks of the path-indexed composed function F_T with total weight W; at the LP optimum, <= min(r^(d+1), 1/fbs_alpha(F_T)). So no choice of the protocol parameter gives the honest prover more than 1/fbs_alpha(F_T), and the conclusion of Theorem 6.1 on T forces fbs_alpha(F_T) <= rho^(d+1). Q51(b), sufficient classes with constants: weighted-margin functions are (sum w)/m-stable; weighted-Lipschitz score thresholds with margin delta are (sum w)/delta-stable; [#true >= theta] is t/(t - theta + 1)-stable at t >= theta true inputs and (q - t)/(theta - t)-stable below (exact: equals fbs for q <= 5); every function is q-stable. Q51(b), lower bounds and one-level composition: k disjoint sensitive blocks rule out rho < k (AND of q bits: best constant exactly q); if inner functions are rho2-stable and the outer function is rho1-stable, the composition is rho1 rho2-stable (inner functions may share inputs).",
+   "remains": "(1) Exact characterization of completeness for Figure 2 on a fixed tree: an unstable sensitive cut is sufficient for failure (derived) and all-nodes-stable is sufficient for success (Theorem 6.1); the conjecture that 'no unstable sensitive cut' is also sufficient for success (exact for all q = 2, d = 2 trees computed) needs a proof and tests for q >= 3; a closed form for Val(x,T,1/rho) on non-uniform trees is open. (2) Adaptive provers: our necessity results fix the prover's tree; whether a prover that changes decomposition in response to B's estimates can beat the barrier min(r^(d+1), 1/fbs_alpha(F_T)) of its realised tree is not settled here. (3) Beyond black-box judges and unbounded opponents: 2610.02557v1 settles the query lower bound for black-box judges (fixed revealed tree, distinct leaves); protocols with structured or partly transparent judgments, and opponents that cannot find sensitive blocks, remain open, as that paper also states (p14 L47-56). (4) Q51(b) converse: does a decomposition with small global fbs_alpha(F_T) <= R imply one of depth O(d) with local fbs <= C R^(1/d)? And which natural problem classes (beyond weighted thresholds, Lipschitz aggregators, AND-like proofs) have small global fbs for some A-provable decomposition? (5) Q47: a protocol that provably elicits coherent, leaf-calibrated reports with an fbs-independent incentive gap, and a useful notion of honesty whose conversion to correctness costs less than fbs_alpha(F_T), are open; the unstable-to-stable transformation route (M to M*) is not addressed here. (6) General-q proofs of the phi-uniform closed form and of the unstable-cut statement (both only derived and checked for q = 2, 3)."
+  }
+ ],
+ "experiment_package": null,
+ "review_status": "provisional_ai_draft",
+ "rules": [
+  "Everything here is an AI draft (provisional_ai_draft): each counted item passed two blind AI checks that were tested on planted errors, and no person has reviewed it.",
+  "A finding counts only in the setting its own quoted lines show; read `setting` before carrying it to another setting.",
+  "A question's status is a label from fixed rules over its counted findings; `status_check` says whether that label itself passed its check.",
+  "Cite the paper and page from the passage, and read the PDF page before relying on a claim."
+ ]
+}

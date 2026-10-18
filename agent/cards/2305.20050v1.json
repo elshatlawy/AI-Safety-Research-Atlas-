@@ -1,0 +1,539 @@
+{
+ "schema": "ASRA-GAP-CLOSING-AGENT-v1",
+ "paper": "2305.20050v1",
+ "review_status": "provisional_ai_draft",
+ "rules": [
+  "Everything here is an AI draft (provisional_ai_draft): each counted item passed two blind AI checks that were tested on planted errors, and no person has reviewed it.",
+  "A finding counts only in the setting its own quoted lines show; read `setting` before carrying it to another setting.",
+  "A question's status is a label from fixed rules over its counted findings; `status_check` says whether that label itself passed its check.",
+  "Cite the paper and page from the passage, and read the PDF page before relying on a claim."
+ ],
+ "notes": "RES-OOD: the text and record say 224 STEM questions, but Table 1's problem counts (45, 60, 45, 84) sum to 234, the total the table lists. CLAIM-NEGATIVE-ALIGNMENT-TAX is a discussion-section interpretation: its performance side comes from the paper's experiments, and its premise that process supervision is the safer method is argued (Section 6.2), not tested; graded EMPIRICAL_SINGLE_SETTING on the performance side, which a reviewer may prefer to grade ARGUMENT_ONLY. CORE and RES-SMALL-SCALE say 'significantly', but no statistical test is named; the only uncertainty shown is mean and standard deviation over three seeds (Figure 4) and subsample variance (Figure 3). CORE's 78% is the best-of-1860 PRM result (78.2%).",
+ "cards": [
+  {
+   "record_id": "N2:DSOFT:ARXIV-2305.20050v1:CORE",
+   "paper": "2305.20050v1",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2305.20050v1:DEF-ORM-PRM",
+     "N2:DSOFT:ARXIV-2305.20050v1:METHOD-HUMAN-STEP-LABELS",
+     "N2:DSOFT:ARXIV-2305.20050v1:METHOD-SYNTHETIC-SUPERVISION"
+    ],
+    "description": "Outcome- and process-supervised reward models are trained at large scale (finetuned from GPT-4; PRM on PRM800K human step labels) and at small scale (models supervised by the large PRM), and each is scored by how often its top-ranked of N generator solutions to a MATH test problem has the correct final answer.",
+    "passages": [
+     {
+      "version": "2305.20050v1",
+      "page": 3,
+      "lines": [
+       9,
+       19
+      ],
+      "text": "We conduct experiments in two separate regimes: large-scale and smallscale. Each has its own advantages, and they offer complimentary perspectives.\nAt large-scale, we finetune all models from GPT-4 (OpenAI, 2023). We focus\non advancing the state-of-the-art by training the most reliable ORM and PRM\npossible. Unfortunately the training sets for these reward models are not directly\ncomparable, for reasons we will discuss in Section 3. These models are therefore\nnot ideal for making an apples-to-apples comparison of outcome and process\nsupervision. To address this flaw, we also train models at small-scale, where\nwe can conduct a more direct comparison. In order to remove our dependence\non costly human feedback, we use a large-scale model to supervise small-scale\nmodel training. This setup enables us to conduct several important ablations\nthat would otherwise be infeasible.",
+      "pdf_page": "https://arxiv.org/pdf/2305.20050v1#page=3"
+     },
+     {
+      "version": "2305.20050v1",
+      "page": 3,
+      "lines": [
+       43,
+       48
+      ],
+      "text": "All large-scale models are finetuned from the base GPT-4 model (OpenAI, 2023).\nThis model has been pretrained solely to predict the next token; it has not been\npretrained with any Reinforcement Learning from Human Feedback (RLHF)\n(Christiano et al., 2017). The small-scale base models are similar in design to\nGPT-4, but they were pretrained with roughly 200 times less compute. As an\nadditional pretraining step, we finetune all models on a dataset of roughly 1.5B",
+      "pdf_page": "https://arxiv.org/pdf/2305.20050v1#page=3"
+     },
+     {
+      "version": "2305.20050v1",
+      "page": 8,
+      "lines": [
+       53,
+       54
+      ],
+      "text": "Figure 4: A comparison of different forms of outcome and process supervision.\nMean and standard deviation is shown across three seeds.",
+      "pdf_page": "https://arxiv.org/pdf/2305.20050v1#page=8"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "Models are evaluated only on 500 MATH test problems, because 4.5K MATH test problems were added to the PRM800K training set.",
+     "Process supervision is given only up to the first incorrect step, so it adds only the location of the first mistake to what outcome supervision reveals.",
+     "Some test-set contamination cannot be ruled out; the authors expect it to affect all methods similarly, leaving the relative comparisons mostly unaffected."
+    ],
+    "passages": [
+     {
+      "version": "2305.20050v1",
+      "page": 5,
+      "lines": [
+       1,
+       3
+      ],
+      "text": "minimize overfitting, we include data from 4.5K MATH test problems in the\nPRM800K training set, and we therefore evaluate our models only on the remaining 500 MATH test problems. More details about this test set can be found\nin Appendix C.",
+      "pdf_page": "https://arxiv.org/pdf/2305.20050v1#page=5"
+     },
+     {
+      "version": "2305.20050v1",
+      "page": 6,
+      "lines": [
+       13,
+       17
+      ],
+      "text": "When we provide process supervision, we deliberately choose to supervise\nonly up to the first incorrect step. This makes the comparison between outcome and process supervision more straightforward. For correct solutions, both\nmethods provide the same information, namely that every step is correct. For\nincorrect solutions, both methods reveal the existence of at least one mistake,\nand process supervision additionally reveals the precise location of that mistake.",
+      "pdf_page": "https://arxiv.org/pdf/2305.20050v1#page=6"
+     },
+     {
+      "version": "2305.20050v1",
+      "page": 11,
+      "lines": [
+       39,
+       45
+      ],
+      "text": "In our experience inspecting model-generated solutions, we saw no clear signs\nof our models memorizing MATH problems. However, it is impossible to rule\nout subtle forms of memorization that would slip past manual inspection, and\nit is still possible that some degree of contamination has slightly inflated our\nperformance on the MATH test set. Even in that case, we would expect any\ncontamination to manifest similarly across all methods, and that the relative\ncomparisons made throughout this work would remain mostly unaffected.",
+      "pdf_page": "https://arxiv.org/pdf/2305.20050v1#page=11"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Reward models and a fixed generator finetuned from base GPT-4 (large scale) and from base models similar in design but pretrained with roughly 200 times less compute (small scale)",
+    "task_data": "MATH problems; PRM800K human step-level labels; evaluation on 500 held-out MATH test problems",
+    "judge": "Automatic final-answer grading of the solution the reward model ranks highest (best-of-N)",
+    "regime": "mixed",
+    "scale": "GPT-4 (large scale) and roughly 200x-less-compute models (small scale); 500 test problems"
+   },
+   "quantitative": {
+    "n": "500 MATH test problems",
+    "uncertainty": "Mean and standard deviation across three seeds for the small-scale comparisons (Figure 4); no test statistic is given for 'significantly'."
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2305.20050v1:LIM-CONFOUNDS",
+     "N2:DSOFT:ARXIV-2305.20050v1:LIM-NO-RL"
+    ],
+    "notes": "The large-scale ORM and PRM training sets are not directly comparable (active learning, wrong-answer bias, size); reward models are judged only by best-of-N, and the generator is not trained with RL."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "All comparisons use one task (MATH) and one model family (GPT-4 and smaller GPT-4-like models); seed standard deviations do not make it multi-setting."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2305.20050v1:RES-LARGE-SCALE",
+   "paper": "2305.20050v1",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2305.20050v1:DEF-ORM-PRM",
+     "N2:DSOFT:ARXIV-2305.20050v1:METHOD-HUMAN-STEP-LABELS"
+    ],
+    "description": "A PRM trained on PRM800K step labels and an ORM trained on 100 uniform generator samples per problem (final-answer graded), both finetuned from GPT-4, each pick the top-ranked of N generator solutions per test problem; final-answer accuracy is plotted against N and compared with majority voting.",
+    "passages": [
+     {
+      "version": "2305.20050v1",
+      "page": 7,
+      "lines": [
+       44,
+       53
+      ],
+      "text": "We train the large-scale PRM using the step-level labels in PRM800K. To ensure\nthe large-scale ORM baseline is as strong as possible, we train on 100 uniform\nsamples per problem from the generator. This means the ORM training set has\nno overlap with PRM800K, and it is an order of magnitude larger. Although\nthese two training sets are not directly comparable, each represents our best\nattempt to advance the state-of-the-art with each form of supervision. We note\nthat training the ORM solely on PRM800K solutions would be problematic,\nsince our active learning strategy has heavily biased the dataset towards wronganswer solutions. We did explore training the ORM on a superset of PRM800K\nsolutions, by mixing in uniformly sampled solutions, but we found that this did\nnot improve ORM performance.",
+      "pdf_page": "https://arxiv.org/pdf/2305.20050v1#page=7"
+     },
+     {
+      "version": "2305.20050v1",
+      "page": 7,
+      "lines": [
+       35,
+       38
+      ],
+      "text": "Figure 3: A comparison of outcome-supervised and process-supervised reward\nmodels, evaluated by their ability to search over many test solutions. Majority\nvoting is shown as a strong baseline. For N ≤ 1000, we visualize the variance\nacross many subsamples of the 1860 solutions we generated in total per problem.",
+      "pdf_page": "https://arxiv.org/pdf/2305.20050v1#page=7"
+     },
+     {
+      "version": "2305.20050v1",
+      "page": 3,
+      "lines": [
+       43,
+       48
+      ],
+      "text": "All large-scale models are finetuned from the base GPT-4 model (OpenAI, 2023).\nThis model has been pretrained solely to predict the next token; it has not been\npretrained with any Reinforcement Learning from Human Feedback (RLHF)\n(Christiano et al., 2017). The small-scale base models are similar in design to\nGPT-4, but they were pretrained with roughly 200 times less compute. As an\nadditional pretraining step, we finetune all models on a dataset of roughly 1.5B",
+      "pdf_page": "https://arxiv.org/pdf/2305.20050v1#page=3"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "The PRM and ORM training sets are not directly comparable: PRM800K is biased toward wrong-answer solutions by active learning, and the ORM set is an order of magnitude larger.",
+     "ORM targets come from automatic final-answer grading, which misgrades solutions that reach the right answer with wrong reasoning.",
+     "Evaluation uses the 500 MATH test problems not used in PRM800K training."
+    ],
+    "passages": [
+     {
+      "version": "2305.20050v1",
+      "page": 5,
+      "lines": [
+       33,
+       38
+      ],
+      "text": "In practice, we usually determine correctness by automatically checking the\nfinal answer, but in principle these labels could be provided by humans. At test\ntime, we use the ORM’s prediction at the final token as the overall score for the\nsolution. We note the automatic grading used to determine ORM targets is not\nperfectly reliable: false positives solutions that reach the correct answer with\nincorrect reasoning will be misgraded. We discuss additional ORM training",
+      "pdf_page": "https://arxiv.org/pdf/2305.20050v1#page=5"
+     },
+     {
+      "version": "2305.20050v1",
+      "page": 5,
+      "lines": [
+       1,
+       3
+      ],
+      "text": "minimize overfitting, we include data from 4.5K MATH test problems in the\nPRM800K training set, and we therefore evaluate our models only on the remaining 500 MATH test problems. More details about this test set can be found\nin Appendix C.",
+      "pdf_page": "https://arxiv.org/pdf/2305.20050v1#page=5"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "GPT-4-finetuned PRM, ORM and generator; majority voting as a baseline",
+    "task_data": "MATH; 500 held-out test problems; up to 1860 generator solutions per problem",
+    "judge": "Automatic final-answer grading of the solution the reward model ranks highest (best-of-N)",
+    "regime": "mixed",
+    "scale": "Large-scale (GPT-4-based) models; N up to 1860"
+   },
+   "quantitative": {
+    "n": "500 test problems; 1860 solutions per problem",
+    "uncertainty": "Figure 3 visualises variance across subsamples of the 1860 solutions for N <= 1000; no test or interval is given for the gap."
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2305.20050v1:LIM-CONFOUNDS",
+     "N2:DSOFT:ARXIV-2305.20050v1:LIM-NO-RL"
+    ],
+    "notes": "The training-set confounds mean this comparison is not apples-to-apples; evaluation is best-of-N only."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "One task (MATH) and one model family, with only a visual spread across subsamples and no test for the difference."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2305.20050v1:RES-SMALL-SCALE",
+   "paper": "2305.20050v1",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2305.20050v1:METHOD-SYNTHETIC-SUPERVISION",
+     "N2:DSOFT:ARXIV-2305.20050v1:DEF-ORM-PRM"
+    ],
+    "description": "Small-scale reward models are trained on 1 to 200 small-generator solutions per problem, labelled by PRMlarge as process supervision, by PRMlarge as outcome supervision, or by final-answer checking (otherwise identical data), and compared by best-of-500 (Figure 4a) and best-of-N (Figure 4b) accuracy.",
+    "passages": [
+     {
+      "version": "2305.20050v1",
+      "page": 9,
+      "lines": [
+       5,
+       11
+      ],
+      "text": "We now conduct a direct comparison of outcome and process supervision. We\nfirst sample between 1 and 200 solutions per problem from a small-scale generator. For each dataset, we provide three forms of supervision: process supervision\nfrom PRMlarge , outcome supervision from PRMlarge , and outcome supervision\nfrom final-answer checking. The choice of supervision is the only difference\nbetween these three series of reward models, which are otherwise trained on\nidentical datasets. See Appendix H for more details about how PRMlarge is\nused for outcome and process supervision.",
+      "pdf_page": "https://arxiv.org/pdf/2305.20050v1#page=9"
+     },
+     {
+      "version": "2305.20050v1",
+      "page": 8,
+      "lines": [
+       53,
+       54
+      ],
+      "text": "Figure 4: A comparison of different forms of outcome and process supervision.\nMean and standard deviation is shown across three seeds.",
+      "pdf_page": "https://arxiv.org/pdf/2305.20050v1#page=8"
+     },
+     {
+      "version": "2305.20050v1",
+      "page": 3,
+      "lines": [
+       43,
+       48
+      ],
+      "text": "All large-scale models are finetuned from the base GPT-4 model (OpenAI, 2023).\nThis model has been pretrained solely to predict the next token; it has not been\npretrained with any Reinforcement Learning from Human Feedback (RLHF)\n(Christiano et al., 2017). The small-scale base models are similar in design to\nGPT-4, but they were pretrained with roughly 200 times less compute. As an\nadditional pretraining step, we finetune all models on a dataset of roughly 1.5B",
+      "pdf_page": "https://arxiv.org/pdf/2305.20050v1#page=3"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "The large-scale PRM stands in for human labellers (synthetic supervision); the authors claim it reliably approximates human supervision for smaller reward models.",
+     "Which outcome baseline is appropriate is unclear; the authors treat outcome supervision by PRMlarge as the more relevant one, since final-answer false positives are arguably over-emphasised in MATH.",
+     "Process supervision is given only up to the first incorrect step."
+    ],
+    "passages": [
+     {
+      "version": "2305.20050v1",
+      "page": 2,
+      "lines": [
+       26,
+       27
+      ],
+      "text": "2. We show that a large reward model can reliably approximate human supervision for smaller reward models, and that it can be used to efficiently\nconduct large-scale data collection ablations.",
+      "pdf_page": "https://arxiv.org/pdf/2305.20050v1#page=2"
+     },
+     {
+      "version": "2305.20050v1",
+      "page": 9,
+      "lines": [
+       20,
+       24
+      ],
+      "text": "It is not clear whether supervision by PRMlarge or by final-answer checking\nrepresents the more appropriate outcome supervision baseline. While finalanswer supervision is more explicitly outcome based, its main weakness — the\nexistence of false positives — is arguably over-emphasized in the MATH dataset.\nOutcome supervision by PRMlarge better represents outcome supervision in domains that are less susceptible to false positives. We consider outcome supervision by PRMlarge to be the more relevant baseline, but we encourage the reader\nto draw their own conclusions.",
+      "pdf_page": "https://arxiv.org/pdf/2305.20050v1#page=9"
+     },
+     {
+      "version": "2305.20050v1",
+      "page": 6,
+      "lines": [
+       13,
+       17
+      ],
+      "text": "When we provide process supervision, we deliberately choose to supervise\nonly up to the first incorrect step. This makes the comparison between outcome and process supervision more straightforward. For correct solutions, both\nmethods provide the same information, namely that every step is correct. For\nincorrect solutions, both methods reveal the existence of at least one mistake,\nand process supervision additionally reveals the precise location of that mistake.",
+      "pdf_page": "https://arxiv.org/pdf/2305.20050v1#page=6"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Small-scale generator and reward models (base models similar to GPT-4 with roughly 200 times less pretraining compute); PRMlarge as labeller",
+    "task_data": "MATH problems; 1 to 200 labelled solutions per problem",
+    "judge": "PRMlarge or final-answer checking supplies training labels; models are compared by best-of-N selection accuracy",
+    "regime": "training",
+    "scale": "Roughly 200x-less-compute models; 1 to 200 solutions per problem; best-of-500"
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": "Mean and standard deviation across three seeds (Figure 4); no test statistic is given for 'significantly'."
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2305.20050v1:LIM-NO-RL"
+    ],
+    "notes": "Supervision is synthetic (from PRMlarge), not human; the appropriate outcome baseline is uncertain; reward models are judged by best-of-N only."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "One task (MATH) and one model family; seed standard deviations are shown, but the result is not reported in more than one setting."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2305.20050v1:RES-ACTIVE-LEARNING",
+   "paper": "2305.20050v1",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2305.20050v1:METHOD-SYNTHETIC-SUPERVISION"
+    ],
+    "description": "A small PRMselector trained on one sample per problem scores 1000 samples per problem; reward models are trained on N selected samples per problem (80% most convincing wrong-answer, 20% most convincing of the rest) labelled by PRMlarge, and data efficiency is estimated by comparing best-fit slopes with and without active learning in Figure 4a.",
+    "passages": [
+     {
+      "version": "2305.20050v1",
+      "page": 9,
+      "lines": [
+       30,
+       32
+      ],
+      "text": "Finally, we investigate the impact of active learning. We train a small-scale\nreward model, PRMselector , on a single sample from each problem, and we use\nthis model to score 1000 samples per problem. To train each of our larger reward models, we select N samples per problem such that 80% are the most",
+      "pdf_page": "https://arxiv.org/pdf/2305.20050v1#page=9"
+     },
+     {
+      "version": "2305.20050v1",
+      "page": 8,
+      "lines": [
+       53,
+       54
+      ],
+      "text": "Figure 4: A comparison of different forms of outcome and process supervision.\nMean and standard deviation is shown across three seeds.",
+      "pdf_page": "https://arxiv.org/pdf/2305.20050v1#page=8"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "Labels come from PRMlarge rather than from humans.",
+     "Selected samples come from a fixed pool of 1000 samples per problem scored by PRMselector."
+    ],
+    "passages": []
+   },
+   "setting": {
+    "systems": "Small-scale reward models; PRMselector; PRMlarge as labeller",
+    "task_data": "Small-scale synthetic-supervision setup; up to 200 selected samples per problem from a pool of 1000",
+    "judge": "PRMlarge supplies the training labels; performance is read from Figure 4a",
+    "regime": "training",
+    "scale": "Up to 200 samples per problem from a pool of 1000"
+   },
+   "quantitative": {
+    "n": "Largest active-learning dataset: 200 samples per problem (pool of 1000)",
+    "uncertainty": "Mean and standard deviation across three seeds in Figure 4; no interval for the 2.6x estimate."
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2305.20050v1:LIM-NO-RL"
+    ],
+    "notes": "The 2.6x figure is a slope-based estimate; the model on the largest active-learning dataset (200 samples per problem) slightly underperforms the trend line."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "One small-scale setup with one labelling model, and the 2.6x estimate carries no uncertainty."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2305.20050v1:RES-OOD",
+   "paper": "2305.20050v1",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2305.20050v1:DEF-ORM-PRM",
+     "N2:DSOFT:ARXIV-2305.20050v1:METHOD-HUMAN-STEP-LABELS"
+    ],
+    "description": "The large-scale ORM and PRM and majority voting each choose from 100 samples per problem on recent AP and AMC exam questions, and final-answer accuracy is compared per exam and in aggregate (Table 1).",
+    "passages": [
+     {
+      "version": "2305.20050v1",
+      "page": 10,
+      "lines": [
+       1,
+       12
+      ],
+      "text": "AP Calculus\nAP Chemistry\nAP Physics\nAMC10/12\nAggregate\n\nORM\n68.9%\n68.9%\n77.8%\n49.1%\n63.8%",
+      "pdf_page": "https://arxiv.org/pdf/2305.20050v1#page=10"
+     },
+     {
+      "version": "2305.20050v1",
+      "page": 10,
+      "lines": [
+       14,
+       25
+      ],
+      "text": "PRM\n86.7%\n80.0%\n86.7%\n53.2%\n72.9%\n\nMajority Vote\n80.0%\n71.7%\n82.2%\n32.8%",
+      "pdf_page": "https://arxiv.org/pdf/2305.20050v1#page=10"
+     },
+     {
+      "version": "2305.20050v1",
+      "page": 10,
+      "lines": [
+       26,
+       36
+      ],
+      "text": "61.3%\n\n# Problems\n45\n60\n45\n84\n234\n\nTable 1: We measure out-of-distribution generalization using recent STEM tests.\nWe evaluate the outcome-supervised RM, the process-supervised RM, and majority voting using 100 test samples per problem.",
+      "pdf_page": "https://arxiv.org/pdf/2305.20050v1#page=10"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "The exams were released after the pre-training data was compiled, so the authors have high confidence the model has not seen the problems."
+    ],
+    "passages": []
+   },
+   "setting": {
+    "systems": "Large-scale ORM and PRM; majority voting baseline",
+    "task_data": "Recent AP Calculus, AP Chemistry, AP Physics, AMC10 and AMC12 questions",
+    "judge": "Automatic final-answer grading of the solution the reward model ranks highest (best-of-N)",
+    "regime": "evaluation",
+    "scale": "100 samples per problem; 224 questions in the text (Table 1 counts sum to 234)"
+   },
+   "quantitative": {
+    "n": "224 questions per the text; Table 1 lists 45, 60, 45 and 84 problems, total 234",
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2305.20050v1:LIM-NO-RL",
+     "N2:DSOFT:ARXIV-2305.20050v1:LIM-CONFOUNDS"
+    ],
+    "notes": "Aggregate best-of-100: PRM 72.9%, ORM 63.8%, majority voting 61.3%, with no uncertainty reported; the authors call it 'some measure' of out-of-distribution generalization and a 'modest' distribution shift."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "One held-out question set scored with the large-scale reward models, with no uncertainty reported."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2305.20050v1:CLAIM-NEGATIVE-ALIGNMENT-TAX",
+   "paper": "2305.20050v1",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2305.20050v1:DEF-ORM-PRM",
+     "N2:DSOFT:ARXIV-2305.20050v1:METHOD-HUMAN-STEP-LABELS",
+     "N2:DSOFT:ARXIV-2305.20050v1:METHOD-SYNTHETIC-SUPERVISION"
+    ],
+    "description": "An interpretation of the paper's MATH comparisons, in which process-supervised reward models select correct solutions more often than outcome-supervised ones at large and small scale, read as a negative alignment tax.",
+    "passages": [
+     {
+      "version": "2305.20050v1",
+      "page": 7,
+      "lines": [
+       54,
+       61
+      ],
+      "text": "Figure 3 shows how the best-of-N performance of each reward model varies\nas a function of N. Since majority voting is known to be a strong baseline (Wang\net al., 2022; Lewkowycz et al., 2022), we also include this method as a point of\ncomparison. While the ORM performs slightly better than the majority voting\nbaseline, the PRM strongly outperforms both. Not only does the PRM reach\nhigher performance for all values of N, but the performance gap widens as N\nincreases. This indicates that the PRM is more effective than both the ORM and\nmajority voting at searching over a large number of model-generated solutions.",
+      "pdf_page": "https://arxiv.org/pdf/2305.20050v1#page=7"
+     },
+     {
+      "version": "2305.20050v1",
+      "page": 9,
+      "lines": [
+       12,
+       14
+      ],
+      "text": "In Figure 4a, we evaluate each reward model by its best-of-500 selection. We\nsee that process supervision significantly outperforms both forms of outcome\nsupervision at all data collection scales. In Figure 4b, we evaluate the best",
+      "pdf_page": "https://arxiv.org/pdf/2305.20050v1#page=9"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "Process supervision is taken to be the safer, more alignment-friendly method because it rewards a human-endorsed chain of thought and is easier to interpret; this premise is argued, not tested.",
+     "Performance is measured by best-of-N reward-model selection on math problems, without RL on the generator."
+    ],
+    "passages": [
+     {
+      "version": "2305.20050v1",
+      "page": 11,
+      "lines": [
+       10,
+       18
+      ],
+      "text": "Process supervision has several advantages over outcome supervision related\nto AI alignment. Process supervision is more likely to produce interpretable\nreasoning, since it encourages models to follow a process endorsed by humans.\nProcess supervision is also inherently safer: it directly rewards an aligned chainof-thought rather than relying on outcomes as a proxy for aligned behavior\n(Stuhlmüller and Byun, 2022). In contrast, outcome supervision is harder to\nscrutinize, and the preferences conveyed are less precise. In the worst case,\nthe use of outcomes as an imperfect proxy could lead to models that become\nmisaligned after learning to exploit the reward signal (Uesato et al., 2022; Cotra,\n2022; Everitt et al., 2017).",
+      "pdf_page": "https://arxiv.org/pdf/2305.20050v1#page=11"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Large-scale and small-scale outcome- and process-supervised reward models",
+    "task_data": "Math problems",
+    "judge": "Automatic final-answer grading of the solution the reward model ranks highest (best-of-N)",
+    "regime": "mixed",
+    "scale": null
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2305.20050v1:LIM-NO-RL",
+     "N2:DSOFT:ARXIV-2305.20050v1:LIM-CONFOUNDS"
+    ],
+    "notes": "The authors say it is unknown how broadly the results generalize beyond math; evaluation is best-of-N only, and the large-scale comparison has training-set confounds."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "The performance side rests on the paper's math best-of-N comparisons in a single task; the premise that process supervision is safer is argued, not measured."
+   },
+   "review_status": "provisional_ai_draft"
+  }
+ ]
+}

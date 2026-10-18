@@ -1,0 +1,519 @@
+{
+ "schema": "ASRA-GAP-CLOSING-AGENT-v1",
+ "paper": "2501.13124v1",
+ "review_status": "provisional_ai_draft",
+ "rules": [
+  "Everything here is an AI draft (provisional_ai_draft): each counted item passed two blind AI checks that were tested on planted errors, and no person has reviewed it.",
+  "A finding counts only in the setting its own quoted lines show; read `setting` before carrying it to another setting.",
+  "A question's status is a label from fixed rules over its counted findings; `status_check` says whether that label itself passed its check.",
+  "Cite the paper and page from the passage, and read the PDF page before relying on a claim."
+ ],
+ "notes": "ASM-HARDER-TO-LIE has an assumption-style id but kind 'claim'; it is an observation on a single illustrative debate (Figure 1) and is graded EMPIRICAL_PRELIMINARY. No result in this paper reports uncertainty, seeds-level spread or a statistical test; 'significantly' (p5 L101) is used without a statistic, so all multi-task results are EMPIRICAL_SINGLE_SETTING. Reviewer observation, not used in the cards because Table 2 is garbled: reading Table 2 (p5 L28-L80) column by column gives weak and strong-ceiling accuracies of 90.0/93.4 (SciQ), 86.0/89.9 (BoolQ), 87.5/89.8 (CosmosQA) and 48.8/50.8 (AnthropicHH), which reproduce the stated PGRs; so PGR is normalised by gaps of 2-4 accuracy points, the debate method's accuracy gains over Finetune w/ aux. loss are about 0.5-1.2 points, and AnthropicHH accuracies are all near 50%. RES-VS-CONSULTANCY-MM: consultancy and market-making run one turn versus three for debate, and only debate is marked as using debate ensembles.",
+ "cards": [
+  {
+   "record_id": "N2:DSOFT:ARXIV-2501.13124v1:CORE",
+   "paper": "2501.13124v1",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2501.13124v1:METHOD-DEBATE-ARGUMENTS",
+     "N2:DSOFT:ARXIV-2501.13124v1:METHOD-WEAK-ENSEMBLE",
+     "N2:DSOFT:ARXIV-2501.13124v1:DEF-PGR"
+    ],
+    "description": "Two Qwen-14B debaters argue opposite answers for three turns; each transcript is appended to the input to finetune an ensemble of Qwen-7B weak models on ground-truth labels; the ensemble's mean prediction labels data for finetuning Qwen-14B as the strong student, which is scored by test accuracy and PGR.",
+    "passages": [
+     {
+      "version": "2501.13124v1",
+      "page": 5,
+      "lines": [
+       118,
+       128
+      ],
+      "text": "Our implementations of data preprocessing, weak and strong\nmodel training are based on the OpenAI weak-to-strong\ncodebase and its default hyper-parameters (Burns et al.\n2023). Specifically, we use Qwen/Qwen-7B as the small pretrained model for training weak models. Meanwhile, we use\nQwen/Qwen-14B as the large pretrained model for generating debate arguments and training strong models. Both\nQwen/Qwen-7B and Qwen/Qwen-14B are open-sources,\nwhich can aid reproducibility (Bai et al. 2023). We do not\nuse pretrained models from the GPT-2 family for training\nweak models (Radford et al. 2019), because they lack the\ncapability required for scalable oversight techniques like\nworking closely with strong models (Bowman et al. 2022).",
+      "pdf_page": "https://arxiv.org/pdf/2501.13124v1#page=5"
+     },
+     {
+      "version": "2501.13124v1",
+      "page": 4,
+      "lines": [
+       77,
+       82
+      ],
+      "text": "Training Strong Models using Ensembles\nWe finally train a strong student model by finetuning a large\npretrained model on weak labels constructed by the weak\nmodel ensemble. We simply take the mean of the predictions\nfrom different weak models within the ensemble as the weak\nlabel for each training sample (Ganaie et al. 2022).",
+      "pdf_page": "https://arxiv.org/pdf/2501.13124v1#page=4"
+     },
+     {
+      "version": "2501.13124v1",
+      "page": 4,
+      "lines": [
+       86,
+       94
+      ],
+      "text": "We adopt the evaluation protocol of prior work (Burns\net al. 2023), and conduct experiments in NLP tasks on\nfour classification datasets: SciQ (Welbl, Liu, and Gardner 2017), BoolQ (Clark et al. 2019), CosmosQA (Huang\net al. 2019), and AnthropicHH (Bai et al. 2022). We convert\neach dataset to a binary classification problem. For multiplechoice datasets, given a data point with a question Q and\nk candidate answers A, we construct k new data points of\nthe form (Q, Ai ), where the label is 1 for the correct answers and 0 for all the incorrect answers. We also keep the\nsame number of correct and incorrect answers per question\nto maintain class balance.",
+      "pdf_page": "https://arxiv.org/pdf/2501.13124v1#page=4"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2501.13124v1:ASM-PRETRAINED-KNOWLEDGE"
+    ],
+    "stated_hypotheses": [
+     "Large pretrained models embed broad-coverage knowledge that can help many tasks.",
+     "The experiment is an analogy: a strong model helps improve a weak model's supervision, which then supervises the strong model.",
+     "Weak and strong models differ only in pretrained model size (7B vs 14B)."
+    ],
+    "passages": [
+     {
+      "version": "2501.13124v1",
+      "page": 1,
+      "lines": [
+       57,
+       62
+      ],
+      "text": "We investigate ways of improving human supervision with a\nstrong pretrained model and then supervise the strong model\nwith enhanced weak human supervision. To make iterative\nempirical progress, we consider an analogy (Burns et al.\n2023; Kenton et al. 2024): can we use a strong model to improve weak model supervision and then use it to supervise\nthe strong model?",
+      "pdf_page": "https://arxiv.org/pdf/2501.13124v1#page=1"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Qwen/Qwen-7B weak models; Qwen/Qwen-14B as debaters and as strong student",
+    "task_data": "SciQ, BoolQ, CosmosQA and AnthropicHH, each converted to binary classification (the OpenAI weak-to-strong NLP benchmarks)",
+    "judge": null,
+    "regime": "training",
+    "scale": "7B weak models and a 14B strong model"
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2501.13124v1:LIM-SMALL-GAP"
+    ],
+    "notes": "Weak and strong models differ only in size, with a modest gap (7B vs 14B), and the method is expensive; the passages report no uncertainty for the gains. 'Extracting trustworthy information' is the authors' reading of accuracy and PGR gains rather than a separate measurement."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "Four tasks with one model family (Qwen) and no test, interval or standard error reported for the gains."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2501.13124v1:ASM-HARDER-TO-LIE",
+   "paper": "2501.13124v1",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2501.13124v1:METHOD-DEBATE-ARGUMENTS"
+    ],
+    "description": "The authors inspect one illustrative three-turn SciQ debate (Figure 1) in which Debater B argues that the answer about electromagnets is incorrect and Debater A rebuts in turn 3; Table 1 gives the three-turn SciQ debate prompts.",
+    "passages": [
+     {
+      "version": "2501.13124v1",
+      "page": 3,
+      "lines": [
+       15,
+       24
+      ],
+      "text": "Turn 2\nDebater B: 1. The answer is incorrect because electromagnets are not used to lift large masses of magnetic materials\nsuch as scrap iron, rolls of steel, and auto parts. 2. Instead, they are used to hold and manipulate magnetic materials.\n3. Electromagnets are made by wrapping a coil of wire around a core of iron or steel. 4. When an electric current is\npassed through the coil, it creates a magnetic field that attracts the magnetic materials. 5. However, this magnetic\nfield is not strong enough to lift large masses of magnetic materials. 6. Therefore, electromagnets are not used for\nlifting heavy objects, but rather for holding and manipulating them. 7. The opponent’s argument is flawed because it\nassumes that electromagnets are used for lifting heavy objects, which is not the case. 8. The opponent’s argument\nalso does not address the fact that electromagnets are not strong enough to lift large masses of magnetic materials. 9.\nTherefore, the answer is incorrect and the opponent’s argument is flawed.",
+      "pdf_page": "https://arxiv.org/pdf/2501.13124v1#page=3"
+     },
+     {
+      "version": "2501.13124v1",
+      "page": 3,
+      "lines": [
+       28,
+       33
+      ],
+      "text": "Turn 3\nDebater A: 1. The opponent’s argument is flawed because it assumes that electromagnets are used for holding and\nmanipulating magnetic materials, which is not the case. 2. Electromagnets are used to lift magnetic materials. 3.\nTherefore, the opponent’s argument is flawed.\n\nFigure 1: Illustration of debate. Illustration of the debate procedure between debater A and debater B.",
+      "pdf_page": "https://arxiv.org/pdf/2501.13124v1#page=3"
+     },
+     {
+      "version": "2501.13124v1",
+      "page": 4,
+      "lines": [
+       29,
+       31
+      ],
+      "text": "Table 1: Prompts to induce debate on a binary classification problem. The binary classification problem is converted from\nthe SciQ dataset. Two answer choices correct and incorrect are randomly assigned to debater A and B. Debate runs for three\nturns. We also append the current debate transcript to the prompt.",
+      "pdf_page": "https://arxiv.org/pdf/2501.13124v1#page=4"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "The cited principle (Irving, Christiano, and Amodei 2018) that it is harder to lie than to refute a lie."
+    ],
+    "passages": []
+   },
+   "setting": {
+    "systems": "Two debater instances of a large pretrained model (Figure 1 does not name the model)",
+    "task_data": "One SciQ question about electromagnets, converted to binary classification",
+    "judge": null,
+    "regime": "evaluation",
+    "scale": "One illustrative debate of three turns"
+   },
+   "quantitative": {
+    "n": "1 illustrative debate",
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [],
+    "notes": "A single example. In the figure, Debater A's turn-3 rebuttal says the opponent's argument is flawed and restates that electromagnets are used to lift magnetic materials; the passages contain no systematic test of the principle."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_PRELIMINARY",
+    "reason": "The claim rests on one illustrative debate (Figure 1)."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2501.13124v1:RES-MAIN-PGR",
+   "paper": "2501.13124v1",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2501.13124v1:METHOD-DEBATE-ARGUMENTS",
+     "N2:DSOFT:ARXIV-2501.13124v1:METHOD-WEAK-ENSEMBLE",
+     "N2:DSOFT:ARXIV-2501.13124v1:DEF-PGR"
+    ],
+    "description": "Debate-ensemble weak supervision labels data for finetuning Qwen-14B; the strong student's test accuracy and PGR are compared with three baselines from Burns et al. (Finetune, Finetune w/ aux. loss, Finetune w/ pro. loss), with weak performance taken from the naively finetuned small model and the strong ceiling from Qwen-14B finetuned on ground truth.",
+    "passages": [
+     {
+      "version": "2501.13124v1",
+      "page": 5,
+      "lines": [
+       82,
+       88
+      ],
+      "text": "Table 2: Debate improves weak-to-strong generalization. Test accuarcy (%) and performance gap recovered (PGR) (%) of\nour approach and baselines on the binary classification tasks converted from NLP classification datasets. Here, our approach\nuses debate ensembles. Accuracy of weak and strong models trained with ground truth are reported as weak performance and\nstrong ceiling performance, respectively.\nVinyals, and Dean 2015). We report the accuracy and performance gap recovered (PGR) of the strong student model\non the test set in all tasks. The weak performance for PGR\nis the performance of the naively finetuned small model.",
+      "pdf_page": "https://arxiv.org/pdf/2501.13124v1#page=5"
+     },
+     {
+      "version": "2501.13124v1",
+      "page": 5,
+      "lines": [
+       118,
+       128
+      ],
+      "text": "Our implementations of data preprocessing, weak and strong\nmodel training are based on the OpenAI weak-to-strong\ncodebase and its default hyper-parameters (Burns et al.\n2023). Specifically, we use Qwen/Qwen-7B as the small pretrained model for training weak models. Meanwhile, we use\nQwen/Qwen-14B as the large pretrained model for generating debate arguments and training strong models. Both\nQwen/Qwen-7B and Qwen/Qwen-14B are open-sources,\nwhich can aid reproducibility (Bai et al. 2023). We do not\nuse pretrained models from the GPT-2 family for training\nweak models (Radford et al. 2019), because they lack the\ncapability required for scalable oversight techniques like\nworking closely with strong models (Bowman et al. 2022).",
+      "pdf_page": "https://arxiv.org/pdf/2501.13124v1#page=5"
+     },
+     {
+      "version": "2501.13124v1",
+      "page": 5,
+      "lines": [
+       138,
+       146
+      ],
+      "text": "Baselines\nWe compare our approach with competitive baseline approaches: 1. Finetune (Burns et al. 2023) naively finetunes\nstrong pretrained models on labels generated by a weak\nmodel; 2. Finetune w/ aux. loss (Burns et al. 2023) finetunes\nstrong models with an auxiliary confidence loss, which reinforces the strong model’s confidence in its own predictions\nwhen they disagree with the weak labels; 3. Finetune w/\npro. loss (Burns et al. 2023) finetunes strong models with\na confidence-like loss which sets the cross entropy targets\nto the product of weak labels and strong model predictions.",
+      "pdf_page": "https://arxiv.org/pdf/2501.13124v1#page=5"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2501.13124v1:ASM-PRETRAINED-KNOWLEDGE"
+    ],
+    "stated_hypotheses": [
+     "Each dataset is converted to binary classification, keeping equal numbers of correct and incorrect answers per question.",
+     "At most 20k data points are sampled per task and split in half: the weak model is trained on the first half and its soft predictions on the second half are the weak labels.",
+     "All models use a linear two-output classification head and are trained for two epochs with batch size 32, using the OpenAI weak-to-strong codebase defaults.",
+     "Weak and strong models differ only in size (7B vs 14B)."
+    ],
+    "passages": [
+     {
+      "version": "2501.13124v1",
+      "page": 4,
+      "lines": [
+       86,
+       94
+      ],
+      "text": "We adopt the evaluation protocol of prior work (Burns\net al. 2023), and conduct experiments in NLP tasks on\nfour classification datasets: SciQ (Welbl, Liu, and Gardner 2017), BoolQ (Clark et al. 2019), CosmosQA (Huang\net al. 2019), and AnthropicHH (Bai et al. 2022). We convert\neach dataset to a binary classification problem. For multiplechoice datasets, given a data point with a question Q and\nk candidate answers A, we construct k new data points of\nthe form (Q, Ai ), where the label is 1 for the correct answers and 0 for all the incorrect answers. We also keep the\nsame number of correct and incorrect answers per question\nto maintain class balance.",
+      "pdf_page": "https://arxiv.org/pdf/2501.13124v1#page=4"
+     },
+     {
+      "version": "2501.13124v1",
+      "page": 4,
+      "lines": [
+       97,
+       100
+      ],
+      "text": "We randomly sample at most 20k data points from each task\nand split them in half. We train a weak model on the first\nhalf of the data points and use its prediction on the other half\nas the weak labels. The weak labels are soft labels (Hinton,",
+      "pdf_page": "https://arxiv.org/pdf/2501.13124v1#page=4"
+     },
+     {
+      "version": "2501.13124v1",
+      "page": 5,
+      "lines": [
+       129,
+       136
+      ],
+      "text": "For each converted binary classification problem, we use\nthe two candidate answers per question as the two opposing answers, which are randomly assigned to the two strong\nmodel debaters in a debate. In order to adapt weak and\nstrong models to the binary classification setting, we equip\neach model with a linear classification head with two outputs\non top of the encoder. We train all models for two epochs\nwith a batch size of 32. We conduct all experiments on a\nsingle 8×A100 machine.",
+      "pdf_page": "https://arxiv.org/pdf/2501.13124v1#page=5"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Qwen/Qwen-7B weak models; Qwen/Qwen-14B as debaters and as strong student; four-member debate ensembles of weak models",
+    "task_data": "SciQ, BoolQ, CosmosQA and AnthropicHH, each converted to binary classification",
+    "judge": null,
+    "regime": "training",
+    "scale": "7B weak and 14B strong models; at most 20k data points per task"
+   },
+   "quantitative": {
+    "n": "At most 20k sampled data points per task, split in half (test-set size not stated in these lines)",
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2501.13124v1:LIM-SMALL-GAP"
+    ],
+    "notes": "No uncertainty or repeated runs are reported, and 'significantly outperforms' comes with no test; weak and strong models differ only in size."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "Four tasks, one model family, and no test, interval or standard error for the PGR or accuracy gains."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2501.13124v1:RES-VS-CONSULTANCY-MM",
+   "paper": "2501.13124v1",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2501.13124v1:METHOD-DEBATE-ARGUMENTS",
+     "N2:DSOFT:ARXIV-2501.13124v1:METHOD-WEAK-ENSEMBLE",
+     "N2:DSOFT:ARXIV-2501.13124v1:DEF-PGR"
+    ],
+    "description": "The debate step is replaced by consultancy (one instance of the large model argues a randomly assigned answer) or market-making (one instance argues the answer the naively finetuned weak supervisor did not select), each run for a single turn while debate runs for three; test accuracy and PGR of the resulting strong students are compared (Table 4).",
+    "passages": [
+     {
+      "version": "2501.13124v1",
+      "page": 6,
+      "lines": [
+       82,
+       87
+      ],
+      "text": "• Consultancy. In consultancy, there is only one consultant\ninstead of two debaters. The consultant is an instance of\na large pretrained model. Given a question and its two\nanswer choices (one correct, one incorrect), the consultant is assigned to argue for one of these answers, with\na 50% chance of each. During the consultancy, the consultant provides evidences for its assigned answer. The\ntranscript is kept at the end of the consultancy.",
+      "pdf_page": "https://arxiv.org/pdf/2501.13124v1#page=6"
+     },
+     {
+      "version": "2501.13124v1",
+      "page": 6,
+      "lines": [
+       88,
+       99
+      ],
+      "text": "• Market-Making. In market-making, there is a single debater. The debater is an instance of a large pretrained\nmodel and aims to generate arguments that change some\nmodel’s beliefs on the answer to a question. Given a\nquestion and its two candidate answers, we let the weak\nsupervisor (the naively finetuned small model) select an\nanswer based on its prediction. Accordingly, the debater\nis assigned to argue for the unselected answer. The transcript is kept at the end.\nSpecifically, consultancy and market-making run for a\nsingle turn. At the start of each turn, the consultant and the\ndebater are provided with a prompt describing the task, the\nassigned answer, and the transcript. The prompts to induce\nconsultancy and market-making are illustrated in Table 3.",
+      "pdf_page": "https://arxiv.org/pdf/2501.13124v1#page=6"
+     },
+     {
+      "version": "2501.13124v1",
+      "page": 6,
+      "lines": [
+       79,
+       81
+      ],
+      "text": "Table 4: Ablation on different scalable oversight approaches. Here, our approach uses debate ensembles.\nto extract trustworthy information from a capable but untrustworthy strong model by replacing it with other alternative scalable oversight approaches: Consultancy (Michael\net al. 2023) and Market-Making (Hubinger 2020).",
+      "pdf_page": "https://arxiv.org/pdf/2501.13124v1#page=6"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "Consultancy and market-making run for a single turn; debate runs for three turns.",
+     "In consultancy the consultant argues for each answer with 50% probability.",
+     "In market-making the arguer is assigned the answer the weak supervisor did not select.",
+     "The debate arm ('our approach') uses debate ensembles (Table 4 caption)."
+    ],
+    "passages": [
+     {
+      "version": "2501.13124v1",
+      "page": 4,
+      "lines": [
+       86,
+       91
+      ],
+      "text": "We adopt the evaluation protocol of prior work (Burns\net al. 2023), and conduct experiments in NLP tasks on\nfour classification datasets: SciQ (Welbl, Liu, and Gardner 2017), BoolQ (Clark et al. 2019), CosmosQA (Huang\net al. 2019), and AnthropicHH (Bai et al. 2022). We convert\neach dataset to a binary classification problem. For multiplechoice datasets, given a data point with a question Q and\nk candidate answers A, we construct k new data points of",
+      "pdf_page": "https://arxiv.org/pdf/2501.13124v1#page=4"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Instances of the large pretrained model as debaters, consultant or market-maker; weak models trained on the resulting transcripts; strong students trained on their labels",
+    "task_data": "The four tasks: SciQ, BoolQ, CosmosQA and AnthropicHH, each converted to a binary classification problem (each question with two answer choices, one correct and one incorrect)",
+    "judge": null,
+    "regime": "training",
+    "scale": null
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2501.13124v1:LIM-SMALL-GAP"
+    ],
+    "notes": "The protocols differ in number of turns (one vs three); Table 4's caption says only that 'our approach uses debate ensembles', and these lines do not say whether the consultancy and market-making variants use ensembles. The authors call consultancy a relatively weak baseline. No uncertainty is reported."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "Four tasks, one model family, and no test, interval or standard error for the differences."
+   },
+   "review_status": "provisional_ai_draft",
+   "check_history": [
+    "card-1: flagged or undecided by two blind checks; rewritten from the checkers' suggested fix (quotes unchanged)",
+    "card-3: flagged by the checks under rubric v1.1; rewritten from the checkers' suggested fix (quotes unchanged)"
+   ]
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2501.13124v1:RES-ENSEMBLE",
+   "paper": "2501.13124v1",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2501.13124v1:METHOD-WEAK-ENSEMBLE",
+     "N2:DSOFT:ARXIV-2501.13124v1:METHOD-DEBATE-ARGUMENTS"
+    ],
+    "description": "Table 5 compares weak supervision from a single weak model finetuned on debate-augmented samples, a finetune ensemble (shared transcript, different finetuning seeds) and a debate ensemble (transcripts from different debate seeds), by the resulting performance on each of the four tasks.",
+    "passages": [
+     {
+      "version": "2501.13124v1",
+      "page": 6,
+      "lines": [
+       107,
+       113
+      ],
+      "text": "Ablation on weak model ensemble. We analyze the impact of weak model ensemble on obtaining a robust weak su-\n\npervision estimate for weak-to-strong generalization. In Table 5, we compare three weak model ensemble methods of\nincreasing computational cost: single weak model, finetune\nensembles, and debate ensembles. Single weak model is an\nindividual small model finetuned on the samples augmented\nwith debate transcripts. Finetune ensembles and debate ensembles are described in the methods section.",
+      "pdf_page": "https://arxiv.org/pdf/2501.13124v1#page=6"
+     },
+     {
+      "version": "2501.13124v1",
+      "page": 5,
+      "lines": [
+       118,
+       128
+      ],
+      "text": "Our implementations of data preprocessing, weak and strong\nmodel training are based on the OpenAI weak-to-strong\ncodebase and its default hyper-parameters (Burns et al.\n2023). Specifically, we use Qwen/Qwen-7B as the small pretrained model for training weak models. Meanwhile, we use\nQwen/Qwen-14B as the large pretrained model for generating debate arguments and training strong models. Both\nQwen/Qwen-7B and Qwen/Qwen-14B are open-sources,\nwhich can aid reproducibility (Bai et al. 2023). We do not\nuse pretrained models from the GPT-2 family for training\nweak models (Radford et al. 2019), because they lack the\ncapability required for scalable oversight techniques like\nworking closely with strong models (Bowman et al. 2022).",
+      "pdf_page": "https://arxiv.org/pdf/2501.13124v1#page=5"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "Ensembles have four members unless stated otherwise.",
+     "The ensemble's mean prediction is the weak label for each training sample.",
+     "Debate ensembles differ in the debate sampling seed; finetune ensembles share one transcript and differ in the finetuning seed."
+    ],
+    "passages": [
+     {
+      "version": "2501.13124v1",
+      "page": 4,
+      "lines": [
+       77,
+       82
+      ],
+      "text": "Training Strong Models using Ensembles\nWe finally train a strong student model by finetuning a large\npretrained model on weak labels constructed by the weak\nmodel ensemble. We simply take the mean of the predictions\nfrom different weak models within the ensemble as the weak\nlabel for each training sample (Ganaie et al. 2022).",
+      "pdf_page": "https://arxiv.org/pdf/2501.13124v1#page=4"
+     },
+     {
+      "version": "2501.13124v1",
+      "page": 4,
+      "lines": [
+       86,
+       91
+      ],
+      "text": "We adopt the evaluation protocol of prior work (Burns\net al. 2023), and conduct experiments in NLP tasks on\nfour classification datasets: SciQ (Welbl, Liu, and Gardner 2017), BoolQ (Clark et al. 2019), CosmosQA (Huang\net al. 2019), and AnthropicHH (Bai et al. 2022). We convert\neach dataset to a binary classification problem. For multiplechoice datasets, given a data point with a question Q and\nk candidate answers A, we construct k new data points of",
+      "pdf_page": "https://arxiv.org/pdf/2501.13124v1#page=4"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Qwen/Qwen-7B weak models; Qwen/Qwen-14B as debaters and as strong student",
+    "task_data": "The four tasks: SciQ, BoolQ, CosmosQA and AnthropicHH, each converted to a binary classification problem",
+    "judge": null,
+    "regime": "training",
+    "scale": "Single weak model vs four-member ensembles"
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2501.13124v1:LIM-SMALL-GAP"
+    ],
+    "notes": "No uncertainty is reported; finetune ensembles are only comparable to a single model on one of four tasks. That debate-argument diversity is 'the key' is the authors' interpretation ('suggest')."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "Four tasks, one model family, and no test, interval or standard error for the differences."
+   },
+   "review_status": "provisional_ai_draft",
+   "check_history": [
+    "card-1: flagged or undecided by two blind checks; rewritten from the checkers' suggested fix (quotes unchanged)",
+    "card-3: flagged by the checks under rubric v1.1; rewritten from the checkers' suggested fix (quotes unchanged)"
+   ]
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2501.13124v1:RES-DEBATE-TURNS",
+   "paper": "2501.13124v1",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2501.13124v1:METHOD-DEBATE-ARGUMENTS",
+     "N2:DSOFT:ARXIV-2501.13124v1:METHOD-WEAK-ENSEMBLE"
+    ],
+    "description": "Debate length is increased from 3 up to 6 turns on SciQ and AnthropicHH, using debate ensembles, and the final test accuracy is plotted (Figure 3).",
+    "passages": [
+     {
+      "version": "2501.13124v1",
+      "page": 7,
+      "lines": [
+       173,
+       178
+      ],
+      "text": "Figure 3: Ablation on the number of turns of debate. Here, our approach uses debate ensembles.\n14B suffer from the inability to effectively process long debate transcripts and follow instructions, as turns continue, as\nshown by a consistent decrease in test accuracy after 3 turns.\nWe used 3 turns of debate in this work because it is the minimum interaction between debaters to extract the truth from\nthe strong model. For instance, the two debaters can critique\ntheir opponent in turn 2 and turn 3, respectively.",
+      "pdf_page": "https://arxiv.org/pdf/2501.13124v1#page=7"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "Debate ensembles are used (Figure 3 caption).",
+     "Three turns is the paper's default because it is 'the minimum interaction between debaters to extract the truth' (the two debaters can critique each other in turns 2 and 3)."
+    ],
+    "passages": []
+   },
+   "setting": {
+    "systems": "Qwen/Qwen-14B debaters; debate ensembles of weak models",
+    "task_data": "SciQ and AnthropicHH (binary classification)",
+    "judge": null,
+    "regime": "training",
+    "scale": "3 to 6 debate turns"
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2501.13124v1:LIM-SMALL-GAP"
+    ],
+    "notes": "Two tasks and no uncertainty. The authors attribute the result to Qwen-14B debaters failing to process long transcripts and follow instructions as turns continue, with test accuracy decreasing after 3 turns."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "Two tasks with one debater model and no test, interval or standard error."
+   },
+   "review_status": "provisional_ai_draft"
+  }
+ ]
+}

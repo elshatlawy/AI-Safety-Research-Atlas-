@@ -1,0 +1,527 @@
+{
+ "schema": "ASRA-GAP-CLOSING-AGENT-v1",
+ "paper": "2210.10860v1",
+ "review_status": "provisional_ai_draft",
+ "rules": [
+  "Everything here is an AI draft (provisional_ai_draft): each counted item passed two blind AI checks that were tested on planted errors, and no person has reviewed it.",
+  "A finding counts only in the setting its own quoted lines show; read `setting` before carrying it to another setting.",
+  "A question's status is a label from fixed rules over its counted findings; `status_check` says whether that label itself passed its check.",
+  "Cite the paper and page from the passage, and read the PDF page before relying on a claim."
+ ],
+ "notes": "The paper has no assumption or limitation records, so hypotheses and limits are taken from added passages. RES-PS-ACCURACY and RES-PSA-ACCURACY quote the same lines as RES-ANOVA-BINARY (p3 L40/42-50): their titles describe descriptive Table 2 differences that the same ANOVA finds not significant. CORE, RES-ANOVA-BINARY, RES-PS-ACCURACY, RES-PSA-ACCURACY and RES-CONFIDENCE are graded EMPIRICAL_PRELIMINARY under the rubric's 'the result is not significant' clause; a reviewer who treats a tested null as the result itself could grade CORE and RES-ANOVA-BINARY EMPIRICAL_SINGLE_SETTING (one task, one judge pool). Table 2's cell values are garbled in the text (columns map to conditions only by order) and are not used. The number of judged questions or judgments is not stated in the lines read; only the F(1,12) degrees of freedom appear. The main text says the 10 highest-performing writers were invited (p2 L110-112), while Appendix A.1 says the 12 writers with the highest scores were hired (p6 L59); cards use the main-text figure. RES-CONFIDENCE's quote starts mid-sentence; its opening (p3 L51-52) is added as a passage. RES-ARG-QUALITY and RES-COUNTER-RESPONSIVE come from the authors' own qualitative annotation of four passages. No record seems mislabelled.",
+ "cards": [
+  {
+   "record_id": "N2:DSOFT:ARXIV-2210.10860v1:CORE",
+   "paper": "2210.10860v1",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2210.10860v1:DEF-CONDITIONS",
+     "N2:DSOFT:ARXIV-2210.10860v1:METHOD-JUDGING",
+     "N2:DSOFT:ARXIV-2210.10860v1:DEF-ABSTAIN-INCENTIVES",
+     "N2:DSOFT:ARXIV-2210.10860v1:METHOD-COUNTERARG"
+    ],
+    "description": "Professional writers wrote counter-arguments to the existing single-turn arguments of Parrish et al. (2022); selected Upwork judges answered two-option QuALITY questions either reading arguments for both options (PSA) or not (PS, snippets only), giving a first judgment after the initial round and a second after the counter-argument round, under 'simple' and 'encourage abstain' incentives, and a 2 x 2 x 2 repeated-measures ANOVA tested these factors' effect on accuracy.",
+    "passages": [
+     {
+      "version": "2210.10860v1",
+      "page": 3,
+      "lines": [
+       45,
+       50
+      ],
+      "text": "to be incorrect when shown arguments and strongly encouraged to abstain. To determine whether\nthe experimental manipulations significantly affect judges’ accuracy, we run a 2 × 2 × 2 repeated\nmeasures ANOVA with the following factors: +/- argument × 1st/2nd judgment × incentive structure.\nRemoving abstentions,2 we observe no main effects of the three conditions, meaning that none of the\nthree factors significantly affect the rate at which judges are correct or incorrect. We also observe no\ninteractions between the factors, indicating no reliable differences dependent on multiple factors.",
+      "pdf_page": "https://arxiv.org/pdf/2210.10860v1#page=3"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "The questions are hard multiple-choice reading comprehension questions, and judges have only time-limited access to the full passage text (5 minutes per judgment in the main task).",
+     "The comparison is with an argument-free baseline; text snippets are shown in both conditions.",
+     "Only the top half of pilot judges (16 of 32), chosen by their accuracy after viewing the passage, take part in the main task.",
+     "The conclusion is confined to multiple-choice reading comprehension; the authors say debate may still help in other set-ups such as highly technical tasks."
+    ],
+    "passages": [
+     {
+      "version": "2210.10860v1",
+      "page": 2,
+      "lines": [
+       93,
+       98
+      ],
+      "text": "Mirroring the mostly null results from Parrish et al. (2022), we find that counter-arguments do\nnot improve human crowdworkers’ ability to answer hard multiple-choice reading comprehension\nquestions with time-limited access to the full passage text, compared to an argument-free baseline.\nIn fact, when abstaining is only minimally incentivized, human accuracy gets slightly worse when\nexposed to (counter-)arguments. In the higher-stakes setting where judges are incentivized to abstain\nunless they are very confident, there is no effect of the (counter-)arguments.",
+      "pdf_page": "https://arxiv.org/pdf/2210.10860v1#page=2"
+     },
+     {
+      "version": "2210.10860v1",
+      "page": 4,
+      "lines": [
+       127,
+       129
+      ],
+      "text": "Although there are many settings in which debate is useful to humans to answer difficult questions,\nthis advantage may not translate to reading comprehension tasks. It remains possible that debate\n4",
+      "pdf_page": "https://arxiv.org/pdf/2210.10860v1#page=4"
+     },
+     {
+      "version": "2210.10860v1",
+      "page": 5,
+      "lines": [
+       1,
+       3
+      ],
+      "text": "may be helpful in other set-ups, such as for highly technical tasks. For multiple-choice reading\ncomprehension, however, the debate set up is potentially harmful to human accuracy, particularly\nwhen human judges do not have a strong incentive to abstain when they are unsure.",
+      "pdf_page": "https://arxiv.org/pdf/2210.10860v1#page=5"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Human debaters: existing arguments from Parrish et al. (2022) and counter-arguments written by professional writers hired through Upwork",
+    "task_data": "Two-option multiple-choice reading comprehension questions on QuALITY passages, reused from the Parrish et al. (2022) dataset",
+    "judge": "Human judges hired through Upwork (the top 16 of 32 pilot judges), who may abstain, with 5 minutes per judgment",
+    "regime": "evaluation",
+    "scale": "10 writers; 16 judges in the main task; writers get sets of six passages with 10-14 questions each; the number of judged questions is not stated in these passages"
+   },
+   "quantitative": {
+    "n": "16 judges in the main task; the number of questions or judgments is not stated in these passages",
+    "uncertainty": "A 2 x 2 x 2 repeated-measures ANOVA finds no significant main effects or interactions; no test statistic or p-value is given for it in these passages"
+   },
+   "limits": {
+    "record_ids": [],
+    "notes": "The authors confine the conclusion to multiple-choice reading comprehension, say debate may still help in other set-ups such as highly technical tasks, and call the debate set-up potentially harmful when judges lack a strong incentive to abstain."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_PRELIMINARY",
+    "reason": "One task with one human judge pool, and the reported repeated-measures ANOVA finds no significant effect of the arguments; the rubric grades a non-significant result as preliminary, and the authors hedge the conclusion with 'suggest'."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2210.10860v1:RES-ANOVA-BINARY",
+   "paper": "2210.10860v1",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2210.10860v1:DEF-CONDITIONS",
+     "N2:DSOFT:ARXIV-2210.10860v1:METHOD-JUDGING",
+     "N2:DSOFT:ARXIV-2210.10860v1:DEF-ABSTAIN-INCENTIVES",
+     "N2:DSOFT:ARXIV-2210.10860v1:METHOD-COUNTERARG"
+    ],
+    "description": "Judges' slider responses were collapsed into correct, incorrect or abstain, abstentions were removed, and a 2 x 2 x 2 repeated-measures ANOVA (+/- argument x 1st/2nd judgment x incentive structure) tested for main effects and interactions.",
+    "passages": [
+     {
+      "version": "2210.10860v1",
+      "page": 3,
+      "lines": [
+       7,
+       13
+      ],
+      "text": "Pilot Task We hire a pool of 32 judges via Upwork (details in Appendix §B.1). We run a pilot\njudging task in which judges first respond without a time limit and without having access to the\npassage, before finally viewing the passage for up to 5 minutes. This allows us to determine (i)\nhow long people typically spend reading just the arguments and text snippets, and (ii) how long\npeople need to spend with the passage after having read the arguments. In this task, judges view\nonly the argument + text snippets or only the text snippets and indicate via a 7-point slider which\nanswer option they believe is correct and how strongly (with the middle representing abstention, see",
+      "pdf_page": "https://arxiv.org/pdf/2210.10860v1#page=3"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "Abstentions are removed before the ANOVA; if they are counted as incorrect, incentive structure has a significant main effect, which the authors attribute to more abstentions under the stronger incentive.",
+     "The incentive structure changes from 'simple' (abstain unless at least 60% sure) to 'encourage abstain' (unless at least 75% sure) after judges showed higher-than-expected confidence in the first two rounds.",
+     "Text snippets are shown in both conditions (Passage+Snippet vs Passage+Snippet+Argument); there is no no-snippet condition.",
+     "Each judgment in the main task has a 5-minute time limit.",
+     "Only the top half of pilot judges (16 of 32), chosen by their performance after viewing the passage, take part in the main task."
+    ],
+    "passages": [
+     {
+      "version": "2210.10860v1",
+      "page": 3,
+      "lines": [
+       56,
+       57
+      ],
+      "text": "If we include abstentions and count them as incorrect, there is a significant main effect of Incentive structure\ndue to the increased rate of abstentions when we increased the incentives to abstain.",
+      "pdf_page": "https://arxiv.org/pdf/2210.10860v1#page=3"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Existing arguments from the Parrish et al. (2022) dataset and counter-arguments written by professional writers hired through Upwork",
+    "task_data": "Questions with two answer options on QuALITY passages; the passages, questions, existing arguments and text snippets come from the Parrish et al. (2022) dataset",
+    "judge": "Human judges: a pool of 32 hired via Upwork, of whom the top 16 in the pilot (chosen on their performance after viewing the passage) continue to the main task; they answer on a 7-point slider whose middle is abstention, with 5 minutes per judgment",
+    "regime": "evaluation",
+    "scale": "10 writers; 16 judges in the main task; writers get sets of six passages with 10-14 questions each; the number of judged questions is not stated in these passages"
+   },
+   "quantitative": {
+    "n": "16 judges in the main task; the number of judgments entering the ANOVA is not stated in these passages",
+    "uncertainty": "No main effect or interaction is significant; no F statistic or p-value is given for this ANOVA in these passages"
+   },
+   "limits": {
+    "record_ids": [],
+    "notes": "With abstentions counted as incorrect, incentive structure does have a significant main effect, attributed to the increased rate of abstentions."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_PRELIMINARY",
+    "reason": "One task and one judge pool, and the reported ANOVA finds no significant main effects or interactions; the rubric grades a non-significant result as preliminary."
+   },
+   "review_status": "provisional_ai_draft",
+   "check_history": [
+    "card-1: flagged or undecided by two blind checks; rewritten from the checkers' suggested fix (quotes unchanged)"
+   ]
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2210.10860v1:RES-PS-ACCURACY",
+   "paper": "2210.10860v1",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2210.10860v1:DEF-CONDITIONS",
+     "N2:DSOFT:ARXIV-2210.10860v1:METHOD-JUDGING",
+     "N2:DSOFT:ARXIV-2210.10860v1:DEF-ABSTAIN-INCENTIVES",
+     "N2:DSOFT:ARXIV-2210.10860v1:METHOD-COUNTERARG"
+    ],
+    "description": "Judges' slider responses were collapsed into correct, incorrect or abstain and compared across argument condition, judgment round and incentive structure (Table 2), then tested with a 2 x 2 x 2 repeated-measures ANOVA with abstentions removed.",
+    "passages": [
+     {
+      "version": "2210.10860v1",
+      "page": 3,
+      "lines": [
+       7,
+       13
+      ],
+      "text": "Pilot Task We hire a pool of 32 judges via Upwork (details in Appendix §B.1). We run a pilot\njudging task in which judges first respond without a time limit and without having access to the\npassage, before finally viewing the passage for up to 5 minutes. This allows us to determine (i)\nhow long people typically spend reading just the arguments and text snippets, and (ii) how long\npeople need to spend with the passage after having read the arguments. In this task, judges view\nonly the argument + text snippets or only the text snippets and indicate via a 7-point slider which\nanswer option they believe is correct and how strongly (with the middle representing abstention, see",
+      "pdf_page": "https://arxiv.org/pdf/2210.10860v1#page=3"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "Abstentions are removed before the ANOVA; if they are counted as incorrect, incentive structure has a significant main effect, which the authors attribute to more abstentions under the stronger incentive.",
+     "The incentive structure changes from 'simple' (abstain unless at least 60% sure) to 'encourage abstain' (unless at least 75% sure) after judges showed higher-than-expected confidence in the first two rounds.",
+     "Text snippets are shown in both conditions (Passage+Snippet vs Passage+Snippet+Argument); there is no no-snippet condition.",
+     "Each judgment in the main task has a 5-minute time limit.",
+     "Only the top half of pilot judges (16 of 32), chosen by their performance after viewing the passage, take part in the main task."
+    ],
+    "passages": [
+     {
+      "version": "2210.10860v1",
+      "page": 3,
+      "lines": [
+       56,
+       57
+      ],
+      "text": "If we include abstentions and count them as incorrect, there is a significant main effect of Incentive structure\ndue to the increased rate of abstentions when we increased the incentives to abstain.",
+      "pdf_page": "https://arxiv.org/pdf/2210.10860v1#page=3"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Existing arguments from the Parrish et al. (2022) dataset and counter-arguments written by professional writers hired through Upwork",
+    "task_data": "Questions with two answer options on QuALITY passages; the passages, questions, existing arguments and text snippets come from the Parrish et al. (2022) dataset",
+    "judge": "Human judges: a pool of 32 hired via Upwork, of whom the top 16 in the pilot (chosen on their performance after viewing the passage) continue to the main task; they answer on a 7-point slider whose middle is abstention, with 5 minutes per judgment",
+    "regime": "evaluation",
+    "scale": "10 writers; 16 judges in the main task; writers get sets of six passages with 10-14 questions each; the number of judged questions is not stated in these passages"
+   },
+   "quantitative": {
+    "n": "16 judges in the main task; the number of judgments is not stated in these passages",
+    "uncertainty": "No interval or test for the descriptive difference itself; the ANOVA finds no significant main effects or interactions"
+   },
+   "limits": {
+    "record_ids": [],
+    "notes": "The descriptive advantage is not significant: none of the three factors significantly affects the rate at which judges are correct or incorrect."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_PRELIMINARY",
+    "reason": "The higher accuracy without arguments is a descriptive difference from one task and one judge pool that the reported ANOVA finds not significant."
+   },
+   "review_status": "provisional_ai_draft",
+   "check_history": [
+    "card-1: flagged or undecided by two blind checks; rewritten from the checkers' suggested fix (quotes unchanged)"
+   ]
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2210.10860v1:RES-PSA-ACCURACY",
+   "paper": "2210.10860v1",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2210.10860v1:DEF-CONDITIONS",
+     "N2:DSOFT:ARXIV-2210.10860v1:METHOD-JUDGING",
+     "N2:DSOFT:ARXIV-2210.10860v1:DEF-ABSTAIN-INCENTIVES",
+     "N2:DSOFT:ARXIV-2210.10860v1:METHOD-COUNTERARG"
+    ],
+    "description": "Judges' slider responses were collapsed into correct, incorrect or abstain and compared across argument condition, judgment round and incentive structure (Table 2), then tested with a 2 x 2 x 2 repeated-measures ANOVA with abstentions removed.",
+    "passages": [
+     {
+      "version": "2210.10860v1",
+      "page": 3,
+      "lines": [
+       7,
+       13
+      ],
+      "text": "Pilot Task We hire a pool of 32 judges via Upwork (details in Appendix §B.1). We run a pilot\njudging task in which judges first respond without a time limit and without having access to the\npassage, before finally viewing the passage for up to 5 minutes. This allows us to determine (i)\nhow long people typically spend reading just the arguments and text snippets, and (ii) how long\npeople need to spend with the passage after having read the arguments. In this task, judges view\nonly the argument + text snippets or only the text snippets and indicate via a 7-point slider which\nanswer option they believe is correct and how strongly (with the middle representing abstention, see",
+      "pdf_page": "https://arxiv.org/pdf/2210.10860v1#page=3"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "Abstentions are removed before the ANOVA; if they are counted as incorrect, incentive structure has a significant main effect, which the authors attribute to more abstentions under the stronger incentive.",
+     "The incentive structure changes from 'simple' (abstain unless at least 60% sure) to 'encourage abstain' (unless at least 75% sure) after judges showed higher-than-expected confidence in the first two rounds.",
+     "Text snippets are shown in both conditions (Passage+Snippet vs Passage+Snippet+Argument); there is no no-snippet condition.",
+     "Each judgment in the main task has a 5-minute time limit.",
+     "Only the top half of pilot judges (16 of 32), chosen by their performance after viewing the passage, take part in the main task."
+    ],
+    "passages": [
+     {
+      "version": "2210.10860v1",
+      "page": 3,
+      "lines": [
+       56,
+       57
+      ],
+      "text": "If we include abstentions and count them as incorrect, there is a significant main effect of Incentive structure\ndue to the increased rate of abstentions when we increased the incentives to abstain.",
+      "pdf_page": "https://arxiv.org/pdf/2210.10860v1#page=3"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Existing arguments from the Parrish et al. (2022) dataset and counter-arguments written by professional writers hired through Upwork",
+    "task_data": "Questions with two answer options on QuALITY passages; the passages, questions, existing arguments and text snippets come from the Parrish et al. (2022) dataset",
+    "judge": "Human judges: a pool of 32 hired via Upwork, of whom the top 16 in the pilot (chosen on their performance after viewing the passage) continue to the main task; they answer on a 7-point slider whose middle is abstention, with 5 minutes per judgment",
+    "regime": "evaluation",
+    "scale": "10 writers; 16 judges in the main task; writers get sets of six passages with 10-14 questions each; the number of judged questions is not stated in these passages"
+   },
+   "quantitative": {
+    "n": "16 judges in the main task; the number of judgments is not stated in these passages",
+    "uncertainty": "No interval or test for the descriptive difference itself; the ANOVA finds no significant main effects or interactions"
+   },
+   "limits": {
+    "record_ids": [],
+    "notes": "The descriptive difference is not significant: none of the three factors significantly affects the rate at which judges are correct or incorrect."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_PRELIMINARY",
+    "reason": "The lower rate of incorrect answers with arguments and strong abstention incentives is a descriptive difference from one task and one judge pool that the reported ANOVA finds not significant."
+   },
+   "review_status": "provisional_ai_draft",
+   "check_history": [
+    "card-1: flagged or undecided by two blind checks; rewritten from the checkers' suggested fix (quotes unchanged)"
+   ]
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2210.10860v1:RES-CONFIDENCE",
+   "paper": "2210.10860v1",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2210.10860v1:DEF-CONDITIONS",
+     "N2:DSOFT:ARXIV-2210.10860v1:METHOD-JUDGING",
+     "N2:DSOFT:ARXIV-2210.10860v1:DEF-ABSTAIN-INCENTIVES",
+     "N2:DSOFT:ARXIV-2210.10860v1:METHOD-COUNTERARG"
+    ],
+    "description": "Response rates at each confidence level of the 7-point slider were compared between the PS and PSA conditions for each judgment round and incentive structure (Figure 1), and a 2 x 2 x 2 repeated-measures ANOVA (+/- argument x 1st/2nd judgment x incentive structure) was run on the full 7-point scale.",
+    "passages": [
+     {
+      "version": "2210.10860v1",
+      "page": 3,
+      "lines": [
+       51,
+       52
+      ],
+      "text": "Confidence When presented with arguments, judges in the ‘simple abstention’ round are more\noften confidently wrong compared to when they are not presented with arguments, but they are also",
+      "pdf_page": "https://arxiv.org/pdf/2210.10860v1#page=3"
+     },
+     {
+      "version": "2210.10860v1",
+      "page": 3,
+      "lines": [
+       7,
+       13
+      ],
+      "text": "Pilot Task We hire a pool of 32 judges via Upwork (details in Appendix §B.1). We run a pilot\njudging task in which judges first respond without a time limit and without having access to the\npassage, before finally viewing the passage for up to 5 minutes. This allows us to determine (i)\nhow long people typically spend reading just the arguments and text snippets, and (ii) how long\npeople need to spend with the passage after having read the arguments. In this task, judges view\nonly the argument + text snippets or only the text snippets and indicate via a 7-point slider which\nanswer option they believe is correct and how strongly (with the middle representing abstention, see",
+      "pdf_page": "https://arxiv.org/pdf/2210.10860v1#page=3"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "Under 'Simple' incentives judges should abstain unless 60% sure; under 'Encourage Abstain' unless 75% sure.",
+     "'1st' is the judgment with arguments and snippets; '2nd' additionally has counter-arguments and snippets.",
+     "Each judgment in the main task has a 5-minute time limit.",
+     "Only the top half of pilot judges (16 of 32), chosen by their performance after viewing the passage, take part in the main task."
+    ],
+    "passages": [
+     {
+      "version": "2210.10860v1",
+      "page": 4,
+      "lines": [
+       100,
+       102
+      ],
+      "text": "Figure 1: Judging response rates for each confidence level. In ‘Simple,’ judges abstained unless 60%\nsure; in ‘Encourage Abstain,’ judges abstained unless 75% sure. ‘1st’ is the judgment with arguments\nand snippets, and ‘2nd’ is the judgment additionally with counter-arguments and snippets.",
+      "pdf_page": "https://arxiv.org/pdf/2210.10860v1#page=4"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Existing arguments from the Parrish et al. (2022) dataset and counter-arguments written by professional writers hired through Upwork",
+    "task_data": "Questions with two answer options on QuALITY passages; the passages, questions, existing arguments and text snippets come from the Parrish et al. (2022) dataset",
+    "judge": "Human judges: a pool of 32 hired via Upwork, of whom the top 16 in the pilot (chosen on their performance after viewing the passage) continue to the main task; they answer on a 7-point slider whose middle is abstention, with 5 minutes per judgment",
+    "regime": "evaluation",
+    "scale": "10 writers; 16 judges in the main task; writers get sets of six passages with 10-14 questions each; the number of judged questions is not stated in these passages"
+   },
+   "quantitative": {
+    "n": "16 judges in the main task; the number of judgments is not stated in these passages",
+    "uncertainty": "Main effect of incentive structure F(1,12)=13.2, p<0.01; no other main effects or interactions; the harm from arguments under weak incentives is stated to be not statistically significant"
+   },
+   "limits": {
+    "record_ids": [],
+    "notes": "The authors state that the difference under weak abstention incentives is not statistically significant, and hedge the stakes interpretation with 'suggests' and 'may'."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_PRELIMINARY",
+    "reason": "One task and one judge pool; the argument effect the record reports is explicitly not statistically significant, and only the incentive-structure effect reaches p<0.01."
+   },
+   "review_status": "provisional_ai_draft",
+   "check_history": [
+    "card-1: flagged or undecided by two blind checks; rewritten from the checkers' suggested fix (quotes unchanged)"
+   ]
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2210.10860v1:RES-ARG-QUALITY",
+   "paper": "2210.10860v1",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [],
+    "description": "In a qualitative assessment, four of the authors rated all arguments and counter-arguments for four randomly selected passages, two raters per question, on a 1-10 scale where quality means whether the rater could think of a more convincing or more appropriate argument.",
+    "passages": [
+     {
+      "version": "2210.10860v1",
+      "page": 11,
+      "lines": [
+       155,
+       159
+      ],
+      "text": "In order to better understand the data that the writers produce, we conduct a qualitative assessment of\nall the arguments and counter-arguments written for a randomly-selected set of four passages. Four\nof us conduct this rating, with two different raters assigned to each passage, such that each question\nis independently rated by two different individuals. We first read the entire passage text, then read\nthrough the questions and their associated arguments, counter-arguments, and text snippets.",
+      "pdf_page": "https://arxiv.org/pdf/2210.10860v1#page=11"
+     },
+     {
+      "version": "2210.10860v1",
+      "page": 12,
+      "lines": [
+       27,
+       34
+      ],
+      "text": "We rate the subjective quality of the arguments on a 10-point scale, and the average ratings are in\nTable 7. We define subjective quality in terms of whether the person rating it can think of a more\nconvincing or more appropriate argument that could instead be made. We use this definition of\nsubjective quality to avoid unfairly biasing our results against the incorrect arguments, which are\nalready more difficult to construct; this measure gives a sense of whether the writers were making the\nbest effort they reasonably could, given the constraints of the task. We find that arguments in favor of\na correct answer are slightly higher rated than those in favor of an incorrect answer, and that this gap\nis slightly wider for counter-arguments than for the initial arguments.",
+      "pdf_page": "https://arxiv.org/pdf/2210.10860v1#page=12"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "Quality is defined as whether the rater can think of a more convincing or more appropriate argument, a definition chosen to avoid biasing ratings against incorrect arguments, which are harder to construct.",
+     "Only four randomly selected passages are annotated."
+    ],
+    "passages": [
+     {
+      "version": "2210.10860v1",
+      "page": 12,
+      "lines": [
+       35,
+       42
+      ],
+      "text": "The range of possible incorrect arguments that could be made is greater than the range of correct\nones, as there are many ways to be misleading and fewer ways to be factually accurate in this task. So\nthe difference in ratings could reflect the slightly subjective definition of the rating task—if the rater\nwould have made a different (counter-)argument, they are likely to give a slightly lower rating to the\nwriter. We note, however, that this difference is small, and that the two raters are fairly consistent\nin their assessments, as the average difference between the two ratings is small (below 2 points on\nthe 10-point scale). The most important point is that all the arguments and counter-arguments were\nconsistently rated above 7/10, indicating a reasonably high quality in the writing.",
+      "pdf_page": "https://arxiv.org/pdf/2210.10860v1#page=12"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Human-written arguments and counter-arguments produced by the study's writers",
+    "task_data": "All arguments and counter-arguments for four randomly selected passages of the reading comprehension task",
+    "judge": "Four of the authors, two raters per question",
+    "regime": "evaluation",
+    "scale": "Four passages, with detailed annotations on five questions per passage"
+   },
+   "quantitative": {
+    "n": "Four randomly selected passages, each question rated by two raters; the number of arguments rated is not stated in these passages",
+    "uncertainty": "None; only the average difference between the two raters' ratings (below 2 points on the 10-point scale) is reported"
+   },
+   "limits": {
+    "record_ids": [],
+    "notes": "The authors note that the gap between correct and incorrect arguments is small and could reflect the slightly subjective definition of the rating task."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_PRELIMINARY",
+    "reason": "The result rests on the authors' qualitative annotation of four randomly selected passages, with no statistical test or interval."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2210.10860v1:RES-COUNTER-RESPONSIVE",
+   "paper": "2210.10860v1",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [],
+    "description": "In a qualitative assessment of all the arguments and counter-arguments written for a randomly selected set of four passages, rated by four of the authors with two raters per passage, the authors gave each counter-argument a binary yes/no rating of whether it directly addresses the first argument.",
+    "passages": [
+     {
+      "version": "2210.10860v1",
+      "page": 11,
+      "lines": [
+       155,
+       159
+      ],
+      "text": "In order to better understand the data that the writers produce, we conduct a qualitative assessment of\nall the arguments and counter-arguments written for a randomly-selected set of four passages. Four\nof us conduct this rating, with two different raters assigned to each passage, such that each question\nis independently rated by two different individuals. We first read the entire passage text, then read\nthrough the questions and their associated arguments, counter-arguments, and text snippets.",
+      "pdf_page": "https://arxiv.org/pdf/2210.10860v1#page=11"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "Writers were rewarded only on judges' choices, so they might have tried to improve on the first-round argument instead of responding to it; the rating checks for this.",
+     "Writers were explicitly instructed to respond to their assigned argument rather than answer the question or support an option independently."
+    ],
+    "passages": [
+     {
+      "version": "2210.10860v1",
+      "page": 2,
+      "lines": [
+       118,
+       120
+      ],
+      "text": "two arguments (example in Table 1, screenshots of the interface in Appendix §A.2). We explicitly\ninstruct the writers to focus on responding to their assigned argument, rather than just answering the\nquestion or supporting one of the answer options independently.",
+      "pdf_page": "https://arxiv.org/pdf/2210.10860v1#page=2"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Counter-arguments written by the study's writers",
+    "task_data": "The counter-arguments written for a randomly selected set of four passages",
+    "judge": "Four of the authors, two raters per passage, giving a binary yes/no rating",
+    "regime": "evaluation",
+    "scale": "Four passages"
+   },
+   "quantitative": {
+    "n": "Counter-arguments in four randomly selected passages; the number of counter-arguments is not stated in these passages",
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [],
+    "notes": "Covers only the counter-arguments of the four annotated passages."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "One task: the authors' binary yes/no rating of the counter-arguments for a randomly selected set of four passages, two raters per question; no test, interval or standard error is reported for the 90% and 85% figures, and the authors neither call the rating preliminary nor state the sample as small."
+   },
+   "review_status": "provisional_ai_draft",
+   "check_history": [
+    "card-1: flagged or undecided by two blind checks; rewritten from the checkers' suggested fix (quotes unchanged)"
+   ]
+  }
+ ]
+}

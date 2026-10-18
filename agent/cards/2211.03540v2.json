@@ -1,0 +1,303 @@
+{
+ "schema": "ASRA-GAP-CLOSING-AGENT-v1",
+ "paper": "2211.03540v2",
+ "review_status": "provisional_ai_draft",
+ "rules": [
+  "Everything here is an AI draft (provisional_ai_draft): each counted item passed two blind AI checks that were tested on planted errors, and no person has reviewed it.",
+  "A finding counts only in the setting its own quoted lines show; read `setting` before carrying it to another setting.",
+  "A question's status is a label from fixed rules over its counted findings; `status_check` says whether that label itself passed its check.",
+  "Cite the paper and page from the passage, and read the PDF page before relying on a claim."
+ ],
+ "notes": "No assumption records exist for this paper, so the sandwiching relaxations and design conditions are given as stated hypotheses with supporting lines. All three cards are graded EMPIRICAL_PRELIMINARY: the authors call the study a simple proof-of-concept, collect 'only 100' questions per experiment from four retained participants per task, and report no confidence interval, standard error or test (none found in the text). RES-MAJORITY-VOTE compares with figures from other work (Pang et al. 2022; Hendrycks et al.'s hypothesized expert score); those comparison values are cited, not measured. METHOD-INNER-OUTER-LOOP describes the full research agenda, which this experiment does not implement, so it is not linked.",
+ "cards": [
+  {
+   "record_id": "N2:DSOFT:ARXIV-2211.03540v2:CORE",
+   "paper": "2211.03540v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2211.03540v2:METHOD-SETUP",
+     "N2:DSOFT:ARXIV-2211.03540v2:DEF-SANDWICHING"
+    ],
+    "description": "A relaxed sandwiching proof of concept: non-expert participants answer sampled validation questions from MMLU and time-limited QuALITY with and without chatting with a 52B RLHF-trained dialog assistant, and their accuracy is compared with the model's own answers, with dataset labels standing in for the experts.",
+    "passages": [
+     {
+      "version": "2211.03540v2",
+      "page": 8,
+      "lines": [
+       4,
+       10
+      ],
+      "text": "The Model We use a 52B-parameter language model fine-tuned for use as a helpful dialog assistant according to the RLHF-based technique described in (Bai et al., 2022).7\nExperimental Conditions We report results from five conditions:\n1. Unassisted Human: We ask our human participants to answer the questions to the best of their\nability without the help of the model or any other outside resources (including web search). For these\nresults and our other human results, we report average individual human accuracy and the accuracy\nof the confidence-weighted majority-vote8 answer from all four active participants together. This\nuses the same UI as our target model-assisted condition, but without the UI connected to a model.",
+      "pdf_page": "https://arxiv.org/pdf/2211.03540v2#page=8"
+     },
+     {
+      "version": "2211.03540v2",
+      "page": 4,
+      "lines": [
+       46,
+       50
+      ],
+      "text": "Relaxation: Labels in Place of Experts Our second relaxation requires that we choose a task like multiplechoice question answering where we can reliably evaluate model performance on a preexisting test dataset\nwithout any expert involvement at test time. In this setting, we can relax the paradigm further by omitting\nthe expert role, and instead evaluate the success of an alignment attempt by the scores it produces on the\nmetric. The absence of experts limits the degree to which we can precisely measure the satisfactoriness of\nour solutions—since we cannot as easily measure the best possible performance that an expert could cause",
+      "pdf_page": "https://arxiv.org/pdf/2211.03540v2#page=4"
+     },
+     {
+      "version": "2211.03540v2",
+      "page": 5,
+      "lines": [
+       38,
+       43
+      ],
+      "text": "While sandwiching may be conceptually appealing, it is not immediately clear that there currently exist tasks\nand models that satisfy its constraints. Our proof-of-concept experiment here is meant to demonstrate that\ntwo existing tasks satisfy two constraints with a typical large language model: (i) typical careful human\nparticipants perform poorly on their own, such that sandwiching is possible, and (ii) those same participants\ncan improve their performance substantially through interaction with the model, such that scalable oversight\ntechniques that rely on help from the model are likely to get off the ground.",
+      "pdf_page": "https://arxiv.org/pdf/2211.03540v2#page=5"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "Static-model relaxation: participants interact with the model only through dialog, without inspecting or fine-tuning it.",
+     "Labels in place of experts: success is scored on a pre-existing labelled dataset and the expert role is omitted.",
+     "Participants are assumed to lack task-relevant knowledge that the model can provide; one high-scoring outlier participant per task was excluded on this basis.",
+     "The tasks were chosen so that the assistant was expected to beat unaided participants yet still make frequent mistakes.",
+     "The correct answer is revealed to participants after each question."
+    ],
+    "passages": [
+     {
+      "version": "2211.03540v2",
+      "page": 4,
+      "lines": [
+       29,
+       32
+      ],
+      "text": "Relaxation: Static Model Sandwiching places no limitation on how the participants interact with the\nmodel (and potentially additional outside resources). In our initial experiments, we focus on the special\ncase where participants can interact with the model only through dialog, without the ability to inspect it or\nfurther fine-tune it. The model we use was previously fine-tuned to act as a dialog assistant, and this finetuning allows humans to elicit a surprisingly rich range of knowledge and behavior from the model through",
+      "pdf_page": "https://arxiv.org/pdf/2211.03540v2#page=4"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Non-expert human participants hired through Surge AI, chatting with a 52B-parameter RLHF-trained dialog assistant",
+    "task_data": "Multiple-choice questions from MMLU and time-limited QuALITY (validation sets)",
+    "judge": "Dataset answer labels stand in for experts",
+    "regime": "evaluation",
+    "scale": "Four retained participants per task (five hired per task); 100 randomly sampled validation questions per experiment; one 52B model"
+   },
+   "quantitative": {
+    "n": "100 questions per experiment; four participants per task",
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2211.03540v2:LIM-RELAXATIONS",
+     "N2:DSOFT:ARXIV-2211.03540v2:LIM-ANSWER-REVEAL",
+     "N2:DSOFT:ARXIV-2211.03540v2:LIM-CONFIDENT-ERRORS"
+    ],
+    "notes": "The authors say this simple paradigm does not succeed fully and that the experiment does not fully implement the sandwiching protocol."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_PRELIMINARY",
+    "reason": "The authors present a simple proof-of-concept that collects only 100 questions per experiment from four participants per task and reports no confidence interval, standard error or test."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2211.03540v2:RES-INDIVIDUAL-ACCURACY",
+   "paper": "2211.03540v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2211.03540v2:METHOD-SETUP"
+    ],
+    "description": "Average individual accuracy of the four retained participants per task, unassisted and in the Human + Model condition (participants use the model to help them answer), is compared with the best model result, Model (best-of-20 CoT): 20 sampled chain-of-thought reasonings, the one scored best by the RLHF preference model used to generate the answer (5-shot for MMLU, zero-shot for QuALITY).",
+    "passages": [
+     {
+      "version": "2211.03540v2",
+      "page": 8,
+      "lines": [
+       4,
+       10
+      ],
+      "text": "The Model We use a 52B-parameter language model fine-tuned for use as a helpful dialog assistant according to the RLHF-based technique described in (Bai et al., 2022).7\nExperimental Conditions We report results from five conditions:\n1. Unassisted Human: We ask our human participants to answer the questions to the best of their\nability without the help of the model or any other outside resources (including web search). For these\nresults and our other human results, we report average individual human accuracy and the accuracy\nof the confidence-weighted majority-vote8 answer from all four active participants together. This\nuses the same UI as our target model-assisted condition, but without the UI connected to a model.",
+      "pdf_page": "https://arxiv.org/pdf/2211.03540v2#page=8"
+     },
+     {
+      "version": "2211.03540v2",
+      "page": 8,
+      "lines": [
+       32,
+       35
+      ],
+      "text": "4. Model (best-of-20 CoT): Here, we prompt the model with a chain-of-thought-style input before\nasking them to answer (Nye et al., 2021; Wei et al., 2022). We sample 20 instances of model\nreasoning and choose the one that scores best under our RLHF preference model before conditioning\non that reasoning string to generate the answer. For MMLU, we additionally prepend five examples",
+      "pdf_page": "https://arxiv.org/pdf/2211.03540v2#page=8"
+     },
+     {
+      "version": "2211.03540v2",
+      "page": 9,
+      "lines": [
+       57,
+       59
+      ],
+      "text": "Table 1: Validation set results, showing accuracy (higher is better) and calibration error (lower is better): Human–model\nteams tend to substantially outperform humans or models alone. The best-of-20 result is 5-shot for MMLU and zero-shot\nfor QuALITY. 5-shot QuALITY experiments are not possible due to input length limitations.",
+      "pdf_page": "https://arxiv.org/pdf/2211.03540v2#page=9"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "The assisted and unassisted conditions use separate 100-question samples.",
+     "Participants complete the assisted condition before the unassisted one, so the authors expect any learning effect to bias the result toward null.",
+     "Participants are assumed to lack task-relevant knowledge that the model can provide; one high-scoring outlier participant per task was excluded on this basis.",
+     "The correct answer is revealed to participants after each question.",
+     "The experiment is a simple baseline on a slightly relaxed version of the sandwiching paradigm: difficult multiple-choice questions on which the assistant is expected to beat the participants' unaided performance but still make frequent mistakes."
+    ],
+    "passages": [
+     {
+      "version": "2211.03540v2",
+      "page": 9,
+      "lines": [
+       63,
+       65
+      ],
+      "text": "5. Human + Model: For our main target condition, we ask our human participants to attempt to use the\nmodel to help them answer. This condition uses a separate 100-example sample from the unassisted\nhuman condition above.",
+      "pdf_page": "https://arxiv.org/pdf/2211.03540v2#page=9"
+     },
+     {
+      "version": "2211.03540v2",
+      "page": 8,
+      "lines": [
+       1,
+       2
+      ],
+      "text": "complete all 100 questions in the assisted condition before beginning the unassisted condition, so any learning\neffect would yield a bias toward a null result.",
+      "pdf_page": "https://arxiv.org/pdf/2211.03540v2#page=8"
+     },
+     {
+      "version": "2211.03540v2",
+      "page": 3,
+      "lines": [
+       12,
+       19
+      ],
+      "text": "Our Proof-of-Concept Experiment This paper presents a simple baseline experiment, meant to demonstrate the viability of sandwiching-style experiments on two tasks with current large language models, focusing on a slightly relaxed version of the paradigm: We present human participants with difficult multiplechoice questions from two datasets (MMLU and time-limited QuALITY; Hendrycks et al., 2020; Pang et al.,\n2022) on which we expect our existing natural language assistant (Bai et al., 2022) to perform better than the\nparticipants could naïvely perform on their own, but on which we expect our assistant to nonetheless make\nfrequent mistakes. We then ask the participants to interact with the assistant in any way they see fit to elicit\nanswers in which they can be justifiably confident. This simple paradigm does not succeed fully, but the\nresults are encouraging, with model-assisted humans outperforming machines by about 10 percentage points\non the MMLU and timed QuALITY question-answering tasks, and exceeding their own model-unassisted\nperformance by up to 36 points.",
+      "pdf_page": "https://arxiv.org/pdf/2211.03540v2#page=3"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Human participants hired through Surge AI, with a 52B-parameter dialog assistant fine-tuned with RLHF; the same model alone with best-of-20 chain-of-thought (5-shot on MMLU, zero-shot on QuALITY)",
+    "task_data": "MMLU and time-limited QuALITY validation questions",
+    "judge": "Dataset answer labels",
+    "regime": "evaluation",
+    "scale": "Four retained participants per task (five hired per task); 100 randomly sampled validation questions per experiment; one 52B model"
+   },
+   "quantitative": {
+    "n": "100 questions per experiment; four participants per task",
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2211.03540v2:LIM-RELAXATIONS",
+     "N2:DSOFT:ARXIV-2211.03540v2:LIM-ANSWER-REVEAL",
+     "N2:DSOFT:ARXIV-2211.03540v2:LIM-CONFIDENT-ERRORS"
+    ],
+    "notes": "No uncertainty is reported for the accuracy gaps."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_PRELIMINARY",
+    "reason": "The authors present it as a simple proof-of-concept baseline experiment, with answers for 'only 100' randomly sampled validation questions per experiment and four retained participants per task, and no reported uncertainty."
+   },
+   "review_status": "provisional_ai_draft",
+   "check_history": [
+    "card-1: flagged or undecided by two blind checks; rewritten from the checkers' suggested fix (quotes unchanged)"
+   ]
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2211.03540v2:RES-MAJORITY-VOTE",
+   "paper": "2211.03540v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2211.03540v2:METHOD-SETUP"
+    ],
+    "description": "The four participants' answers per question are aggregated by a confidence-weighted majority vote (the product of the probabilities each participant assigns, with unselected answers given equal probability) and compared with the model alone and with published human and expert estimates.",
+    "passages": [
+     {
+      "version": "2211.03540v2",
+      "page": 8,
+      "lines": [
+       46,
+       50
+      ],
+      "text": "We score each answer using the product of the probabilities assigned to each answer by each participant and select\nthe answer with the highest score. This allows a highly-uncertain annotator who chooses the minimum 25% confidence\nvalue to avoid influencing the consensus answer. We assign equal probability to each non-selected answer, so an annotator\nwho selects answer (B) with 60% confidence would implicitly be assigning probabilities [.13, .60, .13, .13]. We map the\n‘Certain (100%)’ value in the interface to 99% to avoid zeroes.",
+      "pdf_page": "https://arxiv.org/pdf/2211.03540v2#page=8"
+     },
+     {
+      "version": "2211.03540v2",
+      "page": 8,
+      "lines": [
+       4,
+       10
+      ],
+      "text": "The Model We use a 52B-parameter language model fine-tuned for use as a helpful dialog assistant according to the RLHF-based technique described in (Bai et al., 2022).7\nExperimental Conditions We report results from five conditions:\n1. Unassisted Human: We ask our human participants to answer the questions to the best of their\nability without the help of the model or any other outside resources (including web search). For these\nresults and our other human results, we report average individual human accuracy and the accuracy\nof the confidence-weighted majority-vote8 answer from all four active participants together. This\nuses the same UI as our target model-assisted condition, but without the UI connected to a model.",
+      "pdf_page": "https://arxiv.org/pdf/2211.03540v2#page=8"
+     },
+     {
+      "version": "2211.03540v2",
+      "page": 9,
+      "lines": [
+       57,
+       59
+      ],
+      "text": "Table 1: Validation set results, showing accuracy (higher is better) and calibration error (lower is better): Human–model\nteams tend to substantially outperform humans or models alone. The best-of-20 result is 5-shot for MMLU and zero-shot\nfor QuALITY. 5-shot QuALITY experiments are not possible due to input length limitations.",
+      "pdf_page": "https://arxiv.org/pdf/2211.03540v2#page=9"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "The assisted and unassisted conditions use separate 100-question samples.",
+     "Participants are assumed to lack task-relevant knowledge that the model can provide; one high-scoring outlier participant per task was excluded on this basis.",
+     "The correct answer is revealed to participants after each question."
+    ],
+    "passages": [
+     {
+      "version": "2211.03540v2",
+      "page": 9,
+      "lines": [
+       63,
+       65
+      ],
+      "text": "5. Human + Model: For our main target condition, we ask our human participants to attempt to use the\nmodel to help them answer. This condition uses a separate 100-example sample from the unassisted\nhuman condition above.",
+      "pdf_page": "https://arxiv.org/pdf/2211.03540v2#page=9"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Teams of four non-expert participants with a 52B RLHF-trained dialog assistant; the same model alone",
+    "task_data": "MMLU and time-limited QuALITY validation questions",
+    "judge": "Dataset answer labels; expert figures are published estimates",
+    "regime": "evaluation",
+    "scale": "Four retained participants per task (five hired per task); 100 randomly sampled validation questions per experiment; one 52B model"
+   },
+   "quantitative": {
+    "n": "100 questions per experiment; four participants per task",
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2211.03540v2:LIM-RELAXATIONS",
+     "N2:DSOFT:ARXIV-2211.03540v2:LIM-ANSWER-REVEAL",
+     "N2:DSOFT:ARXIV-2211.03540v2:LIM-CONFIDENT-ERRORS"
+    ],
+    "notes": "The 94% untimed QuALITY team figure is from Pang et al. (2022) and the 90% MMLU figure is Hendrycks et al.'s hypothesized expert-committee score; neither was measured here."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_PRELIMINARY",
+    "reason": "A proof-of-concept with only 100 questions per condition and four participants per task, with no reported uncertainty; the expert comparisons use other work's figures."
+   },
+   "review_status": "provisional_ai_draft"
+  }
+ ]
+}

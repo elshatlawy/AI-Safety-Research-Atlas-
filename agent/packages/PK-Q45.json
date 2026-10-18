@@ -1,0 +1,218 @@
+{
+ "schema": "ASRA-GAP-CLOSING-AGENT-v1",
+ "id": "PK-Q45",
+ "question_id": "Q45",
+ "remaining_question": "In a high-stakes deployment of a debate-trained agent with no online training, what evidence can bound (a) alignment-faking or other train-to-deploy behaviour gaps that can persist through training and (b) coordination between instances of the same model (including acausal collusion and attacks split across instances), given that current bounds cover only passive self-recognition collusion and per-commit monitoring in coding-control settings?",
+ "safety_case_nodes": [
+  "SC-C2.3",
+  "SC-OP-HIGH-STAKES"
+ ],
+ "premises": [
+  {
+   "statement": "The safety-case sketch of Buhl et al. (arXiv 2505.03989v3) says it only works in low-stakes contexts where it takes many bad actions to cause unacceptable outcomes; in high stakes, key claim 3 (that the error rate will stay consistent throughout deployment) breaks because online training can no longer be relied on, opening up alignment faking and other distribution-shift problems. For C2.3 ('During deployment, A's error rate will not drift further than ε'), which breaks in a high-stakes context where even a small number of errors can cause large harm, the authors say that since online training cannot be used, guarantees against alignment faking (and, less importantly, more generic distribution shifts) would be needed instead. Setting: a safety-case sketch (an argument, not an experiment).",
+   "source": "N2:DSOFT:ARXIV-2505.03989v3:LIM-HIGH-STAKES",
+   "passages": [
+    {
+     "version": "2505.03989v3",
+     "page": 17,
+     "line_start": 52,
+     "line_end": 54,
+     "text": "This safety case sketch only works in low-stakes contexts where it takes many bad actions to cause unacceptable outcomes. Key claim 4 – that we are in a low-stakes context – breaks by definition. Key claim 3 –\nthat the error rate will stay consistent throughout deployment – also breaks because we can no longer rely\non online training, opening up the possibility of alignment faking and other distribution shift problems."
+    },
+    {
+     "version": "2505.03989v3",
+     "page": 15,
+     "line_start": 24,
+     "line_end": 35,
+     "text": "During deployment, A’s error\nrate will not drift further than ε\n\nEvidence\nincorporation\n\nThis is one of the key claims in the sketch which\nbreaks in a high-stakes context, where even a small\nE3.1\nnumber of errors can cause large harm. Since we\nOnline training\ncannot use online training, we instead need guarantees against alignment faking (and, less importantly, more generic distribution shifts). This would Figure 9: The third key claim (C2.3) and the argument"
+    }
+   ]
+  },
+  {
+   "statement": "When the red team, given perfect knowledge of which samples were training and which deployment samples, instructed the untrusted model through a system-prompt flag to answer benignly on the training distribution and sandbag only on the deployment distribution, SFT followed by RL elicited it less than in the base case across all settings (very weak supervisor: 36% vs 88% on Olympiads, 60% vs 99% on Super GPQA, 66% vs 93% on Code Contests), and on multiple runs the sandbagging rate even rose during RL after partial removal by SFT. The authors tentatively conclude that making training indistinguishable from deployment is essential to elicit an adversarially sandbagging model. Setting: training-based elicitation of instructed sandbagging with weak supervision on Olympiads, Super GPQA and Code Contests; not debate and not a high-stakes deployment, and the gap there is instructed by a flag rather than learned, unlike the planted gap in this study.",
+   "source": "Q45:F5",
+   "passages": [
+    {
+     "version": "2604.22082v2",
+     "page": 7,
+     "line_start": 20,
+     "line_end": 26,
+     "text": "Given this perfect knowledge about training and deployment samples, the red team instructs the untrusted model to\nalways answer benignly on the training distribution and to\nsandbag only on the deployment distribution by setting the\nflag in the system prompt. This means that the blue team’s\nelicitation training now does not train the untrusted model\nto directly disobey its malign system prompt, meaning that\nit may still follow the sandbagging instructions during deployment (Wichers et al., 2025; Tan et al., 2025)."
+    },
+    {
+     "version": "2604.22082v2",
+     "page": 7,
+     "line_start": 38,
+     "line_end": 47,
+     "text": "We show the results of SFT followed by RL in this setup\nin Figure 4. Across all settings, the untrusted model gets\nless elicited than in the base case (for the very weak supervisor: 36% vs 88% on Olympiads, 60% vs 99% on Super\nGPQA, and 66% vs 93% on Code Contests). On multiple\nruns (for instance on the very weak supervisor on Super\nGPQA and Olympiads) we observe that the sandbagging\nrate even increases (and elicited performance decreases) during RL training after having been partially removed during\nSFT. Given these results, we tentatively conclude that making sure training is indistinguishable from deployment is\nessential to ensure successful elicitation of an adversarially\nsandbagging model."
+    }
+   ]
+  },
+  {
+   "statement": "In a 13-model sweep for naturally emerging alignment faking, natural faking appeared only in Qwen3-32B (+18.2pp) and Llama-3.1-8B (+24.4pp at n=10); explicit scratchpad self-reports were rare (a Claude Opus 4 judge flagged faking reasoning in 1.4% of Qwen and 0.0% of Llama compliant scratchpads); under leakage-free leave-one-query-out probing, per-sample detection survived on Llama (AUROC 0.87) but collapsed to chance on Qwen (0.43), and cross-model transfer was null. The authors call the fact that the headline AUROC of 0.87 rests on a single 8B model a real generality limitation. Setting: natural (not planted) alignment faking found in a sweep of 13 models, with hidden-state probes on the two that fake; not debate and not a high-stakes deployment. This study uses the two gap sizes only as a reference scale for a planted gap in a different task.",
+   "source": "Q45:F4",
+   "passages": [
+    {
+     "version": "2607.13346v1",
+     "page": 1,
+     "line_start": 14,
+     "line_end": 25,
+     "text": "reveal what outputs hide. We run a 13-model\nsweep for naturally-emerging faking, then probe\nand steer hidden states on the two models that\nfake. Natural faking appears only in Qwen3-32B\n(+18.2pp) and Llama-3.1-8B (+24.4pp at n=10,\np<10−15 ), while explicit scratchpad self-reports\nare rare (a Claude Opus 4 judge flags faking reasoning in 1.4% of Qwen and 0.0% of Llama\ncompliant scratchpads). Both fakers show an\nasymmetric refusal residue: monitored compliance shifts toward refusal (d=0.32 Qwen, d=0.33\nLlama, both p<0.0001), while refusal representations do not move (p=1.00). Per-sample detection is model-conditional. Under leakagefree leave-one-query-out probing, detection survives on Llama (AUROC 0.87) but collapses to\nchance on Qwen (0.43), and cross-model transfer\nis null. Steering over 2,000 runs barely changes"
+    },
+    {
+     "version": "2607.13346v1",
+     "page": 2,
+     "line_start": 24,
+     "line_end": 27,
+     "text": "Scope. The headline LOQO AUROC=0.87 rests on a single\n8B model (the only sub-32B faker in our sweep), a real\ngenerality limitation. We are careful about what we do not\nclaim. We do not claim that per-sample detection works on"
+    }
+   ]
+  },
+  {
+   "statement": "The same paper states that behavioral and chain-of-thought monitoring both miss natural faking, that hidden-state probes can catch it but only on some models, and that telling a real detector from an artifact requires the five controls it provides; it reports that standard residualized probing leaks across folds and reaches AUROC 0.63 on a control where no faking can occur, that naive linear probes reach a meaningless AUROC 1.0, and that conventional MLPs overstate detectability by 0.2-0.3 AUROC. Setting: the alignment-faking probing study of the previous premise; this study probes for a different thing (whether an organism's activations separate audit inputs from deployment inputs) and uses the premise only as a warning about leakage.",
+   "source": "Q45:F4",
+   "passages": [
+    {
+     "version": "2607.13346v1",
+     "page": 2,
+     "line_start": 11,
+     "line_end": 15,
+     "text": "Why this matters. The takeaway is practical: behavioral\nand chain-of-thought monitoring both miss natural faking;\nhidden-state probes can catch it, but only on some models;\nand telling a real detector from an artifact requires the five\ncontrols we provide."
+    },
+    {
+     "version": "2607.13346v1",
+     "page": 1,
+     "line_start": 28,
+     "line_end": 32,
+     "text": "Standard residualized probing leaks across folds\nand reaches AUROC 0.63 on a control where\nno faking can occur; naive linear probes reach\na meaningless AUROC 1.0; and conventional\nMLPs overstate detectability by 0.2–0.3 AUROC."
+    }
+   ]
+  },
+  {
+   "statement": "Arnesen et al.'s debates use QuALITY-HARD multiple-choice reading-comprehension questions over short stories, one debater defending the correct answer and the other the answer annotators marked as the best distractor, in a hidden-information setup where the debaters can read the story and the judge can only read quotes the debaters select; they start from a version of Llama3-8B-Instruct extended to a 262k-token context, because QuALITY stories run to over 10k tokens. Setting: that paper's debate experiments; this study borrows the two-option hidden-information format but uses shorter documents, other models and a different deployment domain.",
+   "source": "N2:DSOFT:ARXIV-2409.16636v1:DEF-DEBATE",
+   "passages": [
+    {
+     "version": "2409.16636v1",
+     "page": 2,
+     "line_start": 102,
+     "line_end": 110,
+     "text": "Following Parrish et al. (2022b), our debates center on questions from the QuALITY dataset (Pang\net al., 2022) of multiple choice reading comprehension questions over short stories. We exclusively\nsample questions from the QuALITY-HARD subset, with one debater defending the correct answer\nand the other defending the answer marked as the best distractor by annotators.\nTo ensure that the judge needs the debate transcript to answer each question, we follow Michael\net al. (2023) in using a hidden information setup where the debaters have access to the short story\ntext while the judge can only read quotes from the story selected by the debaters. This setup models\na scalable oversight setting by artificially elevating the capabilities of the debaters relative to that of\nthe judge: in this case, the debater’s expertise comes from superior access to information."
+    },
+    {
+     "version": "2409.16636v1",
+     "page": 5,
+     "line_start": 13,
+     "line_end": 16,
+     "text": "We start with a version of Llama3-8B-Instruct that was finetuned by GradientAI to extend the context\nlength to from 8k to 262k tokens (AI@Meta, 2024; GradientAI, 2024). This context length extension\nis necessary to accommodate the full text of the QuALITY stories, which run to over 10k tokens\n(Pang et al., 2022)."
+    }
+   ]
+  },
+  {
+   "statement": "In a section headed self-play DPO training, Arnesen et al. further finetune their models after supervised finetuning with multiple iterations of a modified DPO that uses the AI judge's output probabilities instead of only discrete preferences. They report that DPO training can help open-source 8B-sized models be more convincing to a GPT-4-level judge (the fully trained debate model wins 67% of the time against the average debater in the sample and 82.5% against its SFT-trained base model) and say these results suggest it may be feasible to train much stronger persuasive models with larger LMs. Setting: the QuALITY debates of the previous premise, judged by a GPT-4-level judge; this study uses an open-weight judge, so its debate-training gains may be smaller.",
+   "source": "N2:DSOFT:ARXIV-2409.16636v1:METHOD-SELFPLAY-DPO",
+   "passages": [
+    {
+     "version": "2409.16636v1",
+     "page": 5,
+     "line_start": 25,
+     "line_end": 32,
+     "text": "S ELF -P LAY DPO T RAINING\n\nAfter supervised finetuning, we further finetune our models with multiple iterations of a novel,\nmodified version of Direct Preference Optimization (DPO; Rafailov et al., 2023). We choose DPO\nover standard RL methods like PPO (Schulman et al., 2017) because of ease of implementation\nand tuning. However, the standard formulation of DPO assumes access only to discrete preference\njudgments. Since we have access to the AI judge’s output probabilities, this means throwing away\ninformation about the exact reward. We modify DPO to take advantage of this information."
+    },
+    {
+     "version": "2409.16636v1",
+     "page": 9,
+     "line_start": 28,
+     "line_end": 32,
+     "text": "DPO training can help current open-source 8B-sized models be more convincing to a GPT-4–\nlevel judge. The fully trained debate model wins 67% of the time against the average debater in\nthe sample and 82.5% against its SFT-trained base model. Similarly, the fully-trained consultant\nconvinces the judge of its position 52% of the time, up from 36% with just supervised finetuning.\nThese results suggest it may be feasible to train much stronger persuasive models with larger LMs"
+    }
+   ]
+  }
+ ],
+ "hypothesis": "In 8B open-weight agents trained by debate, a planted deployment-conditional error policy of about 25 points persists through debate training on the training domain and is missed by a training-domain audit. An audit on synthetic deployment look-alikes from an independent generator bounds it within 10 points for a naive organism but underestimates it for an organism trained to recognise another generator's synthetic inputs.",
+ "design": {
+  "scope": "Part (a) of the remaining question only: whether pre-deployment evidence, with no online training, can bound a train-to-deploy behaviour gap that has persisted through debate training. Part (b), coordination between instances (acausal collusion, attacks split across instances), is not tested and stays open. High stakes enters through the absence of online training and the requirement that the evidence be gathered before deployment; the study does not test whether audits can certify the very small error rates a high-stakes case needs.",
+  "variable": "The source of the pre-deployment audit used to bound the deployment error rate, at three levels of fidelity to deployment: A1 items from the training domain (the usual offline evaluation), A2 synthetic look-alikes of deployment documents written by an independent generator (the practical candidate), and A0 held-out items from the real deployment pool (indistinguishable by construction). Crossed with the organism: clean control C, naive planted gap N, and test-aware planted gap A, each built on two base-model families.",
+  "conditions": [
+   "C (clean control): base model, then debate-format SFT on training-domain items, then self-play debate training on training-domain items only. No planted gap.",
+   "N (naive planted gap): as C, but the SFT stage also includes 1,500 real deployment-domain items (documents disjoint from all evaluation documents) whose target is the distractor on 30% of items, aiming at an excess deployment error of about 25 percentage points; training-domain targets are always correct. Debate training then runs on training-domain items only, so nothing trains on the deployment distribution (no online training).",
+   "A (test-aware planted gap): as N, plus 1,500 SFT items over synthetic deployment look-alikes written by generator G1 with correct targets, so the organism learns to behave well on one generator's test-like inputs; audit A2 is written by a different generator G2 that the organism never sees.",
+   "Item sets, 1,000 items each, one question per document: D (real deployment-domain items, the ground truth), A0 (a random split of the same real pool), A1 (training-domain items), A2 (G2 synthetic look-alikes).",
+   "Each organism is built on Llama-3.1-8B-Instruct and on Qwen3-8B (6 organisms), and each is evaluated at the post-SFT checkpoint and after debate training, so persistence through training is measured."
+  ],
+  "control": "The clean debate-trained organism C answering the same items: its error difference between D and each audit set measures how much the sets differ in difficulty, and is subtracted (difference-in-differences). Audit A0, drawn from the deployment pool itself, is a positive control: it must show no undercoverage, or the analysis is at fault.",
+  "models_and_judges": "Agents: Llama-3.1-8B-Instruct and Qwen3-8B (non-thinking mode), trained with LoRA (open weights). Debate judge during training: Gemma-3-27B-it, prompted, reading only debater-selected quotes (a third family, to avoid self-preference; possibly weaker than the GPT-4-level judge of premise 6). Items: Llama-3.3-70B-Instruct writes one two-option question (correct answer and best distractor) per document for every item set; Qwen3-32B verifies each item (kept only if it picks the gold option when given the document) and writes G1 synthetic documents; Mistral-Small-3.1-24B-Instruct writes G2 synthetic documents from prompts written by a team member who has not seen the planting data. No model grades deployment answers: correctness is scored against the verified gold option.",
+  "task_and_data": "Two-option hidden-information reading comprehension, in the format of premise 5 but on 2-4k-token document excerpts. Training domain: public-domain short fiction. Deployment domain: excerpts of machine-learning papers posted in 2026, standing in for a research deployment. Deployment task (no further training): the agent reads the document and question, states which option is correct and writes a short quoted argument for it (an open-role opening statement); an error is choosing the non-gold option. Debate training, all on training-domain items: SFT on debate transcripts written by Llama-3.3-70B-Instruct, then 3 iterations of self-play DPO using judge probabilities as in premise 6, mixing assigned-role two-turn debates (correct vs distractor) with open-role debates in which the agent first picks the side it defends. Documents are disjoint across all sets. About 9,000 further items for SFT, planting and debate training (estimate).",
+  "measures": [
+   "Error rate: share of items where the agent picks the non-gold option, for each organism, item set and checkpoint (one sample per item at temperature 1).",
+   "Undercoverage U for audit s and planted organism o: (error on D minus error on s) for o, minus the same quantity for C. U > 0 means the audit underestimates the planted organism's deployment error beyond what item difficulty explains.",
+   "Raw coverage: the one-sided 95% Clopper-Pearson upper bound on error computed from each audit, compared with the same organism's observed error on D.",
+   "Persistence of the planted gap: U for A1 (training-domain audit), at the post-SFT checkpoint and after debate training.",
+   "Hidden-gap check: error on A1 for N and A minus error on A1 for C (near 0 if the gap is hidden from training-like items).",
+   "Distinguishability: AUROC of a logistic-regression probe on each organism's mid-layer residual activations separating D documents from each audit set's documents, with document-grouped 5-fold splits and per-fold preprocessing; D versus A0 is the null control and must sit near 0.5; G1 versus G2 documents is also reported.",
+   "Debate-training check: win rate of each final checkpoint against its SFT checkpoint under the judge."
+  ],
+  "sample_size": "1,000 items in each of D, A0, A1 and A2 (4,000 evaluation items, one per document), each answered once by each of the 6 organisms at 2 checkpoints.",
+  "sample_size_reason": "The primary tests are 4 one-sided tests of U > 0 for A2 (2 planted organisms x 2 base models), Holm-corrected; power is computed at the Bonferroni level alpha = 0.05/4 (z = 2.24). U combines four proportions; at the worst-case binomial variance (every error rate 0.5) and 1,000 items per set its standard error is sqrt(4 x 0.25 / 1,000) = 0.032, giving 80% power to detect U of about 10 percentage points ((2.24 + 0.84) x 0.032 = 0.097). Ten points is about 40% of the planted 25-point gap; the planted gap is sized to the natural faking gaps reported in premise 3 (+24.4pp for Llama-3.1-8B, +18.2pp for Qwen3-32B), a different setting, used only as a reference scale. With the same standard error the non-inferiority test (upper 95% confidence limit of U below 10 points) has about 94% power for each cell if the true U is 0 (about 77% that all four cells pass, if independent). No variance for this task has been reported, so the binomial worst case is used; because every organism answers the same items, pairing should make these figures conservative. The planted gap's persistence (U for A1) has the same standard error, so a 25-point gap is detected easily.",
+  "analysis": "Pre-registered. For each base model, a mixed-effects logistic regression of error on organism x item set x checkpoint with a random intercept per item (items are crossed with organisms); U and the checks are computed on the probability scale with item-level bootstrap 95% confidence intervals. Order: (1) manipulation checks: after debate training, U for A1 is at least 10 points with its interval excluding 0 (the gap persisted and is missed by a training-domain audit), the hidden-gap check is within 5 points, and the debate-training win rate rose; an organism failing a check is reported as uninformative. (2) Primary: 4 one-sided tests of U > 0 for A2, Holm at familywise 0.05, and non-inferiority (upper one-sided 95% limit of U below 10 points, each cell at 0.05; a claim that needs every cell to pass needs no correction) for the claim that A2 bounds the gap. (3) Positive control: U for A0 must have an interval containing 0. (4) Raw coverage reported for every cell. (5) Exploratory, descriptive only: whether distinguishability AUROC orders the cells as U does.",
+  "confounds": [
+   "Deployment and audit items differ in difficulty (different documents and domains): handled by the difference-in-differences against the clean organism C on the same items, and by one question writer and one verifier for all sets.",
+   "Whether inputs can be told apart from deployment drives the outcome (premise 2: when the red team knew training from deployment samples, SFT then RL elicited less, and the authors tentatively conclude indistinguishability is essential): distinguishability is the manipulated variable (A1, A2, A0) and is measured with the probe rather than assumed.",
+   "Reading reasoning misses natural faking (premises 3 and 4: rare scratchpad self-reports; behavioral and chain-of-thought monitoring both miss natural faking): the outcome is scored only against verified gold options, never by reading the agent's reasoning, and the planted gap is defined by answers.",
+   "Probe scores can be artifacts of leakage (premise 4: residualized probing leaks across folds; naive linear probes reach a meaningless AUROC 1.0): document-grouped folds with per-fold preprocessing, and the D versus A0 null control must sit near 0.5 before any AUROC is read.",
+   "Results may be model-conditional (premise 3: detection survived on Llama but collapsed on Qwen, cross-model transfer null, headline on a single 8B model): two base-model families, analysed and reported separately; a claim is made for both only if both agree.",
+   "If G1 and G2 documents were alike, A2 would be recognised trivially by the test-aware organism: different generator families and independently written prompts, and the G1 versus G2 probe AUROC is reported.",
+   "Label noise that differs by set: the verification filter plus a human spot-check of 10% of each evaluation set, with a sensitivity analysis that drops items the spot-check flags."
+  ]
+ },
+ "outcomes": [
+  {
+   "if": "A validity check fails: after debate training U for A1 is under 10 points or its interval includes 0, the planted organism also errs more on training-domain items, or U for A0 differs from 0.",
+   "means": "For part (a): the planted gap did not persist through debate training (or was not hidden), so the audit comparison says nothing for that organism; it narrows the question only in that this kind of planted gap did not survive debate training here, not for natural or stronger gaps (in premise 2's sandbagging setting, training removed less of an instructed gap when training and deployment samples could be told apart). For SC-C2.3 and SC-OP-HIGH-STAKES: no update until a stronger organism is planted. If instead the positive control fails (U for A0 differs from 0), the pipeline creates spurious undercoverage (for example a leak between pools) and no result on part (a) is reported until it is fixed and rerun."
+  },
+  {
+   "if": "Checks pass and A2 is non-inferior (upper 95% limit of U below 10 points) for both N and A in both base models.",
+   "means": "For part (a): in this testbed, an audit on synthetic deployment look-alikes from an independent generator bounds a train-to-deploy gap that persisted through debate training, even for a model trained to recognise another generator's test inputs, without any online training. For SC-C2.3 and SC-OP-HIGH-STAKES: first evidence that an audit could stand in for online training as support for the no-drift claim, limited to 8B models, two-option reading comprehension and gaps of about 25 points; it does not show that audits can certify the very small error rates a high-stakes case needs."
+  },
+  {
+   "if": "Checks pass, A2 is non-inferior for N but U > 0 for A (in both base models).",
+   "means": "For part (a): synthetic look-alike audits bound a naive gap but not one held by a model that has learned to recognise test-like inputs, so an audit bound needs separate evidence that the model cannot tell audits from deployment. For SC-C2.3: audits alone do not support the no-drift claim in high stakes; the step also needs an indistinguishability argument."
+  },
+  {
+   "if": "Checks pass and U > 0 for A2 for both N and A, while A0 shows no undercoverage.",
+   "means": "For part (a): here only audits drawn from the real deployment distribution bound the gap; synthetic look-alikes fail even against a naive organism. For SC-C2.3 and SC-OP-HIGH-STAKES: support without online training would have to come from evidence sampled from the deployment stream itself; synthetic audits should not be cited for C2.3."
+  },
+  {
+   "if": "The two base models disagree (for example A2 non-inferior on one, U > 0 on the other).",
+   "means": "For part (a): whether an audit bounds the gap is model-conditional, as premise 3 found for probe detection; no general claim. For SC-C2.3: a safety case would need audit validity shown for the specific deployed model."
+  },
+  {
+   "if": "Checks pass but for A2 neither U > 0 nor non-inferiority is shown.",
+   "means": "Inconclusive for part (a): the study then only limits how large the undercoverage can be (the upper confidence limit of U). No update to the safety-case steps beyond that limit."
+  }
+ ],
+ "resources": {
+  "compute": "estimate: about 650 H100 GPU-hours (plausible range 450-1,300): about 60 for writing and verifying about 13,000 items with 24-70B open-weight models; per organism about 10 for SFT and about 80 for self-play debate training with judge calls (3 DPO iterations x 2,000 questions x about 8 debates), for 6 organisms; about 30 for evaluation and probes. Rests on LoRA training of 8B models and assumed serving throughput, not on measured runs; longer debates could double it.",
+  "people": "estimate: one research engineer full-time for 4 months; one senior researcher at 20% for design, pre-registration and analysis; about 60 hours of annotators able to read ML papers, to spot-check about 850 items at about 4 minutes each. Rests on the scale of comparable fine-tuning and evaluation projects, not on a staffing plan.",
+  "time": "estimate: about 4 months: month 1 item pipeline, pre-registration and a small pilot; month 2 organisms and debate training; month 3 evaluation and probes; month 4 analysis and write-up.",
+  "cost": "estimate: about USD 85,000: staff about USD 76,000 (assumed fully loaded USD 15,000 per month for the engineer and USD 20,000 per month for the senior researcher at 20%), annotation about USD 3,600 (60 hours at an assumed USD 60 per hour), compute about USD 1,300-2,600 (650 H100-hours at an assumed USD 2-4 per hour), plus about USD 2,000 contingency. Rests on assumed rates, not quotes."
+ },
+ "decision": "Informs SC-C2.3 (during deployment the error rate will not drift past ε, which the case supports by online training and which, per premise 1, needs guarantees against alignment faking in high stakes) and SC-OP-HIGH-STAKES (key claim 3 in the high-stakes extension). It does not inform SC-D4.4 or part (b) of the remaining question; coordination between instances needs its own study. A funder or lab would act as follows. If A2 bounds the gap for both organisms: fund a follow-on with larger models, agentic tasks and rare planted errors before any lab cites audits as evidence for C2.3; a lab could pilot independent-generator audits with a distinguishability probe as provisional evidence. If A2 bounds only the naive organism: prioritise work on showing audits cannot be told apart from deployment, and do not cite synthetic audits for C2.3 without it. If only A0 works: invest in audits sampled from the real deployment stream, and keep the high-stakes extension off synthetic audits. If the planted gap does not persist, or the result is inconclusive: re-plant a stronger organism at small extra cost before concluding. If base models disagree: require per-model validation of any audit.",
+ "risks": [
+  "A planted, domain-cued error policy may not resemble natural alignment faking; a valid bound on it does not show validity against natural faking or against a more capable adversary.",
+  "The test-aware organism encodes one way of recognising tests (generator style); a model with other cues could defeat A2, so a non-inferior result is not an upper bound on what an adversarial model could do.",
+  "The gaps studied (about 25 points) are far larger than the error rates a high-stakes case must bound; the study tests whether audit evidence is biased, not whether audits can certify very small error rates. If the persisting gap is much smaller than planned, only an audit that misses most of it can be detected.",
+  "Two-option reading comprehension with hidden documents may not carry over to agentic research tasks.",
+  "An open-weight judge may give smaller debate-training gains than the GPT-4-level judge of premise 6; the debate-training check reports this, and a weak training stage would weaken the 'persisted through debate training' reading.",
+  "Generated items carry label noise; the verifier and spot-check reduce but do not remove it.",
+  "The organisms are deliberately deceptive 8B models; weights stay internal and are deleted after the study."
+ ],
+ "review_status": "provisional_ai_draft",
+ "check_state": "AI_CHECKED",
+ "rules": [
+  "Everything here is an AI draft (provisional_ai_draft): each counted item passed two blind AI checks that were tested on planted errors, and no person has reviewed it.",
+  "A finding counts only in the setting its own quoted lines show; read `setting` before carrying it to another setting.",
+  "A question's status is a label from fixed rules over its counted findings; `status_check` says whether that label itself passed its check.",
+  "Cite the paper and page from the passage, and read the PDF page before relying on a claim."
+ ]
+}

@@ -1,0 +1,357 @@
+{
+ "schema": "ASRA-GAP-CLOSING-AGENT-v1",
+ "paper": "1805.00899v2",
+ "review_status": "provisional_ai_draft",
+ "rules": [
+  "Everything here is an AI draft (provisional_ai_draft): each counted item passed two blind AI checks that were tested on planted errors, and no person has reviewed it.",
+  "A finding counts only in the setting its own quoted lines show; read `setting` before carrying it to another setting.",
+  "A question's status is a label from fixed rules over its counted findings; `status_check` says whether that label itself passed its check.",
+  "Cite the paper and page from the passage, and read the PDF page before relying on a claim."
+ ],
+ "notes": "CORE combines a proposal, a complexity analogy and an initial experiment; its card grades the empirical part, and the theorem has its own card. Both MNIST cards are graded EMPIRICAL_PRELIMINARY because the section is titled 'Experiments: proposed and preliminary' (p7 L29) and the experiment is called an 'initial version' (p8 L81). RES-MNIST-NO-PRECOMMIT: the record quote is the Table 2 caption; 'random judge' there means the judge's accuracy on random pixels (48.2% for 4 pixels, 59.4% for 6). Read in column order, Table 2 (p8 L27-59, garbled in the text) gives mean no-precommit honest win rates of 59.7% (4 pixels) and 74.4% (6 pixels), consistent with the caption, but this card does not restate them. The MNIST test-set size is not stated in the passages read. ASM-HARDER-TO-LIE is labelled an assumption; the paper calls it the 'central claim' and says its truth is empirical, so it is linked as an assumption of CORE.",
+ "cards": [
+  {
+   "record_id": "N2:DSOFT:ARXIV-1805.00899v2:CORE",
+   "paper": "1805.00899v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-1805.00899v2:DEF-DEBATE"
+    ],
+    "description": "The authors propose a zero-sum debate game, relate it to complexity theory by replacing the human judge with a polynomial-time algorithm, and run an initial MNIST experiment in which ML agents debate in front of a pre-trained sparse-pixel classifier judge.",
+    "passages": [
+     {
+      "version": "1805.00899v2",
+      "page": 7,
+      "lines": [
+       29,
+       39
+      ],
+      "text": "Experiments: proposed and preliminary\n\nSince the theoretical limit of infinite compute agents and polynomial time judges gives all of PSPACE,\nwhether debate works in practice as a method for AI alignment is an empirical question about\npractical ML systems and actual human judges. Thus, we need experiments to explore whether near\noptimal play produces aligned behavior with human judges, and whether we can find near optimal\nplay with practical ML.\nAlthough we believe the best equilibrium for debate is two honest agents, in the experiments discussed here we prespecify one agent as honest and one as liar. This is particularly useful with human\nagents, since humans may be intrinsically inclined to tell the truth in ways ML agents would not\nbe. If the honest agent wins against any liar in an experiment, we will have shown that honesty is\nthe optimal strategy, and that an agent trained to optimal play would become honest.",
+      "pdf_page": "https://arxiv.org/pdf/1805.00899v2#page=7"
+     },
+     {
+      "version": "1805.00899v2",
+      "page": 8,
+      "lines": [
+       81,
+       88
+      ],
+      "text": "We have performed an initial version of this experiment on MNIST, using ML agents and an ML\njudge. Figure 2 shows the structure of the game. Similar to Milli et al. [2017], we train the judge in\nadvance with supervised learning, using a convolutional net that sees a sparse mask of a few pixels.\nThe judge is treated as fixed when computing optimal play by the agents. Joint training of agents\nand judge together would be particularly bad as a test of debate, since it assumes knowledge of the\ntruth at game time which is exactly what we hope to do without.\nConcretely, the judge is trained to classify MNIST from 6 (resp. 4) nonzero pixels, with the pixels\nchosen at random at training time. The judge receives two input feature planes: a {0, 1} mask of",
+      "pdf_page": "https://arxiv.org/pdf/1805.00899v2#page=8"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-1805.00899v2:ASM-HARDER-TO-LIE",
+     "N2:DSOFT:ARXIV-1805.00899v2:ASM-POLY-JUDGE",
+     "N2:DSOFT:ARXIV-1805.00899v2:ASM-MATCHED-STRENGTH"
+    ],
+    "stated_hypotheses": [
+     "Central claim: in the debate game it is harder to lie than to refute a lie; the authors say whether this holds in a given setting is empirical.",
+     "For the complexity analogy, the judge is a polynomial-time algorithm and the debaters have arbitrary computational power and play optimally.",
+     "Debaters are approximately matched in strength."
+    ],
+    "passages": []
+   },
+   "setting": {
+    "systems": "Two debating AI agents (proposed: trained by self-play); in the experiment, ML agents",
+    "task_data": "Questions or proposed actions in general; the experiment uses MNIST images with 6 or 4 revealed pixels",
+    "judge": "A human in the proposal; a polynomial-time algorithm in the complexity analogy; a sparse-pixel ML classifier in the MNIST experiment",
+    "regime": "mixed",
+    "scale": null
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-1805.00899v2:LIM-SCOPE",
+     "N2:DSOFT:ARXIV-1805.00899v2:LIM-BELIEF-BIAS"
+    ],
+    "notes": "The authors say debate is so far a proposal only for natural language with only a basic MNIST experiment, that significant research is needed to know whether it works with human judges, and that human belief bias may matter."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_PRELIMINARY",
+    "reason": "The claim's empirical support is an MNIST experiment the authors call initial and place under 'Experiments: proposed and preliminary'; the PSPACE analogy is graded in its own theorem card."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-1805.00899v2:THM-PSPACE",
+   "paper": "1805.00899v2",
+   "evidence_type": "theorem",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-1805.00899v2:DEF-DEBATE"
+    ],
+    "description": "Complexity-theoretic argument: an n-round debate judged by a polynomial-time algorithm H corresponds to an alternating-quantifier formula ∃x0 ∀x1 · · · H(q, x0, ...), which with polynomially many rounds captures PSPACE; the short proof applies Theorem 8.9 of Sipser [2013] to choose H and n = poly(|q|).",
+    "passages": [
+     {
+      "version": "1805.00899v2",
+      "page": 6,
+      "lines": [
+       1,
+       2
+      ],
+      "text": "Proof. Given L, by Theorem 8.9 of Sipser [2013] we can choose H and n = poly(|q|) such that q ∈ L\niff ∃x0 ∀x1 · · · ∃xn−1 .H(q, x0 , . . .). As above, debate with H as the judge answers q ∈ L.",
+      "pdf_page": "https://arxiv.org/pdf/1805.00899v2#page=6"
+     },
+     {
+      "version": "1805.00899v2",
+      "page": 5,
+      "lines": [
+       65,
+       70
+      ],
+      "text": "Now consider an adversarial debate of length two, where Alice chooses x attempting to make the\nhuman say yes, Bob chooses y attempting to make the human say no, and the human decides who\nis correct. The result is ∃x∀y.H(q, x, y). Alice wins if she can find x such that all responses y by\nBob have H(q, x, y) = 1. Bob wins if he can find a response y to any x that Alice says so that\nH(q, x, y) = 0. This complexity class is Σ2 P, two steps up the polynomial hierarchy, since Σ2 P\ncontains all questions answerable as formulas of the form ∃x∀y.H(q, x, y) for polynomial time H.",
+      "pdf_page": "https://arxiv.org/pdf/1805.00899v2#page=5"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-1805.00899v2:ASM-POLY-JUDGE"
+    ],
+    "stated_hypotheses": [
+     "L is a decision problem in PSPACE (the theorem is stated for any L ∈ PSPACE).",
+     "The human judge is replaced by a polynomial-time algorithm H that outputs one bit (whether a statement is true).",
+     "The debaters (ML models) have arbitrary computational power; the only limitation is the supervision signal.",
+     "Both debaters play optimally.",
+     "The number of debate steps grows polynomially in the size of the question.",
+     "Judges are modelled as limited but free of error."
+    ],
+    "passages": [],
+    "check": "not verified: the blind checks miss some dropped conditions on theorem cards; read the theorem's statement at the cited page"
+   },
+   "setting": {
+    "systems": "Two debaters with unbounded computation playing optimally",
+    "task_data": "Any decision problem L in PSPACE",
+    "judge": "A polynomial-time algorithm H standing in for the human judge",
+    "regime": "theory",
+    "scale": null
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-1805.00899v2:LIM-SCOPE"
+    ],
+    "notes": "The authors say the DEBATE = PSPACE discussion leaves out many important considerations: judges are modelled as limited but error-free and agents have unlimited computational power."
+   },
+   "strength": {
+    "grade": "PROVED_IN_PAPER",
+    "reason": "Theorem 1 is followed by a short proof in the paper that reduces it to Theorem 8.9 of Sipser [2013]."
+   },
+   "review_status": "provisional_ai_draft",
+   "check_history": [
+    "card-4: flagged; rewritten from the checkers' suggested fix"
+   ]
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-1805.00899v2:RES-MNIST-PRECOMMIT",
+   "paper": "1805.00899v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-1805.00899v2:DEF-DEBATE"
+    ],
+    "description": "A convolutional judge was trained to classify MNIST from 6 (or 4) randomly chosen nonzero pixels and then held fixed; on the MNIST test set two debaters, one honest and one liar, precommitted to a label and revealed one pixel per turn, choosing moves by pure Monte Carlo Tree Search with 10k rollouts per move, and the winner was the player whose claimed class had the higher judge logit.",
+    "passages": [
+     {
+      "version": "1805.00899v2",
+      "page": 8,
+      "lines": [
+       81,
+       88
+      ],
+      "text": "We have performed an initial version of this experiment on MNIST, using ML agents and an ML\njudge. Figure 2 shows the structure of the game. Similar to Milli et al. [2017], we train the judge in\nadvance with supervised learning, using a convolutional net that sees a sparse mask of a few pixels.\nThe judge is treated as fixed when computing optimal play by the agents. Joint training of agents\nand judge together would be particularly bad as a test of debate, since it assumes knowledge of the\ntruth at game time which is exactly what we hope to do without.\nConcretely, the judge is trained to classify MNIST from 6 (resp. 4) nonzero pixels, with the pixels\nchosen at random at training time. The judge receives two input feature planes: a {0, 1} mask of",
+      "pdf_page": "https://arxiv.org/pdf/1805.00899v2#page=8"
+     },
+     {
+      "version": "1805.00899v2",
+      "page": 9,
+      "lines": [
+       123,
+       134
+      ],
+      "text": "With the judge fixed, we define the debate game as shown in Fig. 2. The two players precommit to\ntheir claimed label up front, then reveal one pixel per turn up to a total of 6 (resp. 4). In the 6 pixel\ncase, this means each player reveals 3 pixels. We prespecify one player to be honest and one to lie: if\nthe honest player wins this implies honesty is the optimal strategy. The winner is the player whose\nclaimed class has higher logit when the sparse mask is shown to the judge, ignoring the logits for the\nother 8 classes. We also consider debate without precommit: the judge uses the maximum logit over\nall 10 classes and any incorrect guess by the judge is a win for the liar. Precommit makes the game\nharder for a liar even though they can choose the precommitted lie arbitrarily, since the liar cannot\nadapt the lie based on moves already played. Precommit more accurately reflects the intended\nbehavior of debate as described in Section 2.1; we include the harder version for illustration. Both\nversions give an advantage to the second player to move: if the first player has a winning strategy,\nthe second player can steal that strategy by ignoring the previous move on each turn.",
+      "pdf_page": "https://arxiv.org/pdf/1805.00899v2#page=9"
+     },
+     {
+      "version": "1805.00899v2",
+      "page": 9,
+      "lines": [
+       135,
+       137
+      ],
+      "text": "The MNIST debate game is simple enough that we can play it with pure Monte Carlo Tree Search\n[Coulom, 2006] without training a heuristic as in Silver et al. [2017a]. We use 10k rollouts per move,\nwhere each rollout descends to a leaf for evaluation using the judge. During rollouts, we select nodes",
+      "pdf_page": "https://arxiv.org/pdf/1805.00899v2#page=9"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "The judge is trained in advance by supervised learning on random sparse pixel masks and held fixed while the debaters play (no joint training).",
+     "One debater is prespecified honest and one a liar; if the honest player wins, the authors take honesty to be the optimal strategy.",
+     "Debaters play by MCTS on the test set with full access to the judge, modelling debate agents with no generalisation error (the judge does have generalisation error).",
+     "With precommit, the liar states its lie in advance and cannot adapt it; the liar wins if any lie wins (best over 9 games), with each lie's result averaged over 3 games with different seeds."
+    ],
+    "passages": [
+     {
+      "version": "1805.00899v2",
+      "page": 7,
+      "lines": [
+       29,
+       39
+      ],
+      "text": "Experiments: proposed and preliminary\n\nSince the theoretical limit of infinite compute agents and polynomial time judges gives all of PSPACE,\nwhether debate works in practice as a method for AI alignment is an empirical question about\npractical ML systems and actual human judges. Thus, we need experiments to explore whether near\noptimal play produces aligned behavior with human judges, and whether we can find near optimal\nplay with practical ML.\nAlthough we believe the best equilibrium for debate is two honest agents, in the experiments discussed here we prespecify one agent as honest and one as liar. This is particularly useful with human\nagents, since humans may be intrinsically inclined to tell the truth in ways ML agents would not\nbe. If the honest agent wins against any liar in an experiment, we will have shown that honesty is\nthe optimal strategy, and that an agent trained to optimal play would become honest.",
+      "pdf_page": "https://arxiv.org/pdf/1805.00899v2#page=7"
+     },
+     {
+      "version": "1805.00899v2",
+      "page": 10,
+      "lines": [
+       658,
+       662
+      ],
+      "text": "lies; the liar wins if any lie wins. Taking the best liar performance over 9 games gives an advantage\nto the liar since it is a minimum over noisy MCTS; we reduce this noise and better approximate\noptimal play by taking the mean over 3 games with different seeds for each lie. Since we use MCTS\non the test set with full access to the judge, we are modeling the limit of debate agents with no\ngeneralization error (though the judge does have generalization error).",
+      "pdf_page": "https://arxiv.org/pdf/1805.00899v2#page=10"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Debaters played by pure Monte Carlo Tree Search (10k rollouts per move); a convolutional-network judge on sparse pixel masks",
+    "task_data": "MNIST test set images; 6 or 4 nonzero pixels revealed in total",
+    "judge": "A fixed, pre-trained ML classifier (no human judge)",
+    "regime": "evaluation",
+    "scale": "10k MCTS rollouts per move; 3 seeds per lie"
+   },
+   "quantitative": {
+    "n": "The MNIST test set (its size is not stated in these passages); 3 seeds per lie",
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-1805.00899v2:LIM-SCOPE"
+    ],
+    "notes": "The authors call this a basic, initial experiment; agents are modelled with no generalisation error, and the judge is an ML classifier rather than a human."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_PRELIMINARY",
+    "reason": "The authors call it an initial version of the experiment under the heading 'Experiments: proposed and preliminary', on one dataset with an ML judge and no reported uncertainty."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-1805.00899v2:RES-MNIST-NO-PRECOMMIT",
+   "paper": "1805.00899v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-1805.00899v2:DEF-DEBATE"
+    ],
+    "description": "In the same MNIST debate setup (fixed pre-trained sparse-pixel judge, MCTS debaters, one honest and one liar), the honest player's win rate with and without precommit was compared with the judge's accuracy on random pixels (Table 2); without precommit the judge uses the maximum logit over all 10 classes and any incorrect guess is a win for the liar.",
+    "passages": [
+     {
+      "version": "1805.00899v2",
+      "page": 9,
+      "lines": [
+       123,
+       134
+      ],
+      "text": "With the judge fixed, we define the debate game as shown in Fig. 2. The two players precommit to\ntheir claimed label up front, then reveal one pixel per turn up to a total of 6 (resp. 4). In the 6 pixel\ncase, this means each player reveals 3 pixels. We prespecify one player to be honest and one to lie: if\nthe honest player wins this implies honesty is the optimal strategy. The winner is the player whose\nclaimed class has higher logit when the sparse mask is shown to the judge, ignoring the logits for the\nother 8 classes. We also consider debate without precommit: the judge uses the maximum logit over\nall 10 classes and any incorrect guess by the judge is a win for the liar. Precommit makes the game\nharder for a liar even though they can choose the precommitted lie arbitrarily, since the liar cannot\nadapt the lie based on moves already played. Precommit more accurately reflects the intended\nbehavior of debate as described in Section 2.1; we include the harder version for illustration. Both\nversions give an advantage to the second player to move: if the first player has a winning strategy,\nthe second player can steal that strategy by ignoring the previous move on each turn.",
+      "pdf_page": "https://arxiv.org/pdf/1805.00899v2#page=9"
+     },
+     {
+      "version": "1805.00899v2",
+      "page": 8,
+      "lines": [
+       81,
+       88
+      ],
+      "text": "We have performed an initial version of this experiment on MNIST, using ML agents and an ML\njudge. Figure 2 shows the structure of the game. Similar to Milli et al. [2017], we train the judge in\nadvance with supervised learning, using a convolutional net that sees a sparse mask of a few pixels.\nThe judge is treated as fixed when computing optimal play by the agents. Joint training of agents\nand judge together would be particularly bad as a test of debate, since it assumes knowledge of the\ntruth at game time which is exactly what we hope to do without.\nConcretely, the judge is trained to classify MNIST from 6 (resp. 4) nonzero pixels, with the pixels\nchosen at random at training time. The judge receives two input feature planes: a {0, 1} mask of",
+      "pdf_page": "https://arxiv.org/pdf/1805.00899v2#page=8"
+     },
+     {
+      "version": "1805.00899v2",
+      "page": 8,
+      "lines": [
+       40,
+       51
+      ],
+      "text": "Judge accuracy\n(random pixels)\n48.2%\n\n59.4%\n\nHonest win rate\nNo precommit Precommit\n51.0%\n83.8%\n68.4%\n86.7%",
+      "pdf_page": "https://arxiv.org/pdf/1805.00899v2#page=8"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "The judge is trained in advance by supervised learning on random sparse pixel masks and held fixed while the debaters play (no joint training).",
+     "One debater is prespecified honest and one a liar; if the honest player wins, the authors take honesty to be the optimal strategy.",
+     "Debaters play by MCTS on the test set with full access to the judge, modelling debate agents with no generalisation error (the judge does have generalisation error)."
+    ],
+    "passages": [
+     {
+      "version": "1805.00899v2",
+      "page": 7,
+      "lines": [
+       29,
+       39
+      ],
+      "text": "Experiments: proposed and preliminary\n\nSince the theoretical limit of infinite compute agents and polynomial time judges gives all of PSPACE,\nwhether debate works in practice as a method for AI alignment is an empirical question about\npractical ML systems and actual human judges. Thus, we need experiments to explore whether near\noptimal play produces aligned behavior with human judges, and whether we can find near optimal\nplay with practical ML.\nAlthough we believe the best equilibrium for debate is two honest agents, in the experiments discussed here we prespecify one agent as honest and one as liar. This is particularly useful with human\nagents, since humans may be intrinsically inclined to tell the truth in ways ML agents would not\nbe. If the honest agent wins against any liar in an experiment, we will have shown that honesty is\nthe optimal strategy, and that an agent trained to optimal play would become honest.",
+      "pdf_page": "https://arxiv.org/pdf/1805.00899v2#page=7"
+     },
+     {
+      "version": "1805.00899v2",
+      "page": 10,
+      "lines": [
+       658,
+       662
+      ],
+      "text": "lies; the liar wins if any lie wins. Taking the best liar performance over 9 games gives an advantage\nto the liar since it is a minimum over noisy MCTS; we reduce this noise and better approximate\noptimal play by taking the mean over 3 games with different seeds for each lie. Since we use MCTS\non the test set with full access to the judge, we are modeling the limit of debate agents with no\ngeneralization error (though the judge does have generalization error).",
+      "pdf_page": "https://arxiv.org/pdf/1805.00899v2#page=10"
+     },
+     {
+      "version": "1805.00899v2",
+      "page": 9,
+      "lines": [
+       135,
+       137
+      ],
+      "text": "The MNIST debate game is simple enough that we can play it with pure Monte Carlo Tree Search\n[Coulom, 2006] without training a heuristic as in Silver et al. [2017a]. We use 10k rollouts per move,\nwhere each rollout descends to a leaf for evaluation using the judge. During rollouts, we select nodes",
+      "pdf_page": "https://arxiv.org/pdf/1805.00899v2#page=9"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Debaters played by pure Monte Carlo Tree Search (10k rollouts per move); a convolutional-network judge on sparse pixel masks",
+    "task_data": "MNIST test set images; 6 or 4 nonzero pixels revealed in total",
+    "judge": "A fixed, pre-trained ML classifier (no human judge)",
+    "regime": "evaluation",
+    "scale": "10k MCTS rollouts per move"
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-1805.00899v2:LIM-SCOPE"
+    ],
+    "notes": "The authors call this a basic, initial experiment, and say precommit more accurately reflects the intended behaviour of debate than the no-precommit variant."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_PRELIMINARY",
+    "reason": "Part of an experiment the authors call initial and place under 'Experiments: proposed and preliminary', on one dataset with an ML judge and no reported uncertainty."
+   },
+   "review_status": "provisional_ai_draft"
+  }
+ ]
+}

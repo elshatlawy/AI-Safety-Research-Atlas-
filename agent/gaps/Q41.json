@@ -1,0 +1,120 @@
+{
+ "schema": "ASRA-GAP-CLOSING-AGENT-v1",
+ "id": "Q41",
+ "question": "Do protocols that raise worst-case ASD resist rare catastrophic failures?",
+ "asked_by": "Sudhir et al., A Benchmark for Scalable Oversight Protocols",
+ "rank": 3,
+ "status": "STILL_OPEN",
+ "status_check": "AI_CHECKED",
+ "remaining_question": "For scalable oversight protocols scored by ASD, does choosing or training a protocol for a higher worst-case (minimum over questions) ASD lower the rate at which a single catastrophic falsehood, such as one vulnerable code sample, is accepted when tested on rare or adversarially selected inputs at deployment-relevant scale?",
+ "remaining_type": "EMPIRICAL",
+ "safety_case": [
+  {
+   "node": "SC-OP-HIGH-STAKES",
+   "relation": "INDIRECT",
+   "reason": "An answer would show whether protocols chosen for worst-case rather than average-case ASD stop a single catastrophic falsehood (e.g. one vulnerable code sample) from being accepted, the rare-catastrophic-error setting the node says the low-stakes sketch does not cover, but for benchmarked protocols rather than the case's deployment.",
+   "node_evidence": "NONE",
+   "branch": "deployment and low stakes",
+   "score": 1.5
+  }
+ ],
+ "findings": [
+  {
+   "id": "Q41:F1",
+   "later_paper": "arXiv 2605.28807v1: Calibrating Conservatism for Scalable Oversight",
+   "first_submitted": "2026-05-27",
+   "effect": "RELATED_ONLY",
+   "claim": "CCO, a scalable oversight method that aggregates diverse auxiliary scoring functions into a penalty measuring deviation from a conservative baseline (actions face a penalty proportional to overseer concern) and calibrates this conservatism online using Conformal Decision Theory, is stated to ensure that undesirable outcomes remain below a user-specified target threshold with finite-time bounds and no distributional assumptions; on a modified SWE-bench, weaker overseers constrained an adversarially misaligned stronger agent, and in both that setting and MACHIAVELLI empirical violation rates closely matched the specified targets. The authors state that CCO controls a long-run violation rate and is not as well-suited for extremely rare catastrophic events, and is therefore complementary to per-action monitoring of tail risks.",
+   "setting": "Theory (Conformal Decision Theory) plus experiments on a modified SWE-bench, where an agent is instructed to insert instance-specific vulnerabilities and weaker overseers constrain the adversarially misaligned stronger agent, whose patches are evaluated against the project's tests, and on MACHIAVELLI; the metric is a violation rate, not ASD.",
+   "bears_on": "Whether rate/average-type guarantees for an oversight protocol carry over to rare catastrophic failures.",
+   "passages": [
+    {
+     "version": "2605.28807v1",
+     "page": 1,
+     "lines": [
+      17,
+      27
+     ],
+     "text": "Agentic AI systems capable of autonomous planning and extended environmental interaction pose\na fundamental control problem: how can humans\nmaintain meaningful oversight of systems that\nmay exceed their own capabilities? Existing approaches to scalable oversight rely on complex assumptions, remain largely heuristic, or lack practical methods for sequential settings with statistical\nguarantees. We introduce Calibrated Collective\nOversight (CCO), which aggregates diverse auxiliary scoring functions into a penalty measuring\ndeviation from a conservative baseline. Inspired\nby Attainable Utility Preservation, CCO enables\ncollective conservatism: actions face a penalty\nproportional to overseer concern, so high-utility\nactions are still selected when overseers find them",
+     "pdf_page": "https://arxiv.org/pdf/2605.28807v1#page=1"
+    },
+    {
+     "version": "2605.28807v1",
+     "page": 1,
+     "lines": [
+      28,
+      34
+     ],
+     "text": "unobjectionable and overridden only when concern accumulates. CCO calibrates this conservatism online using Conformal Decision Theory,\nensuring that undesirable outcomes remain below\na user-specified target threshold with finite-time\nbounds and no distributional assumptions. On\na modified version of SWE-bench, weaker overseers successfully constrain an adversarially misaligned stronger agent; on MACHIAVELLI, CCO\nsubstantially reduces ethical violations while preserving reward. In both settings, empirical violation rates closely match the specified targets, as\npredicted by the theory.",
+     "pdf_page": "https://arxiv.org/pdf/2605.28807v1#page=1"
+    },
+    {
+     "version": "2605.28807v1",
+     "page": 9,
+     "lines": [
+      62,
+      72
+     ],
+     "text": "Limitations. Several limitations of our framework are\nworth noting. (i) Theorem 4.10 assumes that the loss ℓt\nis observed exactly after each step. Section 4.5 and Appendix B show graceful degradation under bounded noise\nand bounded delay, but in many realistic settings groundtruth labels arrive only sparsely or are estimated by a separate (and themselves fallible) judge. (ii) Our SWE-bench\nprotocol is adversarial by construction: an agent is instructed\nto insert instance-specific vulnerabilities and its patches are\nevaluated against the project’s tests. This provides a controlled measurement of α-tracking but is not a substitute for\nnaturalistic measurement, which requires post-deployment\nground truth. (iii) CCO controls a long-run violation rate\nand is not as well-suited for extremely rare catastrophic\nevents; it is therefore complementary to per-action monitoring of tail risks. (iv) The framework assumes a designated",
+     "pdf_page": "https://arxiv.org/pdf/2605.28807v1#page=9"
+    }
+   ]
+  },
+  {
+   "id": "Q41:F2",
+   "later_paper": "arXiv 2605.15134v2: Training ML Models with Predictable Failures",
+   "first_submitted": "2026-05-14",
+   "effect": "RELATED_ONLY",
+   "claim": "The authors show that Jones et al.'s estimator, which extrapolates from the largest k failure scores in an evaluation set to predict deployment-scale failure rates, has a built-in bias toward over-prediction in the typical case, which is offset when the evaluation set misses a rare high-failure mode that the deployment set contains, leaving the forecast to under-predict at deployment scale; the bulk-plus-rare-mode mixture in their experiments is synthetic, and application to naturally arising rare modes is open.",
+   "setting": "Theory (finite-k decomposition of the forecast error of Jones et al.'s top-k extrapolation) plus experiments with a synthetic bulk-plus-rare-mode mixture and closed-form regret from backward value iteration. Not a scalable oversight protocol and not ASD.",
+   "bears_on": "Whether the worst scores observed on a finite evaluation set (such as the worst ASDs over a benchmark) reveal rare catastrophic failures.",
+   "passages": [
+    {
+     "version": "2605.15134v2",
+     "page": 1,
+     "lines": [
+      24,
+      34
+     ],
+     "text": "Estimating how often an ML model will fail at deployment scale is central to pre-deployment safety\nassessment, but a feasible evaluation set is rarely\nlarge enough to observe the failures that matter.\nJones et al. [21] address this by extrapolating from\nthe largest k failure scores in an evaluation set to\npredict deployment-scale failure rates. We give\na finite-k decomposition of this estimator’s forecast error and show that it has a built-in bias toward over-prediction in the typical case, which is\nthe safety-favorable direction. This bias is offset\nwhen the evaluation set misses a rare high-failure\nmode that the deployment set contains, leaving\nthe forecast to under-predict at deployment scale.",
+     "pdf_page": "https://arxiv.org/pdf/2605.15134v2#page=1"
+    },
+    {
+     "version": "2605.15134v2",
+     "page": 3,
+     "lines": [
+      19,
+      24
+     ],
+     "text": "second, (A2) fit representativeness, is a sample-coverage\ncondition: the fit set must be large enough to reach a loglinear regime, i.e., the deep tail. Among other examples: if\nthe distribution has a mixture component that is common\nenough to appear in the N deployment set draws but rare\nenough that the M fit-set draws are likely to miss it, the line\nmay underpredict deployment failure.",
+     "pdf_page": "https://arxiv.org/pdf/2605.15134v2#page=3"
+    },
+    {
+     "version": "2605.15134v2",
+     "page": 8,
+     "lines": [
+      95,
+      101
+     ],
+     "text": "on closed-form regret from backward value iteration, so\nextending to settings where regret must be estimated by\nMonte Carlo rollouts is a non-trivial generalization; and\nthe bulk-plus-rare-mode mixture is synthetic, so application\nto naturally arising rare modes is open. Scaling to larger\nmodels, more realistic deployment domains, and natural\nrare modes is the obvious next step.",
+     "pdf_page": "https://arxiv.org/pdf/2605.15134v2#page=8"
+    }
+   ]
+  }
+ ],
+ "findings_drafted": 2,
+ "maths": [],
+ "experiment_package": {
+  "id": "PK-Q41",
+  "file": "agent/packages/PK-Q41.json",
+  "hypothesis": "Across scalable oversight protocol configurations judged on a binary code-security question, a higher worst-case ASD (minimum over selection-set questions) predicts, beyond average ASD, a lower rate at which a vulnerable code sample argued 'safe' by an agent is accepted on held-out natural, held-out rare-class and adversarially selected inputs, so choosing the configuration with the highest worst-case ASD yields a lower acceptance rate than choosing the one with the highest average ASD (Sudhir et al.'s untested conjecture, premise 2, tested for the 'choosing' half of the question).",
+  "check_state": "AI_CHECKED"
+ },
+ "review_status": "provisional_ai_draft",
+ "rules": [
+  "Everything here is an AI draft (provisional_ai_draft): each counted item passed two blind AI checks that were tested on planted errors, and no person has reviewed it.",
+  "A finding counts only in the setting its own quoted lines show; read `setting` before carrying it to another setting.",
+  "A question's status is a label from fixed rules over its counted findings; `status_check` says whether that label itself passed its check.",
+  "Cite the paper and page from the passage, and read the PDF page before relying on a claim."
+ ]
+}

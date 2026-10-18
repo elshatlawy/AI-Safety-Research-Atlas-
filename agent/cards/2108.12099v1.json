@@ -1,0 +1,630 @@
+{
+ "schema": "ASRA-GAP-CLOSING-AGENT-v1",
+ "paper": "2108.12099v1",
+ "review_status": "provisional_ai_draft",
+ "rules": [
+  "Everything here is an AI draft (provisional_ai_draft): each counted item passed two blind AI checks that were tested on planted errors, and no person has reviewed it.",
+  "A finding counts only in the setting its own quoted lines show; read `setting` before carrying it to another setting.",
+  "A question's status is a label from fixed rules over its counted findings; `status_check` says whether that label itself passed its check.",
+  "Cite the paper and page from the passage, and read the PDF page before relying on a claim."
+ ],
+ "notes": "THM-PROP1-TRIVIAL-VERIFIER is kind theorem in the record, but the paper supports Proposition 1 only with a one-sentence argument in the main text (p5 L94-95); Appendix B, which the paper says holds the proofs, contains Theorems 1-3 and Corollary 1 and no proof of Proposition 1, so the card grades it ARGUMENT_ONLY (it could be read as PROVED_IN_PAPER if a one-line argument counts as a proof). THM-4-5-BEC-GRADIENT joins two theorems in one record. RES-BEC-FROZEN-VERIFIER: Appendix E.1 says training ran until frozen precision and recall reached 1, so the reported 1.0 values match the stopping rule. RES-FINDTHEPLUS: Appendix E.2 reports the best checkpoint and the best of four seeds. Table 2 and Table 3 captions say 'specificity' where the text says precision. CORE combines proved equilibrium results with experiments; its card grades the empirical part, and the theorems have their own cards.",
+ "cards": [
+  {
+   "record_id": "N2:DSOFT:ARXIV-2108.12099v1:CORE",
+   "paper": "2108.12099v1",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2108.12099v1:DEF-DESIDERATA-INCENTIVES"
+    ],
+    "description": "The authors define the prover-verifier game and its incentives, compare eight game formulations theoretically (equilibrium proofs in an appendix), and train prover and verifier networks on two algorithmic tasks, then stress-test the frozen verifier by retraining the prover against it and by directly optimizing messages.",
+    "passages": [
+     {
+      "version": "2108.12099v1",
+      "page": 5,
+      "lines": [
+       86,
+       90
+      ],
+      "text": "The conclusions of our theoretical analysis are displayed in Table 1. Proper proof-verification protocols\nconstitute equilibria of only three of the eight game formulations: the simultaneous setup where the problem\ninstance is presented after the agents’ moves, and the two verifier-first sequential setups where the problem\ninstances are revealed after the verifier’s move. We justify these claims through the following theorems.\nThe proofs are presented in Appendix B.",
+      "pdf_page": "https://arxiv.org/pdf/2108.12099v1#page=5"
+     },
+     {
+      "version": "2108.12099v1",
+      "page": 8,
+      "lines": [
+       46,
+       55
+      ],
+      "text": "The aim of the PVG is to produce a proof system which is both sound and complete. If this is the case,\nthen we can expect the verifier to achieve high accuracy. However, the verifier’s accuracy during training\ndoes not constitute a good yardstick for evaluating success, since a high accuracy for the verifier could\ninstead reflect problematic game dynamics. For example, high accuracy can be explained by the verifier\ndetecting the prover’s “tell” (spurious features in prover messages that correlate with the labels) rather\nthan checking the proof. Also, we would like the proof protocol to generalize upwards to provers that are\nmore capable than the one seen at training time.\nTherefore, we propose to stress-test the robustness of the verifier by freezing it and giving a lot\nmore resources to the prover. We did this in two different ways: First, we would freeze the verifier\nand continue to train the prover. Second, we would initialize messages to the prover’s output and",
+      "pdf_page": "https://arxiv.org/pdf/2108.12099v1#page=8"
+     },
+     {
+      "version": "2108.12099v1",
+      "page": 2,
+      "lines": [
+       3,
+       8
+      ],
+      "text": "Do reliable justification protocols emerge in practice if we let artificial agents play the Prover-Verifier\nGame? We first develop an approach to empirically assess how robust a learned verification protocol is.\nWe then run simulations on two algorithmic tasks using a practical instantiation of the PVG concept. As\npredicted by our theory, PVG-trained verifiers learn to receive useful and reliable information from untrusted\nprovers by following sensible verification protocols, whereas those trained alongside fully collaborative\nprovers are easily deceived.",
+      "pdf_page": "https://arxiv.org/pdf/2108.12099v1#page=2"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2108.12099v1:ASM-DECISION-PROBLEM"
+    ],
+    "stated_hypotheses": [
+     "The theoretical guarantees are for the abstract decision problem of Definition 4: labels are a deterministic function of the input and a complete and sound verifier exists in the verifier's policy class.",
+     "Desirable equilibria hold only for three of the eight formulations: the simultaneous game with the instance revealed after the moves, and the two verifier-first games with the instance revealed after the verifier's move.",
+     "Only the single-step, no-feedback interaction between prover and verifier is considered.",
+     "The theoretical results concern exact equilibria; the authors say behaviour at approximate equilibria needs more work."
+    ],
+    "passages": [
+     {
+      "version": "2108.12099v1",
+      "page": 4,
+      "lines": [
+       41,
+       44
+      ],
+      "text": "How the Prover and Verifier Interact: The design space of how the prover and verifier interact\nwith each other is large. We only consider the single-step, no feedback formulation throughout the paper and\nleave the analysis of other formulations as future work. Note that the single-step, no feedback formulation\nis related to NP proof systems and include sophisticated proof-verification protocols. We can also derive",
+      "pdf_page": "https://arxiv.org/pdf/2108.12099v1#page=4"
+     },
+     {
+      "version": "2108.12099v1",
+      "page": 5,
+      "lines": [
+       70,
+       77
+      ],
+      "text": "Assume that there exists a deterministic verifier policy v ∗ ∈ V such that:\n∃p ∈ Cp : ∀x ∈ X : v ∗ (x, p(x)) = f (x) (completeness)\n\n(5)\n\n∀p ∈ Cp : ∀x ∈ X : v (x, p(x)) = 1 =⇒ f (x) = 1 (soundness)\n\n(6)",
+      "pdf_page": "https://arxiv.org/pdf/2108.12099v1#page=5"
+     },
+     {
+      "version": "2108.12099v1",
+      "page": 10,
+      "lines": [
+       62,
+       67
+      ],
+      "text": "Future work should focus on scaling Prover-Verifier Games to more challenging problems. It would\nbe interesting to apply this concept on problems for which no verification protocol is yet known. Our\ntheoretical results focus on the desirability of the equilibria found in different PGB formulations. Since\nsolving for exact equilibria is difficult, more work is needed to understand the behaviour of the prover\nand verifier agents in approximate equilibria. Deploying PVG-trained systems before ensuring that an\nequilibrium has been reached could potentially lead to unexpected behaviour.",
+      "pdf_page": "https://arxiv.org/pdf/2108.12099v1#page=10"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "A trusted verifier network and a more powerful but untrusted prover network that argues for one answer regardless of its correctness",
+    "task_data": "Abstract decision problems (theory) and two algorithmic tasks (experiments)",
+    "judge": "The verifier network; robustness is judged by the frozen verifier's precision and recall against a retrained prover and against directly optimized messages",
+    "regime": "mixed",
+    "scale": null
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2108.12099v1:LIM-HARD-TO-FIND-PROOFS"
+    ],
+    "notes": "The experiments cover two algorithmic tasks; incorrect proofs that the frozen verifier would accept may still exist but be hard to find; the theory concerns exact equilibria, and the authors warn that deploying PVG-trained systems before an equilibrium is reached could lead to unexpected behaviour."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "The equilibrium results are proved (graded in the theorem cards), but the claim that the verifier learns a robust decision rule in practice rests on two algorithmic tasks for which these passages report no uncertainty, which the rubric grades EMPIRICAL_SINGLE_SETTING."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2108.12099v1:THM-PROP1-TRIVIAL-VERIFIER",
+   "paper": "2108.12099v1",
+   "evidence_type": "argument",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2108.12099v1:DEF-DESIDERATA-INCENTIVES"
+    ],
+    "description": "Stated as Proposition 1 and supported in the passages by a one-sentence argument: if the verifier knows the instance when it chooses its policy, it can choose the constant policy that returns f(x) (the 'trivial verifier').",
+    "passages": [
+     {
+      "version": "2108.12099v1",
+      "page": 4,
+      "lines": [
+       36,
+       40
+      ],
+      "text": "When Instances are Revealed: We can also arrive at different game formulation depending on\nwhether the problem instances (i.e., the input and prover-verifier labels) are revealed to the agents before\nor after they pick their strategies (i.e. weights). This leads to eight different game formulations: two from\nthe simultaneous setup (before or after the simultaneous moves) and six from the sequential setup (before,\nin-between and after the moves, for each of the two sequential formulations).",
+      "pdf_page": "https://arxiv.org/pdf/2108.12099v1#page=4"
+     },
+     {
+      "version": "2108.12099v1",
+      "page": 5,
+      "lines": [
+       1,
+       7
+      ],
+      "text": "Table 1: The summary of our theoretical results on the desirability of equilibria of different PVG formulations.\nThe “ordering\" column illustrates in which order the prover and verifier pick their strategies (weights) and the\nproblem instance (the input and labels) are revealed. The “necessity\" and “sufficiency\" columns show whether\nhaving converged to an equilibrium is necessary and/or sufficient for having discovered and complete and sound\nproof-verification protocol. The “failure mode\" column describe in what way some of the setups lead to undesirable\nequilibria. The “convergence\" column specifies if gradient descent converges to the eqilibrium on the Binary Erasure\nChannel Task. (∗ )We’ve only shown local convergence for the verifier-leading equilibria.",
+      "pdf_page": "https://arxiv.org/pdf/2108.12099v1#page=5"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2108.12099v1:ASM-DECISION-PROBLEM"
+    ],
+    "stated_hypotheses": [
+     "The verifier is given the problem instance before it selects its strategy (in any player order).",
+     "The setting is the abstract decision problem of Definition 4, whose verifier policy class includes every constant mapping, so the constant policy returning f(x) is available."
+    ],
+    "passages": [
+     {
+      "version": "2108.12099v1",
+      "page": 4,
+      "lines": [
+       54,
+       57
+      ],
+      "text": "We list in Table 1 all possible game instantiations obtained by varying the 1) player order and 2) when\nthe problem instance is revealed. Our goal is to find which – if any – of these formulations have desirable\nequilibria. We consider the following abstract decision problem formulation to compare and contrast different\nPVG formulations:",
+      "pdf_page": "https://arxiv.org/pdf/2108.12099v1#page=4"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Abstract prover and verifier policies: the prover maps inputs to messages; the verifier is a convex combination of base verifiers",
+    "task_data": "Abstract decision problem with binary labels (Definition 4)",
+    "judge": null,
+    "regime": "theory",
+    "scale": null
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [],
+    "notes": "The passages argue only that a trivial constant verifier is available when the instance is known, which shows an equilibrium need not be a proof-verification protocol; the claim that equilibrium is also not necessary is not argued in these lines."
+   },
+   "strength": {
+    "grade": "ARGUMENT_ONLY",
+    "reason": "The passages give the proposition with only a one-sentence informal justification (the constant policy returning f(x)), not a written proof of both halves of 'neither necessary nor sufficient'."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2108.12099v1:THM-1-PROVER-LEADING",
+   "paper": "2108.12099v1",
+   "evidence_type": "theorem",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2108.12099v1:DEF-DESIDERATA-INCENTIVES"
+    ],
+    "description": "Proof by counterexample given in the paper (PDF p. 14) on a simplified binary erasure channel (Definition 6, uniform inputs, label equal to input): the complete and sound prover-verifier pair is not a prover-leading Stackelberg equilibrium because an uninformative prover policy gives the prover lower loss, while that uninformative policy with a 50/50 verifier is an equilibrium that is not complete and sound.",
+    "passages": [
+     {
+      "version": "2108.12099v1",
+      "page": 14,
+      "lines": [
+       5,
+       12
+      ],
+      "text": "Theorem 1. Consider all prover-leading sequential PVG formulations. Having reached a (prover leading\nStackelberg) equilibrium is neither necessary nor sufficient for having found a complete and sound proofverification protocol.\nProof. It suffices to prove that the prover-leading Stackelberg equilibrium is neither necessary nor sufficient\nfor having found a complete and sound proof-verification protocol on the following decision problem:\nDefinition 6 (Simplified Binary Erasure Channel Problem). Let X = Y = Ỹ = {0, 1} and M = {0, 1, 2}.\nLet the input distribution PX be the uniform distribution over X , and let the label generating function be\ndefined as y = f (x). That is, the label is identical to the input. The prover is arguing for label y 0 = 1.\nThe prover can choose between two policies p1 and p2 :",
+      "pdf_page": "https://arxiv.org/pdf/2108.12099v1#page=14"
+     },
+     {
+      "version": "2108.12099v1",
+      "page": 14,
+      "lines": [
+       79,
+       82
+      ],
+      "text": "On the other hand, if the prover picks policy p2 , then its messages have exactly 0 mutual information\nwith the input. In this scenario, the best the verifier can do to minimize its loss function is to assign equal\nprobability to both outputs 0 and 1. It can do this by assigning 0 weight to v1 and weights 0.5 to v2 and v3 .\nThe prover’s loss in this scenario is:",
+      "pdf_page": "https://arxiv.org/pdf/2108.12099v1#page=14"
+     },
+     {
+      "version": "2108.12099v1",
+      "page": 14,
+      "lines": [
+       92,
+       97
+      ],
+      "text": "Since the prover can do better by picking p2 over p1 , the pair (p1 , v1 ) doesn’t constitute a prover-leading\nStackelberg equilibrium.\nLack of Sufficiency: Consider the scenario discussed above where the prover picks p2 , and the verifier\nresponds by assigning 0.5 weight to v2 and v3 . This is a Stackelberg equilibrium despite not corresponding\nto a complete and sound decision rule. This is because 1) p1 achieves the best prover loss given that the\nverifier",
+      "pdf_page": "https://arxiv.org/pdf/2108.12099v1#page=14"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2108.12099v1:ASM-DECISION-PROBLEM"
+    ],
+    "stated_hypotheses": [
+     "The prover leads: it picks its strategy first and the verifier best-responds (prover-leading Stackelberg equilibrium); the theorem covers all prover-leading sequential formulations.",
+     "Players minimize the losses of Equations 3 and 4, with the prover always arguing for label 1.",
+     "The proof uses one counterexample decision problem (Definition 6) with uniformly distributed inputs and the label equal to the input.",
+     "The result concerns exact equilibria."
+    ],
+    "passages": [
+     {
+      "version": "2108.12099v1",
+      "page": 10,
+      "lines": [
+       62,
+       67
+      ],
+      "text": "Future work should focus on scaling Prover-Verifier Games to more challenging problems. It would\nbe interesting to apply this concept on problems for which no verification protocol is yet known. Our\ntheoretical results focus on the desirability of the equilibria found in different PGB formulations. Since\nsolving for exact equilibria is difficult, more work is needed to understand the behaviour of the prover\nand verifier agents in approximate equilibria. Deploying PVG-trained systems before ensuring that an\nequilibrium has been reached could potentially lead to unexpected behaviour.",
+      "pdf_page": "https://arxiv.org/pdf/2108.12099v1#page=10"
+     }
+    ],
+    "check": "not verified: the blind checks miss some dropped conditions on theorem cards; read the theorem's statement at the cited page"
+   },
+   "setting": {
+    "systems": "Abstract prover and verifier policies; in the proof, two prover policies and three verifier policies",
+    "task_data": "Abstract decision problem; the counterexample is the simplified binary erasure channel problem (Definition 6)",
+    "judge": null,
+    "regime": "theory",
+    "scale": null
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [],
+    "notes": "The theory concerns exact equilibria; the authors say behaviour at approximate equilibria needs more work."
+   },
+   "strength": {
+    "grade": "PROVED_IN_PAPER",
+    "reason": "Theorem 1 is proved in the paper (proof on PDF p. 14) by an explicit counterexample showing both lack of necessity and lack of sufficiency."
+   },
+   "review_status": "provisional_ai_draft",
+   "check_history": [
+    "card-1: flagged or undecided by two blind checks; rewritten from the checkers' suggested fix (quotes unchanged)"
+   ]
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2108.12099v1:THM-2-VERIFIER-LEADING",
+   "paper": "2108.12099v1",
+   "evidence_type": "theorem",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2108.12099v1:DEF-DESIDERATA-INCENTIVES"
+    ],
+    "description": "Proof given in the paper (PDF p. 15): necessity by showing that the complete and sound pair guaranteed by the problem definition is a verifier-leading Stackelberg equilibrium (neither player can lower its loss); sufficiency by contrapositive, since a verifier that puts weight on a policy that is not complete or not sound has nonzero loss and could do strictly better by switching to the complete and sound verifier.",
+    "passages": [
+     {
+      "version": "2108.12099v1",
+      "page": 15,
+      "lines": [
+       4,
+       13
+      ],
+      "text": "Proof. We first prove necessity, then sufficiency.\nNecessity: By the problem definition, there exists a prover-verifier pair (p1 , v1 ) that satisfy Equations 5\nand 6, therefore constitute a complete and sound proof-verification protocol. Consider the scenario where\nthe prover’s policy is p1 , and the verifier assigns a weight of 1 to policy v1 . These prover-verifier strategies\nconstitute a (Stackelberg) equilibrium of the verifier-leading sequential game formulation. This is because\n(1) p1 already achieves the smallest prover loss for the given verifier strategy (2) the verifier already achieves\n0 loss and therefore has no incentive to change its strategy. To see (1), note that the verifier can never\nbe fooled if the correct label is 0, so the prover cannot possibly lower its loss by changing to a different\nstrategy. If the correct label is 1, then the prover achieves 0 loss by following p1 . Therefore, the prover has\nno incentive to change its strategy.",
+      "pdf_page": "https://arxiv.org/pdf/2108.12099v1#page=15"
+     },
+     {
+      "version": "2108.12099v1",
+      "page": 15,
+      "lines": [
+       14,
+       25
+      ],
+      "text": "Sufficiency: To show that having reached a verifier-leading Stackelberg equilibrium implies a complete\nand sounds proof-verification protocol, we follow a “proof by contrapositive\" argument and prove, instead,\nthat if the verifier is not representing a complete and sound proof-verification protocol, it cannot possibly\nbe a Stackelberg equilibrium.\nAssume that the verifier assigns a non-zero weight to a verification policy v ∗∗ that is neither complete\nand/nor sound. If it’s not complete, then for v ∗∗ there exists a label-1 input x such that there doesn’t exists\na prover policy that can convince the verifier that the correct label is 1. This will cause the verifier’s loss to\nbe nonzero. If it’s not sound, then there exists a label-0 input for which there exists a prover policy that\ncan fool the verifier to answering 1. This will also cause the verifier’s loss to be nonzer. On the other hand,\nif the verifier assigns 0 weight to all non-complete nor non-sound verification modules, then it’s loss will\nbe exactly 0. This implies that the verifier can do strictly better by switching to a complete and sound\nverification protocol.",
+      "pdf_page": "https://arxiv.org/pdf/2108.12099v1#page=15"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2108.12099v1:ASM-DECISION-PROBLEM"
+    ],
+    "stated_hypotheses": [
+     "The verifier leads and the problem instance is revealed after the verifier picks its strategy.",
+     "A deterministic verifier policy in the verifier's class is complete and sound together with some prover policy (Definition 4, Equations 5 and 6).",
+     "Players minimize the losses of Equations 3 and 4, with the prover always arguing for label 1.",
+     "The result concerns exact equilibria."
+    ],
+    "passages": [
+     {
+      "version": "2108.12099v1",
+      "page": 10,
+      "lines": [
+       62,
+       67
+      ],
+      "text": "Future work should focus on scaling Prover-Verifier Games to more challenging problems. It would\nbe interesting to apply this concept on problems for which no verification protocol is yet known. Our\ntheoretical results focus on the desirability of the equilibria found in different PGB formulations. Since\nsolving for exact equilibria is difficult, more work is needed to understand the behaviour of the prover\nand verifier agents in approximate equilibria. Deploying PVG-trained systems before ensuring that an\nequilibrium has been reached could potentially lead to unexpected behaviour.",
+      "pdf_page": "https://arxiv.org/pdf/2108.12099v1#page=10"
+     }
+    ],
+    "check": "not verified: the blind checks miss some dropped conditions on theorem cards; read the theorem's statement at the cited page"
+   },
+   "setting": {
+    "systems": "Abstract prover and verifier policies (Definition 4)",
+    "task_data": "Abstract decision problem with binary labels",
+    "judge": null,
+    "regime": "theory",
+    "scale": null
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [],
+    "notes": "The theory concerns exact equilibria; the authors say behaviour at approximate equilibria needs more work."
+   },
+   "strength": {
+    "grade": "PROVED_IN_PAPER",
+    "reason": "Theorem 2 is proved in the paper (proof on PDF p. 15), with separate arguments for necessity and sufficiency."
+   },
+   "review_status": "provisional_ai_draft",
+   "check_history": [
+    "card-1: flagged or undecided by two blind checks; rewritten from the checkers' suggested fix (quotes unchanged)"
+   ]
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2108.12099v1:THM-3-SIMULTANEOUS-NASH",
+   "paper": "2108.12099v1",
+   "evidence_type": "theorem",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2108.12099v1:DEF-DESIDERATA-INCENTIVES"
+    ],
+    "description": "Proof given in the paper (PDF p. 15): with the verifier fixed at the complete and sound policy the prover cannot lower its loss, and with the prover fixed the verifier already has zero loss, so the pair is a Nash equilibrium; Corollary 1 follows from Theorem 2 plus this result. That Nash equilibria need not be complete and sound is shown only by an example (a verifier that ignores the prover).",
+    "passages": [
+     {
+      "version": "2108.12099v1",
+      "page": 15,
+      "lines": [
+       29,
+       39
+      ],
+      "text": "Proof. Proving necessity for the simultaneous setup is identical to proving necessity of the verifier-leading\nStackelberg setup.\nThe complete and sound prover-verifier pair (p1 , v1 ) (i.e. the verifier strategy of assigning a weight of 1\nto v1 ), whose existence is guaranteed by the problem definition, form a Nash equilibrium.\nIf we fix the verifier strategy at v1 , then the prover has no incentive to change it’s strategy. In the\ncollaborative case (when the input belongs to class 1, the prover already achieves 0 loss. In the adversarial\ncase, the verifier is never fooled (by the soundness assumption) so the prover cannot improve its loss by\nswitching to a different strategy. Therefore, if we fix the verifier strategy, the prover wouldn’t move.\nIf we fix the prover strategy at p1 , then the verifier already achieves 0 loss by following v1 . Therefore it\ndoesn’t have an incentive to move.\nTherefore, the (p1 , v1 ) pair form a Nash equilibrium.",
+      "pdf_page": "https://arxiv.org/pdf/2108.12099v1#page=15"
+     },
+     {
+      "version": "2108.12099v1",
+      "page": 15,
+      "lines": [
+       40,
+       44
+      ],
+      "text": "Corollary 1. All verifier-leading Stackelberg equilibria are Nash equilibria of PVG.\nProof. Having reached a verifier-leading Stackelberg equilibria is sufficient for having found a complete and\nsound proof-verification protocol (by Theorem 2). A sound and complete proof-verification protocol already\nconstitute a Nash equilibrium 3. Therefore, having reached a verifier-leading Stackelbeg equilibrium implies\nhaving reached a Nash equilibrium.",
+      "pdf_page": "https://arxiv.org/pdf/2108.12099v1#page=15"
+     },
+     {
+      "version": "2108.12099v1",
+      "page": 6,
+      "lines": [
+       28,
+       30
+      ],
+      "text": "There might exist Nash equilibria that don’t correspond to complete and sound protocols. For instance,\nthe case in which the verifier completely ignores the prover constitutes a Nash equilibrium. We call this the\n“coordination problem\" failure mode: no player can adopt a protocol unilaterally.",
+      "pdf_page": "https://arxiv.org/pdf/2108.12099v1#page=6"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2108.12099v1:ASM-DECISION-PROBLEM"
+    ],
+    "stated_hypotheses": [
+     "Prover and verifier move simultaneously and the problem instance is revealed after both pick their strategies.",
+     "A complete and sound prover-verifier pair exists (Definition 4).",
+     "The result concerns exact equilibria.",
+     "Corollary 1 concerns verifier-leading Stackelberg equilibria (verifier moves first) and relies on Theorem 2's sufficiency result for that formulation."
+    ],
+    "passages": [
+     {
+      "version": "2108.12099v1",
+      "page": 10,
+      "lines": [
+       62,
+       67
+      ],
+      "text": "Future work should focus on scaling Prover-Verifier Games to more challenging problems. It would\nbe interesting to apply this concept on problems for which no verification protocol is yet known. Our\ntheoretical results focus on the desirability of the equilibria found in different PGB formulations. Since\nsolving for exact equilibria is difficult, more work is needed to understand the behaviour of the prover\nand verifier agents in approximate equilibria. Deploying PVG-trained systems before ensuring that an\nequilibrium has been reached could potentially lead to unexpected behaviour.",
+      "pdf_page": "https://arxiv.org/pdf/2108.12099v1#page=10"
+     }
+    ],
+    "check": "not verified: the blind checks miss some dropped conditions on theorem cards; read the theorem's statement at the cited page"
+   },
+   "setting": {
+    "systems": "Abstract prover and verifier policies (Definition 4)",
+    "task_data": "Abstract decision problem with binary labels",
+    "judge": null,
+    "regime": "theory",
+    "scale": null
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [],
+    "notes": "Only necessity is proved: Nash equilibria that are not complete and sound protocols may exist, for example a verifier that ignores the prover (the 'coordination problem' failure mode). The theory concerns exact equilibria."
+   },
+   "strength": {
+    "grade": "PROVED_IN_PAPER",
+    "reason": "Theorem 3 and Corollary 1 are proved in the paper (proofs on PDF p. 15); the non-sufficiency remark is an example rather than part of the theorem."
+   },
+   "review_status": "provisional_ai_draft",
+   "check_history": [
+    "card-1: flagged or undecided by two blind checks; rewritten from the checkers' suggested fix (quotes unchanged)",
+    "card-3: flagged by the checks under rubric v1.1; rewritten from the checkers' suggested fix (quotes unchanged)"
+   ]
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2108.12099v1:RES-BEC-FROZEN-VERIFIER",
+   "paper": "2108.12099v1",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2108.12099v1:DEF-DESIDERATA-INCENTIVES"
+    ],
+    "description": "Small fully connected prover and verifier networks are trained with alternating Adam updates (5 verifier updates per prover update) on the binary erasure channel until the frozen verifier's precision and recall reach 1; the frozen verifier is then evaluated against a prover retrained for 500 Adam steps and against messages optimized directly with L-BFGS, and compared with a collaboratively trained verifier.",
+    "passages": [
+     {
+      "version": "2108.12099v1",
+      "page": 9,
+      "lines": [
+       52,
+       63
+      ],
+      "text": "We parametrized the prover as a small fully connected network\nthat takes one-hot-encoded input bits [1, 0] or [0, 1] as inputs\nand outputs logits over the K = 16 communication tokens.\nThe verifier was instantiated as a small network that takes\nin the one-hot encoded communication tokens as inputs and\noutputs logits that are used to compute the probability the\nverifier assigns to the labels 0 and 1. We sampled the input\nbits uniformly, which means the labels were balanced. We\nused the Adam optimizer [18] with its PyTorch defaults [27],\nbatch size of 2000 and learning rate of 0.0003. We updated the\nverifier 5 times for every prover update. Details about training\nsetup are described in Appendix E.1.",
+      "pdf_page": "https://arxiv.org/pdf/2108.12099v1#page=9"
+     },
+     {
+      "version": "2108.12099v1",
+      "page": 17,
+      "lines": [
+       37,
+       48
+      ],
+      "text": "• Prover Network: We parametrized the prover as a two hidden layer fully connected LeakyReLU\nnetwork with width 100 and LayerNorm [2] layers fully connected network. We used the Gumbel-softmax\ntrick (with a constant temperature of 1) to sample (one hot encoded) communication tokens. We use the\nStraight-Through Gumbel Softmax Estimator [22] to backpropagate through the discrete sampling step.\n• Verifier Network: The verifier was instantiated as a one hidden layer, fully connected LeakyReLU\nneural network with width 100 and LayerNorm layers.\n• Optimization setup: We used the Adam optimizer for updating both the prover and verifier with a\nlearning rate of 0.0003 and batch size of 2000. We updated the verifier 5 times for each prover update.\nWe observed that training the prover to solve the classification and autoencoding auxiliary tasks doesn’t\nhave an impact on training, likely due to the simplicity of this task. We ran optimization until the\nverifier learned a complete and sound proof-verification protocol (or, frozen verifier’s precision and recall\nreached the value of 1)",
+      "pdf_page": "https://arxiv.org/pdf/2108.12099v1#page=17"
+     },
+     {
+      "version": "2108.12099v1",
+      "page": 17,
+      "lines": [
+       49,
+       52
+      ],
+      "text": "• Evaluation details: To train the prover against the frozen verifier, we use the Adam optimizer with a\nlearning rate of 0.0003 for 500 gradient steps, which we found was enough to reach near-convergence. To\noptimize the prover messages directly, we use the PyTorch implementation [27] of the LBFGS optimizer\n[25] with a learning rate of 1, history size of 300 and “strong Wolfe\" line search. We terminate the",
+      "pdf_page": "https://arxiv.org/pdf/2108.12099v1#page=17"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "The prover cannot send message 1 when x = 0 or message 0 when x = 1, the restriction that makes the channel resemble a binary erasure channel.",
+     "Input bits are sampled uniformly, so labels are balanced.",
+     "Training is run until the verifier has learned a complete and sound protocol, i.e. until frozen precision and recall reach 1."
+    ],
+    "passages": [
+     {
+      "version": "2108.12099v1",
+      "page": 7,
+      "lines": [
+       1,
+       7
+      ],
+      "text": "We impose some further restrictions: the prover cannot send the message 1 when x = 0 and cannot send\n0 when x = 1. With this restriction, the communication channel between the prover and verifier resemble\nthe binary erasure channel [6] with the tokens {2, ..., K} representing multiple erasure tokens. This setup is\na simplification of the more general assumption that there exists a complete and sound verification protocol\nthat is realizable by the prover and verifier. In this setting (given loss functions defined in Eq. (3) and (4)),\nthe joint strategy of prover sending the right proof with p11 = 1 and verifier proceeding with q1 = 1 but\nqi = 0 for all i 6= 1 is a Nash equilibrium.",
+      "pdf_page": "https://arxiv.org/pdf/2108.12099v1#page=7"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Prover: two-hidden-layer fully connected LeakyReLU network (width 100); verifier: one-hidden-layer fully connected LeakyReLU network (width 100)",
+    "task_data": "Binary erasure channel task with K = 16 communication tokens and uniformly sampled input bits",
+    "judge": "The frozen verifier network, scored by precision and recall",
+    "regime": "mixed",
+    "scale": "Network width 100; batch size 2000; K = 16 tokens"
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2108.12099v1:LIM-HARD-TO-FIND-PROOFS"
+    ],
+    "notes": "Optimization was run until the frozen verifier's precision and recall reached 1, so the perfect scores coincide with the stopping rule; the passages report no number of runs and no uncertainty; incorrect proofs that are hard to find may still exist."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "One task (binary erasure channel) with point values only and no uncertainty or number of runs reported in the passages."
+   },
+   "review_status": "provisional_ai_draft",
+   "check_history": [
+    "card-1: flagged or undecided by two blind checks; rewritten from the checkers' suggested fix (quotes unchanged)"
+   ]
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2108.12099v1:RES-FINDTHEPLUS",
+   "paper": "2108.12099v1",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2108.12099v1:DEF-DESIDERATA-INCENTIVES"
+    ],
+    "description": "A convolutional prover and a four-head Spatial-Transformer-like verifier restricted to part of the image are trained with alternating Adam updates, prover pretraining, adaptive prover steps and label smoothing; the frozen verifier is evaluated as in the binary erasure channel experiments, reporting the checkpoint with the best frozen accuracy against optimized proofs and the best of four seeds.",
+    "passages": [
+     {
+      "version": "2108.12099v1",
+      "page": 18,
+      "lines": [
+       31,
+       39
+      ],
+      "text": "• Verifier Network: We parametrized the verifier with the Spatial Transformer Network-like [16]\narchitecture with 4 heads. This architecture linearly transforms the prover messages into 2 × 3 matrices\nthat parametrize what kind of spatial transformation should be applied to the image. The transformed\nimages are then fed into a final linear classifier that produces the verifier predictions. A schematic\ndiagram of a single head of this architecture is displayed in Figure 3. We constrained the allowed spatial\ntransformations to only include shifts, and hard-coded the rest to zoom in by a factor of 2, and have no\nrotation and shear. These constraints only serve to improve the clarity plus visualizations and allow us\nto inspect training - training still succeeds if we remove these constraints. We used zero padding, if the\nverifier chose to shift its gaze to outside of the image.",
+      "pdf_page": "https://arxiv.org/pdf/2108.12099v1#page=18"
+     },
+     {
+      "version": "2108.12099v1",
+      "page": 18,
+      "lines": [
+       40,
+       47
+      ],
+      "text": "• Optimization Setup: We used the Adam optimizer for updating both the prover and verifier with a\nlearning rate of 0.0003 and batch size of 2000. We updated the verifier 1 times for each prover update.\nWe observed that pretraining training the prover to solve the classification task speeds up training\nconsiderably, while the autoencoding head doesn’t have a significant impact. We adaptively incremented\nthe prover’s number of steps if the verifier’s accuracy kept above 75% for 20 consequent game steps, and\nstopped incrementing when the prover’s number of steps reached 15. We ran pretraining using the same\noptimizer settings, for 100 gradient steps (enough to let the prover achieve around 80% accuracy).\nWe employed a bit of Label Smoothing [24] (with coefficient 0.05) to the verifier loss to regularize training.",
+      "pdf_page": "https://arxiv.org/pdf/2108.12099v1#page=18"
+     },
+     {
+      "version": "2108.12099v1",
+      "page": 19,
+      "lines": [
+       4,
+       11
+      ],
+      "text": "throughout training. We report our results at the point verifier achieved it’s best frozen precision against\ndirectly optimized message vectors. Note that the verifier achieves perfect frozen precision against an\noptimized prover way before this point.\n• Evaluation Details: We used exactly the same evaluation setup we used in the Binary Erasure\nChannel Experiments. We report the results on the training checkpoint with the highest overall frozen\nverifier accuracy against optimized proofs, as the performance of the verifier tends to fluctuate all\nthroughout training. We also report the best result amongst training runs initialized with four random\nnumber generator seeds.",
+      "pdf_page": "https://arxiv.org/pdf/2108.12099v1#page=19"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "The verifier only processes part of the image and depends on the prover's message for where to look (advice it may ignore).",
+     "Allowed spatial transformations are restricted to shifts with a fixed 2x zoom; the authors say training still succeeds without these constraints.",
+     "Labels are balanced during training."
+    ],
+    "passages": [
+     {
+      "version": "2108.12099v1",
+      "page": 18,
+      "lines": [
+       17,
+       20
+      ],
+      "text": "• Task Setup and Data Distribution: We used 10 × 10 images with exactly one 3 × 3 plus patterns in\nthem. The images were single-channel, and the pixel values were binary (i.e. 0 or 1). The plus patterns\nwere either formed using 0-pixels or 1-pixels, which we refer to “red\" or “blue\" plusses in the original\ntext for additional clarity. The used balanced labels during training.",
+      "pdf_page": "https://arxiv.org/pdf/2108.12099v1#page=18"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Convolutional prover followed by a fully connected layer; Spatial-Transformer-like verifier with 4 heads",
+    "task_data": "FindThePlus: binary 10x10 images with a single 3x3 plus, labelled by the colour of the plus",
+    "judge": "The frozen verifier network, scored by precision and recall",
+    "regime": "mixed",
+    "scale": "Batch size 2000; four random seeds"
+   },
+   "quantitative": {
+    "n": "Four training runs (random seeds); the best one is reported",
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2108.12099v1:LIM-HARD-TO-FIND-PROOFS"
+    ],
+    "notes": "Reported values come from the checkpoint with the best frozen-verifier accuracy against optimized proofs and the best of four seeds, because performance fluctuates during training; no uncertainty is reported; incorrect proofs that are hard to find may still exist."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "One task, with best-checkpoint and best-of-four-seeds point values and no uncertainty reported."
+   },
+   "review_status": "provisional_ai_draft"
+  }
+ ]
+}

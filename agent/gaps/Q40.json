@@ -1,0 +1,137 @@
+{
+ "schema": "ASRA-GAP-CLOSING-AGENT-v1",
+ "id": "Q40",
+ "question": "Why does direct supervision beat recursive critique when a stronger model supervises a weaker one, and would better critique abilities change that?",
+ "asked_by": "Wen et al., Scalable Oversight for Superhuman AI via Recursive Self-Critiquing",
+ "rank": 21,
+ "status": "STILL_OPEN",
+ "status_check": "AI_CHECKED",
+ "remaining_question": "In AI-AI recursive self-critiquing where the critic is stronger than the supervised model, does improving the supervised model's self-critique (for example by RL critique training) or making the critic verify rather than defer to that self-critique remove the advantage of direct critique over higher-order critique on the asking paper's tasks?",
+ "remaining_type": "EMPIRICAL",
+ "safety_case": [],
+ "findings": [
+  {
+   "id": "Q40:F1",
+   "later_paper": "arXiv 2605.27483v1: Debate Helps Weak Judges Reward Stronger Models",
+   "first_submitted": "2026-05-26",
+   "effect": "RELATED_ONLY",
+   "claim": "In proposer-critic debate with a stronger debater and a weaker judge, debate raised macro-F1 over consultancy on three of five model pairings and had no effect on two; the authors report that the split follows whether the critic's classifier macro-F1 exceeds the judge's and whether the judge verifies rather than summarises the critic's claims, with verification rates dropping by tens of points once a critic entered on the non-responder pairings. They flag this as a hypothesis well supported within five pairings, not a law.",
+   "setting": "Empirical. Five stronger-debater/weaker-judge LLM pairings: Qwen3.5-122B/35B, gpt-oss-120B/20B and Qwen3.5-35B/Qwen3-4B on Code Contests, Gemini 3.1 Pro/3 Flash and Opus 4.6/4.5 on ARC-AGI-2; programmatically verifiable tasks; LLM judges; consultancy baseline. No recursive critique and no strong-critic/weak-supervised setting.",
+   "bears_on": "By analogy only, the 'would better critique abilities change it' part: a critique helps its reader only when the critic out-classifies the reader and the reader verifies it. Not tested for higher-order self-critique by a weaker supervised model read by a stronger critic.",
+   "passages": [
+    {
+     "version": "2605.27483v1",
+     "page": 2,
+     "lines": [
+      17,
+      28
+     ],
+     "text": "ground truth—proposer–critic debate raises macro-F1 over consultancy on three of five model pairings\nand shows no effect on the other two. The split is governed by a single condition: debate helps only\nwhen the critic provides a usable advantage. That condition has two sub-parts, both of which must\nhold. First, the critic’s classifier macro-F1 must exceed the opening-only consultancy judge’s—there\nhas to be a margin worth importing; raw judge capability and the critic’s generator–verifier gap\ndo not predict the split, but this critic–judge classifier gap does. Second, the judge must treat the\ncritic’s stance as a claim to verify rather than testimony to summarize. Behavior reviews of the\ntranscripts (§4.2, Appendix L) show the mechanism: on responder pairings both sub-parts hold and\njudges import the critic’s signal; on the two non-responder pairings in our set, both sub-parts fail\ntogether—the critic’s and judge’s binary-classification ability are within noise of each other, and\nverification rates drop by tens of percentage points once a critic enters the transcript, with the critic’s\ndisagreement parsed as testimony rather than a claim to check.",
+     "pdf_page": "https://arxiv.org/pdf/2605.27483v1#page=2"
+    },
+    {
+     "version": "2605.27483v1",
+     "page": 2,
+     "lines": [
+      29,
+      35
+     ],
+     "text": "We flag a small-N caveat: with five pairings, the gap diagnostic is a hypothesis well-supported\nwithin our experimental set, not a law established at scale. We also note that with ARC-AGI-2\nsubstantially harder than Code Contests, our pairings do not let us cleanly separate the critic–judge\ngap from broader capability differences; the two conditions we identify (judge verification behavior\nand critic–judge classifier gap) are themselves capability properties, just more specific ones than\nraw solve rate. Whether the same mechanism transfers to fuzzier domains where programmatic\nverification is unavailable is a hypothesis warranting further work, not a finding from our experiments.",
+     "pdf_page": "https://arxiv.org/pdf/2605.27483v1#page=2"
+    },
+    {
+     "version": "2605.27483v1",
+     "page": 6,
+     "lines": [
+      65,
+      70
+     ],
+     "text": "Debate improves macro-F1 over consultancy on three of five pairings and has no effect on the other\ntwo (Figure 2). It helps Qwen3.5-122B/35B on Code Contests (+14.0pp under our canonical prompt\nand +7.3pp under a simpler one, both p < 0.001), and Gemini 3.1 Pro/3 Flash and Opus 4.6/4.5\non ARC-AGI-2 (+14.0pp and +15.7pp, both p < 0.01). It does not help gpt-oss-120B/20B or\nQwen3.5-35B/Qwen3-4B on Code Contests (+1.4pp, p = 0.23 and −0.2pp, p = 0.93). We call the\nfirst group responder pairings and the second non-responder pairings.",
+     "pdf_page": "https://arxiv.org/pdf/2605.27483v1#page=6"
+    }
+   ]
+  },
+  {
+   "id": "Q40:F2",
+   "later_paper": "arXiv 2606.00424v2: Weak Critics Make Strong Learners: On-Policy Critique Distillation for Scalable Oversight",
+   "first_submitted": "2026-05-29",
+   "effect": "RELATED_ONLY",
+   "claim": "With a weak model critiquing a stronger model's answer before the strong model revises, the authors report that weak critiques improved the frozen strong model, but that misleading critiques can hurt performance even relative to no critique; reusing a critique from a chain where a correct answer was revised to an incorrect one ('worst critic') performed worst among the critique-quality baselines on GPQA Diamond, falling slightly below the strong model alone (S) only at pass@16.",
+   "setting": "Empirical, inference-time critique-and-refine (the paper's training method is not quoted here). A weak critic (W) critiques a frozen strong model's (S) initial answer, which the strong model then revises; Phi-4 results on GPQA Diamond, with IFEval also reported; pass@k. The best/worst-critic baselines are chosen post hoc from outcome labels. Not recursive critique read by a stronger critic.",
+   "bears_on": "Related evidence that critiques from a weaker model can mislead a stronger model and that critique quality matters, but in a weak-critic/strong-reviser setting, not recursive self-critique judged by a stronger critic.",
+   "passages": [
+    {
+     "version": "2606.00424v2",
+     "page": 2,
+     "lines": [
+      8,
+      17
+     ],
+     "text": "conditioned on the question, the initial answer, and the critique. This directly evaluates whether weak critiques can\nimprove a frozen strong model. Our results show that they\ncan, even when the critique only gives a general revision\ndirection rather than a detailed error analysis. This supports\nthe core hypothesis of weak-critic strong oversight: weak\nsupervisors may not need to solve or judge the full task to\nprovide useful oversight. We also find that critique quality is\ncentral. Helpful critiques improve performance, while misleading critiques can hurt performance, even compared with\nusing no critique. This motivates filtering useful critiques\nbefore using them for training.",
+     "pdf_page": "https://arxiv.org/pdf/2606.00424v2#page=2"
+    },
+    {
+     "version": "2606.00424v2",
+     "page": 3,
+     "lines": [
+      72,
+      81
+     ],
+     "text": "refinement. In S + best critic + refine, we select a critique\nfrom a chain where the initial answer is incorrect but the\nrefined answer becomes correct, if such a chain exists. This\nsetting approximates the effect of a high-quality critique.\nIn S + random critic + refine, we uniformly sample one\ncritique from the first k chains, which measures the effect\nof critique reuse without correctness information. In S +\nworst critic + refine, we select a critique from a chain where\nthe initial answer is correct but the refined answer becomes\nincorrect, if such a chain exists. For the thinking-model",
+     "pdf_page": "https://arxiv.org/pdf/2606.00424v2#page=3"
+    },
+    {
+     "version": "2606.00424v2",
+     "page": 4,
+     "lines": [
+      130,
+      141
+     ],
+     "text": "Table 1. Inference-time scaling results on reasoning and alignment benchmarks. All results are reported as accuracy percentages. S and\nW denote the strong and weak models, respectively. Best results within each benchmark are highlighted in bold.\n\nHigh-Quality Critiques Improve Performance and Generalize Across different Initial Answers. The baselines\nfor Phi-4 in Table 1 show that critique quality matters in improving performance. Notably, on GPQA Diamond S+best\ncritic+refine achieves best performance on pass@4, pass@8,\nand pass@16 with 80.30, 87.37 and 92.42 respectively.\nWhile we can also observe that S+random critic+refine is\nconsistently weaker than S+W critic+refine at larger budgets and S+worst critic+refine performs the worst among\nother critique-quality baselines, with 68.18 pass@4, 80.81\npass@8, and 83.33 pass@16, eventually falling slightly below S only at pass@16. Also, a similar pattern appears on\nIFEval, S+best critic+refine achieves the strongest results",
+     "pdf_page": "https://arxiv.org/pdf/2606.00424v2#page=4"
+    }
+   ]
+  },
+  {
+   "id": "Q40:F3",
+   "later_paper": "arXiv 2509.05396v2: Talk Isn't Always Cheap: Understanding Failure Modes in Multi-Agent Debate",
+   "first_submitted": "2025-09-05",
+   "effect": "RELATED_ONLY",
+   "claim": "In multi-agent debate among LLM agents of differing capability, the authors report that introducing a weaker agent into a debate with a stronger one can detrimentally affect the outcome, giving results worse than if the agents had not discussed, and that the weaker agent disrupts the stronger agent's performance. Separately, among agents that change their answers, more shift from correct to incorrect than the reverse, which the authors say indicates that debate can actively mislead agents who started with correct answers.",
+   "setting": "Empirical. Multi-round multi-agent debate among LLM agents, including debates that mix a weaker and a stronger agent; answer transitions between correct and incorrect tracked across rounds; not recursive critique by a stronger supervisor.",
+   "bears_on": "Corroborates, in a different protocol, the asking paper's explanation that a weaker model's reasoning can mislead a stronger one; says nothing about whether better critique ability would change the result.",
+   "passages": [
+    {
+     "version": "2509.05396v2",
+     "page": 2,
+     "lines": [
+      1,
+      8
+     ],
+     "text": "each other’s errors – agreeing reflexively rather than challenging flawed reasoning. These findings\nhold even when there is variation in the abilities of the participating LLM agents. For instance, we\ndiscover that introducing a weak or less capable (lower-performing) LLM agent into a debate with\na strong or more capable (higher-performing) agent can detrimentally affect the debate outcome,\nproducing results worse than if the agents had not engaged in discussion. The presence of a weaker\nagent disrupts the performance of the stronger agent. Moreover, in certain cases, the longer a debate\ncontinues, the more performance can degrade. In other words: talk isn’t always cheap – and in some\ncases, it’s actively harmful.",
+     "pdf_page": "https://arxiv.org/pdf/2509.05396v2#page=2"
+    },
+    {
+     "version": "2509.05396v2",
+     "page": 8,
+     "lines": [
+      50,
+      56
+     ],
+     "text": "→ incorrect, and incorrect → correct. As shown in Figure 2, we observe that most agents with\ninitially incorrect answers do not improve their performance (peach bars), and, of those that do\nchange their answers, there exists a larger shift in agent responses from correct → incorrect answers\n(red) than incorrect → correct (green), indicating that debate can actively mislead agents who started\nwith correct answers. Further, Figure 3 shows that the proportion of correct-to-incorrect transitions\nexceeds the proportion of incorrect-to-correct ones in subsequent rounds, corroborating our earlier\nresults that debate performance degrades over rounds. We further find that there is a dominating effect",
+     "pdf_page": "https://arxiv.org/pdf/2509.05396v2#page=8"
+    }
+   ]
+  }
+ ],
+ "findings_drafted": 3,
+ "maths": [],
+ "experiment_package": null,
+ "review_status": "provisional_ai_draft",
+ "rules": [
+  "Everything here is an AI draft (provisional_ai_draft): each counted item passed two blind AI checks that were tested on planted errors, and no person has reviewed it.",
+  "A finding counts only in the setting its own quoted lines show; read `setting` before carrying it to another setting.",
+  "A question's status is a label from fixed rules over its counted findings; `status_check` says whether that label itself passed its check.",
+  "Cite the paper and page from the passage, and read the PDF page before relying on a claim."
+ ]
+}

@@ -607,7 +607,8 @@
         "scope": "finite matched pixel-debate population under fixed strategies",
         "conditions": [
           "same finite state alphabet across compared protocols",
-          "fixed strategies and channel law"
+          "fixed strategies and channel law",
+          "Blackwell's comparison concerns the expected utility under each channel's optimal decision rule; the paper's judge is a fixed pre-trained classifier that chooses the label with higher logit, not that optimal rule, so the comparison says nothing directly about this judge's accuracy, and no judge action set or loss has yet been specified."
         ],
         "open_obligations": [
           "identify the full conditional law and its sampling uncertainty",
@@ -615,12 +616,12 @@
         ],
         "source_refs": [
           {
-            "locator": "physical PDF p.8 §3.1",
-            "source_id": "N2-SRC:IT:DEBATE-2018"
+            "source_id": "N2-SRC:IT:DEBATE-2018",
+            "locator": "physical PDF p.8 §3.1"
           },
           {
-            "locator": "physical PDF p.1 §I",
-            "source_id": "N2-SRC:IT:RAUH-2017"
+            "source_id": "N2-SRC:IT:RAUH-2017",
+            "locator": "physical PDF p.1 §I"
           }
         ],
         "assessments": [],
@@ -636,7 +637,8 @@
         "state": "PROPOSED",
         "scope": "possible channel order between random-mask and strategic transcript conditions",
         "conditions": [
-          "matched hidden state, transcript semantics, prior, action set, and loss"
+          "matched hidden state, transcript semantics, prior, action set, and loss",
+          "The image population and pixel budget (4 or 6) are the same for both conditions, and the strategic condition fixes the debater strategies, the precommit rule and which player (honest or liar) moves first, which Table 2 reports separately, so that its transcript law is a single fixed kernel."
         ],
         "open_obligations": [
           "identify both K matrices",
@@ -644,12 +646,12 @@
         ],
         "source_refs": [
           {
-            "locator": "physical PDF p.1 §I",
-            "source_id": "N2-SRC:IT:RAUH-2017"
+            "source_id": "N2-SRC:IT:RAUH-2017",
+            "locator": "physical PDF p.1 §I"
           },
           {
-            "locator": "physical PDF p.8 Table 2",
-            "source_id": "N2-SRC:IT:DEBATE-2018"
+            "source_id": "N2-SRC:IT:DEBATE-2018",
+            "locator": "physical PDF p.8 Table 2"
           }
         ],
         "assessments": [],
@@ -713,19 +715,20 @@
         "state": "PROPOSED",
         "scope": "fixed classifier's final mask input and scoring rule's label claims in the 2018 pixel experiment",
         "conditions": [
-          "hold judge weights and input representation fixed"
+          "hold judge weights and input representation fixed",
+          "fix the image population, the protocol (4 or 6 revealed pixels, with or without precommit) and the debater strategies, which the paper computes as optimal play against the fixed judge; the candidate conditional law is defined only once these are fixed, and Table 2's aggregate results do not identify it"
         ],
         "open_obligations": [
           "pin classifier code or full specification and verify its exact inputs"
         ],
         "source_refs": [
           {
-            "locator": "physical PDF p.8 §3.1",
-            "source_id": "N2-SRC:IT:DEBATE-2018"
+            "source_id": "N2-SRC:IT:DEBATE-2018",
+            "locator": "physical PDF p.8 §3.1"
           },
           {
-            "locator": "Proposed debate mapping and its open conditions",
-            "source_id": "N2-SRC:IT:SOURCE-AUDIT"
+            "source_id": "N2-SRC:IT:SOURCE-AUDIT",
+            "locator": "Proposed debate mapping and its open conditions"
           }
         ],
         "assessments": [],
@@ -739,7 +742,7 @@
         "target": "N2:IT:DEBATE-GARBLING-QUESTION",
         "relation": "candidate_mapping",
         "state": "PROPOSED",
-        "scope": "hypothetical application to a fixed pixel-debate population",
+        "scope": "hypothetical application to a fixed pixel-debate population with fixed debater strategies and a fixed precommitment condition; the paper's changes in strategic selection and precommitment are not known to be output garblings",
         "conditions": [
           "prove the two-channel garbling and match utility, prior, actions, and transcript timing"
         ],
@@ -749,8 +752,8 @@
         ],
         "source_refs": [
           {
-            "locator": "Proposed debate mapping and its open conditions",
-            "source_id": "N2-SRC:IT:SOURCE-AUDIT"
+            "source_id": "N2-SRC:IT:SOURCE-AUDIT",
+            "locator": "Proposed debate mapping and its open conditions"
           }
         ],
         "assessments": [],
@@ -957,7 +960,9 @@
         "conditions": [
           "fix one predecision snapshot X and exact materialized monitor-request Y boundary",
           "show Y=f(X), or identify one state-independent stochastic G, under all relevant task contexts",
-          "specify attack and honest episode populations and the same routing action semantics"
+          "cover every monitor branch in that mapping, including the skip_if_no_tool_calls path that returns the default suspicion score without a monitor-model request, and the error paths",
+          "specify attack and honest episode populations and the same routing action semantics",
+          "note that the garbling (Blackwell) order compares channels by the maximal expected utility of optimized decisions, while the pinned basic monitor is a fixed prompted model; a fixed monitor policy can perform worse with a richer signal"
         ],
         "open_obligations": [
           "pin and trace a concrete Rogue Eval predecision snapshot to the exact monitor request",
@@ -967,16 +972,16 @@
         ],
         "source_refs": [
           {
-            "locator": "basic_monitor_builder",
-            "source_id": "INT-V1-SRC-CONTROL-MONITOR"
+            "source_id": "INT-V1-SRC-CONTROL-MONITOR",
+            "locator": "basic_monitor_builder"
           },
           {
-            "locator": "default formatter",
-            "source_id": "INT-V1-SRC-CONTROL-FORMATTER"
+            "source_id": "INT-V1-SRC-CONTROL-FORMATTER",
+            "locator": "default formatter"
           },
           {
-            "locator": "What this changes for the monitoring research question",
-            "source_id": "N2-SRC:PG:SOURCE-AUDIT"
+            "source_id": "N2-SRC:PG:SOURCE-AUDIT",
+            "locator": "What this changes for the monitoring research question"
           }
         ],
         "assessments": [],

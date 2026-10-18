@@ -1,0 +1,620 @@
+{
+ "schema": "ASRA-GAP-CLOSING-AGENT-v1",
+ "paper": "2405.16043v1",
+ "review_status": "provisional_ai_draft",
+ "rules": [
+  "Everything here is an AI draft (provisional_ai_draft): each counted item passed two blind AI checks that were tested on planted errors, and no person has reviewed it.",
+  "A finding counts only in the setting its own quoted lines show; read `setting` before carrying it to another setting.",
+  "A question's status is a label from fixed rules over its counted findings; `status_check` says whether that label itself passed its check.",
+  "Cite the paper and page from the passage, and read the PDF page before relying on a claim."
+ ],
+ "notes": "ASM-ROBUSTNESS and ASM-EXPANSION carry kind 'definition' although their IDs say ASM; they are linked as method/definition records. The quotes of THM-4-1, THM-4-2 and THM-5-1 hold garbled pdftotext formulas (their record texts already flag missing factors); the cards give the hypotheses in words and point to the proofs in Appendices B and D. THM-4-3 is informal in the main text; its formal versions are Theorems B.1 and B.2. CORE combines proved bounds with a claim that expansion holds in practice; it is graded by the weaker, empirical part (EMPIRICAL_SINGLE_SETTING) while the theorem cards carry PROVED_IN_PAPER. RES-IMDB's quote starts mid-sentence ('less than alpha_i'); its bound values ignore the robustness term (Appendix E). Greek letters and set names are spelled out in ASCII in the card text (alpha, eta, S_i^good).",
+ "cards": [
+  {
+   "record_id": "N2:DSOFT:ARXIV-2405.16043v1:CORE",
+   "paper": "2405.16043v1",
+   "evidence_type": "theorem",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2405.16043v1:ASM-EXPANSION",
+     "N2:DSOFT:ARXIV-2405.16043v1:ASM-ROBUSTNESS"
+    ],
+    "description": "Error bounds for a student trained on weak labels are proved under expansion and robustness conditions (Section 4; Theorem 4.1, for example, is proved through an average-case-robust version in Appendix B), a procedure for checking expansion from finite data is given (Section 5), and expansion is measured in an IMDb sentiment experiment (Section 6 and Appendix E).",
+    "passages": [
+     {
+      "version": "2405.16043v1",
+      "page": 2,
+      "lines": [
+       7,
+       17
+      ],
+      "text": "In this work, we give a theoretical analysis of weakly-supervised learning that provably accounts for\nthe effects of pseudolabel correction and coverage expansion. Our results use a natural expansion\ncondition on the population data distribution. Informally, expansion implies that “bad” points (points\nwith incorrect pseudolabels, or points with no pseudolabel at all) have many “good” neighbors (points\nwith correct pseudolabels). If the learned student model is relatively robust on the neighborhoods\nof interest, then making a mistake on a bad point means making many mistakes on good points as\nwell. This allows us to prove a relationship between the student model’s error on the weak labels\n(the training objective) and the student model’s error on the true labels (the desired objective). Our\nassumptions and bounds in Section 4 formalize this intuition. Section 5 details a procedure for\nchecking our expansion conditions from finite data, and in Section 6 and Appendix E, we give\nempirical evidence that these conditions hold on real data.",
+      "pdf_page": "https://arxiv.org/pdf/2405.16043v1#page=2"
+     },
+     {
+      "version": "2405.16043v1",
+      "page": 18,
+      "lines": [
+       5,
+       10
+      ],
+      "text": "We directly prove the “average-case-robust” version of Theorem 4.1. Theorem 4.1 then follows from\nthe equivalence between expansion and robust expansion, and adversarial robustness and η-robustness,\nwhen η = 0.\nTheorem B.1 (Pseudolabel correction). Suppose Mη′ (Sigood , F) satisfies (c, q, η)-robust expansion\non (Sibad , Sigood ) for some c > 0 and η ≥ 0. Consider an arbitrary classifier f such that P(f (x) ̸=\nỹ(x) or f not η-robust at x|Si ) ≤ 1 − q − αi . Then f satisfies the following error bound:",
+      "pdf_page": "https://arxiv.org/pdf/2405.16043v1#page=18"
+     },
+     {
+      "version": "2405.16043v1",
+      "page": 9,
+      "lines": [
+       98,
+       104
+      ],
+      "text": "Setup. We explore training linear classifiers on top of the contrastively-fine-tuned SentenceBERT\nembeddings2 [52]. As shown in Muennighoff et al. [44], training simple classifiers on top of these complex pretrained representations leads to very competitive performance. We study binary sentiment prediction for movie reviews on the IMDb dataset [41], continuing with the example from Section 3. For\nthe teacher model, we use a very coarse rule [49] based on the presence of the unigrams “incredible”\nand “horrible”. Let C(w, x) be the number of times word w appears in input x. The weak label ỹ(x)\nis 1 when C(incredible, x) > C(horrible, x), 0 when C(horrible, x) > C(incredible, x),\nand ∅ otherwise. This counts the occurrences of “horrible” and “incredible” and assigns the binary\nlabel corresponding to the word that occurs strictly more often, and abstains otherwise.",
+      "pdf_page": "https://arxiv.org/pdf/2405.16043v1#page=9"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2405.16043v1:ASM-PSEUDOLABELER",
+     "N2:DSOFT:ARXIV-2405.16043v1:ASM-ORACLE"
+    ],
+    "stated_hypotheses": [
+     "The pseudolabeler and the true labels are deterministic functions of the input; the pseudolabeler may abstain, and its error rate on each covered class subset is strictly between 0 and 1/2.",
+     "Expansion holds for the families of sets generated by the student hypothesis class, between incorrectly pseudolabeled, correctly pseudolabeled and uncovered points.",
+     "The student is robust on the neighborhoods: adversarially robust at most points in Section 4.1, robust only on average in Section 4.2.",
+     "The neighborhoods are symmetric, and for exposition the input space is a discrete (possibly very large) set.",
+     "Checking expansion from data assumes a neighborhood oracle."
+    ],
+    "passages": [
+     {
+      "version": "2405.16043v1",
+      "page": 3,
+      "lines": [
+       18,
+       21
+      ],
+      "text": "Notation. x refers to a random variable with distribution D and italicized letters x refer to realizations\nof x. We will assume for ease of exposition that the input space X is a discrete1 (but possibly very\ns = X \\ A.\nlarge) set, such as all vectors in Rd up to a fixed numerical precision. For A ⊂ X we use A",
+      "pdf_page": "https://arxiv.org/pdf/2405.16043v1#page=3"
+     },
+     {
+      "version": "2405.16043v1",
+      "page": 5,
+      "lines": [
+       55,
+       59
+      ],
+      "text": "4.1 Adversarially Robust Models\nWe begin by stating our theorems for the case when the classifier of interest is η-robust with η = 0\non most points x. That is, we assume that for most points x, the classifier is adversarially robust over\nN (x). This follows the assumptions in related work from other domains [69, 12]. We describe our\nresults for the significantly more general average-case-robust classifiers in Section 4.2.",
+      "pdf_page": "https://arxiv.org/pdf/2405.16043v1#page=5"
+     },
+     {
+      "version": "2405.16043v1",
+      "page": 4,
+      "lines": [
+       47,
+       50
+      ],
+      "text": "Definition 1 (Neighborhood). Let N be a neighborhood function that maps each point x to a set\nof points N (x) ⊂ X that we call the neighborhood of x. We will assume that N satisfies x ∈\nN (x′ ) ⇐⇒ x′ ∈ S\nN (x), i.e., that the neighborhoods are symmetric. We can extend N to a function",
+      "pdf_page": "https://arxiv.org/pdf/2405.16043v1#page=4"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "A student classifier from a hypothesis class F trained on a weak teacher's pseudolabels (theory); in the experiment, linear classifiers on SentenceBERT embeddings",
+    "task_data": "Weakly supervised classification in general (theory); IMDb binary movie-review sentiment with a word-count rule as teacher (experiment)",
+    "judge": "Errors are measured against the ground-truth labels",
+    "regime": "mixed",
+    "scale": null
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2405.16043v1:LIM-1"
+    ],
+    "notes": "The authors call their search for the worst-expanding set a heuristic and their experiments limited in scope, and they propose no new weak supervision algorithm."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "The bounds are proved in the paper (Appendix B), but the claim also says the expansion properties hold in practice, which rests on one IMDb experiment with no reported uncertainty; the claim is graded by that weaker part, and the theorem cards carry PROVED_IN_PAPER."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2405.16043v1:THM-4-1",
+   "paper": "2405.16043v1",
+   "evidence_type": "theorem",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2405.16043v1:ASM-EXPANSION",
+     "N2:DSOFT:ARXIV-2405.16043v1:ASM-ROBUSTNESS"
+    ],
+    "description": "Proved through the average-case-robust Theorem B.1 in Appendix B.1: Theorem 4.1 follows from its bound by taking Delta = 3/4 and eta = 0 (adversarial robustness).",
+    "passages": [
+     {
+      "version": "2405.16043v1",
+      "page": 18,
+      "lines": [
+       5,
+       10
+      ],
+      "text": "We directly prove the “average-case-robust” version of Theorem 4.1. Theorem 4.1 then follows from\nthe equivalence between expansion and robust expansion, and adversarial robustness and η-robustness,\nwhen η = 0.\nTheorem B.1 (Pseudolabel correction). Suppose Mη′ (Sigood , F) satisfies (c, q, η)-robust expansion\non (Sibad , Sigood ) for some c > 0 and η ≥ 0. Consider an arbitrary classifier f such that P(f (x) ̸=\nỹ(x) or f not η-robust at x|Si ) ≤ 1 − q − αi . Then f satisfies the following error bound:",
+      "pdf_page": "https://arxiv.org/pdf/2405.16043v1#page=18"
+     },
+     {
+      "version": "2405.16043v1",
+      "page": 18,
+      "lines": [
+       39,
+       44
+      ],
+      "text": "Proof. The first part directly follows from Theorem B.1 by substituting the value of c′ , using c ≤ 1,\nand using the form of ∆ to simplify the bound. Theorem 4.1 follows from taking ∆ = 3/4, which\nwas small enough for the error condition to hold empirically. The condition on q in Theorem 4.1\nimplies that if P(f (x) ̸= ỹ(x) or f not η-robust at x|Si ) ≤ 1−αi4+3cαi , then\nP(f (x) ̸= ỹ(x) or f not η-robust at x|Si ) ≤ 1 − q − αi ,\nso the conditions of Theorem B.1 hold. This upper bound on q could be replaced by instead assuming",
+      "pdf_page": "https://arxiv.org/pdf/2405.16043v1#page=18"
+     },
+     {
+      "version": "2405.16043v1",
+      "page": 5,
+      "lines": [
+       60,
+       66
+      ],
+      "text": "Expanding Families. We first define the families M and M′ of sets that must expand according\nto Definition 4. Let F be the hypothesis class of the strong model and for each f ∈ F, define\nR(f ) = R0 (f ) = {x : r(f, x) = 0} to be the set of adversarially robust points for f . For B ⊂ X and\nf ∈ F, define U (B, f ) = {x ∈ B ∩ R(f ) : f (x) ̸= y(x)} as the set of robust points in B where f\nmakes a mistake on the true label y. Now define M(B, F) to be the class of these robust mistakes sets:\nM(B, F) = {U (B, f ) : f ∈ F}. Similarly, define M′ (B, F) = {(B \\ U (B, f )) ∩ R(f ) : f ∈ F}\nas the family of robust non-mistakes on B.",
+      "pdf_page": "https://arxiv.org/pdf/2405.16043v1#page=5"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2405.16043v1:ASM-PSEUDOLABELER"
+    ],
+    "stated_hypotheses": [
+     "M'(S_i^good, F), the family of robust non-mistake sets of student classifiers on S_i^good, satisfies (c, q)-expansion on (S_i^bad, S_i^good).",
+     "q is below a multiple of (1 - 2 alpha); the multiple is garbled in the extracted text.",
+     "f is in F and, on S_i, the probability that f disagrees with the weak label or is not robust is at most (1 - alpha + 3c alpha)/4.",
+     "The weak labeler's error rate alpha_i on S_i is strictly between 0 and 1/2.",
+     "Robustness means adversarial robustness (eta = 0) on the neighborhoods at most points; the neighborhoods are symmetric."
+    ],
+    "passages": [
+     {
+      "version": "2405.16043v1",
+      "page": 5,
+      "lines": [
+       55,
+       59
+      ],
+      "text": "4.1 Adversarially Robust Models\nWe begin by stating our theorems for the case when the classifier of interest is η-robust with η = 0\non most points x. That is, we assume that for most points x, the classifier is adversarially robust over\nN (x). This follows the assumptions in related work from other domains [69, 12]. We describe our\nresults for the significantly more general average-case-robust classifiers in Section 4.2.",
+      "pdf_page": "https://arxiv.org/pdf/2405.16043v1#page=5"
+     },
+     {
+      "version": "2405.16043v1",
+      "page": 4,
+      "lines": [
+       47,
+       50
+      ],
+      "text": "Definition 1 (Neighborhood). Let N be a neighborhood function that maps each point x to a set\nof points N (x) ⊂ X that we call the neighborhood of x. We will assume that N satisfies x ∈\nN (x′ ) ⇐⇒ x′ ∈ S\nN (x), i.e., that the neighborhoods are symmetric. We can extend N to a function",
+      "pdf_page": "https://arxiv.org/pdf/2405.16043v1#page=4"
+     }
+    ],
+    "check": "not verified: the blind checks miss some dropped conditions on theorem cards; read the theorem's statement at the cited page"
+   },
+   "setting": {
+    "systems": "Any student classifier f in the hypothesis class F",
+    "task_data": "A covered class subset S_i, split into correctly (S_i^good) and incorrectly (S_i^bad) pseudolabeled points",
+    "judge": null,
+    "regime": "theory",
+    "scale": null
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [],
+    "notes": "Stated for students that are adversarially robust at most points; Section 4.2 gives the average-case-robust version. The bound's exact form is garbled in the extracted text, and the authors note Delta = 3/4 was chosen as small enough for the error condition to hold empirically."
+   },
+   "strength": {
+    "grade": "PROVED_IN_PAPER",
+    "reason": "Theorem 4.1 is derived in Appendix B from Theorem B.1, which the appendix proves."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2405.16043v1:THM-4-2",
+   "paper": "2405.16043v1",
+   "evidence_type": "theorem",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2405.16043v1:ASM-EXPANSION",
+     "N2:DSOFT:ARXIV-2405.16043v1:ASM-ROBUSTNESS"
+    ],
+    "description": "Proved through Theorem B.2 in Appendix B, an average-case-robust version that allows different expansion parameters c1 and c2; Theorem 4.2 is its special case eta = 0 and c1 = c2.",
+    "passages": [
+     {
+      "version": "2405.16043v1",
+      "page": 21,
+      "lines": [
+       5,
+       12
+      ],
+      "text": "We directly prove the “average-case-robust” version of Theorem 4.2. Theorem 4.2 then follows from\nthe equivalence between expansion and robust expansion, and adversarial robustness and η-robustness,\nwhen η = 0. The following theorem also allows for Ti to expand to Sigood and Sibad in different\namounts, controlled by the two expansion parameters c1 and c2 . This allows for empirically tighter\nbounds and is used in our experiments in Section 6. Theorem 4.2 is a special case of Theorem B.2\ntaking η = 0 and c1 = c2 .\nTheorem B.2 (Average-case-robust version of Theorem 4.2). Suppose there exists c1 , c2 , q, η >\n0 such that Mη (Ti , F, y) satisfies (c1 , q, η)-expansion on (Sigood , Ti ) and Mη′ (Ti , F, y) satisfies",
+      "pdf_page": "https://arxiv.org/pdf/2405.16043v1#page=21"
+     },
+     {
+      "version": "2405.16043v1",
+      "page": 22,
+      "lines": [
+       48,
+       51
+      ],
+      "text": "If c1 = c2 ≡ c, we have c/c̄ = 1 and c1 − (c1 + c2 )αi = c(1 − 2αi ), which gives a simpler bound\nfor coverage expansion of average-case-robust classifiers. When η = 0, P(Rη (f )|Ti ) := P(R(f )|Ti )\nby definition, and (c, q, η)-expansion is equivalent to (c, q)-expansion. These two simplifications\ndirectly yield Theorem 4.2 for coverage expansion of adversarially robust classifiers.",
+      "pdf_page": "https://arxiv.org/pdf/2405.16043v1#page=22"
+     },
+     {
+      "version": "2405.16043v1",
+      "page": 5,
+      "lines": [
+       60,
+       66
+      ],
+      "text": "Expanding Families. We first define the families M and M′ of sets that must expand according\nto Definition 4. Let F be the hypothesis class of the strong model and for each f ∈ F, define\nR(f ) = R0 (f ) = {x : r(f, x) = 0} to be the set of adversarially robust points for f . For B ⊂ X and\nf ∈ F, define U (B, f ) = {x ∈ B ∩ R(f ) : f (x) ̸= y(x)} as the set of robust points in B where f\nmakes a mistake on the true label y. Now define M(B, F) to be the class of these robust mistakes sets:\nM(B, F) = {U (B, f ) : f ∈ F}. Similarly, define M′ (B, F) = {(B \\ U (B, f )) ∩ R(f ) : f ∈ F}\nas the family of robust non-mistakes on B.",
+      "pdf_page": "https://arxiv.org/pdf/2405.16043v1#page=5"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2405.16043v1:ASM-PSEUDOLABELER"
+    ],
+    "stated_hypotheses": [
+     "M(T_i, F), the robust mistake sets of student classifiers on the uncovered set T_i, satisfies (c, q)-expansion on (S_i^good, T_i).",
+     "M'(T_i, F), the robust non-mistake sets on T_i, satisfies (c, q)-expansion on (S_i^bad, T_i).",
+     "f is in F, fits the weak labels well on S_i and is fairly robust on T_i: its weak-label error on S_i plus its non-robust mass on T_i is below c(1 - q - alpha_i).",
+     "The weak labeler's error rate alpha_i on S_i is strictly between 0 and 1/2.",
+     "Robustness means adversarial robustness (eta = 0) at most points."
+    ],
+    "passages": [
+     {
+      "version": "2405.16043v1",
+      "page": 6,
+      "lines": [
+       32,
+       42
+      ],
+      "text": "Coverage Expansion. In this section, we relate the error of f on an uncovered subset, err(f, y|Ti ),\nto the weak error of f on the corresponding covered subset, err(f, ỹ|Si ). The goal is to give a\nnontrivial error bound on these points even though we see none of them during training. Expansion\nfrom Ti to Sigood implies that subsets of Ti have enough correctly-pseudolabeled neighbors. If the\nstudent model is robust on N , this is already enough to prove an error bound for Ti . However, we\nalso assume that subsets of Ti have enough incorrectly-pseudolabeled neighbors. Intuitively, this\nmeans that subsets of Ti have the “correct” number of neighbors in Sigood and the “correct” number\nof neighbors in Sibad . This implies a regular structure in the Si –Ti neighborhood connections that\nallows us to prove a much tighter error bound. Our empirical results suggest that this structure is\npresent in real-world examples. We prove a weaker bound that only assumes expansion from Ti to\nSigood in Appendix B.",
+      "pdf_page": "https://arxiv.org/pdf/2405.16043v1#page=6"
+     },
+     {
+      "version": "2405.16043v1",
+      "page": 5,
+      "lines": [
+       55,
+       59
+      ],
+      "text": "4.1 Adversarially Robust Models\nWe begin by stating our theorems for the case when the classifier of interest is η-robust with η = 0\non most points x. That is, we assume that for most points x, the classifier is adversarially robust over\nN (x). This follows the assumptions in related work from other domains [69, 12]. We describe our\nresults for the significantly more general average-case-robust classifiers in Section 4.2.",
+      "pdf_page": "https://arxiv.org/pdf/2405.16043v1#page=5"
+     }
+    ],
+    "check": "not verified: the blind checks miss some dropped conditions on theorem cards; read the theorem's statement at the cited page"
+   },
+   "setting": {
+    "systems": "Any student classifier f in the hypothesis class F",
+    "task_data": "An uncovered class subset T_i, never seen in training, and the corresponding covered subset S_i",
+    "judge": null,
+    "regime": "theory",
+    "scale": null
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [],
+    "notes": "The tighter bound needs T_i to expand to both correctly and incorrectly pseudolabeled points; a weaker bound that assumes expansion only to S_i^good is proved in Appendix B. The bound's exact form is garbled in the extracted text."
+   },
+   "strength": {
+    "grade": "PROVED_IN_PAPER",
+    "reason": "Theorem 4.2 is obtained in Appendix B as a special case of Theorem B.2, which is proved there."
+   },
+   "review_status": "provisional_ai_draft",
+   "check_history": [
+    "card-4: flagged; rewritten from the checkers' suggested fix"
+   ]
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2405.16043v1:THM-4-3",
+   "paper": "2405.16043v1",
+   "evidence_type": "theorem",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2405.16043v1:ASM-ROBUSTNESS",
+     "N2:DSOFT:ARXIV-2405.16043v1:ASM-EXPANSION"
+    ],
+    "description": "Formal average-case-robust versions of Theorems 4.1 and 4.2 (Theorems B.1 and B.2) are stated and proved in Appendix B; Markov's inequality turns average-case robustness into a bound on the mass of non-eta-robust points.",
+    "passages": [
+     {
+      "version": "2405.16043v1",
+      "page": 18,
+      "lines": [
+       5,
+       10
+      ],
+      "text": "We directly prove the “average-case-robust” version of Theorem 4.1. Theorem 4.1 then follows from\nthe equivalence between expansion and robust expansion, and adversarial robustness and η-robustness,\nwhen η = 0.\nTheorem B.1 (Pseudolabel correction). Suppose Mη′ (Sigood , F) satisfies (c, q, η)-robust expansion\non (Sibad , Sigood ) for some c > 0 and η ≥ 0. Consider an arbitrary classifier f such that P(f (x) ̸=\nỹ(x) or f not η-robust at x|Si ) ≤ 1 − q − αi . Then f satisfies the following error bound:",
+      "pdf_page": "https://arxiv.org/pdf/2405.16043v1#page=18"
+     },
+     {
+      "version": "2405.16043v1",
+      "page": 21,
+      "lines": [
+       5,
+       12
+      ],
+      "text": "We directly prove the “average-case-robust” version of Theorem 4.2. Theorem 4.2 then follows from\nthe equivalence between expansion and robust expansion, and adversarial robustness and η-robustness,\nwhen η = 0. The following theorem also allows for Ti to expand to Sigood and Sibad in different\namounts, controlled by the two expansion parameters c1 and c2 . This allows for empirically tighter\nbounds and is used in our experiments in Section 6. Theorem 4.2 is a special case of Theorem B.2\ntaking η = 0 and c1 = c2 .\nTheorem B.2 (Average-case-robust version of Theorem 4.2). Suppose there exists c1 , c2 , q, η >\n0 such that Mη (Ti , F, y) satisfies (c1 , q, η)-expansion on (Sigood , Ti ) and Mη′ (Ti , F, y) satisfies",
+      "pdf_page": "https://arxiv.org/pdf/2405.16043v1#page=21"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2405.16043v1:ASM-PSEUDOLABELER"
+    ],
+    "stated_hypotheses": [
+     "(c, q, eta)-robust expansion (Definition 7, built on the eta-robust neighborhood size of Definition 6) holds in place of (c, q)-expansion.",
+     "The student need only be robust on average: its expected disagreement with random neighbors is at most gamma, so its non-eta-robust mass is at most gamma/eta.",
+     "The other hypotheses of Theorems 4.1 and 4.2 carry over with R_eta(f) in place of R(f)."
+    ],
+    "passages": [
+     {
+      "version": "2405.16043v1",
+      "page": 7,
+      "lines": [
+       63,
+       73
+      ],
+      "text": "Definition 6 (η-robust neighborhood size). Let A, U ⊂ X . The size of the η-robust neighborhood of\nU in A is: P1−η (U, A) := minV ⊂X {P(V |A) : w(V, U ) ≥ (1 − η)w(N (U ), U )}.\nP1−η (U, A) is the probability of the “smallest” subset of A that still captures at least a 1 − η\nfraction of the edge weight incident on U . When η = 0, we have P1 (U, A) = P(N (U )|A), so this\nrecovers the size of the non-robust neighborhood. In the pathological example described above, we\nwould have P(N (U )|A) large, but P1−η (U, A) small for some η > 0. We are now ready to give\na “robustified” definition of expansion, which is identical to Definition 4 except that it requires the\nrobust neighborhood, rather than the regular neighborhood, to be large.\nDefinition 7 (Robust expansion). Fix sets A, B ⊂ X and suppose M is a collection of subsets\nof B. M satisfies (c, q, η)-robust expansion on (A, B) if for all U ∈ M with P(U |B) > q,\nP1−η (U, A) > cP(U |B). This exactly recovers Definition 3 when η = 0.",
+      "pdf_page": "https://arxiv.org/pdf/2405.16043v1#page=7"
+     }
+    ],
+    "check": "not verified: the blind checks miss some dropped conditions on theorem cards; read the theorem's statement at the cited page"
+   },
+   "setting": {
+    "systems": "Average-case-robust student classifiers in the hypothesis class F",
+    "task_data": "Covered and uncovered class subsets, as in Theorems 4.1 and 4.2",
+    "judge": null,
+    "regime": "theory",
+    "scale": null
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [],
+    "notes": "The main-text statement is informal. Its fit with empirical results (adversarial training not being required) is supported by citations to other work [73, 38, 10]."
+   },
+   "strength": {
+    "grade": "PROVED_IN_PAPER",
+    "reason": "The informal theorem's formal versions, Theorems B.1 and B.2, are stated and proved in Appendix B."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2405.16043v1:THM-5-1",
+   "paper": "2405.16043v1",
+   "evidence_type": "theorem",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2405.16043v1:ASM-EXPANSION"
+    ],
+    "description": "A finite-sample bound, in terms of the VC dimension of the set family M, on how much the empirical expansion estimate can exceed the population expansion; the formal version is stated in Appendix D as 'Theorem D.1 (Theorem 5.1, formal)', followed by 'Proof of Theorem D.1'. Since computing the worst-expanding set is intractable, the experiments approximate it with a randomized heuristic.",
+    "passages": [
+     {
+      "version": "2405.16043v1",
+      "page": 8,
+      "lines": [
+       54,
+       56
+      ],
+      "text": "appropriately to account for empirical error in estimating the probability P(U |B). The following\ntheorem, proven in Appendix D, shows that the expansion on the population distribution can’t be too\nmuch smaller than the expansion on the empirical distribution.",
+      "pdf_page": "https://arxiv.org/pdf/2405.16043v1#page=8"
+     },
+     {
+      "version": "2405.16043v1",
+      "page": 8,
+      "lines": [
+       67,
+       72
+      ],
+      "text": "1[xi ∈ U ]. Then for any δ ∈ (0, 1], with probability at\np\ne VC(M)/nA ), where O\ne hides constants and log factors\nleast 1 − δ, supU ∈M ĉ(U ) − c(U ) ≤ O(\nin VC(M), nA + nB , and 1/δ.",
+      "pdf_page": "https://arxiv.org/pdf/2405.16043v1#page=8"
+     },
+     {
+      "version": "2405.16043v1",
+      "page": 8,
+      "lines": [
+       73,
+       76
+      ],
+      "text": "Heuristic approximation. While Theorem 5.1 gives a rigorous statistical theory for checking\nexpansion from finite data, it is unfortunately still intractable to compute the set with the worst\nexpansion on the empirical data, i.e., to solve Û = arg minU ∈M ĉ(U ). Instead, our experiments in\nSection 6 use a simple randomized heuristic for approximating this minimization. If the learning",
+      "pdf_page": "https://arxiv.org/pdf/2405.16043v1#page=8"
+     },
+     {
+      "version": "2405.16043v1",
+      "page": 32,
+      "lines": [
+       19,
+       23
+      ],
+      "text": "D\n\nChecking expansion: Statistical theory\n\nTheorem D.1 (Theorem 5.1, formal). For U ∈ M, define:",
+      "pdf_page": "https://arxiv.org/pdf/2405.16043v1#page=32"
+     },
+     {
+      "version": "2405.16043v1",
+      "page": 32,
+      "lines": [
+       55,
+       56
+      ],
+      "text": "Proof of Theorem D.1. We start off with a lemma providing concentation results for a fixed set\nU ∈ M.",
+      "pdf_page": "https://arxiv.org/pdf/2405.16043v1#page=32"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2405.16043v1:ASM-ORACLE"
+    ],
+    "stated_hypotheses": [
+     "The formal version assumes a lower bound q-bar > 0 on P(U|B) for every U in M.",
+     "The guarantee holds with probability at least 1 - delta over the sampling of S_A and S_B."
+    ],
+    "passages": [
+     {
+      "version": "2405.16043v1",
+      "page": 32,
+      "lines": [
+       43,
+       45
+      ],
+      "text": "Suppose there is a lower bound q̄ > 0 such that q(U ) ≥ q̄ for all U ∈ M. Define γ = nB q̄/nA and\nlet m = nA + nB . Then for any δ ∈ (0, 1], with probability at least 1 − δ over the sampling of SA\nand SB ,",
+      "pdf_page": "https://arxiv.org/pdf/2405.16043v1#page=32"
+     }
+    ],
+    "check": "not verified: the blind checks miss some dropped conditions on theorem cards; read the theorem's statement at the cited page"
+   },
+   "setting": {
+    "systems": "The set family M generated by the student hypothesis class",
+    "task_data": "Finite samples from sets A and B, with a neighborhood oracle mapping points of A to neighbors in B",
+    "judge": null,
+    "regime": "theory",
+    "scale": null
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2405.16043v1:LIM-1"
+    ],
+    "notes": "The theorem bounds the estimation error, but computing the worst-expanding set on the data is intractable, so the experiments rely on a heuristic."
+   },
+   "strength": {
+    "grade": "PROVED_IN_PAPER",
+    "reason": "Theorem 5.1 is stated informally in the main text, 'proven in Appendix D', where it is restated as Theorem D.1 (Theorem 5.1, formal) and the proof of Theorem D.1 begins."
+   },
+   "review_status": "provisional_ai_draft",
+   "check_history": [
+    "card-1: flagged or undecided by two blind checks; rewritten from the checkers' suggested fix (quotes unchanged)"
+   ]
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2405.16043v1:RES-IMDB",
+   "paper": "2405.16043v1",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2405.16043v1:ASM-EXPANSION"
+    ],
+    "description": "Linear classifiers on SentenceBERT embeddings are trained on IMDb with weak labels from an 'incredible'/'horrible' count rule; expansion between S_i^bad, S_i^good and T_i is measured with paraphrase-based neighborhood oracles (with GPT-4 for S_bad-to-S_good neighbors) and a randomized search over 5 training runs, and bound values from Theorems B.1 and B.2 are compared with the students' worst-case errors (Tables 1-2).",
+    "passages": [
+     {
+      "version": "2405.16043v1",
+      "page": 9,
+      "lines": [
+       98,
+       104
+      ],
+      "text": "Setup. We explore training linear classifiers on top of the contrastively-fine-tuned SentenceBERT\nembeddings2 [52]. As shown in Muennighoff et al. [44], training simple classifiers on top of these complex pretrained representations leads to very competitive performance. We study binary sentiment prediction for movie reviews on the IMDb dataset [41], continuing with the example from Section 3. For\nthe teacher model, we use a very coarse rule [49] based on the presence of the unigrams “incredible”\nand “horrible”. Let C(w, x) be the number of times word w appears in input x. The weak label ỹ(x)\nis 1 when C(incredible, x) > C(horrible, x), 0 when C(horrible, x) > C(incredible, x),\nand ∅ otherwise. This counts the occurrences of “horrible” and “incredible” and assigns the binary\nlabel corresponding to the word that occurs strictly more often, and abstains otherwise.",
+      "pdf_page": "https://arxiv.org/pdf/2405.16043v1#page=9"
+     },
+     {
+      "version": "2405.16043v1",
+      "page": 9,
+      "lines": [
+       105,
+       112
+      ],
+      "text": "Neighborhood function and oracle. We set N (x) to be the examples obtainable from x by sampling\nfrom a pretrained paraphrase model. As described in Section 5, to measure expansion between sets A\nand B, we need a neighborhood oracle n : A → B that, given x ∈ A, returns a point x′ ∈ N (x) ∩ B.\nOur results require us to measure expansion between (Sigood , Ti ), (Sibad , Ti ), and (Sibad , Sigood ). For\nx ∈ Sigood (resp. x ∈ Sibad ), we generate a target point x′ ∈ N (x) ∩ T by rejection sampling from\na pretrained paraphrase model. Because ỹ takes a simple form, we can efficiently approximate this\nstep by setting the logits of tokens “horrible” and “incredible” to −∞ during decoding so they are\nnever generated. For x ∈ Sibad , to generate a neighbor x′′ ∈ N (x) ∩ Sigood , we prompt GPT-4",
+      "pdf_page": "https://arxiv.org/pdf/2405.16043v1#page=9"
+     },
+     {
+      "version": "2405.16043v1",
+      "page": 9,
+      "lines": [
+       1,
+       10
+      ],
+      "text": "Table 1: Measured expansion and error bounds for the covered sets Si . Expansion values for the\nfamily of sets M′ (Sigood , F) are measured using the heuristic described in Section 5 and shown in the\n(Sibad , Sigood ) exp. column. This column shows our heuristic finds expansion in practice. Pseudolabel\nerror αi = P(ỹ ̸= y|Si ). Worst-case error of trained classifier f on the weak labels ỹ, err(f, ỹ|Si ),\nacross 5 independent training runs. This column shows the student can’t exactly fit the teacher labels\nusing this representation. Value of the error upper bound in Theorem 4.1 (specifically, the tighter\nversion, B.1), computed using the numbers from the other columns (details in Appendix E). For label\ni = 0, the bound being strictly less than the error αi of the teacher ỹ suggests pseudolabel correction\nmay occur. Finally, the actual worst-case error of trained classifier f on the true labels y, err(f, y|Si ),\nacross 5 independent training runs, shows pseudolabel correction does occur for label i = 0.",
+      "pdf_page": "https://arxiv.org/pdf/2405.16043v1#page=9"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2405.16043v1:ASM-ORACLE"
+    ],
+    "stated_hypotheses": [
+     "Bound values ignore the robustness term P(R_eta(f)|.) and use only the terms involving expansion.",
+     "Neighbors are rejection-sampled to keep the same ground-truth label, as judged by a model trained on the gold labels.",
+     "The learning rate and weight decay are not tuned, and early stopping uses weak labels only, on the 20% of covered samples held out in each of the 5 runs."
+    ],
+    "passages": [
+     {
+      "version": "2405.16043v1",
+      "page": 35,
+      "lines": [
+       36,
+       42
+      ],
+      "text": "our choice to analyze these effects separately for different classes. As discussed in Section 6, Tables\n1 and 2 show the measured values of expansion, the worst-case weak label error of the student across\nthe 5 training runs, and the values of our bounds from Theorems B.1 and B.2, respectively. Since the\ngoal is to give evidence for the presence of expansion, we ignore P(Rη (f )|·) when computing the\nvalues of the bounds and focus on the terms involving amount of expansion. The bounds in Table 1\nshow that our results can effectively distinguish between cases where pseudolabel correction does\n(on S0 ) and does not (on S1 ) occur.",
+      "pdf_page": "https://arxiv.org/pdf/2405.16043v1#page=35"
+     },
+     {
+      "version": "2405.16043v1",
+      "page": 35,
+      "lines": [
+       12,
+       16
+      ],
+      "text": "ideal lower bound for the performance of a weakly-supervised classifier). For i ∈ {0, 1} and points\nx ∈ Sigood , we obtained neighbors in Ti and Sibad using the oracle procedure described in Section\n6 and shown graphically in Figure 3. In each neighbor sampling step, we enforce the constraint\ny(x′ ) = i using the model trained on the gold labels to perform rejection sampling. This ensures (as\nmuch as possible) that all neighbors have the same ground-truth label, as required by the definitions.",
+      "pdf_page": "https://arxiv.org/pdf/2405.16043v1#page=35"
+     },
+     {
+      "version": "2405.16043v1",
+      "page": 35,
+      "lines": [
+       17,
+       25
+      ],
+      "text": "Model training. We train the linear classifiers using the AdamW optimizer [40] with global learning\nrate 0.01 and a weight decay of 0.1, and linear learning rate decay over 500 optimizer steps. For\nthe heuristic in Section 5, we retrain a model 5 times on 5 different random subsets of the covered\ntraining samples, each 80% of the original, and use the other 20% of covered samples as a validation\nset to perform early stopping with the weak label. We do not perform early stopping with the true\ngold label, which is common practice in many works on programmatic weak supervision and gives a\nlarge performance gain [73, 10]. Since the goal of our experiments is to give evidence that expansion\nholds in practice, we do not tune the learning rate or weight decay parameters at all, since the initial\nvalues we chose already led to weak-to-strong generalization effects.",
+      "pdf_page": "https://arxiv.org/pdf/2405.16043v1#page=35"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Linear classifiers on contrastively fine-tuned SentenceBERT embeddings; a pretrained paraphrase model and GPT-4 generate neighbors",
+    "task_data": "IMDb binary movie-review sentiment; weak labels from a word-count rule on 'incredible' and 'horrible' that abstains otherwise",
+    "judge": "Ground-truth labels y",
+    "regime": "mixed",
+    "scale": "5 training runs; the tables report worst cases over the runs"
+   },
+   "quantitative": {
+    "n": "5 training runs",
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2405.16043v1:LIM-1"
+    ],
+    "notes": "One dataset, one teacher rule and one representation; the worst-expanding-set search is a heuristic; bound values omit the robustness term."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "A single dataset and model setup, with worst-case values over 5 runs and no confidence interval, standard error or test for the bound comparisons, which the rubric grades single-setting."
+   },
+   "review_status": "provisional_ai_draft"
+  }
+ ]
+}

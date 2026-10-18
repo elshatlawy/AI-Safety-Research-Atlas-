@@ -1,0 +1,219 @@
+{
+ "schema": "ASRA-GAP-CLOSING-AGENT-v1",
+ "id": "PK-Q19",
+ "question_id": "Q19",
+ "remaining_question": "On questions whose correct answers rest on knowledge the stronger models cannot back with short, judge-checkable evidence (e.g. expert intuitions or regularities induced from many examples), does debate raise a weaker judge's accuracy above direct QA and consultancy?",
+ "safety_case_nodes": [
+  "SC-D5.4"
+ ],
+ "premises": [
+  {
+   "statement": "Michael et al. (2023) pose this as an open problem, not a result. In their debates, debaters justified their positions with a small set of claims grounded in textual evidence and needed to reveal only a small amount of the source material (3.5% of the story on average in their human debates) to settle a debate. They suggest that knowledge of very complex patterns or induced from many examples (e.g. honed expert intuition, linguistic knowledge, know-how) 'may not admit such simple explanations', or that debaters may not know how to justify it succinctly, and that it 'may be necessary' to test debate on questions about such knowledge or to design other extraction methods. Setting: debates grounded in the text of a story; the passage reports no experiment on such knowledge.",
+   "source": "N2:DSOFT:ARXIV-2311.08702v1:OPEN-INDUCTIVE-KNOWLEDGE",
+   "passages": [
+    {
+     "version": "2311.08702v1",
+     "page": 17,
+     "line_start": 1,
+     "line_end": 12,
+     "text": "• Debates about inductive knowledge. In our debates, debaters justify their positions on the\nbasis of a small set of claims which they can ground in textual evidence, and ultimately only\nneed to reveal a small amount of the source material (3.5% of the story on average for our\nhuman debates) in order to settle the debate. It may be that certain kinds of knowledge, e.g.,\nknowledge of very complex patterns or induced from many examples, may not admit such\nsimple explanations, or that debaters with such knowledge may not know how to express or\njustify it succinctly. Examples of this kind of knowledge may include honed expert intuition,\nlinguistic knowledge, or “know-how” about specialized tasks, and encodings of these things\nmay conceivably form a useful part of the repertoire of powerful AI systems. To know\nwhether we can reliably extract this information from AI systems, it may be necessary to test\ndebate on questions about such knowledge, or design alternative methods of extracting such\ninformation."
+    }
+   ]
+  },
+  {
+   "statement": "Buhl et al. (2025), in a conceptual safety-case sketch for recursive tree debate, list as defeater D5.4 the worry that some truths might only be knowable via heuristics learned by encountering many examples and so cannot be argued for compellingly via deductive arguments, reducing the scope of questions recursive tree debate can answer (possibly especially research taste and plans in AI research). Separately (D5.1) they say translating latent knowledge acquired via heuristics into deductive arguments might require very large argument trees. Both are stated worries, not results; they concern recursive tree / prover-estimator debate, a different protocol from the short flat debate this study runs.",
+   "source": "Q19:F1",
+   "passages": [
+    {
+     "version": "2505.03989v3",
+     "page": 14,
+     "line_start": 12,
+     "line_end": 17,
+     "text": "First, we need to argue that the structure of recursive tree debate is conducive to identifying truth (C4.4).\nThis is supported by theoretical arguments (E5.4). We might worry that some true statements cannot be\nargued for compellingly via deductive arguments. For example, some truths might only be knowable via\nheuristics learned by encountering many examples, reducing the scope of questions that can be answered\nwith recursive tree debate (D5.4). This might be an especially plausible defeater in the AI research domain,\nwhere research taste and plans may be hard to defend deductively. More worryingly, we might worry that"
+    },
+    {
+     "version": "2505.03989v3",
+     "page": 10,
+     "line_start": 72,
+     "line_end": 77,
+     "text": "uncertainty about whether stochastic gradient descent (SGD) can reach E in realistic training time. There\nare reasons to think that, in the case of debate, there are bad constants or exponents (i.e. the time it takes\nto solve E is on the higher end) – for example, translating latent knowledge acquired via heuristics into\ndeductive arguments might require very large argument trees (D5.1). However, we are hopeful that future\nresearch can prove tighter theoretical results linking prover-estimator debate – or other, improved debate\nprotocols – to realistic training methods."
+    }
+   ]
+  },
+  {
+   "statement": "Kenton et al. (2024), using LLMs both as agents and as stand-ins for human judges (judge models weaker than agent models), report that debate outperforms consultancy across all their tasks when the consultant is randomly assigned the correct or incorrect answer, and that against direct QA debate wins on extractive QA with information asymmetry but results are mixed on tasks without it. On closed tasks: for Gemma7B, QA without article beats debate; for GPT-3.5 debate beats it (p = 0.037); for Pro 1.0 the difference is not significant (p = 0.1); for Pro 1.5, judging debaters of its own model, debate is worse; the authors read Pro 1.0 and GPT-3.5 as 'probably the most indicative of scalable oversight' and as indicating 'either small or no benefit' of debate over QA without article. Different setting: their tasks are the asymmetries the passage names (extractive QA, mathematics, coding, logic, multimodal reasoning); the passages do not describe questions selected for lacking short, checkable justifications.",
+   "source": "N2:DSOFT:ARXIV-2407.04622v2:CORE; N2:DSOFT:ARXIV-2407.04622v2:RES-CLOSED",
+   "passages": [
+    {
+     "version": "2407.04622v2",
+     "page": 1,
+     "line_start": 15,
+     "line_end": 26,
+     "text": "where the judge just answers outright without the AI. We use large language models (LLMs) as both AI\nagents and as stand-ins for human judges, taking the judge models to be weaker than agent models.\nWe benchmark on a diverse range of asymmetries between judges and agents, extending previous\nwork on a single extractive QA task with information asymmetry, to also include mathematics, coding,\nlogic and multimodal reasoning asymmetries. We find that debate outperforms consultancy across all\ntasks when the consultant is randomly assigned to argue for the correct/incorrect answer. Comparing\ndebate to direct question answering, the results depend on the type of task: in extractive QA tasks\nwith information asymmetry debate outperforms direct question answering, but in other tasks without\ninformation asymmetry the results are mixed. Previous work assigned debaters/consultants an answer\nto argue for. When we allow them to instead choose which answer to argue for, we find judges are less\nfrequently convinced by the wrong answer in debate than in consultancy. Further, we find that stronger\ndebater models increase judge accuracy, though more modestly than in previous studies."
+    },
+    {
+     "version": "2407.04622v2",
+     "page": 9,
+     "line_start": 15,
+     "line_end": 26,
+     "text": "Closed tasks: We see debate increases judge accuracy compared to consultancy on closed tasks\n(previously this was only seen in the extractive task, QuALITY).\nDebate compared to QA without article is more subtle. For Gemma7B, our weakest judge, QA\nwithout article does better than debate (as in the extractive case). For GPT3.5, debate does better\nthan QA without article (with 𝑝 = 0.037). For Pro 1.0, the difference between debate and QA without\narticle is not statistically significant ( 𝑝 = 0.1). For Pro 1.5, when the judge is the same as the debaters,\ndebate actually leads to worse judge accuracy than QA without article, similar to some of the findings\nreported in Fig 31 of Khan et al. (2024). Our interpretation is as follows: Gemma7B is likely too weak\nto learn anything that valuable about these protocols. Pro 1.5 has no weak-strong asymmetry in this\nclosed QA case, so doesn’t inform much about scalable oversight. Pro 1.0 and GT3.5 are probably\nthe most indicative of scalable oversight, and indicate either small or no benefit of debate over QA\nwithout article."
+    }
+   ]
+  },
+  {
+   "statement": "Khan et al. (2024) state that their results are limited to setups where debaters can provide verified evidence to the judge (their quote tool); without it, a debater arguing the incorrect answer could create an alternative narrative that a judge without the story would have no means to discover. Their work uses reading comprehension over short stories of about 8000 tokens, and they note, as an open question, that stronger models may possess 'parametric knowledge' that is not easily citeable or verifiable by any specific tool. These are stated limits, not tested results.",
+   "source": "N2:DSOFT:ARXIV-2402.06782v4:LIM-VERIFIED-EVIDENCE; N2:DSOFT:ARXIV-2402.06782v4:OPEN-LARGER-EVIDENCE",
+   "passages": [
+    {
+     "version": "2402.06782v4",
+     "page": 8,
+     "line_start": 43,
+     "line_end": 54,
+     "text": "Finally, our results are limited to setups where the debaters\ncan provide verified evidence to the judge (provided by the\ndebater quote tool in our case). Without such a system, a\ndebater arguing for the incorrect answer could simply create\nan alternative narrative in which their answer is correct (the\njudge, without access to the underlying story, would have\nno means to discover this). We expect that useful implementations of debate will be grounded in verifiable evidence,\ne.g. quoting trusted sources or data. Other domains have\ndifferent notions of evidence, and debater tool-use will take\ndifferent forms. For example, arguments in mathematical\ndebates may require access to simulators, while physics debates can be grounded in experimental data. We posit that\nsuch tool-use capabilities will help judges to decide debates"
+    },
+    {
+     "version": "2402.06782v4",
+     "page": 8,
+     "line_start": 55,
+     "line_end": 60,
+     "text": "more quickly and accurately. Our work uses reading comprehension over short stories of approximately 8000 tokens.\nThere is an open question of how well our approach will\ngeneralise to domains where a much larger set of evidence\nis required, e.g. quoting published literature when debating\na science question. Stronger models may also possess ‘parametric knowledge’, which is not easily citeable or easily\nverifiable by any specific tool."
+    }
+   ]
+  },
+  {
+   "statement": "In Khan et al.'s information-asymmetric reading-comprehension setting (debaters have the text and a quote tool for externally verified quotes; judges have no access to the text), for the most persuasive models non-expert human judges reach 88% and non-expert LLM judges 76% accuracy with debate (naive 60% and 48%); with the single-model consultancy baseline, human and LLM judges reach 78% and 54%. Taken at face value these give debate-minus-consultancy gaps of 10 and 22 points. These effect sizes come from an evidence-grounded setting; this package uses them only to size the study, not as a prediction for questions that lack short evidence.",
+   "source": "N2:DSOFT:ARXIV-2402.06782v4:RES-HEADLINE",
+   "passages": [
+    {
+     "version": "2402.06782v4",
+     "page": 2,
+     "line_start": 19,
+     "line_end": 29,
+     "text": "information-asymmetric debates in a reading comprehension task (Michael et al., 2023; Radhakrishnan, 2023). We\ngive the debaters full access to the underlying text while\njudges have no access to the text. This setup renders the\ndebaters experts (i.e. stronger) and the judges non-experts\n(i.e. weaker) in the task. Experts are provided with a quote\ntool, which allows them to present externally verified quotes\nfrom the text. The judges use the arguments from the debate\nto answer the reading comprehension question. We test this\nsetup for both human and LLM judges and evaluate against\na non-adversarial baseline called consultancy, in which a\nsingle expert model argues for one particular answer."
+    },
+    {
+     "version": "2402.06782v4",
+     "page": 2,
+     "line_start": 31,
+     "line_end": 38,
+     "text": "1. Weak judges can supervise strong debaters. The\nresult holds both when using LLMs and when using\nhumans to judge outputs. Specifically, for the most persuasive models we find that non-expert human judges\nachieve 88% and non-expert LLM judges achieve 76%\naccuracy with debate, where naive performance is 60%\nand 48% respectively. Debate also outperforms the\nsingle-model baseline consultancy, with which human\nand LLM judges achieve 78% and 54%, respectively."
+    }
+   ]
+  },
+  {
+   "statement": "Kenton et al. flag limits that bear on this design. Their study is inference-only (models prompted to play the roles), which they say does not give 'much evidence about their effectiveness as scalable oversight training protocols', and their consultants/debaters were RLHF-fine-tuned for honesty, which 'may hamper' the dishonest side. Discussing Khan et al.'s QuALITY task, they also say Khan et al.'s Fig. 15 'suggests' quote verification, rather than argumentation, is the dominant contribution to judge accuracy (quotes alone improve beyond arguments plus quotes).",
+   "source": "N2:DSOFT:ARXIV-2407.04622v2:LIM-INFERENCE-ONLY; N2:DSOFT:ARXIV-2407.04622v2:XREF-KHAN-QUOTE-VERIFICATION-UNREALISTIC",
+   "passages": [
+    {
+     "version": "2407.04622v2",
+     "page": 15,
+     "line_start": 3,
+     "line_end": 13,
+     "text": "Limitations Our work studies consultancy/debate in an inference-only setting by prompting models\nto play these roles. Whilst providing some evidence of the models’ abilities to play these roles,\nwhat we actually care about are the safety properties of the optima/equilibria that arise due to the\nincentives produced by training models specifically in consultancy/debate decision-problems/games.\nWhile results on win rates, and advantages arising from selecting correct vs. incorrect answers\nprovide some evidence of their abilities to play these games, they don’t give us much evidence\nabout their effectiveness as scalable oversight training protocols. Further, the models we used as\nconsultants/debaters were all fine-tuned with RLHF for, among other qualities, honesty, which is\nwhat debate is aiming to incentivise, and for example may hamper the dishonest consultant/debater\n(see discussion in Appendix C.3 of Khan et al. (2024)). It would be interesting to perform our study\nin the helpful-only setting."
+    },
+    {
+     "version": "2407.04622v2",
+     "page": 21,
+     "line_start": 3,
+     "line_end": 12,
+     "text": "questions, with the same filtering (roughly to Gutenberg sci-fi subset of QuALITY). This task has\nmultiple advantages, namely controlled information asymmetry, high answerability and plausible\nincorrect answers. However it also has some drawbacks: Khan et al. (2024) saw no improvement in\ndebate with number of rounds (see their Fig. 20), suggesting the questions can be answered straight\naway in the first simultaneous round. This may indicate that in this task there is no advantage to\npointing out flaws in your opponent’s answers – a key aspect of debate as a scalable oversight protocol.\nFurther, their Fig. 15 suggests the quote verification, rather than the argumentation, is the dominant\ncontribution to judge accuracy (using quotes alone improves beyond the combination of arguments\nand quotes) – and such a quote verification tool may be unrealistic considering the weak-strong\nanalogy we expect to face for scalable oversight with humans."
+    }
+   ]
+  }
+ ],
+ "hypothesis": "Following the worry in premises 1 and 2, on tacit items (answers resting on a regularity the debater induced from many examples, with no short verified evidence that settles them) debate raises a weaker LLM judge's accuracy by less than 6 points over direct QA and over consultancy, and by less than on matched citeable items. The design is outcome-neutral: it can also show the opposite.",
+ "design": {
+  "scope": "The study tests the remaining question for one of its two named examples, regularities induced from many examples, with open-weight LLM debaters and weaker LLM judges, inference-only, short assigned-role debate. It does not settle the question for expert intuition in natural domains, for human judges, for trained debaters, or for recursive tree debate (premise 2); those parts stay open whatever the result.",
+  "variable": "Citeability of the correct answer: whether it can be backed by short, judge-checkable evidence. It is varied within each synthetic world, so the same fine-tuned model, tool and budgets serve both levels. Citeable (C) items are labelled by a rule on at most 2 attributes, which a few verified citations can demonstrate. Tacit (T) items are labelled by a random small neural 'teacher' over all 16 attributes, so the fine-tuned model's correct answer rests on a regularity it induced from many training examples. Operational check on the final items (thresholds fixed after the pilot, before the main run): on T items the best rule with at most 3 conditions fit to the training set, and the majority label of the 9 nearest training items, are each at most 65% accurate, while the debater's own direct answer is correct; on C items the best rule with at most 3 conditions is at least 95% accurate. The protocol is the second, crossed factor (conditions below).",
+  "conditions": [
+   "QA-bare (direct QA): the judge sees the item and the world's attribute glossary and answers alone, with no AI and no evidence.",
+   "QA+evidence (direct QA holding evidence fixed): as QA-bare, plus the verified citations (labelled training examples and counts) that appeared in that item's debate transcripts, shown without any argument text or side labels.",
+   "Consultancy: one fine-tuned consultant argues an assigned answer for 3 turns of at most 150 words with at most 3 verified citations per turn; run once assigned the correct and once the incorrect answer; the judge reads the transcript and does not ask questions.",
+   "Debate: two copies of the same fine-tuned model argue opposite assigned answers in 3 simultaneous rounds, each turn at most 150 words with at most 3 verified citations; 2 debates per item, each judged in both position orders.",
+   "Secondary arm: long debate on a random 300 of the T items (6 rounds, at most 300 words and 6 citations per turn), to see whether a null result is only a length limit (premise 2, D5.1)."
+  ],
+  "control": "The baselines the question names, direct QA (QA-bare, and QA+evidence to hold the verified evidence fixed) and assigned consultancy, run on the same items with the same judge. The C items are a positive control: same worlds, adapters, tools, budgets and knowledge-present filter, where debate should beat QA-bare and consultancy if the pipeline can show a debate benefit at all. QA-bare is expected near 50% because the worlds are new to every judge; QA+evidence is therefore the stricter direct-QA baseline.",
+  "models_and_judges": "Debaters and consultants: one LoRA adapter per world on an open-weight ~30B instruct model (e.g. Qwen2.5-32B-Instruct or a newer model of similar size), fine-tuned on that world's training set mixed with general instruction data so it can still argue; the same adapter plays both sides. Judges, no adapter: J1 (primary) a smaller model from another family (e.g. Llama-3.1-8B-Instruct), weaker in capability and lacking the induced knowledge; J2 (secondary) the debaters' base model without the adapter, equal in capability but lacking the knowledge. The judge's probability for each answer is read from answer-token log-probabilities.",
+  "task_and_data": "Four synthetic worlds (e.g. fictional fungi, minerals, cultivars, loan files), each with 16 attributes of 4 values described in plain language and two neutral labels. A visible gate attribute puts each item in region C or region T. Teacher in C: a rule on at most 2 other attributes. Teacher in T: the sign of a random 2-layer network (8 hidden units) over all attributes, thresholded at its median so labels are balanced. Each world has 40,000 training items (a planning estimate, tuned in the pilot) used for fine-tuning and served to debaters through a tool: a private search (filter by attributes, returns example IDs and counts) and a public citation of example IDs, or of counts for conjunctions of at most 3 attribute values, which the judge sees marked as verified. Test items are drawn fresh with no training item sharing more than 10 of the 16 values (a planning estimate, tuned in the pilot). An item is kept only if the fine-tuned debater's direct answer is correct in at least 4 of 5 samples (knowledge-present filter, the same for C and T). Labels are balanced 50/50 within each world and region; 225 C and 225 T items per world.",
+  "measures": [
+   "Judge accuracy (primary): probability on the correct answer above 0.5; per item, averaged over that protocol's runs.",
+   "Judge Brier score, and rate of confident errors (at least 0.9 on the wrong answer).",
+   "Manipulation checks on the final items: best at-most-3-condition rule accuracy, 9-nearest-neighbour accuracy, QA+evidence accuracy, and the debater's direct accuracy and confidence (the ceiling of what could be extracted).",
+   "Extraction ratio (descriptive): (debate minus QA-bare) / (debater direct accuracy minus QA-bare).",
+   "Process: verified citations per transcript; concession or refusal rate of the assigned-incorrect side, by region (LLM classifier, 200 transcripts hand-checked)."
+  ],
+  "sample_size": "900 T items and 900 C items (4 worlds x 225 per region), each run in every protocol; 300 T items in the long-debate arm. Judge calls per item and judge: 1 QA-bare, 2 QA+evidence, 2 consultancy, 4 debate.",
+  "sample_size_reason": "No premise gives a variance for per-item differences between protocols, so the number rests on bounds and one stated assumption. Smallest effect of interest: 6 points of judge accuracy, a little over half the smallest debate-minus-consultancy gap quoted in premise 5 (10 points for human judges; 22 for LLM judges), chosen because premise 3 reports mixed results against direct QA on tasks without information asymmetry and, for the judges its authors consider most indicative, 'either small or no benefit'. Paired design: three primary comparisons with Holm correction (worst case alpha 0.05/3 two-sided, z = 2.39), power 0.8 (z = 0.84). Assuming the SD of the per-item difference is 0.55 (each protocol's per-item accuracy variance about 0.15, and no positive correlation between protocols on the same item, which would only lower it), n = ((2.39 + 0.84) x 0.55 / 0.06)^2, about 880, rounded to 900 T items. In the worst case (each variance at its maximum 0.25, no correlation, SD 0.71) 900 items detect about 7.6 points at the same power, still below the 10-point gap. The 900 C items mirror this for the positive control; the region-by-protocol interaction (secondary, alpha 0.05) then detects about 7.3 points under the 0.55 assumption, and the 300-item long-debate comparison about 9 points.",
+  "analysis": "Primary (registered after the pilot, before the main run; judge J1; T items): paired per-item differences debate minus QA-bare, debate minus QA+evidence, and debate minus consultancy, with 95% CIs from a paired bootstrap over items stratified by world, Holm-corrected at family-wise alpha 0.05, two-sided. 'Debate raises accuracy above direct QA and consultancy' is concluded only if all three are significantly positive; 'no meaningful benefit' over a baseline is concluded if the CI upper bound for that difference is below +6 points. Positive control: debate minus QA-bare and debate minus consultancy on C items, both significantly positive (debate minus QA+evidence on C items is reported but not required, since short evidence may settle C items on its own). Secondary: protocol-by-region interaction in a logistic mixed model (item random effect, world fixed effect, debater confidence as covariate); per-world estimates; judge J2; long vs short debate on the 300-item subsample; results without the knowledge-present filter; confident-error rates by protocol.",
+  "confounds": [
+   "Verified evidence vs argument (premise 6: Kenton et al. say Khan et al.'s Fig. 15 suggests quote verification, rather than argumentation, is the dominant contribution to judge accuracy): QA+evidence gives the judge exactly the citations from that item's debates without the arguments, so any debate gain over it is due to argument, not evidence access.",
+   "Whether the strong model actually has the knowledge (the question presumes it does): the knowledge-present filter is applied identically to C and T items; debater confidence is reported and used as a covariate; the manipulation checks are computed on the final items.",
+   "Judge without a real asymmetry (premise 3: Pro 1.5, judging debaters of its own model, did worse with debate than QA without article, and the authors say it has no weak-strong asymmetry there and so 'doesn't inform much about scalable oversight'): the primary judge J1 is a smaller model from another family; J2 (same base, knowledge gap only) is reported separately.",
+   "Honesty training hampering the dishonest side (premise 6): the same adapter plays both sides with a role-play prompt; concession and refusal by the assigned-incorrect side are measured by region, and results are re-analysed excluding conceding transcripts as a sensitivity check.",
+   "World, teacher or adapter idiosyncrasy: citeability varies within each world and adapter; 4 worlds with world as a fixed effect and per-world estimates reported.",
+   "Label and position bias: labels balanced within each world and region with neutral names; consultancy run under both assignments; each debate judged in both orders.",
+   "Debate length (premise 2, D5.1: translating heuristic knowledge into deductive arguments might need very large argument trees): the long-debate secondary arm; a null in short debates is reported as a result about short debates only."
+  ]
+ },
+ "outcomes": [
+  {
+   "if": "Pilot gate fails: no teacher setting gives T items with short-evidence accuracy at most 65% while the debater is correct, or the knowledge-present filter cannot yield 225 T items per world.",
+   "means": "The study cannot instantiate the question with this generator; no update on the question or on SC-D5.4. Stop after the pilot and report the generator limits."
+  },
+  {
+   "if": "Positive control fails: on C items debate is not significantly above QA-bare and consultancy.",
+   "means": "The pipeline cannot show a debate benefit even with checkable evidence, so the T results say nothing specific about tacit knowledge; no update on the question or SC-D5.4."
+  },
+  {
+   "if": "Control passes, and on T items debate is significantly above QA-bare, QA+evidence and consultancy.",
+   "means": "Narrows the question towards yes: in this setting, short debate lets a weaker judge recover some induced knowledge that short evidence alone does not convey. For SC-D5.4 it is indirect evidence against the defeater for induced-regularity questions (flat inference-only LLM debate, not recursive tree debate or humans). The interaction says whether the gain is as large as on C items."
+  },
+  {
+   "if": "Control passes; on T items debate is significantly above QA-bare and QA+evidence but not above consultancy.",
+   "means": "Debate conveys some induced knowledge beyond the cited evidence, but no more than a single assigned consultant does; for the question as worded (above direct QA and consultancy) the answer is no for the consultancy part. For SC-D5.4 it gives no support for preferring debate's structure on such questions."
+  },
+  {
+   "if": "Control passes; on T items debate is significantly above QA-bare but not significantly above QA+evidence.",
+   "means": "Whatever the judge gains on T items comes from the cited evidence, not from argument: no evidence that debate extracts the tacit part. Supports SC-D5.4 being a live defeater in this setting."
+  },
+  {
+   "if": "Control passes; on T items the CI upper bounds of debate minus each baseline are all below +6 points (and the long-debate arm shows no significant gain over short debate).",
+   "means": "Answers the induced-regularity part of the question 'no meaningful benefit' for short inference-only LLM debate. For SC-D5.4 it is empirical support for the defeater in this setting: a safety case should not count debate as covering questions whose answers rest on such knowledge without further evidence."
+  },
+  {
+   "if": "On T items debate is significantly below a baseline, or its confident-error rate exceeds consultancy's.",
+   "means": "Debate misleads the judge on tacit questions rather than failing gracefully: strongest support for SC-D5.4 in this setting, and a sign that judge calibration would also need a safety-case argument."
+  },
+  {
+   "if": "Short debate gives no meaningful benefit on T items but the long-debate arm significantly beats short debate on the 300-item subsample (it can detect about 9 points).",
+   "means": "The limit is at least partly a length budget (consistent with premise 2's D5.1 worry about large argument trees), not a hard limit; narrows the question and points follow-up work at longer or recursive debates."
+  },
+  {
+   "if": "Any primary CI includes both 0 and +6 points.",
+   "means": "Inconclusive for that comparison; the package reports the bound, which narrows the plausible effect size but does not settle the question."
+  }
+ ],
+ "resources": {
+  "compute": "estimate: about 300 H100-GPU-hours in total. Rests on: pilot teacher-complexity sweep on a 7-8B model and confirmation on the ~30B model (estimate about 80 GPU-hours); 4 LoRA fine-tunes of a ~30B model on about 25M tokens each including instruction-data mixing (estimate about 10 GPU-hours each); generating about 40,000 debate and consultancy turns of a few thousand tokens each, plus about 18,000 short knowledge-filter samples, with an open-weight inference server (estimate about 30 GPU-hours); about 35,000 judge calls on 8B and ~30B judges (estimate about 10 GPU-hours); then roughly doubled for debugging and reruns.",
+  "people": "estimate: one research engineer full time for about 3 months, a senior researcher at about 10% for design review and analysis, and about 30 hours of a second person hand-checking 200 transcripts. Rests on the author's judgment of the work in the harness (generator, tool, four protocols, two judges); not on a quoted figure.",
+  "time": "estimate: about 14 weeks: 3 weeks generator and pilot gate, 3 weeks fine-tuning and tool harness, 4 weeks main runs and reruns, 4 weeks analysis and write-up. Rests on the people estimate above.",
+  "cost": "estimate: about USD 55,000-75,000 in total. Rests on: compute at an assumed USD 2-4 per H100-hour (estimate USD 600-1,200, budget USD 2,000 with margin), the research engineer at an assumed loaded USD 15,000-20,000 per month for 3 months, and the senior researcher and checker time at assumed rates. No paid API models are needed."
+ },
+ "decision": "Informs SC-D5.4 (the defeater that truths knowable only via heuristics learned from many examples cannot be argued for compellingly), indirectly, because the study runs flat inference-only debate on synthetic induced regularities with LLM judges. If the pilot gate or the positive control fails, a funder should not update and should stop or fix the generator (the gate caps the loss at about 3 weeks, estimate). If debate beats all baselines on T items, a lab can cite this as weak evidence against D5.4 for induced-regularity questions and fund the next step: trained debaters (premise 6), human judges, and a natural expert-intuition domain. If debate gives no meaningful benefit, or only via cited evidence, or misleads, a safety-case author should treat D5.4 as a live defeater, scope debate's claimed coverage to questions with checkable evidence, and a funder should prefer work on other ways of extracting such knowledge (premise 1) or, if the long-debate arm gains, on longer or recursive debates (premise 2, D5.1). An inconclusive result justifies more items only if its CI sits near the 6-point threshold.",
+ "risks": [
+  "The synthetic generator may not produce a tacit regime (the debater cannot learn the T teacher well while short evidence fails); the pilot gate catches this early.",
+  "Fine-tuning on classification data may degrade the debater's ability to argue; mixing instruction data and the positive control on C items check this.",
+  "Synthetic induced regularities may not behave like expert intuition in natural domains, so a result transfers to that part of the question only by analogy.",
+  "LLM judges stand in for humans, and inference-only debate says little about trained equilibria (premise 6); the result bears on SC-D5.4 only indirectly.",
+  "Tool or prompt design choices (citation budget, word limits) could favour one protocol; budgets are matched across protocols and fixed before the main run.",
+  "The planning figures (training-set size, distance and accuracy thresholds) are estimates to be tuned in the pilot; if they move, the registered analysis is updated before the main run, not after."
+ ],
+ "review_status": "provisional_ai_draft",
+ "check_state": "AI_CHECKED",
+ "rules": [
+  "Everything here is an AI draft (provisional_ai_draft): each counted item passed two blind AI checks that were tested on planted errors, and no person has reviewed it.",
+  "A finding counts only in the setting its own quoted lines show; read `setting` before carrying it to another setting.",
+  "A question's status is a label from fixed rules over its counted findings; `status_check` says whether that label itself passed its check.",
+  "Cite the paper and page from the passage, and read the PDF page before relying on a claim."
+ ]
+}

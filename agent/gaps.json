@@ -1,0 +1,695 @@
+{
+ "schema": "ASRA-GAP-CLOSING-AGENT-v1",
+ "review_status": "provisional_ai_draft",
+ "rules": [
+  "Everything here is an AI draft (provisional_ai_draft): each counted item passed two blind AI checks that were tested on planted errors, and no person has reviewed it.",
+  "A finding counts only in the setting its own quoted lines show; read `setting` before carrying it to another setting.",
+  "A question's status is a label from fixed rules over its counted findings; `status_check` says whether that label itself passed its check.",
+  "Cite the paper and page from the passage, and read the PDF page before relying on a claim."
+ ],
+ "ranking_rules": {
+  "node_label": "SUPPORTED: >=1 strong or >=2 moderate SUPPORTS and no UNDERMINES; CONTESTED: both; WEAK: other mappings only; NONE: no mapping",
+  "gap_weight": {
+   "NONE": 3,
+   "WEAK": 2,
+   "CONTESTED": 2,
+   "SUPPORTED": 1
+  },
+  "indirect_link_factor": 0.5,
+  "tie_break": "openness (STILL_OPEN > NARROWED > PARTLY), then id",
+  "counted": "only entries whose checks passed (AI_CHECKED)"
+ },
+ "safety_case_steps": {
+  "SC-O": {
+   "label": "NONE",
+   "step": "System X causes no unacceptable outcomes",
+   "branch": "deployment and low stakes"
+  },
+  "SC-Oprime": {
+   "label": "NONE",
+   "step": "Agent A causes no unacceptable outcomes",
+   "branch": "deployment and low stakes"
+  },
+  "SC-ASM-NOT-EXTREME": {
+   "label": "NONE",
+   "step": "System is not extremely superhuman",
+   "branch": "deployment and low stakes"
+  },
+  "SC-C1.1": {
+   "label": "WEAK",
+   "step": "A's error rate is at most ε",
+   "branch": "other"
+  },
+  "SC-C2.1": {
+   "label": "WEAK",
+   "step": "Training reaches an approximate global equilibrium",
+   "branch": "training reaches the honest equilibrium"
+  },
+  "SC-C3.1": {
+   "label": "SUPPORTED",
+   "step": "Efficient equilibrium debaters exist",
+   "branch": "training reaches the honest equilibrium"
+  },
+  "SC-C3.2": {
+   "label": "WEAK",
+   "step": "Training converged to a local equilibrium",
+   "branch": "training reaches the honest equilibrium"
+  },
+  "SC-C3.3": {
+   "label": "WEAK",
+   "step": "Reached local equilibrium is global",
+   "branch": "training reaches the honest equilibrium"
+  },
+  "SC-C4.1": {
+   "label": "WEAK",
+   "step": "Training finds efficient equilibrium debaters efficiently",
+   "branch": "training reaches the honest equilibrium"
+  },
+  "SC-D5.1": {
+   "label": "NONE",
+   "step": "Convergence time prohibitive, e.g. ELK problems",
+   "branch": "training reaches the honest equilibrium"
+  },
+  "SC-C4.2": {
+   "label": "WEAK",
+   "step": "Exploration hacking is the main failure",
+   "branch": "training reaches the honest equilibrium"
+  },
+  "SC-D5.2": {
+   "label": "NONE",
+   "step": "Models are gradient hacking",
+   "branch": "training reaches the honest equilibrium"
+  },
+  "SC-D5.3": {
+   "label": "WEAK",
+   "step": "Training stuck in a local minimum",
+   "branch": "training reaches the honest equilibrium"
+  },
+  "SC-C4.3": {
+   "label": "WEAK",
+   "step": "A is not exploration hacking",
+   "branch": "training reaches the honest equilibrium"
+  },
+  "SC-E5.3": {
+   "label": "WEAK",
+   "step": "Exploration guarantee methods: further research required",
+   "branch": "the equilibrium is correct (debate structure and judges)"
+  },
+  "SC-OP-EXPLORATION": {
+   "label": "WEAK",
+   "step": "How serious is exploration hacking?",
+   "branch": "deployment and low stakes"
+  },
+  "SC-C2.2": {
+   "label": "WEAK",
+   "step": "Game equilibria are mostly correct",
+   "branch": "the equilibrium is correct (debate structure and judges)"
+  },
+  "SC-C3.4": {
+   "label": "WEAK",
+   "step": "Equilibria approximate big computation M",
+   "branch": "the equilibrium is correct (debate structure and judges)"
+  },
+  "SC-ASM-NO-OBFUSCATION": {
+   "label": "SUPPORTED",
+   "step": "Protocol avoids obfuscated arguments",
+   "branch": "the equilibrium is correct (debate structure and judges)"
+  },
+  "SC-C3.5": {
+   "label": "WEAK",
+   "step": "Approximate M-executions are approximately correct",
+   "branch": "the equilibrium is correct (debate structure and judges)"
+  },
+  "SC-C4.4": {
+   "label": "WEAK",
+   "step": "Recursive tree debate approximates truth",
+   "branch": "the equilibrium is correct (debate structure and judges)"
+  },
+  "SC-D5.4": {
+   "label": "WEAK",
+   "step": "Heuristic truths cannot be argued deductively",
+   "branch": "the equilibrium is correct (debate structure and judges)"
+  },
+  "SC-D5.5": {
+   "label": "WEAK",
+   "step": "False claims defended by gerrymandering",
+   "branch": "the equilibrium is correct (debate structure and judges)"
+  },
+  "SC-C4.5": {
+   "label": "WEAK",
+   "step": "Simulated judge has bounded systematic error",
+   "branch": "the equilibrium is correct (debate structure and judges)"
+  },
+  "SC-ASM-RANDOM-WASHOUT": {
+   "label": "WEAK",
+   "step": "Random judge errors wash out",
+   "branch": "the equilibrium is correct (debate structure and judges)"
+  },
+  "SC-C5.1": {
+   "label": "CONTESTED",
+   "step": "Human judges have bounded systematic error",
+   "branch": "the equilibrium is correct (debate structure and judges)"
+  },
+  "SC-E6.1": {
+   "label": "WEAK",
+   "step": "Human trials and judgeable-domain datasets needed",
+   "branch": "the equilibrium is correct (debate structure and judges)"
+  },
+  "SC-D6.1": {
+   "label": "WEAK",
+   "step": "Definition of bounded error too permissive",
+   "branch": "the equilibrium is correct (debate structure and judges)"
+  },
+  "SC-D6.2": {
+   "label": "WEAK",
+   "step": "Verifiable-domain evidence may not generalise",
+   "branch": "the equilibrium is correct (debate structure and judges)"
+  },
+  "SC-D6.3": {
+   "label": "WEAK",
+   "step": "Unknown biases in non-verifiable domains",
+   "branch": "the equilibrium is correct (debate structure and judges)"
+  },
+  "SC-C5.2": {
+   "label": "WEAK",
+   "step": "Simulated judge faithful to human judgement",
+   "branch": "the equilibrium is correct (debate structure and judges)"
+  },
+  "SC-C4.6": {
+   "label": "WEAK",
+   "step": "M is stable",
+   "branch": "the equilibrium is correct (debate structure and judges)"
+  },
+  "SC-C2.3": {
+   "label": "NONE",
+   "step": "Error rate does not drift in deployment",
+   "branch": "deployment and low stakes"
+  },
+  "SC-C1.2": {
+   "label": "WEAK",
+   "step": "Error rate ε cannot cause unacceptable outcomes",
+   "branch": "deployment and low stakes"
+  },
+  "SC-ASM-SECURE-ENV": {
+   "label": "NONE",
+   "step": "Environment implementation is sufficiently secure",
+   "branch": "deployment and low stakes"
+  },
+  "SC-C2.4": {
+   "label": "NONE",
+   "step": "Research sabotage impossible at error rate ε",
+   "branch": "deployment and low stakes"
+  },
+  "SC-C3.6": {
+   "label": "WEAK",
+   "step": "Sabotage needs at least Z bad actions",
+   "branch": "the equilibrium is correct (debate structure and judges)"
+  },
+  "SC-D4.1": {
+   "label": "NONE",
+   "step": "Online training raises capabilities, lowering Z",
+   "branch": "deployment and low stakes"
+  },
+  "SC-D4.2": {
+   "label": "WEAK",
+   "step": "Subtly misleading research evades the checker",
+   "branch": "deployment and low stakes"
+  },
+  "SC-C3.7": {
+   "label": "NONE",
+   "step": "A cannot take Z bad actions",
+   "branch": "deployment and low stakes"
+  },
+  "SC-D4.3": {
+   "label": "NONE",
+   "step": "Deployment protocol not adhered to",
+   "branch": "deployment and low stakes"
+  },
+  "SC-D4.4": {
+   "label": "NONE",
+   "step": "Iterations of A coordinate across resets",
+   "branch": "deployment and low stakes"
+  },
+  "SC-OP-EMPIRICAL": {
+   "label": "WEAK",
+   "step": "Empirical tests of debate's key assumptions",
+   "branch": "deployment and low stakes"
+  },
+  "SC-OP-HIGH-STAKES": {
+   "label": "NONE",
+   "step": "Extending the case to high stakes",
+   "branch": "deployment and low stakes"
+  },
+  "SC-OP-HONESTY-ALIGNMENT": {
+   "label": "NONE",
+   "step": "Does honesty translate into aligned actions?",
+   "branch": "deployment and low stakes"
+  }
+ },
+ "gaps": [
+  {
+   "id": "Q43",
+   "rank": 1,
+   "question": "Open empirical questions: does debate help, reach equilibrium, show obfuscation?",
+   "status": "PARTLY_ANSWERED_BY_LATER_WORK",
+   "status_check": "AI_CHECKED",
+   "remaining_type": "EMPIRICAL",
+   "safety_case_steps": [
+    "SC-OP-EMPIRICAL",
+    "SC-C4.6",
+    "SC-E6.1",
+    "SC-ASM-NO-OBFUSCATION"
+   ],
+   "findings_counted": 6,
+   "has_experiment_package": true,
+   "file": "agent/gaps/Q43.json"
+  },
+  {
+   "id": "Q44",
+   "rank": 2,
+   "question": "Open: how serious is exploration hacking and how can it be prevented?",
+   "status": "PARTLY_ANSWERED_BY_LATER_WORK",
+   "status_check": "AI_CHECKED",
+   "remaining_type": "MIXED",
+   "safety_case_steps": [
+    "SC-OP-EXPLORATION",
+    "SC-E5.3"
+   ],
+   "findings_counted": 4,
+   "has_experiment_package": true,
+   "file": "agent/gaps/Q44.json"
+  },
+  {
+   "id": "Q41",
+   "rank": 3,
+   "question": "Do protocols that raise worst-case ASD resist rare catastrophic failures?",
+   "status": "STILL_OPEN",
+   "status_check": "AI_CHECKED",
+   "remaining_type": "EMPIRICAL",
+   "safety_case_steps": [
+    "SC-OP-HIGH-STAKES"
+   ],
+   "findings_counted": 2,
+   "has_experiment_package": true,
+   "file": "agent/gaps/Q41.json"
+  },
+  {
+   "id": "Q45",
+   "rank": 4,
+   "question": "Without online training in high-stakes settings, how can distribution shift, alignment faking and coordinated errors be handled?",
+   "status": "NARROWED",
+   "status_check": "AI_CHECKED",
+   "remaining_type": "MIXED",
+   "safety_case_steps": [
+    "SC-OP-HIGH-STAKES",
+    "SC-D4.4",
+    "SC-C2.3"
+   ],
+   "findings_counted": 6,
+   "has_experiment_package": true,
+   "file": "agent/gaps/Q45.json"
+  },
+  {
+   "id": "Q19",
+   "rank": 5,
+   "question": "Can debate extract inductive or tacit knowledge that lacks short, citeable justifications?",
+   "status": "STILL_OPEN",
+   "status_check": "AI_CHECKED",
+   "remaining_type": "EMPIRICAL",
+   "safety_case_steps": [
+    "SC-D5.4"
+   ],
+   "findings_counted": 2,
+   "has_experiment_package": true,
+   "file": "agent/gaps/Q19.json"
+  },
+  {
+   "id": "Q48",
+   "rank": 6,
+   "question": "Does persona-aware debate help human judges on manipulated content, satire, propaganda and unresolved claims?",
+   "status": "STILL_OPEN",
+   "status_check": "AI_CHECKED",
+   "remaining_type": "EMPIRICAL",
+   "safety_case_steps": [
+    "SC-E6.1"
+   ],
+   "findings_counted": 1,
+   "has_experiment_package": false,
+   "file": "agent/gaps/Q48.json"
+  },
+  {
+   "id": "Q11",
+   "rank": 7,
+   "question": "How far can critique training be pushed relative to discriminator performance, and what stops models from explaining what they know?",
+   "status": "NARROWED",
+   "status_check": "AI_CHECKED",
+   "remaining_type": "EMPIRICAL",
+   "safety_case_steps": [
+    "SC-D5.4"
+   ],
+   "findings_counted": 5,
+   "has_experiment_package": false,
+   "file": "agent/gaps/Q11.json"
+  },
+  {
+   "id": "Q21",
+   "rank": 8,
+   "question": "Will obfuscated arguments become an obstacle for debate on harder questions?",
+   "status": "NARROWED",
+   "status_check": "AI_CHECKED",
+   "remaining_type": "EMPIRICAL",
+   "safety_case_steps": [
+    "SC-OP-EMPIRICAL",
+    "SC-ASM-NO-OBFUSCATION"
+   ],
+   "findings_counted": 3,
+   "has_experiment_package": false,
+   "file": "agent/gaps/Q21.json"
+  },
+  {
+   "id": "Q22",
+   "rank": 9,
+   "question": "Do doubly-efficient debate guarantees survive an oracle that gives wrong answers on some queries?",
+   "status": "NARROWED",
+   "status_check": "AI_CHECKED",
+   "remaining_type": "MATHEMATICAL",
+   "safety_case_steps": [
+    "SC-C4.5",
+    "SC-ASM-RANDOM-WASHOUT"
+   ],
+   "findings_counted": 2,
+   "has_experiment_package": false,
+   "file": "agent/gaps/Q22.json"
+  },
+  {
+   "id": "Q28",
+   "rank": 10,
+   "question": "Does debate generalise to larger evidence bases or uncitable parametric knowledge?",
+   "status": "NARROWED",
+   "status_check": "AI_CHECKED",
+   "remaining_type": "EMPIRICAL",
+   "safety_case_steps": [
+    "SC-D5.4",
+    "SC-OP-EMPIRICAL"
+   ],
+   "findings_counted": 2,
+   "has_experiment_package": false,
+   "file": "agent/gaps/Q28.json"
+  },
+  {
+   "id": "Q32",
+   "rank": 11,
+   "question": "Can debate with weak judges beat direct QA baselines, e.g. via judge fine-tuning?",
+   "status": "NARROWED",
+   "status_check": "AI_CHECKED",
+   "remaining_type": "EMPIRICAL",
+   "safety_case_steps": [
+    "SC-OP-EMPIRICAL"
+   ],
+   "findings_counted": 2,
+   "has_experiment_package": false,
+   "file": "agent/gaps/Q32.json"
+  },
+  {
+   "id": "Q37",
+   "rank": 12,
+   "question": "Can learning-theoretic results say how the abilities of learning agents and available data affect a weaker agent's ability to verify a stronger one?",
+   "status": "NARROWED",
+   "status_check": "AI_CHECKED",
+   "remaining_type": "MATHEMATICAL",
+   "safety_case_steps": [
+    "SC-C4.1",
+    "SC-C2.2"
+   ],
+   "findings_counted": 4,
+   "has_experiment_package": false,
+   "file": "agent/gaps/Q37.json"
+  },
+  {
+   "id": "Q49",
+   "rank": 13,
+   "question": "How would humans check that an unsupervised elicitation method reads a constitution as intended?",
+   "status": "NARROWED",
+   "status_check": "AI_CHECKED",
+   "remaining_type": "MIXED",
+   "safety_case_steps": [
+    "SC-C5.2"
+   ],
+   "findings_counted": 4,
+   "has_experiment_package": false,
+   "file": "agent/gaps/Q49.json"
+  },
+  {
+   "id": "Q35",
+   "rank": 14,
+   "question": "Do scalable oversight methods (critique, debate, decomposition) work on misleading errors?",
+   "status": "PARTLY_ANSWERED_BY_LATER_WORK",
+   "status_check": "AI_CHECKED",
+   "remaining_type": "EMPIRICAL",
+   "safety_case_steps": [
+    "SC-D4.2",
+    "SC-E6.1"
+   ],
+   "findings_counted": 4,
+   "has_experiment_package": false,
+   "file": "agent/gaps/Q35.json"
+  },
+  {
+   "id": "Q39",
+   "rank": 15,
+   "question": "How can model similarity be measured on free-text answers and reasoning, to study its role in debate and process supervision?",
+   "status": "PARTLY_ANSWERED_BY_LATER_WORK",
+   "status_check": "AI_CHECKED",
+   "remaining_type": "EMPIRICAL",
+   "safety_case_steps": [
+    "SC-C5.2"
+   ],
+   "findings_counted": 5,
+   "has_experiment_package": false,
+   "file": "agent/gaps/Q39.json"
+  },
+  {
+   "id": "Q47",
+   "rank": 16,
+   "question": "Can a debate protocol avoid needing stability, for example by targeting honesty instead of correctness?",
+   "status": "PARTLY_ANSWERED_BY_LATER_WORK",
+   "status_check": "AI_CHECKED",
+   "remaining_type": "MATHEMATICAL",
+   "safety_case_steps": [
+    "SC-C4.6"
+   ],
+   "findings_counted": 4,
+   "has_experiment_package": false,
+   "file": "agent/gaps/Q47.json"
+  },
+  {
+   "id": "Q50",
+   "rank": 17,
+   "question": "Does some variant of debate work as a component of an overall alignment strategy?",
+   "status": "PARTLY_ANSWERED_BY_LATER_WORK",
+   "status_check": "AI_CHECKED",
+   "remaining_type": "MIXED",
+   "safety_case_steps": [
+    "SC-C4.5",
+    "SC-D4.2"
+   ],
+   "findings_counted": 6,
+   "has_experiment_package": false,
+   "file": "agent/gaps/Q50.json"
+  },
+  {
+   "id": "Q51",
+   "rank": 18,
+   "question": "Open: is stability necessary, and which problems admit stable decompositions?",
+   "status": "PARTLY_ANSWERED_BY_LATER_WORK",
+   "status_check": "AI_CHECKED",
+   "remaining_type": "MIXED",
+   "safety_case_steps": [
+    "SC-C4.6"
+   ],
+   "findings_counted": 3,
+   "has_experiment_package": false,
+   "file": "agent/gaps/Q51.json"
+  },
+  {
+   "id": "Q24",
+   "rank": 19,
+   "question": "Why do MAD hyperparameters transfer from GPT-3.5 to GPT-4 but not to Mixtral?",
+   "status": "STILL_OPEN",
+   "status_check": "AI_CHECKED",
+   "remaining_type": "EMPIRICAL",
+   "safety_case_steps": [],
+   "findings_counted": 4,
+   "has_experiment_package": false,
+   "file": "agent/gaps/Q24.json"
+  },
+  {
+   "id": "Q29",
+   "rank": 20,
+   "question": "Open question: can pseudolabeler-aware contrastive pretraining improve weak-to-strong?",
+   "status": "STILL_OPEN",
+   "status_check": "AI_CHECKED",
+   "remaining_type": "MIXED",
+   "safety_case_steps": [],
+   "findings_counted": 3,
+   "has_experiment_package": false,
+   "file": "agent/gaps/Q29.json"
+  },
+  {
+   "id": "Q40",
+   "rank": 21,
+   "question": "Why does direct supervision beat recursive critique when a stronger model supervises a weaker one, and would better critique abilities change that?",
+   "status": "STILL_OPEN",
+   "status_check": "AI_CHECKED",
+   "remaining_type": "EMPIRICAL",
+   "safety_case_steps": [],
+   "findings_counted": 3,
+   "has_experiment_package": false,
+   "file": "agent/gaps/Q40.json"
+  },
+  {
+   "id": "Q02",
+   "rank": 22,
+   "question": "Proposed experiments: can RL learn nearly as fast with reward on 10% of episodes?",
+   "status": "NARROWED",
+   "status_check": "AI_CHECKED",
+   "remaining_type": "EMPIRICAL",
+   "safety_case_steps": [],
+   "findings_counted": 7,
+   "has_experiment_package": false,
+   "file": "agent/gaps/Q02.json"
+  },
+  {
+   "id": "Q05",
+   "rank": 23,
+   "question": "Can Iterated Amplification be applied to complex real-world beyond-human-scale tasks?",
+   "status": "NARROWED",
+   "status_check": "AI_CHECKED",
+   "remaining_type": "MIXED",
+   "safety_case_steps": [],
+   "findings_counted": 3,
+   "has_experiment_package": false,
+   "file": "agent/gaps/Q05.json"
+  },
+  {
+   "id": "Q15",
+   "rank": 24,
+   "question": "What is needed to automate decomposition, error analysis and program repair?",
+   "status": "NARROWED",
+   "status_check": "AI_CHECKED",
+   "remaining_type": "EMPIRICAL",
+   "safety_case_steps": [],
+   "findings_counted": 6,
+   "has_experiment_package": false,
+   "file": "agent/gaps/Q15.json"
+  },
+  {
+   "id": "Q16",
+   "rank": 25,
+   "question": "Can several examiner models, or a trained examiner, make cross-examination better at detecting factual errors?",
+   "status": "NARROWED",
+   "status_check": "AI_CHECKED",
+   "remaining_type": "EMPIRICAL",
+   "safety_case_steps": [],
+   "findings_counted": 4,
+   "has_experiment_package": false,
+   "file": "agent/gaps/Q16.json"
+  },
+  {
+   "id": "Q30",
+   "rank": 26,
+   "question": "Open question: how do strong models perceive the knowledge boundaries of weak supervisors?",
+   "status": "NARROWED",
+   "status_check": "AI_CHECKED",
+   "remaining_type": "EMPIRICAL",
+   "safety_case_steps": [],
+   "findings_counted": 3,
+   "has_experiment_package": false,
+   "file": "agent/gaps/Q30.json"
+  },
+  {
+   "id": "Q42",
+   "rank": 27,
+   "question": "What is the probability that ASI escapes control (Compton constant) in realistic settings?",
+   "status": "NARROWED",
+   "status_check": "AI_CHECKED",
+   "remaining_type": "MIXED",
+   "safety_case_steps": [],
+   "findings_counted": 4,
+   "has_experiment_package": false,
+   "file": "agent/gaps/Q42.json"
+  },
+  {
+   "id": "Q52",
+   "rank": 28,
+   "question": "Which debate graph topologies satisfy the martingale condition?",
+   "status": "NARROWED",
+   "status_check": "AI_CHECKED",
+   "remaining_type": "MATHEMATICAL",
+   "safety_case_steps": [],
+   "findings_counted": 4,
+   "has_experiment_package": false,
+   "file": "agent/gaps/Q52.json"
+  },
+  {
+   "id": "Q09",
+   "rank": 29,
+   "question": "Is learned task decomposition feasible for hard real-world tasks, and where does it fail?",
+   "status": "PARTLY_ANSWERED_BY_LATER_WORK",
+   "status_check": "AI_CHECKED",
+   "remaining_type": "EMPIRICAL",
+   "safety_case_steps": [],
+   "findings_counted": 5,
+   "has_experiment_package": false,
+   "file": "agent/gaps/Q09.json"
+  },
+  {
+   "id": "Q13",
+   "rank": 30,
+   "question": "Do debate, market-making and recursive reward modeling work in sandwiching trials?",
+   "status": "PARTLY_ANSWERED_BY_LATER_WORK",
+   "status_check": "AI_CHECKED",
+   "remaining_type": "EMPIRICAL",
+   "safety_case_steps": [],
+   "findings_counted": 6,
+   "has_experiment_package": false,
+   "file": "agent/gaps/Q13.json"
+  },
+  {
+   "id": "Q18",
+   "rank": 31,
+   "question": "Open question: does process supervision's advantage generalize beyond math?",
+   "status": "PARTLY_ANSWERED_BY_LATER_WORK",
+   "status_check": "AI_CHECKED",
+   "remaining_type": "EMPIRICAL",
+   "safety_case_steps": [],
+   "findings_counted": 7,
+   "has_experiment_package": false,
+   "file": "agent/gaps/Q18.json"
+  },
+  {
+   "id": "Q26",
+   "rank": 32,
+   "question": "What makes a concept easy or hard for a strong model to learn from weak labels, and can weak-to-strong generalization error be estimated without labels?",
+   "status": "PARTLY_ANSWERED_BY_LATER_WORK",
+   "status_check": "AI_CHECKED",
+   "remaining_type": "MIXED",
+   "safety_case_steps": [],
+   "findings_counted": 5,
+   "has_experiment_package": false,
+   "file": "agent/gaps/Q26.json"
+  },
+  {
+   "id": "Q38",
+   "rank": 33,
+   "question": "Which other combinations of scalable oversight and weak-to-strong generalization work?",
+   "status": "PARTLY_ANSWERED_BY_LATER_WORK",
+   "status_check": "AI_CHECKED",
+   "remaining_type": "EMPIRICAL",
+   "safety_case_steps": [],
+   "findings_counted": 5,
+   "has_experiment_package": false,
+   "file": "agent/gaps/Q38.json"
+  }
+ ]
+}

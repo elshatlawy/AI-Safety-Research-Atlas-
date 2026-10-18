@@ -1,0 +1,536 @@
+{
+ "schema": "ASRA-GAP-CLOSING-AGENT-v1",
+ "paper": "2301.01751v2",
+ "review_status": "provisional_ai_draft",
+ "rules": [
+  "Everything here is an AI draft (provisional_ai_draft): each counted item passed two blind AI checks that were tested on planted errors, and no person has reviewed it.",
+  "A finding counts only in the setting its own quoted lines show; read `setting` before carrying it to another setting.",
+  "A question's status is a label from fixed rules over its counted findings; `status_check` says whether that label itself passed its check.",
+  "Cite the paper and page from the passage, and read the PDF page before relying on a claim."
+ ],
+ "notes": "All empirical cards are graded EMPIRICAL_PRELIMINARY because the paper presents its three applications as case studies (p1 L22, p7 L56, and the 'Case Study' section headings); if case-study framing were not read as preliminary, the placebo and adherence results (held-out test sets with p-values) would be EMPIRICAL_SINGLE_SETTING. Appendix 9.5.1 (p22 L48) says the placebo test set has 61 experiments across 47 papers, while Table 2 gives classification n=48 and description n=20. The placebo p-values (0.0004, 0.025) are given without naming the test; only the adherence p-value is tied to Fisher's exact test (footnote, p15 L60-61). RES-KEYWORD-BASELINE mixes a measured comparison (94% vs 98%, Table 2, no test) with an untested argument about generalisation. RES-QASPER-TRANSFER's record setting says answers are 'judged as semantic equivalence to expert answers', which matches p16 L52-55 (the authors' own rating).",
+ "cards": [
+  {
+   "record_id": "N2:DSOFT:ARXIV-2301.01751v2:CORE",
+   "paper": "2301.01751v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2301.01751v2:METHOD-ITERATED-DECOMPOSITION"
+    ],
+    "description": "The authors applied their human-in-the-loop iterated-decomposition workflow, supported by the ICE trace visualiser, to three real-world tasks from their work on Elicit and compared the resulting LM programs with less compositional baselines on held-out test sets.",
+    "passages": [
+     {
+      "version": "2301.01751v2",
+      "page": 7,
+      "lines": [
+       56,
+       57
+      ],
+      "text": "We used iterated decomposition and ICE to improve performance over simple baselines on three real-world case studies\nwe encountered in our work on Elicit (Figure 4).",
+      "pdf_page": "https://arxiv.org/pdf/2301.01751v2#page=7"
+     },
+     {
+      "version": "2301.01751v2",
+      "page": 1,
+      "lines": [
+       22,
+       23
+      ],
+      "text": "These applications serve as case studies for a workflow that, if automated, could keep ML systems\ninterpretable and safe even as they scale to increasingly complex tasks.",
+      "pdf_page": "https://arxiv.org/pdf/2301.01751v2#page=1"
+     },
+     {
+      "version": "2301.01751v2",
+      "page": 8,
+      "lines": [
+       61,
+       65
+      ],
+      "text": "Baseline: Select-and-generate like Elicit\n\nThe baseline is the “select-then-generate” algorithm currently deployed for paper question-answering in Elicit. Elicit\nuses monoT54 to rank paragraphs from the paper against the question (Lin et al., 2021). The top-ranking paragraph is\nfed to text-davinci-002 with the following prompt:",
+      "pdf_page": "https://arxiv.org/pdf/2301.01751v2#page=8"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2301.01751v2:ASM-DEVELOPER-SUPERVISOR"
+    ],
+    "stated_hypotheses": [
+     "The decompositions are designed and refined by the human developer, who has access to the correct answers."
+    ],
+    "passages": []
+   },
+   "setting": {
+    "systems": "Compositional LM programs; the baseline is Elicit's select-then-generate pipeline (monoT5 ranker, text-davinci-002)",
+    "task_data": "Placebo description in randomized controlled trials, participant adherence in trials, and NLP questions from Qasper; held-out test sets",
+    "judge": "Outputs compared with gold-standard answers",
+    "regime": "evaluation",
+    "scale": null
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2301.01751v2:LIM-COMPETITIVENESS",
+     "N2:DSOFT:ARXIV-2301.01751v2:LIM-PVALUE-INDEPENDENCE"
+    ],
+    "notes": "The authors present the three applications as case studies of a workflow; the adherence p-value treats answers as independent although they are clustered by trial and paper."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_PRELIMINARY",
+    "reason": "The abstract presents the three applications as case studies of the workflow, each evaluated on one held-out test set, which the rubric grades preliminary."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2301.01751v2:RES-PLACEBO-CLASSIFICATION",
+   "paper": "2301.01751v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2301.01751v2:METHOD-ITERATED-DECOMPOSITION"
+    ],
+    "description": "A developer-designed decomposition (classify from the trial arms with rank-and-answer steps, classify from each paragraph and aggregate, then ensemble the two) was compared with the Elicit select-then-generate baseline on a held-out test set (Table 2, classification n=48), and execution traces were then reviewed in ICE.",
+    "passages": [
+     {
+      "version": "2301.01751v2",
+      "page": 9,
+      "lines": [
+       28,
+       39
+      ],
+      "text": "In outline, the decomposition looks like this:\n1. Classify based on trial arms\n(a) What were the trial arms?\ni. Rank paragraphs by relevance to this question through pairwise comparisons\nii. Answer based on the most relevant paragraphs\n(b) Describe each trial arm: Rank and Answer\n(c) Do any of the arms look like placebos?\n(d) If so, could participants tell which arm they were in? (If so, there’s not really a placebo.)\n2. Classify based on each paragraph\n(a) Was there a placebo, according to each paragraph?\n(b) Aggregate answers from paragraphs\n3. Ensemble the classification based on trial arms and paragraphs",
+      "pdf_page": "https://arxiv.org/pdf/2301.01751v2#page=9"
+     },
+     {
+      "version": "2301.01751v2",
+      "page": 8,
+      "lines": [
+       61,
+       65
+      ],
+      "text": "Baseline: Select-and-generate like Elicit\n\nThe baseline is the “select-then-generate” algorithm currently deployed for paper question-answering in Elicit. Elicit\nuses monoT54 to rank paragraphs from the paper against the question (Lin et al., 2021). The top-ranking paragraph is\nfed to text-davinci-002 with the following prompt:",
+      "pdf_page": "https://arxiv.org/pdf/2301.01751v2#page=8"
+     },
+     {
+      "version": "2301.01751v2",
+      "page": 10,
+      "lines": [
+       3,
+       7
+      ],
+      "text": "Method\n\nClassification (n=48)\n\nDescription (n=20)",
+      "pdf_page": "https://arxiv.org/pdf/2301.01751v2#page=10"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2301.01751v2:ASM-DEVELOPER-SUPERVISOR"
+    ],
+    "stated_hypotheses": [
+     "The decompositions are designed and refined by the human developer, who has access to the correct answers.",
+     "Accuracy is measured on a held-out test set.",
+     "The authors report strong agreement among human raters on the classification and description labels.",
+     "The placebo task was chosen as a fairly easy task, a setting where success was likely."
+    ],
+    "passages": [
+     {
+      "version": "2301.01751v2",
+      "page": 8,
+      "lines": [
+       43,
+       52
+      ],
+      "text": "Case Study: Placebo Classification & Description\n\nIn this case study, we focus on domain-specific decompositions. Through iteration on the classification and description\nsteps, accuracy of the generated placebo description improved from 25% to 65% on a held-out test set.\n4.1\n\nSetup\n\nGiven the full text of an RCT, the task is to answer “Did this RCT use a placebo?” (classification) and “If so, what was\nit?” (description). For both classification and description we find strong agreement among human raters.",
+      "pdf_page": "https://arxiv.org/pdf/2301.01751v2#page=8"
+     },
+     {
+      "version": "2301.01751v2",
+      "page": 9,
+      "lines": [
+       8,
+       8
+      ],
+      "text": "On a held-out test set, this approach has 71% accuracy for classification, 25% for description (Table 2).",
+      "pdf_page": "https://arxiv.org/pdf/2301.01751v2#page=9"
+     },
+     {
+      "version": "2301.01751v2",
+      "page": 22,
+      "lines": [
+       36,
+       37
+      ],
+      "text": "Besides helping researchers evaluate risk of bias, another reason to pick this task was that it is a fairly easy task. We\nwanted to try decomposition in a setting where success was likely, and identify any unexpected failure modes.",
+      "pdf_page": "https://arxiv.org/pdf/2301.01751v2#page=22"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "A compositional LM program; the baseline ranks paragraphs with monoT5 and answers with text-davinci-002",
+    "task_data": "Placebo classification ('Did this RCT use a placebo?') from full texts of randomized controlled trials",
+    "judge": "Answers compared with gold-standard labels",
+    "regime": "evaluation",
+    "scale": "Classification test set n=48"
+   },
+   "quantitative": {
+    "n": "48",
+    "uncertainty": "p = 0.0004 for 71% → 98%; the test used is not named in these passages"
+   },
+   "limits": {
+    "record_ids": [],
+    "notes": "The authors chose the task as fairly easy; the gain is attributed almost entirely to the paragraph-wise classification rather than the trial-arms branch."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_PRELIMINARY",
+    "reason": "A single case study on one held-out test set (n=48); a p-value is reported, but the rubric grades a result resting on a case study as preliminary, and the authors chose the task as fairly easy."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2301.01751v2:RES-PLACEBO-DESCRIPTION",
+   "paper": "2301.01751v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2301.01751v2:METHOD-ITERATED-DECOMPOSITION"
+    ],
+    "description": "The placebo description was generated by ranking paragraphs by relevance through pairwise comparisons and answering from the most relevant ones (the same Rank and Answer step used for classification), and compared with the Elicit baseline on trials that used a placebo, each description checked against the gold standard (Table 2, n=20).",
+    "passages": [
+     {
+      "version": "2301.01751v2",
+      "page": 9,
+      "lines": [
+       29,
+       33
+      ],
+      "text": "1. Classify based on trial arms\n(a) What were the trial arms?\ni. Rank paragraphs by relevance to this question through pairwise comparisons\nii. Answer based on the most relevant paragraphs\n(b) Describe each trial arm: Rank and Answer",
+      "pdf_page": "https://arxiv.org/pdf/2301.01751v2#page=9"
+     },
+     {
+      "version": "2301.01751v2",
+      "page": 22,
+      "lines": [
+       46,
+       51
+      ],
+      "text": "We evaluate each trial, rather than the paper. A trial is when participants are randomized into arms that will be tested\nagainst each other. Some papers discuss multiple trials, and sometimes some trials are blinded while others are not.\nThere are 61 experiments in our test set across 47 papers.\nTo evaluate placebo descriptions, we only look at experiments where there is in fact a placebo. If the decompositino\nsaid that there is no placebo, we immediately count that description as wrong. Otherwise, we check whether the\ndecomposition’s description is reasonably accurate and complete compared to the gold standard.",
+      "pdf_page": "https://arxiv.org/pdf/2301.01751v2#page=22"
+     },
+     {
+      "version": "2301.01751v2",
+      "page": 10,
+      "lines": [
+       3,
+       7
+      ],
+      "text": "Method\n\nClassification (n=48)\n\nDescription (n=20)",
+      "pdf_page": "https://arxiv.org/pdf/2301.01751v2#page=10"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2301.01751v2:ASM-DEVELOPER-SUPERVISOR"
+    ],
+    "stated_hypotheses": [
+     "The decompositions are designed and refined by the human developer, who has access to the correct answers.",
+     "Only trials that in fact used a placebo are scored; a 'no placebo' answer counts as a wrong description.",
+     "The placebo task was chosen as a fairly easy task, a setting where success was likely."
+    ],
+    "passages": [
+     {
+      "version": "2301.01751v2",
+      "page": 8,
+      "lines": [
+       43,
+       52
+      ],
+      "text": "Case Study: Placebo Classification & Description\n\nIn this case study, we focus on domain-specific decompositions. Through iteration on the classification and description\nsteps, accuracy of the generated placebo description improved from 25% to 65% on a held-out test set.\n4.1\n\nSetup\n\nGiven the full text of an RCT, the task is to answer “Did this RCT use a placebo?” (classification) and “If so, what was\nit?” (description). For both classification and description we find strong agreement among human raters.",
+      "pdf_page": "https://arxiv.org/pdf/2301.01751v2#page=8"
+     },
+     {
+      "version": "2301.01751v2",
+      "page": 22,
+      "lines": [
+       36,
+       37
+      ],
+      "text": "Besides helping researchers evaluate risk of bias, another reason to pick this task was that it is a fairly easy task. We\nwanted to try decomposition in a setting where success was likely, and identify any unexpected failure modes.",
+      "pdf_page": "https://arxiv.org/pdf/2301.01751v2#page=22"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "A compositional LM program using a Rank and Answer step, compared with the Elicit baseline",
+    "task_data": "Describing the placebo used in randomized controlled trials; held-out test set",
+    "judge": "The authors check whether each description is reasonably accurate and complete compared with the gold standard",
+    "regime": "evaluation",
+    "scale": "Description test set n=20"
+   },
+   "quantitative": {
+    "n": "20",
+    "uncertainty": "p = 0.025 for 25% → 65%; the test used is not named in these passages"
+   },
+   "limits": {
+    "record_ids": [],
+    "notes": "A small description test set (n=20) in a task the authors chose as fairly easy."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_PRELIMINARY",
+    "reason": "A single case study with n=20 descriptions on one held-out test set; a p-value is reported, but the rubric grades a result resting on a case study as preliminary."
+   },
+   "review_status": "provisional_ai_draft",
+   "check_history": [
+    "card-1: flagged or undecided by two blind checks; rewritten from the checkers' suggested fix (quotes unchanged)"
+   ]
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2301.01751v2:RES-KEYWORD-BASELINE",
+   "paper": "2301.01751v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [],
+    "description": "A three-rule regex keyword algorithm ('open-label' means no placebo, 'placebo' means placebo, otherwise no placebo) was scored on the same placebo test set as the decompositions (Table 2: keyword decision tree 94% classification, final decomposition 98%); its failure to generalise to adherence is argued, not tested.",
+    "passages": [
+     {
+      "version": "2301.01751v2",
+      "page": 10,
+      "lines": [
+       3,
+       14
+      ],
+      "text": "Method\n\nClassification (n=48)\n\nDescription (n=20)\n\nElicit select-then-generate baseline\nSelect-then-generate with “not mentioned\" perplexity selection\nStuff paper in prompt\nFinal decomposition\nKeyword decision tree\n",
+      "pdf_page": "https://arxiv.org/pdf/2301.01751v2#page=10"
+     },
+     {
+      "version": "2301.01751v2",
+      "page": 10,
+      "lines": [
+       15,
+       25
+      ],
+      "text": "71%\n65%\n69%\n98%\n94%\n\n25%\n10%\n30%\n65%\n10%",
+      "pdf_page": "https://arxiv.org/pdf/2301.01751v2#page=10"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "The comparison uses the placebo classification test set of Table 2 (n=48).",
+     "The claim that keywords do not generalise rests on adherence being discussed with varied wordings, with reference to Appendix 9.6.2."
+    ],
+    "passages": [
+     {
+      "version": "2301.01751v2",
+      "page": 8,
+      "lines": [
+       43,
+       52
+      ],
+      "text": "Case Study: Placebo Classification & Description\n\nIn this case study, we focus on domain-specific decompositions. Through iteration on the classification and description\nsteps, accuracy of the generated placebo description improved from 25% to 65% on a held-out test set.\n4.1\n\nSetup\n\nGiven the full text of an RCT, the task is to answer “Did this RCT use a placebo?” (classification) and “If so, what was\nit?” (description). For both classification and description we find strong agreement among human raters.",
+      "pdf_page": "https://arxiv.org/pdf/2301.01751v2#page=8"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "A regex keyword algorithm versus the final LM decomposition",
+    "task_data": "Placebo classification on randomized controlled trial papers",
+    "judge": "Answers compared with gold-standard labels",
+    "regime": "evaluation",
+    "scale": "Classification test set n=48"
+   },
+   "quantitative": {
+    "n": "48",
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [],
+    "notes": "No test is stated for the 94% versus 98% comparison; the generalisation claim is argued, not tested."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_PRELIMINARY",
+    "reason": "A comparison within one case study's test set (n=48) with no stated uncertainty, plus an untested argument about generalisation; the rubric grades a result resting on a case study as preliminary."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2301.01751v2:RES-PARTICIPANT-FLOW",
+   "paper": "2301.01751v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2301.01751v2:METHOD-ITERATED-DECOMPOSITION"
+    ],
+    "description": "Starting from the Elicit select-then-generate baseline, the authors iterated on the selection step (a zero-shot perplexity classifier) and the generation step (few-shot answering from expert demonstrations) and measured accuracy against gold standards on held-out test sets for experiments, arms and adherence (Table 3).",
+    "passages": [
+     {
+      "version": "2301.01751v2",
+      "page": 15,
+      "lines": [
+       39,
+       41
+      ],
+      "text": "The zero-shot perplexity classifier and few-shot answering via “demonstrations” add up to substantial improvements\nover the Elicit baseline (e.g. 53% correct → 70% for adherence, p=0.0065 ; see Table 3). These techniques vastly reduce\nthe number of false negatives for the adherence task (error analysis in Appendix 9.6.3).",
+      "pdf_page": "https://arxiv.org/pdf/2301.01751v2#page=15"
+     },
+     {
+      "version": "2301.01751v2",
+      "page": 11,
+      "lines": [
+       71,
+       77
+      ],
+      "text": "Experiments and arms are relatively easy to evaluate—we can check whether each experiment/arm from the gold\nstandard is represented and whether there are any additional ones that should not be there.\nAdherence tends to require a narrative answer, and to be more subjective. This means that it may benefit more from a\nnuanced decomposition, and approaches that work well for adherence may generalize better to other fuzzy tasks.\nEach arm has an adherence answer, so there are a total of 135 adherence answers in our test set. Often, no information\nabout adherence is available in the text of the paper—information about adherence is only available for 56/135 arms\n(41%) in our test set. So the adherence task is substantially a classification task (adherence mentioned vs. not mentioned).",
+      "pdf_page": "https://arxiv.org/pdf/2301.01751v2#page=11"
+     },
+     {
+      "version": "2301.01751v2",
+      "page": 14,
+      "lines": [
+       3,
+       12
+      ],
+      "text": "Method\n\nExperiments\n(n=50)\n\nArms\n(n=50)\n\nAdherence\n(n=135)",
+      "pdf_page": "https://arxiv.org/pdf/2301.01751v2#page=14"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2301.01751v2:ASM-DEVELOPER-SUPERVISOR"
+    ],
+    "stated_hypotheses": [
+     "The decompositions are designed and refined by the human developer, who has access to the correct answers.",
+     "Few-shot demonstrations are built from expert gold-standard answers, randomly sampled from the development set.",
+     "The adherence p-value uses Fisher's exact test treating each adherence answer as independent, though answers are clustered by trial and paper.",
+     "Adherence information is available for only 56 of 135 arms, so adherence is largely a mentioned/not-mentioned classification."
+    ],
+    "passages": [
+     {
+      "version": "2301.01751v2",
+      "page": 15,
+      "lines": [
+       22,
+       28
+      ],
+      "text": "We generated few-shot prompts from expert demonstrations (gold standards) by prepending the existing perplexity\nselection prompt with multiple filled examples. We either used only positive demonstrations, which included a\nsupporting paragraph and an expert’s handwritten answer based on that paragraph, or mixed positive and negative\ndemonstrations, which assumed that unmarked paragraphs did not answer the question. This assumption was often\nfalse, so we found it better to use only positive examples in the few-shot demonstration prompts.\nAcross all tasks, the few-shot prompts derived from demonstrations improved the accuracy of generation over the\nzero-shot approach, even with randomly sampled examples from the development set. The improvement was larger",
+      "pdf_page": "https://arxiv.org/pdf/2301.01751v2#page=15"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "LM select-then-generate programs (perplexity-based selection, few-shot generation) against Elicit's baseline",
+    "task_data": "Participant flow in randomized controlled trials: extracting experiments, trial arms and per-arm adherence; held-out test set",
+    "judge": "The authors check answers against gold standards",
+    "regime": "evaluation",
+    "scale": "Experiments n=50, arms n=50, adherence answers n=135"
+   },
+   "quantitative": {
+    "n": "Experiments 50, arms 50, adherence answers 135",
+    "uncertainty": "p = 0.0065 for adherence 53% → 70% (Fisher's exact test treating answers as independent; the authors say the true p-value is somewhat higher); none stated for experiments or arms"
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2301.01751v2:LIM-PVALUE-INDEPENDENCE"
+    ],
+    "notes": "Only adherence has a p-value, which the authors say is understated because answers are clustered by trial and paper."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_PRELIMINARY",
+    "reason": "One case study's held-out test sets (n = 50, 50, 135), with a p-value only for adherence that the authors say understates the uncertainty; the rubric grades a result resting on a case study as preliminary."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2301.01751v2:RES-QASPER-TRANSFER",
+   "paper": "2301.01751v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [],
+    "description": "The select-then-generate baselines and the best participant-flow decompositions (perplexity selection with and without few-shot demonstrations) were run on 100 sampled Qasper questions, and each answer was rated as semantically equivalent to the expert answers or not, with F1 also reported (Table 4).",
+    "passages": [
+     {
+      "version": "2301.01751v2",
+      "page": 16,
+      "lines": [
+       65,
+       66
+      ],
+      "text": "We tested both our select-then-generate baselines and our best-performing decompositions (perplexity selection, with\nand without few-shot examples from demonstrations) on a sample of Q ASPER questions. Table 4 shows the results.",
+      "pdf_page": "https://arxiv.org/pdf/2301.01751v2#page=16"
+     },
+     {
+      "version": "2301.01751v2",
+      "page": 16,
+      "lines": [
+       52,
+       60
+      ],
+      "text": "Because we care about correctness of answers, not whether they literally match expert wording, we focused instead on\na binary assessment of whether the generated answer was semantically equivalent to the expert answers. For example, a\nyes-no answer of “yes” versus a generated answer of “true” would have F1 = 0, but we would rate it as correct. For\ncompleteness, we also measure and report F1 scores, but we did not adapt decompositions to maximize F1 .\nTo keep the task and assessments manageable but meaningful, we sampled 100 questions from Q ASPER to test both\nbaselines and decompositions that performed substantially better than baselines on the participant flow tasks. We\nperformed light data cleaning before testing, removing special tokens indicating cross-references with natural language\nequivalents (e.g., converting ‘BIBREF0’ to ‘[1]’) and, as in the original Q ASPER paper, omitting questions that required\ntables or figures to answer.",
+      "pdf_page": "https://arxiv.org/pdf/2301.01751v2#page=16"
+     },
+     {
+      "version": "2301.01751v2",
+      "page": 16,
+      "lines": [
+       49,
+       50
+      ],
+      "text": "Table 4: Results for the Q ASPER NLP question-answering task (n=100). The ordering of methods by performance is\nthe same as for the participant flow case study, providing some evidence of generality for decompositions.",
+      "pdf_page": "https://arxiv.org/pdf/2301.01751v2#page=16"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "The decompositions were iterated on primarily using the earlier case-study tasks and then tested on Qasper to see how well they generalise.",
+     "Accuracy is a binary rating of semantic equivalence to the expert answers, not F1; decompositions were not adapted to maximise F1.",
+     "100 questions are sampled; questions that need tables or figures are omitted.",
+     "Few-shot demonstrations are other, randomly selected Qasper question-paragraph-answer tuples."
+    ],
+    "passages": [
+     {
+      "version": "2301.01751v2",
+      "page": 15,
+      "lines": [
+       45,
+       51
+      ],
+      "text": "Case Study: Q ASPER NLP question answering\n\nWe primarily iterated on decompositions using the tasks above. However, we also wanted to explore how well these\ntask decompositions generalized to other domains and questions, so we tested them on a subset of the Q ASPER dataset,\na question-answering dataset of 5,049 questions and answers written by NLP practitioners, covering 1,585 NLP papers\n(Dasigi et al., 2021). By using the final decomposition for participant flow, accuracy at answering NLP questions on the\nQ ASPER dataset improved from 38% to 69%.",
+      "pdf_page": "https://arxiv.org/pdf/2301.01751v2#page=15"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "LM select-then-generate programs (perplexity classifier, optional few-shot demonstrations)",
+    "task_data": "A sample of 100 questions from Qasper, a dataset of questions about NLP papers answered by NLP practitioners",
+    "judge": "The authors rate whether each answer is semantically equivalent to the expert answers",
+    "regime": "evaluation",
+    "scale": "100 sampled questions"
+   },
+   "quantitative": {
+    "n": "100",
+    "uncertainty": "'Significantly outperformed' is stated without a named test, p-value or interval"
+   },
+   "limits": {
+    "record_ids": [],
+    "notes": "One sample of 100 questions; the authors hedge that the decomposition is 'somewhat robust' to domain transfer, giving 'some evidence of generality'."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_PRELIMINARY",
+    "reason": "The authors present this as a case study ('Case Study: QASPER NLP question answering') on one sample of 100 questions; 'significantly' is backed by no stated test, p-value or interval, and the authors hedge the result as 'some evidence of generality'. The rubric grades a result resting on a case study as preliminary."
+   },
+   "review_status": "provisional_ai_draft",
+   "check_history": [
+    "card-1: flagged or undecided by two blind checks; rewritten from the checkers' suggested fix (quotes unchanged)"
+   ]
+  }
+ ]
+}

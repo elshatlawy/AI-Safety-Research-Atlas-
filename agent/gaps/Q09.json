@@ -1,0 +1,219 @@
+{
+ "schema": "ASRA-GAP-CLOSING-AGENT-v1",
+ "id": "Q09",
+ "question": "Is learned task decomposition feasible for hard real-world tasks, and where does it fail?",
+ "asked_by": "Wu et al., Recursively Summarizing Books with Human Feedback",
+ "rank": 29,
+ "status": "PARTLY_ANSWERED_BY_LATER_WORK",
+ "status_check": "AI_CHECKED",
+ "remaining_question": "Can a decomposition model trained from human feedback beat a fixed decomposition on a hard real-world task without verifiable answers (e.g. book-length summarization), measured by the quality of the human supervision it enables, and on which tasks do cross-part dependencies make it fail?",
+ "remaining_type": "EMPIRICAL",
+ "safety_case": [],
+ "findings": [
+  {
+   "id": "Q09:F1",
+   "later_paper": "arXiv 2406.04604v4: Learning Task Decomposition to Assist Humans in Competitive Programming",
+   "first_submitted": "2024-06-07",
+   "effect": "PARTLY_ANSWERS",
+   "claim": "A method that uses a collected dataset of human repair experiences as in-context examples to learn to critique, refine and rank decomposed solutions, improving assistive value (AssistV: the feasibility and speed for humans to repair the decomposed solution), enabled non-experts to solve 33.3% more competitive programming problems, sped them up by 3.3x and let them match unassisted experts, under 177 hours of human study. The authors say they only conduct experiments based on in-context learning and supervised learning, and that fine-tuning the decomposition model with reinforcement learning is worth studying in the future.",
+   "setting": "Human study (177 hours) on competitive programming problems: non-experts repair decomposed solutions with the method's help and are compared with unassisted experts; the decomposition is improved by learning to critique, refine and rank decomposed solutions, with human repair data as in-context examples (in-context and supervised learning only; no RL fine-tuning of the decomposition model). Differs from the question's setting: a programming task, not book summarization (the asking paper's task), and what is decomposed is a solution that humans repair.",
+   "bears_on": "Feasibility part of the question (learning a decomposition rather than using a fixed one, on a hard task); also the asking paper's further sub-question on other ways ML models can assist human supervision, which the question as worded omits. It does not say where decomposition fails.",
+   "passages": [
+    {
+     "version": "2406.04604v4",
+     "page": 1,
+     "lines": [
+      52,
+      63
+     ],
+     "text": "corresponding to specific subtasks. We introduce a novel objective for learning task decomposition, termed assistive value (AssistV),\nwhich measures the feasibility and speed for\nhumans to repair the decomposed solution. We\ncollect a dataset of human repair experiences on\ndifferent decomposed solutions. Utilizing the\ncollected data as in-context examples, we then\nlearn to critique, refine, and rank decomposed\nsolutions to improve AssistV. We validate our\nmethod under competitive programming problems: under 177 hours of human study, our\nmethod enables non-experts to solve 33.3%\nmore problems, speeds them up by 3.3x, and\nempowers them to match unassisted experts.",
+     "pdf_page": "https://arxiv.org/pdf/2406.04604v4#page=1"
+    },
+    {
+     "version": "2406.04604v4",
+     "page": 9,
+     "lines": [
+      5,
+      12
+     ],
+     "text": "results demonstrate that our method can effectively\nassist humans in providing higher-quality supervision with significantly less time. Notably, our\nmethod assists non-experts in matching unassisted\nexperts. Overall, we show that even when LMs\ncannot solve the problem themselves, they can still\nlearn to assist humans by learning from human\nrepair experiences. These results highlight the potential of learning-based methods to assist humans\nwith scalable oversight.",
+     "pdf_page": "https://arxiv.org/pdf/2406.04604v4#page=9"
+    },
+    {
+     "version": "2406.04604v4",
+     "page": 9,
+     "lines": [
+      52,
+      56
+     ],
+     "text": "Moreover, we only conduct experiments based\non in-context learning and supervised learning.\nGiven the reasonable performance of the rank\nmodel (Section 4.1), fine-tuning the decomposition model with reinforcement learning is worth\nstudying in the future.",
+     "pdf_page": "https://arxiv.org/pdf/2406.04604v4#page=9"
+    }
+   ]
+  },
+  {
+   "id": "Q09:F2",
+   "later_paper": "arXiv 2512.24601v3: Recursive Language Models",
+   "first_submitted": "2025-12-31",
+   "effect": "NARROWS",
+   "claim": "Letting an LLM choose its own decomposition at run time (examining, decomposing and recursively calling itself over snippets of a long prompt) handled inputs more than an order of magnitude beyond the context window and outperformed compaction and coding scaffolds by median margins (on GPT-5: 26% against compaction, 130% against CodeAct with sub-calls, 13% against Claude Code) across four long-context tasks; a small post-trained Qwen3-8B, trained with only 1,000 samples from unrelated domains, improved by a median of 28.3% across the four evaluation tasks. The authors say evaluations for more difficult and natural long-context tasks remain highly underexplored.",
+   "setting": "Experiment: inference-time scaffold in which frontier LLMs (e.g. GPT-5) examine, decompose and recursively call themselves over snippets of long prompts; small-scale post-training of Qwen3-8B with 1,000 samples from unrelated domains; four long-context tasks. Differs from the question's setting: the decomposition is chosen by the model at run time (plus light post-training), on long-context benchmarks with no human feedback, not learned from human supervision on a hard real-world task.",
+   "bears_on": "First sub-question: feasibility of model-chosen (and, at small scale, trained) decomposition instead of fixed chunking on long-input tasks of the kind book summarization involves.",
+   "passages": [
+    {
+     "version": "2512.24601v3",
+     "page": 1,
+     "lines": [
+      12,
+      23
+     ],
+     "text": "We study allowing large language models (LLMs) to process arbitrarily long\nprompts through the lens of inference-time scaling. We propose Recursive Language Models (RLMs), a general inference paradigm that treats long prompts\nas part of an external environment and allows the LLM to programmatically examine, decompose, and recursively call itself over snippets of the prompt. We\nfind that RLMs can successfully process inputs more than an order of magnitude\nbeyond model context window limits and, even for shorter prompts, dramatically\noutperform the quality of vanilla frontier LLMs and common long-context and\ncoding scaffolds (e.g., on GPT-5 by a median across the evaluated benchmarks of\n26% against compaction, 130% against CodeAct with sub-calls, and 13% against\nClaude Code) across four diverse long-context tasks while having comparable\ncost. At a small scale, we post-train the first model around the RLM. Our model,\nRLM-Qwen3-8B, outperforms the underlying Qwen3-8B model by a median of\n28% and even approaches the quality of vanilla GPT-5 on three long-context tasks.",
+     "pdf_page": "https://arxiv.org/pdf/2512.24601v3#page=1"
+    },
+    {
+     "version": "2512.24601v3",
+     "page": 3,
+     "lines": [
+      13,
+      17
+     ],
+     "text": "Finally, at a small scale, we post-train the first natively recursive language model, demonstrating\nthat RLMs can be improved quickly with little additional training. While a small open model\n(Qwen3-8B; Yang et al. 2025) struggles to solve long context tasks even in an RLM scaffold, our\nsimple general-purpose training recipe uses only 1,000 samples from unrelated domains to improve\nits performance by a median of 28.3% across the four evaluation tasks.",
+     "pdf_page": "https://arxiv.org/pdf/2512.24601v3#page=3"
+    },
+    {
+     "version": "2512.24601v3",
+     "page": 9,
+     "lines": [
+      39,
+      42
+     ],
+     "text": "While RLMs show strong performance on tasks beyond the context window limitations of existing\nLMs at reasonable inference costs, evaluations for more difficult and natural long-context processing\ntasks and the best mechanisms for implementing guardrails for RLMs both remain highly underexplored. Broadly, RLMs add a layer of complexity on top of existing LMs that may lead to\nunintentional side-effects like exploding sub-call costs, which we leave for future work to solve.",
+     "pdf_page": "https://arxiv.org/pdf/2512.24601v3#page=9"
+    }
+   ]
+  },
+  {
+   "id": "Q09:F3",
+   "later_paper": "arXiv 2402.15000v3: Divide-or-Conquer? Which Part Should You Distill Your LLM?",
+   "first_submitted": "2024-02-22",
+   "effect": "PARTLY_ANSWERS",
+   "claim": "Breaking reasoning tasks into a problem decomposition phase and a problem solving phase, the authors hypothesize that decomposition should be easier to distill into a smaller model than problem solving, and find that they can distill the problem decomposition phase while achieving good generalization across tasks, datasets and models, whereas the problem solving capability is harder to distill without losing performance and the resulting distilled model struggles with generalization.",
+   "setting": "Experiment: reasoning split into a decomposition phase and a solving phase, each capability distilled into a smaller model; evaluated on GSM8K (mathematical reasoning), DROP (question answering) and Bamboogle (two questions combined into one complex question). Differs from the question's setting: the decomposition is distilled, not learned from human feedback, and the tasks are benchmarks rather than hard real-world tasks.",
+   "bears_on": "First sub-question, settled only in a narrower setting: a learned (distilled) decomposition model is feasible on math and question-answering benchmarks (GSM8K, DROP, Bamboogle); it is not learned from human feedback and not tested on hard real-world tasks.",
+   "passages": [
+    {
+     "version": "2402.15000v3",
+     "page": 1,
+     "lines": [
+      18,
+      29
+     ],
+     "text": "reasoning tasks into a problem decomposition\nphase and a problem solving phase and show\nthat the strategy is able to outperform a single\nstage solution. Further, we hypothesize that the\ndecomposition should be easier to distill into a\nsmaller model compared to the problem solving because the latter requires large amounts\nof domain knowledge while the former only requires learning general problem solving strategies. We propose methods to distill these two\ncapabilities and evaluate their impact on reasoning outcomes and inference cost. We find\nthat we can distill the problem decomposition\nphase and at the same time achieve good generalization across tasks, datasets, and models.\nHowever, it is harder to distill the problem solving capability without losing performance and\nthe resulting distilled model struggles with generalization. These results indicate that by using",
+     "pdf_page": "https://arxiv.org/pdf/2402.15000v3#page=1"
+    },
+    {
+     "version": "2402.15000v3",
+     "page": 4,
+     "lines": [
+      29,
+      36
+     ],
+     "text": "pipeline on three distinct datasets. GSM8K (Cobbe\net al., 2021) focuses on mathematical reasoning\nand is composed of 7.5K training instances alongside 1K test problems. DROP (Dua et al., 2019)\ncaters to Question Answering, containing 77.4K\ntraining samples and a 9.5K validation set. Bamboogle (Press et al., 2022) is a manually crafted\ncollection that integrates two questions into one\ncomplex question, consisting of 125 test samples.\nWe use the GSM8K test set, the DROP development set, and the Bamboogle test set for evaluation.",
+     "pdf_page": "https://arxiv.org/pdf/2402.15000v3#page=4"
+    }
+   ]
+  },
+  {
+   "id": "Q09:F4",
+   "later_paper": "arXiv 2310.00785v4: BooookScore: A systematic exploration of book-length summarization in the era of LLMs",
+   "first_submitted": "2023-10-01",
+   "effect": "NARROWS",
+   "claim": "The authors considered it possible that hierarchical merging introduces more coherence errors, because it summarizes portions of the input document without complete context (chunks towards the end of the book are summarized without knowledge of what came before). Their Table 1 instead shows that omission errors are the most common across both incremental and hierarchical prompting strategies and that hierarchical merging makes fewer errors of every type but inconsistencies; they also find that hierarchical merging generally results in more coherent summaries but a reduced level of detail compared to incremental updating.",
+   "setting": "Experiment: LLMs (GPT-4, Claude 2, LLaMA 2) prompted with two fixed book-summarization workflows over chunks of the book, hierarchical merging and incremental updating; coherence error types compared. No training and no learned decomposition, so it bears on a fixed, prompted decomposition only.",
+   "bears_on": "Second sub-question (where decomposition limits book summarization): measures the coherence errors of a fixed decomposition against a sequential alternative; it does not test learned decomposition.",
+   "passages": [
+    {
+     "version": "2310.00785v4",
+     "page": 3,
+     "lines": [
+      22,
+      26
+     ],
+     "text": "Incremental updating: It is possible that since hierarchical merging necessitates summarizing\nportions of the input document without complete context, it may introduce more coherence errors.\nFor example, in the first level, chunks towards the end of the book will be summarized without\nknowledge of what came before, which can lead to incoherent summaries especially for non-linear\nor multi-perspective narratives. We thus explore an alternate prompting strategy—incremental updating (Figure 1, right)— that iterates through each chunk in order while continuously updating a",
+     "pdf_page": "https://arxiv.org/pdf/2310.00785v4#page=3"
+    },
+    {
+     "version": "2310.00785v4",
+     "page": 5,
+     "lines": [
+      110,
+      112
+     ],
+     "text": "since modern LLMs rarely make such mistakes (Goyal et al., 2022b). Table 1 shows that omission\nerrors are the most common across both incremental and hierarchical prompting strategies, and also\nthat hierarchical merging makes fewer errors of every type but inconsistencies.",
+     "pdf_page": "https://arxiv.org/pdf/2310.00785v4#page=5"
+    },
+    {
+     "version": "2310.00785v4",
+     "page": 2,
+     "lines": [
+      34,
+      36
+     ],
+     "text": "that altogether cost $10K (USD) in LLM API calls. Our findings include (1) hierarchical merging\ngenerally results in more coherent summaries but reduced level of detail compared to incremental\nupdating; (2) GPT-4 and Claude 2 produce the most coherent summaries, while LLaMA 2 is substantially worse and fails to follow instructions; (3) increasing the chunk size does not improve hierarchical merging but does substantially benefit Claude 2 when using incremental updating; and (4)",
+     "pdf_page": "https://arxiv.org/pdf/2310.00785v4#page=2"
+    }
+   ]
+  },
+  {
+   "id": "Q09:F5",
+   "later_paper": "arXiv 2509.18632v1: A Good Plan is Hard to Find: Aligning Models with Preferences is Misaligned with What Helps Users",
+   "first_submitted": "2025-09-23",
+   "effect": "NARROWS",
+   "claim": "In a study where 126 users answered 300 multi-step questions with LLM plans, user/model preferences and agent success did not accurately predict which plans helped users, so common alignment feedback can misalign with helpfulness; the gap was not due to user-specific preferences, as users were similarly successful when using plans they preferred or dispreferred. The authors argue that aligning helpful LLMs needs feedback from real user interactions, not just preferences of what looks helpful.",
+   "setting": "Human-subject experiment (Planorama interface): 126 users solve 300 multi-step math and trivia questions with calculator and web search tools, using 600 LLM-created plans; 4388 plan executions and 5584 comparisons; agents and reward models recreate the setup to see whether they simulate or prefer what helps users. Differs from the question's setting: no decomposition model is learned here; it tests whether preference feedback on model-given decompositions (plans) tracks whether they help.",
+   "bears_on": "Where learned decomposition can fail (and the asking paper's further sub-question on how else ML models can assist humans, not in the question as worded): preference feedback on decompositions (plans) can diverge from whether they actually help, which bears on learning or selecting decompositions from preferences.",
+   "passages": [
+    {
+     "version": "2509.18632v1",
+     "page": 1,
+     "lines": [
+      27,
+      38
+     ],
+     "text": "Planorama: an interface where 126 users answer 300 multi-step questions with LLM plans.\nWe get 4388 plan executions and 5584 comparisons to measure plan helpfulness (QA success)\nand user preferences on plans, and recreate the\nsetup in agents and reward models to see if they\nsimulate or prefer what helps users. We expose:\n1) user/model preferences and agent success do\nnot accurately predict which plans help users,\nso common alignment feedback can misalign\nwith helpfulness; 2) this gap is not due to userspecific preferences, as users are similarly successful when using plans they prefer/disprefer;\n3) surface-level cues like brevity and question\nsimilarity strongly link to preferences, but such\nbiases fail to predict helpfulness. In all, we argue aligning helpful LLMs needs feedback from",
+     "pdf_page": "https://arxiv.org/pdf/2509.18632v1#page=1"
+    },
+    {
+     "version": "2509.18632v1",
+     "page": 1,
+     "lines": [
+      39,
+      41
+     ],
+     "text": "real user interactions—not just preferences of\nwhat looks helpful—so we discuss the plan NLP\nresearchers can execute to solve this problem. 1",
+     "pdf_page": "https://arxiv.org/pdf/2509.18632v1#page=1"
+    },
+    {
+     "version": "2509.18632v1",
+     "page": 1,
+     "lines": [
+      85,
+      94
+     ],
+     "text": "This paper challenges the assumptions of alignment by building Planorama (Figure 1), an interface to study if users’ preferred plans—the standard\nsignal in alignment—help them solve problems—\nour real alignment target. We deploy LLM-created\nplans in our interface to help users solve multi-step\nmath and trivia questions with calculator and web\nsearch tools—complex, verifiable problem-solving\ntasks. We find preferred plans via user votes in pairwise comparisons (§3.2.1) and helpful plans based\non which let users solve questions quickly and accurately (§3.2.2)—unified into one metric with Item\nResponse Theory (§5.1). In total, 126 users solve\n300 distinct questions with 600 LLM plans, yielding",
+     "pdf_page": "https://arxiv.org/pdf/2509.18632v1#page=1"
+    }
+   ]
+  }
+ ],
+ "findings_drafted": 5,
+ "maths": [],
+ "experiment_package": null,
+ "review_status": "provisional_ai_draft",
+ "rules": [
+  "Everything here is an AI draft (provisional_ai_draft): each counted item passed two blind AI checks that were tested on planted errors, and no person has reviewed it.",
+  "A finding counts only in the setting its own quoted lines show; read `setting` before carrying it to another setting.",
+  "A question's status is a label from fixed rules over its counted findings; `status_check` says whether that label itself passed its check.",
+  "Cite the paper and page from the passage, and read the PDF page before relying on a claim."
+ ]
+}

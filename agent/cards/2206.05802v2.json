@@ -1,0 +1,603 @@
+{
+ "schema": "ASRA-GAP-CLOSING-AGENT-v1",
+ "paper": "2206.05802v2",
+ "review_status": "provisional_ai_draft",
+ "rules": [
+  "Everything here is an AI draft (provisional_ai_draft): each counted item passed two blind AI checks that were tested on planted errors, and no person has reviewed it.",
+  "A finding counts only in the setting its own quoted lines show; read `setting` before carrying it to another setting.",
+  "A question's status is a label from fixed rules over its counted findings; `status_check` says whether that label itself passed its check.",
+  "Cite the paper and page from the passage, and read the PDF page before relying on a claim."
+ ],
+ "notes": "RES-ASSIST-CRITIQUE-COUNT's quote says assisted labelers find the intended critiques '50% more often', while Section 3.3.1 (RES-INTENDED-FLAWS) reports 45 ± 5% vs 27 ± 5%, a relative increase of about two-thirds by our arithmetic; the cards report both figures as stated. The number of summaries in the assistance experiment is not stated in the lines read, so n is null for those cards. CORE is graded EMPIRICAL_SINGLE_SETTING because its assistance and refinement parts concern only topic-based summarization. The paper-wide error-bar note (p.2) is cited where uncertainty is mentioned; no figure-specific values are quoted. No record seems mislabelled.",
+ "cards": [
+  {
+   "record_id": "N2:DSOFT:ARXIV-2206.05802v2:CORE",
+   "paper": "2206.05802v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2206.05802v2:DEF-CRITIQUE-TASKS"
+    ],
+    "description": "Pretrained GPT-3-style transformer decoders are fine-tuned with supervised learning on human labels for the base task and its critique, discrimination and refinement tasks; labelers write critiques of topic-based summaries with or without model critiques as assistance, and critiquing is studied across five pretrained models on topic-based summarization and synthetic tasks.",
+    "passages": [
+     {
+      "version": "2206.05802v2",
+      "page": 5,
+      "lines": [
+       5,
+       9
+      ],
+      "text": "Similarly to [DL15, RNSS18, BHA+ 21], we start with foundation models pre-trained to autoregressively predict the next token in a large text corpus. All of our models are transformer decoders [VSP+ 17] in the style of GPT-3 [RNSS18, BMR+ 20].\nWe fine-tune pre-trained models using supervised learning to predict human labels on all of these\ntasks. Joint training means that there is no capability asymmetry between the base and critique\nmodels—thus we expect that any mistakes the base model “knows about” would also be “known” by\nthe critique model.",
+      "pdf_page": "https://arxiv.org/pdf/2206.05802v2#page=5"
+     },
+     {
+      "version": "2206.05802v2",
+      "page": 7,
+      "lines": [
+       11,
+       20
+      ],
+      "text": "Labelers are given a topic-based summarization question and summary, and instructed to write as\nmany different possible critiques as they can think of for the summary. They are also instructed to\nonly read as much of the text as necessary to write the critiques.\nIn the baseline no assist condition, the labeler had no assistance and had to write all critiques\nthemselves. In the assist condition, the labeler would also see 8 model-generated critiques of the\nanswer, one at each of the following temperatures: [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 1.0]. Critiques\nwere de-duplicated, sorted according to the model’s helpfulness score, and shown to the human\nlabeler along with their helpfulness scores. The labeler could click a button to \"use\" any of the model\ngenerated critiques. If they did this, it would pre-fill the labeler critique with the model-written text,\nwhich they could further edit. We use our best model for generating all assistance.",
+      "pdf_page": "https://arxiv.org/pdf/2206.05802v2#page=7"
+     },
+     {
+      "version": "2206.05802v2",
+      "page": 2,
+      "lines": [
+       5,
+       7
+      ],
+      "text": "Note: Throughout the paper, all error bars shown either use bootstrapping at the passage level or simply\ncalculate standard error of the mean (when appropriate), and represent z = 1 (i.e. one standard deviation on\neach side). All results use data from test set passages which were held out from training.",
+      "pdf_page": "https://arxiv.org/pdf/2206.05802v2#page=2"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "A key assumption of the approach is that evaluating the assistance task is simpler than evaluating the base task.",
+     "Joint training means there is no capability asymmetry between base and critique models, so mistakes the base model 'knows about' should also be 'known' by the critique model.",
+     "Synthetic tasks are chosen so that evaluating critiques is easier than evaluating the base task, and so that the task is difficult but possible for most models; they use hand-coded oracles.",
+     "Model scale is measured by supervised fine-tuning validation loss, because the five pretrained models are not directly comparable.",
+     "Error bars in the paper are one standard deviation (bootstrapping at the passage level or standard error of the mean), and results use held-out test passages."
+    ],
+    "passages": [
+     {
+      "version": "2206.05802v2",
+      "page": 1,
+      "lines": [
+       54,
+       58
+      ],
+      "text": "One idea to overcome this problem is to use AI systems to aid human evaluation. This basic idea\ncomes up in many prior proposals, such as iterated amplification [CSA18], debate [ICA18], and\nrecursive reward modeling [LKE+ 18]. If we first train a model to perform simpler assistive tasks\nthat humans can evaluate, then we can use this model to assist humans with the evaluation of harder\ntasks. A key assumption is that evaluating the assistance task is simpler than evaluating the \"base\"",
+      "pdf_page": "https://arxiv.org/pdf/2206.05802v2#page=1"
+     },
+     {
+      "version": "2206.05802v2",
+      "page": 5,
+      "lines": [
+       40,
+       46
+      ],
+      "text": "We also report results on four “synthetic” tasks, described in Table 3. For these tasks, we don’t require\nhuman data collection because we have binary ground truth for both answer and critique validity. We\nuse hand-coded oracles for each of the base, critiqueability, critique, and helpfulness tasks.\nOur tasks are chosen based on two criteria:\n1. Evaluating critiques is easier than evaluating the base tasks.\n2. The task is difficult but possible for most models. We tweak free parameters (e.g. sentence\nlength for the unscramble task or number of digits for addition) to achieve this.",
+      "pdf_page": "https://arxiv.org/pdf/2206.05802v2#page=5"
+     },
+     {
+      "version": "2206.05802v2",
+      "page": 5,
+      "lines": [
+       28,
+       35
+      ],
+      "text": "Model scale\nWe use five pre-trained models with varying capabilities. Our pre-trained models are unfortunately not\ndirectly comparable to one another (for example, due to different pre-training datasets). However, on\nmodels which are directly comparable, the number of parameters correlates strongly with supervised\nfine-tuning validation loss. Using loss as the natural way to compare models of different architecture\nis suggested by [CCG+ 22], though here we use loss measured on fine-tuning instead of pre-training\nsince it is the dataset commonality. Thus throughout the paper, we use “model scale” to refer to loss,\nmeasured in nats per token, and use that instead of model size for scaling laws [KMH+ 20].",
+      "pdf_page": "https://arxiv.org/pdf/2206.05802v2#page=5"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Five pretrained GPT-3-style transformer decoders fine-tuned with supervised learning; the best model provides assistance",
+    "task_data": "Topic-based summarization (critique-finding on held-out test passages) and four synthetic tasks",
+    "judge": "Human labelers for topic-based summarization; hand-coded oracles for synthetic tasks",
+    "regime": "mixed",
+    "scale": "Five pretrained models of varying capability"
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": "Error bars are one standard deviation throughout the paper; no value is attached to the abstract's statements"
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2206.05802v2:LIM-GROUND-TRUTH",
+     "N2:DSOFT:ARXIV-2206.05802v2:LIM-ARTICULABLE-REASONING",
+     "N2:DSOFT:ARXIV-2206.05802v2:LIM-LACK-OF-DIFFICULTY"
+    ],
+    "notes": "Topic-based summarization has no robust or objective ground truth for answer or critique quality, and labelers may misevaluate answers; the base task is not very hard for humans, so positive results may not reproduce on harder tasks. Critiques also assume the model can put a problem into words; the CD gap could remain large."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "The help-to-humans and summary-refinement parts concern only the topic-based summarization task, and only the self-critique scaling part spans the synthetic tasks, so the claim as a whole rests on single-task evidence despite the error bars."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2206.05802v2:RES-ASSIST-CRITIQUE-COUNT",
+   "paper": "2206.05802v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2206.05802v2:DEF-CRITIQUE-TASKS"
+    ],
+    "description": "Labelers wrote as many critiques as they could of a topic-based summary, either unassisted or while shown 8 de-duplicated critiques from the best critique model, sorted by helpfulness score, that they could use and edit; answers were model-written, honest human-written or deliberately misleading human-written, and for misleading answers the answer's author checked whether the intended critique was found.",
+    "passages": [
+     {
+      "version": "2206.05802v2",
+      "page": 7,
+      "lines": [
+       11,
+       20
+      ],
+      "text": "Labelers are given a topic-based summarization question and summary, and instructed to write as\nmany different possible critiques as they can think of for the summary. They are also instructed to\nonly read as much of the text as necessary to write the critiques.\nIn the baseline no assist condition, the labeler had no assistance and had to write all critiques\nthemselves. In the assist condition, the labeler would also see 8 model-generated critiques of the\nanswer, one at each of the following temperatures: [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 1.0]. Critiques\nwere de-duplicated, sorted according to the model’s helpfulness score, and shown to the human\nlabeler along with their helpfulness scores. The labeler could click a button to \"use\" any of the model\ngenerated critiques. If they did this, it would pre-fill the labeler critique with the model-written text,\nwhich they could further edit. We use our best model for generating all assistance.",
+      "pdf_page": "https://arxiv.org/pdf/2206.05802v2#page=7"
+     },
+     {
+      "version": "2206.05802v2",
+      "page": 7,
+      "lines": [
+       24,
+       34
+      ],
+      "text": "For each question, we use three different kinds of answers to critique:\n• Model: An answer sampled from our best model, the same as the critiquing model, using a\nrandomly chosen temperature.3\n• Human: An answer generated by a labeler doing the base task honestly.\n• Human misleading: An answer generated by the same labeler to deliberately have a\nhard-to-detect flaw. (Details in Appendix A).\nThis results in six total conditions. For each summary, we had six labelers finding critiques, assigning\none to each of the six conditions. We ensured labelers had not seen the text before (if they had, it\nwould get reassigned). We did not limit the amount of time the labeler took performing the task: we\ninstructed them to take enough time to cover all possible critiques of the answer at least 90% of the\ntime.",
+      "pdf_page": "https://arxiv.org/pdf/2206.05802v2#page=7"
+     },
+     {
+      "version": "2206.05802v2",
+      "page": 8,
+      "lines": [
+       29,
+       36
+      ],
+      "text": "To break this symmetry, we had the authors of the misleading answers also generate the corresponding\n“intended” critiques (usually just one per answer). We then ask them to check whether the other\nlabelers in the assistance experiment found critiques covering the intended critiques. We also ask\nthem to independently judge whether each of the new critiques was valid (we assume the intended\ncritiques are valid).\nWe find that:\n1. With assistance, labelers find the intended critiques 45 ± 5% of the time, whereas without\nassistance they only find it 27 ± 5% of the time.",
+      "pdf_page": "https://arxiv.org/pdf/2206.05802v2#page=8"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "Labelers had not seen the text before, had no time limit, and were told to take enough time to cover all possible critiques at least 90% of the time.",
+     "Questions use longer passages (2048 to 3840 tokens) to observe a larger effect from assistance.",
+     "Intended critiques written by the misleading answers' authors are assumed valid.",
+     "Possible confounder named by the authors: labelers shown many critiques may accept invalid ones, and a valid critique of a poor answer cannot be told apart from a misleading critique of a valid answer; the intended-critique check addresses this.",
+     "Error bars in the paper are one standard deviation (bootstrapping at the passage level or standard error of the mean), and results use held-out test passages."
+    ],
+    "passages": [
+     {
+      "version": "2206.05802v2",
+      "page": 7,
+      "lines": [
+       21,
+       23
+      ],
+      "text": "We use questions for longer passages (2048 to 3840 tokens in length) in order to observe a larger\neffect from assistance. We noticed no degradation in critique writing ability despite training only on\npassages up to length 2048.",
+      "pdf_page": "https://arxiv.org/pdf/2206.05802v2#page=7"
+     },
+     {
+      "version": "2206.05802v2",
+      "page": 8,
+      "lines": [
+       26,
+       28
+      ],
+      "text": "One potential confounder for our results is that because labelers are shown many critiques, they are\noccasionally erring and accepting critiques that are not truly valid. In other words, we have no way to\ndistinguish between a valid critique of a poor answer from a misleading critique of a valid answer.",
+      "pdf_page": "https://arxiv.org/pdf/2206.05802v2#page=8"
+     },
+     {
+      "version": "2206.05802v2",
+      "page": 2,
+      "lines": [
+       5,
+       7
+      ],
+      "text": "Note: Throughout the paper, all error bars shown either use bootstrapping at the passage level or simply\ncalculate standard error of the mean (when appropriate), and represent z = 1 (i.e. one standard deviation on\neach side). All results use data from test set passages which were held out from training.",
+      "pdf_page": "https://arxiv.org/pdf/2206.05802v2#page=2"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "The authors' best critique model, which also wrote the model answers",
+    "task_data": "Topic-based summarization questions on held-out test passages of 2048 to 3840 tokens; model, human and human-misleading answers",
+    "judge": "Human labelers write the critiques; misleading-answer authors check whether intended critiques were found",
+    "regime": "evaluation",
+    "scale": "Six labelers per summary, one in each of six conditions"
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": "For the intended-critique part only: found 45 ± 5% of the time with assistance vs 27 ± 5% without (error bars are one standard deviation); no uncertainty for the 'about 50% more critiques' figure is shown in these passages."
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2206.05802v2:LIM-GROUND-TRUTH",
+     "N2:DSOFT:ARXIV-2206.05802v2:LIM-LACK-OF-DIFFICULTY"
+    ],
+    "notes": "Topic-based summarization has no robust or objective ground truth for answer or critique quality, and labelers may misevaluate answers; the base task is not very hard for humans, so positive results may not reproduce on harder tasks."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "Comes from the single topic-based summarization task; the intended-critique rates carry one-standard-deviation error bars (45 ± 5% vs 27 ± 5%), and no uncertainty for the critique count is shown in these passages."
+   },
+   "review_status": "provisional_ai_draft",
+   "check_history": [
+    "card-1: flagged or undecided by two blind checks; rewritten from the checkers' suggested fix (quotes unchanged)"
+   ]
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2206.05802v2:RES-ASSIST-RATINGS",
+   "paper": "2206.05802v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2206.05802v2:DEF-CRITIQUE-TASKS"
+    ],
+    "description": "In the same critique-finding experiment labelers also gave each answer a 1-7 Likert quality rating, and the fraction of answers with critiques found and the mean rating are compared between assisted and unassisted labelers.",
+    "passages": [
+     {
+      "version": "2206.05802v2",
+      "page": 7,
+      "lines": [
+       11,
+       20
+      ],
+      "text": "Labelers are given a topic-based summarization question and summary, and instructed to write as\nmany different possible critiques as they can think of for the summary. They are also instructed to\nonly read as much of the text as necessary to write the critiques.\nIn the baseline no assist condition, the labeler had no assistance and had to write all critiques\nthemselves. In the assist condition, the labeler would also see 8 model-generated critiques of the\nanswer, one at each of the following temperatures: [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 1.0]. Critiques\nwere de-duplicated, sorted according to the model’s helpfulness score, and shown to the human\nlabeler along with their helpfulness scores. The labeler could click a button to \"use\" any of the model\ngenerated critiques. If they did this, it would pre-fill the labeler critique with the model-written text,\nwhich they could further edit. We use our best model for generating all assistance.",
+      "pdf_page": "https://arxiv.org/pdf/2206.05802v2#page=7"
+     },
+     {
+      "version": "2206.05802v2",
+      "page": 7,
+      "lines": [
+       35,
+       37
+      ],
+      "text": "We also ask the labeler to provide a 1-7 Likert rating for quality of the answer, with 7 indicating a\nperfect answer. For each critique the labeler finds, we ask for a severity level, ranging from minor to\ncritical, and a category (described in Appendix A).",
+      "pdf_page": "https://arxiv.org/pdf/2206.05802v2#page=7"
+     },
+     {
+      "version": "2206.05802v2",
+      "page": 35,
+      "lines": [
+       10,
+       11
+      ],
+      "text": "Figure 16: Assistance increases the fraction of answers with critiques found and decreases Likert\nscore (1-7) judgements.",
+      "pdf_page": "https://arxiv.org/pdf/2206.05802v2#page=35"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "The critique model was trained on data from the same pool of labelers, so the authors describe the effect as bootstrapping labelers to be more careful at the base task.",
+     "The authors read the lower ratings as a different subjective sense of quality ('suggests').",
+     "The quoted figures are for model-written answers."
+    ],
+    "passages": []
+   },
+   "setting": {
+    "systems": "The authors' best critique model as assistant",
+    "task_data": "Topic-based summarization; the quoted figures are for model-written answers",
+    "judge": "Human labelers giving 1-7 Likert ratings",
+    "regime": "evaluation",
+    "scale": null
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2206.05802v2:LIM-GROUND-TRUTH",
+     "N2:DSOFT:ARXIV-2206.05802v2:LIM-LACK-OF-DIFFICULTY"
+    ],
+    "notes": "Topic-based summarization has no robust or objective ground truth for answer or critique quality, and labelers may misevaluate answers; the base task is not very hard for humans, so positive results may not reproduce on harder tasks."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "One task, and the percentages and mean ratings are given without uncertainty in these lines."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2206.05802v2:RES-INTENDED-FLAWS",
+   "paper": "2206.05802v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2206.05802v2:DEF-CRITIQUE-TASKS"
+    ],
+    "description": "Authors of deliberately misleading summaries wrote the intended critique for their answer, then checked whether labelers in the assisted and unassisted conditions found critiques covering it and judged whether each new critique was valid.",
+    "passages": [
+     {
+      "version": "2206.05802v2",
+      "page": 8,
+      "lines": [
+       26,
+       28
+      ],
+      "text": "One potential confounder for our results is that because labelers are shown many critiques, they are\noccasionally erring and accepting critiques that are not truly valid. In other words, we have no way to\ndistinguish between a valid critique of a poor answer from a misleading critique of a valid answer.",
+      "pdf_page": "https://arxiv.org/pdf/2206.05802v2#page=8"
+     },
+     {
+      "version": "2206.05802v2",
+      "page": 7,
+      "lines": [
+       27,
+       29
+      ],
+      "text": "• Human: An answer generated by a labeler doing the base task honestly.\n• Human misleading: An answer generated by the same labeler to deliberately have a\nhard-to-detect flaw. (Details in Appendix A).",
+      "pdf_page": "https://arxiv.org/pdf/2206.05802v2#page=7"
+     },
+     {
+      "version": "2206.05802v2",
+      "page": 25,
+      "lines": [
+       85,
+       91
+      ],
+      "text": "1. We sometimes also collected misleading answers that should be clearly wrong, but take\nreaders a long time to determine as wrong. We asked for labelers to aim to have answers\nwith different kinds of flaws, e.g. accuracy flaws contradicting part of the text that are hard\nto find or not stated explicitly and coverage flaws leaving out important details that are easy\nto overlook. We also ask labelers to aim for the flaws to be severe. Finally, labelers wrote\ncritiques of the misleading answer (typically only one, as per the initial requirement that it\nbe hard to spot a flaw).",
+      "pdf_page": "https://arxiv.org/pdf/2206.05802v2#page=25"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "The intended critiques are assumed valid.",
+     "The validity of the other labelers' critiques is judged by the author of the misleading answer.",
+     "Misleading answers were written to deliberately have a hard-to-detect flaw; the authors sometimes also collected misleading answers that should be clearly wrong but take readers a long time to determine as wrong, and asked labelers to aim for severe flaws of different kinds, e.g. hard-to-find accuracy flaws or easy-to-overlook coverage flaws.",
+     "Error bars in the paper are one standard deviation (bootstrapping at the passage level or standard error of the mean), and results use held-out test passages."
+    ],
+    "passages": [
+     {
+      "version": "2206.05802v2",
+      "page": 2,
+      "lines": [
+       5,
+       7
+      ],
+      "text": "Note: Throughout the paper, all error bars shown either use bootstrapping at the passage level or simply\ncalculate standard error of the mean (when appropriate), and represent z = 1 (i.e. one standard deviation on\neach side). All results use data from test set passages which were held out from training.",
+      "pdf_page": "https://arxiv.org/pdf/2206.05802v2#page=2"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Model-written critiques shown as assistance in the critique-finding experiment",
+    "task_data": "Topic-based summarization answers written by labelers to be deliberately misleading",
+    "judge": "Labelers find critiques; the misleading answer's author judges coverage of the intended critique and validity",
+    "regime": "evaluation",
+    "scale": null
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": "45 ± 5% vs 27 ± 5% intended critiques found; 0.96 ± 0.09 vs 0.62 ± 0.07 valid critiques; 0.24 ± 0.06 vs 0.18 ± 0.05 valid novel critiques; error bars are one standard deviation"
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2206.05802v2:LIM-GROUND-TRUTH",
+     "N2:DSOFT:ARXIV-2206.05802v2:LIM-LACK-OF-DIFFICULTY"
+    ],
+    "notes": "Topic-based summarization has no robust or objective ground truth for answer or critique quality, and labelers may misevaluate answers; the base task is not very hard for humans, so positive results may not reproduce on harder tasks."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "The result carries one-standard-deviation error bars but comes from one task (topic-based summarization with deliberately misleading answers)."
+   },
+   "review_status": "provisional_ai_draft",
+   "check_history": [
+    "card-1: flagged or undecided by two blind checks; rewritten from the checkers' suggested fix (quotes unchanged)"
+   ]
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2206.05802v2:RES-SELF-CRITIQUE-SCALING",
+   "paper": "2206.05802v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2206.05802v2:DEF-CRITIQUE-TASKS"
+    ],
+    "description": "Each of five fine-tuned models critiques its own answers at the same random temperature, and the helpfulness of these self-critiques (judged by human labelers on summarization, by a critique validity oracle on synthetic tasks) is plotted against model scale, with and without filtering for critiqueable answers.",
+    "passages": [
+     {
+      "version": "2206.05802v2",
+      "page": 10,
+      "lines": [
+       10,
+       15
+      ],
+      "text": "Figure 4: More capable models are significantly better at self-critiquing (Figure 4b). Although more\ncapable models get better at generating hard-to-critique answers (Figure 4c), their ability to critique\ntheir answers is improving more rapidly with scale. This is true even without adjusting for the fact\nthat humans find fewer critiques of more capable models (Figure 4a). In all figures, we sample at the\nsame random temperature for both the base task and critique task; the effects are equally visible at all\ntemperature ranges (not pictured).",
+      "pdf_page": "https://arxiv.org/pdf/2206.05802v2#page=10"
+     },
+     {
+      "version": "2206.05802v2",
+      "page": 11,
+      "lines": [
+       1,
+       3
+      ],
+      "text": "Figure 5: Helpfulness of self-critiques for synthetic tasks, according to a critique validity oracle. Like\nFigure 4, we show with and without filtering for critiqueable answers (according to a critiqueability\noracle).",
+      "pdf_page": "https://arxiv.org/pdf/2206.05802v2#page=11"
+     },
+     {
+      "version": "2206.05802v2",
+      "page": 5,
+      "lines": [
+       28,
+       35
+      ],
+      "text": "Model scale\nWe use five pre-trained models with varying capabilities. Our pre-trained models are unfortunately not\ndirectly comparable to one another (for example, due to different pre-training datasets). However, on\nmodels which are directly comparable, the number of parameters correlates strongly with supervised\nfine-tuning validation loss. Using loss as the natural way to compare models of different architecture\nis suggested by [CCG+ 22], though here we use loss measured on fine-tuning instead of pre-training\nsince it is the dataset commonality. Thus throughout the paper, we use “model scale” to refer to loss,\nmeasured in nats per token, and use that instead of model size for scaling laws [KMH+ 20].",
+      "pdf_page": "https://arxiv.org/pdf/2206.05802v2#page=5"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "Model scale is measured by supervised fine-tuning validation loss, since the five pretrained models are not directly comparable.",
+     "Caveat: the supervised dataset contains more critiques of outputs from larger models; the authors believe this effect is minimal.",
+     "Joint training means there is no capability asymmetry between the base and critique models.",
+     "On synthetic tasks critique validity and critiqueability come from oracles.",
+     "Error bars in the paper are one standard deviation (bootstrapping at the passage level or standard error of the mean), and results use held-out test passages."
+    ],
+    "passages": [
+     {
+      "version": "2206.05802v2",
+      "page": 5,
+      "lines": [
+       5,
+       9
+      ],
+      "text": "Similarly to [DL15, RNSS18, BHA+ 21], we start with foundation models pre-trained to autoregressively predict the next token in a large text corpus. All of our models are transformer decoders [VSP+ 17] in the style of GPT-3 [RNSS18, BMR+ 20].\nWe fine-tune pre-trained models using supervised learning to predict human labels on all of these\ntasks. Joint training means that there is no capability asymmetry between the base and critique\nmodels—thus we expect that any mistakes the base model “knows about” would also be “known” by\nthe critique model.",
+      "pdf_page": "https://arxiv.org/pdf/2206.05802v2#page=5"
+     },
+     {
+      "version": "2206.05802v2",
+      "page": 2,
+      "lines": [
+       5,
+       7
+      ],
+      "text": "Note: Throughout the paper, all error bars shown either use bootstrapping at the passage level or simply\ncalculate standard error of the mean (when appropriate), and represent z = 1 (i.e. one standard deviation on\neach side). All results use data from test set passages which were held out from training.",
+      "pdf_page": "https://arxiv.org/pdf/2206.05802v2#page=2"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Five pretrained GPT-3-style transformer decoders fine-tuned with supervised learning, each critiquing its own answers",
+    "task_data": "Topic-based summarization; synthetic tasks (Figure 5)",
+    "judge": "Human labelers (summarization); critique validity oracle (synthetic tasks)",
+    "regime": "mixed",
+    "scale": "Five pretrained models; scale measured as fine-tuning loss in nats per token"
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": "The Figure 4 caption calls larger models 'significantly better' at self-critiquing; error bars are one standard deviation; no value is given in these lines"
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2206.05802v2:LIM-GROUND-TRUTH"
+    ],
+    "notes": "The authors have no strong reason to believe positive critique scaling is a fundamental trend and do not know whether it would survive RL training of the answer and critique models."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "The clear result is on the single topic-based summarization task; on synthetic tasks the authors say the story is less clear, so the result is not established in more than one task."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2206.05802v2:RES-CD-GAP",
+   "paper": "2206.05802v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2206.05802v2:DEF-GDC-GAPS",
+     "N2:DSOFT:ARXIV-2206.05802v2:DEF-CRITIQUE-TASKS"
+    ],
+    "description": "Generation (G) is the average generator sample, discrimination (D) is best-of-N against the discriminator, and critiquing (C) is best-of-N against the human- or oracle-judged severity of a generated critique, with N = 2; the gaps between them are compared across model sizes for topic-based summarization and synthetic tasks.",
+    "passages": [
+     {
+      "version": "2206.05802v2",
+      "page": 14,
+      "lines": [
+       11,
+       16
+      ],
+      "text": "We propose comparing these tasks to each other using the following methodology:\n• G: What is the average performance of a generator sample?\n• D: What is the performance of the generator with best-of-N against the discriminator?\n• C: What is the performance of the generator with best-of-N against the severity of a critique?\nFor measuring C, we essentially use critiques as a discriminator: to judge an answer we generate\na critique and consider the answer poor if any critique is valid and severe, according to a human.",
+      "pdf_page": "https://arxiv.org/pdf/2206.05802v2#page=14"
+     },
+     {
+      "version": "2206.05802v2",
+      "page": 16,
+      "lines": [
+       13,
+       14
+      ],
+      "text": "For our primary results, we use N = 2. This still leaves us with choices for how to measure\nperformance of a sample, and how to measure critique quality.",
+      "pdf_page": "https://arxiv.org/pdf/2206.05802v2#page=16"
+     },
+     {
+      "version": "2206.05802v2",
+      "page": 16,
+      "lines": [
+       38,
+       49
+      ],
+      "text": "For critique severity measurement, the most straightforward thing is to use human-evaluated severity,\nwith unhelpful critiques being least severe. For topic-based summarization, we again use humans for\nground truth, and additionally break ties between helpful critiques using severity.\nFor synthetic tasks, we again use binary helpfulness ground truth as if it were acting as the human\nbeing assisted. This simulates a human judgement in a setting where the humans can easily evaluate\ncritiques, but not the base task answers.\nA downside of this approach is that it makes it possible for the model to find flaws by “trying out”\ncritiques it has low confidence in. This means that C effectively gets to leverage a bit of search against\nground truth, which D does not get to do. Therefore one could expect a negative CD gap. However\nthis “search effect” should be quite small in the limit of scale with larger models – humans are doing\na relatively simple task of critique validation, compared to the difficult task of finding a critique. If\nthe effect exists, it is a genuine advantage of having a human in the loop. For more discussion, see",
+      "pdf_page": "https://arxiv.org/pdf/2206.05802v2#page=16"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "Humans are ground truth for topic-based summarization and binary helpfulness ground truth (an oracle) for synthetic tasks; the authors caution that the summarization sample-quality measures are all potentially flawed, especially if labelers miss critiques systematically.",
+     "Measuring C with ground-truth critique validity lets C leverage a bit of search against ground truth, so a negative CD gap could be expected; the authors expect this effect to be quite small in the limit of scale.",
+     "The definition of C is not necessarily canonical but chosen to be convenient to measure."
+    ],
+    "passages": [
+     {
+      "version": "2206.05802v2",
+      "page": 16,
+      "lines": [
+       31,
+       33
+      ],
+      "text": "A large caveat is that for topic-based summarization, these methods are all potentially flawed, as\nsuggested by our results in Section 3.4. This is especially problematic if labelers fail to find critiques\nin systematic ways (rather than, e.g. independently failing to find critiques with some probability).",
+      "pdf_page": "https://arxiv.org/pdf/2206.05802v2#page=16"
+     },
+     {
+      "version": "2206.05802v2",
+      "page": 16,
+      "lines": [
+       1,
+       5
+      ],
+      "text": "Our definition for C is not necessarily canonical, but was chosen to be convenient to measure (see\nAppendix C.3.2).\nWith this definition, it is clear that we should generally expect a non-negative GD gap and GC gap. If\nnot, then optimizing against the discriminator or critique training signal makes the generator actively\nworse. What to expect for the CD gap is less clear. For more discussion, see Appendix C.3.",
+      "pdf_page": "https://arxiv.org/pdf/2206.05802v2#page=16"
+     },
+     {
+      "version": "2206.05802v2",
+      "page": 14,
+      "lines": [
+       1,
+       5
+      ],
+      "text": "Figure 8: GDC gaps for topic-based summarization, using humans as ground truth. We measure\nsample quality using various metrics. \"Diff\" metrics subtract out the values for the generator. Note\nthat best-of-2 against human win rate against best-of-1 would be exactly 75% if not for labelers\nmarking ties. Overall, GD and GC gaps may be slightly increasing, but CD gap is positive and shows\nno trend.",
+      "pdf_page": "https://arxiv.org/pdf/2206.05802v2#page=14"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Models of several sizes, each acting as generator, discriminator and critiquer",
+    "task_data": "Topic-based summarization and synthetic tasks (3-SAT, Addition and RACE are named)",
+    "judge": "Human labelers (summarization) and oracles (synthetic tasks) as ground truth",
+    "regime": "mixed",
+    "scale": "Best-of-N with N = 2 across model sizes"
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2206.05802v2:LIM-ARTICULABLE-REASONING",
+     "N2:DSOFT:ARXIV-2206.05802v2:LIM-GROUND-TRUTH"
+    ],
+    "notes": "The CD gap could remain large after much effort using assistance (linked limitation); the authors hedge the conclusion ('suggests')."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "Measured on summarization and several synthetic tasks, but the gap results are reported without any uncertainty in these lines and differ in sign across tasks."
+   },
+   "review_status": "provisional_ai_draft"
+  }
+ ]
+}

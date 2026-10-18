@@ -1,0 +1,168 @@
+{
+ "schema": "ASRA-GAP-CLOSING-AGENT-v1",
+ "id": "Q24",
+ "question": "Why do MAD hyperparameters transfer from GPT-3.5 to GPT-4 but not to Mixtral?",
+ "asked_by": "Smit et al., Should we be going MAD? A Look at Multi-Agent Debate Strategies for LLMs",
+ "rank": 19,
+ "status": "STILL_OPEN",
+ "status_check": "AI_CHECKED",
+ "remaining_question": "Why do MAD hyperparameter settings (such as agreement intensity) tuned on GPT-3.5 transfer to GPT-4 but not to Mixtral 8x7B: the sparse-MoE architecture, or model-specific differences in conformity and instruction following? Testable by re-tuning the hyperparameters per model and comparing transfer on matched MoE/dense pairs, measuring whether realized agent behaviour follows the prompted setting.",
+ "remaining_type": "EMPIRICAL",
+ "safety_case": [],
+ "findings": [
+  {
+   "id": "Q24:F1",
+   "later_paper": "arXiv 2512.08296v3: Towards a Science of Scaling Agent Systems",
+   "first_submitted": "2025-12-09",
+   "effect": "RELATED_ONLY",
+   "claim": "In controlled evaluations of single- vs multi-agent architectures, the authors report that the optimal coordination pattern differs across OpenAI, Google and Anthropic model families and call coordination efficacy contingent on each family's 'intrinsic communication bandwidth and reasoning alignment'; they say the precise mechanisms 'remain to be characterized' and list candidate factors (instruction-following fidelity, context utilization, inter-turn consistency). The same paper also reports architecture-specific scaling slopes differing by at most 0.023 across families, which it reads as model-agnostic scaling.",
+   "setting": "Experiment; three LLM families: OpenAI (GPT-5-nano, GPT-5-mini, GPT-5), Google (Gemini-2.0 Flash, Gemini-2.5 Flash, Gemini-2.5 Pro) and Anthropic (Claude Sonnet 3.7, Claude Sonnet 4, Claude Sonnet 4.5; Sonnet 3.7 not on SWE-bench Verified and Terminal-Bench); 260 configurations over benchmarks including Finance, SWE-bench Verified and Terminal-Bench; multi-agent system (MAS) configurations such as Centralized and Hybrid compared with SAS systems at matched maximum total iterations. Differs from the question: not multi-agent debate on QA, no agreement-intensity hyperparameter, and no Mixtral among the listed models.",
+   "bears_on": "Whether multi-agent configurations carry over across model families, and candidate (untested) mechanisms other than architecture.",
+   "passages": [
+    {
+     "version": "2512.08296v3",
+     "page": 16,
+     "lines": [
+      8,
+      15
+     ],
+     "text": "bars denoting Standard Error of Mean (SEM) in cost and performance, respectively. The optimal coordination pattern differs across model families: OpenAI models show consistent gains from Centralized\nand Hybrid MAS configurations despite higher costs, suggesting stronger communication alignment;\nGoogle models display marginal MAS improvements but a clear efficiency plateau, indicating diminishing returns under lightweight coordination; and Anthropic models reveal higher variance and\noccasional MAS underperformance, reflecting sensitivity to coordination overhead. These cross-family\ndiscrepancies imply that the efficacy of multi-agent coordination is contingent on each model family’s\nintrinsic communication bandwidth and reasoning alignment. Collectively, the results establish a\nfamily-dependent scaling principle linking coordination structure, economic efficiency, and emergent\nperformance.",
+     "pdf_page": "https://arxiv.org/pdf/2512.08296v3#page=16"
+    },
+    {
+     "version": "2512.08296v3",
+     "page": 15,
+     "lines": [
+      36,
+      39
+     ],
+     "text": "overcome fundamental sequential reasoning constraints. While the precise mechanisms remain to be\ncharacterized, potential factors include differences in instruction-following fidelity, context utilization\npatterns, and inter-turn consistency that affect how agents interpret and respond to coordination\nmessages. No vendor achieves universal multi-agent dominance; instead, each exhibits relative advantages in structured domains (Finance) that evaporate in sequential constraint-satisfaction domains",
+     "pdf_page": "https://arxiv.org/pdf/2512.08296v3#page=15"
+    },
+    {
+     "version": "2512.08296v3",
+     "page": 12,
+     "lines": [
+      6,
+      17
+     ],
+     "text": "• OpenAI: GPT-5-nano, GPT-5-mini, GPT-5\n• Google: Gemini-2.0 Flash, Gemini-2.5 Flash, Gemini-2.5 Pro\n• Anthropic: Claude Sonnet 3.7, Claude Sonnet 4, Claude Sonnet 4.5\nClaude Sonnet 3.7 was deprecated by Anthropic in February 2026 and is therefore unavailable for\nSWE-bench Verified and Terminal-Bench. On these two benchmarks, the Anthropic family includes\nClaude Sonnet 4 and Claude Sonnet 4.5, while the OpenAI and Google families remain unchanged,\nyielding 8 models per benchmark and a total of 𝑁 =260 configurations. Strong consistency across\nfamilies validates that coordination scaling follows model-agnostic principles: the maximum difference\nin architecture-specific scaling slopes between any two LLM families is Δmax = 0.023 (computed\nas max𝑖, 𝑗 | 𝛽ˆarch,𝑖 − 𝛽ˆarch, 𝑗 | across families 𝑖, 𝑗 ∈ {OpenAI, Google, Anthropic}), with coefficient of variation CV < 0.02 across families. To ensure computational fairness, we matched maximum total\niterations between MAS and SAS systems: MAS configurations received equal computational budget\nthrough parallel agent processing (smaller per-agent iterations for 𝑛-agent teams), while SAS received",
+     "pdf_page": "https://arxiv.org/pdf/2512.08296v3#page=12"
+    }
+   ]
+  },
+  {
+   "id": "Q24:F2",
+   "later_paper": "arXiv 2606.00820v1: Not All Flips Are Conformity: Decomposing Stance Convergence in Multi-Agent LLM Debate",
+   "first_submitted": "2026-05-30",
+   "effect": "RELATED_ONLY",
+   "claim": "Decomposing answer changes in debate into spontaneous instability, stance-induced conformity and reasoning-induced persuasion, the authors report substantial model-dependent instability across three model families, and that the relative contribution of spontaneous degradation versus harmful conformity to accuracy loss varies across models (GPT-4o, Qwen, DeepSeek), depending on 'model-specific stability characteristics'.",
+   "setting": "Experiment; multi-agent debate with counterfactual controls (self-reflection, stance-only, reasoning exposure); primary setting GPT-4o on MMLU-Pro, robustness on GPQA-Diamond and two further families (DeepSeek, Qwen). No agreement-intensity prompt, no Mixtral.",
+   "bears_on": "Gives a measurable model-specific property (instability vs conformity) through which a prompt-level agreement setting could act differently across models; the paper does not test hyperparameter transfer.",
+   "passages": [
+    {
+     "version": "2606.00820v1",
+     "page": 1,
+     "lines": [
+      62,
+      67
+     ],
+     "text": "distinct mechanisms: spontaneous instability, stance-induced conformity, and reasoninginduced persuasion. Our three-source decomposition framework isolates each through controlled counterfactual conditions. In the primary\nMMLU-Pro setting, 37% of agent-question observations change under self-reflection alone,\nwhile robustness tests show substantial modeldependent instability across GPQA-Diamond\nand three model families; strict conformity\nis 29% in the primary setting and remains\npredominantly harmful across model replications (57–77% correct-to-wrong). A controlled",
+     "pdf_page": "https://arxiv.org/pdf/2606.00820v1#page=1"
+    },
+    {
+     "version": "2606.00820v1",
+     "page": 12,
+     "lines": [
+      40,
+      51
+     ],
+     "text": "Second, the relative contribution of spontaneous\ndegradation versus harmful conformity to accuracy\nloss varies across models. For GPT-4o, spontaneous\ndegradation is the larger source (23.0% vs. 11.75%\nof all samples on MMLU-Pro). For Qwen, its\nextreme instability amplifies this gap further. However, for DeepSeek, which has low spontaneous\nchange (11.91%), harmful conformity becomes the\nlarger threat. The qualitative conclusions that both\nmechanisms exist and that both are predominantly\nharmful hold across all models; the relative balance\nbetween them depends on model-specific stability\ncharacteristics.",
+     "pdf_page": "https://arxiv.org/pdf/2606.00820v1#page=12"
+    }
+   ]
+  },
+  {
+   "id": "Q24:F3",
+   "later_paper": "arXiv 2609.35875v1: Beyond Symmetric Agents: Cognitive Diversity and Multi-Agent Debate in Small Language Models",
+   "first_submitted": "2026-09-26",
+   "effect": "RELATED_ONLY",
+   "claim": "A debate study over 23 open-weight models spanning dense, mixture-of-experts and hybrid architectures notes that its pool contains an MoE-versus-dense pair (Qwen3.5-35B-A3B vs. 27B) but leaves integrating it into the team design to future work.",
+   "setting": "Experiment; 23 open-weight models (0.6B-109B total parameters) from eleven vendor families and three architecture types (dense transformer, mixture-of-experts, hybrid state-space/attention); multi-agent debates, with model-diversity teams drawn from 19 of the models under a fixed, stratified team design; a three-model judge panel (Gemma3-27B-it, GPT-OSS-20B, GPT-OSS-120B) that never participates in debates scores the biography task. Differs from the question: the quoted lines concern team composition, not whether a tuned MAD hyperparameter (such as agreement intensity) transfers across GPT-3.5, GPT-4 and Mixtral.",
+   "bears_on": "Smit et al.'s architectural (MoE) hypothesis: still untested in this later study.",
+   "passages": [
+    {
+     "version": "2609.35875v1",
+     "page": 4,
+     "lines": [
+      11,
+      17
+     ],
+     "text": "We evaluate 23 open-weight models spanning eleven vendor families, three architecture types (dense\ntransformer, mixture-of-experts, and hybrid state-space/attention), and a 180-fold range in parameter\ncount (0.6B–109B total; Appendix A, Table 3). Models above ∼27B run as published int4/FP8\nquantizations and all others at native precision. The model-diversity teams (Section 5.3) draw from\nthe 19 models available when team sampling was frozen; four later additions join all single-model\nconditions.\nBiography evaluation uses a three-judge primary panel that never participates in debates — Gemma3-27B-it, GPT-OSS-20B, and GPT-OSS-120B — with no judge sharing a model generation with any",
+     "pdf_page": "https://arxiv.org/pdf/2609.35875v1#page=4"
+    },
+    {
+     "version": "2609.35875v1",
+     "page": 9,
+     "lines": [
+      17,
+      20
+     ],
+     "text": "reward diversity differently. Future work should learn team composition rather than fix it: the pool\nalready contains matched pairs for distillation provenance (R1-Distill-32B vs. Qwen3-32B, identically\nquantized) and MoE-versus-dense at one rung (Qwen3.5-35B-A3B vs. 27B), but integrating them\ninto the stratified team design requires resampling the team space.",
+     "pdf_page": "https://arxiv.org/pdf/2609.35875v1#page=9"
+    }
+   ]
+  },
+  {
+   "id": "Q24:F4",
+   "later_paper": "arXiv 2502.08788v3: Stop Overvaluing Multi-Agent Debate -- We Must Rethink Evaluation and Embrace Model Heterogeneity",
+   "first_submitted": "2025-02-12",
+   "effect": "RELATED_ONLY",
+   "claim": "Re-evaluating MAD frameworks against CoT with four models (GPT-4o-mini, Llama3.1-8b, Llama3.1-70b, Claude-3.5-haiku), the authors report that MAD methods fail to consistently outperform CoT across different models and benchmarks, and that EoT's advantage over CoT on GSM8K and CommonsenseQA was observed only when using Claude-3.5-haiku among the four models. When varying the number of agents or debate rounds, the sole notable exception was EoT on GSM8K, where increasing the number of agents from 3 to 9 led to a continuous improvement, ultimately surpassing CoT; aside from this exception, increasing the number of agents or debate rounds often resulted in stagnation or even a decline, so superior performance over CoT across various benchmarks could not be realized by merely adjusting hyperparameters. They rule out suboptimal hyperparameter configurations as 'a universal explanation' for MAD's inferior performance compared with CoT.",
+   "setting": "Experiment: re-evaluation of MAD frameworks (including EoT and SoM) against CoT with four models (GPT-4o-mini, Llama3.1-8b, Llama3.1-70b, Claude-3.5-haiku) on benchmarks including GSM8K, CommonsenseQA, MMLU and HumanEval; in the hyperparameter analysis the number of agents (e.g. 3 to 9) and debate rounds (e.g. 2 to 4) are varied, and the quoted lines do not say which model was used there. Differs from the question: the hyperparameters varied are agents and rounds, not agreement intensity, and there is no GPT-3.5-to-GPT-4 or Mixtral transfer test.",
+   "bears_on": "Model-dependence of MAD gains (one method's advantage did not carry across models) and the role of agents/rounds hyperparameters; no explanation of non-transfer.",
+   "passages": [
+    {
+     "version": "2502.08788v3",
+     "page": 8,
+     "lines": [
+      82,
+      84
+     ],
+     "text": "disclosed. EoT was shown to outperform CoT (Yin et al., 2023). Our evaluation replicates that\nEoT can surpass CoT on the GSM8K and CommensenseQA benchmarks, but this advantage was\nobserved only when using Claude-3.5-haiku among the four models. Furthermore, as shown in",
+     "pdf_page": "https://arxiv.org/pdf/2502.08788v3#page=8"
+    },
+    {
+     "version": "2502.08788v3",
+     "page": 9,
+     "lines": [
+      1,
+      11
+     ],
+     "text": "increasing the number of agents or debate rounds does not significantly change the outcomes. For\ninstance, the SoM framework continues to underperform CoT on the MMLU and HumanEval\nbenchmarks, even as debate rounds increase from 2 to 4 or the number of agents increases from 3 to\n9 on HumanEval. Conversely, SoM always surpasses CoT on GSM8K when varying debate rounds.\nThe sole notable exception is observed with EoT on the GSM8K benchmark, where increasing\nthe number of agents from 3 to 9 leads to a continuous improvement in performance, ultimately\nsurpassing CoT. Nonetheless, aside from this exception, increasing the number of agents or debate\nrounds often results in either stagnation or even a decline in performance. These results show that\nsuperior performance over CoT across various benchmarks cannot be realized by merely adjusting\nhyperparameters. Consequently, our study rules out suboptimal hyperparameter configurations as a\nuniversal explanation for the inferior performance of MAD when compared to CoT.",
+     "pdf_page": "https://arxiv.org/pdf/2502.08788v3#page=9"
+    },
+    {
+     "version": "2502.08788v3",
+     "page": 7,
+     "lines": [
+      110,
+      114
+     ],
+     "text": "experiments three times, reporting the standard deviations. Table 3 and Tables 6, 7, 8 in Appendix D\npresent empirical results on GPT-4o-mini, Llama3.1-8b, Llama3.1-70b, Claude-3.5-haiku, respectively.\nIn these tables, all methods are compared against CoT, with results higher or lower than CoT\ndenoted in lightred and lightblue , respectively. Our results indicate that MAD methods fail to\nconsistently outperform CoT across different models and benchmarks. Specifically, in Table 3, SoM",
+     "pdf_page": "https://arxiv.org/pdf/2502.08788v3#page=7"
+    }
+   ]
+  }
+ ],
+ "findings_drafted": 4,
+ "maths": [],
+ "experiment_package": null,
+ "review_status": "provisional_ai_draft",
+ "rules": [
+  "Everything here is an AI draft (provisional_ai_draft): each counted item passed two blind AI checks that were tested on planted errors, and no person has reviewed it.",
+  "A finding counts only in the setting its own quoted lines show; read `setting` before carrying it to another setting.",
+  "A question's status is a label from fixed rules over its counted findings; `status_check` says whether that label itself passed its check.",
+  "Cite the paper and page from the passage, and read the PDF page before relying on a claim."
+ ]
+}

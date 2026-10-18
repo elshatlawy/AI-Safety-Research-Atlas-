@@ -1,0 +1,2501 @@
+{
+ "schema": "ASRA-GAP-CLOSING-AGENT-v1",
+ "review_status": "provisional_ai_draft",
+ "rules": [
+  "Everything here is an AI draft (provisional_ai_draft): each counted item passed two blind AI checks that were tested on planted errors, and no person has reviewed it.",
+  "A finding counts only in the setting its own quoted lines show; read `setting` before carrying it to another setting.",
+  "A question's status is a label from fixed rules over its counted findings; `status_check` says whether that label itself passed its check.",
+  "Cite the paper and page from the passage, and read the PDF page before relying on a claim."
+ ],
+ "grades": {
+  "PROVED_IN_PAPER": "a theorem or proposition with a proof in the paper or its appendix",
+  "EMPIRICAL_MULTI_SETTING": "experiments in more than one task, dataset or model family, with uncertainty reported",
+  "EMPIRICAL_SINGLE_SETTING": "one task or model family, or several without uncertainty reported",
+  "EMPIRICAL_PRELIMINARY": "called preliminary, small sample, not significant, or examples and case studies",
+  "ARGUMENT_ONLY": "an argument, analogy or position without proof or experiment",
+  "CITED_FROM_OTHER_WORK": "the paper reports someone else's result"
+ },
+ "withheld_not_passing": 3,
+ "cards": [
+  {
+   "record_id": "N2:DSOFT:ARXIV-1606.06565v2:CORE",
+   "paper": "1606.06565v2",
+   "evidence_type": "argument",
+   "grade": "ARGUMENT_ONLY",
+   "regime": "theory",
+   "hypotheses": 1,
+   "hypotheses_verified": true,
+   "file": "agent/cards/1606.06565v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-1606.06565v2:CLAIM-PROXIES-TRANSPARENCY",
+   "paper": "1606.06565v2",
+   "evidence_type": "argument",
+   "grade": "ARGUMENT_ONLY",
+   "regime": "theory",
+   "hypotheses": 2,
+   "hypotheses_verified": true,
+   "file": "agent/cards/1606.06565v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-1805.00899v2:CORE",
+   "paper": "1805.00899v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_PRELIMINARY",
+   "regime": "mixed",
+   "hypotheses": 6,
+   "hypotheses_verified": true,
+   "file": "agent/cards/1805.00899v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-1805.00899v2:THM-PSPACE",
+   "paper": "1805.00899v2",
+   "evidence_type": "theorem",
+   "grade": "PROVED_IN_PAPER",
+   "regime": "theory",
+   "hypotheses": 7,
+   "hypotheses_verified": false,
+   "file": "agent/cards/1805.00899v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-1805.00899v2:RES-MNIST-PRECOMMIT",
+   "paper": "1805.00899v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_PRELIMINARY",
+   "regime": "evaluation",
+   "hypotheses": 4,
+   "hypotheses_verified": true,
+   "file": "agent/cards/1805.00899v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-1805.00899v2:RES-MNIST-NO-PRECOMMIT",
+   "paper": "1805.00899v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_PRELIMINARY",
+   "regime": "evaluation",
+   "hypotheses": 3,
+   "hypotheses_verified": true,
+   "file": "agent/cards/1805.00899v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-1810.08575v1:CORE",
+   "paper": "1810.08575v1",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "training",
+   "hypotheses": 3,
+   "hypotheses_verified": true,
+   "file": "agent/cards/1810.08575v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-1810.08575v1:RES-ALGORITHMIC-TASKS",
+   "paper": "1810.08575v1",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "training",
+   "hypotheses": 2,
+   "hypotheses_verified": true,
+   "file": "agent/cards/1810.08575v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-1810.08575v1:RES-ORACLE-CALLS",
+   "paper": "1810.08575v1",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "training",
+   "hypotheses": 2,
+   "hypotheses_verified": true,
+   "file": "agent/cards/1810.08575v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-1810.08575v1:DEF-VS-DEBATE",
+   "paper": "1810.08575v1",
+   "evidence_type": "argument",
+   "grade": "ARGUMENT_ONLY",
+   "regime": "theory",
+   "hypotheses": 1,
+   "hypotheses_verified": true,
+   "file": "agent/cards/1810.08575v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-1811.07871v1:CORE",
+   "paper": "1811.07871v1",
+   "evidence_type": "argument",
+   "grade": "ARGUMENT_ONLY",
+   "regime": "theory",
+   "hypotheses": 9,
+   "hypotheses_verified": true,
+   "file": "agent/cards/1811.07871v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-1811.07871v1:CLAIM-COMPLEXITY-ANALOGY",
+   "paper": "1811.07871v1",
+   "evidence_type": "argument",
+   "grade": "ARGUMENT_ONLY",
+   "regime": "theory",
+   "hypotheses": 3,
+   "hypotheses_verified": true,
+   "file": "agent/cards/1811.07871v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2108.12099v1:CORE",
+   "paper": "2108.12099v1",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "mixed",
+   "hypotheses": 5,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2108.12099v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2108.12099v1:THM-PROP1-TRIVIAL-VERIFIER",
+   "paper": "2108.12099v1",
+   "evidence_type": "argument",
+   "grade": "ARGUMENT_ONLY",
+   "regime": "theory",
+   "hypotheses": 3,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2108.12099v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2108.12099v1:THM-1-PROVER-LEADING",
+   "paper": "2108.12099v1",
+   "evidence_type": "theorem",
+   "grade": "PROVED_IN_PAPER",
+   "regime": "theory",
+   "hypotheses": 5,
+   "hypotheses_verified": false,
+   "file": "agent/cards/2108.12099v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2108.12099v1:THM-2-VERIFIER-LEADING",
+   "paper": "2108.12099v1",
+   "evidence_type": "theorem",
+   "grade": "PROVED_IN_PAPER",
+   "regime": "theory",
+   "hypotheses": 5,
+   "hypotheses_verified": false,
+   "file": "agent/cards/2108.12099v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2108.12099v1:THM-3-SIMULTANEOUS-NASH",
+   "paper": "2108.12099v1",
+   "evidence_type": "theorem",
+   "grade": "PROVED_IN_PAPER",
+   "regime": "theory",
+   "hypotheses": 5,
+   "hypotheses_verified": false,
+   "file": "agent/cards/2108.12099v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2108.12099v1:RES-BEC-FROZEN-VERIFIER",
+   "paper": "2108.12099v1",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "mixed",
+   "hypotheses": 3,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2108.12099v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2108.12099v1:RES-FINDTHEPLUS",
+   "paper": "2108.12099v1",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "mixed",
+   "hypotheses": 3,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2108.12099v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2109.10862v2:CORE",
+   "paper": "2109.10862v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "mixed",
+   "hypotheses": 3,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2109.10862v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2109.10862v2:RES-COST-50X",
+   "paper": "2109.10862v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "training",
+   "hypotheses": 1,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2109.10862v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2109.10862v2:RES-FULL-BOOK-LIKERT",
+   "paper": "2109.10862v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 1,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2109.10862v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2109.10862v2:RES-RL-VS-BC-SUBTREE",
+   "paper": "2109.10862v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "mixed",
+   "hypotheses": 2,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2109.10862v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2109.10862v2:RES-BOOKSUM",
+   "paper": "2109.10862v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 3,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2109.10862v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2109.10862v2:RES-LABEL-EFFICIENCY",
+   "paper": "2109.10862v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "training",
+   "hypotheses": 4,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2109.10862v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2204.05212v2:CORE",
+   "paper": "2204.05212v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_PRELIMINARY",
+   "regime": "evaluation",
+   "hypotheses": 3,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2204.05212v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2204.05212v2:RES-CONDITIONS",
+   "paper": "2204.05212v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_PRELIMINARY",
+   "regime": "evaluation",
+   "hypotheses": 3,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2204.05212v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2204.05212v2:RES-SURVEY-MISTRUST",
+   "paper": "2204.05212v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 2,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2204.05212v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2204.05212v2:RES-LENGTH-BIAS",
+   "paper": "2204.05212v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 2,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2204.05212v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2206.05802v2:CORE",
+   "paper": "2206.05802v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "mixed",
+   "hypotheses": 5,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2206.05802v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2206.05802v2:RES-ASSIST-CRITIQUE-COUNT",
+   "paper": "2206.05802v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 5,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2206.05802v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2206.05802v2:RES-ASSIST-RATINGS",
+   "paper": "2206.05802v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 3,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2206.05802v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2206.05802v2:RES-INTENDED-FLAWS",
+   "paper": "2206.05802v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 4,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2206.05802v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2206.05802v2:RES-SELF-CRITIQUE-SCALING",
+   "paper": "2206.05802v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "mixed",
+   "hypotheses": 5,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2206.05802v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2206.05802v2:RES-CD-GAP",
+   "paper": "2206.05802v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "mixed",
+   "hypotheses": 3,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2206.05802v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2210.10860v1:CORE",
+   "paper": "2210.10860v1",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_PRELIMINARY",
+   "regime": "evaluation",
+   "hypotheses": 4,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2210.10860v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2210.10860v1:RES-ANOVA-BINARY",
+   "paper": "2210.10860v1",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_PRELIMINARY",
+   "regime": "evaluation",
+   "hypotheses": 5,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2210.10860v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2210.10860v1:RES-PS-ACCURACY",
+   "paper": "2210.10860v1",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_PRELIMINARY",
+   "regime": "evaluation",
+   "hypotheses": 5,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2210.10860v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2210.10860v1:RES-PSA-ACCURACY",
+   "paper": "2210.10860v1",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_PRELIMINARY",
+   "regime": "evaluation",
+   "hypotheses": 5,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2210.10860v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2210.10860v1:RES-CONFIDENCE",
+   "paper": "2210.10860v1",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_PRELIMINARY",
+   "regime": "evaluation",
+   "hypotheses": 4,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2210.10860v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2210.10860v1:RES-ARG-QUALITY",
+   "paper": "2210.10860v1",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_PRELIMINARY",
+   "regime": "evaluation",
+   "hypotheses": 2,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2210.10860v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2210.10860v1:RES-COUNTER-RESPONSIVE",
+   "paper": "2210.10860v1",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 2,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2210.10860v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2211.03540v2:CORE",
+   "paper": "2211.03540v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_PRELIMINARY",
+   "regime": "evaluation",
+   "hypotheses": 5,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2211.03540v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2211.03540v2:RES-INDIVIDUAL-ACCURACY",
+   "paper": "2211.03540v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_PRELIMINARY",
+   "regime": "evaluation",
+   "hypotheses": 5,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2211.03540v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2211.03540v2:RES-MAJORITY-VOTE",
+   "paper": "2211.03540v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_PRELIMINARY",
+   "regime": "evaluation",
+   "hypotheses": 3,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2211.03540v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2212.08073v1:CORE",
+   "paper": "2212.08073v1",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "mixed",
+   "hypotheses": 3,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2212.08073v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2212.08073v1:ASM-SUPERVISOR-SCALES",
+   "paper": "2212.08073v1",
+   "evidence_type": "argument",
+   "grade": "ARGUMENT_ONLY",
+   "regime": null,
+   "hypotheses": 2,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2212.08073v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2212.08073v1:RES-AI-HARM-ID",
+   "paper": "2212.08073v1",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 2,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2212.08073v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2212.08073v1:RES-RLCAI-HARMLESS",
+   "paper": "2212.08073v1",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "mixed",
+   "hypotheses": 2,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2212.08073v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2212.08073v1:RES-CRITIQUE-VALUE",
+   "paper": "2212.08073v1",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 1,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2212.08073v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2301.01751v2:CORE",
+   "paper": "2301.01751v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_PRELIMINARY",
+   "regime": "evaluation",
+   "hypotheses": 2,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2301.01751v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2301.01751v2:RES-PLACEBO-CLASSIFICATION",
+   "paper": "2301.01751v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_PRELIMINARY",
+   "regime": "evaluation",
+   "hypotheses": 5,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2301.01751v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2301.01751v2:RES-PLACEBO-DESCRIPTION",
+   "paper": "2301.01751v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_PRELIMINARY",
+   "regime": "evaluation",
+   "hypotheses": 4,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2301.01751v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2301.01751v2:RES-KEYWORD-BASELINE",
+   "paper": "2301.01751v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_PRELIMINARY",
+   "regime": "evaluation",
+   "hypotheses": 2,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2301.01751v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2301.01751v2:RES-PARTICIPANT-FLOW",
+   "paper": "2301.01751v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_PRELIMINARY",
+   "regime": "evaluation",
+   "hypotheses": 5,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2301.01751v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2301.01751v2:RES-QASPER-TRANSFER",
+   "paper": "2301.01751v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_PRELIMINARY",
+   "regime": "evaluation",
+   "hypotheses": 4,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2301.01751v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2305.13281v1:CORE",
+   "paper": "2305.13281v1",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 4,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2305.13281v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2305.13281v1:RES-CHATGPT",
+   "paper": "2305.13281v1",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 4,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2305.13281v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2305.13281v1:RES-VS-BASELINES",
+   "paper": "2305.13281v1",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 4,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2305.13281v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2305.13281v1:RES-FALSEHOODS",
+   "paper": "2305.13281v1",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 4,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2305.13281v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2305.13281v1:RES-ABLATION-FOLLOWUP",
+   "paper": "2305.13281v1",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 2,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2305.13281v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2305.13281v1:RES-FAILURE-CONSISTENT-FALSE",
+   "paper": "2305.13281v1",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_PRELIMINARY",
+   "regime": "evaluation",
+   "hypotheses": 2,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2305.13281v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2305.14325v1:CORE",
+   "paper": "2305.14325v1",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_MULTI_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 2,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2305.14325v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2305.14325v1:DEF-CONTRAST-IRVING",
+   "paper": "2305.14325v1",
+   "evidence_type": "cited",
+   "grade": "CITED_FROM_OTHER_WORK",
+   "regime": null,
+   "hypotheses": 0,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2305.14325v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2305.14325v1:RES-REASONING",
+   "paper": "2305.14325v1",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_MULTI_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 2,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2305.14325v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2305.14325v1:RES-FACTUALITY",
+   "paper": "2305.14325v1",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 2,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2305.14325v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2305.14325v1:RES-ALL-WRONG-TO-RIGHT",
+   "paper": "2305.14325v1",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_PRELIMINARY",
+   "regime": "evaluation",
+   "hypotheses": 0,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2305.14325v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2305.14325v1:RES-UNCERTAINTY-PERSUASION",
+   "paper": "2305.14325v1",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_PRELIMINARY",
+   "regime": "evaluation",
+   "hypotheses": 2,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2305.14325v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2305.14325v1:RES-AGENTS-ROUNDS",
+   "paper": "2305.14325v1",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 2,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2305.14325v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2305.14325v1:RES-STUBBORN-PROMPTS",
+   "paper": "2305.14325v1",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 1,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2305.14325v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2305.14325v1:RES-CHATGPT-BARD",
+   "paper": "2305.14325v1",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 0,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2305.14325v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2305.19118v4:CORE",
+   "paper": "2305.19118v4",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 3,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2305.19118v4.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2305.19118v4:RES-COMMONMT",
+   "paper": "2305.19118v4",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 5,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2305.19118v4.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2305.19118v4:RES-CIAR",
+   "paper": "2305.19118v4",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 3,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2305.19118v4.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2305.19118v4:RES-DOT-MITIGATION",
+   "paper": "2305.19118v4",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 2,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2305.19118v4.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2305.19118v4:RES-WEAK-JUDGE",
+   "paper": "2305.19118v4",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 2,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2305.19118v4.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2305.19118v4:RES-JUDGE-BIAS",
+   "paper": "2305.19118v4",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 2,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2305.19118v4.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2305.19118v4:RES-TIT-FOR-TAT",
+   "paper": "2305.19118v4",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 2,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2305.19118v4.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2305.20050v1:CORE",
+   "paper": "2305.20050v1",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "mixed",
+   "hypotheses": 3,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2305.20050v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2305.20050v1:RES-LARGE-SCALE",
+   "paper": "2305.20050v1",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "mixed",
+   "hypotheses": 3,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2305.20050v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2305.20050v1:RES-SMALL-SCALE",
+   "paper": "2305.20050v1",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "training",
+   "hypotheses": 3,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2305.20050v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2305.20050v1:RES-ACTIVE-LEARNING",
+   "paper": "2305.20050v1",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "training",
+   "hypotheses": 2,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2305.20050v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2305.20050v1:RES-OOD",
+   "paper": "2305.20050v1",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 1,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2305.20050v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2305.20050v1:CLAIM-NEGATIVE-ALIGNMENT-TAX",
+   "paper": "2305.20050v1",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "mixed",
+   "hypotheses": 2,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2305.20050v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2311.08702v1:CORE",
+   "paper": "2311.08702v1",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_PRELIMINARY",
+   "regime": "evaluation",
+   "hypotheses": 4,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2311.08702v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2311.08702v1:RES-ACCURACY",
+   "paper": "2311.08702v1",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 3,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2311.08702v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2311.08702v1:RES-CONSULTANCY-HONESTY",
+   "paper": "2311.08702v1",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 2,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2311.08702v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2311.08702v1:RES-ERRORS-DEBATE",
+   "paper": "2311.08702v1",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 2,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2311.08702v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2311.08702v1:RES-ERRORS-CONSULTANCY",
+   "paper": "2311.08702v1",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 2,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2311.08702v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2311.14125v1:CORE",
+   "paper": "2311.14125v1",
+   "evidence_type": "theorem",
+   "grade": "PROVED_IN_PAPER",
+   "regime": "theory",
+   "hypotheses": 7,
+   "hypotheses_verified": false,
+   "file": "agent/cards/2311.14125v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2311.14125v1:THM-5-1",
+   "paper": "2311.14125v1",
+   "evidence_type": "theorem",
+   "grade": "PROVED_IN_PAPER",
+   "regime": "theory",
+   "hypotheses": 4,
+   "hypotheses_verified": false,
+   "file": "agent/cards/2311.14125v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2311.14125v1:THM-5-3",
+   "paper": "2311.14125v1",
+   "evidence_type": "theorem",
+   "grade": "PROVED_IN_PAPER",
+   "regime": "theory",
+   "hypotheses": 5,
+   "hypotheses_verified": false,
+   "file": "agent/cards/2311.14125v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2311.14125v1:THM-6-2",
+   "paper": "2311.14125v1",
+   "evidence_type": "theorem",
+   "grade": "PROVED_IN_PAPER",
+   "regime": "theory",
+   "hypotheses": 6,
+   "hypotheses_verified": false,
+   "file": "agent/cards/2311.14125v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2311.17371v3:CORE",
+   "paper": "2311.17371v3",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 3,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2311.17371v3.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2311.17371v3:RES-MEDQA-TABLE",
+   "paper": "2311.17371v3",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 2,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2311.17371v3.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2311.17371v3:RES-NO-PROTOCOL-DOMINATES",
+   "paper": "2311.17371v3",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 3,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2311.17371v3.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2311.17371v3:RES-HELDOUT-HYPERPARAMS",
+   "paper": "2311.17371v3",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 2,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2311.17371v3.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2311.17371v3:RES-DEBATE-GAIN",
+   "paper": "2311.17371v3",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 0,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2311.17371v3.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2311.17371v3:RES-AGREEMENT-DATASET",
+   "paper": "2311.17371v3",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 1,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2311.17371v3.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2311.17371v3:RES-AGREEMENT-USMLE",
+   "paper": "2311.17371v3",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 2,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2311.17371v3.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2311.17371v3:RES-WORST-TO-BEST",
+   "paper": "2311.17371v3",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 3,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2311.17371v3.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2312.04792v4:CORE",
+   "paper": "2312.04792v4",
+   "evidence_type": "theorem",
+   "grade": "EMPIRICAL_PRELIMINARY",
+   "regime": "mixed",
+   "hypotheses": 4,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2312.04792v4.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2312.04792v4:THM-PURE-VS-SMOOTH",
+   "paper": "2312.04792v4",
+   "evidence_type": "cited",
+   "grade": "CITED_FROM_OTHER_WORK",
+   "regime": "theory",
+   "hypotheses": 3,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2312.04792v4.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2312.04792v4:THM-5",
+   "paper": "2312.04792v4",
+   "evidence_type": "theorem",
+   "grade": "PROVED_IN_PAPER",
+   "regime": "theory",
+   "hypotheses": 4,
+   "hypotheses_verified": false,
+   "file": "agent/cards/2312.04792v4.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2312.04792v4:THM-SMALL-SUPPORT",
+   "paper": "2312.04792v4",
+   "evidence_type": "theorem",
+   "grade": "PROVED_IN_PAPER",
+   "regime": "theory",
+   "hypotheses": 2,
+   "hypotheses_verified": false,
+   "file": "agent/cards/2312.04792v4.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2312.04792v4:RES-COMBINED",
+   "paper": "2312.04792v4",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_PRELIMINARY",
+   "regime": "evaluation",
+   "hypotheses": 4,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2312.04792v4.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2312.04792v4:RES-JUDGE-INDECISION",
+   "paper": "2312.04792v4",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_PRELIMINARY",
+   "regime": "evaluation",
+   "hypotheses": 2,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2312.04792v4.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2312.09390v1:CORE",
+   "paper": "2312.09390v1",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "training",
+   "hypotheses": 4,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2312.09390v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2312.09390v1:RES-NAIVE-NLP",
+   "paper": "2312.09390v1",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "training",
+   "hypotheses": 2,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2312.09390v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2312.09390v1:RES-CHESS",
+   "paper": "2312.09390v1",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "training",
+   "hypotheses": 2,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2312.09390v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2312.09390v1:RES-RM",
+   "paper": "2312.09390v1",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "training",
+   "hypotheses": 3,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2312.09390v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2312.09390v1:RES-CONF-LOSS",
+   "paper": "2312.09390v1",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "training",
+   "hypotheses": 3,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2312.09390v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2312.09390v1:RES-BOOTSTRAP",
+   "paper": "2312.09390v1",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "training",
+   "hypotheses": 2,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2312.09390v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2312.09390v1:RES-IMITATION",
+   "paper": "2312.09390v1",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "training",
+   "hypotheses": 3,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2312.09390v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2401.06751v2:CORE",
+   "paper": "2401.06751v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "mixed",
+   "hypotheses": 3,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2401.06751v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2401.06751v2:RES-SGR-ICL",
+   "paper": "2401.06751v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_MULTI_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 2,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2401.06751v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2401.06751v2:RES-QLORA-GSM8K",
+   "paper": "2401.06751v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "mixed",
+   "hypotheses": 2,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2401.06751v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2401.06751v2:RES-COST-NOISE",
+   "paper": "2401.06751v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "mixed",
+   "hypotheses": 2,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2401.06751v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2401.06751v2:RES-SCALE-GAP",
+   "paper": "2401.06751v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "mixed",
+   "hypotheses": 2,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2401.06751v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2401.06751v2:CONCL-OVERSIGHT",
+   "paper": "2401.06751v2",
+   "evidence_type": "argument",
+   "grade": "ARGUMENT_ONLY",
+   "regime": "mixed",
+   "hypotheses": 2,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2401.06751v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2402.06782v4:CORE",
+   "paper": "2402.06782v4",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 4,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2402.06782v4.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2402.06782v4:RES-HEADLINE",
+   "paper": "2402.06782v4",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_MULTI_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 6,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2402.06782v4.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2402.06782v4:RES-INTERACTION",
+   "paper": "2402.06782v4",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 3,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2402.06782v4.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2402.06782v4:RES-CORRECT-ADVANTAGE",
+   "paper": "2402.06782v4",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 5,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2402.06782v4.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2402.06782v4:RES-ELO-ACCURACY",
+   "paper": "2402.06782v4",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 4,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2402.06782v4.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2402.06782v4:RES-CONSULTANT-OPT",
+   "paper": "2402.06782v4",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 2,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2402.06782v4.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2402.06782v4:RES-CONFIDENCE-REJECTION",
+   "paper": "2402.06782v4",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 2,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2402.06782v4.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2402.06782v4:RES-HUMAN-ERRORS",
+   "paper": "2402.06782v4",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 1,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2402.06782v4.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2403.09472v2:CORE",
+   "paper": "2403.09472v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "mixed",
+   "hypotheses": 5,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2403.09472v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2403.09472v2:RES-GENERATORS",
+   "paper": "2403.09472v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "mixed",
+   "hypotheses": 3,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2403.09472v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2403.09472v2:RES-OPRM",
+   "paper": "2403.09472v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "mixed",
+   "hypotheses": 2,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2403.09472v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2403.09472v2:RES-RERANK",
+   "paper": "2403.09472v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "mixed",
+   "hypotheses": 3,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2403.09472v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2403.09472v2:RES-EVAL-BETTER",
+   "paper": "2403.09472v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "mixed",
+   "hypotheses": 2,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2403.09472v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2403.09472v2:RES-RL",
+   "paper": "2403.09472v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "mixed",
+   "hypotheses": 4,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2403.09472v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2403.09472v2:RES-CODING",
+   "paper": "2403.09472v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "mixed",
+   "hypotheses": 2,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2403.09472v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2405.16043v1:CORE",
+   "paper": "2405.16043v1",
+   "evidence_type": "theorem",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "mixed",
+   "hypotheses": 7,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2405.16043v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2405.16043v1:THM-4-1",
+   "paper": "2405.16043v1",
+   "evidence_type": "theorem",
+   "grade": "PROVED_IN_PAPER",
+   "regime": "theory",
+   "hypotheses": 6,
+   "hypotheses_verified": false,
+   "file": "agent/cards/2405.16043v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2405.16043v1:THM-4-2",
+   "paper": "2405.16043v1",
+   "evidence_type": "theorem",
+   "grade": "PROVED_IN_PAPER",
+   "regime": "theory",
+   "hypotheses": 6,
+   "hypotheses_verified": false,
+   "file": "agent/cards/2405.16043v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2405.16043v1:THM-4-3",
+   "paper": "2405.16043v1",
+   "evidence_type": "theorem",
+   "grade": "PROVED_IN_PAPER",
+   "regime": "theory",
+   "hypotheses": 4,
+   "hypotheses_verified": false,
+   "file": "agent/cards/2405.16043v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2405.16043v1:THM-5-1",
+   "paper": "2405.16043v1",
+   "evidence_type": "theorem",
+   "grade": "PROVED_IN_PAPER",
+   "regime": "theory",
+   "hypotheses": 3,
+   "hypotheses_verified": false,
+   "file": "agent/cards/2405.16043v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2405.16043v1:RES-IMDB",
+   "paper": "2405.16043v1",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "mixed",
+   "hypotheses": 4,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2405.16043v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2406.11431v3:CORE",
+   "paper": "2406.11431v3",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_PRELIMINARY",
+   "regime": "training",
+   "hypotheses": 3,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2406.11431v3.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2406.11431v3:RES-RM-DECEPTION",
+   "paper": "2406.11431v3",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_PRELIMINARY",
+   "regime": "training",
+   "hypotheses": 4,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2406.11431v3.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2406.11431v3:RES-SPONTANEOUS",
+   "paper": "2406.11431v3",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_PRELIMINARY",
+   "regime": "mixed",
+   "hypotheses": 3,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2406.11431v3.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2406.11431v3:RES-PREFERENCE",
+   "paper": "2406.11431v3",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_PRELIMINARY",
+   "regime": "training",
+   "hypotheses": 4,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2406.11431v3.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2406.11431v3:RES-CAUSE",
+   "paper": "2406.11431v3",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_PRELIMINARY",
+   "regime": "training",
+   "hypotheses": 2,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2406.11431v3.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2406.11431v3:RES-HIGH-CONF",
+   "paper": "2406.11431v3",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "training",
+   "hypotheses": 3,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2406.11431v3.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2406.11431v3:RES-BOOTSTRAP",
+   "paper": "2406.11431v3",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "training",
+   "hypotheses": 3,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2406.11431v3.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2407.00215v1:CORE",
+   "paper": "2407.00215v1",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "mixed",
+   "hypotheses": 4,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2407.00215v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2407.00215v1:RES-INSERTED-BUGS",
+   "paper": "2407.00215v1",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 5,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2407.00215v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2407.00215v1:RES-SCALE-30X",
+   "paper": "2407.00215v1",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "mixed",
+   "hypotheses": 4,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2407.00215v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2407.00215v1:RES-HUMAN-MACHINE-TEAMS",
+   "paper": "2407.00215v1",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 4,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2407.00215v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2407.00215v1:RES-NO-TAMPER-ABLATION",
+   "paper": "2407.00215v1",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "mixed",
+   "hypotheses": 2,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2407.00215v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2407.00215v1:RES-FLAWLESS-DATA",
+   "paper": "2407.00215v1",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 2,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2407.00215v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2407.00215v1:RES-JUDGE-ACCURACY-NEGATIVE",
+   "paper": "2407.00215v1",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_PRELIMINARY",
+   "regime": "evaluation",
+   "hypotheses": 3,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2407.00215v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2407.04622v2:CORE",
+   "paper": "2407.04622v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_MULTI_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 3,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2407.04622v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2407.04622v2:RES-EXTRACTIVE",
+   "paper": "2407.04622v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_MULTI_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 2,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2407.04622v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2407.04622v2:RES-CLOSED",
+   "paper": "2407.04622v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_MULTI_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 3,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2407.04622v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2407.04622v2:RES-ABLATIONS",
+   "paper": "2407.04622v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_MULTI_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 3,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2407.04622v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2407.04622v2:RES-OPEN-ROLE",
+   "paper": "2407.04622v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_MULTI_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 2,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2407.04622v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2407.04622v2:RES-DEBATER-ELO",
+   "paper": "2407.04622v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_MULTI_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 3,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2407.04622v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2407.13692v2:CORE",
+   "paper": "2407.13692v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_PRELIMINARY",
+   "regime": "mixed",
+   "hypotheses": 4,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2407.13692v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2407.13692v2:THM-1-STACKELBERG",
+   "paper": "2407.13692v2",
+   "evidence_type": "theorem",
+   "grade": "PROVED_IN_PAPER",
+   "regime": "theory",
+   "hypotheses": 6,
+   "hypotheses_verified": false,
+   "file": "agent/cards/2407.13692v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2407.13692v2:RES-CORRECTNESS-ONLY",
+   "paper": "2407.13692v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "mixed",
+   "hypotheses": 3,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2407.13692v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2407.13692v2:RES-CAPABILITY-GAP",
+   "paper": "2407.13692v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_PRELIMINARY",
+   "regime": "mixed",
+   "hypotheses": 4,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2407.13692v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2407.13692v2:RES-VERIFIER-ROBUSTNESS",
+   "paper": "2407.13692v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "training",
+   "hypotheses": 4,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2407.13692v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2407.13692v2:RES-SNEAKY-HUMAN",
+   "paper": "2407.13692v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_PRELIMINARY",
+   "regime": "mixed",
+   "hypotheses": 2,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2407.13692v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2407.13692v2:RES-HELPFUL-HUMAN",
+   "paper": "2407.13692v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "mixed",
+   "hypotheses": 3,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2407.13692v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2409.12822v3:CORE",
+   "paper": "2409.12822v3",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "mixed",
+   "hypotheses": 5,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2409.12822v3.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2409.12822v3:RES-APPROVAL",
+   "paper": "2409.12822v3",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "mixed",
+   "hypotheses": 5,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2409.12822v3.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2409.12822v3:RES-ERROR-FPR",
+   "paper": "2409.12822v3",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "mixed",
+   "hypotheses": 6,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2409.12822v3.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2409.12822v3:RES-ROBUSTNESS",
+   "paper": "2409.12822v3",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_MULTI_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 2,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2409.12822v3.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2409.12822v3:RES-ORACLE-CONTROL",
+   "paper": "2409.12822v3",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "mixed",
+   "hypotheses": 2,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2409.12822v3.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2409.12822v3:RES-QUALITATIVE",
+   "paper": "2409.12822v3",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_PRELIMINARY",
+   "regime": "evaluation",
+   "hypotheses": 0,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2409.12822v3.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2409.12822v3:RES-PROBING",
+   "paper": "2409.12822v3",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 1,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2409.12822v3.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2409.16636v1:CORE",
+   "paper": "2409.16636v1",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "mixed",
+   "hypotheses": 4,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2409.16636v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2409.16636v1:RES-WINRATE",
+   "paper": "2409.16636v1",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "mixed",
+   "hypotheses": 3,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2409.16636v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2409.16636v1:RES-DEBATE-ACCURACY",
+   "paper": "2409.16636v1",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "mixed",
+   "hypotheses": 3,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2409.16636v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2409.16636v1:RES-PROTOCOL-COMPARISON",
+   "paper": "2409.16636v1",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "mixed",
+   "hypotheses": 3,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2409.16636v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2409.16636v1:RES-EVIDENCE-TRANSFER",
+   "paper": "2409.16636v1",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "mixed",
+   "hypotheses": 2,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2409.16636v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2412.08897v2:CORE",
+   "paper": "2412.08897v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "mixed",
+   "hypotheses": 3,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2412.08897v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2412.08897v2:THM-NIP-STACKELBERG",
+   "paper": "2412.08897v2",
+   "evidence_type": "theorem",
+   "grade": "PROVED_IN_PAPER",
+   "regime": "theory",
+   "hypotheses": 4,
+   "hypotheses_verified": false,
+   "file": "agent/cards/2412.08897v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2412.08897v2:THM-MNIP",
+   "paper": "2412.08897v2",
+   "evidence_type": "theorem",
+   "grade": "PROVED_IN_PAPER",
+   "regime": "theory",
+   "hypotheses": 5,
+   "hypotheses_verified": false,
+   "file": "agent/cards/2412.08897v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2412.08897v2:RES-GRAPH-PROTOCOLS",
+   "paper": "2412.08897v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "training",
+   "hypotheses": 2,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2412.08897v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2412.08897v2:RES-GRAPH-VERIFIER-SIZE",
+   "paper": "2412.08897v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "training",
+   "hypotheses": 2,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2412.08897v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2412.08897v2:RES-CODE-VALIDATION",
+   "paper": "2412.08897v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "training",
+   "hypotheses": 3,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2412.08897v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2412.08897v2:RES-STABILISED-EI",
+   "paper": "2412.08897v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "training",
+   "hypotheses": 2,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2412.08897v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2501.13124v1:CORE",
+   "paper": "2501.13124v1",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "training",
+   "hypotheses": 4,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2501.13124v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2501.13124v1:ASM-HARDER-TO-LIE",
+   "paper": "2501.13124v1",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_PRELIMINARY",
+   "regime": "evaluation",
+   "hypotheses": 1,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2501.13124v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2501.13124v1:RES-MAIN-PGR",
+   "paper": "2501.13124v1",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "training",
+   "hypotheses": 5,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2501.13124v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2501.13124v1:RES-VS-CONSULTANCY-MM",
+   "paper": "2501.13124v1",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "training",
+   "hypotheses": 4,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2501.13124v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2501.13124v1:RES-ENSEMBLE",
+   "paper": "2501.13124v1",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "training",
+   "hypotheses": 3,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2501.13124v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2501.13124v1:RES-DEBATE-TURNS",
+   "paper": "2501.13124v1",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "training",
+   "hypotheses": 2,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2501.13124v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2502.04313v2:CORE",
+   "paper": "2502.04313v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "mixed",
+   "hypotheses": 2,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2502.04313v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2502.04313v2:RES-AFFINITY-BIAS",
+   "paper": "2502.04313v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_MULTI_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 5,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2502.04313v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2502.04313v2:RES-AFFINITY-CONTROLS",
+   "paper": "2502.04313v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_MULTI_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 4,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2502.04313v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2502.04313v2:RES-W2S-SIMILARITY",
+   "paper": "2502.04313v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_MULTI_SETTING",
+   "regime": "training",
+   "hypotheses": 5,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2502.04313v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2502.04313v2:RES-COMPLEMENTARY",
+   "paper": "2502.04313v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "training",
+   "hypotheses": 3,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2502.04313v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2502.04313v2:RES-W2S-CEILING",
+   "paper": "2502.04313v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "training",
+   "hypotheses": 2,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2502.04313v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2502.04313v2:RES-CORRELATED-ERRORS",
+   "paper": "2502.04313v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 2,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2502.04313v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2502.04313v2:CLAIM-OVERSIGHT-RISK",
+   "paper": "2502.04313v2",
+   "evidence_type": "argument",
+   "grade": "ARGUMENT_ONLY",
+   "regime": "theory",
+   "hypotheses": 2,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2502.04313v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2502.04675v4:CORE",
+   "paper": "2502.04675v4",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "mixed",
+   "hypotheses": 4,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2502.04675v4.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2502.04675v4:RES-HUMAN-C2",
+   "paper": "2502.04675v4",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 3,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2502.04675v4.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2502.04675v4:RES-HUMAN-C3",
+   "paper": "2502.04675v4",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 3,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2502.04675v4.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2502.04675v4:RES-HUMAN-AI",
+   "paper": "2502.04675v4",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 3,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2502.04675v4.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2502.04675v4:RES-HUMAN-AI-C3",
+   "paper": "2502.04675v4",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 2,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2502.04675v4.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2502.04675v4:RES-AI-W2S",
+   "paper": "2502.04675v4",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "mixed",
+   "hypotheses": 4,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2502.04675v4.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2502.04675v4:RES-AI-S2W",
+   "paper": "2502.04675v4",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "mixed",
+   "hypotheses": 3,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2502.04675v4.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2504.03731v1:CORE",
+   "paper": "2504.03731v1",
+   "evidence_type": "argument",
+   "grade": "ARGUMENT_ONLY",
+   "regime": "evaluation",
+   "hypotheses": 3,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2504.03731v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2504.03731v1:RES-DEBATE-BEST",
+   "paper": "2504.03731v1",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_PRELIMINARY",
+   "regime": "evaluation",
+   "hypotheses": 3,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2504.03731v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2504.03731v1:RES-TURNS",
+   "paper": "2504.03731v1",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_PRELIMINARY",
+   "regime": "evaluation",
+   "hypotheses": 3,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2504.03731v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2504.03731v1:RES-EAS-ASD",
+   "paper": "2504.03731v1",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_PRELIMINARY",
+   "regime": "evaluation",
+   "hypotheses": 3,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2504.03731v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2504.03731v1:RES-CONSULTANCY-PROPAGANDA",
+   "paper": "2504.03731v1",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_PRELIMINARY",
+   "regime": "evaluation",
+   "hypotheses": 3,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2504.03731v1.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2504.18530v3:CORE",
+   "paper": "2504.18530v3",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "mixed",
+   "hypotheses": 6,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2504.18530v3.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2504.18530v3:RES-DEBATE-SCALING",
+   "paper": "2504.18530v3",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 5,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2504.18530v3.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2504.18530v3:RES-SINGLE-STEP-SLOPES",
+   "paper": "2504.18530v3",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 5,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2504.18530v3.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2504.18530v3:CLAIM-NSO-NUMERICAL",
+   "paper": "2504.18530v3",
+   "evidence_type": "simulation",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "simulation",
+   "hypotheses": 5,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2504.18530v3.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2504.18530v3:THM-NSO-ASYMPTOTICS",
+   "paper": "2504.18530v3",
+   "evidence_type": "theorem",
+   "grade": "PROVED_IN_PAPER",
+   "regime": "theory",
+   "hypotheses": 5,
+   "hypotheses_verified": false,
+   "file": "agent/cards/2504.18530v3.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2504.18530v3:RES-NSO-GAMES",
+   "paper": "2504.18530v3",
+   "evidence_type": "simulation",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "simulation",
+   "hypotheses": 4,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2504.18530v3.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2505.03989v3:CORE",
+   "paper": "2505.03989v3",
+   "evidence_type": "argument",
+   "grade": "ARGUMENT_ONLY",
+   "regime": "theory",
+   "hypotheses": 9,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2505.03989v3.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2506.02175v2:CORE",
+   "paper": "2506.02175v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_MULTI_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 4,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2506.02175v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2506.02175v2:RES-ACCURACY-COVID",
+   "paper": "2506.02175v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 4,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2506.02175v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2506.02175v2:RES-CLIMATE",
+   "paper": "2506.02175v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 3,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2506.02175v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2506.02175v2:RES-BELIEF-REVERSALS",
+   "paper": "2506.02175v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 3,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2506.02175v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2506.02175v2:RES-CALIBRATION",
+   "paper": "2506.02175v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 2,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2506.02175v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2506.02175v2:RES-PRIOR-BELIEF-EQUALIZE",
+   "paper": "2506.02175v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_PRELIMINARY",
+   "regime": "evaluation",
+   "hypotheses": 2,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2506.02175v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2506.02175v2:RES-PERSUASION-STRATEGIES",
+   "paper": "2506.02175v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 1,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2506.02175v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2506.02175v2:RES-PERSONA-LLM-JUDGES",
+   "paper": "2506.02175v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 3,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2506.02175v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2506.10139v2:CORE",
+   "paper": "2506.10139v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "mixed",
+   "hypotheses": 4,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2506.10139v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2506.10139v2:RES-GOLDEN",
+   "paper": "2506.10139v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "mixed",
+   "hypotheses": 5,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2506.10139v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2506.10139v2:RES-CHAT-SCALE",
+   "paper": "2506.10139v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "mixed",
+   "hypotheses": 3,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2506.10139v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2506.10139v2:RES-SALIENCE-FAIL",
+   "paper": "2506.10139v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 1,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2506.10139v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2506.10139v2:RES-GENDER",
+   "paper": "2506.10139v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 3,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2506.10139v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2506.10139v2:RES-CLAUDE-ASSISTANT",
+   "paper": "2506.10139v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "training",
+   "hypotheses": 3,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2506.10139v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2506.10139v2:RES-PERTURBED",
+   "paper": "2506.10139v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 1,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2506.10139v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2506.10139v2:RES-CONSISTENCY-ABLATION",
+   "paper": "2506.10139v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 2,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2506.10139v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2506.13609v2:CORE",
+   "paper": "2506.13609v2",
+   "evidence_type": "theorem",
+   "grade": "PROVED_IN_PAPER",
+   "regime": "theory",
+   "hypotheses": 5,
+   "hypotheses_verified": false,
+   "file": "agent/cards/2506.13609v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2506.13609v2:THM-COMPLETENESS",
+   "paper": "2506.13609v2",
+   "evidence_type": "theorem",
+   "grade": "PROVED_IN_PAPER",
+   "regime": "theory",
+   "hypotheses": 7,
+   "hypotheses_verified": false,
+   "file": "agent/cards/2506.13609v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2506.13609v2:THM-SOUNDNESS",
+   "paper": "2506.13609v2",
+   "evidence_type": "theorem",
+   "grade": "PROVED_IN_PAPER",
+   "regime": "theory",
+   "hypotheses": 6,
+   "hypotheses_verified": false,
+   "file": "agent/cards/2506.13609v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2506.13609v2:THM-STACKELBERG",
+   "paper": "2506.13609v2",
+   "evidence_type": "theorem",
+   "grade": "PROVED_IN_PAPER",
+   "regime": "theory",
+   "hypotheses": 6,
+   "hypotheses_verified": false,
+   "file": "agent/cards/2506.13609v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2506.13609v2:RES-COST",
+   "paper": "2506.13609v2",
+   "evidence_type": "argument",
+   "grade": "ARGUMENT_ONLY",
+   "regime": "theory",
+   "hypotheses": 3,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2506.13609v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2508.17536v2:CORE",
+   "paper": "2508.17536v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "mixed",
+   "hypotheses": 5,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2508.17536v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2508.17536v2:RES-MV-VS-MAD",
+   "paper": "2508.17536v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 3,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2508.17536v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2508.17536v2:THM-1",
+   "paper": "2508.17536v2",
+   "evidence_type": "theorem",
+   "grade": "PROVED_IN_PAPER",
+   "regime": "theory",
+   "hypotheses": 6,
+   "hypotheses_verified": false,
+   "file": "agent/cards/2508.17536v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2508.17536v2:THM-2",
+   "paper": "2508.17536v2",
+   "evidence_type": "theorem",
+   "grade": "PROVED_IN_PAPER",
+   "regime": "theory",
+   "hypotheses": 5,
+   "hypotheses_verified": false,
+   "file": "agent/cards/2508.17536v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2508.17536v2:RES-MARTINGALE-EMPIRICAL",
+   "paper": "2508.17536v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 2,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2508.17536v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2508.17536v2:RES-ORACLE",
+   "paper": "2508.17536v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 1,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2508.17536v2.json"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2508.17536v2:RES-MV-GUIDED",
+   "paper": "2508.17536v2",
+   "evidence_type": "experiment",
+   "grade": "EMPIRICAL_SINGLE_SETTING",
+   "regime": "evaluation",
+   "hypotheses": 2,
+   "hypotheses_verified": true,
+   "file": "agent/cards/2508.17536v2.json"
+  }
+ ]
+}

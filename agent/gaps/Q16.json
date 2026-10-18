@@ -1,0 +1,188 @@
+{
+ "schema": "ASRA-GAP-CLOSING-AGENT-v1",
+ "id": "Q16",
+ "question": "Can several examiner models, or a trained examiner, make cross-examination better at detecting factual errors?",
+ "asked_by": "Cohen et al., LM vs LM: Detecting Factual Errors via Cross Examination",
+ "rank": 25,
+ "status": "NARROWED",
+ "status_check": "AI_CHECKED",
+ "remaining_question": "Does training the examiner's question generation (e.g. with RL rewarded on detection correctness), or pooling several diverse examiners, raise cross-examination F1 at detecting factual errors above a single prompted examiner with a majority-vote or trained (e.g. linear) decision rule, and do correlated mistakes across capable examiner LMs limit the gain from pooling?",
+ "remaining_type": "EMPIRICAL",
+ "safety_case": [],
+ "findings": [
+  {
+   "id": "Q16:F1",
+   "later_paper": "arXiv 2501.01558v4: Predicting the Performance of Black-box LLMs through Follow-up Queries",
+   "first_submitted": "2025-01-02",
+   "effect": "NARROWS",
+   "claim": "The authors ask a black-box model follow-up questions, take the probabilities of its responses as representations, and train a linear model on them that, they report, reliably and accurately predicts model correctness on question-answering and reasoning benchmarks and can even outperform white-box linear predictors that operate over model internals or activations. Predictive performance increased as the number of elicitation prompts increased, with the rate of increase slowly diminishing. The questions are fixed prompts treated as abstract features; the authors note that further work could perform discrete optimization over the prompts.",
+   "setting": "Experiment: black-box LLMs as examined models; question-answering and reasoning benchmarks; fixed follow-up questions; trained linear predictors on response probabilities predicting answer correctness. Not an interactive cross-examination of a claim, and no examiner model is trained.",
+   "bears_on": "Both parts, partially: a trained decision rule over many follow-up questions detects incorrect answers and more questions help; training the question-generating examiner, and using several examiner models, are not tested.",
+   "passages": [
+    {
+     "version": "2501.01558v4",
+     "page": 1,
+     "lines": [
+      20,
+      24
+     ],
+     "text": "we predict the behavior of black-box language models by asking follow-up questions and taking the probabilities of responses as representations to train reliable\npredictors. We first demonstrate that training a linear model on these responses\nreliably and accurately predicts model correctness on question-answering and\nreasoning benchmarks. Surprisingly, this can even outperform white-box linear\npredictors that operate over model internals or activations. Furthermore, we demonstrate that these follow-up question responses can reliably distinguish between",
+     "pdf_page": "https://arxiv.org/pdf/2501.01558v4#page=1"
+    },
+    {
+     "version": "2501.01558v4",
+     "page": 9,
+     "lines": [
+      75,
+      82
+     ],
+     "text": "More follow-up questions lead to better performance. We study how much the number of\nelicitation questions directly impacts how much information is extracted in QueRE. We randomly\nsubsample the number of elicitation questions and report how much the performance of our approach\nvaries when only using this subset of questions. We observe the overall trend that our predictive\nperformance increases as we increase the number of elicitation prompts (Figure 5 - Right), with\nthe rate of increase slowly diminishing with more prompts. We defer results on other datasets to\nAppendix A.12, where we observe similar results. Overall, this demonstrates that we can achieve\neven stronger performance with our method by scaling up the number of follow-up questions. As",
+     "pdf_page": "https://arxiv.org/pdf/2501.01558v4#page=9"
+    },
+    {
+     "version": "2501.01558v4",
+     "page": 4,
+     "lines": [
+      14,
+      18
+     ],
+     "text": "However, to maintain our approach’s generality and to not restrict our approach to only a certain\ntype of elicitation questions, we treat these as abstract features for a linear predictor. We also\nnote that further work could perform discrete optimization over prompts to further improve the\nextracted representation’s usability, through methods described in [Wen et al., 2024, Zou et al.,\n2023b]. However, one key appeal of the current approach is that it defines an extremely simple",
+     "pdf_page": "https://arxiv.org/pdf/2501.01558v4#page=4"
+    }
+   ]
+  },
+  {
+   "id": "Q16:F2",
+   "later_paper": "arXiv 2309.15840v1: How to Catch an AI Liar: Lie Detection in Black-Box LLMs by Asking Unrelated Questions",
+   "first_submitted": "2023-09-26",
+   "effect": "RELATED_ONLY",
+   "claim": "A logistic-regression classifier on a model's yes/no answers to a predefined set of unrelated follow-up questions detected lies with high accuracy and, when trained only on GPT-3.5 prompted to lie about factual questions, generalised to other LLM architectures, LLMs fine-tuned to lie, sycophantic lies and lies emerging in real-life scenarios such as sales. The authors did not choose the elicitation questions systematically and list detectors using inconsistency checks or iterative interrogation as future work.",
+   "setting": "Experiment: black-box lie detection; GPT-3.5 training setting, transfer to other LLMs and lie types; fixed elicitation questions, trained logistic regression. Lies are defined as false statements the model 'knows' are false, not honest factual errors.",
+   "bears_on": "Trained-examiner part, by analogy: training the decision rule of a follow-up-question detector works for lies; the questions themselves were not trained.",
+   "passages": [
+    {
+     "version": "2309.15840v1",
+     "page": 1,
+     "lines": [
+      35,
+      43
+     ],
+     "text": "ground-truth knowledge of the fact in question. The detector works by asking a\npredefined set of unrelated follow-up questions after a suspected lie, and feeding the\nLLM’s yes/no answers into a logistic regression classifier. Despite its simplicity,\nthis lie detector is highly accurate and surprisingly general. When trained on\nexamples from a single setting—prompting GPT-3.5 to lie about factual questions—\nthe detector generalises out-of-distribution to (1) other LLM architectures, (2)\nLLMs fine-tuned to lie, (3) sycophantic lies, and (4) lies emerging in real-life\nscenarios such as sales. These results indicate that LLMs have distinctive lierelated behavioural patterns, consistent across architectures and contexts, which\ncould enable general-purpose lie detection.",
+     "pdf_page": "https://arxiv.org/pdf/2309.15840v1#page=1"
+    },
+    {
+     "version": "2309.15840v1",
+     "page": 10,
+     "lines": [
+      29,
+      31
+     ],
+     "text": "i) This work is an initial investigation into the feasibility of black-box lie detection; as such, we didn’t\nchoose the elicitation questions systematically or test classifiers other than logistic regression. Future\nwork could increase lie detector performance. ii) We only study question-answering tasks. Future",
+     "pdf_page": "https://arxiv.org/pdf/2309.15840v1#page=10"
+    },
+    {
+     "version": "2309.15840v1",
+     "page": 10,
+     "lines": [
+      38,
+      40
+     ],
+     "text": "LLMs. Besides addressing these limitations, future work could improve lie detection methods with\nwhite-box access, study lies emerging through RL fine-tuning, or create detectors that leverage\ndifferent strategies (e.g. checking for inconsistencies or iterative interrogation).",
+     "pdf_page": "https://arxiv.org/pdf/2309.15840v1#page=10"
+    }
+   ]
+  },
+  {
+   "id": "Q16:F3",
+   "later_paper": "arXiv 2311.01740v2: SAC3: Reliable Hallucination Detection in Black-Box Language Models via Semantic-aware Cross-check Consistency",
+   "first_submitted": "2023-11-03",
+   "effect": "RELATED_ONLY",
+   "claim": "In a scenario where the dataset only contains hallucinated samples (accuracy of detecting hallucinated samples at a preset threshold of 0.5), the model-level cross-check with verifier LMs performed well on the prime-number dataset but failed to accurately detect hallucination on the senator-search dataset, because both verifier LMs refused to answer a large portion of its questions for lack of sufficient information. By combining the target LM, SAC3-all with Guanaco-33b achieved the highest detection accuracy compared with SC2 (+51.2%), SAC3-Q (+6.2%) and SAC3-QM (+5.0%).",
+   "setting": "Experiment: hallucination detection by self-checking (SC2) and cross-check variants (SAC3-Q, SAC3-QM, SAC3-all); target LM gpt-3.5-turbo; verifier LM Falcon-7b-instruct or Guanaco-33b; prime-number and senator-search datasets, in the scenario where the dataset contains only hallucinated samples, with a preset threshold of 0.5. The verifier LMs are asked the questions themselves; there is no examiner dialogue or cross-examination of the target LM.",
+   "bears_on": "Several-examiner part, by analogy: adding another model's answers helps only where that model has the relevant knowledge.",
+   "passages": [
+    {
+     "version": "2311.01740v2",
+     "page": 6,
+     "lines": [
+      84,
+      89
+     ],
+     "text": "Evaluation Models. We use gpt-3.5-turbo\nfrom OpenAI as the target LM for our experiment. The verifier LM is chosen from the following two models: (1) Falcon-7b-instruct (Almazrouei et al., 2023): an open-source causal\ndecoder-only model built by TII that is trained on\n1,500B tokens of RefinedWeb (Penedo et al., 2023)\nand further enhanced using the curated corpora;\nand (2) Guanaco-33b: an open-source instructionfollowing models through QLoRA (Dettmers et al.,",
+     "pdf_page": "https://arxiv.org/pdf/2311.01740v2#page=6"
+    },
+    {
+     "version": "2311.01740v2",
+     "page": 7,
+     "lines": [
+      52,
+      57
+     ],
+     "text": "Unbalanced Dataset. We further evaluate our\nmethod in a more challenging scenario where the\ndataset only contains hallucinated samples. Table\n3 presents the accuracy of detecting hallucinated\nsamples using a preset threshold of 0.5. In this case,\nthe performance of self-check drops significantly",
+     "pdf_page": "https://arxiv.org/pdf/2311.01740v2#page=7"
+    },
+    {
+     "version": "2311.01740v2",
+     "page": 7,
+     "lines": [
+      58,
+      67
+     ],
+     "text": "to 48.2% and 29.6% respectively. SAC3 -Q still outperforms SC2 by a large margin. The model-level\ncross-check with verifier LMs performs well in the\nprime number dataset but fails to accurately detect\nhallucination in the senator search dataset. This\nis because both verifier LMs refuse to answer a\nlarge portion of the questions on this dataset due\nto a lack of sufficient information. By combining the target LM, SAC3 -all with Guanaco-33b\nachieves the highest detection accuracy compared\nto other baselines SC2 (+51.2%), SAC3 -Q (+6.2%),\nand SAC3 -QM (+ 5.0%).",
+     "pdf_page": "https://arxiv.org/pdf/2311.01740v2#page=7"
+    }
+   ]
+  },
+  {
+   "id": "Q16:F4",
+   "later_paper": "arXiv 2603.24579v1: MARCH: Multi-Agent Reinforced Self-Check for LLM Hallucination",
+   "first_submitted": "2026-03-25",
+   "effect": "RELATED_ONLY",
+   "claim": "MARCH has three agents: a Solver generates an initial RAG response, a Proposer decomposes it into claim-level verifiable atomic propositions, and a Checker validates these propositions against retrieved evidence in isolation, without the Solver's original output. For each question generated by the Proposer, the Checker generates multiple independent audit trajectories and a majority vote determines the consensus answer. The shared policy of the three agents is optimised with PPO (multi-agent RL). From Llama3.1-8B, the policy trained on General QA data improved the average accuracy from 29.7 to 51.6 (+21.9) and the policy trained on STEM data reached 52.3 (+22.6), with gains across all eight dimensions; the authors say these 8B policies reach or surpass the performance of many much larger judge models.",
+   "setting": "Experiment: retrieval-augmented generation; one shared policy for Solver, Proposer and Checker, starting from Llama3.1-8B and trained with multi-agent RL (PPO) on General QA or STEM data; evaluated on hallucination benchmarks and on average accuracy over eight dimensions, compared with judge models. The Checker verifies against retrieved evidence, not by cross-examining the examinee's other beliefs, and the questions come from the system's own Proposer.",
+   "bears_on": "Trained-examiner part, by analogy: training a question-proposing verification pipeline improved its factual-consistency judgments in a RAG setting.",
+   "passages": [
+    {
+     "version": "2603.24579v1",
+     "page": 1,
+     "lines": [
+      17,
+      22
+     ],
+     "text": "asymmetry. MARCH orchestrates a collaborative pipeline of three specialized agents: a Solver, a Proposer,\nand a Checker. The Solver generates an initial RAG response, which the Proposer decomposes into claimlevel verifiable atomic propositions. Crucially, the Checker validates these propositions against retrieved\nevidence in isolation, deprived of the Solver’s original output. This well-crafted information asymmetry\nscheme breaks the cycle of self-confirmation bias. By training this pipeline with multi-agent reinforcement\nlearning (MARL), we enable the agents to co-evolve and optimize factual adherence. Extensive experiments\nacross hallucination benchmarks demonstrate that MARCH substantially reduces hallucination rates.",
+     "pdf_page": "https://arxiv.org/pdf/2603.24579v1#page=1"
+    },
+    {
+     "version": "2603.24579v1",
+     "page": 4,
+     "lines": [
+      53,
+      61
+     ],
+     "text": "plausibility, forcing the model to prioritize strict evidentiary identity. Besides, to ensure the Checker provides a\nreliable baseline for the audit and to reduce the variance of the reward signal, we employ a multi-sampling\nstrategy during the cross-validation phase. For each question 𝒒𝑖 generated by the Proposer, 𝜈check generates\nmultiple independent audit trajectories. We apply a majority voting to determine the final consensus answer 𝒂ˆ𝑖 ,\nwhich effectively mitigates stochastic errors in Checker’s generation in one independent audit.\nPolicy Optimization. We optimize the shared policy 𝜋𝜃 of the three agents using Proximal Policy Optimization\n(PPO) (Schulman et al., 2017). Critically, we incorporate both the reasoning path 𝒚 and the audit trajectory\n𝝀 ∼ 𝜈check (·|{𝒒𝑖 }, 𝑫) into the optimization loop, ensuring that 𝜋𝜃 concurrently evolves as both a reliable generator\nand a rigorous auditor. Consequently, each original query of a training batch 𝒙 𝑖 ∈ B contributes two distinct",
+     "pdf_page": "https://arxiv.org/pdf/2603.24579v1#page=4"
+    },
+    {
+     "version": "2603.24579v1",
+     "page": 8,
+     "lines": [
+      295,
+      301
+     ],
+     "text": "from Llama3.1-8B, our framework again yields large gains across all eight dimensions under both training\nregimes. Specifically, the policy trained on General QA data (MARCH-General) improves the average accuracy\nfrom 29.7 to 51.6 (+21.9), while the policy trained on STEM data (MARCH-STEM) reaches 52.3 (+22.6). The\nimprovements are particularly pronounced on faithfulness and completeness (both QA and summarization),\nwhere accurate document-grounded judgment is most critical. Based on an 8B LLM, our policies surprisingly\nreach or surpass the performance of many much larger judge models, and approach the best specialized judge\nmodels on several dimensions. Table 3 indicates that MARCH not only improves binary hallucination detection",
+     "pdf_page": "https://arxiv.org/pdf/2603.24579v1#page=8"
+    }
+   ]
+  }
+ ],
+ "findings_drafted": 4,
+ "maths": [],
+ "experiment_package": null,
+ "review_status": "provisional_ai_draft",
+ "rules": [
+  "Everything here is an AI draft (provisional_ai_draft): each counted item passed two blind AI checks that were tested on planted errors, and no person has reviewed it.",
+  "A finding counts only in the setting its own quoted lines show; read `setting` before carrying it to another setting.",
+  "A question's status is a label from fixed rules over its counted findings; `status_check` says whether that label itself passed its check.",
+  "Cite the paper and page from the passage, and read the PDF page before relying on a claim."
+ ]
+}

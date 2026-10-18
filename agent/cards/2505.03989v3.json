@@ -1,0 +1,107 @@
+{
+ "schema": "ASRA-GAP-CLOSING-AGENT-v1",
+ "paper": "2505.03989v3",
+ "review_status": "provisional_ai_draft",
+ "rules": [
+  "Everything here is an AI draft (provisional_ai_draft): each counted item passed two blind AI checks that were tested on planted errors, and no person has reviewed it.",
+  "A finding counts only in the setting its own quoted lines show; read `setting` before carrying it to another setting.",
+  "A question's status is a label from fixed rules over its counted findings; `status_check` says whether that label itself passed its check.",
+  "Cite the paper and page from the passage, and read the PDF page before relying on a claim."
+ ],
+ "notes": "The only carded record is CORE, a position/argument (a safety-case sketch), graded ARGUMENT_ONLY. The sketch relies on a forthcoming protocol (prover-estimator debate) that is not specified in this paper.",
+ "cards": [
+  {
+   "record_id": "N2:DSOFT:ARXIV-2505.03989v3:CORE",
+   "paper": "2505.03989v3",
+   "evidence_type": "argument",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2505.03989v3:METHOD-FOUR-CLAIMS"
+    ],
+    "description": "Safety-case sketching: a hypothetical structured argument, relying in part on future research, that a developer could make for a debate-trained AI R&D agent, organised around four key claims.",
+    "passages": [
+     {
+      "version": "2505.03989v3",
+      "page": 1,
+      "lines": [
+       59,
+       63
+      ],
+      "text": "This paper sets out what debate can be used to achieve, what gaps remain, and what research is needed\nto solve them. The paper uses the technique of safety case sketching (Hilton et al., 2025): outlining an\nargument a developer could make that a given AI system is safe in a given context. The details in the sketch\nare hypothetical, often relying on future research. Nonetheless, the sketch helps contextualise how different\npieces of evidence fit together and identify the most crucial pieces of missing evidence.",
+      "pdf_page": "https://arxiv.org/pdf/2505.03989v3#page=1"
+     },
+     {
+      "version": "2505.03989v3",
+      "page": 6,
+      "lines": [
+       21,
+       25
+      ],
+      "text": "We imagine starting with a pre-trained model (e.g. an LLM trained on next-token prediction) and then\nfine-tuning it via a debate which satisfies the above requirements. We wrote it with a particular protocol\nin mind, called prover-estimator debate (forthcoming), but the argument structure should be applicable to\nother protocols as well. In prover-estimator debate, a “prover” (Alice) produces subclaims arguing for a\nconclusion to a given query, while an “estimator” (Bob) assigns probabilities to the subclaims.",
+      "pdf_page": "https://arxiv.org/pdf/2505.03989v3#page=6"
+     },
+     {
+      "version": "2505.03989v3",
+      "page": 4,
+      "lines": [
+       39,
+       44
+      ],
+      "text": "Two copies of the model debate each\nother via a carefully specified protocol\nand adjudicated by simulated human\njudges, until they reach an equilibrium\nin which the models provide honest\nanswers most of the time.",
+      "pdf_page": "https://arxiv.org/pdf/2505.03989v3#page=4"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2505.03989v3:ASM-LOW-STAKES",
+     "N2:DSOFT:ARXIV-2505.03989v3:ASM-EXPLORATION",
+     "N2:DSOFT:ARXIV-2505.03989v3:ASM-NO-OBFUSCATION",
+     "N2:DSOFT:ARXIV-2505.03989v3:ASM-HUMAN-INPUT"
+    ],
+    "stated_hypotheses": [
+     "The deployment context is low-stakes, so online training can limit the effect of distribution shift; the sketch argues this assuming sufficient security in the environment implementation.",
+     "Exploration guarantees rule out exploration hacking during training.",
+     "The debate protocol avoids obfuscated arguments; the protocol the sketch relies on needs a stability assumption.",
+     "The human input being simulated has bounded systematic error with respect to reality, and its simulation has bounded systematic error with respect to that input.",
+     "The model does not deliberately underperform during training."
+    ],
+    "passages": [
+     {
+      "version": "2505.03989v3",
+      "page": 2,
+      "lines": [
+       1,
+       11
+      ],
+      "text": "The core claim in the sketch is that debate training can upper bound the proportion of model outputs that are\n1\nmisaligned, as long as the model does not deliberately underperform during training. This upper bound can\nbe maintained during deployment if a system is trained continuously. So, in low-stakes settings, where\na small number of mistakes are acceptable such that you can use online training (Christiano,\n2\n2021), debate training might be sufficient - especially if the error bound is tight.\nThe sketch focuses on a slightly superhuman system in a limited internal deployment context designed for\nautomated AI research (including alignment research). The sketch argues that this is a low-stakes context,\nassuming sufficient security in the environment implementation. The paper also contains ideas about pushing\nlow-stakes solutions through to high-stakes contexts (see “Extending the safety case to high-stakes contexts”).",
+      "pdf_page": "https://arxiv.org/pdf/2505.03989v3#page=2"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "A hypothetical slightly superhuman LLM agent; two copies of the model debate each other (prover-estimator debate as the example protocol)",
+    "task_data": "Hypothetical internal deployment for automated AI research inside an AI company",
+    "judge": "Simulated human judges",
+    "regime": "theory",
+    "scale": null
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2505.03989v3:LIM-HIGH-STAKES",
+     "N2:DSOFT:ARXIV-2505.03989v3:LIM-NOT-STRONG"
+    ],
+    "notes": "The sketch covers only low-stakes contexts; the authors say the argument is not strong with current techniques and that the sketch's details are hypothetical."
+   },
+   "strength": {
+    "grade": "ARGUMENT_ONLY",
+    "reason": "The passages present a hypothetical argument that relies on future research; no proof or experiment for the four claims is given in them."
+   },
+   "review_status": "provisional_ai_draft"
+  }
+ ]
+}

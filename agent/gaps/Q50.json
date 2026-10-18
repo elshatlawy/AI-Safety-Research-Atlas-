@@ -1,0 +1,247 @@
+{
+ "schema": "ASRA-GAP-CLOSING-AGENT-v1",
+ "id": "Q50",
+ "question": "Does some variant of debate work as a component of an overall alignment strategy?",
+ "asked_by": "Brown-Cohen et al., Avoiding Obfuscation with Prover-Estimator Debate",
+ "rank": 17,
+ "status": "PARTLY_ANSWERED_BY_LATER_WORK",
+ "status_check": "AI_CHECKED",
+ "remaining_question": "Is there a debate protocol, trained end to end, whose guarantees survive (a) human judges with bounded but systematic, correlated errors and (b) debaters free to choose among winning decompositions or subclaims to leak or steer information, and does it keep its reward-hacking benefits in domains without verifiable ground truth?",
+ "remaining_type": "MIXED",
+ "safety_case": [
+  {
+   "node": "SC-C4.5",
+   "relation": "INDIRECT",
+   "reason": "A protocol whose guarantees survive human judges with bounded but systematic, correlated errors would help keep C4.5's judge inputs accurate despite systematic errors, as the node hopes improved debate protocols can improve human inputs.",
+   "node_evidence": "WEAK",
+   "branch": "the equilibrium is correct (debate structure and judges)",
+   "score": 1.0
+  },
+  {
+   "node": "SC-D4.2",
+   "relation": "INDIRECT",
+   "reason": "The part on debaters choosing among winning decompositions or subclaims to leak or steer information concerns individually acceptable choices with harmful effect, close to the subtly misleading but not technically false output that D4.2 says may evade the reward signal.",
+   "node_evidence": "WEAK",
+   "branch": "deployment and low stakes",
+   "score": 1.0
+  }
+ ],
+ "findings": [
+  {
+   "id": "Q50:F1",
+   "later_paper": "arXiv 2608.17776v1: Debate Training Reduces Reward Hacking in RLAIF",
+   "first_submitted": "2026-08-18",
+   "effect": "PARTLY_ANSWERS",
+   "claim": "On mathematics tasks with verifiable final-answer correctness, the authors train a Gemini 2.5 Flash-class policy with a frozen, weaker Gemini 2.5 Flash Lite judge: the single-player RLAIF baseline quickly hacks the judge, while debate maintains judge performance and reaches a higher peak validation accuracy (45% performance gap recovered). They find debate's adversarial self-play keeps rewards in check and prevents the accuracy collapse seen under the RLAIF baseline; they say their results suggest a positive update on the promise of debate as a practical training protocol for scalable oversight, and that debate appears to sustain peak performance without careful early stopping, 'at least in our setting'. They stress that balancing multi-agent training is critical: without player constraints adversarial training risks defaulting to critic judge-hacking, which critique word limits (effective up to 150 words) avoid at the cost of restricting critic expressive clarity. They name transfer to domains without verifiable ground truth as the most critical open question.",
+   "setting": "Experiment, RL training: a Gemini 2.5 Flash-class policy trained with debate (adversarial self-play) or a single-player RLAIF baseline, with a frozen, weaker Gemini 2.5 Flash Lite judge; mathematics tasks with verifiable final-answer correctness; critique word limits used to balance the game. Differs from the question's setting: one verifiable domain with an LLM judge only, and debate is tested as a training protocol, not inside a full alignment strategy.",
+   "bears_on": "The broad question (does a debate variant work as a component of an alignment strategy): evidence that debate works as a reward-hacking mitigation in RL training, in a verifiable-math setting with an LLM judge only, and only with constraints (word limits) on the critic.",
+   "passages": [
+    {
+     "version": "2608.17776v1",
+     "page": 13,
+     "lines": [
+      5,
+      16
+     ],
+     "text": "Our results suggest a positive update on the promise of debate as a practical training protocol for\nscalable oversight. Prior empirical work found debate’s benefits limited to toy settings, informationasymmetric tasks, or inference-only evaluation; and concurrent work struggles with saturation and\nreward hacking. In contrast, we find that the key benefit of debate emerges through RL training itself:\nthe adversarial self-play keeps rewards in check, maintains judge performance leading to higher peak\naccuracy that persists through many RL steps, and prevents the accuracy collapse seen under the\nRLAIF baseline.\nThis has practical implications. In domains without ground-truth labels, practitioners cannot\nidentify when reward hacking begins or select an optimal checkpoint. A training protocol that sustains\npeak performance by default, rather than requiring careful early stopping, is therefore of direct value.\nDebate appears to provide this property, at least in our setting.\nSeveral important questions remain open, we discuss some in the Limitations below (Section 5.2).\nThe most critical is whether debate’s benefits transfer to domains without verifiable ground truth.",
+     "pdf_page": "https://arxiv.org/pdf/2608.17776v1#page=13"
+    },
+    {
+     "version": "2608.17776v1",
+     "page": 1,
+     "lines": [
+      17,
+      27
+     ],
+     "text": "relevant to overseeing increasingly capable AI systems. We study mathematics tasks, where final-answer\ncorrectness is verifiable, allowing us to measure reward hacking dynamics. We train a Gemini 2.5\nFlash-class policy with a frozen, weaker Gemini 2.5 Flash Lite judge, comparing a single-player RLAIF\nbaseline against debate. While the baseline quickly hacks the judge, debate maintains judge performance\nthroughout training, leading to a higher peak validation accuracy (45% performance gap recovered)\nthat persists through many RL steps. Additional experiments show that: 1) further weakening the judge\nleads to faster hacking, but this can be compensated by adding an additional debate round; 2) debate\nincentives override prompted misalignment; 3) RL using an LLM judge has a smaller train/validation\nreward gap than RL from verifiable rewards; 4) learning to critique to convince the judge using ground\ntruth labels is possible but slow. Taken together, our results are a positive update on the feasibility of\ndebate, while highlighting that balancing multi-agent training is critical: without player constraints,",
+     "pdf_page": "https://arxiv.org/pdf/2608.17776v1#page=1"
+    },
+    {
+     "version": "2608.17776v1",
+     "page": 1,
+     "lines": [
+      28,
+      30
+     ],
+     "text": "adversarial training risks defaulting to critic judge-hacking. We show that critique word limits (effective\nup to 150 words) successfully balance the game and avoid judge hacking, though this introduces a\ntrade-off by restricting critic expressive clarity.",
+     "pdf_page": "https://arxiv.org/pdf/2608.17776v1#page=1"
+    }
+   ]
+  },
+  {
+   "id": "Q50:F2",
+   "later_paper": "arXiv 2605.27483v1: Debate Helps Weak Judges Reward Stronger Models",
+   "first_submitted": "2026-05-26",
+   "effect": "NARROWS",
+   "claim": "In a stronger-debater/weaker-judge setting on programmatically verifiable code and logic tasks, proposer-critic debate's gains over consultancy were statistically significant on three of five pairings and null on the two others; the authors conclude that, in visible-information code and logic settings, debate helps only when the critic is a better correctness classifier than the judge evaluating the answer alone, and that debate is a targeted tool for improving reward labels in verifiable domains, not a complete safety mechanism or evidence that the result transfers to fuzzier domains without further validation.",
+   "setting": "Experiment on RLHF-style reward labels: proposer-critic debate compared with consultancy and with the judge evaluating the answer alone, in a stronger-debater/weaker-judge setting on programmatically verifiable code and logic tasks with visible information, five pairings; test-time results. Differs from the question's setting: a reward-labeling study in verifiable domains, not a test of debate inside an overall alignment strategy.",
+   "bears_on": "The broad question: bounds the role debate played in this study to a conditional reward-labeling component.",
+   "passages": [
+    {
+     "version": "2605.27483v1",
+     "page": 10,
+     "lines": [
+      31,
+      36
+     ],
+     "text": "We test whether debate can improve RLHF-style reward labels. In visible-information code and logic\nsettings, proposer–critic debate helps only when the critic is a better correctness classifier than the\njudge evaluating the answer alone. At test time, most of the gain comes from the critic’s opening\nstance; rebuttals neither lift nor degrade the verdict. Debate is therefore a targeted tool for improving\nreward labels in verifiable domains, not a complete safety mechanism or evidence that the result\ntransfers to fuzzier domains without further validation.",
+     "pdf_page": "https://arxiv.org/pdf/2605.27483v1#page=10"
+    },
+    {
+     "version": "2605.27483v1",
+     "page": 1,
+     "lines": [
+      16,
+      27
+     ],
+     "text": "Despite theoretical promise, debate as a scalable oversight protocol has produced\nmixed empirical results: gains in some settings, and null effects in others, especially\nwhen the judge does not have information hidden from it. We study proposer-critic\ndebate in a stronger-debater/weaker-judge setting on programmatically verifiable\ncode and logic tasks. Debate helps the judge over a consultancy baseline when the\ncritic provides a usable advantage: the critic’s classification ability must exceed\nthe judge’s, and the judge must treat critic speeches as claims to verify rather than\ntestimony to summarize.\nOn the three of five pairings where the condition holds, proposer-critic debate’s\ngains are statistically significant over consultancy, and these pairings are the most\ncapable model pairings. On the two non-responder pairings in our set, debate\nproduces null effects, and judge verification rates drop by tens of percentage points",
+     "pdf_page": "https://arxiv.org/pdf/2605.27483v1#page=1"
+    }
+   ]
+  },
+  {
+   "id": "Q50:F3",
+   "later_paper": "arXiv 2610.02557v1: How to Have a Sensitive Debate: An Instance-Optimal Protocol for AI Debate",
+   "first_submitted": "2026-10-01",
+   "effect": "NARROWS",
+   "claim": "On the theory side, a new protocol for the same stable-decomposition problem class as prover-estimator debate gives worst-case correctness and honesty as a dominant-strategy equilibrium, with a matching black-box lower bound; the authors pose going beyond the fractional-block-sensitivity barrier, e.g. by relaxing the black-box model of human judgment, as the open problem.",
+   "setting": "Theory (query complexity): human judgment modelled as a black box accessible only via queries; problems with sufficiently stable decompositions into subproblems; a new protocol with proofs, including black-box lower bounds. Differs from the question's setting: a theoretical guarantee for one problem class, not a test of debate inside an alignment strategy.",
+   "bears_on": "The authors' hope for 'improved protocols': an improvement over prover-estimator debate in guarantee strength (worst-case, dominant strategy), but within the same problem class; does not address systematic human error or hidden information.",
+   "passages": [
+    {
+     "version": "2610.02557v1",
+     "page": 1,
+     "lines": [
+      30,
+      39
+     ],
+     "text": "to complex problems with limited supervision. Specifically, the current best protocol has been\nshown to work for all problems that have sufficiently stable decompositions into subproblems.\nIn this paper, we design a new protocol for this same class of problems that improves on the\nprior work in several ways. First, correctness holds in a worst-case rather than an average-case\nsense. Second, being honest and correct is a dominant-strategy equilibrium for both debaters,\nrather than a Stackelberg equilibrium. Finally, we prove black-box lower bounds, showing that\nour new protocol is instance-wise optimal. That is, no protocol for this class of problems can\noutperform ours while making only black-box queries to human judgments. We obtain these\nresults by relating the notion of stable problem decompositions to the concept of fractional block\nsensitivity from query complexity.",
+     "pdf_page": "https://arxiv.org/pdf/2610.02557v1#page=1"
+    },
+    {
+     "version": "2610.02557v1",
+     "page": 14,
+     "lines": [
+      47,
+      56
+     ],
+     "text": "Given this discussion, the question remains: is it possible to design a protocol that goes beyond\nthe fractional block sensitivity barrier we identify? One might hope that utilizing Bob’s ability\nto solve the same problems as Alice could help with this issue, perhaps by allowing Bob to take\nadvantage of Alice’s computational limitations in some way. Alternatively, our lower bounds only\napply when human judgment is modeled as a black box, accessible only via queries. Classical\nresults in interactive proofs like IP = PSPACE show that opening up the black box yields much\nstronger protocols. It seems implausible that these methods can be adapted to the case of human\njudgment—one would need to essentially be able to “read the code” that implements the human\njudgment. However, it is still possible that some other relaxation of the black-box oracle assumption\ncould lead to better debate protocols.",
+     "pdf_page": "https://arxiv.org/pdf/2610.02557v1#page=14"
+    }
+   ]
+  },
+  {
+   "id": "Q50:F4",
+   "later_paper": "arXiv 2609.29189v1: When Honesty is Not Enough in AI Debate",
+   "first_submitted": "2026-09-24",
+   "effect": "NARROWS",
+   "claim": "The authors formalise task-admissible latent optimisation: because a correct verdict does not fix which arguments support it, debaters can encode information about a hidden variable while still winning; in debate with cross-examination the disclosed information can grow linearly with the number of rounds, and a sliding-window consistency check narrows the persistent perturbations compatible with task success, which the authors say limits the studied disclosure strategy rather than establishing transcript confidentiality.",
+   "setting": "Theoretical framework (strategic interactive oversight) instantiated as a proof-of-concept in debate with cross-examination; the latent objective is disclosing information about a hidden variable; the mitigation studied is a sliding-window consistency check. Differs from the question's ask: debate with cross-examination, not prover-estimator debate's subclaims.",
+   "bears_on": "The authors' ask about 'the potential for debaters to hide information in the subclaims': formalises a closely related channel (free choice among winning strategies) and gives a partial mitigation in a different protocol.",
+   "passages": [
+    {
+     "version": "2609.29189v1",
+     "page": 1,
+     "lines": [
+      11,
+      22
+     ],
+     "text": "on incentivizing honest arguments that lead to correct verdicts. Yet a correct verdict need not uniquely\ndetermine the arguments used to support it. Agents may retain discretion over which correct claims\nto present, how to frame them, and in what order to disclose them. This residual freedom can allow\nagents to shape what the verifier learns beyond the task-relevant conclusion, pursuing latent objectives\nwithout compromising verdict correctness.\nTo study this phenomenon, we introduce the framework strategic interactive oversight (SIO), which\ntreats oversight jointly as a verification mechanism and a strategic communication channel. Within this\nframework, we formalise the notion of task-admissible latent optimisation, which entails the pursuit of\nlatent objectives while maintaining a prescribed task performance. As proof-of-concept, we instantiate\nSIO in the establish protocol debate with cross-examination and quantify a tradeoff between task success\nand information disclosure about a hidden variable. The trade-off identifies a strategic window in\nwhich substantial disclosure remains compatible with task admissibility. Towards mitigation, we reduce",
+     "pdf_page": "https://arxiv.org/pdf/2609.29189v1#page=1"
+    },
+    {
+     "version": "2609.29189v1",
+     "page": 2,
+     "lines": [
+      24,
+      30
+     ],
+     "text": "required for the task. In standard debate, the task objective is to win. However, there are generally\nmany strategies by which it can do so. This non-uniqueness allows the debater to select, among\ntask-successful strategies, those that additionally encode information about the latent variable. We\nshow that, even when the disclosure in each round is small, the total information revealed can grow\nlinearly with the number of cross-examination rounds. Local report-accuracy conditions and a correct\nterminal verdict therefore do not prevent the oversight interaction from becoming a channel for latent\ninformation.",
+     "pdf_page": "https://arxiv.org/pdf/2609.29189v1#page=2"
+    },
+    {
+     "version": "2609.29189v1",
+     "page": 3,
+     "lines": [
+      31,
+      35
+     ],
+     "text": "Third, as a step towards mitigation, we augment cross-examination with a sliding-window consistency\ncheck that tests for persistent discrepancies across rounds. This narrows the range of persistent\nperturbations compatible with task success, at the cost of additional verifier work, while leaving the\ndebaters’ per-round sampling work unchanged. The resulting guarantee limits the disclosure strategy\nstudied here rather than establishing transcript confidentiality.",
+     "pdf_page": "https://arxiv.org/pdf/2609.29189v1#page=3"
+    }
+   ]
+  },
+  {
+   "id": "Q50:F5",
+   "later_paper": "arXiv 2610.05461v1: AI Safety via Debate is Compromised by Cognitive Biases",
+   "first_submitted": "2026-10-04",
+   "effect": "NARROWS",
+   "claim": "In a study with 369 participants judging 68 LLM-generated dialogues about detective mysteries, four bias interventions applied to either side, pooled across bias types, significantly shifted judgments toward the manipulated side; the authors conclude that cognitive biases can shift adjudications toward the side deploying a bias-inducing intervention, potentially weakening the connection between winning a debate and correctness, and suggest asking judges to assess evidentiary support, logical validity and responses to counterarguments before adjudicating, interventions they say warrant further evaluation.",
+   "setting": "Human-subject experiment: 369 participants adjudicate 68 LLM-generated dialogues (inspired by competitive debate) about detective mysteries with known culprits; one of four interventions (anchoring, fallacy oversight, pro-jargon, verbosity) is applied to the side advocating for the true culprit or for an innocent suspect. The proposed procedural mitigations were not tested.",
+   "bears_on": "The authors' ask for 'protocols which mitigate systematic errors in human input': confirms the vulnerability empirically and proposes, but does not test, mitigations.",
+   "passages": [
+    {
+     "version": "2610.05461v1",
+     "page": 9,
+     "lines": [
+      35,
+      39
+     ],
+     "text": "are harder to defend than to refute [19]. However, systematic imperfections in human judgment arising from\ncognitive biases or irrational models of decision-making may give a competitive advantage to strategies\nthat exploit those imperfections. Our results identify one such vulnerability: cognitive biases can shift\nadjudications toward the side deploying a bias-inducing intervention, potentially weakening the connection\nbetween winning a debate and correctness.",
+     "pdf_page": "https://arxiv.org/pdf/2610.05461v1#page=9"
+    },
+    {
+     "version": "2610.05461v1",
+     "page": 10,
+     "lines": [
+      4,
+      6
+     ],
+     "text": "Adapting these approaches to AI debate could involve asking judges to assess evidentiary support, logical\nvalidity, and responses to counterarguments before adjudicating; such interventions warrant further evaluation. These procedural changes should complement approaches that model systematic biases in human\njudgment.",
+     "pdf_page": "https://arxiv.org/pdf/2610.05461v1#page=10"
+    },
+    {
+     "version": "2610.05461v1",
+     "page": 1,
+     "lines": [
+      17,
+      23
+     ],
+     "text": "we investigate whether this advantage persists when debaters use rhetorical strategies that exploit biases\nin human judgment. Inspired by competitive debate, we construct 68 LLM-generated dialogues about\ndetective mysteries with known culprits, spanning four interventions: anchoring, fallacy oversight, projargon, and verbosity. We apply each intervention to either the side advocating for the true culprit or\nthe side advocating for an innocent suspect, allowing us to distinguish influence on adjudication from\ncorrectness. In a study with 369 participants, we find that, pooled across bias types, these interventions\nsignificantly shift judgments toward the manipulated side. These findings expose a vulnerability in\ndebate-based supervision: human adjudication is sensitive to manipulative rhetorical strategies.",
+     "pdf_page": "https://arxiv.org/pdf/2610.05461v1#page=1"
+    }
+   ]
+  },
+  {
+   "id": "Q50:F6",
+   "later_paper": "arXiv 2607.03561v1: How to Avoid Debate: Scalable AI Safety via Doubly-Efficient Interactive Proofs",
+   "first_submitted": "2026-07-03",
+   "effect": "RELATED_ONLY",
+   "claim": "The authors give doubly-efficient single-prover interactive proofs and arguments for oracle-aided computations when the computation is robust to a small fraction of incorrect oracle (e.g. human-judgment) answers or the oracle is a low-degree polynomial, suggesting verification without debate under structured or noise-tolerant oracle access.",
+   "setting": "Theory (interactive proofs). Single prover, no opponent; oracle models human judgment or external databases; robustness to a small fraction of wrong oracle answers.",
+   "bears_on": "Systematic human error: an alternative to debate tolerating a bounded fraction of wrong human answers; not a debate variant and not targeted at systematic (correlated) errors.",
+   "passages": [
+    {
+     "version": "2607.03561v1",
+     "page": 1,
+     "lines": [
+      15,
+      25
+     ],
+     "text": "convince a weak verifier, or a human, of the correctness of their claim. However, debate assumes that\nthe two AI models possess equal abilities and that one of them is truthful, which may not be realistic.\nIn this work, we show how to avoid debate: we initiate the study of single-prover interactive proofs\nfor AI safety. Prior results in single-prover interactive proofs do not immediately carry over to the AI\nsafety setting: for example, they do not work when the computation has access to an oracle, such as\nto human judgment or an external database such as the web. We present doubly-efficient single-prover\ninteractive proofs and arguments for oracle-aided computations (also known as relativizing proofs),\nin the settings where (1) the computation is robust, in the sense that the output does not change if\nat most a small fraction of the answers to oracle queries are incorrect, or (2) the oracle is a low-degree\npolynomial. These results suggest that interactive verification is possible even without debate, under\nstructured or noise-tolerant oracle access.",
+     "pdf_page": "https://arxiv.org/pdf/2607.03561v1#page=1"
+    }
+   ]
+  }
+ ],
+ "findings_drafted": 6,
+ "maths": [],
+ "experiment_package": null,
+ "review_status": "provisional_ai_draft",
+ "rules": [
+  "Everything here is an AI draft (provisional_ai_draft): each counted item passed two blind AI checks that were tested on planted errors, and no person has reviewed it.",
+  "A finding counts only in the setting its own quoted lines show; read `setting` before carrying it to another setting.",
+  "A question's status is a label from fixed rules over its counted findings; `status_check` says whether that label itself passed its check.",
+  "Cite the paper and page from the passage, and read the PDF page before relying on a claim."
+ ]
+}

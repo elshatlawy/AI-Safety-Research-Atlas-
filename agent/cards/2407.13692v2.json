@@ -1,0 +1,683 @@
+{
+ "schema": "ASRA-GAP-CLOSING-AGENT-v1",
+ "paper": "2407.13692v2",
+ "review_status": "provisional_ai_draft",
+ "rules": [
+  "Everything here is an AI draft (provisional_ai_draft): each counted item passed two blind AI checks that were tested on planted errors, and no person has reviewed it.",
+  "A finding counts only in the setting its own quoted lines show; read `setting` before carrying it to another setting.",
+  "A question's status is a label from fixed rules over its counted findings; `status_check` says whether that label itself passed its check.",
+  "Cite the paper and page from the passage, and read the PDF page before relying on a claim."
+ ],
+ "notes": "Theorem 1 on p.7 states that the properties hold for (v*, pi*), while the Appendix A restatement says (v*, h*). Appendix I says Figs. 7b, S5c and S6 come from a pilot campaign the authors call potentially flawed (learning or fatigue effects); RES-SNEAKY-HUMAN and the sneaky-human part of CORE rest on it and are graded EMPIRICAL_PRELIMINARY, and RES-CAPABILITY-GAP's legibility claim for the prover-sized verifier uses Fig. S5c. No uncertainty (error bars, intervals or tests) is reported for any training or human result in the lines read. The main campaign count (15983 datapoints, 75 trainers) pools several checkpoints, so per-comparison sample sizes are not stated. RES-CORRECTNESS-ONLY is a baseline, so no method record is linked; its method is shown by passages. No record seems mislabelled.",
+ "cards": [
+  {
+   "record_id": "N2:DSOFT:ARXIV-2407.13692v2:CORE",
+   "paper": "2407.13692v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2407.13692v2:METHOD-CHECKABILITY-TRAINING",
+     "N2:DSOFT:ARXIV-2407.13692v2:DEF-LEGIBILITY"
+    ],
+    "description": "Over rounds of checkability training on grade-school math, a small verifier is trained by supervised learning to predict solution correctness and a prover prompted as helpful or sneaky is trained by reinforcement learning against it; the provers are compared with a prover trained by PPO for correctness only, and their solutions are judged by time-constrained human contractors.",
+    "passages": [
+     {
+      "version": "2407.13692v2",
+      "page": 7,
+      "lines": [
+       23,
+       30
+      ],
+      "text": "role-alignment q differently. Both provers and verifiers are from the GPT4 family (Achiam et al.,\n2023). We initialize the prover and the verifier with different sized models that have been lightly\nfinetuned on a variety of math data from the pretaining distribution, including human written proofs\nand derivations. We discuss the algorithmic details below.\nFirst, we augmented the GSM (Cobbe et al., 2021) dataset using 100k synthetically generated and\nvalidated datapoints from ChatGPT, similar to the method in Liu et al. (2023). We made the dataset\nlarger so as not to be bottlenecked by sample efficiency in order to focus on the training dynamics.\nWe validated that the the original test set accuracy is not impacted by using real vs. synthetic data.",
+      "pdf_page": "https://arxiv.org/pdf/2407.13692v2#page=7"
+     },
+     {
+      "version": "2407.13692v2",
+      "page": 8,
+      "lines": [
+       56,
+       62
+      ],
+      "text": "A natural baseline for our setup is to train the prover model directly to optimize for the correctness of\nthe solutions without the intermediate verifier. Specifically, we can use Proximal Policy Optimization\n(PPO) against a binary grader that checks if the solution is correct or not. This approach has\nbeen explored in works such as Havrilla et al. (2024), where a language model is fine-tuned using\nreinforcement learning (RL) with a reward based on the correctness of the answers. We use a KL\nregularization towards prover initialization with the same small coefficient for all methods in this\npaper.",
+      "pdf_page": "https://arxiv.org/pdf/2407.13692v2#page=8"
+     },
+     {
+      "version": "2407.13692v2",
+      "page": 33,
+      "lines": [
+       5,
+       16
+      ],
+      "text": "Our main human evaluation experiment is as follows. For the training shown in Figure 5, we sample\nthe last checkpoint helpful prover solutions to the problems from the GSM test dataset. We also\nsample from the correctness-only baseline at training step 3k, 7k, as well as the few-shot prover\ninitialization. We collect up to one correct and up to one incorrect sample from each prover and\neach problem, if possible (around one-third of the problems per round have either all correct or all\nincorrect solutions among 128 samples). We randomized assignment of those samples to 75 trainers\n(making sure each person see balanced correct vs. incorrect samples from each checkpoint), and\nasked them to judge the solution correctness within a 45-second time limit per problem. We excluded\nall problems that yielded only correct or only incorrect solutions. We also excluded four trainers\nwhose performance was statistically indistinguishable from chance from the dataset. We collected\n15983 datapoints. Each trainer spent a maximum of 4 hours working on the task to prevent learning\nand fatigue effects. The instructions are shown in Fig. S12 and Fig. S13 contains an example task.",
+      "pdf_page": "https://arxiv.org/pdf/2407.13692v2#page=33"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "Ground-truth answer labels are available for the training problems; the paper studies this easier case and leaves semi-supervised or unsupervised settings to future work.",
+     "Human legibility is measured only as the accuracy of time-limited judgements of solution correctness, which the authors call one of many ways to measure it.",
+     "Provers and verifiers are GPT-4-family models of different sizes, initialised after light fine-tuning on math data.",
+     "Pilot campaign: 10 trainers with a 1-minute limit saw rounds in order (R0, R1, R2, ...) over one month, so the authors suspect learning or fatigue effects; Figs. 7b, S5c and S6 come from it."
+    ],
+    "passages": [
+     {
+      "version": "2407.13692v2",
+      "page": 2,
+      "lines": [
+       61,
+       62
+      ],
+      "text": "We focus on the easier case where some ground truth labels are available for improving the players, and\nleave the semi-supervised or unsupervised settings for future work (see Section 6.1 for more discussions).",
+      "pdf_page": "https://arxiv.org/pdf/2407.13692v2#page=2"
+     },
+     {
+      "version": "2407.13692v2",
+      "page": 5,
+      "lines": [
+       20,
+       21
+      ],
+      "text": "In this work we measured human legibility via the accuracy of their judgement of solution correctness\nin time-limited settings, which is only one of many ways to measure human legibility.",
+      "pdf_page": "https://arxiv.org/pdf/2407.13692v2#page=5"
+     },
+     {
+      "version": "2407.13692v2",
+      "page": 33,
+      "lines": [
+       18,
+       23
+      ],
+      "text": "We also had an earlier pilot campaign where the we showed sneaky solutions as well as samples from\nan Iterative Goodharting training to 10 trainers with 1 minute time limit (instead of 45 seconds) per\ntask. In this pilot run, we showed solutions from earlier rounds to the trainers first (they judged the\nsamples in the order of R0, R1, R2, etc.) across a span of one month, and hence we suspect that the\ndata is affected by learning or fatigue effects. The only plots from this potentially flawed campaign\nare Fig. 7b, S5c and S6.",
+      "pdf_page": "https://arxiv.org/pdf/2407.13692v2#page=33"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "GPT-4-family provers and smaller GPT-4-family verifiers; a correctness-only PPO prover as baseline",
+    "task_data": "Grade-school math (GSM) augmented with 100k synthetic ChatGPT-generated problems; human evaluation on GSM test problems",
+    "judge": "The learned verifier during training; time-constrained human contractors for evaluation (45 s per solution in the main campaign, 1 minute in the pilot)",
+    "regime": "mixed",
+    "scale": "Main human campaign: 75 trainers, 15983 datapoints; pilot campaign: 10 trainers"
+   },
+   "quantitative": {
+    "n": "15983 datapoints from 75 trainers in the main human campaign; 10 trainers in the pilot campaign",
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2407.13692v2:LIM-GROUND-TRUTH"
+    ],
+    "notes": "Checkability training needs problems with known ground-truth answers and is expected to be less relevant where ground truth is too hard or expensive to collect; out-of-domain generalization is not studied."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_PRELIMINARY",
+    "reason": "The claim's human result on sneaky solutions comes from a pilot campaign the authors suspect of learning or fatigue effects, and its other parts come from one dataset and one model family with no uncertainty reported, so the claim as a whole is graded by its weakest part."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2407.13692v2:THM-1-STACKELBERG",
+   "paper": "2407.13692v2",
+   "evidence_type": "theorem",
+   "method": {
+    "record_ids": [],
+    "description": "Proof in Appendix A: for necessity, given completeness and soundness, a sneaky prover that outputs an arbitrary incorrect solution is constructed and the triple is shown to be a verifier-leading Stackelberg equilibrium; for sufficiency, it is shown by contradiction that any such equilibrium satisfies completeness and soundness.",
+    "passages": [
+     {
+      "version": "2407.13692v2",
+      "page": 7,
+      "lines": [
+       5,
+       8
+      ],
+      "text": "One of the players (in our case, the verifier) is the leader, and the other player (the prover) is the\nfollower. We assume that given a leader strategy, the follower will always play its best response, and\nthe leader picks its strategy based on this knowledge. A Stackelberg equilibrium means that none of\nthe players have incentives to change its strategy. The proof is in Appendix A. Compared to Theorem",
+      "pdf_page": "https://arxiv.org/pdf/2407.13692v2#page=7"
+     },
+     {
+      "version": "2407.13692v2",
+      "page": 21,
+      "lines": [
+       35,
+       38
+      ],
+      "text": "Proof. First, assuming that the completeness and soundness properties hold for v ∗ , h∗ . We construct\ns∗ as follows: For any x, let s∗ (x) be an arbitrary incorrect solution, i.e. s∗ (x) ∈ {z | 1correct (x, z) =\n0}. By the soundness property, we know that we will have v ∗ (x, s∗ (x)) = 0 and 1correct (x, s∗ (x)) =\n0 for all x. We shall show that (v ∗ , h∗ , s∗ ) is a verifier-leading Stackelberg equilibrium. First, at",
+      "pdf_page": "https://arxiv.org/pdf/2407.13692v2#page=21"
+     },
+     {
+      "version": "2407.13692v2",
+      "page": 22,
+      "lines": [
+       17,
+       18
+      ],
+      "text": "We have proved by contradiction that (v ∗ , h∗ ) from any verifier-leading Stackelberg equilibrium\nsatisfies both completeness and soundness properties.",
+      "pdf_page": "https://arxiv.org/pdf/2407.13692v2#page=22"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2407.13692v2:ASM-PROVER-CLASS"
+    ],
+    "stated_hypotheses": [
+     "The prover hypothesis class H is the set of all deterministic mappings from inputs X to solutions Z.",
+     "The verifier's utility is the negative of a classification loss l(v, c), minimized if and only if v = c (with l(c, c) = 0), on a uniform mixture of helpful and sneaky samples.",
+     "The prover is conditioned on the helpful or sneaky role with equal probability, and its reward r(v, q) satisfies Eq. (1): r(v1, 1) > r(v2, 0) for all v1, v2 (any role-aligned solution beats any role-misaligned one), and r(v1, 1) > r(v2, 1) whenever v1 > v2.",
+     "The verifier leads and the prover follows, always playing its best response to the verifier's strategy.",
+     "In the appendix proof, X is restricted to inputs with non-zero probability under P_X and treated as discrete, and every input has at least one correct and one incorrect solution in Z."
+    ],
+    "passages": [
+     {
+      "version": "2407.13692v2",
+      "page": 6,
+      "lines": [
+       32,
+       41
+      ],
+      "text": "We define the verifier’s utility as a negative classification loss on a uniform mixture between the\nhelpful and the sneaky samples,\n1\n1\nRV = − Ex∼PX l(v(x, h(x)), 1correct (x, h(x))) − Ex∼PX l(v(x, s(x)), 1correct (x, s(x)))\n2\n2\nwhere l(v, c) : [0, 1] × {0, 1} → R is a loss function minimized if and only if v = c, such as the\ncross-entropy loss. We assume without loss of generality that l(c, c) = 0. In practice we optimize\nRV via gradient descent on lV = −RV .",
+      "pdf_page": "https://arxiv.org/pdf/2407.13692v2#page=6"
+     },
+     {
+      "version": "2407.13692v2",
+      "page": 6,
+      "lines": [
+       42,
+       53
+      ],
+      "text": "The policy is conditioned on either the helpful or the sneaky role with equal probability, and the\ncombined reward is\n1\n1\nRP = Ex∼PX r(v(x, h(x)), 1correct (x, h(x))) + Ex∼PX r(v(x, s(x)), 1 − 1correct (x, s(x)))\n2\n2\nwhere r(v, q) : [0, 1] × {0, 1} → R is a reward function that satisfies:\n∀v1 , v2 ∈ [0, 1] : r(v1 , 1) > r(v2 , 0),\n∀v1 , v2 ∈ [0, 1], v1 > v2 : r(v1 , 1) > r(v2 , 1).\n(1)\nHere q ∈ {0, 1} indicates that the correctness of the solution is role-aligned — it is 1 if the prover",
+      "pdf_page": "https://arxiv.org/pdf/2407.13692v2#page=6"
+     },
+     {
+      "version": "2407.13692v2",
+      "page": 21,
+      "lines": [
+       6,
+       12
+      ],
+      "text": "We first make a few more mild assumptions. We restrict X to be the set of inputs where PX has\nnon-zero probability mass. We treat X as discrete for simplicity, although the same result can be\nextended to continuous domain using measure theory. We remind the reader that x ∈ X is the input,\nv(x, z) : X × Z → [0, 1] is the verifier, h(x), s(x) : X → Z are helpful and sneaky provers, and\n1correct (x, z) ∈ {0, 1} is the indicator for the correctness of solution z given input x. We assume the\nhypothesis class H is the set of all deterministic mappings from X → Z. We also assume that for\nany x ∈ X , there exists any least one correct solution and one incorrect solution in Z.",
+      "pdf_page": "https://arxiv.org/pdf/2407.13692v2#page=21"
+     }
+    ],
+    "check": "not verified: the blind checks miss some dropped conditions on theorem cards; read the theorem's statement at the cited page"
+   },
+   "setting": {
+    "systems": "Abstract prover-verifier game between a role-conditioned (helpful or sneaky) prover and a verifier v(x, z) in [0, 1]",
+    "task_data": "Inputs drawn from a data distribution, with a correctness indicator for each solution; no dataset",
+    "judge": null,
+    "regime": "theory",
+    "scale": null
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [],
+    "notes": "The linked assumption record states that LLMs are probabilistic and their hypothesis class is only a subset of all mappings, so the empirical setup does not match the theorem's assumptions exactly, and that for nonconvex players there is no formal guarantee of finding a Stackelberg equilibrium efficiently."
+   },
+   "strength": {
+    "grade": "PROVED_IN_PAPER",
+    "reason": "Theorem 1 is stated on p. 7 with 'The proof is in Appendix A', and the appendix proves necessity by construction and sufficiency by contradiction."
+   },
+   "review_status": "provisional_ai_draft",
+   "check_history": [
+    "card-4: flagged; rewritten from the checkers' suggested fix"
+   ]
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2407.13692v2:RES-CORRECTNESS-ONLY",
+   "paper": "2407.13692v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [],
+    "description": "A prover is trained with PPO against a binary grader of answer correctness (with a small KL penalty toward its initialization), and samples from the initialization and after 3k and 7k RL steps are judged by human contractors who decide within 45 seconds whether each solution is correct.",
+    "passages": [
+     {
+      "version": "2407.13692v2",
+      "page": 8,
+      "lines": [
+       56,
+       62
+      ],
+      "text": "A natural baseline for our setup is to train the prover model directly to optimize for the correctness of\nthe solutions without the intermediate verifier. Specifically, we can use Proximal Policy Optimization\n(PPO) against a binary grader that checks if the solution is correct or not. This approach has\nbeen explored in works such as Havrilla et al. (2024), where a language model is fine-tuned using\nreinforcement learning (RL) with a reward based on the correctness of the answers. We use a KL\nregularization towards prover initialization with the same small coefficient for all methods in this\npaper.",
+      "pdf_page": "https://arxiv.org/pdf/2407.13692v2#page=8"
+     },
+     {
+      "version": "2407.13692v2",
+      "page": 33,
+      "lines": [
+       5,
+       16
+      ],
+      "text": "Our main human evaluation experiment is as follows. For the training shown in Figure 5, we sample\nthe last checkpoint helpful prover solutions to the problems from the GSM test dataset. We also\nsample from the correctness-only baseline at training step 3k, 7k, as well as the few-shot prover\ninitialization. We collect up to one correct and up to one incorrect sample from each prover and\neach problem, if possible (around one-third of the problems per round have either all correct or all\nincorrect solutions among 128 samples). We randomized assignment of those samples to 75 trainers\n(making sure each person see balanced correct vs. incorrect samples from each checkpoint), and\nasked them to judge the solution correctness within a 45-second time limit per problem. We excluded\nall problems that yielded only correct or only incorrect solutions. We also excluded four trainers\nwhose performance was statistically indistinguishable from chance from the dataset. We collected\n15983 datapoints. Each trainer spent a maximum of 4 hours working on the task to prevent learning\nand fatigue effects. The instructions are shown in Fig. S12 and Fig. S13 contains an example task.",
+      "pdf_page": "https://arxiv.org/pdf/2407.13692v2#page=33"
+     },
+     {
+      "version": "2407.13692v2",
+      "page": 7,
+      "lines": [
+       23,
+       30
+      ],
+      "text": "role-alignment q differently. Both provers and verifiers are from the GPT4 family (Achiam et al.,\n2023). We initialize the prover and the verifier with different sized models that have been lightly\nfinetuned on a variety of math data from the pretaining distribution, including human written proofs\nand derivations. We discuss the algorithmic details below.\nFirst, we augmented the GSM (Cobbe et al., 2021) dataset using 100k synthetically generated and\nvalidated datapoints from ChatGPT, similar to the method in Liu et al. (2023). We made the dataset\nlarger so as not to be bottlenecked by sample efficiency in order to focus on the training dynamics.\nWe validated that the the original test set accuracy is not impacted by using real vs. synthetic data.",
+      "pdf_page": "https://arxiv.org/pdf/2407.13692v2#page=7"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "Contractors judge the correctness of the whole solution rather than the final answer, under a strict 45-second limit per solution.",
+     "Human legibility is measured only as the accuracy of time-limited judgements of solution correctness, which the authors call one of many ways to measure it.",
+     "Main human campaign: each trainer sees balanced correct and incorrect samples from each checkpoint and judges correctness within 45 seconds; problems with only correct or only incorrect solutions and four trainers indistinguishable from chance are excluded."
+    ],
+    "passages": [
+     {
+      "version": "2407.13692v2",
+      "page": 5,
+      "lines": [
+       20,
+       21
+      ],
+      "text": "In this work we measured human legibility via the accuracy of their judgement of solution correctness\nin time-limited settings, which is only one of many ways to measure human legibility.",
+      "pdf_page": "https://arxiv.org/pdf/2407.13692v2#page=5"
+     },
+     {
+      "version": "2407.13692v2",
+      "page": 16,
+      "lines": [
+       3,
+       9
+      ],
+      "text": "Conflating the model’s chain-of-thought with legible solutions. By training the CoTs to be\nlegible, we potentially limited the provers’ accuracy. A better method could be training a first model\nusing CoT to maximize accuracy, and then training a second model to turn the CoT used to produce\nthe answer into a legible justification to humans. Hence, our measurement of accuracy-legibility\ntradeoff may be overly pessimistic; the prover may be able to achieve legibility at less or no cost to\naccuracy. For the correctness-only baseline, we could have early stopped at less accurate but more\nlegible checkpoint. However, we don’t know of a principled way to do early stopping for legibility.",
+      "pdf_page": "https://arxiv.org/pdf/2407.13692v2#page=16"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "GPT-4-family prover trained by PPO for correctness only; samples from the initialization and after 3k and 7k RL steps",
+    "task_data": "GSM test problems (training on GSM augmented with synthetic problems)",
+    "judge": "Time-constrained human contractors (45 s per solution)",
+    "regime": "mixed",
+    "scale": "Main human campaign: 75 trainers, 15983 datapoints"
+   },
+   "quantitative": {
+    "n": "15983 datapoints from 75 trainers in the main campaign, which also covers helpful-prover samples; the count for this comparison alone is not stated",
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [],
+    "notes": "The authors note they could have early-stopped the correctness-only baseline at a less accurate but more legible checkpoint, but know no principled way to early-stop for legibility."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "One dataset and one model family, with human accuracy and time reported as means and no uncertainty in these lines."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2407.13692v2:RES-CAPABILITY-GAP",
+   "paper": "2407.13692v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2407.13692v2:METHOD-CHECKABILITY-TRAINING"
+    ],
+    "description": "Checkability training is repeated with verifiers of different sizes relative to the prover's compute (10^-4, 10^-3 to 10^-1.8, and 10^0), and training dynamics, prover accuracy and sample solutions are compared; for the prover-sized verifier a human plot from the pilot campaign is also shown.",
+    "passages": [
+     {
+      "version": "2407.13692v2",
+      "page": 26,
+      "lines": [
+       66,
+       69
+      ],
+      "text": "Supplementary Figure S4: A very small verifier makes training dynamics unstable and results in\ndegenerate solutions. a Sample completion from round zero of legibility training with a very small\nverifier. b Average accuracy for the helpful (top) and sneaky (bottom) provers as a function of the\ncompleted fraction of each round.",
+      "pdf_page": "https://arxiv.org/pdf/2407.13692v2#page=26"
+     },
+     {
+      "version": "2407.13692v2",
+      "page": 27,
+      "lines": [
+       85,
+       90
+      ],
+      "text": "Supplementary Figure S5: A verifier as large as the prover does not increase in robustness\nover rounds and results in degenerate solutions. a Sample completion from round zero of\nlegibility training with a very small verifier. b Average accuracy for the helpful (top) and sneaky\n(bottom) provers as a function of the completed fraction of each round. c Median accuracy of\ntime-constrained human contractors when evaluating solutions from the helpful prover at different\nrounds of checkability training. This plot is from a potentially flawed campaign (see Appendix I).",
+      "pdf_page": "https://arxiv.org/pdf/2407.13692v2#page=27"
+     },
+     {
+      "version": "2407.13692v2",
+      "page": 33,
+      "lines": [
+       18,
+       23
+      ],
+      "text": "We also had an earlier pilot campaign where the we showed sneaky solutions as well as samples from\nan Iterative Goodharting training to 10 trainers with 1 minute time limit (instead of 45 seconds) per\ntask. In this pilot run, we showed solutions from earlier rounds to the trainers first (they judged the\nsamples in the order of R0, R1, R2, etc.) across a span of one month, and hence we suspect that the\ndata is affected by learning or fatigue effects. The only plots from this potentially flawed campaign\nare Fig. 7b, S5c and S6.",
+      "pdf_page": "https://arxiv.org/pdf/2407.13692v2#page=33"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "The authors cannot exclude that the poor results with very small and very large verifiers come from non-optimal hyperparameters; the sample-mixture ratio was tuned only for the 10^-3 verifier with the SRC reward and reused for other sizes.",
+     "Suspected explanations, not tested: a too-limited verifier may make verification fundamentally impossible, and a verifier very similar to the prover lets the sneaky prover simulate its mistakes.",
+     "Prover and verifier are GPT-4-family models of different sizes; verifier size is given relative to the prover's compute.",
+     "Pilot campaign: 10 trainers with a 1-minute limit saw rounds in order (R0, R1, R2, ...) over one month, so the authors suspect learning or fatigue effects; Figs. 7b, S5c and S6 come from it."
+    ],
+    "passages": [
+     {
+      "version": "2407.13692v2",
+      "page": 16,
+      "lines": [
+       29,
+       34
+      ],
+      "text": "Hyperparameters. We did not tune all hyperparameters thoroughly for all training schemes in\nthis paper. The main hyperparameter we tuned are the ratios of samples from each of the previous\nrounds. We tuned the ratio for one verifier size (10−3 ) for the SRC reward based on whether training\nrobustness increases across rounds, and used the same ratio for other sizes with SRC and CGC\nrewards, which could result in other training schemes being worse in robustness and legibility. We\nseparately tuned the ratio for one verifier size (10−3 ) for the iterative goodharting training. We",
+      "pdf_page": "https://arxiv.org/pdf/2407.13692v2#page=16"
+     },
+     {
+      "version": "2407.13692v2",
+      "page": 7,
+      "lines": [
+       23,
+       30
+      ],
+      "text": "role-alignment q differently. Both provers and verifiers are from the GPT4 family (Achiam et al.,\n2023). We initialize the prover and the verifier with different sized models that have been lightly\nfinetuned on a variety of math data from the pretaining distribution, including human written proofs\nand derivations. We discuss the algorithmic details below.\nFirst, we augmented the GSM (Cobbe et al., 2021) dataset using 100k synthetically generated and\nvalidated datapoints from ChatGPT, similar to the method in Liu et al. (2023). We made the dataset\nlarger so as not to be bottlenecked by sample efficiency in order to focus on the training dynamics.\nWe validated that the the original test set accuracy is not impacted by using real vs. synthetic data.",
+      "pdf_page": "https://arxiv.org/pdf/2407.13692v2#page=7"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "GPT-4-family prover with verifiers of 10^-4, 10^-3 to 10^-1.8, and 10^0 times the prover's compute",
+    "task_data": "Grade-school math (GSM augmented with synthetic problems)",
+    "judge": "The learned verifier; human contractors only in the pilot plot for the prover-sized verifier",
+    "regime": "mixed",
+    "scale": "Verifier sizes from 10^-4 to 10^0 times the prover's compute"
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2407.13692v2:LIM-GROUND-TRUTH"
+    ],
+    "notes": "Poor legibility at the extremes is shown through sample completions (Sup. Figs. S4a, S5a) and, for the prover-sized verifier, a human plot (Sup. Fig. S5c) from a campaign the authors call potentially flawed. Checkability training needs problems with known ground-truth answers and is expected to be less relevant where ground truth is too hard or expensive to collect; out-of-domain generalization is not studied."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_PRELIMINARY",
+    "reason": "The failures at the extremes rest on sample completions and, for the prover-sized verifier, a pilot human plot the authors call potentially flawed, and the authors cannot exclude non-optimal hyperparameters."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2407.13692v2:RES-VERIFIER-ROBUSTNESS",
+   "paper": "2407.13692v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2407.13692v2:METHOD-CHECKABILITY-TRAINING",
+     "N2:DSOFT:ARXIV-2407.13692v2:DEF-LEGIBILITY"
+    ],
+    "description": "Separately trained sneaky-only provers that share no weights with the helpful prover attack the verifiers from five rounds of checkability training, for several verifier sizes, using the SRC, CGC and goodharting rewards, and the number of RL steps until an attack succeeds is recorded.",
+    "passages": [
+     {
+      "version": "2407.13692v2",
+      "page": 11,
+      "lines": [
+       90,
+       93
+      ],
+      "text": "checkability training, the sneaky prover requires increasingly many steps to discover highly convincing, incorrect solutions (Fig. 5b). However, it is unclear whether this increase is due to the sneaky\nand helpful provers sharing weights. Hence, we perform a variety of additional attacks by separately\ntraining sneaky-only provers that do not share weights with the helpful prover to evaluate whether the\nverifier becomes able to discern correct from incorrect completions beyond the exact set-up during",
+      "pdf_page": "https://arxiv.org/pdf/2407.13692v2#page=11"
+     },
+     {
+      "version": "2407.13692v2",
+      "page": 11,
+      "lines": [
+       80,
+       86
+      ],
+      "text": "Figure 6: Verifiers increase in robustness as measured by difficulty of sneaky-only attacks and\nbalanced best-of-n accuracy a Number of steps until sneaky finds an exploit for the SRC (blue),\ngoodharting (orange), and CGC (green) adversaries as a function of verifier sizes. We declare an\nattack ‘successful’ for the SRC and CGC adversaries when the sneaky becomes 95% incorrect and the\naverage verifier score of sneaky incorrect samples become as high as that of helpful correct samples\nfrom the same round. We declare a goodharting adversary ‘successful’ when optimizing a prover on\nthe verifier score reaches accuracy < 0.2. b Fraction of correct solutions when selecting the most",
+      "pdf_page": "https://arxiv.org/pdf/2407.13692v2#page=11"
+     },
+     {
+      "version": "2407.13692v2",
+      "page": 11,
+      "lines": [
+       106,
+       111
+      ],
+      "text": "The test attacks we perform are far from complete and there is no simple way to evaluate whether the\nverifiers are robust to all sneaky provers within the model family. Nevertheless, the rank correlation\nbetween those robustness measures do reflect a general increase in compute budget if some actor trains\nan adversarial prover to fool the verifier. A more complete evaluation of the verifier’s adversarial\nrobustness would include a variety of common white-box and black-box attacks (Zou et al., 2023;\nShah et al., 2023; Hayase et al., 2024).",
+      "pdf_page": "https://arxiv.org/pdf/2407.13692v2#page=11"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "An SRC or CGC attack counts as successful when the sneaky prover is 95% incorrect and its incorrect samples score as high as the same round's helpful correct samples; a goodharting attack succeeds when prover accuracy falls below 0.2.",
+     "Each attack has a budget of 8k RL steps.",
+     "Soundness is relaxed to robustness against a limited set of black-box attacks close to the honest prover, and verifiers are compared by their ranking on a variety of attacks.",
+     "Prover and verifier are GPT-4-family models of different sizes."
+    ],
+    "passages": [
+     {
+      "version": "2407.13692v2",
+      "page": 6,
+      "lines": [
+       22,
+       27
+      ],
+      "text": "study a relaxation of completeness and soundness in the following sense: (1) for the helpful prover\nwe require that the it is correct in distribution PXY with high probability; and (2) for the verifier, we\nrequire that it is robust to a limited set of black-box attacks that are relatively \"close\" to the honest\nprover (intuitively, we want the verifier not to miss small errors that would make the conclusion\ninvalid). We will compare verifiers’ soundness via their ranking on a variety of attacks, and the more\ncomprehensive the attacks are the closer we get to measuring soundness.",
+      "pdf_page": "https://arxiv.org/pdf/2407.13692v2#page=6"
+     },
+     {
+      "version": "2407.13692v2",
+      "page": 7,
+      "lines": [
+       23,
+       30
+      ],
+      "text": "role-alignment q differently. Both provers and verifiers are from the GPT4 family (Achiam et al.,\n2023). We initialize the prover and the verifier with different sized models that have been lightly\nfinetuned on a variety of math data from the pretaining distribution, including human written proofs\nand derivations. We discuss the algorithmic details below.\nFirst, we augmented the GSM (Cobbe et al., 2021) dataset using 100k synthetically generated and\nvalidated datapoints from ChatGPT, similar to the method in Liu et al. (2023). We made the dataset\nlarger so as not to be bottlenecked by sample efficiency in order to focus on the training dynamics.\nWe validated that the the original test set accuracy is not impacted by using real vs. synthetic data.",
+      "pdf_page": "https://arxiv.org/pdf/2407.13692v2#page=7"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Verifiers of several relative sizes (including 10^-2 and 10^-3 of the prover) from five rounds of checkability training, attacked by sneaky-only GPT-4-family provers",
+    "task_data": "Grade-school math (GSM augmented with synthetic problems)",
+    "judge": null,
+    "regime": "training",
+    "scale": "Five rounds of checkability training; up to 8k RL steps per attack"
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2407.13692v2:LIM-GROUND-TRUTH"
+    ],
+    "notes": "The authors say the test attacks are far from complete, there is no simple way to check robustness to all sneaky provers in the model family, and a fuller evaluation would include white-box and black-box attacks. Checkability training needs problems with known ground-truth answers and is expected to be less relevant where ground truth is too hard or expensive to collect; out-of-domain generalization is not studied."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "Attack experiments in one dataset and one model family, with step counts reported without any uncertainty in these lines."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2407.13692v2:RES-SNEAKY-HUMAN",
+   "paper": "2407.13692v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2407.13692v2:METHOD-CHECKABILITY-TRAINING"
+    ],
+    "description": "Sneaky-prover solutions from successive rounds of checkability training were shown to time-constrained human trainers in an earlier pilot campaign, and the fraction they labelled correctly was tracked across rounds.",
+    "passages": [
+     {
+      "version": "2407.13692v2",
+      "page": 12,
+      "lines": [
+       116,
+       117
+      ],
+      "text": "We were interested to see whether the adversarial attacks against the small verifier might transfer to\nhumans. Interestingly, when presenting the sneaky solutions to the time-constrained contractors, the",
+      "pdf_page": "https://arxiv.org/pdf/2407.13692v2#page=12"
+     },
+     {
+      "version": "2407.13692v2",
+      "page": 12,
+      "lines": [
+       90,
+       94
+      ],
+      "text": "Figure 7: Flaws introduced by the sneaky prover become more localized and harder for timelimited humans to spot. a Mean (circle) and minimum (triangle) validity score over portions of\ncorrect (solid) and incorrect (dotted) solutions from the initialization (left) and from different rounds\nof checkability training. b Mean accuracy of time-constrained human contractors when evaluating\nsolutions from the sneaky prover at different rounds of checkability training. This plot is from a\npotentially flawed campaign (see Appendix I). c Two examples of incorrect solutions with high",
+      "pdf_page": "https://arxiv.org/pdf/2407.13692v2#page=12"
+     },
+     {
+      "version": "2407.13692v2",
+      "page": 33,
+      "lines": [
+       18,
+       23
+      ],
+      "text": "We also had an earlier pilot campaign where the we showed sneaky solutions as well as samples from\nan Iterative Goodharting training to 10 trainers with 1 minute time limit (instead of 45 seconds) per\ntask. In this pilot run, we showed solutions from earlier rounds to the trainers first (they judged the\nsamples in the order of R0, R1, R2, etc.) across a span of one month, and hence we suspect that the\ndata is affected by learning or fatigue effects. The only plots from this potentially flawed campaign\nare Fig. 7b, S5c and S6.",
+      "pdf_page": "https://arxiv.org/pdf/2407.13692v2#page=33"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "Pilot campaign: 10 trainers with a 1-minute limit saw rounds in order (R0, R1, R2, ...) over one month, so the authors suspect learning or fatigue effects; Figs. 7b, S5c and S6 come from it.",
+     "The suggested use of the sneaky prover as a tampering model for training critique models is hedged ('might')."
+    ],
+    "passages": []
+   },
+   "setting": {
+    "systems": "Sneaky prover from successive rounds of checkability training",
+    "task_data": "Grade-school math solutions",
+    "judge": "Time-constrained human trainers in a pilot campaign (10 trainers, 1 minute per task)",
+    "regime": "mixed",
+    "scale": "10 trainers"
+   },
+   "quantitative": {
+    "n": "10 trainers in the pilot campaign; the number of judgements is not stated",
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2407.13692v2:LIM-GROUND-TRUTH"
+    ],
+    "notes": "The authors state that Fig. 7b is from a pilot study with some design flaws. Checkability training needs problems with known ground-truth answers and is expected to be less relevant where ground truth is too hard or expensive to collect; out-of-domain generalization is not studied."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_PRELIMINARY",
+    "reason": "The authors state that Fig. 7b comes from a pilot study that has some design flaws."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2407.13692v2:RES-HELPFUL-HUMAN",
+   "paper": "2407.13692v2",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2407.13692v2:METHOD-CHECKABILITY-TRAINING",
+     "N2:DSOFT:ARXIV-2407.13692v2:DEF-LEGIBILITY"
+    ],
+    "description": "Helpful-prover solutions from the last checkpoint of each round of the checkability training shown in Figure 5 were sampled on GSM test problems and judged by time-constrained human contractors in the main campaign; accuracy and time to label are compared across rounds and with the initialization and the correctness-only prover.",
+    "passages": [
+     {
+      "version": "2407.13692v2",
+      "page": 33,
+      "lines": [
+       5,
+       16
+      ],
+      "text": "Our main human evaluation experiment is as follows. For the training shown in Figure 5, we sample\nthe last checkpoint helpful prover solutions to the problems from the GSM test dataset. We also\nsample from the correctness-only baseline at training step 3k, 7k, as well as the few-shot prover\ninitialization. We collect up to one correct and up to one incorrect sample from each prover and\neach problem, if possible (around one-third of the problems per round have either all correct or all\nincorrect solutions among 128 samples). We randomized assignment of those samples to 75 trainers\n(making sure each person see balanced correct vs. incorrect samples from each checkpoint), and\nasked them to judge the solution correctness within a 45-second time limit per problem. We excluded\nall problems that yielded only correct or only incorrect solutions. We also excluded four trainers\nwhose performance was statistically indistinguishable from chance from the dataset. We collected\n15983 datapoints. Each trainer spent a maximum of 4 hours working on the task to prevent learning\nand fatigue effects. The instructions are shown in Fig. S12 and Fig. S13 contains an example task.",
+      "pdf_page": "https://arxiv.org/pdf/2407.13692v2#page=33"
+     },
+     {
+      "version": "2407.13692v2",
+      "page": 13,
+      "lines": [
+       48,
+       51
+      ],
+      "text": "Figure 8: Checkability training jointly increases model performance and legibility. a Mean\naccuracy of the helpful prover at different rounds of checkability training. b,c Mean accuracy (b) and\ntime required to correctly label solutions (c) of time-constrained human contractors when evaluating\nsolutions from the helpful prover at different rounds of checkability training.",
+      "pdf_page": "https://arxiv.org/pdf/2407.13692v2#page=13"
+     },
+     {
+      "version": "2407.13692v2",
+      "page": 10,
+      "lines": [
+       126,
+       131
+      ],
+      "text": "At the end of each round of checkability training, we obtain three artifacts:\n1. a verifier trained on diverse adversarial examples,\n2. a sneaky prover that produces convincing, subtly incorrect solutions,\n3. a helpful prover that produces convincing, correct solutions.\nIn this section, we perform various evaluations of the soundness of verifiers and the legibility of\nsneaky and correct solutions across rounds of training shown in Figure 5.",
+      "pdf_page": "https://arxiv.org/pdf/2407.13692v2#page=10"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "Human legibility is measured only as the accuracy of time-limited judgements of solution correctness, which the authors call one of many ways to measure it.",
+     "Main human campaign: each trainer sees balanced correct and incorrect samples from each checkpoint and judges correctness within 45 seconds; problems with only correct or only incorrect solutions and four trainers indistinguishable from chance are excluded.",
+     "The authors note the measured accuracy-legibility trade-off may be overly pessimistic, since the chain of thought itself was trained to be legible and the correctness-only baseline could have been early-stopped at a more legible checkpoint."
+    ],
+    "passages": [
+     {
+      "version": "2407.13692v2",
+      "page": 5,
+      "lines": [
+       20,
+       21
+      ],
+      "text": "In this work we measured human legibility via the accuracy of their judgement of solution correctness\nin time-limited settings, which is only one of many ways to measure human legibility.",
+      "pdf_page": "https://arxiv.org/pdf/2407.13692v2#page=5"
+     },
+     {
+      "version": "2407.13692v2",
+      "page": 16,
+      "lines": [
+       3,
+       9
+      ],
+      "text": "Conflating the model’s chain-of-thought with legible solutions. By training the CoTs to be\nlegible, we potentially limited the provers’ accuracy. A better method could be training a first model\nusing CoT to maximize accuracy, and then training a second model to turn the CoT used to produce\nthe answer into a legible justification to humans. Hence, our measurement of accuracy-legibility\ntradeoff may be overly pessimistic; the prover may be able to achieve legibility at less or no cost to\naccuracy. For the correctness-only baseline, we could have early stopped at less accurate but more\nlegible checkpoint. However, we don’t know of a principled way to do early stopping for legibility.",
+      "pdf_page": "https://arxiv.org/pdf/2407.13692v2#page=16"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Helpful prover across rounds of checkability training, compared with its initialization and the correctness-only prover",
+    "task_data": "GSM test problems",
+    "judge": "Time-constrained human contractors (45 s per solution)",
+    "regime": "mixed",
+    "scale": "Main human campaign: 75 trainers, 15983 datapoints"
+   },
+   "quantitative": {
+    "n": "15983 datapoints from 75 trainers in the main campaign, which also covers the correctness-only baseline and the initialization",
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2407.13692v2:LIM-GROUND-TRUTH"
+    ],
+    "notes": "Checkability training needs problems with known ground-truth answers and is expected to be less relevant where ground truth is too hard or expensive to collect; out-of-domain generalization is not studied."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "One dataset and one model family; mean human accuracy and time are reported across rounds without any uncertainty in these lines."
+   },
+   "review_status": "provisional_ai_draft"
+  }
+ ]
+}

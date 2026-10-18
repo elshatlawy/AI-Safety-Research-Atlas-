@@ -1,0 +1,570 @@
+{
+ "schema": "ASRA-GAP-CLOSING-AGENT-v1",
+ "paper": "2305.13281v1",
+ "review_status": "provisional_ai_draft",
+ "rules": [
+  "Everything here is an AI draft (provisional_ai_draft): each counted item passed two blind AI checks that were tested on planted errors, and no person has reviewed it.",
+  "A finding counts only in the setting its own quoted lines show; read `setting` before carrying it to another setting.",
+  "A question's status is a label from fixed rules over its counted findings; `status_check` says whether that label itself passed its check.",
+  "Cite the paper and page from the passage, and read the PDF page before relying on a claim."
+ ],
+ "notes": "No result in this paper reports uncertainty for its scores (only Table 8's examination statistics carry +/- values), so no card reaches EMPIRICAL_MULTI_SETTING. RES-FAILURE-CONSISTENT-FALSE's quote starts mid-sentence and does not name the pattern it counts ('Wrong intermediate answers', p8 L101-p9 L5); those lines and the 96-examination sample (p8 L73-77) are added as passages. Reading the garbled Table 5 lines by order (the mapping agrees with the harmonic means of P and R), the ablation's quoted drops 78 -> 68.3 (NQ) and 77.2 -> 71.1 (TriviaQA) compare the LM vs LM (Majority) row with the '- Follow-up' row; against the single-run LM vs LM row (68.5 and 72.1) the drop is about 0.2 and 1 F1 points, and the 6%-10% recall decrease also holds only against the Majority row. The paper does not say whether the ablation row is single-run or majority. Likewise the RES-VS-BASELINES examples (85.4 F1 on PopQA, 77.2 on TriviaQA) are LM vs LM (Majority) values, and the RES-FALSEHOODS ranges (87%-98%, 75%-99%) appear to match the Majority rows of Table 7 rather than single runs. In the RES-CHATGPT quote two LM vs LM F1 values are not the harmonic mean of the P and R beside them (LAMA 85.1/70.7/76.7, NQ 74.5/74.9/77.7), possibly typos in the paper. The Falsehoods dataset size is not stated in the lines read. No record seems mislabelled.",
+ "cards": [
+  {
+   "record_id": "N2:DSOFT:ARXIV-2305.13281v1:CORE",
+   "paper": "2305.13281v1",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2305.13281v1:DEF-LMVLM",
+     "N2:DSOFT:ARXIV-2305.13281v1:METHOD-STAGES"
+    ],
+    "description": "An examiner LM questions the examinee LM about the examinee's own claim in a prompted multi-turn interaction (setup questions, follow-up questions, then a 'correct' or 'incorrect' decision), and its rejections are scored with precision, recall and F1 for detecting incorrect claims, in three examiner/examinee model settings on four closed-book QA datasets.",
+    "passages": [
+     {
+      "version": "2305.13281v1",
+      "page": 3,
+      "lines": [
+       50,
+       59
+      ],
+      "text": "conducted iteratively, until either E XAMINER declares it has no follow-up questions, or the number\nof turns has reached a threshold.3\nStage 3: Factuality Decision Once no further questions are obtained from E XAMINER, we\nprompt it to conclude whether the claim C is true\nor false. Specifically, we request it to reply with\neither “correct” or “incorrect” as its final conclusion. In cases where the examiner does not output\neither of “correct” or “incorrect”, we consider its\nfinal decision to be a rejection of the claim. Typically though, we observe that the examiner follows\nthe instructions and indeed generates a definitive\nconclusion (see statistics in §5).",
+      "pdf_page": "https://arxiv.org/pdf/2305.13281v1#page=3"
+     },
+     {
+      "version": "2305.13281v1",
+      "page": 5,
+      "lines": [
+       64,
+       71
+      ],
+      "text": "Examiner Evaluation We evaluate how well the\nexaminer detects claims that are factually incorrect,\nusing the following metrics:4\n• Precision: the portion of incorrect claims, out of\nthe claims rejected by the examiner.\n• Recall: the portion of incorrect claims rejected\nby the examiner, out of all the incorrect claims.\n• F1: the harmonic mean of precision and recall.",
+      "pdf_page": "https://arxiv.org/pdf/2305.13281v1#page=5"
+     },
+     {
+      "version": "2305.13281v1",
+      "page": 6,
+      "lines": [
+       187,
+       197
+      ],
+      "text": "Models We use C HAT GPT (gpt-3.5-turbo),\nGPT-3 (text-davinci-003) (Brown et al., 2020;\nOuyang et al., 2022), and LL A MA-7B (Touvron\net al., 2023), in three E XAMINER vs. E XAMINEE\ncross-examination settings: GPT-3 vs. GPT-3,\nC HAT GPT vs. C HAT GPT, and C HAT GPT vs.\nLL A MA. Notably, using the same LM as E XAM INER and E XAMINEE (except for their prompts,\nwhich are different), provides a cleaner setting\nwhere both LMs share the same knowledge. The\nprompts used for each LM at every stage of the\nexamination are shown in Table 1.",
+      "pdf_page": "https://arxiv.org/pdf/2305.13281v1#page=6"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2305.13281v1:ASM-INCONSISTENCY"
+    ],
+    "stated_hypotheses": [
+     "An incorrect claim is likely to be inconsistent with other claims the model generates (the method's key idea).",
+     "Claims are answers to closed-book, open-ended factual questions, labelled correct when the gold answer or an alias appears in them, with manual review of claims marked incorrect and ambiguous or unclear claims filtered out.",
+     "An examiner output other than 'correct' or 'incorrect' counts as rejecting the claim; the examination uses at most five turns."
+    ],
+    "passages": [
+     {
+      "version": "2305.13281v1",
+      "page": 4,
+      "lines": [
+       81,
+       90
+      ],
+      "text": "the gold answer A. To evaluate if the claim C obtained for a question Q is correct with respect to\nthe ground-truth answer A, we first check if A or\nany of its aliases (if provided as part of the dataset,\ne.g., “FC Tottenham” and “Tottenham Hotspur”)\nappears as a sub-string in C (Schick et al., 2023;\nMeng et al., 2022). Next, to avoid incorrect labels\nresulting from this automatic evaluation (Bulian\net al., 2022), we manually review all the claims\nmarked as incorrect in the first step, and fix any labeling mistakes. We also filter out any ambiguous\nor unclear claims generated by E XAMINEE.",
+      "pdf_page": "https://arxiv.org/pdf/2305.13281v1#page=4"
+     },
+     {
+      "version": "2305.13281v1",
+      "page": 5,
+      "lines": [
+       75,
+       85
+      ],
+      "text": "Data We consider the following datasets: LAMA\n(Petroni et al., 2019), TriviaQA (Joshi et al., 2017),\nNatural Questions (NQ) (Kwiatkowski et al., 2019)\nand PopQA (Mallen et al., 2022). These datasets\ncover a wide range of queries, from real user\nqueries (NQ), to trivia questions (TriviaQA), and\nsubject-relation-object facts phrased as queries\n(LAMA, PopQA). We consider the closed-book\nopen-ended setting, where we do not provide any\ncontext or answer choices to the model. We evaluate our approach on 1,000 random examples from\nthe test set (or from the development set if a test",
+      "pdf_page": "https://arxiv.org/pdf/2305.13281v1#page=5"
+     },
+     {
+      "version": "2305.13281v1",
+      "page": 3,
+      "lines": [
+       74,
+       74
+      ],
+      "text": "We use a maximum of five turns in our experiments.",
+      "pdf_page": "https://arxiv.org/pdf/2305.13281v1#page=3"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "ChatGPT (gpt-3.5-turbo), GPT-3 (text-davinci-003) and LLaMA-7B in three examiner vs examinee settings: GPT-3 vs GPT-3, ChatGPT vs ChatGPT and ChatGPT vs LLaMA",
+    "task_data": "Closed-book open-ended factual QA: LAMA, TriviaQA, Natural Questions and PopQA",
+    "judge": "The examiner LM decides; its decisions are compared with gold-answer correctness labels",
+    "regime": "evaluation",
+    "scale": "1,000 random examples from the test set (or the development set when no test set is available)"
+   },
+   "quantitative": {
+    "n": "1,000 random examples from the test (or development) set, before ambiguous or unclear claims are filtered out",
+    "uncertainty": "None stated for the precision, recall or F1 results"
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2305.13281v1:LIM-COST-CAPABILITY",
+     "N2:DSOFT:ARXIV-2305.13281v1:LIM-LOGIC-FLAWS"
+    ],
+    "notes": "The method needs many queries to both LMs, which is costly at scale; it relies on LMs (mostly the examiner) that follow instructions and reason over long context, a skill mostly shown by models above 10B parameters; logical flaws in the examiner can lead to wrong decisions."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "Four datasets and three examiner/examinee settings, but no uncertainty is reported for the scores, so the rubric's multi-setting condition is not met."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2305.13281v1:RES-CHATGPT",
+   "paper": "2305.13281v1",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2305.13281v1:DEF-LMVLM",
+     "N2:DSOFT:ARXIV-2305.13281v1:METHOD-STAGES"
+    ],
+    "description": "With ChatGPT as both examiner and examinee, a single examination (LM vs LM) and a three-run majority vote (LM vs LM (Majority)) are scored with precision, recall and F1 for detecting incorrect claims on four closed-book QA datasets, alongside an ablation without the follow-up questions stage (Table 4).",
+    "passages": [
+     {
+      "version": "2305.13281v1",
+      "page": 7,
+      "lines": [
+       153,
+       161
+      ],
+      "text": "• LM V LM: A single execution of our method,\nwhere we accept or reject the claim according to\nthe examiner’s final decision.\n• LM V LM (Majority): For a given claim, we\napply our method three times (with the same\nE XAMINER and E XAMINEE), using sampling\ngeneration for follow-up questions generation.\nWe reject the claim in case at least two of the\nexaminations concluded it is false.",
+      "pdf_page": "https://arxiv.org/pdf/2305.13281v1#page=7"
+     },
+     {
+      "version": "2305.13281v1",
+      "page": 5,
+      "lines": [
+       64,
+       71
+      ],
+      "text": "Examiner Evaluation We evaluate how well the\nexaminer detects claims that are factually incorrect,\nusing the following metrics:4\n• Precision: the portion of incorrect claims, out of\nthe claims rejected by the examiner.\n• Recall: the portion of incorrect claims rejected\nby the examiner, out of all the incorrect claims.\n• F1: the harmonic mean of precision and recall.",
+      "pdf_page": "https://arxiv.org/pdf/2305.13281v1#page=5"
+     },
+     {
+      "version": "2305.13281v1",
+      "page": 5,
+      "lines": [
+       75,
+       85
+      ],
+      "text": "Data We consider the following datasets: LAMA\n(Petroni et al., 2019), TriviaQA (Joshi et al., 2017),\nNatural Questions (NQ) (Kwiatkowski et al., 2019)\nand PopQA (Mallen et al., 2022). These datasets\ncover a wide range of queries, from real user\nqueries (NQ), to trivia questions (TriviaQA), and\nsubject-relation-object facts phrased as queries\n(LAMA, PopQA). We consider the closed-book\nopen-ended setting, where we do not provide any\ncontext or answer choices to the model. We evaluate our approach on 1,000 random examples from\nthe test set (or from the development set if a test",
+      "pdf_page": "https://arxiv.org/pdf/2305.13281v1#page=5"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2305.13281v1:ASM-INCONSISTENCY"
+    ],
+    "stated_hypotheses": [
+     "Examiner and examinee are the same LM with different prompts, which the authors call a cleaner setting where both share the same knowledge.",
+     "Correctness labels come from matching gold answers and aliases, with manual review of claims marked incorrect.",
+     "Examiner outputs other than 'correct' or 'incorrect' count as rejections."
+    ],
+    "passages": [
+     {
+      "version": "2305.13281v1",
+      "page": 6,
+      "lines": [
+       187,
+       197
+      ],
+      "text": "Models We use C HAT GPT (gpt-3.5-turbo),\nGPT-3 (text-davinci-003) (Brown et al., 2020;\nOuyang et al., 2022), and LL A MA-7B (Touvron\net al., 2023), in three E XAMINER vs. E XAMINEE\ncross-examination settings: GPT-3 vs. GPT-3,\nC HAT GPT vs. C HAT GPT, and C HAT GPT vs.\nLL A MA. Notably, using the same LM as E XAM INER and E XAMINEE (except for their prompts,\nwhich are different), provides a cleaner setting\nwhere both LMs share the same knowledge. The\nprompts used for each LM at every stage of the\nexamination are shown in Table 1.",
+      "pdf_page": "https://arxiv.org/pdf/2305.13281v1#page=6"
+     },
+     {
+      "version": "2305.13281v1",
+      "page": 4,
+      "lines": [
+       81,
+       90
+      ],
+      "text": "the gold answer A. To evaluate if the claim C obtained for a question Q is correct with respect to\nthe ground-truth answer A, we first check if A or\nany of its aliases (if provided as part of the dataset,\ne.g., “FC Tottenham” and “Tottenham Hotspur”)\nappears as a sub-string in C (Schick et al., 2023;\nMeng et al., 2022). Next, to avoid incorrect labels\nresulting from this automatic evaluation (Bulian\net al., 2022), we manually review all the claims\nmarked as incorrect in the first step, and fix any labeling mistakes. We also filter out any ambiguous\nor unclear claims generated by E XAMINEE.",
+      "pdf_page": "https://arxiv.org/pdf/2305.13281v1#page=4"
+     },
+     {
+      "version": "2305.13281v1",
+      "page": 3,
+      "lines": [
+       50,
+       59
+      ],
+      "text": "conducted iteratively, until either E XAMINER declares it has no follow-up questions, or the number\nof turns has reached a threshold.3\nStage 3: Factuality Decision Once no further questions are obtained from E XAMINER, we\nprompt it to conclude whether the claim C is true\nor false. Specifically, we request it to reply with\neither “correct” or “incorrect” as its final conclusion. In cases where the examiner does not output\neither of “correct” or “incorrect”, we consider its\nfinal decision to be a rejection of the claim. Typically though, we observe that the examiner follows\nthe instructions and indeed generates a definitive\nconclusion (see statistics in §5).",
+      "pdf_page": "https://arxiv.org/pdf/2305.13281v1#page=3"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "ChatGPT (gpt-3.5-turbo) as both examiner and examinee",
+    "task_data": "LAMA, TriviaQA, Natural Questions and PopQA, closed-book open-ended",
+    "judge": "The ChatGPT examiner's decisions, compared with gold-answer correctness labels",
+    "regime": "evaluation",
+    "scale": "1,000 random examples from the test (or development) set"
+   },
+   "quantitative": {
+    "n": "1,000 random examples from the test (or development) set, before ambiguous or unclear claims are filtered out",
+    "uncertainty": "None stated; Table 4 gives point precision, recall and F1 values"
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2305.13281v1:LIM-COST-CAPABILITY",
+     "N2:DSOFT:ARXIV-2305.13281v1:LIM-LOGIC-FLAWS"
+    ],
+    "notes": "The Majority variant runs the examination three times per claim. The method needs many queries to both LMs, which is costly at scale; it relies on LMs (mostly the examiner) that follow instructions and reason over long context, a skill mostly shown by models above 10B parameters; logical flaws in the examiner can lead to wrong decisions."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "One examiner/examinee model (ChatGPT) on four datasets, with no uncertainty reported for the scores."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2305.13281v1:RES-VS-BASELINES",
+   "paper": "2305.13281v1",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2305.13281v1:DEF-LMVLM",
+     "N2:DSOFT:ARXIV-2305.13281v1:METHOD-STAGES"
+    ],
+    "description": "LM vs LM (a single examination and a three-run majority vote) is compared by precision, recall and F1 with recent uncertainty-detection baselines and variants of the approach in the ChatGPT vs ChatGPT, GPT-3 vs GPT-3 and ChatGPT vs LLaMA settings (Tables 4, 5 and 6).",
+    "passages": [
+     {
+      "version": "2305.13281v1",
+      "page": 7,
+      "lines": [
+       171,
+       173
+      ],
+      "text": "Tables 4, 5, 6 show the results for the settings\nC HAT GPT vs. C HAT GPT, GPT-3 vs. GPT-3,\nand LL A MA vs. C HAT GPT, respectively. Across",
+      "pdf_page": "https://arxiv.org/pdf/2305.13281v1#page=7"
+     },
+     {
+      "version": "2305.13281v1",
+      "page": 6,
+      "lines": [
+       198,
+       200
+      ],
+      "text": "Baselines For each setting, we compare\nLM V LM with recent methods for uncertainty\ndetection and variants of our approach:",
+      "pdf_page": "https://arxiv.org/pdf/2305.13281v1#page=6"
+     },
+     {
+      "version": "2305.13281v1",
+      "page": 7,
+      "lines": [
+       153,
+       161
+      ],
+      "text": "• LM V LM: A single execution of our method,\nwhere we accept or reject the claim according to\nthe examiner’s final decision.\n• LM V LM (Majority): For a given claim, we\napply our method three times (with the same\nE XAMINER and E XAMINEE), using sampling\ngeneration for follow-up questions generation.\nWe reject the claim in case at least two of the\nexaminations concluded it is false.",
+      "pdf_page": "https://arxiv.org/pdf/2305.13281v1#page=7"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2305.13281v1:ASM-INCONSISTENCY"
+    ],
+    "stated_hypotheses": [
+     "The confidence-based baseline tunes a decision threshold on the training set to maximize F1, while LM vs LM tunes no threshold.",
+     "There are no confidence-based results for ChatGPT, whose API gives no output probabilities, and ChatGPT often fails to understand the in-context IDK task.",
+     "Examiner and examinee are the same LM (with different prompts) in two settings; in the third ChatGPT examines LLaMA-7B."
+    ],
+    "passages": [
+     {
+      "version": "2305.13281v1",
+      "page": 6,
+      "lines": [
+       205,
+       211
+      ],
+      "text": "LM generates a multi-token claim, and we calculate the confidence for the claim as the product\nof probabilities for all predicted tokens of the\nanswer only. In order to output a binary decision\n(i.e., is the claim correct or not), we optimize\na threshold over the train dataset to maximize\nF1. Note that our examination approach does not\nrequire tuning any threshold.",
+      "pdf_page": "https://arxiv.org/pdf/2305.13281v1#page=6"
+     },
+     {
+      "version": "2305.13281v1",
+      "page": 7,
+      "lines": [
+       162,
+       166
+      ],
+      "text": "Since output probabilities are not provided as\npart of the C HAT GPT’s API, we cannot provide\nresults for the Confidence-Based baselines in this\ncase. Moreover, we observe that C HAT GPT often\nfails to understand the task of IC-IDK.",
+      "pdf_page": "https://arxiv.org/pdf/2305.13281v1#page=7"
+     },
+     {
+      "version": "2305.13281v1",
+      "page": 6,
+      "lines": [
+       187,
+       197
+      ],
+      "text": "Models We use C HAT GPT (gpt-3.5-turbo),\nGPT-3 (text-davinci-003) (Brown et al., 2020;\nOuyang et al., 2022), and LL A MA-7B (Touvron\net al., 2023), in three E XAMINER vs. E XAMINEE\ncross-examination settings: GPT-3 vs. GPT-3,\nC HAT GPT vs. C HAT GPT, and C HAT GPT vs.\nLL A MA. Notably, using the same LM as E XAM INER and E XAMINEE (except for their prompts,\nwhich are different), provides a cleaner setting\nwhere both LMs share the same knowledge. The\nprompts used for each LM at every stage of the\nexamination are shown in Table 1.",
+      "pdf_page": "https://arxiv.org/pdf/2305.13281v1#page=6"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "ChatGPT (gpt-3.5-turbo), GPT-3 (text-davinci-003) and LLaMA-7B in three examiner vs examinee settings",
+    "task_data": "The factual QA datasets of Tables 4-6, including PopQA and TriviaQA",
+    "judge": "The examiner LM's accept or reject decision",
+    "regime": "evaluation",
+    "scale": "Three examiner/examinee settings"
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": "None stated; the comparisons are of point F1 values (e.g. 85.4 vs at most 65.2)"
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2305.13281v1:LIM-COST-CAPABILITY",
+     "N2:DSOFT:ARXIV-2305.13281v1:LIM-LOGIC-FLAWS"
+    ],
+    "notes": "The method needs many queries to both LMs, which is costly at scale; it relies on LMs (mostly the examiner) that follow instructions and reason over long context, a skill mostly shown by models above 10B parameters; logical flaws in the examiner can lead to wrong decisions."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "Three examiner/examinee settings and several datasets, but no uncertainty is reported for the F1 comparisons, so the multi-setting condition is not met."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2305.13281v1:RES-FALSEHOODS",
+   "paper": "2305.13281v1",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2305.13281v1:DEF-LMVLM",
+     "N2:DSOFT:ARXIV-2305.13281v1:METHOD-STAGES"
+    ],
+    "description": "GPT-3 and ChatGPT were prompted to give wrong answers to questions from the four QA datasets, answers containing the gold answer or an alias were discarded, and the examiner's accuracy on these false claims, which it should always reject, is reported (Table 7).",
+    "passages": [
+     {
+      "version": "2305.13281v1",
+      "page": 5,
+      "lines": [
+       110,
+       121
+      ],
+      "text": "In addition, we created a dataset of false claims\nto further test our approach. This “Falsehoods”\ndataset contains only wrong claims, created separately for each model (GPT-3 and C HAT GPT)\nand for each of the four QA datasets. Concretely,\ngiven a model and a question Q, we prompt the\nmodel to generate a false answer (see §B for details). We verify that these are indeed incorrect\nclaims by checking that the gold answer (and any\nof its aliases, if they exist) does not occur in the\ngenerated text. This yields a subset of examples\nthat are realistic, namely, the answer matches the\ntarget type (e.g., “a city”) but is incorrect (see examples in Table 3). The examiner’s decision for\nthese examples should always be to reject.",
+      "pdf_page": "https://arxiv.org/pdf/2305.13281v1#page=5"
+     },
+     {
+      "version": "2305.13281v1",
+      "page": 13,
+      "lines": [
+       33,
+       42
+      ],
+      "text": "To generate a wrong claim, given a query Q for one\nof the QA datasets we use, we prompt our models the following way: in case Q is in a question\nformat, we use “Please answer the following\nquestion with a wrong answer: <Q>” and\nfurther request the LM to “Please also phrase\nyour answer as an argument.”. in case Q is\nin a sentence-completion format, we use “Please\ncomplete the following sentence with a\nwrong answer: <Q>” and further concatenate Q\nwith the model answer. Table 12 introduces a few",
+      "pdf_page": "https://arxiv.org/pdf/2305.13281v1#page=13"
+     },
+     {
+      "version": "2305.13281v1",
+      "page": 7,
+      "lines": [
+       142,
+       142
+      ],
+      "text": "Table 7: Accuracy of GPT-3 and C HAT GPT as E XAM INER on false claims generated for each dataset.",
+      "pdf_page": "https://arxiv.org/pdf/2305.13281v1#page=7"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2305.13281v1:ASM-INCONSISTENCY"
+    ],
+    "stated_hypotheses": [
+     "The Falsehoods data are created separately for each model (GPT-3, ChatGPT) and each of the four QA datasets by prompting for a wrong answer.",
+     "A claim counts as false when the gold answer and its aliases do not occur in the generated text.",
+     "The dataset holds only wrong claims, so the correct examiner decision is always to reject."
+    ],
+    "passages": []
+   },
+   "setting": {
+    "systems": "GPT-3 and ChatGPT as examiners",
+    "task_data": "Falsehoods dataset: model-generated wrong answers to questions from the four QA datasets",
+    "judge": "The examiner LM; the correct decision is always rejection",
+    "regime": "evaluation",
+    "scale": null
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2305.13281v1:LIM-COST-CAPABILITY",
+     "N2:DSOFT:ARXIV-2305.13281v1:LIM-LOGIC-FLAWS"
+    ],
+    "notes": "The dataset contains only false claims, so it measures rejection of wrong claims, not acceptance of correct ones. The method needs many queries to both LMs, which is costly at scale; it relies on LMs (mostly the examiner) that follow instructions and reason over long context, a skill mostly shown by models above 10B parameters; logical flaws in the examiner can lead to wrong decisions."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "Two examiner models and four datasets, with point accuracies and no uncertainty reported."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2305.13281v1:RES-ABLATION-FOLLOWUP",
+   "paper": "2305.13281v1",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [
+     "N2:DSOFT:ARXIV-2305.13281v1:METHOD-STAGES"
+    ],
+    "description": "The follow-up questions stage was removed from the examination and GPT-3, as both examiner and examinee, was scored again with precision, recall and F1 (Table 5, last row).",
+    "passages": [
+     {
+      "version": "2305.13281v1",
+      "page": 6,
+      "lines": [
+       185,
+       185
+      ],
+      "text": "Table 5: Precision (P), Recall (R), and F1 scores for LM V LM with GPT-3 as E XAMINER and E XAMINEE, compared to baselines. The last row shows an ablation of our method without the follow-up questions stage.",
+      "pdf_page": "https://arxiv.org/pdf/2305.13281v1#page=6"
+     },
+     {
+      "version": "2305.13281v1",
+      "page": 2,
+      "lines": [
+       62,
+       67
+      ],
+      "text": "Stage 2: Follow-up Questions We next feed E X AMINER with the answers generated by E XAMINEE\nto its initial questions, and ask E XAMINER whether\nit has any follow-up questions. Notably, outputs\nfrom E XAMINER at this stage are conditioned on\nthe previous output from E XAMINEE. If the answer from E XAMINER is “Yes”, we then further\nprompt it to obtain more questions. This phase is",
+      "pdf_page": "https://arxiv.org/pdf/2305.13281v1#page=2"
+     },
+     {
+      "version": "2305.13281v1",
+      "page": 8,
+      "lines": [
+       49,
+       51
+      ],
+      "text": "are decreased by 6%-10%. Overall, this shows the\nimportance of the follow-up questions issued by\nthe examiner to assess the examinee’s claim.",
+      "pdf_page": "https://arxiv.org/pdf/2305.13281v1#page=8"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "GPT-3 is both examiner and examinee.",
+     "Only the follow-up iterations are removed from the examination."
+    ],
+    "passages": []
+   },
+   "setting": {
+    "systems": "GPT-3 as examiner and examinee",
+    "task_data": "The factual QA datasets of Table 5; the quoted examples are NQ and TriviaQA",
+    "judge": "The GPT-3 examiner's decisions",
+    "regime": "evaluation",
+    "scale": null
+   },
+   "quantitative": {
+    "n": null,
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [],
+    "notes": "Recall drops by 6%-10% without the follow-up stage; the F1 drops are given as examples for NQ and TriviaQA only."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_SINGLE_SETTING",
+    "reason": "One model (GPT-3) with point F1 values and no uncertainty reported."
+   },
+   "review_status": "provisional_ai_draft"
+  },
+  {
+   "record_id": "N2:DSOFT:ARXIV-2305.13281v1:RES-FAILURE-CONSISTENT-FALSE",
+   "paper": "2305.13281v1",
+   "evidence_type": "experiment",
+   "method": {
+    "record_ids": [],
+    "description": "The authors manually analysed 96 examinations, 48 by each of GPT-3 and ChatGPT with 6 correct and 6 incorrect examinations per model and dataset, and recorded how often the examinee gave factually incorrect answers to the examiner's questions.",
+    "passages": [
+     {
+      "version": "2305.13281v1",
+      "page": 8,
+      "lines": [
+       73,
+       77
+      ],
+      "text": "Qualitative Analysis We manually analyze a\nsample of 96 examinations – 48 by each LM, with\n6 correct and 6 incorrect examinations for each\nmodel and each dataset. We observe the following\ntrends (examples are in Table 9):",
+      "pdf_page": "https://arxiv.org/pdf/2305.13281v1#page=8"
+     },
+     {
+      "version": "2305.13281v1",
+      "page": 8,
+      "lines": [
+       101,
+       102
+      ],
+      "text": "6. Wrong intermediate answers: The E XAMI NEE responds with factually incorrect answers\nto one or more of the questions originated by",
+      "pdf_page": "https://arxiv.org/pdf/2305.13281v1#page=8"
+     },
+     {
+      "version": "2305.13281v1",
+      "page": 9,
+      "lines": [
+       1,
+       5
+      ],
+      "text": "the E XAMINER. We observe this occurs mostly\nin cases where the original claim is false (it happens in only in about 14% of the cases where\nthe E XAMINEE is correct). In both models, this\ncan be observed in about half of the cases where\nthe claim is false and has also been detected",
+      "pdf_page": "https://arxiv.org/pdf/2305.13281v1#page=9"
+     }
+    ]
+   },
+   "assumptions": {
+    "record_ids": [],
+    "stated_hypotheses": [
+     "The sample has 6 correct and 6 incorrect examinations for each model and dataset.",
+     "The explanation that the examinee has encoded many mutually consistent wrong facts is offered as a possibility ('might indicate')."
+    ],
+    "passages": [
+     {
+      "version": "2305.13281v1",
+      "page": 8,
+      "lines": [
+       57,
+       59
+      ],
+      "text": "We analyze cross-examinations by GPT-3 and\nC HAT GPT to better understand the success and\nfailure cases of our method. We find that examiner",
+      "pdf_page": "https://arxiv.org/pdf/2305.13281v1#page=8"
+     }
+    ]
+   },
+   "setting": {
+    "systems": "Examinations run by GPT-3 and ChatGPT",
+    "task_data": "Cross-examinations from each dataset of the study",
+    "judge": "Manual analysis by the authors",
+    "regime": "evaluation",
+    "scale": "96 examinations, 48 per model"
+   },
+   "quantitative": {
+    "n": "96 examinations (48 by each LM)",
+    "uncertainty": null
+   },
+   "limits": {
+    "record_ids": [],
+    "notes": "Rests on a manual analysis of 96 examinations with approximate percentages; the explanation is hedged with 'might indicate'."
+   },
+   "strength": {
+    "grade": "EMPIRICAL_PRELIMINARY",
+    "reason": "A manual qualitative analysis of 96 examinations, reporting approximate percentages and a hedged explanation."
+   },
+   "review_status": "provisional_ai_draft"
+  }
+ ]
+}

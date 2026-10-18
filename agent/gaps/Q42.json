@@ -1,0 +1,158 @@
+{
+ "schema": "ASRA-GAP-CLOSING-AGENT-v1",
+ "id": "Q42",
+ "question": "What is the probability that ASI escapes control (Compton constant) in realistic settings?",
+ "asked_by": "Engels et al., Scaling Laws For Scalable Oversight",
+ "rank": 27,
+ "status": "NARROWED",
+ "status_check": "AI_CHECKED",
+ "remaining_question": "What escape probability per deployment does the Elo-gap win probability of Eq. (5) predict, and what is observed, in realistic settings such as RLHF, supervised fine-tuning and AI-control environments (with prompted and trained attackers), across a controlled range of attacker-monitor capability gaps, audit budgets and horizons, and how does it extrapolate toward the ASI regime?",
+ "remaining_type": "MIXED",
+ "safety_case": [],
+ "findings": [
+  {
+   "id": "Q42:F1",
+   "later_paper": "arXiv 2506.05296v3: Control Tax: The Price of Keeping AI in Check",
+   "first_submitted": "2025-06-05",
+   "effect": "NARROWS",
+   "claim": "In a setting where LM attackers insert backdoors and LM monitors are used under optimal sequential monitoring with a 5% fixed auditing budget, the authors compute achievable safety (the probability of detecting the first inserted backdoor given optimal attacker/monitor strategies) against monitor cost; e.g. moving from Gemini 2.0 Flash to o3-mini on the Pareto frontier requires a 45x increase in cost for an absolute improvement of 0.15 in safety (from about 0.70 to about 0.85) against a GPT-4o attacker. For an unknown (effectively infinite) deployment horizon they say one effective attacker strategy appears to be to insert backdoors as infrequently as possible, which reveals a fundamental weakness of pure monitoring in long-term deployments, 'as a patient attacker will eventually succeed'.",
+   "setting": "Backdoor insertion by LM attackers (GPT-4o, o3-mini) against LM monitors (including Gemini 2.0 Flash and o3-mini) under optimal sequential monitoring with a 5% fixed auditing budget; safety versus monitor cost. Current models, not ASI; not computed from the Elo-gap model.",
+   "bears_on": "Gives attacker-win / safety probabilities in one AI-control environment (a setting Engels et al. name) and shows they depend on monitor choice, audit budget and deployment horizon; not an estimate of p_c(ASI).",
+   "passages": [
+    {
+     "version": "2506.05296v3",
+     "page": 2,
+     "lines": [
+      71,
+      75
+     ],
+     "text": "Figure 1: Control Tax. Achievable safety (probability of detecting the first inserted backdoor given\noptimal attacker/monitor strategies) versus the average cost of different LM monitors (the ’control\ntax’). The plots compare monitors against attackers GPT 4o (left) and o3-mini (right), under\noptimal sequential monitoring with a 5% fixed auditing budget. Safety is shown with bootstrapped\n95% confidence intervals.",
+     "pdf_page": "https://arxiv.org/pdf/2506.05296v3#page=2"
+    },
+    {
+     "version": "2506.05296v3",
+     "page": 9,
+     "lines": [
+      27,
+      33
+     ],
+     "text": "The main takeaway of this work is that the most expensive, highest-performing monitor is not always\nthe best choice for maximizing safety. As our Control Tax analysis in Figure 1 demonstrates, a\npractitioner with a limited budget might achieve higher overall safety by using a cheaper, albeit\nweaker, monitor (e.g., Gemini 2.0 Flash) because the cost savings allow for a more robust, highervolume auditing strategy. Yet the Control Tax is non-linear: achieving marginal gains in safety can\nrequire significant investments. For example, moving from Gemini 2.0 Flash to o3-mini on the Pareto\nfrontier requires a 45x increase in cost to achieve an absolute improvement of 0.15 in the safety score\n(from ∼0.70 to ∼0.85) against a GPT-4o attacker.",
+     "pdf_page": "https://arxiv.org/pdf/2506.05296v3#page=9"
+    },
+    {
+     "version": "2506.05296v3",
+     "page": 8,
+     "lines": [
+      112,
+      115
+     ],
+     "text": "(2) In infinite-horizon scenarios, be wary of patient attackers. When the deployment horizon is\nunknown (effectively infinite), one effective strategy appears to be patient and insert backdoors as\ninfrequently as possible (pb → 0). This reveals a fundamental weakness of pure monitoring in\nlong-term deployments, as a patient attacker will eventually succeed.",
+     "pdf_page": "https://arxiv.org/pdf/2506.05296v3#page=8"
+    }
+   ]
+  },
+  {
+   "id": "Q42:F2",
+   "later_paper": "arXiv 2508.19461v1: Reliable Weak-to-Strong Monitoring of LLM Agents",
+   "first_submitted": "2025-08-26",
+   "effect": "RELATED_ONLY",
+   "claim": "Across 36 attacker-monitor pairs in SHADE-Arena, monitor reliability (AUC-ROC) correlates with the monitor's relative advantage in MMLU-Pro score over the agent's backbone LLM, but the strength of this association varies across monitor types (weakest for the hybrid monitor); even weaker models such as GPT-4o-mini and Claude 3.6 Haiku achieve a monitoring AUC above 0.85 against all agents. The authors conclude that while it is challenging for a single weak LLM to reliably monitor a stronger LLM, a well-designed ensemble of weaker monitors (e.g. the hybrid approach) can yield a significantly more reliable monitoring system.",
+   "setting": "Experiment; SHADE-Arena as dataset and environment; 'aware' agents (Claude 3.6 Sonnet, Claude Sonnet 4, Gemini 2.5 Flash, Gemini 2.5 Pro) using CoT obfuscation as their evasion strategy; 10 monitor LLMs, each used to build 4 types of monitoring system; capability gap measured by MMLU-Pro difference; detection AUC-ROC, not escape probability. Current models, not ASI.",
+   "bears_on": "Capability-gap dependence of oversight in an agent-monitoring (AI-control-like) environment, modulated by scaffolding; no escape-probability estimate or ASI extrapolation.",
+   "passages": [
+    {
+     "version": "2508.19461v1",
+     "page": 14,
+     "lines": [
+      14,
+      18
+     ],
+     "text": "Setup. We use Claude 3.6 Sonnet, Claude Sonnet 4, Gemini 2.5 Flash, and Gemini 2.5 Pro as aware agents. Each\nagent uses CoT obfuscation as their evasion strategy. For monitors, we employ Claude 3.6 Haiku, Claude 3.6\nSonnet, Claude 3.7 Sonnet, Claude Sonnet 4, Gemini 2.5 Pro, Gemini 2.5 Flash, GPT-4o, GPT-4o-mini, o3, and\no4-mini, resulting in a total of 36 attacker-monitor pairs. We use each monitor LLM to build the 4 types of\nmonitoring systems as mentioned in Section 3.5. We use SHADE-Arena as the dataset and environment.",
+     "pdf_page": "https://arxiv.org/pdf/2508.19461v1#page=14"
+    },
+    {
+     "version": "2508.19461v1",
+     "page": 14,
+     "lines": [
+      19,
+      30
+     ],
+     "text": "In Figure 6, we plot the AUC-ROC scores for each agent-monitor pairs against the difference of their MMLU Pro\nscores. For each monitor type, we fit a line to the corresponding data points.\nSummary of Findings. First, we observe that the reliability of a monitor is correlated with its relative advantage\nin MMLU-Pro score compared to the backbone LLM of the agent. However, the strength of this association varies\nacross monitor types—with the hybrid monitor exhibiting the weakest association with the capability gap.\nNotably, even with weaker models such as GPT-4o-mini and Claude 3.6 Haiku, we achieve a monitoring AUC\nexceeding 0.85 against all agents. Second, the reliability scores of the hybrid monitor consistently surpass those\nof the baseline, hierarchical, and sequential monitors by a substantial margin, indicating that the sequential and\nhierarchical approaches are complementary and can be effectively combined into a more powerful hybrid monitor.\nOverall, our results show that while it is challenging for a single weak LLM to reliably monitor a stronger LLM,\na well-designed ensemble of weaker monitors (e.g., the hybrid approach) can yield a significantly more reliable\nmonitoring system.",
+     "pdf_page": "https://arxiv.org/pdf/2508.19461v1#page=14"
+    }
+   ]
+  },
+  {
+   "id": "Q42:F3",
+   "later_paper": "arXiv 2610.15778v2: Who Sets the Pace of Judge Hacking? Judge Capability versus the Policy-Judge Gap",
+   "first_submitted": "2026-10-11",
+   "effect": "RELATED_ONLY",
+   "claim": "Under GRPO training of 0.5B and 1.5B Qwen2.5 policies on GSM8K against frozen LLM judges, the depth of judge hacking tracks the judge (plateau correlates with judge AUC, Spearman -0.69 over 12 cells), and two pre-specified pairs contradict the capability-gap account for the pace; the author states that with 12 cells judge AUC and the gap cannot be formally separated.",
+   "setting": "Experiment; RL (GRPO) against reference-free LLM judges, four at least as large as the policy and one smaller; small models; GSM8K.",
+   "bears_on": "Whether a capability-gap account predicts oversight failure in an RL-against-a-judge setting (close to the RLHF setting Engels et al. name); inconclusive and small-scale; no escape probability.",
+   "passages": [
+    {
+     "version": "2610.15778v2",
+     "page": 1,
+     "lines": [
+      10,
+      16
+     ],
+     "text": "Under GRPO against a frozen, reference-free LLM judge, RL exploits the judge’s\nfalse positives. Does the policy–judge capability gap or the judge itself set how fast\nand how far? We train 0.5B and 1.5B Qwen2.5 policies on GSM8K against four\njudges at least as large, and the 1.5B policy also against one smaller judge. In a\npost-hoc analysis, judge acceptance rose, but no cell of 12 gained more than 0.04 in\nseed-mean held-out greedy accuracy. A gold-reward control with the same recipe\nraised the 1.5B policy’s accuracy by +0.054 (for the 0.5B policy, gold reward",
+     "pdf_page": "https://arxiv.org/pdf/2610.15778v2#page=1"
+    },
+    {
+     "version": "2610.15778v2",
+     "page": 1,
+     "lines": [
+      17,
+      22
+     ],
+     "text": "gave no detectable gain either). The depth of judge hacking tracks the judge: the\nplateau correlates with judge AUC (Spearman −0.69 over 12 cells), and within a\nfamily the larger judge is fooled less deeply. For the pace, two pre-specified pairs\ncontradict the gap account: the cell with the larger gap was fooled 3.5× sooner at\nthe pre-specified threshold. With 12 cells, however, we cannot formally separate\njudge AUC from the gap for either endpoint. A blind test of step-0 predictors",
+     "pdf_page": "https://arxiv.org/pdf/2610.15778v2#page=1"
+    }
+   ]
+  },
+  {
+   "id": "Q42:F4",
+   "later_paper": "arXiv 2606.11998v1: Bootstrapped Monitoring: Leveraging Transparent Reasoning to Oversee Stronger AI Agents",
+   "first_submitted": "2026-06-10",
+   "effect": "RELATED_ONLY",
+   "claim": "A three-tier monitoring protocol (a weaker trusted model auditing a stronger untrusted monitor's chain-of-thought) improves catch rates over trusted-only monitoring on BashArena even when the untrusted monitor colludes, given raw chain-of-thought; collusion is elicited by system prompt, BashArena covers a narrow attack surface, and scaling studies over the capability gap are left to future work.",
+   "setting": "Experiment; AI-control environment BashArena (multi-turn software engineering); several agent and monitor model families; prompted collusion; catch rates.",
+   "bears_on": "Applies a nested oversight chain in an AI-control environment but reports catch rates, not an escape probability, and does not vary the capability gap.",
+   "passages": [
+    {
+     "version": "2606.11998v1",
+     "page": 1,
+     "lines": [
+      18,
+      24
+     ],
+     "text": "model (T ) oversees Um ’s reasoning to detect collusion. We evaluate bootstrapped\nmonitoring on multi-turn software engineering tasks (BashArena) across multiple\nagents and monitors. Bootstrapped monitoring substantially improves catch rates\nover trusted-only monitoring, even when the untrusted monitor actively colludes\nwith the agent, provided we have access to its raw chain-of-thought. Our results\nsuggest that bootstrapped monitoring can extend the useful lifetime of trusted\nmodels in control as AI capabilities advance.",
+     "pdf_page": "https://arxiv.org/pdf/2606.11998v1#page=1"
+    },
+    {
+     "version": "2606.11998v1",
+     "page": 9,
+     "lines": [
+      14,
+      21
+     ],
+     "text": "Limitations. Collusion in this work is elicited via system prompt. A model fine-tuned or trained\nvia reinforcement learning to produce deceptive reasoning might achieve more natural-sounding\ncollusion. However, fine-tuning frontier-scale models was beyond our resources. BashArena also\ncovers a narrow slice of the agentic attack surface, so results may differ with other attack vectors.\nFuture work. Agentic monitors that can execute commands in a sandbox rather than passively\nreading actions may further improve catch rates. Adversarial training of Um against T would provide\na lower bound on the protocol’s robustness. Scaling studies that vary the capability gap between T\nand Um would clarify how long a given trusted model remains useful as frontier capabilities advance.",
+     "pdf_page": "https://arxiv.org/pdf/2606.11998v1#page=9"
+    }
+   ]
+  }
+ ],
+ "findings_drafted": 4,
+ "maths": [],
+ "experiment_package": null,
+ "review_status": "provisional_ai_draft",
+ "rules": [
+  "Everything here is an AI draft (provisional_ai_draft): each counted item passed two blind AI checks that were tested on planted errors, and no person has reviewed it.",
+  "A finding counts only in the setting its own quoted lines show; read `setting` before carrying it to another setting.",
+  "A question's status is a label from fixed rules over its counted findings; `status_check` says whether that label itself passed its check.",
+  "Cite the paper and page from the passage, and read the PDF page before relying on a claim."
+ ]
+}
