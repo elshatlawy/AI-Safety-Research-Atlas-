@@ -1,0 +1,420 @@
+<!doctype html>
+    <html lang="en">
+    <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+    <title>Overview · Safety Research Atlas</title>
+    <meta name="description" content="Where the AI Safety Research Atlas stands, what it found, and what it could become.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Schibsted+Grotesk:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+    <style>
+    /* layout: one reading column; every section opens with its picture, then at most two lines of text */
+    :root{
+      --bg:#fbfaf7; --surface:#ffffff; --sunk:#f3f1ec; --ink:#1b1c1a; --ink2:#55574f; --muted:#86887f; --line:#e7e4dc; --line2:#d5d2c8;
+      --seq:#256abf; --seq-soft:#86b6ef; --good:#1baf7a; --warn:#eb6834;
+      --sev-err:#c4420f; --sev-gap:#f08a5d; --sev-amb:#f8c9b1;
+      --ev-sup:#1baf7a; --ev-weak:#9ec5f4; --ev-con:#eb6834;
+      --font-display:"Source Serif 4",Georgia,serif; --font-body:"Schibsted Grotesk",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif; --font-mono:"JetBrains Mono",ui-monospace,monospace;
+    }
+    @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+      --bg:#131412; --surface:#1b1c1a; --sunk:#222320; --ink:#ecebe5; --ink2:#b3b2aa; --muted:#878780; --line:#2c2d2a; --line2:#3a3b37;
+      --seq:#6aa7ee; --seq-soft:#1c5cab; --good:#199e70; --warn:#d95926;
+      --sev-err:#f07a45; --sev-gap:#b4532a; --sev-amb:#5a3322;
+      --ev-sup:#199e70; --ev-weak:#2b5f9c; --ev-con:#d95926; color-scheme:dark}}
+    :root[data-theme="dark"]{
+      --bg:#131412; --surface:#1b1c1a; --sunk:#222320; --ink:#ecebe5; --ink2:#b3b2aa; --muted:#878780; --line:#2c2d2a; --line2:#3a3b37;
+      --seq:#6aa7ee; --seq-soft:#1c5cab; --good:#199e70; --warn:#d95926;
+      --sev-err:#f07a45; --sev-gap:#b4532a; --sev-amb:#5a3322;
+      --ev-sup:#199e70; --ev-weak:#2b5f9c; --ev-con:#d95926; color-scheme:dark}
+    *{box-sizing:border-box}
+    body{background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
+    .wrap{max-width:1000px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:40px 72px}
+    h1,h2,h3{margin:0;text-wrap:balance}
+    .eyebrow{font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
+    h1{font-family:var(--font-display);font-weight:600;font-size:clamp(30px,4.4vw,44px);line-height:1.08;letter-spacing:-.02em;margin-top:10px}
+    .lede{color:var(--ink2);font-size:17px;max-width:62ch;margin:12px 0 0}
+    section{margin-top:54px}
+    h2{font-size:21px;font-weight:650;letter-spacing:-.01em;margin-bottom:4px}
+    .sub{color:var(--ink2);margin:0 0 16px;max-width:68ch}
+    .note{font-size:12.5px;color:var(--muted);margin:10px 0 0;max-width:74ch}
+    a{color:var(--seq)}
+    a:focus-visible{outline:2px solid var(--seq);outline-offset:2px;border-radius:4px}
+    .panel{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px 18px;min-width:0}
+    .mono{font-family:var(--font-mono);font-variant-numeric:tabular-nums}
+    .fig{display:block;width:100%;height:auto;font-family:var(--font-body)}
+    .scroll{overflow-x:auto}
+    .scroll .fig{min-width:520px}
+
+    /* composition bar */
+    .comp{display:flex;height:34px;border-radius:9px;overflow:hidden;gap:2px;margin:6px 0 10px}
+    .comp span{display:block;min-width:6px}
+    .c-formal{background:var(--ink2)} .c-deb{background:var(--seq)} .c-oth{background:var(--warn)}
+    .ckey{display:flex;flex-wrap:wrap;gap:6px 22px;font-size:13.5px;color:var(--ink2)}
+    .ckey b{font-family:var(--font-mono);font-weight:500;color:var(--ink);font-size:16px;margin-right:6px}
+    .ckey i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:7px;vertical-align:0}
+
+    /* depth ladder */
+    .ladder{display:grid;grid-template-columns:minmax(120px,1.3fr) repeat(6,minmax(0,1fr));gap:0;margin-top:18px;font-size:12.5px}
+    .ladder>div{padding:9px 6px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:center;text-align:center;min-width:0}
+    .ladder .lh{color:var(--muted);font-weight:600;font-size:11.5px;letter-spacing:.02em;align-items:flex-end}
+    .ladder .ln{justify-content:flex-start;text-align:left;font-weight:600;color:var(--ink);font-size:13.5px}
+    .ladder .ln small{display:block;font-weight:400;color:var(--muted);font-size:12px}
+    .dot{width:14px;height:14px;border-radius:50%;display:inline-block}
+    .dot.y{background:var(--seq)} .dot.n{box-shadow:inset 0 0 0 1.5px var(--line2)} .dot.p{background:linear-gradient(90deg,var(--seq) 50%,transparent 50%);box-shadow:inset 0 0 0 1.5px var(--seq)}
+    @media (max-width:640px){.ladder{grid-template-columns:minmax(96px,1.1fr) repeat(6,minmax(0,1fr));font-size:11px}.ladder .lh{font-size:10px;letter-spacing:0}.ladder .ln{font-size:12px}.ladder .ln small{display:none}}
+
+    /* result tiles */
+    .tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+    @media (max-width:760px){.tiles{grid-template-columns:1fr}}
+    .tile h3{font-family:var(--font-display);font-weight:600;font-size:19px;line-height:1.2;margin:2px 0 10px}
+    .tile .k{font-size:11.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);font-weight:600}
+    .sq{display:flex;flex-wrap:wrap;gap:3px}
+    .sq i{width:13px;height:13px;border-radius:3px;display:block}
+    .e-sup{background:var(--ev-sup)} .e-con{background:var(--ev-con)} .e-weak{background:var(--ev-weak)} .e-none{box-shadow:inset 0 0 0 1.5px var(--line2)}
+    .s-err{background:var(--sev-err)} .s-gap{background:var(--sev-gap)} .s-amb{background:var(--sev-amb)}
+    .q-nar{background:var(--seq-soft)} .q-par{background:var(--seq)} .q-open{box-shadow:inset 0 0 0 1.5px var(--line2)}
+    .tkey{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12.5px;color:var(--ink2);margin-top:10px}
+    .tkey span{display:inline-flex;align-items:center;gap:6px}
+    .tkey i{width:10px;height:10px;border-radius:3px;display:inline-block}
+    .tile p{margin:10px 0 0;font-size:13.5px;color:var(--ink2)}
+    .callout{margin-top:12px;padding:14px 18px;border-radius:14px;background:var(--sunk);font-size:14.5px}
+    .callout b{font-weight:650}
+    svg .dk{fill:none;stroke:var(--seq);stroke-width:1.6} svg .do{fill:var(--seq)}
+    svg .zero{stroke:var(--ink2);stroke-width:1.2;stroke-dasharray:3 3} svg .base{stroke:var(--line2)} svg .tk{stroke:var(--line2)}
+    svg .ax{font:11px var(--font-mono);fill:var(--muted)} svg .med{stroke:var(--warn);stroke-width:1.5} svg .mt{font:11.5px var(--font-body);fill:var(--ink2)}
+
+    /* usefulness checklist */
+    .use{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+    @media (max-width:760px){.use{grid-template-columns:1fr}}
+    .use h3{font-size:14px;font-weight:650;margin-bottom:8px}
+    .use ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+    .use li{display:flex;gap:10px;align-items:flex-start;font-size:14px}
+    .use li i{flex:none;width:11px;height:11px;border-radius:50%;margin-top:5px}
+    .use li.on i{background:var(--good)} .use li.off i{box-shadow:inset 0 0 0 1.6px var(--muted)}
+    .use li.off span{color:var(--ink2)}
+    .verdict{margin-top:12px;font-family:var(--font-display);font-size:19px;line-height:1.35;max-width:60ch}
+
+    /* uses now */
+    .now{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+    @media (max-width:760px){.now{grid-template-columns:1fr}}
+    .now .panel b{display:block;font-size:14.5px;margin-bottom:2px}
+    .now .panel span{font-size:13.5px;color:var(--ink2)}
+    .now .who{font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);font-weight:600}
+
+    /* next steps */
+    .steps{display:grid;gap:10px;counter-reset:s}
+    .step{display:grid;grid-template-columns:44px minmax(0,1fr);gap:4px 14px;align-items:start}
+    .step .n{font-family:var(--font-mono);font-size:26px;line-height:1;color:var(--muted);padding-top:2px}
+    .step.rec{border-color:var(--seq);box-shadow:inset 3px 0 0 var(--seq)}
+    .step.rec .n{color:var(--seq)}
+    .step h3{font-size:16px;font-weight:650}
+    .step p{margin:3px 0 0;font-size:13.5px;color:var(--ink2);max-width:72ch}
+    .pill{display:inline-block;font-size:11px;font-weight:600;letter-spacing:.04em;padding:1px 8px;border-radius:999px;background:var(--seq);color:var(--bg);margin-left:8px;vertical-align:2px}
+
+    /* debate roadmap */
+    .road{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;position:relative}
+    @media (max-width:860px){.road{grid-template-columns:1fr}}
+    .stage{position:relative}
+    .stage .k{font-size:11px;letter-spacing:.07em;text-transform:uppercase;font-weight:600;color:var(--muted)}
+    .stage h3{font-family:var(--font-display);font-size:18px;font-weight:600;margin:2px 0 6px}
+    .stage p{margin:0;font-size:13px;color:var(--ink2)}
+    .stage .gets{margin-top:8px;font-size:12.5px;color:var(--ink)}
+    .stage.done{background:var(--sunk);border-style:dashed}
+    .stage.done .k{color:var(--good)}
+    .target{margin-top:12px;display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px;font-size:14px}
+    .target .sq i{width:11px;height:11px}
+
+    /* other areas */
+    .areas{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+    @media (max-width:860px){.areas{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media (max-width:560px){.areas{grid-template-columns:1fr}}
+    .area h3{font-size:15px;font-weight:650}
+    .area .now{display:block;font-size:12px;color:var(--muted);margin-top:2px}
+    .area p{margin:8px 0 0;font-size:13px;color:var(--ink2)}
+    .area .spine{margin-top:8px;font-size:12.5px}
+    .area.first{border-color:var(--seq);box-shadow:inset 0 3px 0 var(--seq)}
+    .pipe{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:0 0 14px;font-size:13px}
+    .pipe span{background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:3px 11px;white-space:nowrap}
+    .pipe em{font-style:normal;color:var(--muted)}
+    footer{margin-top:56px;padding-top:14px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted)}
+    @media (prefers-reduced-motion: reduce){*{transition:none!important}}
+    
+    body{margin:0}
+    .crumb{display:flex;flex-wrap:wrap;gap:4px 18px;font-size:13.5px;margin-bottom:28px}
+    .crumb a{color:var(--ink2);text-underline-offset:3px}
+    .crumb a:first-child{color:var(--ink);font-weight:600;text-decoration:none}
+    /* what could come next */
+    .prop{display:inline-block;font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--warn);margin-bottom:4px}
+    .part{display:flex;align-items:baseline;gap:10px;margin:30px 0 4px}
+    .part .pn{font-family:var(--font-mono);font-size:13px;color:var(--muted)}
+    .part h3{font-size:16px;font-weight:650}
+    .psub{color:var(--ink2);font-size:13.5px;margin:0 0 12px;max-width:72ch}
+    /* ideas matrix */
+    .ideas{padding:4px 14px}
+    .irow{display:grid;grid-template-columns:minmax(0,1.5fr) 84px minmax(0,2fr);gap:0 10px;padding:11px 0;border-bottom:1px solid var(--line);align-items:center}
+    .irow:last-child{border-bottom:0}
+    .ih{font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600;padding:8px 0}
+    .irow .i{font-weight:600;font-size:14px;min-width:0}
+    .irow .i small{display:block;font-weight:400;font-size:12px;color:var(--muted);margin-top:2px;line-height:1.4}
+    .irow .t{display:flex;align-items:center;gap:7px;font-size:12.5px;color:var(--ink2)}
+    .irow .t .dot{width:12px;height:12px;flex:none}
+    .irow .a{font-size:13px;color:var(--ink2);min-width:0}
+    .ikey{display:flex;flex-wrap:wrap;gap:4px 16px;font-size:12.5px;color:var(--ink2);margin-top:10px}
+    .ikey span{display:inline-flex;align-items:center;gap:6px}
+    .ikey .dot{width:11px;height:11px}
+    @media (max-width:760px){
+      .ih{display:none}
+      .irow{grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"i t" "a a";gap:6px 12px}
+      .irow .i{grid-area:i} .irow .t{grid-area:t;align-self:start} .irow .a{grid-area:a}
+    }
+    /* additions */
+    .adds{display:grid;gap:12px}
+    .add{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.5fr);gap:14px 24px;align-items:start}
+    .add>div:first-child{min-width:0}
+    .add .an{font-family:var(--font-mono);font-size:26px;line-height:1;color:var(--seq)}
+    .add h3{font-family:var(--font-display);font-size:19px;font-weight:600;margin:6px 0 6px}
+    .add p{margin:0;font-size:13.5px;color:var(--ink2)}
+    .add .src{margin-top:10px;font-size:12px;color:var(--muted)}
+    @media (max-width:820px){.add{grid-template-columns:1fr}}
+    /* 1 understanding card mock */
+    .ucard{border:1px solid var(--line2);border-radius:12px;background:var(--bg);padding:4px 14px}
+    .uf{display:grid;grid-template-columns:22px minmax(0,1fr) 14px;gap:10px;align-items:center;padding:9px 0;border-bottom:1px dashed var(--line2)}
+    .uf:last-child{border-bottom:0}
+    .un{font-family:var(--font-mono);font-size:12px;color:var(--muted)}
+    .ut b{display:block;font-size:13.5px;font-weight:600}
+    .ut small{display:block;font-size:12px;color:var(--muted);line-height:1.4}
+    /* 2 hub */
+    .hubw{display:grid;grid-template-columns:minmax(0,1fr) 200px minmax(0,1fr);gap:10px 30px;align-items:center}
+    .hubl,.hubr{display:grid;gap:8px}
+    .sp{position:relative;border:1px solid var(--line2);border-radius:10px;padding:7px 10px;background:var(--bg)}
+    .sp b{display:block;font-size:13px;font-weight:600}
+    .sp small{display:block;font-size:11.5px;color:var(--muted);line-height:1.35}
+    .sp.l::after,.sp.r::before{content:"";position:absolute;top:50%;width:30px;border-top:1.5px solid var(--seq-soft)}
+    .sp.l::after{right:-31px} .sp.r::before{left:-31px}
+    .hub{border-radius:999px;aspect-ratio:1/1;max-width:200px;width:100%;margin:0 auto;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:var(--sunk);box-shadow:inset 0 0 0 2px var(--seq);padding:14px}
+    .hub .hk{font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);font-weight:600}
+    .hub b{font-family:var(--font-display);font-size:18px;line-height:1.15;font-weight:600;margin:4px 0 6px}
+    .hub .hn{font-size:12px;color:var(--ink2)}
+    .hub .mono{color:var(--ink);font-size:14px;font-weight:500}
+    .guard{margin-top:12px}
+    @media (max-width:820px){.hubw{grid-template-columns:1fr}.hub{order:-1;aspect-ratio:auto;border-radius:14px;max-width:none}.sp.l::after,.sp.r::before{display:none}}
+    /* 3 router */
+    .router{display:grid}
+    .rr{display:grid;grid-template-columns:minmax(0,1fr) 18px minmax(0,1.25fr) minmax(0,1.2fr);gap:4px 10px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)}
+    .rr:last-child{border-bottom:0}
+    .rb{font-weight:600;font-size:13.5px}
+    .ra{color:var(--muted)}
+    .rc{font-size:13px;color:var(--ink2)}
+    .rq .sq{gap:2px}
+    .rq .sq i{width:8px;height:8px;border-radius:2px}
+    .rq small{display:block;font-size:11.5px;color:var(--muted);margin-top:3px}
+    .rnote{font-size:12.5px;color:var(--muted);margin-top:8px}
+    @media (max-width:560px){.rr{grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-areas:"b q" "c c"}.rb{grid-area:b}.ra{display:none}.rc{grid-area:c}.rq{grid-area:q}}
+    /* the long road */
+    .stairs{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:10px}
+    .stp{display:flex;flex-direction:column;min-width:0}
+    .stp .bar{height:100px;display:flex;flex-direction:column;justify-content:flex-end;position:relative}
+    .stp .bar::after{content:"";display:block;height:var(--h);border-radius:6px 6px 2px 2px;border:1.5px dashed var(--seq);background:color-mix(in srgb,var(--seq) 8%,transparent)}
+    .stp.done .bar::after{border:0;background:var(--good)}
+    .stp .bar span{font-size:11px;font-weight:600;color:var(--good);margin-bottom:4px}
+    .stp .sk{font-family:var(--font-mono);font-size:11.5px;color:var(--muted);margin-top:8px}
+    .stp h3{font-family:var(--font-display);font-size:17px;font-weight:600;margin:0 0 4px}
+    .stp p{margin:0;font-size:12.5px;color:var(--ink2)}
+    .stp .sg{margin-top:6px;font-size:12px;color:var(--ink);border-top:1px solid var(--line);padding-top:6px}
+    @media (max-width:860px){.stairs{grid-template-columns:1fr;gap:0}.stp{display:grid;grid-template-columns:88px minmax(0,1fr);grid-template-areas:"bar h" "bar p" "bar g";gap:0 14px;padding:10px 0;border-bottom:1px solid var(--line)}.stp .bar{grid-area:bar;height:auto;justify-content:center}.stp .bar::after{height:14px;width:calc(var(--h) * .8)}.stp .bar span{margin:0 0 4px}.stp .sk{display:none}.stp h3{grid-area:h}.stp p{grid-area:p}.stp .sg{grid-area:g;border:0;padding:0;margin-top:2px}}
+    .who5{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin-top:14px}
+    .who5 .panel span{font-size:13px;color:var(--ink2)}
+    .who5 .who{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:4px}
+    @media (max-width:860px){.who5{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media (max-width:520px){.who5{grid-template-columns:1fr}}
+    .aim{margin-top:18px;font-family:var(--font-display);font-size:21px;line-height:1.3;max-width:56ch}
+    
+    </style>
+    </head>
+    <body>
+    <div class="wrap">
+    <nav class="crumb" aria-label="Site"><a href="./">Safety Research Atlas</a><a href="explore.html">All 1,750 records</a></nav>
+    <header>
+      <div class="eyebrow">AI Safety Research Atlas · 18 October 2026</div>
+      <h1>Where the atlas stands, and where it could go</h1>
+      <p class="lede">One area, debate and scalable oversight, now works as a discovery engine. Everything else is a thin map. No person has checked any result yet, so nothing in it is citable.</p>
+    </header>
+
+    <section id="contents">
+      <h2>What's in it</h2>
+      <p class="sub">1,750 records and 5,821 links, built from 245 pinned sources. Most of the depth sits in one area.</p>
+      <div class="comp" role="img" aria-label="997 formal maths records, 657 debate and scalable oversight records, 96 records across other AI-safety areas">
+        <span class="c-formal" style="flex:997"></span><span class="c-deb" style="flex:657"></span><span class="c-oth" style="flex:96"></span></div>
+      <div class="ckey">
+        <span><i class="c-formal"></i><b>997</b>formal maths: Lean and Metamath theorems, definitions and their proof links</span>
+        <span><i class="c-deb"></i><b>657</b>debate and scalable oversight, read in full from 42 papers</span>
+        <span><i class="c-oth"></i><b>96</b>22 other AI-safety topics, mostly sampled from abstracts</span>
+      </div>
+      <div class="ladder" role="table" aria-label="How deep each part of the atlas goes">
+        <div class="lh" role="columnheader"></div><div class="lh">Sources quoted</div><div class="lh">Full text read</div><div class="lh">Open questions mapped</div><div class="lh">Gaps attacked</div><div class="lh">Two AI checks</div><div class="lh">Person reviewed</div>
+        <div class="ln">Debate &amp; scalable oversight<small>42 papers</small></div><div><i class="dot y"></i></div><div><i class="dot y"></i></div><div><i class="dot y"></i></div><div><i class="dot y"></i></div><div><i class="dot y"></i></div><div><i class="dot n"></i></div>
+        <div class="ln">22 other topics<small>37 papers, mostly abstracts</small></div><div><i class="dot y"></i></div><div><i class="dot n"></i></div><div><i class="dot n"></i></div><div><i class="dot n"></i></div><div><i class="dot y"></i></div><div><i class="dot n"></i></div>
+        <div class="ln">Formal maths<small>Lean, Mathlib, Metamath</small></div><div><i class="dot y"></i></div><div><i class="dot y"></i></div><div><i class="dot n"></i></div><div><i class="dot n"></i></div><div><i class="dot p"></i></div><div><i class="dot p"></i></div>
+      </div>
+      <p class="note">Half-filled means part of it. A few formal records and links carry a person's sign-off; none of the debate pilot's results do yet.</p>
+    </section>
+
+    <section id="results">
+      <h2>What it found</h2>
+      <p class="sub">The four results that matter most from the debate pilot. All are AI drafts that passed two blind AI checks; none is confirmed by an expert.</p>
+      <div class="tiles">
+        <div class="panel tile">
+          <div class="k">The debate safety case</div>
+          <h3>2 of 45 steps have checked support</h3>
+          <div class="sq" role="img" aria-label="2 supported, 1 contested, 28 weak, 14 with no evidence"><i class="e-sup" title="supported"></i><i class="e-sup" title="supported"></i><i class="e-con" title="contested"></i><i class="e-weak" title="weak evidence"></i><i class="e-weak" title="weak evidence"></i><i class="e-weak" title="weak evidence"></i><i class="e-weak" title="weak evidence"></i><i class="e-weak" title="weak evidence"></i><i class="e-weak" title="weak evidence"></i><i class="e-weak" title="weak evidence"></i><i class="e-weak" title="weak evidence"></i><i class="e-weak" title="weak evidence"></i><i class="e-weak" title="weak evidence"></i><i class="e-weak" title="weak evidence"></i><i class="e-weak" title="weak evidence"></i><i class="e-weak" title="weak evidence"></i><i class="e-weak" title="weak evidence"></i><i class="e-weak" title="weak evidence"></i><i class="e-weak" title="weak evidence"></i><i class="e-weak" title="weak evidence"></i><i class="e-weak" title="weak evidence"></i><i class="e-weak" title="weak evidence"></i><i class="e-weak" title="weak evidence"></i><i class="e-weak" title="weak evidence"></i><i class="e-weak" title="weak evidence"></i><i class="e-weak" title="weak evidence"></i><i class="e-weak" title="weak evidence"></i><i class="e-weak" title="weak evidence"></i><i class="e-weak" title="weak evidence"></i><i class="e-weak" title="weak evidence"></i><i class="e-weak" title="weak evidence"></i><i class="e-none" title="no evidence"></i><i class="e-none" title="no evidence"></i><i class="e-none" title="no evidence"></i><i class="e-none" title="no evidence"></i><i class="e-none" title="no evidence"></i><i class="e-none" title="no evidence"></i><i class="e-none" title="no evidence"></i><i class="e-none" title="no evidence"></i><i class="e-none" title="no evidence"></i><i class="e-none" title="no evidence"></i><i class="e-none" title="no evidence"></i><i class="e-none" title="no evidence"></i><i class="e-none" title="no evidence"></i><i class="e-none" title="no evidence"></i></div>
+          <div class="tkey"><span><i class="e-sup"></i>supported 2</span><span><i class="e-con"></i>contested 1</span><span><i class="e-weak"></i>weak 28</span><span><i class="e-none"></i>none 14</span></div>
+          <p>Each step of Buhl et al.'s 2025 debate safety case is matched to the papers' results. Only "efficient equilibrium debaters exist" and "the protocol avoids obfuscated arguments" are supported.</p>
+        </div>
+        <div class="panel tile">
+          <div class="k">Problems in the papers</div>
+          <h3>52 problems in 5 papers' theorems</h3>
+          <div class="sq" role="img" aria-label="9 errors, 22 gaps, 21 ambiguities"><i class="s-err" title="error"></i><i class="s-err" title="error"></i><i class="s-err" title="error"></i><i class="s-err" title="error"></i><i class="s-err" title="error"></i><i class="s-err" title="error"></i><i class="s-err" title="error"></i><i class="s-err" title="error"></i><i class="s-err" title="error"></i><i class="s-gap" title="gap"></i><i class="s-gap" title="gap"></i><i class="s-gap" title="gap"></i><i class="s-gap" title="gap"></i><i class="s-gap" title="gap"></i><i class="s-gap" title="gap"></i><i class="s-gap" title="gap"></i><i class="s-gap" title="gap"></i><i class="s-gap" title="gap"></i><i class="s-gap" title="gap"></i><i class="s-gap" title="gap"></i><i class="s-gap" title="gap"></i><i class="s-gap" title="gap"></i><i class="s-gap" title="gap"></i><i class="s-gap" title="gap"></i><i class="s-gap" title="gap"></i><i class="s-gap" title="gap"></i><i class="s-gap" title="gap"></i><i class="s-gap" title="gap"></i><i class="s-gap" title="gap"></i><i class="s-gap" title="gap"></i><i class="s-gap" title="gap"></i><i class="s-amb" title="ambiguity"></i><i class="s-amb" title="ambiguity"></i><i class="s-amb" title="ambiguity"></i><i class="s-amb" title="ambiguity"></i><i class="s-amb" title="ambiguity"></i><i class="s-amb" title="ambiguity"></i><i class="s-amb" title="ambiguity"></i><i class="s-amb" title="ambiguity"></i><i class="s-amb" title="ambiguity"></i><i class="s-amb" title="ambiguity"></i><i class="s-amb" title="ambiguity"></i><i class="s-amb" title="ambiguity"></i><i class="s-amb" title="ambiguity"></i><i class="s-amb" title="ambiguity"></i><i class="s-amb" title="ambiguity"></i><i class="s-amb" title="ambiguity"></i><i class="s-amb" title="ambiguity"></i><i class="s-amb" title="ambiguity"></i><i class="s-amb" title="ambiguity"></i><i class="s-amb" title="ambiguity"></i><i class="s-amb" title="ambiguity"></i></div>
+          <div class="tkey"><span><i class="s-err"></i>error 9</span><span><i class="s-gap"></i>gap in a proof 22</span><span><i class="s-amb"></i>ambiguity 21</span></div>
+          <p>Found by restating theorems in Lean. The errors are mostly slips in proofs and printed formulas. Five are in one proof (Hammond &amp; Adam-Day 2024, Proposition 7); others are in Anil et al. 2021 Theorem 2 and Chen et al. 2023 Theorem 5.</p>
+        </div>
+        <div class="panel tile">
+          <div class="k">Does debate help the judge?</div>
+          <h3>Debate beats consultancy in 51 of 56 matched comparisons</h3>
+          <div class="scroll"><svg class="fig" viewBox="0 0 640 134.39999999999998" role="img" aria-label="51 of 56 matched comparisons favour debate over consultancy; median +8.4 points; 33 come from Kenton et al. 2024.">
+    <line class="zero" x1="128.5" x2="128.5" y1="6" y2="108.39999999999999"/>
+    <line class="base" x1="34" x2="620" y1="106.39999999999999" y2="106.39999999999999"/><line class="tk" x1="34.0" x2="34.0" y1="106.39999999999999" y2="111.39999999999999"/><text class="ax" x="34.0" y="125.39999999999999" text-anchor="middle">-5</text><text class="ax" x="128.5" y="125.39999999999999" text-anchor="middle">0</text><line class="tk" x1="223.0" x2="223.0" y1="106.39999999999999" y2="111.39999999999999"/><text class="ax" x="223.0" y="125.39999999999999" text-anchor="middle">+5</text><line class="tk" x1="317.5" x2="317.5" y1="106.39999999999999" y2="111.39999999999999"/><text class="ax" x="317.5" y="125.39999999999999" text-anchor="middle">+10</text><line class="tk" x1="412.1" x2="412.1" y1="106.39999999999999" y2="111.39999999999999"/><text class="ax" x="412.1" y="125.39999999999999" text-anchor="middle">+15</text><line class="tk" x1="506.6" x2="506.6" y1="106.39999999999999" y2="111.39999999999999"/><text class="ax" x="506.6" y="125.39999999999999" text-anchor="middle">+20</text><line class="tk" x1="601.1" x2="601.1" y1="106.39999999999999" y2="111.39999999999999"/><text class="ax" x="601.1" y="125.39999999999999" text-anchor="middle">+25</text>
+    <line class="med" x1="287.7" x2="287.7" y1="4" y2="106.39999999999999"/><text class="mt" x="292.7" y="12">median +8.4</text>
+    <circle class="dk" cx="71.8" cy="99.8" r="4.6"><title>Kenton et al. 2024: debate -2.8 points vs consultancy (llm judge)</title></circle><circle class="dk" cx="90.7" cy="99.8" r="4.6"><title>Kenton et al. 2024: debate -1.6 points vs consultancy (llm judge)</title></circle><circle class="do" cx="90.7" cy="89.0" r="4.6"><title>Michael et al. 2023: debate -2.0 points vs consultancy (human judge)</title></circle><circle class="dk" cx="109.6" cy="99.8" r="4.6"><title>Kenton et al. 2024: debate -0.9 points vs consultancy (llm judge)</title></circle><circle class="dk" cx="109.6" cy="89.0" r="4.6"><title>Kenton et al. 2024: debate -0.6 points vs consultancy (llm judge)</title></circle><circle class="dk" cx="128.5" cy="99.8" r="4.6"><title>Kenton et al. 2024: debate +0.3 points vs consultancy (llm judge)</title></circle><circle class="dk" cx="147.4" cy="99.8" r="4.6"><title>Kenton et al. 2024: debate +0.6 points vs consultancy (llm judge)</title></circle><circle class="dk" cx="166.3" cy="99.8" r="4.6"><title>Kenton et al. 2024: debate +1.6 points vs consultancy (llm judge)</title></circle><circle class="dk" cx="185.2" cy="99.8" r="4.6"><title>Kenton et al. 2024: debate +3.1 points vs consultancy (llm judge)</title></circle><circle class="do" cx="185.2" cy="89.0" r="4.6"><title>Khan et al. 2024: debate +3.1 points vs consultancy (llm judge)</title></circle><circle class="dk" cx="223.0" cy="99.8" r="4.6"><title>Kenton et al. 2024: debate +4.7 points vs consultancy (llm judge)</title></circle><circle class="dk" cx="223.0" cy="89.0" r="4.6"><title>Kenton et al. 2024: debate +4.7 points vs consultancy (llm judge)</title></circle><circle class="dk" cx="223.0" cy="78.2" r="4.6"><title>Kenton et al. 2024: debate +5.3 points vs consultancy (llm judge)</title></circle><circle class="do" cx="223.0" cy="67.4" r="4.6"><title>Rahman et al. 2025: debate +4.7 points vs consultancy (human judge)</title></circle><circle class="dk" cx="241.9" cy="99.8" r="4.6"><title>Kenton et al. 2024: debate +5.6 points vs consultancy (llm judge)</title></circle><circle class="dk" cx="241.9" cy="89.0" r="4.6"><title>Kenton et al. 2024: debate +5.6 points vs consultancy (llm judge)</title></circle><circle class="dk" cx="241.9" cy="78.2" r="4.6"><title>Kenton et al. 2024: debate +6.2 points vs consultancy (llm judge)</title></circle><circle class="dk" cx="260.8" cy="99.8" r="4.6"><title>Kenton et al. 2024: debate +6.9 points vs consultancy (llm judge)</title></circle><circle class="dk" cx="260.8" cy="89.0" r="4.6"><title>Kenton et al. 2024: debate +6.9 points vs consultancy (llm judge)</title></circle><circle class="dk" cx="260.8" cy="78.2" r="4.6"><title>Kenton et al. 2024: debate +6.9 points vs consultancy (llm judge)</title></circle><circle class="dk" cx="260.8" cy="67.4" r="4.6"><title>Kenton et al. 2024: debate +7.2 points vs consultancy (llm judge)</title></circle><circle class="dk" cx="260.8" cy="56.6" r="4.6"><title>Kenton et al. 2024: debate +7.5 points vs consultancy (llm judge)</title></circle><circle class="do" cx="260.8" cy="45.8" r="4.6"><title>Khan et al. 2024: debate +7.1 points vs consultancy (human judge)</title></circle><circle class="do" cx="260.8" cy="35.0" r="4.6"><title>Rahman et al. 2025: debate +7.3 points vs consultancy (human judge)</title></circle><circle class="do" cx="260.8" cy="24.2" r="4.6"><title>Khan et al. 2024: debate +7.3 points vs consultancy (human judge)</title></circle><circle class="dk" cx="279.7" cy="99.8" r="4.6"><title>Kenton et al. 2024: debate +8.1 points vs consultancy (llm judge)</title></circle><circle class="do" cx="279.7" cy="89.0" r="4.6"><title>Khan et al. 2024: debate +8.0 points vs consultancy (llm judge)</title></circle><circle class="dk" cx="298.6" cy="99.8" r="4.6"><title>Kenton et al. 2024: debate +8.7 points vs consultancy (llm judge)</title></circle><circle class="dk" cx="298.6" cy="89.0" r="4.6"><title>Kenton et al. 2024: debate +9.0 points vs consultancy (llm judge)</title></circle><circle class="dk" cx="298.6" cy="78.2" r="4.6"><title>Kenton et al. 2024: debate +9.3 points vs consultancy (llm judge)</title></circle><circle class="dk" cx="298.6" cy="67.4" r="4.6"><title>Kenton et al. 2024: debate +9.3 points vs consultancy (llm judge)</title></circle><circle class="do" cx="298.6" cy="56.6" r="4.6"><title>Arnesen, Rein and Michael 2024: debate +9.0 points vs consultancy (llm judge)</title></circle><circle class="do" cx="298.6" cy="45.8" r="4.6"><title>Arnesen, Rein and Michael 2024: debate +9.0 points vs consultancy (llm judge)</title></circle><circle class="do" cx="298.6" cy="35.0" r="4.6"><title>Arnesen, Rein and Michael 2024: debate +9.0 points vs consultancy (llm judge)</title></circle><circle class="dk" cx="317.5" cy="99.8" r="4.6"><title>Kenton et al. 2024: debate +9.7 points vs consultancy (llm judge)</title></circle><circle class="do" cx="317.5" cy="89.0" r="4.6"><title>Khan et al. 2024: debate +9.6 points vs consultancy (llm judge)</title></circle><circle class="do" cx="317.5" cy="78.2" r="4.6"><title>Khan et al. 2024: debate +10.0 points vs consultancy (human judge)</title></circle><circle class="do" cx="317.5" cy="67.4" r="4.6"><title>Rahman et al. 2025: debate +10.1 points vs consultancy (human judge)</title></circle><circle class="do" cx="317.5" cy="56.6" r="4.6"><title>Khan et al. 2024: debate +10.1 points vs consultancy (llm judge)</title></circle><circle class="do" cx="317.5" cy="45.8" r="4.6"><title>Rahman et al. 2025: debate +10.4 points vs consultancy (human judge)</title></circle><circle class="dk" cx="336.5" cy="99.8" r="4.6"><title>Kenton et al. 2024: debate +10.9 points vs consultancy (llm judge)</title></circle><circle class="dk" cx="374.3" cy="99.8" r="4.6"><title>Kenton et al. 2024: debate +12.8 points vs consultancy (llm judge)</title></circle><circle class="dk" cx="374.3" cy="89.0" r="4.6"><title>Kenton et al. 2024: debate +12.8 points vs consultancy (llm judge)</title></circle><circle class="dk" cx="374.3" cy="78.2" r="4.6"><title>Kenton et al. 2024: debate +13.1 points vs consultancy (llm judge)</title></circle><circle class="dk" cx="393.2" cy="99.8" r="4.6"><title>Kenton et al. 2024: debate +14.3 points vs consultancy (llm judge)</title></circle><circle class="dk" cx="393.2" cy="89.0" r="4.6"><title>Kenton et al. 2024: debate +14.3 points vs consultancy (llm judge)</title></circle><circle class="do" cx="393.2" cy="78.2" r="4.6"><title>Khan et al. 2024: debate +14.4 points vs consultancy (llm judge)</title></circle><circle class="dk" cx="412.1" cy="99.8" r="4.6"><title>Kenton et al. 2024: debate +15.3 points vs consultancy (llm judge)</title></circle><circle class="do" cx="412.1" cy="89.0" r="4.6"><title>Rahman et al. 2025: debate +15.2 points vs consultancy (human judge)</title></circle><circle class="dk" cx="449.9" cy="99.8" r="4.6"><title>Kenton et al. 2024: debate +17.1 points vs consultancy (llm judge)</title></circle><circle class="do" cx="204.1" cy="99.8" r="4.6"><title>Rahman et al. 2025: debate +3.8 points vs consultancy (human judge)</title></circle><circle class="do" cx="355.4" cy="99.8" r="4.6"><title>Khan et al. 2024: debate +12.2 points vs consultancy (llm judge)</title></circle><circle class="do" cx="506.6" cy="99.8" r="4.6"><title>Rahman et al. 2025: debate +20.3 points vs consultancy (human judge)</title></circle><circle class="do" cx="544.4" cy="99.8" r="4.6"><title>Khan et al. 2024: debate +22.0 points vs consultancy (llm judge)</title></circle><circle class="do" cx="544.4" cy="89.0" r="4.6"><title>Khan et al. 2024: debate +22.1 points vs consultancy (llm judge)</title></circle><circle class="do" cx="582.2" cy="99.8" r="4.6"><title>Khan et al. 2024: debate +24.3 points vs consultancy (llm judge)</title></circle></svg></div>
+          <div class="tkey"><span><i style="background:var(--seq)"></i>other 4 papers</span><span><i style="box-shadow:inset 0 0 0 1.6px var(--seq)"></i>Kenton et al. 2024 (33)</span><span>points of judge accuracy</span></div>
+          <p>The median gain is +8.4 points across 5 papers, but 33 of the 56 comparisons come from one paper and 45 use LLM judges.</p>
+        </div>
+        <div class="panel tile">
+          <div class="k">Authors' open questions</div>
+          <h3>27 of 33 moved forward</h3>
+          <div class="sq" role="img" aria-label="15 narrowed, 12 partly answered, 6 still open"><i class="q-par" title="partly answered by later work"></i><i class="q-par" title="partly answered by later work"></i><i class="q-par" title="partly answered by later work"></i><i class="q-par" title="partly answered by later work"></i><i class="q-par" title="partly answered by later work"></i><i class="q-par" title="partly answered by later work"></i><i class="q-par" title="partly answered by later work"></i><i class="q-par" title="partly answered by later work"></i><i class="q-par" title="partly answered by later work"></i><i class="q-par" title="partly answered by later work"></i><i class="q-par" title="partly answered by later work"></i><i class="q-par" title="partly answered by later work"></i><i class="q-nar" title="narrowed"></i><i class="q-nar" title="narrowed"></i><i class="q-nar" title="narrowed"></i><i class="q-nar" title="narrowed"></i><i class="q-nar" title="narrowed"></i><i class="q-nar" title="narrowed"></i><i class="q-nar" title="narrowed"></i><i class="q-nar" title="narrowed"></i><i class="q-nar" title="narrowed"></i><i class="q-nar" title="narrowed"></i><i class="q-nar" title="narrowed"></i><i class="q-nar" title="narrowed"></i><i class="q-nar" title="narrowed"></i><i class="q-nar" title="narrowed"></i><i class="q-nar" title="narrowed"></i><i class="q-open" title="still open"></i><i class="q-open" title="still open"></i><i class="q-open" title="still open"></i><i class="q-open" title="still open"></i><i class="q-open" title="still open"></i><i class="q-open" title="still open"></i></div>
+          <div class="tkey"><span><i class="q-par"></i>partly answered 12</span><span><i class="q-nar"></i>narrowed 15</span><span><i class="q-open"></i>still open 6</span></div>
+          <p>6 questions now have a Lean proof of a narrowed version, and 5 come with a ready experiment design. None is fully answered.</p>
+        </div>
+      </div>
+      <div class="callout"><b>The finding that cuts across all four:</b> the five assumptions the papers rely on most appear in no step of the safety case. The safety case leans on "training reaches equilibrium" (15 steps), which only 6 results address.</div>
+    </section>
+
+    <section id="useful">
+      <h2>How useful is it?</h2>
+      <p class="sub">It is a strong first draft for debate research, with almost no outside proof that it helps anyone yet.</p>
+      <div class="use">
+        <div class="panel"><h3>Measured</h3><ul>
+          <li class="on"><i aria-hidden="true"></i><span>Answers 19 of the authors' 52 open questions in full and 19 in part (45 judged by two AI checks, 7 by a person)</span></li>
+          <li class="on"><i aria-hidden="true"></i><span>Every quote matches its PDF: 0 errors across 42 papers</span></li>
+          <li class="on"><i aria-hidden="true"></i><span>Its checks caught 539 of 542 planted mistakes</span></li>
+          <li class="on"><i aria-hidden="true"></i><span>Grades all 248 debate results by evidence: 152 rest on a single setting</span></li>
+          <li class="on"><i aria-hidden="true"></i><span>Search finds 63% of the records a good answer needs</span></li>
+          <li class="on"><i aria-hidden="true"></i><span>AI agents can use it today through llms.txt</span></li>
+        </ul></div>
+        <div class="panel"><h3>Not yet shown</h3><ul>
+          <li class="off"><i aria-hidden="true"></i><span>An expert has confirmed the 9 errors</span></li>
+          <li class="off"><i aria-hidden="true"></i><span>A person has reviewed any discovery</span></li>
+          <li class="off"><i aria-hidden="true"></i><span>It saves time: the with/without-atlas test has not run</span></li>
+          <li class="off"><i aria-hidden="true"></i><span>Anyone outside this project has used it</span></li>
+        </ul></div>
+      </div>
+      <p class="verdict">Today it is most useful as a map of what is actually established about debate, and a ranked to-do list of what is not.</p>
+    </section>
+
+    <section id="now">
+      <h2>What you can do with it now</h2>
+      <div class="now">
+        <div class="panel"><div class="who">Before building on a result</div><b>Check what a debate theorem really needs</b><span>Each result lists its hypotheses, its setting and how strong its evidence is, plus any problem found in its proof.</span></div>
+        <div class="panel"><div class="who">Choosing a project</div><b>Pick an open question with a head start</b><span>6 questions are still open, every narrowed one says what remains, and 5 have an experiment design.</span></div>
+        <div class="panel"><div class="who">Funding or prioritising</div><b>Fund the empty steps</b><span>The 14 safety-case steps with no evidence are a list of the experiments and proofs debate still needs.</span></div>
+        <div class="panel"><div class="who">Working with an agent</div><b>Give an AI agent the whole map</b><span>Agents read the same records, cards and gap list through the site's llms.txt and get quoted answers back.</span></div>
+      </div>
+    </section>
+
+    <section id="next">
+      <h2>The best next steps</h2>
+      <p class="sub">Credibility first, because it multiplies everything else. A new area built on unconfirmed checks would inherit the same doubt.</p>
+      <div class="steps">
+        <div class="panel step rec"><div class="n">1</div><div><h3>Get the finds confirmed<span class="pill">Recommended</span></h3><p>Experts check the 9 errors from short notes: the claim, the Lean counterexample, a suggested fix. People review only a small core of debate statements, each shown beside a blind plain-maths read-back of its Lean version; AI checks cover the rest. That turns the first results into findings people can cite.</p></div></div>
+        <div class="panel step"><div class="n">2</div><div><h3>Measure usefulness automatically</h3><p>An agent answers the 52 authors' questions with and without the atlas. We report accuracy, sources found and time taken. No people needed, and it gives the first real answer to "does this help?".</p></div></div>
+        <div class="panel step"><div class="n">3</div><div><h3>Make the results understandable</h3><p>Understanding cards for the results the safety case leans on, and a blocker label on every open question so each one gets the right kind of agent.</p></div></div>
+        <div class="panel step"><div class="n">4</div><div><h3>Run the first theory-building mission</h3><p>Ask what changes when "training reaches equilibrium" is weakened: 15 safety-case steps rest on it and only 6 results address it.</p></div></div>
+        <div class="panel step"><div class="n">5</div><div><h3>Then open the next area</h3><p>Make debate a living area (below), and run the same pipeline on AI control and monitoring.</p></div></div>
+      </div>
+    </section>
+
+    <section id="debate">
+      <h2>Debate and scalable oversight: from map to engine</h2>
+      <p class="sub">Five stages that would make the atlas the place where the state of debate research is kept, tested and moved forward.</p>
+      <div class="road">
+        <div class="panel stage done"><div class="k">Done</div><h3>Map</h3><p>42 papers read, 248 results graded, 33 questions worked once, 52 problems found.</p><div class="gets">One pilot run, frozen at 18 Oct.</div></div>
+        <div class="panel stage"><div class="k">Stage 2</div><h3>Live</h3><p>New debate papers are read automatically each week, checked twice, and placed on the safety case.</p><div class="gets">The safety-case colours change as evidence arrives.</div></div>
+        <div class="panel stage"><div class="k">Stage 3</div><h3>Prover</h3><p>One Lean library of the core debate theorems: PSPACE, doubly-efficient debate, cross-examination, stability.</p><div class="gets">Every theorem's conditions are checked by a machine.</div></div>
+        <div class="panel stage"><div class="k">Stage 4</div><h3>Experimenter</h3><p>Run the 5 experiment designs on small open models, and package the rest for funders with costs and expected outcomes.</p><div class="gets">Evidence for the empty steps.</div></div>
+        <div class="panel stage"><div class="k">Stage 5</div><h3>Author</h3><p>A public "state of evidence for debate" review, generated from the atlas and refreshed as it changes.</p><div class="gets">The atlas's results reach the field.</div></div>
+      </div>
+      <div class="target"><span>What to move:</span><span class="sq" aria-hidden="true"><i class="e-none" title="no evidence"></i><i class="e-none" title="no evidence"></i><i class="e-none" title="no evidence"></i><i class="e-none" title="no evidence"></i><i class="e-none" title="no evidence"></i><i class="e-none" title="no evidence"></i><i class="e-none" title="no evidence"></i><i class="e-none" title="no evidence"></i><i class="e-none" title="no evidence"></i><i class="e-none" title="no evidence"></i><i class="e-none" title="no evidence"></i><i class="e-none" title="no evidence"></i><i class="e-none" title="no evidence"></i><i class="e-none" title="no evidence"></i></span><span>14 steps with no evidence, and</span><span class="sq" aria-hidden="true"><i class="e-weak" title="weak evidence"></i><i class="e-weak" title="weak evidence"></i><i class="e-weak" title="weak evidence"></i><i class="e-weak" title="weak evidence"></i><i class="e-weak" title="weak evidence"></i><i class="e-weak" title="weak evidence"></i><i class="e-weak" title="weak evidence"></i><i class="e-weak" title="weak evidence"></i><i class="e-weak" title="weak evidence"></i><i class="e-weak" title="weak evidence"></i><i class="e-weak" title="weak evidence"></i><i class="e-weak" title="weak evidence"></i><i class="e-weak" title="weak evidence"></i><i class="e-weak" title="weak evidence"></i><i class="e-weak" title="weak evidence"></i><i class="e-weak" title="weak evidence"></i><i class="e-weak" title="weak evidence"></i><i class="e-weak" title="weak evidence"></i><i class="e-weak" title="weak evidence"></i><i class="e-weak" title="weak evidence"></i><i class="e-weak" title="weak evidence"></i><i class="e-weak" title="weak evidence"></i><i class="e-weak" title="weak evidence"></i><i class="e-weak" title="weak evidence"></i><i class="e-weak" title="weak evidence"></i><i class="e-weak" title="weak evidence"></i><i class="e-weak" title="weak evidence"></i><i class="e-weak" title="weak evidence"></i></span><span>28 with weak evidence</span></div>
+    </section>
+
+    <section id="areas">
+      <h2>Other areas</h2>
+      <p class="sub">Each area goes through the same pipeline debate went through. What matters most is a published safety case or framework to rank its gaps against, like Buhl et al. for debate.</p>
+      <div class="pipe" aria-label="The pipeline"><span>Pick 30–50 key papers</span><em>→</em><span>Quote them line by line</span><em>→</em><span>Map their open questions</span><em>→</em><span>Attack the gaps</span><em>→</em><span>Two blind checks</span><em>→</em><span>Pictures and agent access</span></div>
+      <div class="areas">
+        <div class="panel area first"><h3>AI control and monitoring</h3><span class="now">17 records today · next</span><div class="spine">Spine: <a href="https://arxiv.org/abs/2501.17315" target="_blank" rel="noopener">A sketch of an AI control safety case</a> (2025)</div><p>The closest match to debate: a safety case to rank against, many empirical results, and a link through "the overseer is weaker".</p></div>
+        <div class="panel area"><h3>Reward hacking, RLHF and specification gaming</h3><span class="now">about 10 records today</span><div class="spine">Spine: none published yet; rank by how often results fail to transfer</div><p>The largest empirical literature, and the most results that hold in one setting only.</p></div>
+        <div class="panel area"><h3>ELK and deceptive alignment</h3><span class="now">a handful of records today</span><div class="spine">Spine: debate's "judge weaker by design" assumption</div><p>Cheap to add: weak-to-strong already sits inside the debate batch, and these papers attach to the same assumption map.</p></div>
+        <div class="panel area"><h3>Interpretability</h3><span class="now">a handful of records today</span><div class="spine">Spine: none; would need a framework first</div><p>Huge and fast-moving. Worth starting only with a narrow slice, such as sparse autoencoders.</p></div>
+        <div class="panel area"><h3>Agent foundations and learning theory</h3><span class="now">a handful of records today</span><div class="spine">Spine: the formal maths backbone, plus the new <a href="https://resolution.org/post/formalizing-resolution-of-singularities" target="_blank" rel="noopener">Lean proof of resolution of singularities</a> that singular learning theory rests on</div><p>The most suited to Lean, so it gains most from the 997 formal records already in place.</p></div>
+        <div class="panel area"><h3>Across areas</h3><span class="now">new</span><div class="spine">Spine: the 30 shared assumption families</div><p>Link areas through the assumptions they share, so a result in one shows where it does or does not carry over to another.</p></div>
+      </div>
+    </section>
+
+    
+    <section id="future" class="fut">
+      <div class="prop">Proposal · not built yet</div>
+      <h2>What could come next</h2>
+      <p class="sub">Twelve ideas for what the atlas could become, set against what it already has. None of them changes what a record is; they change how records are reviewed, explained and worked on.</p>
+
+      <div class="part"><span class="pn">A</span><h3>Twelve ideas worth taking</h3></div>
+      <p class="psub">0 are partly in place, 0 not yet.</p>
+      <div class="panel ideas" role="table" aria-label="Twelve ideas and how far the atlas has them today">
+        <div class="irow ih" role="row"><span role="columnheader">Idea</span><span role="columnheader">Atlas today</span><span role="columnheader">What we would add</span></div>
+        <div class="irow" role="row"><span class="i" role="cell">Many research roles, one graph<small>Today: agents read it through llms.txt; only our own pipeline writes to it</small></span><span class="t" role="cell"><i class="dot p"></i>partly</span><span class="a" role="cell">Agents take roles (definer, prover, experimenter, explainer, auditor) and write back to the same records.</span></div><div class="irow" role="row"><span class="i" role="cell">Compare definitions first<small>Today: 59 debate definitions quoted; not yet compared across papers</small></span><span class="t" role="cell"><i class="dot p"></i>partly</span><span class="a" role="cell">One page per concept: each paper&#x27;s definition side by side, and exactly where they agree or differ.</span></div><div class="irow" role="row"><span class="i" role="cell">Organise by shared structure<small>Today: organised by paper and by topic</small></span><span class="t" role="cell"><i class="dot n"></i>not yet</span><span class="a" role="cell">Views built around games, information channels and constrained policies, showing which assumptions let results connect.</span></div><div class="irow" role="row"><span class="i" role="cell">Freeze the statement<small>Today: results quote their exact source lines; Lean versions sit in separate files</small></span><span class="t" role="cell"><i class="dot p"></i>partly</span><span class="a" role="cell">Each result gets one fixed statement. Proofs, evidence and counterexamples attach to it and never edit it.</span></div><div class="irow" role="row"><span class="i" role="cell">People review a small core<small>Today: no person has reviewed a debate result yet</small></span><span class="t" role="cell"><i class="dot n"></i>not yet</span><span class="a" role="cell">People check only the safety-case steps, the definitions they use and the headline results. AI checks cover the rest.</span></div><div class="irow" role="row"><span class="i" role="cell">Check formal statements against the source<small>Today: 3 paper-to-Lean cards with 31 flagged differences</small></span><span class="t" role="cell"><i class="dot p"></i>partly</span><span class="a" role="cell">An agent restates each Lean statement in plain maths without seeing the paper. A reviewer compares two statements, and every changed hypothesis is recorded.</span></div><div class="irow" role="row"><span class="i" role="cell">Results that fill in later<small>Today: the proof graph shows what an error breaks downstream; support does not flow up yet</small></span><span class="t" role="cell"><i class="dot p"></i>partly</span><span class="a" role="cell">Support flows up the safety case as its steps are proved or measured, the way errors already flow down.</span></div><div class="irow" role="row"><span class="i" role="cell">Use proofs as inputs<small>Today: 13 Lean projects checked; not yet mined for reusable pieces</small></span><span class="t" role="cell"><i class="dot p"></i>partly</span><span class="a" role="cell">Mine proofs for reusable lemmas and for the assumptions that actually carry the weight.</span></div><div class="irow" role="row"><span class="i" role="cell">Name the blocker first<small>Today: questions are labelled empirical, mathematical or mixed</small></span><span class="t" role="cell"><i class="dot p"></i>partly</span><span class="a" role="cell">Six blocker types, each sent to the right kind of agent (see 3 below).</span></div><div class="irow" role="row"><span class="i" role="cell">Credit ideas, count reuse<small>Today: every record cites its source line; AI-made results don&#x27;t say whose idea they build on</small></span><span class="t" role="cell"><i class="dot p"></i>partly</span><span class="a" role="cell">Record whose idea a result builds on, with AI-proposed ideas marked provisional, and count how often each result is reused.</span></div><div class="irow" role="row"><span class="i" role="cell">Explain, then check understanding<small>Today: summaries, hypothesis lists and &#x27;what remains&#x27; lines; no worked examples or self-tests</small></span><span class="t" role="cell"><i class="dot p"></i>partly</span><span class="a" role="cell">Understanding cards with a worked example and a quick self-test (see 1 below).</span></div><div class="irow" role="row"><span class="i" role="cell">Measure the automation itself<small>Today: planted-error tallies (539 of 542 caught); people&#x27;s time and cost not logged</small></span><span class="t" role="cell"><i class="dot p"></i>partly</span><span class="a" role="cell">Log people&#x27;s interventions, cost and caught errors per result, to learn how much oversight the pipeline really needs.</span></div>
+      </div>
+      <div class="ikey"><span><i class="dot p"></i>partly in place</span><span><i class="dot n"></i>not yet</span></div>
+
+      <div class="part"><span class="pn">B</span><h3>Three additions, drawn</h3></div>
+      <p class="psub">Three of the ideas, mapped onto the atlas's own data.</p>
+      <div class="adds">
+        <div class="panel add">
+          <div><div class="an">1</div><h3>An understanding card for each key result</h3><p>Six short fields in the existing inspector. Two exist already, three can be assembled in part, and only the key idea is new writing. Start with the results the safety case leans on.</p></div>
+          <div class="ucard" role="list" aria-label="The six fields of an understanding card and where each comes from"><div class="uf"><span class="un">1</span><span class="ut"><b>Why it matters</b><small>the safety-case steps it supports and its question&#x27;s rank</small></span><i class="dot p" title="partly in the atlas"></i></div><div class="uf"><span class="un">2</span><span class="ut"><b>What it says, plainly and precisely</b><small>summary plus the exact quote; the Lean statement where one exists</small></span><i class="dot y" title="in the atlas"></i></div><div class="uf"><span class="un">3</span><span class="ut"><b>The key idea</b><small>new writing, AI-drafted and labelled as such</small></span><i class="dot n" title="new"></i></div><div class="uf"><span class="un">4</span><span class="ut"><b>Which assumptions matter, with a counterexample</b><small>hypothesis lists on 243 of 248 results; counterexamples from the Lean audits</small></span><i class="dot p" title="partly in the atlas"></i></div><div class="uf"><span class="un">5</span><span class="ut"><b>What it lets us conclude about an AI system</b><small>each result&#x27;s setting and limits (241 of 248 results)</small></span><i class="dot p" title="partly in the atlas"></i></div><div class="uf"><span class="un">6</span><span class="ut"><b>What remains open</b><small>the &#x27;what remains&#x27; line of each of the 33 questions</small></span><i class="dot y" title="in the atlas"></i></div></div>
+        </div>
+        <div class="panel add">
+          <div><div class="an">2</div><h3>What changes when we weaken one assumption?</h3><p>One question, assembled from six kinds of material. The first candidate is the assumption the safety case leans on most and the papers address least.</p>
+            <div class="pipe guard" aria-label="Before a new theorem counts"><span>New theorem</span><em>→</em><span>Lean check</span><em>→</em><span>Blind read-back</span><em>→</em><span>Prior-art search</span><em>→</em><span>Counts</span></div>
+            <p class="src">AI-proposed connections stay marked provisional.</p></div>
+          <div class="hubw"><div class="hubl"><div class="sp l"><b>Original definitions and result</b><small>quoted from the 4 papers that state it</small></div><div class="sp l"><b>Restricted or more general versions</b><small>later results on the same assumption</small></div><div class="sp l"><b>Counterexamples</b><small>from the Lean audits and the literature</small></div></div><div class="hub"><span class="hk">Weaken one assumption</span><b>Training reaches equilibrium</b><span class="hn"><span class="mono">15</span> safety-case steps rest on it</span><span class="hn"><span class="mono">6</span> results address it</span></div><div class="hubr"><div class="sp r"><b>Reusable proof ingredients</b><small>lemmas mined from the proofs</small></div><div class="sp r"><b>Unsupported transfers</b><small>results cited beyond the setting they hold in</small></div><div class="sp r"><b>Where the boundary lies</b><small>a short plain account of what breaks, and when</small></div></div></div>
+        </div>
+        <div class="panel add">
+          <div><div class="an">3</div><h3>Pick the work by what is actually blocking</h3><p>Before an agent starts, name what would move the question: a definition, a proof, a statement match, system evidence, a measurement or an explanation. Many to-do items already carry a label that fits.</p><p class="src">The 9 mixed questions get split first. Counts are items whose current label fits; each still needs a one-by-one check.</p></div>
+          <div class="router"><div class="rr"><span class="rb">Ambiguous definition</span><span class="ra" aria-hidden="true">→</span><span class="rc">Compare the papers&#x27; own definitions</span><span class="rq"><span class="sq" aria-hidden="true"><i class="s-amb" title="ambiguity found in a paper"></i><i class="s-amb" title="ambiguity found in a paper"></i><i class="s-amb" title="ambiguity found in a paper"></i><i class="s-amb" title="ambiguity found in a paper"></i><i class="s-amb" title="ambiguity found in a paper"></i><i class="s-amb" title="ambiguity found in a paper"></i><i class="s-amb" title="ambiguity found in a paper"></i><i class="s-amb" title="ambiguity found in a paper"></i><i class="s-amb" title="ambiguity found in a paper"></i><i class="s-amb" title="ambiguity found in a paper"></i><i class="s-amb" title="ambiguity found in a paper"></i><i class="s-amb" title="ambiguity found in a paper"></i><i class="s-amb" title="ambiguity found in a paper"></i><i class="s-amb" title="ambiguity found in a paper"></i><i class="s-amb" title="ambiguity found in a paper"></i><i class="s-amb" title="ambiguity found in a paper"></i><i class="s-amb" title="ambiguity found in a paper"></i><i class="s-amb" title="ambiguity found in a paper"></i><i class="s-amb" title="ambiguity found in a paper"></i><i class="s-amb" title="ambiguity found in a paper"></i><i class="s-amb" title="ambiguity found in a paper"></i></span><small>21 ambiguities found in the papers</small></span></div><div class="rr"><span class="rb">Missing implication</span><span class="ra" aria-hidden="true">→</span><span class="rc">Find a proof or a counterexample</span><span class="rq"><span class="sq" aria-hidden="true"><i class="s-gap" title="gap in a proof"></i><i class="s-gap" title="gap in a proof"></i><i class="s-gap" title="gap in a proof"></i><i class="s-gap" title="gap in a proof"></i><i class="s-gap" title="gap in a proof"></i><i class="s-gap" title="gap in a proof"></i><i class="s-gap" title="gap in a proof"></i><i class="s-gap" title="gap in a proof"></i><i class="s-gap" title="gap in a proof"></i><i class="s-gap" title="gap in a proof"></i><i class="s-gap" title="gap in a proof"></i><i class="s-gap" title="gap in a proof"></i><i class="s-gap" title="gap in a proof"></i><i class="s-gap" title="gap in a proof"></i><i class="s-gap" title="gap in a proof"></i><i class="s-gap" title="gap in a proof"></i><i class="s-gap" title="gap in a proof"></i><i class="s-gap" title="gap in a proof"></i><i class="s-gap" title="gap in a proof"></i><i class="s-gap" title="gap in a proof"></i><i class="s-gap" title="gap in a proof"></i><i class="s-gap" title="gap in a proof"></i><i class="q-par" title="mathematical question"></i><i class="q-par" title="mathematical question"></i><i class="q-par" title="mathematical question"></i><i class="q-par" title="mathematical question"></i></span><small>22 proof gaps, 4 mathematical questions</small></span></div><div class="rr"><span class="rb">Unclear paper-to-Lean match</span><span class="ra" aria-hidden="true">→</span><span class="rc">Review the statements and the definitions they use</span><span class="rq"><span class="sq" aria-hidden="true"><i class="q-nar" title="flagged difference"></i><i class="q-nar" title="flagged difference"></i><i class="q-nar" title="flagged difference"></i><i class="q-nar" title="flagged difference"></i><i class="q-nar" title="flagged difference"></i><i class="q-nar" title="flagged difference"></i><i class="q-nar" title="flagged difference"></i><i class="q-nar" title="flagged difference"></i><i class="q-nar" title="flagged difference"></i><i class="q-nar" title="flagged difference"></i><i class="q-nar" title="flagged difference"></i><i class="q-nar" title="flagged difference"></i><i class="q-nar" title="flagged difference"></i><i class="q-nar" title="flagged difference"></i><i class="q-nar" title="flagged difference"></i><i class="q-nar" title="flagged difference"></i><i class="q-nar" title="flagged difference"></i><i class="q-nar" title="flagged difference"></i><i class="q-nar" title="flagged difference"></i><i class="q-nar" title="flagged difference"></i><i class="q-nar" title="flagged difference"></i><i class="q-nar" title="flagged difference"></i><i class="q-nar" title="flagged difference"></i><i class="q-nar" title="flagged difference"></i><i class="q-nar" title="flagged difference"></i><i class="q-nar" title="flagged difference"></i><i class="q-nar" title="flagged difference"></i><i class="q-nar" title="flagged difference"></i><i class="q-nar" title="flagged difference"></i><i class="q-nar" title="flagged difference"></i><i class="q-nar" title="flagged difference"></i></span><small>31 flagged differences</small></span></div><div class="rr"><span class="rb">Unknown system applicability</span><span class="ra" aria-hidden="true">→</span><span class="rc">Inspect code, configuration and traces</span><span class="rq"><span class="sq" aria-hidden="true"></span><small>none labelled yet</small></span></div><div class="rr"><span class="rb">Unsupported observable prediction</span><span class="ra" aria-hidden="true">→</span><span class="rc">Name the population, the event and the measurement</span><span class="rq"><span class="sq" aria-hidden="true"><i class="e-weak" title="empirical question"></i><i class="e-weak" title="empirical question"></i><i class="e-weak" title="empirical question"></i><i class="e-weak" title="empirical question"></i><i class="e-weak" title="empirical question"></i><i class="e-weak" title="empirical question"></i><i class="e-weak" title="empirical question"></i><i class="e-weak" title="empirical question"></i><i class="e-weak" title="empirical question"></i><i class="e-weak" title="empirical question"></i><i class="e-weak" title="empirical question"></i><i class="e-weak" title="empirical question"></i><i class="e-weak" title="empirical question"></i><i class="e-weak" title="empirical question"></i><i class="e-weak" title="empirical question"></i><i class="e-weak" title="empirical question"></i><i class="e-weak" title="empirical question"></i><i class="e-weak" title="empirical question"></i><i class="e-weak" title="empirical question"></i><i class="e-weak" title="empirical question"></i></span><small>20 empirical questions</small></span></div><div class="rr"><span class="rb">Hard to explain</span><span class="ra" aria-hidden="true">→</span><span class="rc">Write a worked example and test comprehension</span><span class="rq"><span class="sq" aria-hidden="true"></span><small>none labelled yet</small></span></div></div>
+        </div>
+      </div>
+
+      <div class="part"><span class="pn">C</span><h3>The long road: from map to the place AI-safety research is checked</h3></div>
+      <p class="psub">Each stage adds one thing people can do that they could not do before.</p>
+      <div class="stairs"><div class="stp done"><div class="bar" style="--h:18px"><span>You are here</span></div><div class="sk">Now</div><h3>Map</h3><p>Debate read, graded and attacked once.</p><div class="sg">A ranked to-do list for debate</div></div><div class="stp"><div class="bar" style="--h:31px"></div><div class="sk">1</div><h3>Trust</h3><p>Experts confirm the finds; people review a small core.</p><div class="sg">Findings people can cite</div></div><div class="stp"><div class="bar" style="--h:44px"></div><div class="sk">2</div><h3>Understand</h3><p>Understanding cards, concept pages, blocker labels.</p><div class="sg">Results usable without reading every paper</div></div><div class="stp"><div class="bar" style="--h:57px"></div><div class="sk">3</div><h3>Build</h3><p>Weaken-an-assumption missions; support flows up the safety case.</p><div class="sg">New results, not just a map</div></div><div class="stp"><div class="bar" style="--h:70px"></div><div class="sk">4</div><h3>Widen</h3><p>AI control next, then other areas, joined by shared structures.</p><div class="sg">Results checked across areas</div></div><div class="stp"><div class="bar" style="--h:83px"></div><div class="sk">5</div><h3>Open</h3><p>Outside researchers' agents take missions, credited by reuse.</p><div class="sg">Grows faster than one team can</div></div><div class="stp"><div class="bar" style="--h:96px"></div><div class="sk">6</div><h3>Decide</h3><p>Live safety cases, a transfer check for real systems, ranked experiments.</p><div class="sg">Decisions rest on checked evidence</div></div></div>
+      <div class="who5"><div class="panel"><div class="who">Researchers</div><span>Check what a result really needs before building on it, and pick a problem with a head start.</span></div><div class="panel"><div class="who">Safety-case writers and evaluators</div><span>See what each step of an argument rests on, and how strong that is.</span></div><div class="panel"><div class="who">Funders</div><span>Back the experiments and proofs that would move the most safety-case steps.</span></div><div class="panel"><div class="who">Newcomers</div><span>Learn an area through understanding cards, in a sensible order.</span></div><div class="panel"><div class="who">AI agents</div><span>Query it, take a mission, and hand back results that pass the checks.</span></div></div>
+      <p class="aim">The aim: the place you check before you cite, build on or rely on an AI-safety result.</p>
+      <div class="callout"><b>A bonus for AI safety itself.</b> The atlas's own pipeline, AI doing the work under checks tested on planted errors with people reviewing a small core, is a working test of scalable oversight. Logging how well it holds up is evidence in its own right.</div>
+      <p class="note">It counts as useful only if researchers find the right sources faster, catch missing assumptions, avoid invalid transfers, reuse its exports and send corrections. Record counts don't.</p>
+    </section>
+    
+    <footer>Counts come from this site's data: 1,750 records, 5,821 links and 245 sources. A few measures taken outside it (answer verdicts, planted-error tallies, quote checks, search recall) are as of 18 October 2026. "What could come next" is a proposal; none of it is built yet.</footer>
+    </div>
+    </body>
+    </html>
+    

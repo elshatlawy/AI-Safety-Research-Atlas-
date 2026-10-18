@@ -18,12 +18,16 @@ No coordinator keys, participant responses, local model assets or private joined
 
 `index.html` shows the 42 papers of the debate and scalable-oversight batch, their findings with exact quotes, the open questions ranked by the safety-case step they affect, and the gap-closing pilot's results. `data.json` only selects and joins existing fields; it adds no claim. All of it is an AI draft that no person has reviewed. The page labels it so, marks unverified hypothesis lists "not verified" and says how each view was checked. `PUBLIC_BUILD_MANIFEST.json` records the data's hash under `visual_atlas`.
 
+## Overview
+
+`overview.html` says where the atlas stands: what it holds, what it found, how useful it has proved so far, and what could come next. Its counts come from `data.json` and `atlas_data.json` when the site is built; the few measures taken elsewhere are dated in its footer. Its last section is a proposal, and none of it is built yet. `PUBLIC_BUILD_MANIFEST.json` lists it under `overview`.
+
 ## For AI agents
 
 `llms.txt` tells an AI agent how to use the atlas: its rules, its files, and a recipe for each kind of research question. `agent/index.json` lists every record with its type, state, sources and card path; `agent/papers.json` lists every source with its records; and `agent/records/` holds one small card per record with its text, its sources (with a link that opens the PDF at the cited page), its links in both directions with their state, rationale and open obligations, and a link that opens the record in `explore.html`. All of these are built from `atlas_data.json` alone and add no paper text. A card's links to formal kernel dependencies are capped at 40 per direction; `atlas_data.json` has them all.
 
 ## Scope
 
-The site itself is 23 files: 22 interface and data files plus `PUBLIC_BUILD_MANIFEST.json`. The agent files add `llms.txt`, two index files and one card per record, plus the gap-closing pilot's files under `agent/`.
+The site itself is 24 files: 23 interface and data files plus `PUBLIC_BUILD_MANIFEST.json`. The agent files add `llms.txt`, two index files and one card per record, plus the gap-closing pilot's files under `agent/`.
 
 This is the complete minimal deployment. At the maintainer's request, earlier research pages, their redirects and the large formal-index/network assets are retired from the public site. They remain recoverable in repository history. The explorer's footer stays within this site: Visual atlas, Data, About and Contribute. Canonical research records are unchanged.
