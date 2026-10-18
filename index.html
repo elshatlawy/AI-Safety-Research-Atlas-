@@ -409,8 +409,67 @@ p.clamp{margin:0}
 .lgsq i{width:10px;height:10px;border-radius:2.5px;display:block;background:var(--c)}
 .lgdot{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:8px;vertical-align:-1px;background:var(--c)}
 .lgdesc{color:var(--ink2);font-size:14px;max-width:72ch;margin:-6px 0 14px}
-.lggrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-@media (max-width:760px){.lggrid{grid-template-columns:1fr}}
+.vpanel{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:14px 16px;margin:0 0 18px;min-width:0}
+.dq-leg{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12.5px;color:var(--ink2);margin:8px 0 0}
+.dq-leg span{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.dq-leg i{width:10px;height:10px;border-radius:3px;display:inline-block}
+.dq-sc{overflow-x:auto;margin-top:4px}
+.dq-svg{display:block;width:100%;max-width:900px;min-width:600px;height:auto;margin:0 auto}
+.dq-svg.nar{min-width:0}
+.dq-rib{fill-opacity:.36;cursor:pointer;transition:fill-opacity .15s}
+.dq-rib:hover{fill-opacity:.6}
+.dq-svg.sel .dq-rib{fill-opacity:.12}
+.dq-svg.sel .dq-rib.on,.dq-svg .dq-rib.on:hover{fill-opacity:.66}
+.dq-n{cursor:pointer;outline:none}
+.dq-node{fill:var(--ink2)}
+.dq-n.on .dq-node,.dq-n:focus-visible .dq-node{stroke:var(--ink);stroke-width:2.5}
+.dq-n:hover .dq-l{fill:var(--ink)}
+.dq-c{font:500 15px "JetBrains Mono",monospace;fill:var(--ink)}
+.dq-l{font-size:12.5px;fill:var(--ink2)}
+.dq-m{font-size:11px;fill:var(--muted)}
+.dq-hint{font-size:12.5px;color:var(--muted);margin:2px 0 0}
+.dq-lh{display:flex;align-items:baseline;flex-wrap:wrap;gap:4px 10px;font-size:13.5px;margin-top:6px;padding-top:10px;border-top:1px solid var(--line)}
+.dq-lh .muted{font-size:12.5px}
+.dq-x{margin-left:auto;border:1px solid var(--line2);background:transparent;color:var(--ink2);border-radius:999px;padding:2px 11px;font:inherit;font-size:12px;cursor:pointer}
+.dq-x:hover{color:var(--ink);border-color:var(--ink2)}
+.dq-qs{display:flex;flex-direction:column;margin-top:6px}
+.dq-q{display:flex;align-items:center;gap:8px;padding:6px 6px;border-radius:8px;text-decoration:none;color:var(--ink);font-size:13.5px;min-width:0}
+.dq-q:hover{background:var(--sunk)}
+.dq-q svg{flex:none}
+.dq-q .mono{font-size:12px;flex:none;min-width:2.4em}
+.dq-qt{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dq-q .tag{margin-left:0}
+@media (max-width:560px){.dq-q .tag{display:none}.dq-q{align-items:flex-start}.dq-q svg{margin-top:2px}.dq-qt{white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}}
+.rcpleg{display:flex;flex-wrap:wrap;align-items:center;gap:6px 16px;font-size:12.5px;color:var(--ink2);margin:16px 0 0;padding:9px 14px;border:1px dashed var(--line2);border-radius:12px}
+.rcpleg .k{font-weight:600;color:var(--ink)}
+.rcp{display:flex;flex-wrap:wrap;gap:3px 14px;font-size:11.5px;color:var(--ink2)}
+.rm{display:inline-flex;align-items:center;gap:5px;white-space:nowrap}
+.rm i{width:9px;height:9px;border-radius:50%;flex:none;display:inline-block}
+.rm.on i{background:var(--lg-proved)}
+.rm.off i{box-shadow:inset 0 0 0 1.5px var(--muted)}
+.rm.off{color:var(--muted)}
+.rmn{font-weight:600}
+.rm.off .rmn{font-weight:500}
+.rmd{color:var(--muted)}
+.rmd::before{content:"· "}
+@media (max-width:560px){.rcp .rmd{display:none}}
+.lglist{display:flex;flex-direction:column;gap:8px}
+.lgrow{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--c);border-radius:12px;min-width:0}
+.lgrow>summary{list-style:none;cursor:pointer;padding:10px 14px;display:flex;flex-direction:column;gap:6px;border-radius:0 11px 11px 0}
+.lgrow>summary::-webkit-details-marker{display:none}
+.lgrow>summary:hover{background:color-mix(in srgb,var(--sunk) 55%,transparent)}
+.lgrow>summary:focus-visible{outline:2px solid var(--ink2);outline-offset:-2px}
+.lgrow .lgh::after,.rl>summary::after{content:"";margin-left:auto;width:6px;height:6px;flex:none;border-right:1.5px solid var(--muted);border-bottom:1.5px solid var(--muted);transform:translateY(-2px) rotate(45deg);transition:transform .15s}
+.lgrow[open] .lgh::after,.rl[open]>summary::after{transform:translateY(1px) rotate(-135deg)}
+.lgrow .lgs{margin:0;font-size:14px}
+.lgrow .lgp{margin:0}
+.lgrow .lgp::before{content:"· ";color:var(--muted)}
+.l2{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.lgrow[open] .l2{display:block}
+.lgbody{padding:2px 14px 12px}
+.lgbody>:first-child{margin-top:0}
+.lgbody .lgid{display:block;margin-top:10px;text-align:right}
+.lgrc{margin-top:10px}
 .lgc{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--c);border-radius:14px;padding:12px 14px;min-width:0}
 .lgh{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;font-size:12.5px}
 .lgh .tag{margin-left:0}
@@ -434,8 +493,21 @@ p.clamp{margin:0}
 .tag.sev-gap{background:color-mix(in srgb,var(--disputes) 13%,var(--surface));color:var(--ink)}
 
 /* results (cards) */
-.gbar{display:flex;gap:2px;height:16px;margin:8px 0 12px}
-.gbar span{display:block;min-width:3px;border-radius:3px}
+.st-sc{overflow-x:auto;margin-top:10px}
+.st-svg{display:block;width:100%;max-width:calc(var(--w) * 1.35);min-width:var(--w);height:auto}
+.st-tk{stroke:var(--line);stroke-width:1}
+.st-ax{font:11px "JetBrains Mono",monospace;fill:var(--muted)}
+.st-yr{stroke:var(--line2);stroke-width:1.5}
+.st-hit{fill:transparent}
+.st-col{cursor:pointer;outline:none}
+.st-col:hover .st-hit,.st-col:focus-visible .st-hit{fill:var(--sunk)}
+.sq-PROVED_IN_PAPER{fill:var(--g-proved)}
+.sq-EMPIRICAL_MULTI_SETTING{fill:var(--g-multi)}
+.sq-EMPIRICAL_SINGLE_SETTING{fill:var(--g-single)}
+.sq-EMPIRICAL_PRELIMINARY{fill:var(--g-prelim)}
+.sq-ARGUMENT_ONLY{fill:var(--surface);stroke:var(--ink2);stroke-width:1.5}
+.sq-CITED_FROM_OTHER_WORK{fill:color-mix(in srgb,var(--muted) 30%,var(--surface));stroke:var(--muted);stroke-width:1}
+.st-svg .dim{opacity:.13}
 .gsw{display:inline-block;width:11px;height:11px;border-radius:3px;flex:none}
 .g-PROVED_IN_PAPER{background:var(--g-proved)}
 .g-EMPIRICAL_MULTI_SETTING{background:var(--g-multi)}
@@ -451,8 +523,20 @@ p.clamp{margin:0}
 .rph a{font-weight:650;font-size:15.5px;text-decoration:none}
 .rph a:hover{text-decoration:underline}
 .rph .t{font-size:13px;color:var(--muted);flex:1 1 260px;min-width:0}
-.rph .gs{display:flex;gap:3px;flex-wrap:wrap}
-.rcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(300px,100%),1fr));gap:10px}
+.rlist{display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.rl+.rl{border-top:1px solid var(--line)}
+.rl>summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:11px minmax(0,1.3fr) 50px minmax(0,1fr) 8px;align-items:center;gap:12px;padding:8px 14px;font-size:13.5px}
+.rl>summary::-webkit-details-marker{display:none}
+.rl>summary:hover{background:color-mix(in srgb,var(--sunk) 55%,transparent)}
+.rl>summary:focus-visible{outline:2px solid var(--ink2);outline-offset:-2px}
+.rl[open]>summary{background:var(--sunk)}
+.rl-t{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:550}
+.rl-h{display:flex;gap:2.5px}
+.rl-h i{width:6px;height:6px;border-radius:50%;background:var(--ink2);display:block}
+.rl-h.nv i{background:transparent;box-shadow:inset 0 0 0 1.3px var(--ink2)}
+.rl-s{color:var(--muted);font-size:12.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rl .rc{border:0;border-radius:0;border-top:1px solid var(--line)}
+@media (max-width:640px){.rl>summary{grid-template-columns:11px minmax(0,1fr) 50px 8px;gap:10px}.rl-s{display:none}}
 .rc{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 14px;min-width:0}
 .rch{display:flex;flex-wrap:wrap;align-items:center;gap:4px 10px;font-size:12px;color:var(--muted)}
 .gchip{display:inline-flex;align-items:center;gap:6px;font-weight:600;font-size:12px;color:var(--ink)}
@@ -488,9 +572,6 @@ mark{background:var(--mark);color:inherit;border-radius:3px;padding:0 1px}
 .copybox textarea{width:100%;height:260px;font-family:"JetBrains Mono",monospace;font-size:12px;border:1px solid var(--line2);border-radius:10px;padding:10px;background:var(--sunk);color:var(--ink)}
 .empty{padding:40px 0;color:var(--muted)}
 .gfoot{border-top:1px solid var(--line);padding-top:16px;padding-bottom:calc(28px + env(safe-area-inset-bottom,0px));font-size:12.5px;color:var(--muted);display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline}
-.gfoot .aid{display:inline-flex;align-items:center;gap:7px;font-weight:600;color:var(--ink2);white-space:nowrap}
-.gfoot .aid i{width:8px;height:8px;border-radius:50%;border:1.5px dashed var(--ink2);display:inline-block}
-.gfoot span.txt{flex:1 1 320px;min-width:0}
 .xlink{color:var(--ink2);text-underline-offset:3px;white-space:nowrap}
 .sfoot{display:flex;flex-wrap:wrap;gap:4px 8px;padding:9px 18px 11px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted)}
 
@@ -917,7 +998,7 @@ const LG_VAR = {"Proved":"--lg-proved","Paper problem":"--lg-problem","Derived":
 
 let D, P, R, L, GQ, QBY, STEPS, STEP, BRANCHES, LG, CD, CARD_BY_R, ARX, ADJ, PREC, CASE = null, PAIRS = [], POOLED_E = null, lastStep;
 const CN = {}, CKIDS = new Map();
-const S = {fams:new Set(FAMS.map(f => f[0])), leads:false, pbase:"papers", kq:null, sk:null, step:null, gstatus:null, grade:null, openQ:null, back:"gaps", hops:1, lgoff:new Set(), focusStep:null, fam:null, focusFam:null, gsort:"paper", ppaper:null, prob:null, pnode:null, lproj:null, lsel:null, lprob:null};
+const S = {fams:new Set(FAMS.map(f => f[0])), leads:false, pbase:"papers", kq:null, sk:null, step:null, gstatus:null, grade:null, openQ:null, back:"gaps", hops:1, lgoff:new Set(), focusStep:null, fam:null, focusFam:null, gsort:"paper", ppaper:null, prob:null, pnode:null, lproj:null, lsel:null, lprob:null, flow:null};
 const $ = (s, r = document) => r.querySelector(s);
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const fmt = n => n.toLocaleString("en-US");
@@ -964,7 +1045,7 @@ const statusSVG = (st, s) => fracSVG(STATUS_FILL[st] ?? 0, s);
 
 async function boot() {
   try {
-    const res = await fetch("data.json?v=a5c76c929af5");
+    const res = await fetch("data.json?v=3c7047487c65");
     if (!res.ok) throw new Error(res.status);
     D = await res.json();
   } catch (e) {
@@ -999,9 +1080,7 @@ async function boot() {
   route();
 }
 function renderFooter() {
-  const rules = (D.gap && D.gap.rules) || [], st = (D.gap && D.gap.review_status) || "";
-  const rule = rules.find(r => st && r.includes(st)) || rules[0] || "";
-  $("#gfoot").innerHTML = `<span class="aid"><i></i>AI draft</span><span class="txt">${esc(rule)}</span><a class="xlink" data-xlink href="explore.html"></a>`;
+  $("#gfoot").innerHTML = `<a class="xlink" data-xlink href="explore.html"></a>`;
   const n = D.snapshot && D.snapshot.records;
   document.querySelectorAll("[data-xlink]").forEach(a => { a.textContent = n ? `All ${fmt(n)} records` : "All records"; });
 }
@@ -1480,15 +1559,75 @@ function labelDesc(l) {
   }
   return "";
 }
+/* where the open questions went: status, then what kind of work is left (fixed vocabularies; counts from data.json) */
+const FLOW_ST = ["NARROWED","PARTLY_ANSWERED_BY_LATER_WORK","ANSWERED_BY_LATER_WORK","STILL_OPEN"];
+const FLOW_TY = [["EMPIRICAL","Needs an experiment"],["MIXED","Needs both"],["MATHEMATICAL","Needs a proof"]];
+const FLOW_C = {NARROWED:"--lg-narrowed", PARTLY_ANSWERED_BY_LATER_WORK:"--lg-partly", ANSWERED_BY_LATER_WORK:"--lg-answered", STILL_OPEN:"--muted"};
+const FLOW_MQ = matchMedia("(max-width:600px)");
+const stName = s => s === "PARTLY_ANSWERED_BY_LATER_WORK" ? "Partly answered" : s === "ANSWERED_BY_LATER_WORK" ? "Answered" : human(s);
+function flowSVG() {
+  const narrow = FLOW_MQ.matches;
+  const W = narrow ? 360 : 800, top = 14, pad = 12, span = narrow ? 220 : 240, nw = narrow ? 10 : 14, xL = narrow ? 24 : 118, xM = narrow ? 98 : 330, xR = narrow ? 206 : 530;
+  const sts = FLOW_ST.filter(s => GQ.some(q => q.status === s)), tys = FLOW_TY.filter(([t]) => GQ.some(q => q.remaining_type === t));
+  const unit = (span - pad * Math.max(sts.length, tys.length, 2)) / GQ.length, H = top + span + 20;
+  const n = (s, t) => GQ.filter(q => (s == null || q.status === s) && (t == null || q.remaining_type === t)).length;
+  const on = k => S.flow === k ? " on" : "";
+  const [fs, ft] = S.flow ? S.flow.split("|") : [];
+  const lit = (s, t) => S.flow && (fs === "all" || ((!fs || fs === s) && (!ft || ft === t))) ? " on" : "";
+  const rib = (x1, a1, b1, x2, a2, b2, s, key, lab, t) => { const c = (x1 + x2) / 2;
+    return `<path class="dq-rib${lit(s, t)}" style="fill:var(${FLOW_C[s]})" data-flow="${key}" data-tip="${esc(lab)}" d="M${f1(x1)} ${f1(a1)} C ${f1(c)} ${f1(a1)}, ${f1(c)} ${f1(a2)}, ${f1(x2)} ${f1(a2)} L ${f1(x2)} ${f1(b2)} C ${f1(c)} ${f1(b2)}, ${f1(c)} ${f1(b1)}, ${f1(x1)} ${f1(b1)} Z"/>`; };
+  const out = [], mid = {}, right = {};
+  const lh = GQ.length * unit + pad;
+  out.push(`<g class="dq-n${on("all|")}" data-flow="all|" role="button" tabindex="0" aria-label="All ${GQ.length} open questions"><rect class="dq-node" x="${xL}" y="${top}" width="${nw}" height="${f1(lh)}" rx="3"/><text class="dq-c" x="${xL - 8}" y="${f1(top + lh / 2 - 3)}" text-anchor="end">${GQ.length}</text>${narrow ? "" : `<text class="dq-l" x="${xL - 8}" y="${f1(top + lh / 2 + 13)}" text-anchor="end">open questions</text>`}</g>`);
+  let y = top;
+  for (const s of sts) { const h = n(s, null) * unit; mid[s] = y;
+    out.push(`<g class="dq-n${on(s + "|")}" data-flow="${s}|" role="button" tabindex="0" aria-label="${n(s, null)} ${esc(stName(s).toLowerCase())}"><rect class="dq-node" style="fill:var(${FLOW_C[s]})" x="${xM}" y="${f1(y)}" width="${nw}" height="${f1(h)}" rx="3"/><text class="dq-c" x="${xM + nw + 8}" y="${f1(y + h / 2 - 1)}">${n(s, null)}</text><text class="dq-l" x="${xM + nw + 8}" y="${f1(y + h / 2 + 14)}">${esc(stName(s))}</text></g>`);
+    y += h + pad; }
+  y = top;
+  for (const [t, name] of tys) { const h = n(null, t) * unit; right[t] = y;
+    const pk = GQ.filter(q => q.remaining_type === t && q.has_experiment_package).length, ln = GQ.filter(q => q.remaining_type === t && (q.proved || []).length).length;
+    const marks = narrow ? "" : [pk ? plural(pk, "experiment design") : "", ln ? plural(ln, "Lean proof") : ""].filter(Boolean).join(" · ");
+    out.push(`<g class="dq-n${on("|" + t)}" data-flow="|${t}" role="button" tabindex="0" aria-label="${n(null, t)}: ${esc(name.toLowerCase())}"><rect class="dq-node dq-ty" x="${xR}" y="${f1(y)}" width="${nw}" height="${f1(h)}" rx="3"/><text class="dq-c" x="${xR + nw + 8}" y="${f1(y + h / 2 - 1)}">${n(null, t)}</text><text class="dq-l" x="${xR + nw + 8}" y="${f1(y + h / 2 + 14)}">${esc(name)}</text>${marks ? `<text class="dq-m" x="${xR + nw + 8}" y="${f1(y + h / 2 + 29)}">${esc(marks)}</text>` : ""}</g>`);
+    y += h + pad; }
+  const ribs = [];
+  let ly = top + pad / 2;
+  for (const s of sts) { const h = n(s, null) * unit; ribs.push(rib(xL + nw, ly, ly + h, xM, mid[s], mid[s] + h, s, s + "|", `${n(s, null)} ${stName(s).toLowerCase()}`)); ly += h; }
+  const fill = {...right};
+  for (const s of sts) { let my = mid[s];
+    for (const [t, name] of tys) { const k = n(s, t); if (!k) continue; const h = k * unit;
+      ribs.push(rib(xM + nw, my, my + h, xR, fill[t], fill[t] + h, s, `${s}|${t}`, `${k} ${stName(s).toLowerCase()} · ${name.toLowerCase()}`, t)); my += h; fill[t] += h; } }
+  return `<svg class="dq-svg${S.flow ? " sel" : ""}${narrow ? " nar" : ""}" viewBox="0 0 ${W} ${H}" role="group" aria-label="Where the ${GQ.length} open questions went: by status, then by the kind of work left. Select a band to list its questions.">${ribs.join("")}${out.join("")}</svg>`;
+}
+function flowList() {
+  if (!S.flow) return `<p class="dq-hint">Select a band to list its questions.</p>`;
+  const [s, t] = S.flow.split("|"), st = s && s !== "all" ? s : null, ty = t || null;
+  const qs = GQ.filter(q => (!st || q.status === st) && (!ty || q.remaining_type === ty)).sort((a, b) => a.rank - b.rank);
+  const tyName = ty ? (FLOW_TY.find(x => x[0] === ty) || [0, human(ty)])[1] : "";
+  const head = [st ? stName(st) : "", tyName].filter(Boolean).join(" · ") || "All open questions";
+  return `<div class="dq-lh"><b>${esc(head)}</b><span class="muted">${plural(qs.length, "question")}</span><button type="button" class="dq-x" data-flow-clear>Clear</button></div>
+    <div class="dq-qs">${qs.map(q => `<a class="dq-q" href="#q${esc(q.id.slice(1))}">${statusSVG(q.status, 14)}<span class="mono muted">#${q.rank}</span><span class="dq-qt">${esc(q.question)}</span>${q.has_experiment_package ? `<span class="tag">experiment design</span>` : ""}${(q.proved || []).length ? `<span class="tag">Lean proof</span>` : ""}</a>`).join("")}</div>`;
+}
+function bindFlow() {
+  const box = $("#dqbox"); if (!box) return;
+  const pick = k => { S.flow = S.flow === k || !k ? null : k; box.querySelector(".dq-sc").innerHTML = flowSVG(); box.querySelector(".dq-list").innerHTML = flowList(); };
+  box.onclick = e => { const g = e.target.closest("[data-flow]"); if (g) return pick(g.dataset.flow); if (e.target.closest("[data-flow-clear]")) pick(null); };
+  box.onkeydown = e => { const g = e.target.closest?.("[data-flow]"); if (g && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); pick(g.dataset.flow); } };
+  FLOW_MQ.onchange = () => { const sc = document.querySelector("#dqbox .dq-sc"); if (sc) sc.innerHTML = flowSVG(); };
+}
 function renderLedger() {
   const E = LG.entries || [], counts = LG.counts || {};
   const labels = [...Object.keys(counts), ...[...new Set(E.map(e => e.label))].filter(l => !(l in counts))];
+  const legend = [...new Set(GQ.map(q => q.status))].sort((a, b) => FLOW_ST.indexOf(a) - FLOW_ST.indexOf(b)).map(s => `<span><i style="background:var(${FLOW_C[s]})"></i>${esc(stName(s))}</span>`).join("");
   $("#app").innerHTML = `
     <div class="ghead"><div class="eyebrow">Discovery ledger</div><h1 class="gtitle">${E.length} counted results</h1>
       <p class="lede">Every result of the pilot that passed its checks, by what kind of result it is.</p></div>
+    ${GQ.length ? `<div class="vpanel" id="dqbox"><div class="cph"><b>Where the ${GQ.length} open questions went</b><span class="muted">and what kind of work is left</span></div>
+      <div class="dq-leg">${legend}</div><div class="dq-sc">${flowSVG()}</div><div class="dq-list" aria-live="polite">${flowList()}</div></div>` : ""}
     <div class="lgsum">${labels.map(l => { const n = counts[l] ?? E.filter(e => e.label === l).length; return `<button type="button" class="lgg" data-jump="lg-${slug(l)}" style="--c:${lgColor(l)}"><span class="lgn"><b>${n}</b>${esc(l)}</span><span class="lgsq" aria-hidden="true">${"<i></i>".repeat(n)}</span></button>`; }).join("")}</div>
+    <div class="rcpleg"><span class="k">How each was checked</span>${RCP.map(([name, tip]) => `<span class="rm on" data-tip="${esc(tip)}"><i></i>${esc(name)}</span>`).join("")}</div>
     ${labels.map(l => ledgerSection(l, E.filter(e => e.label === l))).join("")}`;
   document.querySelectorAll("[data-jump]").forEach(b => b.onclick = () => document.getElementById(b.dataset.jump)?.scrollIntoView({behavior:"smooth", block:"start"}));
+  bindFlow();
   drawViz($("#app"));
 }
 function ledgerSection(l, es) {
@@ -1503,11 +1642,39 @@ function ledgerSection(l, es) {
       const pi = list[0].pi, p = pi != null ? P[pi] : null;
       const sev = {}; list.forEach(e => { sev[e.severity] = (sev[e.severity] || 0) + 1; });
       return `<div class="ppgroup"><div class="pph">${p ? `<a href="#p${pi}">${esc(p.short)}</a><span class="t">${esc(p.title)} · ${esc(k)}</span>` : `<b>${esc(k)}</b>`}<span>${Object.entries(sev).map(([s, n]) => `<span class="tag sev-${esc(s)}">${esc(human(s))} ${n}</span>`).join("")}</span></div>
-        <div class="lggrid">${list.map(entryHTML).join("")}</div></div>`;
+        <div class="lglist">${list.map(entryHTML).join("")}</div></div>`;
     }).join("");
-  } else body = `<div class="lggrid">${es.map(entryHTML).join("")}</div>`;
+  } else body = `<div class="lglist">${es.map(entryHTML).join("")}</div>`;
   return `<section id="lg-${slug(l)}" style="scroll-margin-top:80px"><div class="sechead"><h2 style="--c:${lgColor(l)}"><i class="lgdot"></i>${esc(l)} <span class="muted mono" style="font-weight:500">${es.length}</span></h2></div>
     ${desc ? `<p class="lgdesc">${esc(desc)}</p>` : ""}${body}</section>`;
+}
+/* the trust receipt: four marks for how a discovery was checked */
+const RCP = [["Quoted source", "Its evidence quotes exact lines from the pinned PDFs, or rests on a question quoted from one."],
+  ["Machine-checked", "The Lean kernel checked the proof, or the counterexample that shows the problem."],
+  ["Two blind AI checks", "Two AI checks that never see each other's verdict passed it, in batches that also had to catch planted mistakes."],
+  ["Person reviewed", "Whether a person has reviewed it."]];
+function rcpSource(e) {
+  if (e.label === "Proved") return [true, "question quoted"];
+  if (e.kind === "pooled_table") return [true, `${plural(PAIRS.length || 0, "comparison")}`];
+  if (e.kind === "evidence_gap") return [true, "checked mappings"];
+  const ev = String(e.evidence || "");
+  let m = ev.match(/(\d+) later-paper findings?/);
+  if (m) return [true, `${plural(+m[1], "later finding")}`];
+  const spans = ev.match(/arXiv \d{4}\.\d{4,5}v\d+ p\.\s?\d+/g);
+  if (spans) return [true, plural(spans.length, "quoted span")];
+  const pages = [...ev.matchAll(/(?:^|[\s;(,])p\.?\s?(\d+)(?=\s+(?:L\d|lines?\b))/g)].map(x => +x[1]);
+  if (pages.length) { const a = Math.min(...pages), b = Math.max(...pages); return [true, a === b ? `p. ${a}` : `p. ${a}–${b}`]; }
+  return [false, "no quote"];
+}
+function rcpLean(e) {
+  if (e.label === "Proved") return [true, "Lean kernel"];
+  if (e.label === "Paper problem" && /Lean:/.test(e.evidence || "") && !/Lean:\s*None/.test(e.evidence || "")) return [true, "Lean"];
+  return [false, "no Lean"];
+}
+function receipt(e) {
+  const c = e.chk, src = rcpSource(e), ln = rcpLean(e);
+  const mark = (ok, txt, i, extra) => `<span class="rm ${ok ? "on" : "off"}" data-tip="${esc(RCP[i][0] + ": " + (extra || RCP[i][1]))}"><i aria-hidden="true"></i><span class="rmn">${esc(RCP[i][0])}</span><span class="rmd">${esc(txt)}</span></span>`;
+  return `<span class="rcp" role="group" aria-label="How this was checked">${mark(src[0], src[1], 0)}${mark(ln[0], ln[1], 1)}${mark(!!c, c ? `${c.c} of ${c.p} plants` : "no batch", 2, c ? `passed in ${plural(c.b.length, "check batch", "check batches")} (${c.b.join(", ")}) that caught ${c.c} of ${c.p} planted mistakes.` : "")}${mark(false, "not yet", 3, "no person has reviewed it yet.")}</span>`;
 }
 function entryHTML(e) {
   const q = e.question_id ? QBY[e.question_id] : (e.gap_rank != null ? GQ.find(x => x.rank === e.gap_rank) || null : null);
@@ -1517,21 +1684,25 @@ function entryHTML(e) {
   if (e.kind) tags.push(`<span class="tag">${esc(human(e.kind))}</span>`);
   const head = q ? `<a class="lgq" href="#q${q.id.slice(1)}">${statusSVG(q.status, 16)}<span class="mono">#${q.rank}</span>${esc(q.id)}</a>` : (e.gap_rank != null ? `<span class="mono muted">#${esc(e.gap_rank)}</span>` : "");
   const paper = e.paper && e.label !== "Paper problem" ? (e.pi != null ? `<a href="#p${e.pi}">${esc(e.paper)}</a>` : esc(e.paper)) : "";
+  const steps = (e.safety_case || []).length ? `<div class="ministeps lgst">${e.safety_case.map(miniNode).join("")}</div>` : "";
   if (e.kind === "pooled_table" && PAIRS.length) return `<article class="lgc lgwide" style="--c:${lgColor(e.label)}">
     <div class="lgh">${head}${tags.join("")}<span class="mono muted lgid">${esc(e.id)}</span></div>
     ${pooledFigure()}
+    <div class="lgrc">${receipt(e)}</div>
     <details class="lgr"><summary>Summary</summary><p>${esc(e.statement)}</p></details>
-    ${(e.safety_case || []).length ? `<div class="ministeps lgst">${e.safety_case.map(miniNode).join("")}</div>` : ""}
+    ${steps}
   </article>`;
-  return `<article class="lgc" style="--c:${lgColor(e.label)}">
-    <div class="lgh">${head}${tags.join("")}<span class="mono muted lgid">${esc(e.id)}</span></div>
-    ${paper ? `<div class="lgp">${paper}</div>` : ""}
-    <p class="lgs clamp c3">${esc(e.statement).replace("What remains:", "<b>What remains:</b>")}</p>
-    ${e.scope ? `<p class="lgx clamp c3"><b>Scope</b> · ${esc(e.scope)}</p>` : ""}
-    ${e.evidence ? `<div class="lge clamp c2"><b>Evidence</b> · ${evidenceHTML(e)}</div>` : ""}
-    ${e.remains ? `<details class="lgr"><summary>What remains</summary><p>${esc(e.remains)}</p></details>` : ""}
-    ${(e.safety_case || []).length ? `<div class="ministeps lgst">${e.safety_case.map(miniNode).join("")}</div>` : ""}
-  </article>`;
+  const stmt = esc(e.statement).replace("What remains:", "<b>What remains:</b>");
+  return `<details class="lgrow" style="--c:${lgColor(e.label)}">
+    <summary><span class="lgh">${head}${tags.join("")}${paper ? `<span class="lgp">${paper}</span>` : ""}</span><span class="lgs l2">${stmt}</span>${receipt(e)}</summary>
+    <div class="lgbody">
+      ${e.scope ? `<p class="lgx"><b>Scope</b> · ${esc(e.scope)}</p>` : ""}
+      ${e.evidence ? `<div class="lge"><b>Evidence</b> · ${evidenceHTML(e)}</div>` : ""}
+      ${e.remains ? `<p class="lgx"><b>What remains</b> · ${esc(e.remains)}</p>` : ""}
+      ${steps}
+      <span class="mono muted lgid">${esc(e.id)}</span>
+    </div>
+  </details>`;
 }
 function pdfOf(id) { return ARX[id] != null ? P[ARX[id]].pdf : "https://arxiv.org/pdf/" + id; }
 function evidenceHTML(e) {
@@ -1542,6 +1713,28 @@ function evidenceHTML(e) {
 }
 
 /* ---------- results (cards) ---------- */
+const GORDER = ["PROVED_IN_PAPER","EMPIRICAL_MULTI_SETTING","EMPIRICAL_SINGLE_SETTING","EMPIRICAL_PRELIMINARY","ARGUMENT_ONLY","CITED_FROM_OTHER_WORK"];
+/* evidence strength over time: one column per paper in publication order, one square per result, strongest at the bottom */
+function strengthSVG(cards) {
+  const by = new Map(); cards.forEach(c => { if (c.pi == null || !P[c.pi]) return; if (!by.has(c.pi)) by.set(c.pi, []); by.get(c.pi).push(c); });
+  const ps = [...by.keys()].sort((a, b) => P[a].year * 12 + P[a].month - P[b].year * 12 - P[b].month || P[a].short.localeCompare(P[b].short));
+  if (!ps.length) return "";
+  const rank = g => { const i = GORDER.indexOf(g); return i < 0 ? GORDER.length : i; };
+  const cw = 16, sq = 11, gap = 3, yg = 8, x0 = 30, maxn = Math.max(...[...by.values()].map(v => v.length));
+  const base = 10 + maxn * (sq + gap), H = base + 32;
+  const years = [], xs = {}; let x = x0, prev = null;
+  for (const i of ps) { const yv = P[i].year; if (prev != null && yv !== prev) x += yg; if (yv !== prev) years.push([yv, x, x]); xs[i] = x; years[years.length - 1][2] = x + cw; x += cw; prev = yv; }
+  const W = x + 6, out = [];
+  for (let k = 0; k <= maxn; k += 3) { const yy = base - k * (sq + gap) + gap / 2; out.push(`<line class="st-tk" x1="${x0 - 4}" x2="${W - 2}" y1="${f1(yy)}" y2="${f1(yy)}"/><text class="st-ax" x="${x0 - 8}" y="${f1(yy + 4)}" text-anchor="end">${k}</text>`); }
+  for (const i of ps) {
+    const cs = by.get(i).slice().sort((a, b) => rank(a.grade) - rank(b.grade));
+    const cnt = {}; cs.forEach(c => { cnt[c.grade] = (cnt[c.grade] || 0) + 1; });
+    const tip = `${P[i].short}: ${plural(cs.length, "result")}\n${GORDER.filter(g => cnt[g]).map(g => `${human(g)} ${cnt[g]}`).join("\n")}`;
+    out.push(`<g class="st-col" data-rp="${i}" role="button" tabindex="0" aria-label="${esc(P[i].short)}, ${plural(cs.length, "result")}" data-tip="${esc(tip)}"><rect class="st-hit" x="${xs[i]}" y="0" width="${cw}" height="${base + 2}"/>${cs.map((c, j) => `<rect class="sq-${esc(c.grade)}${S.grade && c.grade !== S.grade ? " dim" : ""}" x="${xs[i] + 2.5}" y="${f1(base - (j + 1) * (sq + gap) + gap)}" width="${sq}" height="${sq}" rx="2.5"/>`).join("")}</g>`);
+  }
+  for (const [yv, a, b] of years) out.push(`<line class="st-yr" x1="${a + 1}" x2="${b - 1}" y1="${base + 7}" y2="${base + 7}"/><text class="st-ax" x="${f1((a + b) / 2)}" y="${base + 23}" text-anchor="middle">${yv}</text>`);
+  return `<svg class="st-svg" viewBox="0 0 ${W} ${H}" style="--w:${W}px" role="group" aria-label="One column per paper in publication order, one square per result, coloured by the strength of its evidence. Select a column to jump to that paper.">${out.join("")}</svg>`;
+}
 function renderResults() {
   const G = CD.grades || {}, cards = CD.cards || [];
   const gt = {}; cards.forEach(c => { gt[c.grade] = (gt[c.grade] || 0) + 1; });
@@ -1553,10 +1746,11 @@ function renderResults() {
   const keyOf = k => typeof k === "number" ? P[k] : null;
   const lanes = D.lanes.map((l, li) => [li, [...byPaper.keys()].filter(k => keyOf(k)?.lane === li).sort((a, b) => P[a].year * 12 + P[a].month - P[b].year * 12 - P[b].month)]).filter(x => x[1].length);
   const loose = [...byPaper.keys()].filter(k => !keyOf(k) || keyOf(k).lane == null);
+  const strength = strengthSVG(cards);
   $("#app").innerHTML = `
     <div class="ghead"><div class="eyebrow">Result cards</div><h1 class="gtitle">${cards.length} results from ${nP} papers, graded by their evidence</h1>
-      <p class="lede">Each card says how strong the evidence is and which stated hypotheses the result needs.</p></div>
-    <div class="gbar" role="img" aria-label="Results by grade">${grades.map(g => `<span class="g-${esc(g)}" style="flex:${gt[g]}" data-tip="${esc(human(g))} · ${gt[g]}\n${esc(G[g] || "")}"></span>`).join("")}</div>
+      <p class="lede">One line per result: its evidence grade, one dot per stated hypothesis (hollow where the list is not verified) and its setting. Open a line for the full card.</p></div>
+    ${strength ? `<div class="vpanel"><div class="cph"><b>Evidence strength over time</b><span class="muted">one column per paper, one square per result</span></div><div class="st-sc">${strength}</div></div>` : ""}
     <div class="legend gfilter" role="group" aria-label="Filter by grade"><button type="button" class="chip ${S.grade ? "" : "on"}" data-grade="">All <span class="mono">${cards.length}</span></button>${grades.map(g => `<button type="button" class="chip ${S.grade === g ? "on" : ""}" data-grade="${esc(g)}" data-tip="${esc(G[g] || "")}"><i class="gsw g-${esc(g)}"></i>${esc(human(g))} <span class="mono">${gt[g]}</span></button>`).join("")}</div>
     ${S.grade && G[S.grade] ? `<p class="gdesc"><b>${esc(human(S.grade))}</b> · ${esc(G[S.grade])}</p>` : ""}
     ${CD.withheld_not_passing ? `<p class="muted" style="font-size:12.5px;margin:10px 0 0">${plural(CD.withheld_not_passing, "more card")} withheld: they did not pass their checks.</p>` : ""}
@@ -1564,11 +1758,21 @@ function renderResults() {
     ${loose.length ? `<div class="lanehead">Other</div>${loose.map(k => paperCards(k, byPaper.get(k))).join("")}` : ""}
     ${shown.length ? "" : `<div class="empty">No result cards with this grade.</div>`}`;
   document.querySelectorAll("[data-grade]").forEach(b => b.onclick = () => { S.grade = b.dataset.grade || null; renderResults(); });
+  const jump = g => { const t = document.getElementById("rp-" + g.dataset.rp); if (t) { t.scrollIntoView({behavior:"smooth", block:"start"}); const d = t.querySelector("details"); if (d) d.querySelector("summary")?.focus({preventScroll:true}); } };
+  document.querySelectorAll(".st-col").forEach(g => { g.onclick = () => jump(g); g.onkeydown = e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); jump(g); } }; });
 }
 function paperCards(k, list) {
   const p = typeof k === "number" ? P[k] : null;
-  return `<section class="rp"><div class="rph">${p ? `<a href="#p${p.i}">${esc(p.short)}</a><span class="t">${esc(p.title)}</span>` : `<b>${esc(k)}</b><span class="t"></span>`}<span class="gs" aria-hidden="true">${list.map(c => `<i class="gsw g-${esc(c.grade)}"></i>`).join("")}</span></div>
-    <div class="rcards">${list.map(cardHTML).join("")}</div></section>`;
+  const rank = g => { const i = GORDER.indexOf(g); return i < 0 ? GORDER.length : i; };
+  list = list.slice().sort((a, b) => rank(a.grade) - rank(b.grade));
+  return `<section class="rp" id="rp-${p ? p.i : esc(slug(k))}" style="scroll-margin-top:80px"><div class="rph">${p ? `<a href="#p${p.i}">${esc(p.short)}</a><span class="t">${esc(p.title)}</span>` : `<b>${esc(k)}</b><span class="t"></span>`}</div>
+    <div class="rlist">${list.map(cardLine).join("")}</div></section>`;
+}
+function cardLine(c) {
+  const r = c.r != null ? R[c.r] : null;
+  const setting = c.set && (c.set.task_data || c.set.systems) || "";
+  const nh = c.hyp.length;
+  return `<details class="rl"><summary><i class="gsw g-${esc(c.grade)}" data-tip="${esc(human(c.grade))}: ${esc((CD.grades || {})[c.grade] || "")}"></i><span class="rl-t">${esc(r ? r.t : c.id)}</span><span class="rl-h${c.hcheck ? " nv" : ""}" data-tip="${esc(nh ? plural(nh, "stated hypothesis", "stated hypotheses") + (c.hcheck ? ", list not verified" : "") : "No stated hypotheses")}">${"<i></i>".repeat(nh)}</span><span class="rl-s">${esc(setting)}</span></summary>${cardHTML(c)}</details>`;
 }
 function cardHTML(c) {
   const r = c.r != null ? R[c.r] : null;
@@ -1577,7 +1781,7 @@ function cardHTML(c) {
     ${r ? `<a class="rct" href="#r${c.r}">${esc(r.t)}</a>` : `<div class="rct">${esc(c.id)}</div>`}
     <div class="mlab">${c.hyp.length ? `Needs ${plural(c.hyp.length, "stated hypothesis", "stated hypotheses")}` : "No stated hypotheses"}${c.hcheck ? ` <span class="unv" data-tip="${esc(c.hcheck)}">not verified</span>` : ""}</div>
     ${c.hyp.length ? `<ol class="hyps">${c.hyp.map(h => `<li>${esc(h)}</li>`).join("")}</ol>` : ""}
-    ${setting ? `<div class="rcs clamp c3"><b>Setting</b> · ${esc(setting)}</div>` : ""}
+    ${setting ? `<div class="rcs"><b>Setting</b> · ${esc(setting)}</div>` : ""}
   </article>`;
 }
 function cardBlock(c, p) {
