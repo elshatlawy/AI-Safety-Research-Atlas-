@@ -6,6 +6,8 @@
 <script>
 /* Old record-explorer links (?view=…, ?record=…, ?q=…) open the record graph, at their record if they name one. */
 if (location.search) { const r = new URLSearchParams(location.search).get("record"); location.replace(location.pathname + (r ? "#graph/" + encodeURIComponent(r) : "#graph")); }
+/* Inside a frame (the overview page shows the record graph this way) the page shows the graph alone. */
+if (window.top !== window.self) document.documentElement.classList.add("embed");
 </script>
 <title>Safety Research Atlas</title>
 <meta name="description" content="Open research questions on the debate safety case, ranked by the step they affect, with what later work settled and what is left.">
@@ -847,6 +849,28 @@ button.x2{background:none;cursor:pointer;padding:0}
 .frr .t{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .frr .m{font:500 11px "JetBrains Mono",ui-monospace,monospace;color:var(--muted);white-space:nowrap;align-self:start;padding-top:2px}
 .frr .p{grid-column:1/-1;font-size:11.5px;color:var(--muted)}
+/* proofs: the three-step guide */
+.pguide{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:0 0 22px}
+.pgi{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;min-width:0}
+.pgi>b{display:block;font-size:14.5px;margin-top:8px}
+.pgi p{margin:3px 0 0;font-size:13px;color:var(--ink2);line-height:1.45}
+.pgpic{display:block;width:132px;height:70px;overflow:visible}
+.pgpic text{font-size:9.5px;fill:var(--ink2);font-family:"Schibsted Grotesk",ui-sans-serif,system-ui,sans-serif}
+.pgpic text.sm{font-size:8.5px;fill:var(--muted)}
+.pgpic text.mono{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:8.5px;fill:var(--ink)}
+.pgpic .ln{fill:none;stroke:var(--line2);stroke-width:1.4}
+.pgpic .ln.on{stroke:var(--disputes);stroke-width:1.8}
+.pgpic .nd{fill:var(--ink2)} .pgpic .nd.df{fill:var(--surface);stroke:var(--ink2);stroke-width:1.4}
+.pgpic .nd.on{fill:color-mix(in srgb,var(--disputes) 55%,var(--surface))} .pgpic .nd.at{fill:var(--disputes)}
+.pgpic .bad{fill:var(--disputes)} .pgpic .badt{fill:#fff;font-size:9px;text-anchor:middle;font-weight:600}
+.pgpic .pg-doc{fill:var(--sunk);stroke:var(--line2);stroke-width:1.2}
+.pgpic .hlq{fill:var(--mark)}
+.pgpic .ck{fill:none;stroke:var(--agrees);stroke-width:1.6} .pgpic .ckm{fill:none;stroke:var(--agrees);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.pgnum{display:flex;align-items:baseline;gap:6px;height:70px;padding-top:14px}
+.pgnum b{font-family:"JetBrains Mono",ui-monospace,monospace;font-weight:500;font-size:34px;line-height:1}
+.pgnum span{font-size:13px;color:var(--ink2)}
+@media (max-width:860px){.pguide{grid-template-columns:1fr}.pgi{display:grid;grid-template-columns:132px minmax(0,1fr);grid-template-areas:"p b" "p t";gap:2px 14px;align-items:start}.pgi>svg,.pgi>.pgnum{grid-area:p}.pgi>b{grid-area:b;margin-top:0}.pgi p{grid-area:t}}
+@media (max-width:520px){.pgi{grid-template-columns:96px minmax(0,1fr)}.pgpic{width:96px;height:51px}.pgnum{height:auto;padding-top:0}.pgnum b{font-size:26px}}
 .howchk{margin-top:28px;font-size:13px;color:var(--ink2);max-width:80ch}
 .howchk summary{cursor:pointer;color:var(--ink2);font-weight:600}
 .howchk p{margin:6px 0 0}
@@ -1049,6 +1073,14 @@ a.fdot2:hover,a.fdot2:focus-visible{box-shadow:0 0 0 2px var(--surface),0 0 0 3.
 .lk{border:0;background:transparent;padding:0;color:var(--ink2);text-decoration:underline;text-underline-offset:3px;cursor:pointer;font-size:13px}
 .sheet .actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
 @media (max-width:720px){.rgbox{height:62vh}}
+/* inside a frame: the record graph alone, filling the frame */
+.embed .top,.embed .ghead,.embed .rgnote,.embed #app>section{display:none}
+.embed main.wrap{padding:0;max-width:none}
+.embed #app{display:flex;flex-direction:column;height:100vh}
+.embed .rgtools{margin:0 0 10px}
+.embed .rgbox{flex:1;height:auto;min-height:0}
+.embed .sheet{top:0}
+@media (max-width:720px){.embed .sheet,.embed .sheet.wide{top:auto;max-height:88vh}}
 </style>
 </head>
 <body>
@@ -1056,7 +1088,7 @@ a.fdot2:hover,a.fdot2:focus-visible{box-shadow:0 0 0 2px var(--surface),0 0 0 3.
   <a class="brand" href="#gaps" aria-label="Safety Research Atlas, open questions">
     <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><path d="M6 19 L12 7 L20 15" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M6 19 Q14 23 20 15" fill="none" stroke="currentColor" stroke-width="1.6" stroke-dasharray="2 2.4"/><circle cx="6" cy="19" r="3.2" fill="currentColor"/><circle cx="12" cy="7" r="3.2" fill="var(--bg)" stroke="currentColor" stroke-width="1.6"/><circle cx="20" cy="15" r="3.2" fill="currentColor"/></svg>
     <span>Safety Research Atlas</span></a>
-  <nav class="nav" aria-label="Views"><a href="overview.html">Overview</a><a href="#gaps" data-v="gaps">Gaps</a><a href="#discoveries" data-v="ledger">Discoveries</a><a href="#results" data-v="results">Results</a><a href="#map" data-v="map">Map</a><a href="#papers" data-v="papers">Papers</a><a href="#graph" data-v="graph">Graph</a><a href="#assumptions" data-v="assumptions" hidden>Assumptions</a><a href="#proofs" data-v="proofs" hidden>Proofs</a></nav>
+  <nav class="nav" aria-label="Views"><a href="overview.html">Overview</a><a href="#gaps" data-v="gaps">Gaps</a><a href="#discoveries" data-v="ledger">Discoveries</a><a href="#results" data-v="results">Results</a><a href="#map" data-v="map">Map</a><a href="#papers" data-v="papers">Papers</a><a href="#assumptions" data-v="assumptions" hidden>Assumptions</a><a href="#proofs" data-v="proofs" hidden>Proofs</a></nav>
   <button class="sbtn" id="openSearch" type="button" aria-label="Search the atlas"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M11 11l3.5 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Search</span><kbd>/</kbd></button>
 </div></header>
 <main class="wrap" id="app"><div class="empty">Loading the atlas…</div></main>
@@ -1178,8 +1210,22 @@ async function boot() {
 
 /* ---------- routing ---------- */
 let lastView = "";
+// In a frame only the record graph shows: its moves stay out of the parent page's history, and every other view opens in the parent page.
+const EMBED = document.documentElement.classList.contains("embed");
+function setHash(h) {
+  h = String(h).replace(/^#/, "");
+  if (!EMBED) { location.hash = h; return; }
+  history.replaceState(null, "", "#" + h); route();
+}
+if (EMBED) document.addEventListener("click", e => {
+  const a = e.target.closest("a[href]"); if (!a || a.target === "_blank" || e.defaultPrevented) return;
+  e.preventDefault();
+  const href = a.getAttribute("href");
+  if (/^#graph\b/i.test(href)) setHash(href); else window.top.location.href = new URL(href, location.href).href;
+});
 function route() {
   const h = decodeURIComponent(location.hash.slice(1)).toLowerCase();
+  if (EMBED && !/^graph\b/.test(h)) { window.top.location.href = location.href; return; }
   let m, view;
   hideTip(); hidePop();
   if (!h || h === "gaps") view = ["gaps", null, null];
@@ -2184,7 +2230,7 @@ function openSheet(html, back, wide) {
   sh.classList.toggle("wide", !!wide);
   sh.innerHTML = `<button class="x" type="button" aria-label="Close">×</button>` + html;
   sh.hidden = false; sh.scrollTop = 0;
-  sh.querySelector(".x").onclick = () => { location.hash = S.back; };
+  sh.querySelector(".x").onclick = () => setHash(S.back);
 }
 function closeSheet() { const sh = $("#sheet"); if (sh) { sh.hidden = true; sh.innerHTML = ""; } }
 function waffle(pi, me, hlKind) {
@@ -2491,7 +2537,7 @@ function wireGraph() {
   svg.addEventListener("click", e => {
     if (moved) { moved = false; return; }
     const d = e.target.closest(".rgd");
-    if (d) { location.hash = graphHref(+d.dataset.i); return; }
+    if (d) { setHash(graphHref(+d.dataset.i)); return; }
     const g = e.target.closest("[data-g]"); if (g) zoomGroup(+g.dataset.g);
   });
   box.querySelector(".rgzoom").addEventListener("click", e => {
@@ -2517,7 +2563,7 @@ function wireGraph() {
   };
   q.addEventListener("input", () => { clearTimeout(tq); tq = setTimeout(runFind, 120); });
   q.addEventListener("keydown", e => {
-    if (e.key === "Enter") { e.preventDefault(); clearTimeout(tq); runFind(); const a = res.querySelector("a"); res.hidden = true; if (a) location.hash = a.getAttribute("href"); }
+    if (e.key === "Enter") { e.preventDefault(); clearTimeout(tq); runFind(); const a = res.querySelector("a"); res.hidden = true; if (a) setHash(a.getAttribute("href")); }
     if (e.key === "Escape") { q.value = ""; runFind(); }
     if (e.key === "ArrowDown") { const a = res.querySelector("a"); if (a && !res.hidden) { e.preventDefault(); a.focus(); } }
   });
@@ -2635,7 +2681,7 @@ $("#q").addEventListener("keydown", e => {
 $("#search").addEventListener("click", e => { if (e.target.id === "search") closeSearch(); else if (e.target.closest(".hit")) closeSearch(); });
 $("#openSearch").onclick = () => openSearch("");
 document.addEventListener("keydown", e => {
-  if (e.key === "Escape") { if (!$("#search").hidden) closeSearch(); else if (!$("#sheet").hidden) location.hash = S.back; }
+  if (e.key === "Escape") { if (!$("#search").hidden) closeSearch(); else if (!$("#sheet").hidden) setHash(S.back); }
   else if ((e.key === "/" || (e.key === "k" && (e.metaKey || e.ctrlKey))) && $("#search").hidden && !/input|textarea/i.test(document.activeElement?.tagName || "")) { e.preventDefault(); openSearch(""); }
 });
 
@@ -3139,13 +3185,14 @@ function renderProofs(arg) {
       body = papersHTML(pg, list);
     }
   }
-  const PS = DP.proofs || [], nE = PS.reduce((s, p) => s + p.edges.filter(e => e.state === "AI_CHECKED").length, 0), nN = PS.reduce((s, p) => s + p.nodes.length, 0);
+  const PS = DP.proofs || [], nN = PS.reduce((s, p) => s + p.nodes.length, 0);
   $("#app").innerHTML = `
     <div class="ghead">
       <div class="eyebrow">Proofs · ${lean ? plural((DP.lean || []).length, "Lean project") : plural(PS.length, "paper")}</div>
       <h1 class="gtitle">${lean ? "What each Lean declaration uses" : "How each paper's results build on each other"}</h1>
-      <p class="lede">${lean ? "Every line is a real use in the Lean source." : `${nE} checked links join ${nN} results in ${PS.length} papers; a problem in one result reaches every result built on it.`}</p>
+      <p class="lede">${lean ? "The same kind of picture for Lean code, where a computer has checked every proof step." : `Inside ${PS.length} of the ${P.length} debate papers: which result's proof uses which, ${fmt(nN)} numbered results in all. A problem in one result reaches every result built on it.`}</p>
     </div>
+    ${proofGuide(lean)}
     <div class="seg" style="margin-bottom:14px" role="group" aria-label="Paper proofs or Lean code"><a href="#proofs" class="${lean ? "" : "on"}"${lean ? "" : ' aria-current="page"'}>Papers</a><a href="#proofs=lean" class="${lean ? "on" : ""}"${lean ? ' aria-current="page"' : ""}>Lean</a></div>
     ${body}
     <details class="howchk"><summary>How this was checked</summary><p>${esc(DP.note || "")}</p></details>`;
@@ -3159,6 +3206,32 @@ function renderProofs(arg) {
     else if (bx.scrollWidth > bx.clientWidth + 4) bx.scrollLeft = (bx.scrollWidth - bx.clientWidth) / 2;
     edge();
   }
+}
+// A three-step guide for readers new to proofs: what a dot and a line are, where the lines come from, what a problem does.
+function proofGuide(lean) {
+  const PS = DP.proofs || [], all = PS.flatMap(p => p.edges), ok = all.filter(e => e.state === "AI_CHECKED").length;
+  const probs = PS.flatMap(p => p.problems), au = probs.filter(q => q.id.startsWith("AU-")), sev = s => au.filter(q => q.severity === s).length;
+  const L = DP.lean || [], kind = k => L.filter(x => x.project.startsWith(k)).length;
+  const layers = (hit) => `<svg class="pgpic" viewBox="0 0 132 70" aria-hidden="true">
+    <path class="ln${hit ? " on" : ""}" d="M66 14V35"/><path class="ln" d="M66 35L34 58M66 35L98 58"/><path class="ln" d="M66 14C110 18 112 40 98 58"/>
+    <rect class="nd${hit ? " on" : ""}" x="60" y="8" width="12" height="12" rx="2.5"/><text x="78" y="17">Theorem</text>
+    <rect class="nd${hit ? " on at" : ""}" x="60" y="29" width="12" height="12" rx="2.5"/><text x="78" y="38">Lemma</text>${hit ? `<rect class="bad" x="42" y="29" width="13" height="12" rx="4"/><text class="badt" x="48.5" y="38.2">1</text>` : ""}
+    <circle class="nd df" cx="34" cy="58" r="5.5"/><circle class="nd df" cx="98" cy="58" r="5.5"/><text x="2" y="68" class="sm">definitions</text></svg>`;
+  const doc = `<svg class="pgpic" viewBox="0 0 132 70" aria-hidden="true"><path class="pg-doc" d="M8 4h40l10 10v52H8z"/><path class="ln" d="M15 20h30M15 27h34M15 41h26M15 48h32M15 55h20"/>
+    <rect class="hlq" x="12" y="30" width="45" height="9" rx="2"/><text x="14.5" y="37.2" class="sm">by Lemma 3</text><path class="ln" d="M61 34.5h15"/>
+    <circle class="ck" cx="88" cy="24" r="9"/><path class="ckm" d="M84 24l3 3 5-6"/><circle class="ck" cx="88" cy="47" r="9"/><path class="ckm" d="M84 47l3 3 5-6"/><text x="101" y="28" class="sm">check 1</text><text x="101" y="51" class="sm">check 2</text></svg>`;
+  const lean4 = `<svg class="pgpic" viewBox="0 0 132 70" aria-hidden="true"><rect class="pg-doc" x="6" y="6" width="74" height="58" rx="6"/><text x="13" y="22" class="mono">theorem t :</text><text x="19" y="34" class="mono">P → Q := by</text><text x="19" y="46" class="mono">exact h</text>
+    <circle class="ck" cx="104" cy="35" r="13"/><path class="ckm" d="M98 35l4.5 4.5 8-9"/></svg>`;
+  if (lean) return `<div class="pguide" role="list" aria-label="How to read the Lean graphs">
+    <div class="pgi" role="listitem">${lean4}<b>Lean checks every step</b><p>Lean is a programming language for maths. A proof written in it is accepted only once a computer has checked every step, so no step can be skipped. Whether a Lean statement says what the paper says is a separate check.</p></div>
+    <div class="pgi" role="listitem">${layers(false)}<b>The same picture, from the code</b><p>Each dot is a Lean definition or theorem, and a line means it uses another one. Lean records these uses itself, so no line needed a check.</p></div>
+    <div class="pgi" role="listitem"><div class="pgnum"><b>${L.length}</b><span>projects</span></div><b>What the ${L.length} projects are</b><p>${kind("audit-")} restate paper theorems to look for problems, ${kind("card-")} pair a paper's results with Lean versions, ${kind("pilot-")} prove narrowed versions of open questions, and ${kind("debate")} is Google DeepMind's Lean version of doubly-efficient debate. None leaves a proof unfinished.</p></div>
+  </div>`;
+  return `<div class="pguide" role="list" aria-label="How to read the proof graphs">
+    <div class="pgi" role="listitem">${layers(false)}<b>Results are built in layers</b><p>Each dot is one numbered result in a paper: definitions at the bottom, then lemmas, then the theorems built on them. A line means the upper result's proof uses the lower one.</p></div>
+    <div class="pgi" role="listitem">${doc}<b>Every line was read from the paper</b><p>We noted each place a proof cites another result, such as "by Lemma 3". Two independent AI checks compared each one with the PDF: ${ok} of ${all.length} passed and are drawn, and the rest are listed under each graph.</p></div>
+    <div class="pgi" role="listitem">${layers(true)}<b>A problem travels upward</b><p>Restating these theorems in Lean, where a computer checks every step, turned up ${au.length} problems: ${sev("error")} errors (something printed is wrong), ${sev("gap")} gaps (a step is skipped) and ${sev("ambiguity")} ambiguities (it can be read two ways).${probs.length > au.length ? ` Reading the proofs closely found ${probs.length - au.length} more.` : ""} Select one to light up every result that leans on it.</p></div>
+  </div>`;
 }
 function thumbSVG(pg) {
   const w = 128, h = 42, md = Math.max(0, ...pg.nodes.map(n => n.depth));

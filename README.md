@@ -24,7 +24,7 @@ No coordinator keys, participant responses, local model assets or private joined
 
 ## Record graph
 
-`index.html#graph` draws every record as one dot, from `graph.json`. Records are grouped by Louvain community detection over the recorded links, with a weaker tie between records that quote the same source; inside a group, records from one paper or one Lean namespace sit together. Groups and positions are navigation, not evidence: a group is not a field, and two dots side by side are not a link. A dot opens the record's text, state, sources and links from its agent card, and `#graph/<record id>` opens one record. `PUBLIC_BUILD_MANIFEST.json` lists the file under `record_graph`.
+`index.html#graph` draws every record as one dot, from `graph.json`; `overview.html` shows it in a frame. Records are grouped by Louvain community detection over the recorded links, with a weaker tie between records that quote the same source; inside a group, records from one paper or one Lean namespace sit together. Groups and positions are navigation, not evidence: a group is not a field, and two dots side by side are not a link. A dot opens the record's text, state, sources and links from its agent card, and `#graph/<record id>` opens one record. `PUBLIC_BUILD_MANIFEST.json` lists the file under `record_graph`.
 
 ## For AI agents
 
