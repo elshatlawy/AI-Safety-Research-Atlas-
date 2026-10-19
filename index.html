@@ -22,6 +22,8 @@ if (location.search) { const r = new URLSearchParams(location.search).get("recor
   --lg-proved:#1baf7a; --lg-problem:#eb6834; --lg-derived:#6250d6; --lg-partly:#256abf; --lg-narrowed:#86b6ef; --lg-answered:#184f95;
   --g-proved:#1b1c1a; --g-multi:#184f95; --g-single:#3987e5; --g-prelim:#9ec5f4;
   --area0:#2a78d6; --area1:#1baf7a; --area2:#eda100;
+  --k0:#2a78d6; --k1:#eb6834; --k2:#1baf7a; --k3:#eda100; --k4:#e87ba4; --k5:#008300;
+  --fp1:#cde2fb; --fp2:#9ec5f4; --fp3:#6da7ec; --fp4:#3987e5; --fp5:#256abf; --fp6:#184f95; --fp7:#0d366b;
   --shadow:0 1px 2px rgba(27,28,26,.05),0 12px 32px rgba(27,28,26,.08);
   --r:14px;
 }
@@ -34,6 +36,8 @@ if (location.search) { const r = new URLSearchParams(location.search).get("recor
   --lg-proved:#199e70; --lg-problem:#d95926; --lg-derived:#9085e9; --lg-partly:#3987e5; --lg-narrowed:#1c5cab; --lg-answered:#86b6ef;
   --g-proved:#ecebe5; --g-multi:#9ec5f4; --g-single:#3987e5; --g-prelim:#1c5cab;
   --area0:#3987e5; --area1:#199e70; --area2:#c98500;
+  --k0:#3987e5; --k1:#d95926; --k2:#199e70; --k3:#c98500; --k4:#d55181; --k5:#008300;
+  --fp1:#223f66; --fp2:#1f5291; --fp3:#1c5cab; --fp4:#2f74c9; --fp5:#3987e5; --fp6:#6da7ec; --fp7:#9ec5f4;
   --shadow:0 1px 2px rgba(0,0,0,.3),0 12px 32px rgba(0,0,0,.35); color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#131412; --surface:#1b1c1a; --sunk:#222320; --ink:#ecebe5; --ink2:#b3b2aa; --muted:#878780;
@@ -44,6 +48,8 @@ if (location.search) { const r = new URLSearchParams(location.search).get("recor
   --lg-proved:#199e70; --lg-problem:#d95926; --lg-derived:#9085e9; --lg-partly:#3987e5; --lg-narrowed:#1c5cab; --lg-answered:#86b6ef;
   --g-proved:#ecebe5; --g-multi:#9ec5f4; --g-single:#3987e5; --g-prelim:#1c5cab;
   --area0:#3987e5; --area1:#199e70; --area2:#c98500;
+  --k0:#3987e5; --k1:#d95926; --k2:#199e70; --k3:#c98500; --k4:#d55181; --k5:#008300;
+  --fp1:#223f66; --fp2:#1f5291; --fp3:#1c5cab; --fp4:#2f74c9; --fp5:#3987e5; --fp6:#6da7ec; --fp7:#9ec5f4;
   --shadow:0 1px 2px rgba(0,0,0,.3),0 12px 32px rgba(0,0,0,.35); color-scheme:dark}
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
@@ -750,7 +756,7 @@ a.srt:hover{text-decoration:underline}
 .pop .pm{color:var(--ink2);margin-top:4px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
 .pop .pm b{color:var(--ink);font-family:"JetBrains Mono",ui-monospace,monospace;font-weight:500}
 .pop .mtl{margin-top:8px}
-/* ---------- assumptions: butterfly, family panel, result-by-family grid ---------- */
+/* ---------- assumptions: bridge to the case, family panel, paper fingerprints, bundles ---------- */
 .famwrap{display:grid;grid-template-columns:minmax(0,1fr);gap:28px;align-items:start}
 .famwrap.sel{grid-template-columns:minmax(0,1fr) minmax(0,380px)}
 @media (max-width:1079px){.famwrap.sel{grid-template-columns:1fr;gap:20px}}
@@ -760,25 +766,75 @@ a.srt:hover{text-decoration:underline}
 .fsw{display:inline-block;width:16px;height:10px;border-radius:2px;flex:none}
 .fsw.r{background:var(--seq)} .fsw.s{background:var(--steps)}
 .fsw.h{background:repeating-linear-gradient(135deg,var(--steps) 0 2px,transparent 2px 5px);box-shadow:inset 0 0 0 1px var(--steps)}
-.bfly{min-height:120px}
-.bfly svg{display:block}
-.bfly .fr{cursor:pointer;outline:none}
-.bfly .fr .hz{fill:transparent}
-.bfly .fr:hover .hz,.bfly .fr:focus-visible .hz{fill:var(--sunk)}
-.bfly .fr.on .hz{fill:var(--sunk);stroke:var(--ink);stroke-width:1.2}
-.bfly .fr.on .fn{font-weight:650;fill:var(--ink)}
-.bfly .br{fill:var(--seq)} .bfly .bs{fill:var(--steps)}
-.bfly .bh{fill:url(#fhatch);stroke:var(--steps);stroke-width:1}
-.bfly .fn{font-size:12.5px;fill:var(--ink)}
-.bfly .fk{font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;fill:var(--muted);font-weight:600}
-.bfly .fc{font:500 11px "JetBrains Mono",ui-monospace,monospace;fill:var(--ink2)}
-.bfly .fz{font:500 11px "JetBrains Mono",ui-monospace,monospace;fill:var(--muted)}
-.bfly .fu{font-size:11px;fill:var(--muted)}
-.bfly .ax{font-size:11.5px;fill:var(--muted)}
-.bfly .gl{stroke:var(--line);stroke-width:1}
-.bfly .axl{stroke:var(--line2);stroke-width:1}
-.bfly .kl{stroke:var(--line);stroke-width:1}
-.bfly .axl,.bfly .gl,.bfly .ax,.bfly .fk{pointer-events:none}
+.bridge{min-height:120px}
+.bridge svg{display:block}
+.bridge .bf{cursor:pointer;outline:none}
+.bridge .bf .hz{fill:transparent}
+.bridge .bf:hover .hz,.bridge .bf:focus-visible .hz{fill:var(--sunk)}
+.bridge .bf.on .hz{fill:var(--sunk);stroke:var(--ink);stroke-width:1.2}
+.bridge .bf.on .ln{font-weight:650}
+.bridge .ns{fill:var(--steps)} .bridge .nn{fill:var(--seq)}
+.bridge .ns.unc{fill:url(#fhatch);stroke:var(--steps);stroke-width:1}
+.bridge .rb{opacity:.28;transition:opacity .15s}
+.bridge .r2s{fill:var(--steps)} .bridge .r2n{fill:var(--seq);opacity:.22}
+.bridge .rb.unc{fill:url(#fhatch)}
+.bridge .rb:hover{opacity:.62}
+.bridge svg.sel .rb,.bridge svg.hl .rb{opacity:.07}
+.bridge svg.sel .rb.on,.bridge svg.hl .rb.hv{opacity:.62}
+.bridge .ln{font-size:12px;fill:var(--ink)}
+.bridge svg.nar .ln{font-size:11px;paint-order:stroke;stroke:var(--surface);stroke-width:3.5px;stroke-linejoin:round}
+.bridge .lc{font:500 10.5px "JetBrains Mono",ui-monospace,monospace;fill:var(--muted)}
+.bridge .bkn{font-size:10px;letter-spacing:.08em;text-transform:uppercase;fill:var(--muted);font-weight:600;pointer-events:none}
+.bridge svg.nar .bkn{paint-order:stroke;stroke:var(--surface);stroke-width:3px}
+.bridge .rt{font-size:13px;font-weight:650;fill:var(--ink)} .bridge svg.nar .rt{font-size:11.5px}
+.bridge .rt2{font-size:11.5px;fill:var(--ink2)}
+.bridge a.bk{outline:none} .bridge a.bk:hover .rt,.bridge a.bk:focus-visible .rt{text-decoration:underline}
+/* paper fingerprints */
+.fprow{min-height:19px}
+.fprow.ny{border-top:1px solid var(--line)}
+.fprow a.fgl{text-decoration:none}
+.fprow a.fgl:hover{color:var(--ink);text-decoration:underline}
+.fpc{display:block;width:13px;height:13px;border-radius:3px;justify-self:center;position:relative;z-index:1}
+.fpc:hover,.fpc:focus-visible{outline:2px solid var(--ink);outline-offset:1px}
+.fpkey{display:inline-flex;align-items:center;gap:2px}
+.fpkey i{display:inline-block;width:14px;height:10px;border-radius:2px}
+.fpkey b{font:500 11px "JetBrains Mono",ui-monospace,monospace;color:var(--ink2);margin:0 4px}
+.frr.hit{background:var(--mark)}
+/* bundles */
+.bdsec{margin-top:36px}
+.secsub{color:var(--ink2);font-size:14px;margin:-6px 0 12px;max-width:72ch}
+.kleg{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12.5px;color:var(--ink2);margin:2px 0 6px}
+.kleg span{display:inline-flex;align-items:center;gap:6px}
+.kd{display:inline-block;width:10px;height:10px;border-radius:50%;flex:none}
+.bdwrap{display:grid;grid-template-columns:minmax(0,1fr);gap:16px;align-items:start}
+@media (min-width:1100px){.bdwrap{grid-template-columns:minmax(0,1fr) 300px}}
+.bund{min-height:120px} .bund svg{display:block;margin:0 auto}
+.bund .ch{fill:none;stroke:var(--muted);opacity:.32;stroke-linecap:round;transition:opacity .15s}
+.bund .chs{stroke:var(--ink2);opacity:.5}
+.bund .ch:hover{opacity:.9}
+.bund svg.sel .ch,.bund svg.hl .ch{opacity:.06}
+.bund svg.sel .ch.on{opacity:.85} .bund svg.hl .ch.hv{opacity:.85;stroke:var(--ink)}
+.bund .bnd{cursor:pointer;outline:none}
+.bund .bnd .hz{fill:transparent}
+.bund .bnd:hover .hz,.bund .bnd:focus-visible .hz{fill:var(--sunk)}
+.bund .bd{stroke:var(--surface);stroke-width:2}
+.bund .bnd.on .bd{stroke:var(--ink)}
+.bund svg.sel .bnd:not(.on):not(.near) .bd{opacity:.3}
+.bund .bl{font-size:11px;fill:var(--ink)}
+.bund svg.sel .bnd:not(.on):not(.near) .bl{fill:var(--muted)}
+.bund .bnd.on .bl{font-weight:650}
+.bdlist{min-width:0}
+.bdlist .mlab{margin-top:4px}
+.bdl{display:flex;flex-direction:column}
+.bdr{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:3px 0;border-bottom:1px solid var(--line)}
+.bdp{display:flex;flex-direction:column;align-items:flex-start;min-width:0}
+.bdpl{display:flex;align-items:center;gap:2px}
+.bfb{display:inline-flex;align-items:center;gap:6px;border:0;background:none;padding:3px 5px;border-radius:6px;cursor:pointer;font-size:13px;line-height:1.3;text-align:left;color:var(--ink)}
+.bfb:hover{background:var(--sunk)}
+.bdc{font:500 12px "JetBrains Mono",ui-monospace,monospace;color:var(--ink2)}
+.bdh{font-size:12.5px;color:var(--muted);margin:8px 0 0}
+.bdlist .plink{display:inline-block;margin-top:12px}
+button.x2{background:none;cursor:pointer;padding:0}
 .fampanel{position:sticky;top:76px;max-height:calc(100vh - 92px);overflow:auto}
 @media (max-width:1079px){.fampanel{position:static;max-height:none}}
 #fampanel{scroll-margin-top:76px}
@@ -1042,7 +1098,7 @@ const LG_VAR = {"Proved":"--lg-proved","Paper problem":"--lg-problem","Derived":
 
 let D, P, R, L, GQ, QBY, STEPS, STEP, BRANCHES, LG, CD, CARD_BY_R, ARX, ADJ, PREC, CASE = null, PAIRS = [], POOLED_E = null, lastStep;
 const CN = {}, CKIDS = new Map();
-const S = {fams:new Set(FAMS.map(f => f[0])), leads:false, pbase:"papers", kq:null, sk:null, step:null, gstatus:null, grade:null, openQ:null, back:"gaps", hops:1, lgoff:new Set(), focusStep:null, fam:null, focusFam:null, gsort:"paper", ppaper:null, prob:null, pnode:null, lproj:null, lsel:null, lprob:null, flow:null};
+const S = {fams:new Set(FAMS.map(f => f[0])), leads:false, pbase:"papers", kq:null, sk:null, step:null, gstatus:null, grade:null, openQ:null, back:"gaps", hops:1, lgoff:new Set(), focusStep:null, fam:null, focusFam:null, famPaper:null, bfam:null, ppaper:null, prob:null, pnode:null, lproj:null, lsel:null, lprob:null, flow:null};
 const $ = (s, r = document) => r.querySelector(s);
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const fmt = n => n.toLocaleString("en-US");
@@ -2793,6 +2849,7 @@ function famCaption() {
 function renderAssumptions(fid) {
   const f = fid && FAMI[fid] ? FAMI[fid] : null, id = f ? f.id : null;
   const changed = S.fam !== id; S.fam = id;
+  if (S.famPaper && S.famPaper[0] !== id) S.famPaper = null;
   const box = $("#fgbox"), keep = box ? [box.scrollLeft, box.scrollTop] : null;
   const nUnc = DP.families.filter(x => x.steps_state !== "AI_CHECKED").length;
   $("#app").innerHTML = `
@@ -2803,70 +2860,119 @@ function renderAssumptions(fid) {
     </div>
     <div class="famwrap${f ? " sel" : ""}">
       <div class="famcard">
-        <div class="cph"><b>Each family: results that use it, steps that name it</b></div>
-        <div class="fleg"><span><i class="fsw r"></i>results that use it</span><span><i class="fsw s"></i>safety-case steps that name it</span>${nUnc ? `<span><i class="fsw h"></i>link not yet checked</span>` : ""}</div>
-        <div class="viz bfly" data-viz="bfly"></div>
+        <div class="cph"><b>Where each family's results land in the safety case</b></div>
+        <div class="fleg"><span><i class="fsw s"></i>to a step that names it</span><span><i class="fsw r"></i>no step names it</span>${nUnc ? `<span><i class="fsw h"></i>link not yet checked</span>` : ""}<span>width: results that use the family</span></div>
+        <div class="viz bridge" data-viz="bridge"></div>
       </div>
       ${f ? `<aside class="stepban fampanel" id="fampanel" aria-live="polite">${famPanel(f)}</aside>` : ""}
     </div>
-    <section id="fgrid">${gridHTML()}</section>
+    <section id="fgrid">${fpHTML()}</section>
+    <section class="bdsec">
+      <div class="sechead"><h2>Families that travel together</h2></div>
+      <p class="secsub">A line joins two families that the same results use; thicker means more results.</p>
+      <div class="famcard bdcard"><div class="kleg">${FKINDS.map((k, i) => `<span><i class="kd" style="background:var(--k${i % 6})"></i>${esc(k[0].toUpperCase() + k.slice(1))}</span>`).join("")}</div>
+        <div class="bdwrap"><div class="viz bund" data-viz="bund"></div><div class="bdlist" id="bdlist" aria-live="polite">${bundList()}</div></div></div>
+    </section>
     <details class="howchk"><summary>How this was checked</summary><p>${esc(DP.note || "")}</p></details>`;
   drawViz($("#app"));
   const nb = $("#fgbox"); if (nb && keep) { nb.scrollLeft = keep[0]; nb.scrollTop = keep[1]; }
-  if (S.focusFam) { $(`.bfly .fr[data-fam="${S.focusFam}"]`)?.focus({preventScroll: true}); S.focusFam = null; }
+  if (S.focusFam) { $(`.bridge .bf[data-fam="${S.focusFam}"]`)?.focus({preventScroll: true}); S.focusFam = null; }
   /* after the router's own scroll reset, bring a newly opened panel into view when it sits off screen (phones) */
-  if (changed && f) setTimeout(() => {
+  if ((changed || S.famPaper) && f) setTimeout(() => {
     const sp = $("#fampanel"), r = sp && sp.getBoundingClientRect();
     if (r && (r.top < 60 || r.top > innerHeight - 140)) sp.scrollIntoView({block: "start"});
   }, 0);
 }
-/* butterfly: one row per family, grouped by kind; left = results that use it, right = steps that name it (two counts, each on its own scale) */
-function bflySVG(W) {
-  W = Math.max(300, Math.floor(W) || 600);
-  const F = FCOLS, wide = W >= 640;
-  const maxR = Math.max(1, ...F.map(f => f.results)), maxS = Math.max(1, ...F.map(f => f.steps.length));
-  const unc = F.some(f => f.steps_state !== "AI_CHECKED");
-  const nameW = wide ? Math.min(260, W * .3) : 0;
-  const cx0 = wide ? (W - nameW) / 2 : W / 2, cx1 = wide ? cx0 + nameW : W / 2;
-  const L0 = wide ? cx0 - 8 : cx0 - 1, R0 = wide ? cx1 + 8 : cx1 + 1;
-  const Lw = L0 - 30, Rw = W - R0 - (wide && unc ? 160 : 30);
-  const sl = v => v / maxR * Lw, sr = v => v / maxS * Rw;
-  const out = [], marks = [];
-  let y = 26;
-  out.push(`<text class="ax" x="${f1(wide ? L0 : L0 - 5)}" y="14" text-anchor="end">results that use it</text><text class="ax" x="${f1(wide ? R0 : R0 + 5)}" y="14">steps that name it</text>`);
-  const y0 = y;
-  FKINDS.forEach(k => {
-    out.push(`<text class="fk" x="${wide ? f1((cx0 + cx1) / 2) : 0}" y="${y + 17}"${wide ? ' text-anchor="middle"' : ""}>${esc(k)}</text>`);
-    y += 24;
-    F.filter(f => f.kind === k).forEach(f => {
-      const n = f.steps.length, u = f.steps_state !== "AI_CHECKED", rh = wide ? 22 : 38;
-      const by = wide ? y + 5 : y + 19, bh = wide ? 12 : 10, ty = by + bh / 2 + 3.8;
-      const lw = sl(f.results), rw = sr(n);
-      const g = [`<rect class="hz" x="0" y="${f1(y)}" width="${W}" height="${rh}" rx="6"/>`];
-      g.push(wide ? `<text class="fn" x="${f1((cx0 + cx1) / 2)}" y="${f1(y + 15)}" text-anchor="middle">${esc(f.name)}</text>`
-                  : `<text class="fn" x="2" y="${f1(y + 13)}">${esc(f.name)}</text>${u ? `<text class="fu" x="${W - 2}" y="${f1(y + 13)}" text-anchor="end">link not yet checked</text>` : ""}`);
-      if (f.results) g.push(`<rect class="br" x="${f1(L0 - lw)}" y="${f1(by)}" width="${f1(lw)}" height="${bh}" rx="2"/>`);
-      g.push(`<text class="${f.results ? "fc" : "fz"}" x="${f1(L0 - lw - 4)}" y="${f1(ty)}" text-anchor="end">${f.results}</text>`);
-      if (n) g.push(`<rect class="${u ? "bh" : "bs"}" x="${f1(R0)}" y="${f1(by)}" width="${f1(rw)}" height="${bh}" rx="2"/>`);
-      g.push(`<text class="${n ? "fc" : "fz"}" x="${f1(R0 + rw + 4)}" y="${f1(ty)}">${n}${wide && u ? `<tspan class="fu" dx="6">link not yet checked</tspan>` : ""}</text>`);
-      const aria = `${f.name}: ${plural(f.results, "result")} use it; ${plural(n, "step")} of the case name it${u ? ", link not yet checked" : ""}`;
-      marks.push(`<g class="fr${S.fam === f.id ? " on" : ""}" data-fam="${esc(f.id)}" data-pop="fam:${esc(f.id)}" tabindex="0" role="button" aria-pressed="${S.fam === f.id}" aria-label="${esc(aria)}" data-r="${f.results}" data-s="${n}">${g.join("")}</g>`);
-      y += rh;
-    });
+/* bridge: each family's results (left, sized by how many use it) flow to the parts of the safety case that name it (right);
+   the key claims come from the case's own labels, and a family that names several parts is split evenly between them */
+function bridgeData() {
+  if (bridgeData.d) return bridgeData.d;
+  const kcs = Object.values(CN).map(n => [n, +(((n.pl || "").match(/Key claim (\d+)/) || [])[1] || 0)]).filter(x => x[1]).sort((a, b) => a[1] - b[1]);
+  const right = kcs.map(([n, k]) => ({id: n.id, t: "Key claim " + k, s: "Key claim " + k, d: n.label}));
+  right.push({id: "OTHER", t: "Elsewhere in the case", s: "Elsewhere", d: "open problems and other steps"}, {id: "NONE", t: "No step names it", s: "No step names it", d: ""});
+  const ri = Object.fromEntries(right.map((r, i) => [r.id, i])), kset = new Set(kcs.map(x => x[0].id));
+  const land = sid => { for (let i = sid; i && CN[i]; i = CN[i].parent) if (kset.has(i)) return i; return "OTHER"; };
+  const fams = FKINDS.flatMap(k => DP.families.filter(f => f.kind === k).sort((a, b) => b.results - a.results));
+  const dest = {}, rin = {};
+  fams.forEach(f => {
+    const ds = uniq(f.steps.map(s => land(s.id))).sort((a, b) => ri[a] - ri[b]);
+    dest[f.id] = ds.length ? ds : ["NONE"];
+    dest[f.id].forEach(d => { rin[d] = (rin[d] || 0) + f.results / dest[f.id].length; });
   });
-  const H = Math.ceil(y + 24), st = m => m <= 6 ? 2 : m <= 15 ? 5 : m <= 40 ? 10 : 20;
-  const grid = [];
-  if (wide) {
-    for (let t = st(maxR); t <= maxR; t += st(maxR)) grid.push(`<path class="gl" d="M${f1(L0 - sl(t))} ${y0}V${f1(y)}"/><text class="ax" x="${f1(L0 - sl(t))}" y="${f1(y + 16)}" text-anchor="middle">${t}</text>`);
-    for (let t = st(maxS); t <= maxS; t += st(maxS)) grid.push(`<path class="gl" d="M${f1(R0 + sr(t))} ${y0}V${f1(y)}"/><text class="ax" x="${f1(R0 + sr(t))}" y="${f1(y + 16)}" text-anchor="middle">${t}</text>`);
-  }
-  const axis = wide ? `<path class="axl" d="M${f1(L0)} ${y0}V${f1(y)}M${f1(R0)} ${y0}V${f1(y)}"/>` : `<path class="axl" d="M${f1(cx0)} ${y0}V${f1(y)}"/>`;
-  return `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="group" aria-label="${DP.families.length} assumption families: for each, how many results use it and how many steps of the safety case name it">
+  return bridgeData.d = {right, fams, dest, rin};
+}
+/* words wrapped into at most L lines of about n characters, the last one cut with an ellipsis */
+function wrapWords(s, n, L) {
+  const out = [""];
+  s.split(/\s+/).forEach(w => { const c = out[out.length - 1]; if (!c || (c + " " + w).length <= n) out[out.length - 1] = c ? c + " " + w : w; else out.push(w); });
+  if (out.length > L) { out.length = L; out[L - 1] = out[L - 1].replace(/\s*\S*$/, "") + "…"; }
+  return out;
+}
+function bridgeSVG(W) {
+  W = Math.max(300, Math.floor(W) || 600);
+  const {right, fams, dest, rin} = bridgeData(), wide = W >= 640;
+  const tot = fams.reduce((s, f) => s + f.results, 0) || 1, k = 380 / tot;
+  const nw = 10, gap = 3, slot = 11, lx = wide ? Math.min(250, Math.round(W * .3)) : 0, rlab = wide ? Math.min(230, Math.round(W * .27)) : 76, rx = W - rlab - nw;
+  const out = [], marks = [], rib = [], lpos = {};
+  let y = 4, kp = null;
+  fams.forEach(f => {
+    if (f.kind !== kp) { y += kp ? 12 : 0; out.push(`<text class="bkn" x="${wide ? lx - 8 : nw + 6}" y="${f1(y + 10)}"${wide ? ' text-anchor="end"' : ""}>${esc(f.kind)}</text>`); y += 16; kp = f.kind; }
+    const h = Math.max(1.5, f.results * k), sy = Math.max(h, slot), on = S.fam === f.id, unc = f.steps_state !== "AI_CHECKED", none = dest[f.id][0] === "NONE";
+    lpos[f.id] = y;
+    const aria = `${f.name}: ${plural(f.results, "result")} use it; ${none ? "no step of the case names it" : "named in " + andList(dest[f.id].map(d => right.find(r => r.id === d).t.toLowerCase()))}${unc ? ", link not yet checked" : ""}`;
+    marks.push(`<g class="bf${on ? " on" : ""}" data-fam="${esc(f.id)}" data-pop="fam:${esc(f.id)}" tabindex="0" role="button" aria-pressed="${on}" aria-label="${esc(aria)}"><rect class="hz" x="0" y="${f1(y - gap / 2)}" width="${wide ? lx + nw + 4 : f1(rx - 4)}" height="${f1(sy + gap)}" rx="4"/><rect class="${none ? "nn" : "ns"}${unc ? " unc" : ""}" x="${lx}" y="${f1(y)}" width="${nw}" height="${f1(h)}" rx="2"/><text class="ln" x="${wide ? lx - 8 : nw + 6}" y="${f1(y + sy / 2 + 4)}"${wide ? ' text-anchor="end"' : ""}>${esc(f.name)} <tspan class="lc">${f.results}</tspan></text></g>`);
+    y += sy + gap;
+  });
+  /* the right-hand parts keep their order and spread over the same height; each keeps room for its label */
+  const lh = wide ? 42 : 28, hs = right.map(r => Math.max((rin[r.id] || 0) * k, 2)), sl = hs.map(h => Math.max(h, lh));
+  const sum = sl.reduce((s, v) => s + v, 0), rgap = Math.max(10, (y - 4 - sum) / (right.length - 1));
+  const H = Math.ceil(Math.max(y, 4 + sum + rgap * (right.length - 1)) + 4), rpos = {};
+  let ry = 4;
+  right.forEach((r, i) => {
+    const h = hs[i], top = ry + (sl[i] - h) / 2, v = rin[r.id] || 0, cy = top + h / 2, n = v >= 1 || !v ? Math.round(v) : "<1", tx = rx + nw + (wide ? 10 : 6);
+    rpos[r.id] = top;
+    let lab;
+    if (wide) {
+      const ds = r.d ? wrapWords(r.d, Math.floor(rlab / 6.4), 2) : [];
+      const y0 = cy + 4 - ds.length * 6.5;
+      lab = `<text class="rt" x="${tx}" y="${f1(y0)}">${esc(r.t)} <tspan class="lc">${n}</tspan></text>${ds.length ? `<text class="rt2" x="${tx}" y="${f1(y0 + 14)}">${ds.map((d, j) => `<tspan x="${tx}" dy="${j ? 13 : 0}">${esc(d)}</tspan>`).join("")}</text>` : ""}`;
+    } else {
+      const ts = wrapWords(r.s, 11, 2), y0 = cy - 2 - (ts.length - 1) * 6.5;
+      lab = `<text class="rt" x="${tx}" y="${f1(y0)}">${ts.map((t, j) => `<tspan x="${tx}" dy="${j ? 13 : 0}">${esc(t)}</tspan>`).join("")}</text><text class="lc" x="${tx}" y="${f1(y0 + ts.length * 13)}">${n}</text>`;
+    }
+    const g = `<rect class="${r.id === "NONE" ? "nn" : "ns"}" x="${rx}" y="${f1(top)}" width="${nw}" height="${f1(h)}" rx="2"/>${lab}`;
+    marks.push(CN[r.id] ? `<a class="bk" href="#step=${esc(r.id.toLowerCase())}" data-pop="step:${esc(r.id)}" aria-label="${esc(`${r.t}: ${r.d}`)}">${g}</a>` : `<g class="bk">${g}</g>`);
+    ry += sl[i] + rgap;
+  });
+  const lcur = {...lpos}, rcur = {...rpos}, x0 = lx + nw, x1 = rx, xm = (x0 + x1) / 2;
+  right.forEach(r => fams.forEach(f => {
+    const ds = dest[f.id]; if (!ds.includes(r.id) || !f.results) return;
+    const h = f.results / ds.length * k, a = lcur[f.id], b = rcur[r.id];
+    lcur[f.id] += h; rcur[r.id] += h;
+    const tip = `${f.name} → ${r.t} · ${ds.length > 1 ? `${plural(f.results, "result")}, split across ${ds.length} parts of the case` : plural(f.results, "result")}`;
+    rib.push(`<path class="rb ${r.id === "NONE" ? "r2n" : "r2s"}${f.steps_state !== "AI_CHECKED" ? " unc" : ""}${S.fam === f.id ? " on" : ""}" data-f="${esc(f.id)}" data-tip="${esc(tip)}" d="M${f1(x0)} ${f1(a)}C${f1(xm)} ${f1(a)} ${f1(xm)} ${f1(b)} ${f1(x1)} ${f1(b)}V${f1(b + h)}C${f1(xm)} ${f1(b + h)} ${f1(xm)} ${f1(a + h)} ${f1(x0)} ${f1(a + h)}Z"/>`);
+  }));
+  return `<svg class="${S.fam ? "sel" : ""}${wide ? "" : " nar"}" data-lim="${wide ? lx - 8 : rx - 4}" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="group" aria-label="${DP.families.length} assumption families, each sized by the results that use it, linked to the parts of the safety case that name it">
     <defs><pattern id="fhatch" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="2" height="5" style="fill:var(--steps)"/></pattern></defs>
-    ${grid.join("")}${marks.join("")}${axis}${out.join("")}</svg>`;
+    ${rib.join("")}${out.join("")}${marks.join("")}</svg>`;
+}
+/* hover a family to light its ribbons; a name too long for its side is shortened (the full name is in its label and preview) */
+function wireBridge(svg) {
+  const nar = svg.classList.contains("nar"), lim = +svg.dataset.lim;
+  svg.querySelectorAll(".ln").forEach(t => {
+    const nm = t.firstChild, fits = () => { const b = t.getBBox(); return nar ? b.x + b.width <= lim : b.x >= 2; };
+    let s = nm.textContent.trimEnd();
+    while (!fits() && s.length > 6) { s = s.slice(0, -1).trimEnd(); nm.textContent = s + "… "; }
+  });
+  const mark = id => { svg.classList.toggle("hl", !!id); svg.querySelectorAll(".rb").forEach(p => p.classList.toggle("hv", p.dataset.f === id)); };
+  svg.addEventListener("mouseover", e => { const g = e.target.closest(".bf"); if (g) mark(g.dataset.fam); });
+  svg.addEventListener("mouseout", e => { if (e.target.closest(".bf") && !e.relatedTarget?.closest?.(".bf")) mark(null); });
 }
 function famPanel(f) {
-  const rows = famRows(f.id), unc = f.steps_state !== "AI_CHECKED";
+  const unc = f.steps_state !== "AI_CHECKED", fp = S.famPaper && S.famPaper[0] === f.id ? S.famPaper[1] : null;
+  let rows = famRows(f.id), nHit = 0;
+  const pk = g => g.pi != null && P[g.pi] ? g.pi : -1;
+  if (fp != null) { const hit = rows.filter(g => pk(g) === fp); nHit = hit.length; rows = hit.concat(rows.filter(g => pk(g) !== fp)); }
   return `<div class="sph"><div style="min-width:0;flex:1"><div class="eyebrow">${esc(f.kind)} · ${esc(f.id)}</div><div class="capt">${esc(f.name)}</div>
       <div class="spm"><span><span class="bn">${f.results}</span> ${f.results === 1 ? "result uses it" : "results use it"}</span><span>${plural(f.papers, "paper")}</span></div></div>
       <a class="x2" href="#assumptions" aria-label="Close the family">×</a></div>
@@ -2874,10 +2980,10 @@ function famPanel(f) {
     <div class="mlab">Steps that name it · ${f.steps.length}${unc ? ` <span class="unv">link not yet checked</span>` : ""}</div>
     ${f.steps.length ? `<div class="fsteps">${f.steps.map(s => `<a class="chip${unc ? " unc" : ""}" href="#step=${esc(s.id.toLowerCase())}" data-pop="step:${esc(s.id)}">${CN[s.id] ? glyphSVG(CN[s.id], 14) : ""}<span>${esc(s.label)}</span></a>`).join("")}</div>`
       : `<p class="muted" style="margin:2px 0 0;font-size:13px">No step of the safety case names it.</p>`}
-    <div class="mlab">Results that use it · ${rows.length}</div>
-    <div class="fres">${rows.map(g => `<a class="frr"${g.r != null ? ` href="#r${g.r}"` : ""}><span class="t">${g.hv === false ? `<span class="unv sm">not verified</span>` : ""}${esc(gTitle(g))}</span><span class="m">${esc(g.cells[f.id].map(unitLab).join(" · "))}</span><span class="p">${esc(gPaper(g) ? gPaper(g).short : "")}</span></a>`).join("")}</div>`;
+    <div class="mlab">Results that use it · ${rows.length}${nHit ? ` · ${nHit} from ${esc(fp >= 0 ? P[fp].short : "other papers")} first` : ""}</div>
+    <div class="fres">${rows.map((g, i) => `<a class="frr${i < nHit ? " hit" : ""}"${g.r != null ? ` href="#r${g.r}"` : ""}><span class="t">${g.hv === false ? `<span class="unv sm">not verified</span>` : ""}${esc(gTitle(g))}</span><span class="m">${esc(g.cells[f.id].map(unitLab).join(" · "))}</span><span class="p">${esc(gPaper(g) ? gPaper(g).short : "")}</span></a>`).join("")}</div>`;
 }
-/* the grid: one row per result, one column per family (grouped by kind), a dot where the result uses the family */
+/* fingerprints: one row per paper (by date), one column per family (grouped by kind); the cell darkens with the number of the paper's results that use the family */
 function gridCols() {
   const tpl = ["var(--lw)"], col = {}, bands = [];
   let c = 2, x = 0;
@@ -2890,42 +2996,105 @@ function gridCols() {
   tpl.push("46px");
   return {tpl: tpl.join(" "), col, bands, total: c};
 }
-function gridHTML() {
-  const {tpl, col, bands, total} = gridCols();
-  const used = DP.grid.filter(g => g.n), none = DP.grid.filter(g => !g.n);
-  const maxR = Math.max(1, ...FCOLS.map(f => f.results)), byCount = S.gsort === "count";
-  const anyUnc = DP.grid.some(g => g.unchecked), anyNv = used.some(g => g.hv === false);
-  const row = (g, showPaper) => {
-    const ids = Object.keys(g.cells).filter(id => col[id]).sort((a, b) => col[a] - col[b]);
-    return `<a class="fgrow"${g.r != null ? ` href="#r${g.r}"` : ""} data-g="${g.k}">
-      <span class="fgl" style="grid-column:1">${g.hv === false ? `<span class="unv sm">not verified</span>` : ""}${esc(gTitle(g))}${showPaper && gPaper(g) ? `<span class="fgpt">${esc(gPaper(g).tag)}</span>` : ""}</span>${ids.map(id => `<i class="gd" style="grid-column:${col[id]}" data-pop="cell:${g.k}|${esc(id)}" data-f="${esc(id)}"></i>`).join("")}<span class="fgt" style="grid-column:${total}">${g.unchecked ? `<i class="gd hol" data-tip="${esc(plural(g.unchecked, "hypothesis", "hypotheses"))} not yet checked; not drawn in any column"></i>` : ""}${g.n}</span></a>`;
-  };
-  let body;
-  if (byCount) body = used.slice().sort((a, b) => b.n - a.n || pdate(a.pi) - pdate(b.pi) || a.k - b.k).map(g => row(g, true)).join("");
-  else {
-    const groups = new Map();
-    used.slice().sort((a, b) => pdate(a.pi) - pdate(b.pi) || a.k - b.k).forEach(g => { const key = g.pi != null ? g.pi : -1; if (!groups.has(key)) groups.set(key, []); groups.get(key).push(g); });
-    body = [...groups.entries()].map(([pi, gs]) => `<div class="fgp"><span class="fgl" style="grid-column:1">${pi >= 0 ? `${esc(P[pi].short)} <span>${esc(P[pi].year)} · ${gs.length}</span>` : "Other"}</span></div>${gs.map(g => row(g, false)).join("")}`).join("");
-  }
-  return `<div class="sechead"><h2>Every result against the ${DP.families.length} families</h2>
-      <div class="seg" role="group" aria-label="Sort the rows"><button type="button" data-gsort="paper" class="${byCount ? "" : "on"}" aria-pressed="${!byCount}">By paper</button><button type="button" data-gsort="count" class="${byCount ? "on" : ""}" aria-pressed="${byCount}">By number of assumptions</button></div></div>
-    <div class="gleg"><span><i class="gd"></i>the result uses the family</span>${anyUnc ? `<span><i class="gd hol"></i>a hypothesis not yet checked</span>` : ""}${anyNv ? `<span><span class="unv sm">not verified</span>theorem: hypotheses not verified</span>` : ""}</div>
-    <div class="fgbox" id="fgbox" tabindex="0" aria-label="Results by assumption family; scrolls inside its box"><div class="fg" style="--tpl:${tpl}">
+function fpData() {
+  if (fpData.d) return fpData.d;
+  const by = {}, rows = new Map();
+  DP.grid.filter(g => g.n).forEach(g => {
+    const pi = g.pi != null && P[g.pi] ? g.pi : -1;
+    if (!rows.has(pi)) rows.set(pi, {pi, n: 0, unc: 0, c: {}});
+    const r = rows.get(pi); r.n++; r.unc += g.unchecked || 0;
+    Object.keys(g.cells).filter(id => FAMI[id]).forEach(id => { r.c[id] = (r.c[id] || 0) + 1; (by[pi + "|" + id] = by[pi + "|" + id] || []).push(g); });
+  });
+  const list = [...rows.values()].sort((a, b) => pdate(a.pi < 0 ? null : a.pi) - pdate(b.pi < 0 ? null : b.pi) || (a.pi < 0 ? "" : P[a.pi].short).localeCompare(b.pi < 0 ? "" : P[b.pi].short));
+  const mx = Math.max(1, ...list.flatMap(r => Object.values(r.c)));
+  return fpData.d = {rows: list, by, mx};
+}
+const fpStep = c => { const mx = fpData().mx; return Math.min(7, Math.max(1, mx <= 7 ? c : Math.ceil(c / mx * 7))); };
+function fpHTML() {
+  const {tpl, col, bands, total} = gridCols(), {rows, mx} = fpData();
+  const none = DP.grid.filter(g => !g.n), nUsed = rows.reduce((s, r) => s + r.n, 0), anyUnc = rows.some(r => r.unc);
+  const maxR = Math.max(1, ...FCOLS.map(f => f.results));
+  const steps = mx <= 7 ? Array.from({length: mx}, (_, i) => i + 1) : [1, 2, 3, 4, 5, 6, 7];
+  let yr = null;
+  const body = rows.map(r => {
+    const p = r.pi >= 0 ? P[r.pi] : null, ny = p && p.year !== yr && yr !== null; if (p) yr = p.year;
+    return `<div class="fgrow fprow${ny ? " ny" : ""}">${p ? `<a class="fgl" style="grid-column:1" href="#p${r.pi}">${esc(p.short)}</a>` : `<span class="fgl" style="grid-column:1">Other</span>`}${FCOLS.filter(f => r.c[f.id]).map(f => `<a class="fpc" style="grid-column:${col[f.id]};background:var(--fp${fpStep(r.c[f.id])})" href="#assumptions=${esc(f.id.toLowerCase())}" data-fp="${r.pi}" data-pop="fp:${r.pi}|${esc(f.id)}" aria-label="${esc(`${p ? p.short : "Other"}: ${plural(r.c[f.id], "result uses", "results use")} ${f.name}`)}"></a>`).join("")}<span class="fgt" style="grid-column:${total}">${r.unc ? `<i class="gd hol" data-tip="${esc(plural(r.unc, "hypothesis", "hypotheses"))} not yet checked; not counted in any column"></i>` : ""}${r.n}</span></div>`;
+  }).join("");
+  return `<div class="sechead"><h2>Each paper against the ${DP.families.length} families</h2></div>
+    <div class="gleg"><span>Results in the paper that use the family</span><span class="fpkey"><b>1</b>${steps.map(s => `<i style="background:var(--fp${fpStep(s)})"></i>`).join("")}<b>${mx}</b></span>${anyUnc ? `<span><i class="gd hol"></i>a hypothesis not yet checked</span>` : ""}</div>
+    <div class="fgbox" id="fgbox" tabindex="0" aria-label="Papers by assumption family; scrolls inside its box"><div class="fg" style="--tpl:${tpl}">
       ${bands.filter(b => b[4] % 2).map(([, , n, x]) => `<i class="fband" style="left:calc(var(--lw) + ${x}px);width:${n * 17}px"></i>`).join("")}
       <div class="fgh">
         <div class="fgrow"><span class="fgl" style="grid-column:1"></span>${bands.map(([k, c, n]) => `<span class="fgk" style="grid-column:${c} / span ${n}">${esc(k)}</span>`).join("")}</div>
         <div class="fgrow"><span class="fgl" style="grid-column:1">Results that use each family</span>${FCOLS.map(f => `<span class="fgc" style="grid-column:${col[f.id]}" data-pop="fam:${esc(f.id)}"><b>${f.results}</b><i style="height:${Math.max(1, Math.round(f.results / maxR * 38))}px"></i></span>`).join("")}</div>
-        <div class="fgrow"><span class="fgl" style="grid-column:1">${used.length} results use at least one family</span>${FCOLS.map(f => `<a class="fgn${S.fam === f.id ? " on" : ""}" style="grid-column:${col[f.id]}" href="#assumptions=${esc(f.id.toLowerCase())}" data-pop="fam:${esc(f.id)}">${esc(f.name)}</a>`).join("")}<span class="fgt" style="grid-column:${total};align-self:end;padding-bottom:6px">total</span></div>
+        <div class="fgrow"><span class="fgl" style="grid-column:1">${plural(rows.length, "paper")} · ${nUsed} results use at least one family</span>${FCOLS.map(f => `<a class="fgn${S.fam === f.id ? " on" : ""}" style="grid-column:${col[f.id]}" href="#assumptions=${esc(f.id.toLowerCase())}" data-pop="fam:${esc(f.id)}">${esc(f.name)}</a>`).join("")}<span class="fgt" style="grid-column:${total};align-self:end;padding-bottom:6px">total</span></div>
       </div>
       ${body}
     </div></div>
     ${none.length ? `<details class="fnone"><summary><b>${none.length}</b> results use none of the ${DP.families.length} families</summary><div class="fnl">${none.map(g => `<a${g.r != null ? ` href="#r${g.r}"` : ""}>${esc(gTitle(g))}</a>`).join("")}</div></details>` : ""}`;
 }
-function rerenderGrid() {
-  const box = $("#fgbox"), keep = box ? box.scrollLeft : 0, sec = $("#fgrid");
-  if (!sec) return;
-  sec.innerHTML = gridHTML();
-  const nb = $("#fgbox"); if (nb) nb.scrollLeft = keep;
+/* bundles: families around a circle, grouped by kind; a chord joins two families that the same results use (two or more, or any for the picked family) */
+function bundData() {
+  if (bundData.d) return bundData.d;
+  const co = new Map(), part = {};
+  DP.grid.forEach(g => {
+    const ids = Object.keys(g.cells).filter(id => FAMI[id]).sort();
+    for (let i = 0; i < ids.length; i++) for (let j = i + 1; j < ids.length; j++) { const key = ids[i] + "|" + ids[j]; co.set(key, (co.get(key) || 0) + 1); }
+  });
+  co.forEach((c, key) => { const [a, b] = key.split("|"); (part[a] = part[a] || []).push([b, c]); (part[b] = part[b] || []).push([a, c]); });
+  Object.values(part).forEach(xs => xs.sort((x, y) => y[1] - x[1] || FAMI[x[0]].name.localeCompare(FAMI[y[0]].name)));
+  const pairs = [...co.entries()].sort((x, y) => y[1] - x[1]);
+  return bundData.d = {co, part, pairs, mx: pairs.length ? pairs[0][1] : 1};
+}
+const kIdx = f => FKINDS.indexOf(f.kind) % 6;
+function bundSVG(W) {
+  W = Math.max(260, Math.floor(W) || 600);
+  const {co, part, mx} = bundData(), sel = S.bfam && FAMI[S.bfam] ? S.bfam : null;
+  const room = 18 + 6.1 * Math.max(...FCOLS.map(f => f.name.length)), lab = W / 2 - room >= 120;
+  const pad = lab ? room : 16, r = Math.min(230, W / 2 - pad), H = Math.ceil(2 * (r + pad)), cx = W / 2, cy = H / 2;
+  const slots = FCOLS.length + FKINDS.length, ang = {};
+  let i = 0;
+  FKINDS.forEach(k => { FCOLS.filter(f => f.kind === k).forEach(f => { ang[f.id] = -Math.PI / 2 + 2 * Math.PI * i++ / slots; }); i++; });
+  const at = (a, rr) => [cx + rr * Math.cos(a), cy + rr * Math.sin(a)];
+  const near = new Set(sel ? (part[sel] || []).map(x => x[0]) : []);
+  const ch = [...co.entries()].filter(([key, c]) => c >= 2 || (sel && key.split("|").includes(sel))).sort((x, y) => x[1] - y[1]).map(([key, c]) => {
+    const [a, b] = key.split("|"), on = sel && (a === sel || b === sel), [x0, y0] = at(ang[a], r - 8), [x1, y1] = at(ang[b], r - 8);
+    return `<path class="ch${c >= 5 ? " chs" : ""}${on ? " on" : ""}" data-a="${esc(a)}" data-b="${esc(b)}" data-tip="${esc(`${FAMI[a].name} + ${FAMI[b].name}: ${plural(c, "result uses", "results use")} both`)}" d="M${f1(x0)} ${f1(y0)}Q${f1(cx)} ${f1(cy)} ${f1(x1)} ${f1(y1)}" style="stroke-width:${f1(.8 + 6 * c / mx)}${on ? `;stroke:var(--k${kIdx(FAMI[sel])})` : ""}"/>`;
+  });
+  const mxr = Math.max(1, ...FCOLS.map(f => f.results));
+  const nodes = FCOLS.map(f => {
+    const a = ang[f.id], [x, y] = at(a, r), rad = 3 + 9 * Math.sqrt(f.results / mxr), on = f.id === sel, pt = near.has(f.id);
+    const deg = a * 180 / Math.PI, flip = ((deg % 360) + 360) % 360 > 90 && ((deg % 360) + 360) % 360 < 270, [lx, ly] = at(a, r + 16);
+    const np = (part[f.id] || []).length;
+    return `<g class="bnd${on ? " on" : ""}${pt ? " near" : ""}" data-bf="${esc(f.id)}" data-pop="fam:${esc(f.id)}" tabindex="0" role="button" aria-pressed="${on}" aria-label="${esc(`${f.name}: ${plural(f.results, "result")}; used together with ${plural(np, "other family", "other families")}`)}">
+      <circle class="hz" cx="${f1(x)}" cy="${f1(y)}" r="${f1(Math.max(rad + 5, 12))}"/><circle class="bd" cx="${f1(x)}" cy="${f1(y)}" r="${f1(rad)}" style="fill:var(--k${kIdx(f)})"/>
+      ${lab ? `<text class="bl" transform="translate(${f1(lx)} ${f1(ly)}) rotate(${f1(flip ? deg + 180 : deg)})" text-anchor="${flip ? "end" : "start"}" dy="4">${esc(f.name)}</text>` : ""}</g>`;
+  });
+  return `<svg class="${sel ? "sel" : ""}" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="group" aria-label="${FCOLS.length} assumption families around a circle, grouped by kind; a line joins two families that the same results use">${ch.join("")}${nodes.join("")}</svg>`;
+}
+function wireBund(svg) {
+  const mark = id => { svg.classList.toggle("hl", !!id); svg.querySelectorAll(".ch").forEach(p => p.classList.toggle("hv", !!id && (p.dataset.a === id || p.dataset.b === id))); };
+  svg.addEventListener("mouseover", e => { const g = e.target.closest(".bnd"); if (g) mark(g.dataset.bf); });
+  svg.addEventListener("mouseout", e => { if (e.target.closest(".bnd") && !e.relatedTarget?.closest?.(".bnd")) mark(null); });
+}
+const bfBtn = id => `<button type="button" class="bfb" data-bf="${esc(id)}"><i class="kd" style="background:var(--k${kIdx(FAMI[id])})"></i><span>${esc(FAMI[id].name)}</span></button>`;
+function bundList() {
+  const {part, pairs} = bundData(), f = S.bfam && FAMI[S.bfam];
+  if (!f) return `<div class="mlab">Strongest bundles · results that use both</div>
+    <div class="bdl">${pairs.slice(0, 6).map(([key, c]) => { const [a, b] = key.split("|"); return `<div class="bdr"><span class="bdp">${bfBtn(a)}<span class="bdpl"><span class="muted">+</span>${bfBtn(b)}</span></span><span class="bdc">${c}</span></div>`; }).join("")}</div>
+    <p class="bdh">Pick a family to see what travels with it.</p>`;
+  const xs = part[f.id] || [], top = xs.slice(0, 12);
+  return `<div class="sph"><div style="min-width:0;flex:1"><div class="eyebrow">${esc(f.kind)} · ${plural(f.results, "result")}</div><div class="capt">${esc(f.name)}</div></div><button type="button" class="x2" data-bf="${esc(f.id)}" aria-label="Clear the pick">×</button></div>
+    <div class="mlab">Used together with · results that use both</div>
+    ${top.length ? `<div class="bdl">${top.map(([b, c]) => `<div class="bdr">${bfBtn(b)}<span class="bdc">${c}</span></div>`).join("")}</div>${xs.length > top.length ? `<p class="bdh">and ${plural(xs.length - top.length, "more family", "more families")}, each with fewer results</p>` : ""}`
+      : `<p class="bdh">No result uses it together with another family.</p>`}
+    <a class="plink" href="#assumptions=${esc(f.id.toLowerCase())}">Open its results →</a>`;
+}
+function pickBund(id, refocus) {
+  S.bfam = S.bfam === id ? null : id;
+  const el = $(".bund"); if (el) drawViz(el.parentNode);
+  const l = $("#bdlist"); if (l) l.innerHTML = bundList();
+  if (refocus) $(`.bund .bnd[data-bf="${refocus}"]`)?.focus({preventScroll: true});
 }
 
 /* ---------- proofs: each paper's layered graph of checked references ---------- */
@@ -3342,6 +3511,12 @@ Object.assign(POP, {
     return `<div class="pk"><span>${esc(f.kind)}</span><span>·</span><span class="mono">${esc(f.id)}</span></div><div class="pt">${esc(f.name)}</div>
       <div class="pm"><b>${f.results}</b> ${f.results === 1 ? "result uses it" : "results use it"} · <b>${f.steps.length}</b> ${f.steps.length === 1 ? "step names it" : "steps name it"}${f.steps_state !== "AI_CHECKED" ? " · link not yet checked" : ""}</div><div class="pq">${esc(f.definition)}</div>`;
   },
+  fp(key) {
+    const [pi, id] = key.split("|"), f = FAMI[id], gs = fpData().by[key] || [];
+    if (!f || !gs.length) return "";
+    return `<div class="pk"><i class="kd" style="border-radius:2px;background:var(--fp${fpStep(gs.length)})"></i><span>${esc(f.name)}</span></div><div class="pt">${esc(+pi >= 0 ? P[+pi].short : "Other")} · ${plural(gs.length, "result")}</div>
+      ${gs.slice(0, 4).map(g => `<div class="pm">${g.hv === false ? `<span class="unv sm">not verified</span>` : ""}${esc(gTitle(g))}</div>`).join("")}${gs.length > 4 ? `<div class="pm">and ${gs.length - 4} more</div>` : ""}<div class="pm">Click to open them in the family panel</div>`;
+  },
   cell(key) {
     const [k, id] = key.split("|"), g = DP.grid[+k], f = FAMI[id];
     if (!g || !f || !g.cells[id]) return "";
@@ -3372,16 +3547,20 @@ Object.assign(POP, {
   },
 });
 Object.assign(VIZ, {
-  bfly: el => DP ? bflySVG(el.clientWidth) : "",
+  bridge: el => DP ? bridgeSVG(el.clientWidth) : "",
+  bund: el => DP ? bundSVG(el.clientWidth) : "",
   pg: (el, a) => pgOf(a) ? pgSVG(pgOf(a), el.clientWidth) : "",
   lean: (el, a) => lpOf(a) ? leanSVG(lpOf(a), el.clientWidth) : "",
 });
 function depsAfterDraw(k, a, svg) {
+  if (k === "bridge") wireBridge(svg);
+  if (k === "bund") wireBund(svg);
   if (k === "pg") applyPg(svg, pgOf(a));
   if (k === "lean") { placeLeanLabels(svg); applyLean(svg, lpOf(a)); }
 }
 function depsAct(t) {
-  const fr = t.closest(".bfly .fr"); if (fr) { hidePop(); S.focusFam = fr.dataset.fam; location.hash = S.fam === fr.dataset.fam ? "assumptions" : "assumptions=" + fr.dataset.fam.toLowerCase(); return true; }
+  const fr = t.closest(".bridge .bf"); if (fr) { hidePop(); S.focusFam = fr.dataset.fam; location.hash = S.fam === fr.dataset.fam ? "assumptions" : "assumptions=" + fr.dataset.fam.toLowerCase(); return true; }
+  const bn = t.closest("[data-bf]"); if (bn) { hidePop(); pickBund(bn.dataset.bf, bn.matches(".bnd") ? bn.dataset.bf : null); return true; }
   const pb = t.closest(".pg .pb"); if (pb) { cycleProb(+pb.dataset.pb); return true; }
   const pn = t.closest(".pg .pn"); if (pn) { openPNode(+pn.dataset.pn); return true; }
   const eh = t.closest(".pg .eh"); if (eh) { openPEdge(+eh.dataset.pe); return true; }
@@ -3390,7 +3569,8 @@ function depsAct(t) {
 }
 document.addEventListener("click", e => {
   if (!DP || !e.target.closest) return;
-  const gs = e.target.closest("[data-gsort]"); if (gs) { S.gsort = gs.dataset.gsort; rerenderGrid(); return; }
+  if (e.target.closest('a[href^="#assumptions"]:not([data-fp]), .bridge .bf')) S.famPaper = null;
+  const fc = e.target.closest("[data-fp]"); if (fc) { const h = fc.getAttribute("href"), id = h.split("=")[1].toUpperCase(); S.famPaper = [id, +fc.dataset.fp]; hidePop(); if (location.hash.toLowerCase() === h) { e.preventDefault(); renderAssumptions(id); } return; }
   const pr = e.target.closest("[data-prob]"); if (pr) { const [sc, ...id] = pr.dataset.prob.split("|"); pickProb(sc, id.join("|")); return; }
   if (e.target.closest("[data-pclear]")) { pickProb("pg", S.prob); return; }
   if (e.target.closest("[data-lclear]")) { const lp = lpOf(S.lproj); S.lsel = null; S.lprob = null; applyLean($(".lg2"), lp); return; }
@@ -3398,7 +3578,7 @@ document.addEventListener("click", e => {
 });
 document.addEventListener("keydown", e => {
   if (!DP || (e.key !== "Enter" && e.key !== " ") || !e.target.closest) return;
-  if (e.target.closest(".bfly .fr, .pg .pb, .pg .pn, .pg .eh, .lg2 [data-ln]")) { e.preventDefault(); depsAct(e.target); }
+  if (e.target.closest(".bridge .bf, .bund .bnd, .pg .pb, .pg .pn, .pg .eh, .lg2 [data-ln]")) { e.preventDefault(); depsAct(e.target); }
 });
 
 /* ---------- tooltip, copy ---------- */
