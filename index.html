@@ -866,6 +866,20 @@ button.x2{background:none;cursor:pointer;padding:0}
 .pgpic .pg-doc{fill:var(--sunk);stroke:var(--line2);stroke-width:1.2}
 .pgpic .hlq{fill:var(--mark)}
 .pgpic .ck{fill:none;stroke:var(--agrees);stroke-width:1.6} .pgpic .ckm{fill:none;stroke:var(--agrees);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.pgpic .gnone{fill:none;stroke:var(--muted);stroke-width:1.4;stroke-dasharray:3 2.4}
+.pgpic text.gnum{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:11px;fill:var(--ink)}
+.pgpic .gbadge{fill:var(--ink)} .pgpic text.gbadget{fill:var(--bg);font-size:9px;font-weight:600}
+.pgpic .gst{fill:none;stroke:var(--seq);stroke-width:1.3}
+.pgpic .gbar{fill:none;stroke:var(--line2);stroke-width:3.2;stroke-linecap:round} .pgpic .gbar.soft{stroke:var(--muted);opacity:.45}
+.pgpic text.gq{font-size:14px;fill:var(--muted);font-weight:600} .pgpic text.gq2{font-size:11px;fill:var(--ink);font-weight:600}
+.pgpic .gdot{fill:var(--ink2)} .pgpic .gdoto{fill:none;stroke:var(--ink2);stroke-width:1.2}
+.pgpic .gtri{fill:none;stroke:var(--ink2);stroke-width:1.5;stroke-linejoin:round}
+.pgpic .grib{opacity:.38} .pgpic .grib.s,.pgpic .gsb.s{fill:var(--steps)} .pgpic .grib.r,.pgpic .gsb.r{fill:var(--seq)}
+.pgpic .gring{fill:none;stroke:var(--line2);stroke-width:1.2}
+.pgpic .gpc{fill:var(--surface);stroke:var(--ink2);stroke-width:1.4}
+.pgpic .glane{fill:var(--sunk);stroke:var(--line2);stroke-width:1}
+.mapguide{margin-top:30px}
+.pgi p a{color:inherit;text-decoration:underline;text-underline-offset:2px}
 .pgnum{display:flex;align-items:baseline;gap:6px;height:70px;padding-top:14px}
 .pgnum b{font-family:"JetBrains Mono",ui-monospace,monospace;font-weight:500;font-size:34px;line-height:1}
 .pgnum span{font-size:13px;color:var(--ink2)}
@@ -1289,6 +1303,7 @@ function renderGaps() {
       <h1 class="gtitle">Where the debate safety case is still open</h1>
       <p class="lede">${GQ.length} questions from ${nPapers} papers, ranked by the step of the case they affect.</p>
     </div>
+    ${gapsGuide()}
     <div class="gapwrap">
       ${CASE ? treeCard() : casePanelHTML()}
       <div class="ranked">
@@ -1765,6 +1780,7 @@ function renderLedger() {
   $("#app").innerHTML = `
     <div class="ghead"><div class="eyebrow">Discovery ledger</div><h1 class="gtitle">${E.length} counted results</h1>
       <p class="lede">Every result of the pilot that passed its checks, by what kind of result it is.</p></div>
+    ${ledgerGuide(E, counts)}
     ${GQ.length ? `<div class="vpanel" id="dqbox"><div class="cph"><b>Where the ${GQ.length} open questions went</b><span class="muted">and what kind of work is left</span></div>
       <div class="dq-leg">${legend}</div><div class="dq-sc">${flowSVG()}</div><div class="dq-list" aria-live="polite">${flowList()}</div></div>` : ""}
     <div class="lgsum">${labels.map(l => { const n = counts[l] ?? E.filter(e => e.label === l).length; return `<button type="button" class="lgg" data-jump="lg-${slug(l)}" style="--c:${lgColor(l)}"><span class="lgn"><b>${n}</b>${esc(l)}</span><span class="lgsq" aria-hidden="true">${"<i></i>".repeat(n)}</span></button>`; }).join("")}</div>
@@ -1894,6 +1910,7 @@ function renderResults() {
   $("#app").innerHTML = `
     <div class="ghead"><div class="eyebrow">Result cards</div><h1 class="gtitle">${cards.length} results from ${nP} papers, graded by their evidence</h1>
       <p class="lede">One line per result: its evidence grade, one dot per stated hypothesis (hollow where the list is not verified) and its setting. Open a line for the full card.</p></div>
+    ${resultsGuide(cards, gt)}
     ${strength ? `<div class="vpanel"><div class="cph"><b>Evidence strength over time</b><span class="muted">one column per paper, one square per result</span></div><div class="st-sc">${strength}</div></div>` : ""}
     <div class="legend gfilter" role="group" aria-label="Filter by grade"><button type="button" class="chip ${S.grade ? "" : "on"}" data-grade="">All <span class="mono">${cards.length}</span></button>${grades.map(g => `<button type="button" class="chip ${S.grade === g ? "on" : ""}" data-grade="${esc(g)}" data-tip="${esc(G[g] || "")}"><i class="gsw g-${esc(g)}"></i>${esc(human(g))} <span class="mono">${gt[g]}</span></button>`).join("")}</div>
     ${S.grade && G[S.grade] ? `<p class="gdesc"><b>${esc(human(S.grade))}</b> · ${esc(G[S.grade])}</p>` : ""}
@@ -1987,6 +2004,7 @@ function renderMap() {
     </div>
     <div class="mapbox">${lanesGrid()}<div class="maphint">Nine research lanes. Each dot is a paper, sized by its findings.</div></div>
   </div>
+  <div class="mapguide">${mapGuide()}</div>
   <section>
     <div class="sechead"><h2>Start with a question</h2></div>
     <div class="doors">
@@ -2101,6 +2119,7 @@ function renderPapers(view) {
   $("#app").innerHTML = `
     <div class="sechead" style="margin-bottom:10px"><h2>${focus != null ? esc(D.lanes[focus].title) : "Papers and how they answer each other"}</h2>
       <div class="seg"><a href="#papers" class="${isMatrix ? "" : "on"}">Timeline</a><a href="#matrix" class="${isMatrix ? "on" : ""}">What each paper holds</a></div></div>
+    ${focus == null ? papersGuide() : ""}
     ${isMatrix ? matrixHTML() : `
     <div class="toolbar">
       <div class="legend" id="famchips">${FAMS.map(([f, lab]) => `<button type="button" class="chip ${S.fams.has(f) ? "" : "off"}" data-fam="${f}" aria-pressed="${S.fams.has(f)}">${famSwatch(f)}${esc(lab)}</button>`).join("")}</div>
@@ -2906,6 +2925,7 @@ function renderAssumptions(fid) {
       <h1 class="gtitle">What the results assume, and what the case names</h1>
       <p class="lede">${famCaption()}</p>
     </div>
+    ${assumptionsGuide()}
     <div class="famwrap${f ? " sel" : ""}">
       <div class="famcard">
         <div class="cph"><b>Where each family's results land in the safety case</b></div>
@@ -3206,6 +3226,123 @@ function renderProofs(arg) {
     else if (bx.scrollWidth > bx.clientWidth + 4) bx.scrollLeft = (bx.scrollWidth - bx.clientWidth) / 2;
     edge();
   }
+}
+/* Guide strips for readers new to a page: three cards under its title, each a small picture, a title and a sentence or two, counted from the data. */
+const gpic = body => `<svg class="pgpic" viewBox="0 0 132 70" aria-hidden="true">${body}</svg>`;
+const gbox = (x, y, s, fill, rx = 2.5) => `<rect x="${x}" y="${y}" width="${s}" height="${s}" rx="${rx}" style="fill:${fill}"/>`;
+const gtxt = (x, y, t, cls = "sm", mid) => `<text x="${x}" y="${y}" class="${cls}"${mid ? ` text-anchor="middle"` : ""}>${t}</text>`;
+/* a row of coloured squares, each with its count underneath */
+const gcounts = cs => gpic(cs.map(([fill, n, dash], i) => { const x = 4 + i * 26;
+  return (dash ? `<rect x="${x + .75}" y="12.75" width="16.5" height="16.5" rx="2.5" class="gnone"/>` : gbox(x, 12, 18, fill)) + gtxt(x + 9, 46, n, "gnum", true); }).join(""));
+function guideStrip(label, cards) {
+  return `<div class="pguide" role="list" aria-label="${esc(label)}">${cards.map(([pic, t, p]) => `<div class="pgi" role="listitem">${pic}<b>${t}</b><p>${p}</p></div>`).join("")}</div>`;
+}
+function gapsGuide() {
+  if (!CASE) return "";
+  const ev = {}; CASE.nodes.forEach(n => { ev[n.ev] = (ev[n.ev] || 0) + 1; });
+  const p = CASE.pi != null ? P[CASE.pi] : null, top = CASE.nodes.find(n => n.kind === "top_claim");
+  const nd = (x, y) => `<rect class="nd" x="${x}" y="${y}" width="12" height="12" rx="2.5"/>`;
+  const cell = (x, y, k, lab) => (k === "NONE" ? `<rect x="${x + .75}" y="${y + .75}" width="14.5" height="14.5" rx="2.5" class="gnone"/>` : gbox(x, y, 16, `var(--ev-${{WEAK: "weak", CONTESTED: "con", SUPPORTED: "sup"}[k]})`))
+    + gtxt(x + 22, y + 12.5, ev[k] || 0, "gnum") + gtxt(x, y + 27, lab);
+  return guideStrip("How to read the safety case", [
+    [gpic(`<path class="ln" d="M14 36H42M42 17V55M42 17H56M42 55H56M68 17H80M80 8V26M80 8H94M80 26H94"/>${nd(2, 30)}${nd(56, 11)}${nd(56, 49)}${nd(94, 2)}${nd(94, 20)}
+      ${gtxt(0, 54, "the claim")}${gtxt(76, 50, "steps that")}${gtxt(76, 60, "hold it up")}`),
+      "A safety case is an argument",
+      `It argues, step by step, that an AI system is safe to use. This one${p ? `, from ${esc(p.short)},` : ""} argues that a system trained with debate ${top ? esc(top.label.replace(/^System X /, "")) : "is safe"}. Each box is a claim, held up by the boxes to its right.`],
+    [gpic(cell(4, 4, "NONE", "none") + cell(68, 4, "WEAK", "weak") + cell(4, 38, "CONTESTED", "contested") + cell(68, 38, "SUPPORTED", "supported")),
+      "Colour is the evidence",
+      `It shows how well the papers back each step: ${ev.NONE || 0} steps have no evidence, ${ev.WEAK || 0} weak, ${ev.CONTESTED || 0} contested and ${ev.SUPPORTED || 0} supported.`],
+    [gpic(`${gbox(6, 27, 14, "var(--ev-weak)")}<circle class="gbadge" cx="23" cy="26" r="7"/><text class="gbadget" x="23" y="29.2" text-anchor="middle">3</text><path class="ln" d="M33 34H48"/>
+      <rect class="pg-doc" x="50" y="14" width="78" height="40" rx="6"/><rect x="58" y="21" width="10" height="10" rx="2.5" class="gst"/><path d="M58 26h10v2.5a2.5 2.5 0 0 1-2.5 2.5h-5a2.5 2.5 0 0 1-2.5-2.5z" style="fill:var(--seq)"/>
+      <path class="gbar" d="M74 26H120M58 43H112"/>`),
+      "Badges are open questions",
+      `A black badge counts the questions papers left open on that step. The list ranks all ${GQ.length} by the step they affect; select one to see the later work on it and what is left.`]]);
+}
+function ledgerGuide(E, counts) {
+  const nAud = new Set(E.filter(e => e.label === "Paper problem").map(e => e.paper)).size;
+  const order = ["Proved", "Paper problem", "Derived", "Partly answered by later work", "Narrowed"].filter(l => counts[l]);
+  const tick = (cx, on) => `<circle cx="${cx}" cy="24" r="9" class="${on ? "ck" : "gnone"}"/>${on ? `<path class="ckm" d="M${cx - 4} 24l3 3 5-6"/>` : ""}`;
+  return guideStrip("How these results were made", [
+    [gpic(`<circle cx="16" cy="28" r="11" class="gnone"/>${gtxt(16, 32, "?", "gq", true)}<path class="ln" d="M30 28H42"/>
+      <rect class="pg-doc" x="44" y="17" width="34" height="22" rx="5"/>${gtxt(61, 31.5, "AI", "gq2", true)}<path class="ln" d="M80 28H94"/>${gbox(98, 20, 16, "var(--lg-proved)")}
+      ${gtxt(16, 56, "question", "sm", true)}${gtxt(61, 56, "pilot", "sm", true)}${gtxt(106, 56, "result", "sm", true)}`),
+      "An AI pilot worked the questions",
+      `It took the ${GQ.length} open questions and worked on them with the papers, Lean proofs and calculation${nAud ? `, and checked ${nAud} papers' theorems in Lean` : ""}. This page keeps the ${E.length} results that passed their checks.`],
+    [gcounts(order.map(l => [lgColor(l), counts[l]])),
+      `${order.length === 5 ? "Five" : order.length} kinds of result`,
+      "Proved: a computer checked the proof. Paper problem: a flaw in a published proof. Derived: follows from lines quoted from the papers. Partly answered and narrowed: later papers answer part of a question, or make it smaller."],
+    [gpic(`${tick(16, 1)}${tick(49, 1)}${tick(82, 1)}${tick(115, 0)}${gtxt(16, 50, "quote", "sm", true)}${gtxt(49, 50, "Lean", "sm", true)}${gtxt(82, 50, "2 AI", "sm", true)}${gtxt(115, 50, "person", "sm", true)}`),
+      "Every result shows how it was checked",
+      "Four marks: quoted source, machine-checked, two blind AI checks and person reviewed. A filled mark is done. No person has reviewed any result yet."]]);
+}
+function resultsGuide(cards, gt) {
+  const row = inner => `<rect class="pg-doc" x="4" y="16" width="124" height="26" rx="5"/>${inner}`;
+  const dot = (x, on) => `<circle cx="${x}" cy="29" r="2.6" class="${on ? "gdot" : "gdoto"}"/>`;
+  return guideStrip("How to read the result cards", [
+    [gpic(row(`${gbox(11, 24, 10, "var(--g-single)")}<path class="gbar" d="M28 29H86"/>${dot(96, 1)}${dot(103, 1)}${dot(110, 1)}<path class="ln" d="M118 27l3 3 3-3"/>`) + gtxt(4, 58, "one result, quoted from its paper")),
+      "One line per result",
+      `Each of the ${fmt(cards.length)} lines is a theorem or an experiment's finding, quoted from its paper with the page. Open a line for the full card.`],
+    [gcounts([["var(--g-proved)", gt.PROVED_IN_PAPER || 0], ["var(--g-multi)", gt.EMPIRICAL_MULTI_SETTING || 0], ["var(--g-single)", gt.EMPIRICAL_SINGLE_SETTING || 0], ["var(--g-prelim)", gt.EMPIRICAL_PRELIMINARY || 0], ["", gt.ARGUMENT_ONLY || 0, 1]]),
+      "Graded by its evidence",
+      `Strongest first: a proof in the paper, experiments in several settings, in one setting, early or small experiments, or an argument only. ${fmt(gt.EMPIRICAL_SINGLE_SETTING || 0)} of ${fmt(cards.length)} rest on one setting.`],
+    [gpic(row(`${dot(14, 1)}${dot(22, 1)}${dot(30, 1)}${dot(38, 0)}${dot(46, 0)}<path class="gbar soft" d="M60 29H120"/>`) + gtxt(8, 58, "hypotheses") + gtxt(60, 58, "setting")),
+      "Dots are what it assumes",
+      "Each dot is a hypothesis the paper states for the result; hollow dots mean that list has not passed its checks yet. The grey text is the setting, where the result was tested."]]);
+}
+function assumptionsGuide() {
+  const {fams, rin} = bridgeData(), tot = fams.reduce((s, f) => s + f.results, 0), none = Math.round(rin.NONE || 0);
+  const top = fams.slice().sort((a, b) => b.results - a.results)[0];
+  const tri = (x, y, s) => `<path class="gtri" d="M${x} ${y - s}L${x + s * 1.1} ${y + s * .8}H${x - s * 1.1}z"/>`;
+  const shades = [3, 1, 5, 2, 6, 2, 4, 1, 1, 4, 3, 7];
+  return guideStrip("How to read the assumptions", [
+    [gpic(`<rect class="nd" x="6" y="22" width="16" height="16" rx="2.5"/><path class="ln" d="M22 30H50"/>${gtxt(25, 25, "needs")}${tri(60, 30, 8)}
+      <rect class="pg-doc" x="90" y="10" width="38" height="42" rx="6"/>${tri(101, 24, 5)}${tri(117, 24, 5)}${tri(109, 41, 5)}
+      ${gtxt(14, 54, "result", "sm", true)}${gtxt(60, 54, "assumption", "sm", true)}${gtxt(109, 64, "family", "sm", true)}`),
+      "What a result needs",
+      `An assumption is a condition a result needs in order to hold. The same idea, worded differently across papers, forms one family: ${DP.families.length} families, used ${fmt(tot)} times${top ? `. The most used is “${esc(top.name)}” (${top.results} results)` : ""}.`],
+    [gpic(`<path class="grib s" d="M10 8C48 8 48 6 86 6V24C48 24 48 22 10 22z"/><path class="grib r" d="M10 36C48 36 48 40 86 40V62C48 62 48 56 10 56z"/>
+      <rect x="4" y="8" width="6" height="14" class="gsb s"/><rect x="4" y="36" width="6" height="20" class="gsb r"/><rect x="86" y="6" width="5" height="18" class="gsb s"/><rect x="86" y="40" width="5" height="22" class="gsb r"/>
+      ${gtxt(95, 18, "a step")}${gtxt(95, 54, "no step")}`),
+      "Gold reaches the case, blue does not",
+      `A gold ribbon ends at a step of the safety case that names the assumption. A blue one ends at no step: ${fmt(none)} of the ${fmt(tot)} uses are of assumptions the case never names.`],
+    [gpic(`${shades.map((s, i) => `<rect x="${4 + (i % 4) * 13}" y="${10 + Math.floor(i / 4) * 13}" width="11" height="11" rx="2" style="fill:var(--fp${s})"/>`).join("")}
+      <circle cx="100" cy="32" r="24" class="gring"/><path class="ln" d="M100 8L121 44M100 8L79 44M76 32H124"/>
+      ${[[100, 8, 0], [124, 32, 1], [121, 44, 2], [79, 44, 3], [76, 32, 4]].map(([x, y, k]) => `<circle cx="${x}" cy="${y}" r="3.6" style="fill:var(--k${k})"/>`).join("")}
+      ${gtxt(4, 64, "by paper")}${gtxt(100, 66, "used together", "sm", true)}`),
+      "Who uses which, and what goes together",
+      "The grid shows which families each paper uses, darker for more results. The circle joins families that the same results use together."]]);
+}
+function papersGuide() {
+  const arc = (a, b, h, v, dash) => `<path d="M${a} 48Q${(a + b) / 2} ${48 - h} ${b} 48" fill="none" style="stroke:var(--${v})" stroke-width="2"${dash ? ` stroke-dasharray="3 3"` : ""}/>`;
+  const pc = (x, y, r = 5) => `<circle cx="${x}" cy="${y}" r="${r}" class="gpc"/>`;
+  return guideStrip("How to read the papers", [
+    [gpic(`<rect class="pg-doc" x="2" y="6" width="128" height="20" rx="3"/><rect class="pg-doc" x="2" y="30" width="128" height="20" rx="3"/>${pc(24, 16)}${pc(66, 40)}${pc(108, 16)}${pc(96, 40)}
+      <path class="ln" d="M2 57H130"/>${gtxt(24, 67, "2018", "sm", true)}${gtxt(66, 67, "2023", "sm", true)}${gtxt(108, 67, "2025", "sm", true)}`),
+      "Each circle is a paper",
+      `Each of the ${P.length} papers sits at its date, in its research lane. Select one to see what it claims and what answers it.`],
+    [gpic(`${arc(12, 48, 30, "builds")}${arc(48, 84, 24, "agrees")}${arc(12, 84, 58, "disputes")}${arc(84, 120, 22, "topic", 1)}${pc(12, 48)}${pc(48, 48)}${pc(84, 48)}${pc(120, 48)}
+      ${gtxt(30, 64, "builds", "sm", true)}${gtxt(66, 64, "agrees", "sm", true)}${gtxt(102, 64, "topic", "sm", true)}${gtxt(48, 13, "disputes", "sm", true)}`),
+      "Arcs are what authors say",
+      "An arc means one paper's authors say it builds on (blue), agrees with (green), disputes (orange) or relates to (grey) another. Dashed grey arcs only share a topic and are never evidence."],
+    [gpic(`${[[20, [3, 5.5, 2.4, 4.2, 1.6, 3.4]], [44, [5, 2, 4.6, 1.6, 3.8, 2.4]]].map(([y, rs]) => `<path class="gbar" d="M4 ${y}H26"/>` + rs.map((r, i) => `<circle cx="${40 + i * 17}" cy="${y}" r="${r}" class="gdot"/>`).join("")).join("")}
+      ${gtxt(4, 66, "bigger dot: more of that kind")}`),
+      "What each paper holds",
+      `The second tab, <a href="#matrix">What each paper holds</a>, counts each paper's results, theorems, definitions, assumptions, open questions and more. A bigger dot means more.`]]);
+}
+function mapGuide() {
+  return guideStrip("How to read the map", [
+    [gpic(`<circle cx="34" cy="35" r="30" class="glane"/>${[[24, 22, 8], [42, 24, 7], [22, 42, 9], [44, 43, 8], [33, 55, 5.5]].map(([x, y, r]) => `<circle cx="${x}" cy="${y}" r="${r}" class="gpc"/>`).join("")}
+      <path class="ln" d="M64 22H74M52 43H74"/>${gtxt(78, 25, "a lane")}${gtxt(78, 46, "a paper")}`),
+      `${D.lanes.length === 9 ? "Nine" : D.lanes.length} research lanes`,
+      `Each big circle is a research lane. Each circle inside it is a paper, sized by how many findings it has.`],
+    [gpic(`<path class="pg-doc" d="M8 4h40l10 10v52H8z"/><path class="ln" d="M15 20h30M15 27h34M15 48h32M15 55h20"/><rect class="hlq" x="12" y="33" width="44" height="9" rx="2"/>
+      <path class="gbar" d="M16 37.5H52"/><path class="ln" d="M60 37.5h12"/>${gtxt(76, 34, "page 8")}${gtxt(76, 46, "lines 23–30")}`),
+      "A finding is one quoted line",
+      `Each of the ${fmt(R.length)} findings is the exact sentence a paper states it in, with its page and lines, so it can be checked in the PDF.`],
+    [gpic(`<rect class="pg-doc" x="4" y="6" width="44" height="24" rx="5"/><rect class="pg-doc" x="84" y="40" width="44" height="24" rx="5"/><path class="gbar soft" d="M11 15H40M11 22H32M91 49H120M91 56H112"/>
+      <path d="M48 18C80 18 92 22 104 38" fill="none" style="stroke:var(--builds)" stroke-width="2"/><path d="M100 35l4 4 1-5.5" fill="none" style="stroke:var(--builds)" stroke-width="1.6"/>${gtxt(60, 12, "extends")}`),
+      "Links say how findings relate",
+      `${L.length} typed links say how one finding relates to another, for example whether it addresses, extends, supports or challenges it. Each link gives its reason.`]]);
 }
 // A three-step guide for readers new to proofs: what a dot and a line are, where the lines come from, what a problem does.
 function proofGuide(lean) {
