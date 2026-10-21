@@ -22,6 +22,10 @@ No coordinator keys, participant responses, local model assets or private joined
 
 `index.html#definitions` sets several papers' definitions of one concept side by side, with the exact words behind every cell and where the definitions agree or differ. It is an AI draft: every cell, column, statement and note went through two blind AI checks tested on planted mistakes, and no person has reviewed them. `definitions.json` holds the same comparisons for agents, with record ids and arXiv versions; `PUBLIC_BUILD_MANIFEST.json` lists it under `definitions`.
 
+## Replications
+
+`index.html#replications` shows which results other papers back up, contradict or have not yet tested. Each question card sets several papers' answers side by side, oldest first, with each paper's finding, the setting it was tested in, the exact words behind both, and what differs between the papers. Every result and main claim gets a status: holds elsewhere, conflicts, mixed, or tested once. It is an AI draft: every question, row, difference and left-out record went through two blind AI checks tested on planted mistakes, and no person has reviewed them. `replications.json` holds the same questions and statuses for agents, with record ids and arXiv versions; `PUBLIC_BUILD_MANIFEST.json` lists it under `replications`.
+
 ## Overview
 
 `overview.html` says where the atlas stands: what it holds, what it found, how useful it has proved so far, and what could come next. Its counts come from `data.json` and `atlas_data.json` when the site is built; the few measures taken elsewhere are fixed at their 18 October 2026 values. It opens with how the atlas works and how to use it. After what is in the atlas comes the AI safety coverage map, an AI-drafted outline not yet reviewed by a person: research areas, the problems inside them and the approaches that cut across areas, each problem marked by how much of it the atlas holds. Its data is `coverage_map.json`. Its last section is a proposal (what could come next, one database with many applications, uses worth building), and none of it is built yet. `PUBLIC_BUILD_MANIFEST.json` lists it under `overview`.

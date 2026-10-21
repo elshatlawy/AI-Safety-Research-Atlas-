@@ -52,6 +52,10 @@ Recipes:
 
 - [definitions.json](https://elshatlawy.github.io/AI-Safety-Research-Atlas-/definitions.json): 11 concepts from the debate and scalable-oversight papers, 49 definitions set side by side (the page's Definitions tab). Each cell says what one paper's definition sets for one question and cites the exact words, in the record's quote or in further lines of the same PDF with page and lines. Cells with the same group set the same rule. AI-drafted; every cell and statement passed two blind AI checks; no person has reviewed them. Check the cells that differ before carrying a result from one row's definition to another.
 
+## Replication tracker
+
+- [replications.json](https://elshatlawy.github.io/AI-Safety-Research-Atlas-/replications.json): 41 questions that several debate and scalable-oversight papers test, one row per paper with its answer, finding and setting, each citing the exact words (the page's Replications tab). Of the 224 results and main claims, 23 hold in every other paper on their question, 8 conflict, 66 are mixed and 127 are tested once. AI-drafted; every entry passed two blind AI checks; no person has reviewed them. Before citing a result, check its status and the differences between settings.
+
 ## Humans
 
 The visual atlas is at the site root, https://elshatlawy.github.io/AI-Safety-Research-Atlas-/. Every record is a dot in the record graph at https://elshatlawy.github.io/AI-Safety-Research-Atlas-/#graph (a card's human_url opens one record there). Corrections and new sources go to the research repository through its maintainer.

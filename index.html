@@ -72,13 +72,13 @@ h1,h2,h3{text-wrap:balance;margin:0}
 .brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:650;letter-spacing:-.01em;white-space:nowrap}
 .brand svg{flex:none}
 .nav{display:flex;gap:2px;margin-left:auto}
-.nav a{text-decoration:none;padding:7px 12px;border-radius:999px;color:var(--ink2);font-weight:500;font-size:14.5px;white-space:nowrap}
+.nav a{text-decoration:none;padding:7px 10px;border-radius:999px;color:var(--ink2);font-weight:500;font-size:14.5px;white-space:nowrap}
 .nav a:hover{background:var(--sunk);color:var(--ink)}
 .nav a.on{background:var(--ink);color:var(--bg)}
 .sbtn{display:flex;align-items:center;gap:8px;border:1px solid var(--line2);background:var(--surface);border-radius:999px;padding:6px 8px 6px 12px;cursor:pointer;color:var(--ink2);font-size:14px}
 .sbtn:hover{border-color:var(--ink2)}
 kbd{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:11px;border:1px solid var(--line2);border-radius:6px;padding:1px 6px;color:var(--muted);background:var(--sunk)}
-@media (max-width:980px){.brand span{display:none}.nav a{padding:7px 10px}.topin{gap:10px}}
+@media (max-width:980px){.brand span{display:none}.nav a{padding:7px 8px}.topin{gap:10px}}
 @media (max-width:720px){
   .topin{flex-wrap:wrap;height:auto;padding-top:9px;gap:6px 10px}
   .brand span{display:inline;font-size:14.5px}
@@ -1144,6 +1144,50 @@ td.dc:focus-visible{outline:2px solid var(--seq);outline-offset:1px}
 .dnote{margin:16px 0 0;font-size:12.5px;color:var(--muted)}
 .dsingle{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
 @media (max-width:760px){.dswipe{display:block}.dad{grid-template-columns:minmax(0,1fr)}.dcard{padding:16px 12px}.dgrid table{min-width:700px}.dgrid thead th:first-child{width:112px}}
+/* ---------- replications: which results other papers back up or contradict ---------- */
+.rsum{display:grid;grid-template-columns:minmax(0,520px) minmax(0,1fr);gap:22px;align-items:start}
+.rstamp{width:100%;max-width:520px;height:auto;display:block}
+.rstamp a:hover rect.sq,.rstamp a:focus rect.sq{stroke:var(--ink);stroke-width:1.6}
+.rstamp rect.ring{fill:none;stroke:var(--ink);stroke-width:1.6}
+.rlegs{display:flex;flex-direction:column;gap:9px;font-size:14px;color:var(--ink2)}
+.rleg{display:flex;align-items:center;gap:8px}.rleg b{font-weight:600;color:var(--ink)}
+.rleg i{width:13px;height:13px;border-radius:3px;display:inline-block;flex:none}
+.rleg i.ring{border:1.8px solid var(--ink);background:transparent}
+.rsumnote{font-size:13px;color:var(--muted);margin:8px 0 0;max-width:46ch}
+.rq{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);margin:0 0 10px;min-width:0}
+.rq>summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:6px 14px;align-items:center;padding:14px 18px}
+.rq>summary::-webkit-details-marker{display:none}
+.rq>summary:hover .rqt{text-decoration:underline;text-decoration-color:var(--line2);text-underline-offset:3px}
+.rq[open]>summary{border-bottom:1px solid var(--line)}
+.rqd{display:flex;gap:3px}.rqd i{width:10px;height:10px;border-radius:50%;display:inline-block}
+.rqt{font-family:"Source Serif 4",Georgia,serif;font-weight:600;font-size:18px;line-height:1.3}
+.rqv{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;border-radius:999px;padding:2px 10px;white-space:nowrap;background:color-mix(in srgb,var(--v) 15%,var(--surface));border:1px solid var(--v)}
+.rqb{padding:4px 18px 18px;min-width:0}
+.rplain{color:var(--ink2);margin:10px 0 4px;font-size:15px;max-width:72ch}
+.rtlv{min-height:118px}
+.rtlv .tx{font-size:11px;fill:var(--muted)}.rtlv .tl{font-size:12px;fill:var(--ink2)}
+.rtlv line.ax{stroke:var(--line2);stroke-width:1.5}.rtlv line.tk{stroke:var(--line2)}.rtlv line.st{stroke:var(--line2);stroke-dasharray:2 3}
+.rtlv circle.unc{stroke-dasharray:3 2;stroke:var(--ink2)}
+.frow{display:grid;grid-template-columns:12px 132px minmax(0,1fr) minmax(0,1.1fr);gap:4px 12px;align-items:baseline;width:100%;text-align:left;font:inherit;color:inherit;background:none;border:0;border-top:1px solid var(--line);padding:9px 6px;cursor:pointer;border-radius:6px}
+.frow:hover{background:color-mix(in srgb,var(--ink) 4%,transparent)}
+.frow.on{background:var(--sunk);outline:1.5px solid var(--ink)}
+.frow.on .fc em{background:var(--surface)}
+.frow:focus-visible{outline:2px solid var(--seq)}
+.frow>i{width:11px;height:11px;border-radius:50%;display:inline-block;align-self:center}
+.frow>i.unc{outline:1.5px dashed var(--ink2);outline-offset:1px}
+.fp{font-weight:600;font-size:14px}.fs{font-size:14px;color:var(--ink2)}.fs b{color:var(--ink);font-weight:600}
+.fc{display:flex;flex-wrap:wrap;gap:4px}.fc em{font-style:normal;font-size:11.5px;color:var(--ink2);background:var(--sunk);border-radius:5px;padding:1px 6px}
+.rset{margin:10px 0 0;padding:0;list-style:none;font-size:13px;color:var(--ink2);display:flex;flex-direction:column;gap:3px}
+.rset b{font-weight:600;color:var(--ink)}
+.fdiff{margin:16px 0 0;border-left:3px solid var(--builds);padding:4px 0 4px 14px}
+.fdiff b{display:block;font-size:14.5px}.fdiff ul{margin:6px 0 0;padding-left:18px;font-size:14px;color:var(--ink2);max-width:80ch}.fdiff li+li{margin-top:4px}
+.fsub{font-size:12px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);font-weight:600;margin:22px 0 6px}
+.olist{list-style:none;margin:0;padding:0}.olist li{border-top:1px solid var(--line);padding:9px 0;display:flex;flex-direction:column;gap:2px}
+.olist a{color:var(--ink);font-weight:500;text-decoration:none}.olist a:hover{text-decoration:underline}.olist span{font-size:12.5px;color:var(--muted)}
+.rbox{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px 20px;min-width:0;margin:26px 0 0}
+.rbox h2{font-family:"Source Serif 4",Georgia,serif;font-weight:600;font-size:22px;margin:0}
+@media (max-width:760px){.rsum{grid-template-columns:minmax(0,1fr)}.rq>summary{grid-template-columns:minmax(0,1fr);padding:12px 14px}.rqb{padding:4px 12px 14px}
+  .frow{grid-template-columns:12px minmax(0,1fr)}.frow .fs,.frow .fc{grid-column:2}.rbox{padding:16px 14px}}
 </style>
 </head>
 <body>
@@ -1151,7 +1195,7 @@ td.dc:focus-visible{outline:2px solid var(--seq);outline-offset:1px}
   <a class="brand" href="#gaps" aria-label="Safety Research Atlas, open questions">
     <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><path d="M6 19 L12 7 L20 15" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M6 19 Q14 23 20 15" fill="none" stroke="currentColor" stroke-width="1.6" stroke-dasharray="2 2.4"/><circle cx="6" cy="19" r="3.2" fill="currentColor"/><circle cx="12" cy="7" r="3.2" fill="var(--bg)" stroke="currentColor" stroke-width="1.6"/><circle cx="20" cy="15" r="3.2" fill="currentColor"/></svg>
     <span>Safety Research Atlas</span></a>
-  <nav class="nav" aria-label="Views"><a href="overview.html">Overview</a><a href="#gaps" data-v="gaps">Gaps</a><a href="#discoveries" data-v="ledger">Discoveries</a><a href="#results" data-v="results">Results</a><a href="#map" data-v="map">Map</a><a href="#papers" data-v="papers">Papers</a><a href="#assumptions" data-v="assumptions" hidden>Assumptions</a><a href="#proofs" data-v="proofs" hidden>Proofs</a><a href="#definitions" data-v="definitions" hidden>Definitions</a></nav>
+  <nav class="nav" aria-label="Views"><a href="overview.html">Overview</a><a href="#gaps" data-v="gaps">Gaps</a><a href="#discoveries" data-v="ledger">Discoveries</a><a href="#results" data-v="results">Results</a><a href="#replications" data-v="replications" hidden>Replications</a><a href="#map" data-v="map">Map</a><a href="#papers" data-v="papers">Papers</a><a href="#assumptions" data-v="assumptions" hidden>Assumptions</a><a href="#proofs" data-v="proofs" hidden>Proofs</a><a href="#definitions" data-v="definitions" hidden>Definitions</a></nav>
   <button class="sbtn" id="openSearch" type="button" aria-label="Search the atlas"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M11 11l3.5 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Search</span><kbd>/</kbd></button>
 </div></header>
 <main class="wrap" id="app"><div class="empty">Loading the atlas…</div></main>
@@ -1237,7 +1281,7 @@ const statusSVG = (st, s) => fracSVG(STATUS_FILL[st] ?? 0, s);
 
 async function boot() {
   try {
-    const res = await fetch("data.json?v=4c2738bf315b");
+    const res = await fetch("data.json?v=abf2204295de");
     if (!res.ok) throw new Error(res.status);
     D = await res.json();
   } catch (e) {
@@ -1268,6 +1312,7 @@ async function boot() {
   GQ.forEach(q => { q.lane = q.origin != null && R[q.origin] ? P[R[q.origin].p].lane : null; });
   bootDeps();
   bootDefs();
+  bootReps();
   window.addEventListener("hashchange", route);
   route();
 }
@@ -1308,6 +1353,7 @@ function route() {
   else if ((m = h.match(/^assumptions(?:=(.*))?$/)) && DP) view = ["assumptions", m[1] ? m[1].toUpperCase() : null];
   else if ((m = h.match(/^proofs(?:=(.*))?$/)) && DP) view = ["proofs", m[1] || ""];
   else if ((m = h.match(/^definitions(?:=(.*))?$/)) && DF) view = ["definitions", m[1] || null];
+  else if ((m = h.match(/^replications(?:=(.*))?$/)) && RP) view = ["replications", m[1] || null];
   else view = ["gaps", null, null];
   document.querySelectorAll(".nav a").forEach(a => a.classList.toggle("on", a.dataset.v === view[0]));
   const sheetQ = view[0] === "gaps" && view[1] && QBY[view[1]] ? QBY[view[1]] : null;
@@ -1328,10 +1374,11 @@ function route() {
   else if (view[0] === "assumptions") renderAssumptions(view[1]);
   else if (view[0] === "proofs") renderProofs(view[1]);
   else if (view[0] === "definitions") renderDefinitions(view[1]);
+  else if (view[0] === "replications") renderReplications(view[1]);
   const navOn = $(".nav a.on"), nav = $(".nav");
   if (!navOn && nav) nav.scrollLeft = 0;
   if (navOn && nav && nav.scrollWidth > nav.clientWidth) { const a = navOn.getBoundingClientRect(), b = nav.getBoundingClientRect(); if (a.left < b.left || a.right > b.right) nav.scrollLeft += a.left - b.left - (b.width - a.width) / 2; }
-  const key = ["papers", "gaps", "assumptions", "proofs", "graph", "definitions"].includes(view[0]) ? view[0] : h;
+  const key = ["papers", "gaps", "assumptions", "proofs", "graph", "definitions", "replications"].includes(view[0]) ? view[0] : h;
   if (key !== lastView) { window.scrollTo(0, 0); lastView = key; }
   if (h === "agents") $("#agents")?.scrollIntoView({block:"start"});
 }
@@ -1995,6 +2042,7 @@ function cardHTML(c) {
     <div class="mlab">${c.hyp.length ? `Needs ${plural(c.hyp.length, "stated hypothesis", "stated hypotheses")}` : "No stated hypotheses"}${c.hcheck ? ` <span class="unv" data-tip="${esc(c.hcheck)}">not verified</span>` : ""}</div>
     ${c.hyp.length ? `<ol class="hyps">${c.hyp.map(h => `<li>${esc(h)}</li>`).join("")}</ol>` : ""}
     ${setting ? `<div class="rcs"><b>Setting</b> · ${esc(setting)}</div>` : ""}
+    ${r ? repStrip(c.r) : ""}
   </article>`;
 }
 function cardBlock(c, p) {
@@ -2394,6 +2442,7 @@ function renderRecord(i) {
         <div class="actions"><button class="btn" type="button" id="cpc">Copy citation</button><button class="btn" type="button" id="cpj">Copy as JSON</button></div>
         ${famStrip(i)}
         ${defStrip(i)}
+        ${repStrip(i)}
         ${raises.map(q => `<a class="qbox" href="#q${q.id.slice(1)}">${statusSVG(q.status, 30)}<span><span class="eyebrow">Raises open question · rank ${q.rank}</span><br><span class="qt2">${esc(q.question)}</span></span></a>`).join("")}
         ${card ? cardBlock(card, p) : ""}
       </div>
@@ -3795,6 +3844,164 @@ function defStrip(i) {
   return `<div class="fstrip">${DEF_BY_R[i].map(id => { const c = defById(id); return `<a class="plink" href="#definitions=${esc(id)}">Compare with ${plural(c.rows.length - 1, "other definition")} of ${esc(c.name)} →</a>`; }).join("")}</div>`;
 }
 
+/* ---------- replications: which results other papers back up or contradict, paper by paper ---------- */
+let RP = null;
+const REP_BY_R = {}, RQ = {};
+const ANS = {yes: ["Yes", "var(--agrees)"], partly: ["Partly", "var(--k3)"], no: ["No", "var(--disputes)"]};
+const USTAT = [["conflicts", "Conflicts", "var(--disputes)", "Every other paper on its question finds otherwise."],
+               ["mixed", "Mixed", "var(--k3)", "Some papers on its question agree, others find otherwise or only partly."],
+               ["holds", "Holds elsewhere", "var(--agrees)", "Every other paper on its question finds the same."],
+               ["once", "Tested once", "var(--topic)", "No other paper in the atlas tests it yet."]];
+function bootReps() {
+  RP = D.reps && (D.reps.questions || []).length ? D.reps : null;
+  document.querySelectorAll('.nav a[data-v="replications"]').forEach(a => { a.hidden = !RP; });
+  if (!RP) return;
+  RP.questions.forEach(q => { RQ[q.id] = q; q.rows.forEach(row => { (REP_BY_R[row.r] = REP_BY_R[row.r] || []).push(q.id); }); });
+  // mixed questions first, then by how many papers test them
+  const mixed = q => new Set(q.rows.map(r => r.a)).size > 1;
+  RP.questions.sort((a, b) => mixed(b) - mixed(a) || b.rows.length - a.rows.length || a.q.localeCompare(b.q));
+}
+function repUsed() {
+  const used = new Map();
+  if (CASE) Object.entries(CASE.maps || {}).forEach(([nid, ms]) => ms.forEach(m => { if (m.r != null && !used.has(m.r)) used.set(m.r, nid); }));
+  return used;
+}
+function repVerdict(q) {
+  const n = q.rows.length, c = {}; q.rows.forEach(r => { c[r.a] = (c[r.a] || 0) + 1; });
+  const ks = ["yes", "partly", "no"].filter(a => c[a]);
+  if (ks.length === 1) return [`All ${n} papers: ${ks[0]}`, ANS[ks[0]][1]];
+  return [`Mixed: ${ks.map(a => `${a} in ${c[a]}`).join(", ")} of ${n}`, "var(--k3)"];
+}
+function repsGuide() {
+  const dot = (x, c) => `<circle cx="${x}" cy="40" r="7" style="fill:${c}"/>`;
+  return guideStrip("How to read the replication tracker", [
+    [gpic(`<line x1="4" y1="40" x2="128" y2="40" style="stroke:var(--line2);stroke-width:1.5"/>${["var(--disputes)", "var(--disputes)", "var(--k3)", "var(--agrees)", "var(--agrees)"].map((c, k) => dot(14 + k * 26, c)).join("")}${gtxt(4, 16, "one question", "")}${gtxt(4, 62, "older")}${gtxt(128, 62, "newer", "sm", false).replace("<text", `<text text-anchor="end"`)}`),
+      "One question, many papers",
+      "Each card is one question that several papers test, oldest first. Each dot is a paper's answer: green yes, orange no, amber partly."],
+    [gpic(`${[...Array(32)].map((_, k) => gbox(2 + (k % 8) * 15, 4 + Math.floor(k / 8) * 15, 12, ["var(--disputes)", "var(--disputes)", "var(--k3)", "var(--k3)", "var(--agrees)", "var(--agrees)", "var(--agrees)"][k] || "var(--topic)", 3)).join("")}<rect x=".5" y="2.5" width="15" height="15" rx="4" style="fill:none;stroke:var(--ink);stroke-width:1.4"/>`),
+      "Every result, one square",
+      "A grey square is a result no other paper in the atlas has tested yet. A ring means the debate safety case uses it."],
+    [gpic(`<rect x="1" y="2" width="128" height="64" rx="6" style="fill:var(--sunk)"/><rect class="hlq" x="7" y="22" width="104" height="12" rx="2"/>${gtxt(8, 16, "p. 2 · lines 31–38")}${gtxt(10, 31, "judges achieve 88%", "")}${gtxt(8, 50, "the exact words, highlighted")}`),
+      "Tap a paper for its words",
+      "Every answer points to the paper's own sentence, highlighted, with the page and lines, and to the setting it was tested in."]]);
+}
+function repStamp(used) {
+  const order = USTAT.map(s => s[0]);
+  const units = Object.entries(RP.units).map(([i, s]) => [+i, s]).filter(([i]) => R[i])
+    .sort((a, b) => order.indexOf(a[1]) - order.indexOf(b[1]) || used.has(b[0]) - used.has(a[0]) || a[0] - b[0]);
+  const sq = 13, g = 3, cols = 32, rows = Math.ceil(units.length / cols);
+  const col = Object.fromEntries(USTAT.map(s => [s[0], s]));
+  const cells = units.map(([i, s], n) => {
+    const x = (n % cols) * (sq + g), y = Math.floor(n / cols) * (sq + g), r = R[i];
+    const ring = used.has(i) ? `<rect class="ring" x="${x - 1.5}" y="${y - 1.5}" width="${sq + 3}" height="${sq + 3}" rx="4"/>` : "";
+    return `<a href="#r${i}" aria-label="${esc(`${col[s][1]}: ${P[r.p].short}, ${r.t}`)}">${ring}<rect class="sq" x="${x}" y="${y}" width="${sq}" height="${sq}" rx="3" style="fill:${col[s][2]}"><title>${esc(`${col[s][1]} · ${P[r.p].short}: ${r.t}`)}</title></rect></a>`;
+  }).join("");
+  const cnt = {}; units.forEach(([, s]) => { cnt[s] = (cnt[s] || 0) + 1; });
+  const usedOnce = units.filter(([i, s]) => used.has(i) && s === "once").length, usedAll = units.filter(([i]) => used.has(i)).length;
+  return `<section class="vpanel"><div class="rsum">
+    <svg class="rstamp" viewBox="-3 -3 ${cols * (sq + g) + 3} ${rows * (sq + g) + 3}" role="group" aria-label="${esc(`${units.length} results and claims, one square each, coloured by whether other papers back them up`)}">${cells}</svg>
+    <div><div class="rlegs">${USTAT.map(([k, n, c, t]) => `<span class="rleg" data-tip="${esc(t)}"><i style="background:${c}"></i><b>${n}</b> ${cnt[k] || 0}</span>`).join("")}
+      <span class="rleg"><i class="ring"></i><b>Used by the safety case</b> ${usedAll}</span></div>
+      <p class="rsumnote">Each square is one result or main claim; tap it to open it. Grey does not mean wrong, only that no second paper in the atlas has tested it yet. ${usedOnce} of the ${usedAll} results the safety case uses are grey.</p></div>
+  </div></section>`;
+}
+function repTimelineSVG(q, W) {
+  W = Math.max(300, Math.floor(W) || 600);
+  const t = r => P[R[r.r].p].year + (P[R[r.r].p].month - 1) / 12;
+  const ts = q.rows.map(t), lo = Math.floor(Math.min(...ts)), hi = Math.max(lo + 2, Math.ceil(Math.max(...ts) + 1 / 12));
+  const x0 = 34, x1 = W - 34, sx = v => x0 + (v - lo) / (hi - lo) * (x1 - x0), y = 58;
+  const parts = [`<line class="ax" x1="${x0 - 12}" y1="${y}" x2="${x1 + 12}" y2="${y}"/>`];
+  for (let v = lo; v <= hi; v++) parts.push(`<line class="tk" x1="${f1(sx(v))}" y1="${y - 4}" x2="${f1(sx(v))}" y2="${y + 4}"/><text class="tx" x="${f1(sx(v))}" y="${y + 20}" text-anchor="middle">${v}</text>`);
+  // labels on four levels (above, below, further above, further below), each placed clear of its level's last label
+  const levels = [[24, -1], [96, 1], [8, -1], [112, 1]], last = levels.map(() => -1e9);
+  q.rows.map((r, k) => [r, k]).sort((a, b) => t(a[0]) - t(b[0])).forEach(([r, k]) => {
+    const x = sx(t(r)), w = r.label.length * 6.6 + 10;
+    let lv = levels.findIndex((_, j) => x - w / 2 > last[j]); if (lv < 0) lv = 0;
+    last[lv] = x + w / 2;
+    const [ly] = levels[lv], tx = Math.min(x1 + 30 - w / 2, Math.max(w / 2 - 4, x));
+    parts.push(`<line class="st" x1="${f1(x)}" y1="${y}" x2="${f1(x)}" y2="${ly < y ? ly + 4 : ly - 12}"/>`);
+    parts.push(`<circle class="${r.st !== "AI_CHECKED" ? "unc" : ""}" data-k="${k}" cx="${f1(x)}" cy="${y}" r="8.5" style="fill:${ANS[r.a][1]};stroke-width:2.5${r.st === "AI_CHECKED" ? ";stroke:var(--surface)" : ""}"><title>${esc(`${r.label}: ${ANS[r.a][0]}. ${r.f}`)}</title></circle>`);
+    parts.push(`<text class="tl" x="${f1(tx)}" y="${ly}" text-anchor="middle">${esc(r.label)}</text>`);
+  });
+  return `<svg width="${W}" height="120" viewBox="0 0 ${W} 120" role="img" aria-label="${esc(`${plural(q.rows.length, "paper")} over time: ${q.rows.map(r => `${r.label} ${ANS[r.a][0].toLowerCase()}`).join(", ")}`)}">${parts.join("")}</svg>`;
+}
+function repDrawer(q, k) {
+  const row = q.rows[k], r = R[row.r], p = P[r.p];
+  const phrases = es => es.filter(e => e.pg == null).map(e => e.ph);
+  const spans = [];
+  [...row.ev, ...row.set].filter(e => e.pg != null).forEach(e => { const s = spans.find(z => z.pg === e.pg && z.a === e.a && z.b === e.b); if (s) s.ph.push(e.ph); else spans.push({...e, ph: [e.ph]}); });
+  const rv = REVIEW[row.st] || ["Not yet checked", "var(--related)", "Not yet read by the AI checks"];
+  return `<div class="dq" aria-live="polite">
+    <div class="dqh"><b>${esc(row.label)} · ${ANS[row.a][0]}</b><span>${esc(r.t)}</span></div>
+    <div class="dqv">“${esc(row.f)}”</div>
+    <blockquote>${defMark(r.q, phrases(row.ev))}</blockquote>
+    <div class="dqf">${esc(p.short)}, “${esc(p.title)}” · page ${r.pg}, lines ${esc(r.ln)} · <a href="${esc(p.pdf)}#page=${r.pg}" target="_blank" rel="noopener">Open the PDF at this page ↗</a> · <a href="#r${row.r}">Open in the atlas</a></div>
+    ${spans.map(s => `<div class="dqx"><div class="dqf">More lines of the same paper · page ${s.pg}, lines ${s.a}–${s.b} · <a href="${esc(p.pdf)}#page=${s.pg}" target="_blank" rel="noopener">Open the PDF ↗</a></div><blockquote>${defMark(s.tx, s.ph)}</blockquote></div>`).join("")}
+    <ul class="rset">${row.set.map(s => `<li><b>${esc(s.t)}</b> · “${esc(s.ph)}”${s.pg != null ? ` <span class="muted">(page ${s.pg})</span>` : ""}</li>`).join("")}</ul>
+    <div class="dqf" style="margin-top:8px"><span class="badge" data-tip="${esc(rv[2])}"><i style="background:${rv[1]}"></i>${esc(rv[0])}</span></div>
+  </div>`;
+}
+function repCard(q, sel) {
+  const all = [q, ...q.rows, ...q.differ], ok = all.filter(x => x.st === "AI_CHECKED").length;
+  return `<p class="rplain">${esc(q.plain)}</p>
+    <div class="viz rtlv" data-viz="rtl:${esc(q.id)}"></div>
+    <div class="rrows">${q.rows.map((row, k) => `<button type="button" class="frow${k === sel ? " on" : ""}" data-k="${k}"><i class="${row.st !== "AI_CHECKED" ? "unc" : ""}" style="background:${ANS[row.a][1]}"></i><span class="fp">${esc(row.label)}</span><span class="fs"><b>${ANS[row.a][0]}.</b> ${esc(row.f)}</span><span class="fc">${row.set.map(s => `<em>${esc(s.t)}</em>`).join("")}</span></button>`).join("")}</div>
+    <div class="rdrawer">${repDrawer(q, sel)}</div>
+    ${q.differ.length ? `<div class="fdiff"><b>What differs between the papers</b><ul>${q.differ.map(d => `<li>${esc(d.t)}${d.st !== "AI_CHECKED" ? ` <span class="muted">(not yet checked)</span>` : ""}</li>`).join("")}</ul></div>` : ""}
+    ${q.pooled && PAIRS.length ? `<div class="fsub">All ${PAIRS.length} debate-versus-consultancy comparisons the atlas holds</div>${pooledFigure()}` : ""}
+    <p class="dnote">AI draft, not reviewed by a person. ${ok === all.length ? "Two independent AI checks read every answer, finding and setting on this card against the paper's words." : `${ok} of ${all.length} parts of this card have passed two independent AI checks.`} A machine check confirms every highlighted phrase appears word for word in the paper.</p>`;
+}
+function openRep(det, q, sel = 0) {
+  const body = det.querySelector(".rqb");
+  body.innerHTML = repCard(q, sel);
+  body.querySelectorAll(".frow").forEach(b => b.onclick = () => {
+    body.querySelectorAll(".frow.on").forEach(x => x.classList.remove("on")); b.classList.add("on");
+    body.querySelector(".rdrawer").innerHTML = repDrawer(q, +b.dataset.k);
+  });
+  drawViz(body);
+}
+function renderReplications(arg) {
+  const used = repUsed(), open = arg && RQ[arg] ? arg : null;
+  const units = Object.keys(RP.units).length, papers = uniq(RP.questions.flatMap(q => q.rows.map(r => R[r.r].p))).length;
+  const once = Object.entries(RP.units).filter(([i, s]) => s === "once" && used.has(+i)).map(([i]) => +i).sort((a, b) => a - b);
+  const rv = RP.revisions || {};
+  const revLine = rv.checked ? (rv.newer.length || rv.withdrawn.length
+    ? `${plural(rv.newer.length, "paper has", "papers have")} a newer arXiv version than the one quoted, and ${plural(rv.withdrawn.length, "paper was", "papers were")} withdrawn (checked ${esc(rv.checked)}).`
+    : `All ${rv.papers} papers are quoted at their latest arXiv version, and none has been withdrawn (checked ${esc(rv.checked)}).`) : "";
+  $("#app").innerHTML = `
+    <div class="ghead"><div class="eyebrow">Replications · ${units} results and claims from ${P.length} papers</div>
+      <h1 class="gtitle">Does it hold up?</h1>
+      <p class="lede">A result counts for more when another paper finds the same thing. See which results other papers back up, which they contradict, and which have been tested only once.</p></div>
+    ${repsGuide()}
+    ${repStamp(used)}
+    <div class="sechead" style="margin-top:28px"><h2>Questions several papers test</h2><span class="muted">${plural(RP.questions.length, "question")} across ${plural(papers, "paper")}</span></div>
+    ${RP.questions.map(q => { const [v, c] = repVerdict(q); return `<details class="rq" id="rq-${esc(q.id)}"${q.id === open ? " open" : ""}><summary>
+      <span class="rqd" aria-hidden="true">${q.rows.map(r => `<i style="background:${ANS[r.a][1]}"></i>`).join("")}</span><span class="rqt">${esc(q.q)}</span><span class="rqv" style="--v:${c}">${esc(v)}</span></summary><div class="rqb"></div></details>`; }).join("")}
+    ${once.length ? `<section class="rbox"><div class="sechead"><h2>Used by the safety case, tested once</h2><span class="muted">${plural(once.length, "result")}</span></div>
+      <p class="rplain" style="margin-top:0">The debate safety case uses these results, and no second paper in the atlas has tested them yet: the places a replication would add the most.</p>
+      <ul class="olist">${once.map(i => `<li><a href="#r${i}">${esc(R[i].t)}</a><span>${esc(P[R[i].p].short)} · used for “${esc((CN[used.get(i)] || {}).label || used.get(i))}”</span></li>`).join("")}</ul></section>` : ""}
+    <p class="dnote">${revLine} The atlas's own audit problems in theorems and proofs are on the <a href="#proofs">Proofs</a> page. ${esc(RP.note || "")}</p>`;
+  document.querySelectorAll("details.rq").forEach(det => {
+    const q = RQ[det.id.slice(3)];
+    det.addEventListener("toggle", () => {
+      if (!det.open) return;
+      if (!det.querySelector(".rqb").innerHTML) openRep(det, q);
+      history.replaceState(null, "", `#replications=${q.id}`);
+    });
+  });
+  if (open) { const det = $(`#rq-${open}`); openRep(det, RQ[open]); requestAnimationFrame(() => det.scrollIntoView({block: "start"})); }
+}
+function repStrip(i) {
+  if (!RP || !REP_BY_R[i]) return "";
+  return `<div class="fstrip">${REP_BY_R[i].map(id => {
+    const q = RQ[id], mine = q.rows.find(r => r.r === i), others = q.rows.filter(r => R[r.r].p !== R[i].p);
+    const same = others.filter(r => r.a === mine.a).length, opp = others.filter(r => (r.a === "yes" && mine.a === "no") || (r.a === "no" && mine.a === "yes")).length;
+    const rest = others.length - same - opp;
+    const parts = [same && `${same} find${same === 1 ? "s" : ""} the same`, opp && `${opp} find${opp === 1 ? "s" : ""} otherwise`, rest && `${rest} partly`].filter(Boolean);
+    return `<a class="plink" href="#replications=${esc(id)}">Tested by ${plural(others.length, "other paper")}: ${parts.join(", ")} →</a>`;
+  }).join("")}</div>`;
+}
+
 /* ---------- cross-links: the families a result uses, its place in a proof graph; the families that name a step ---------- */
 function famStrip(i) {
   if (!DP) return "";
@@ -3815,6 +4022,7 @@ const VIZ = {
   tl: (el, a) => QBY[a] ? qTimelineSVG(QBY[a], el.clientWidth) : "",
   pool: el => PAIRS.length ? pooledSVG(el.clientWidth) : "",
   lg: (el, a) => R[+a] ? localGraphSVG(+a, el.clientWidth) : "",
+  rtl: (el, a) => RQ[a] ? repTimelineSVG(RQ[a], el.clientWidth) : "",
 };
 function drawViz(root = document) {
   root.querySelectorAll("[data-viz]").forEach(el => {
