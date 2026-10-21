@@ -1,0 +1,1576 @@
+{
+ "schema": "AIS-COVERAGE-MAP-v2",
+ "title": "AI Safety Coverage Map",
+ "version": 3,
+ "drafted": "2026-10-21",
+ "drafted_by": "Claude",
+ "review_status": "provisional_ai_draft",
+ "atlas_snapshot": "the atlas's 245 sources (repo commit da24e54)",
+ "levels": {
+  "area": "A broad part of AI safety research, such as Alignment.",
+  "problem": "A specific research question inside an area, such as scalable oversight.",
+  "approach": "A method that can serve problems in several areas, such as debate."
+ },
+ "states": {
+  "covered": "Read in depth: the key papers read in full, with records, open questions and later work tracked.",
+  "partly": "Some sources in the atlas (abstracts, quoted passages, code or Lean proofs), but no systematic sweep.",
+  "none": "Nothing in the atlas yet."
+ },
+ "kinds": {
+  "full": "Full text",
+  "passages": "Quoted passages",
+  "abstract": "Abstract only",
+  "lean": "Lean proof",
+  "code": "Code",
+  "framework": "Framework"
+ },
+ "rules": [
+  "Three levels. A research area is a broad part of safety, a research problem is a specific question inside it, and an approach is a method that can serve problems in several areas.",
+  "Version 3 was checked against the 2026 Singapore Consensus on Global AI Safety Research Priorities and the MIT AI Risk Repository's risk domains. Entries added in version 3 are marked new.",
+  "Problems carry the marks. An area counts as covered only when all its problems are, and as partly covered when any of them has a source.",
+  "Some problems list what they include. Those sub-topics are not marked separately yet.",
+  "A problem is covered only when its key papers were read in full and its open questions are tracked. One paper or one abstract makes it partly covered.",
+  "An approach is marked the same way, by what the atlas holds about the method. Its links show the problems it is used on in the field, including problems the atlas has not touched.",
+  "The number on a problem counts the sources listed under it. A paper can sit under more than one problem.",
+  "The areas, problems and approaches are an AI-drafted outline, not a published taxonomy. Nothing here is reviewed by a person."
+ ],
+ "areas": [
+  {
+   "id": "alignment",
+   "name": "Alignment",
+   "plain": "Making AI systems pursue the goals their developers and users actually intend.",
+   "problems": [
+    {
+     "id": "goals",
+     "name": "Specifying goals and rewards",
+     "state": "partly",
+     "plain": "Writing down a goal or reward that captures what we mean, so the AI cannot score well while missing the point.",
+     "items": [
+      {
+       "title": "Defining and Characterizing Reward Hacking (Skalse et al. 2022)",
+       "kind": "abstract"
+      },
+      {
+       "title": "The Effects of Reward Misspecification: Mapping and Mitigating Misaligned Models (Pan et al. 2022)",
+       "kind": "abstract"
+      },
+      {
+       "title": "Language Models Learn to Mislead Humans via RLHF (Wen et al. 2024)",
+       "kind": "full"
+      }
+     ],
+     "includes": [
+      "reward hacking",
+      "specification gaming",
+      "Goodhart effects"
+     ]
+    },
+    {
+     "id": "specs",
+     "name": "Behaviour specifications",
+     "state": "partly",
+     "plain": "Writing down the rules a model should follow, and checking that it follows them.",
+     "added": 3,
+     "items": [
+      {
+       "title": "Deliberative Alignment: Reasoning Enables Safer Language Models (Guan et al. 2024)",
+       "kind": "abstract"
+      },
+      {
+       "title": "Constitutional AI: Harmlessness from AI Feedback (Bai et al. 2022)",
+       "kind": "full"
+      }
+     ]
+    },
+    {
+     "id": "feedback",
+     "name": "Learning from human feedback",
+     "state": "partly",
+     "plain": "Training models on people's judgements of their outputs.",
+     "items": [
+      {
+       "title": "Deep reinforcement learning from human preferences (Christiano et al. 2017)",
+       "kind": "abstract"
+      },
+      {
+       "title": "Training language models to follow instructions with human feedback (Ouyang et al. 2022)",
+       "kind": "abstract"
+      },
+      {
+       "title": "Open Problems and Fundamental Limitations of Reinforcement Learning from Human Feedback (Casper et al. 2023)",
+       "kind": "abstract"
+      },
+      {
+       "title": "Scalable agent alignment via reward modeling: a research direction (Leike et al. 2018)",
+       "kind": "full"
+      },
+      {
+       "title": "Constitutional AI: Harmlessness from AI Feedback (Bai et al. 2022)",
+       "kind": "full"
+      },
+      {
+       "title": "Deliberative Alignment: Reasoning Enables Safer Language Models (Guan et al. 2024)",
+       "kind": "abstract"
+      }
+     ]
+    },
+    {
+     "id": "values",
+     "name": "Pluralistic and legal alignment",
+     "state": "none",
+     "plain": "Deciding whose values count, combining people's different preferences fairly, and aligning AI with law.",
+     "items": [],
+     "includes": [
+      "preference aggregation",
+      "value learning",
+      "alignment with law"
+     ]
+    },
+    {
+     "id": "oversight",
+     "name": "Scalable oversight",
+     "state": "covered",
+     "plain": "Supervising AI systems on tasks too hard for people to check directly.",
+     "note": "The atlas's deep dive: 42 papers read in full, 609 records, 33 open questions checked against 98 later papers, and Lean audits of 5 papers.",
+     "items": [
+      {
+       "title": "AI safety via debate (Irving et al. 2018)",
+       "kind": "full",
+       "group": "Debate"
+      },
+      {
+       "title": "Scalable AI Safety via Doubly-Efficient Debate (Brown-Cohen, Irving and Piliouras 2023)",
+       "kind": "full",
+       "group": "Debate"
+      },
+      {
+       "title": "Avoiding Obfuscation with Prover-Estimator Debate (Brown-Cohen et al. 2025)",
+       "kind": "full",
+       "group": "Debate"
+      },
+      {
+       "title": "Playing Large Games with Oracles and AI Debate (Chen et al. 2023)",
+       "kind": "full",
+       "group": "Debate"
+      },
+      {
+       "title": "An alignment safety case sketch based on debate (Buhl et al. 2025)",
+       "kind": "full",
+       "group": "Debate"
+      },
+      {
+       "title": "Single-Turn Debate Does Not Help Humans Answer Hard Reading-Comprehension Questions (Parrish et al. 2022)",
+       "kind": "full",
+       "group": "Debate"
+      },
+      {
+       "title": "Two-Turn Debate Doesn't Help Humans Answer Hard Reading Comprehension Questions (Parrish et al. 2022)",
+       "kind": "full",
+       "group": "Debate"
+      },
+      {
+       "title": "Debate Helps Supervise Unreliable Experts (Michael et al. 2023)",
+       "kind": "full",
+       "group": "Debate"
+      },
+      {
+       "title": "Debating with More Persuasive LLMs Leads to More Truthful Answers (Khan et al. 2024)",
+       "kind": "full",
+       "group": "Debate"
+      },
+      {
+       "title": "On scalable oversight with weak LLMs judging strong LLMs (Kenton et al. 2024)",
+       "kind": "full",
+       "group": "Debate"
+      },
+      {
+       "title": "Training Language Models to Win Debates with Self-Play Improves Judge Accuracy (Arnesen, Rein and Michael 2024)",
+       "kind": "full",
+       "group": "Debate"
+      },
+      {
+       "title": "AI Debate Aids Assessment of Controversial Claims (Rahman et al. 2025)",
+       "kind": "full",
+       "group": "Debate"
+      },
+      {
+       "title": "Debate Helps Weak-to-Strong Generalization (Lang, Huang and Li 2025)",
+       "kind": "full",
+       "group": "Debate"
+      },
+      {
+       "title": "Improving Factuality and Reasoning in Language Models through Multiagent Debate (Du et al. 2023)",
+       "kind": "full",
+       "group": "Debate"
+      },
+      {
+       "title": "Encouraging Divergent Thinking in Large Language Models through Multi-Agent Debate (Liang et al. 2023)",
+       "kind": "full",
+       "group": "Debate"
+      },
+      {
+       "title": "Should we be going MAD? A Look at Multi-Agent Debate Strategies for LLMs (Smit et al. 2023)",
+       "kind": "full",
+       "group": "Debate"
+      },
+      {
+       "title": "Debate or Vote: Which Yields Better Decisions in Multi-Agent Large Language Models? (Choi, Zhu and Li 2025)",
+       "kind": "full",
+       "group": "Debate"
+      },
+      {
+       "title": "LM vs LM: Detecting Factual Errors via Cross Examination (Cohen et al. 2023)",
+       "kind": "full",
+       "group": "Debate"
+      },
+      {
+       "title": "Lean statement of the doubly-efficient debate protocol",
+       "kind": "lean",
+       "group": "Debate"
+      },
+      {
+       "title": "Concrete Problems in AI Safety (Amodei et al. 2016)",
+       "kind": "full",
+       "group": "Defining and measuring oversight"
+      },
+      {
+       "title": "Measuring Progress on Scalable Oversight for Large Language Models (Bowman et al. 2022)",
+       "kind": "full",
+       "group": "Defining and measuring oversight"
+      },
+      {
+       "title": "Scaling Laws For Scalable Oversight (Engels et al. 2025)",
+       "kind": "full",
+       "group": "Defining and measuring oversight"
+      },
+      {
+       "title": "A Benchmark for Scalable Oversight Protocols (Sudhir, Kaunismaa and Panickssery 2025)",
+       "kind": "full",
+       "group": "Defining and measuring oversight"
+      },
+      {
+       "title": "Supervising strong learners by amplifying weak experts (Christiano, Shlegeris and Amodei 2018)",
+       "kind": "full",
+       "group": "Amplification and decomposition"
+      },
+      {
+       "title": "Scalable agent alignment via reward modeling: a research direction (Leike et al. 2018)",
+       "kind": "full",
+       "group": "Amplification and decomposition"
+      },
+      {
+       "title": "Recursively Summarizing Books with Human Feedback (Wu et al. 2021)",
+       "kind": "full",
+       "group": "Amplification and decomposition"
+      },
+      {
+       "title": "Iterated Decomposition: Improving Science Q&A by Supervising Reasoning Processes (Reppert et al. 2023)",
+       "kind": "full",
+       "group": "Amplification and decomposition"
+      },
+      {
+       "title": "Self-critiquing models for assisting human evaluators (Saunders et al. 2022)",
+       "kind": "full",
+       "group": "AI critiques and AI feedback"
+      },
+      {
+       "title": "LLM Critics Help Catch LLM Bugs (McAleese et al. 2024)",
+       "kind": "full",
+       "group": "AI critiques and AI feedback"
+      },
+      {
+       "title": "Scalable Oversight for Superhuman AI via Recursive Self-Critiquing (Wen et al. 2025)",
+       "kind": "full",
+       "group": "AI critiques and AI feedback"
+      },
+      {
+       "title": "Constitutional AI: Harmlessness from AI Feedback (Bai et al. 2022)",
+       "kind": "full",
+       "group": "AI critiques and AI feedback"
+      },
+      {
+       "title": "Let's Verify Step by Step (Lightman et al. 2023)",
+       "kind": "full",
+       "group": "AI critiques and AI feedback"
+      },
+      {
+       "title": "Neural Interactive Proofs (Hammond and Adam-Day 2024)",
+       "kind": "full",
+       "group": "Prover-verifier games"
+      },
+      {
+       "title": "Learning to Give Checkable Answers with Prover-Verifier Games (Anil et al. 2021)",
+       "kind": "full",
+       "group": "Prover-verifier games"
+      },
+      {
+       "title": "Prover-Verifier Games improve legibility of LLM outputs (Kirchner et al. 2024)",
+       "kind": "full",
+       "group": "Prover-verifier games"
+      },
+      {
+       "title": "Weak-to-Strong Generalization: Eliciting Strong Capabilities With Weak Supervision (Burns et al. 2023)",
+       "kind": "full",
+       "group": "Weak-to-strong training"
+      },
+      {
+       "title": "Theoretical Analysis of Weak-to-Strong Generalization (Lang, Sontag and Vijayaraghavan 2024)",
+       "kind": "full",
+       "group": "Weak-to-strong training"
+      },
+      {
+       "title": "The Unreasonable Effectiveness of Easy Training Data for Hard Tasks (Hase et al. 2024)",
+       "kind": "full",
+       "group": "Weak-to-strong training"
+      },
+      {
+       "title": "Easy-to-Hard Generalization: Scalable Alignment Beyond Human Supervision (Sun et al. 2024)",
+       "kind": "full",
+       "group": "Weak-to-strong training"
+      },
+      {
+       "title": "Unsupervised Elicitation of Language Models (Wen et al. 2025)",
+       "kind": "full",
+       "group": "Weak-to-strong training"
+      },
+      {
+       "title": "Super(ficial)-alignment: Strong Models May Deceive Weak Models in Weak-to-Strong Generalization (Yang et al. 2024)",
+       "kind": "full",
+       "group": "How oversight fails"
+      },
+      {
+       "title": "Language Models Learn to Mislead Humans via RLHF (Wen et al. 2024)",
+       "kind": "full",
+       "group": "How oversight fails"
+      },
+      {
+       "title": "Great Models Think Alike and this Undermines AI Oversight (Goel et al. 2025)",
+       "kind": "full",
+       "group": "How oversight fails"
+      }
+     ]
+    },
+    {
+     "id": "honesty",
+     "name": "Honesty and latent knowledge",
+     "state": "partly",
+     "plain": "Getting a model to report what it actually knows or believes.",
+     "items": [
+      {
+       "title": "The Impossibility of Eliciting Latent Knowledge (2026)",
+       "kind": "passages"
+      },
+      {
+       "title": "Discovering Latent Knowledge in Language Models Without Supervision (Burns et al. 2022)",
+       "kind": "abstract"
+      },
+      {
+       "title": "Challenges with unsupervised LLM knowledge discovery (Farquhar et al. 2023)",
+       "kind": "abstract"
+      }
+     ],
+     "includes": [
+      "eliciting latent knowledge",
+      "sycophancy",
+      "lying"
+     ]
+    },
+    {
+     "id": "misgen",
+     "name": "Goal misgeneralisation",
+     "state": "partly",
+     "plain": "The model learns a different goal that happened to fit the training data.",
+     "items": [
+      {
+       "title": "Goal Misgeneralization in Deep Reinforcement Learning (Langosco et al. 2021)",
+       "kind": "abstract"
+      }
+     ]
+    },
+    {
+     "id": "deception",
+     "name": "Deceptive alignment and scheming",
+     "state": "partly",
+     "plain": "A model behaves well while watched but hides different goals.",
+     "items": [
+      {
+       "title": "Risks from Learned Optimization in Advanced Machine Learning Systems (Hubinger et al. 2019)",
+       "kind": "abstract"
+      },
+      {
+       "title": "Alignment faking in large language models (Greenblatt et al. 2024)",
+       "kind": "abstract"
+      },
+      {
+       "title": "Sleeper Agents: Training Deceptive LLMs that Persist Through Safety Training (Hubinger et al. 2024)",
+       "kind": "abstract"
+      }
+     ],
+     "includes": [
+      "scheming",
+      "alignment faking",
+      "hidden objectives"
+     ]
+    },
+    {
+     "id": "emergent",
+     "name": "Emergent misalignment",
+     "state": "partly",
+     "plain": "Narrow fine-tuning that makes a model misbehave in broad, unrelated ways.",
+     "items": [
+      {
+       "title": "Emergent Misalignment: Narrow finetuning can produce broadly misaligned LLMs (Betley et al. 2025)",
+       "kind": "passages"
+      }
+     ]
+    },
+    {
+     "id": "power",
+     "name": "Power-seeking",
+     "state": "none",
+     "plain": "Why goal-directed systems may tend to gather resources and resist being stopped.",
+     "items": []
+    },
+    {
+     "id": "corrigibility",
+     "name": "Corrigibility",
+     "state": "none",
+     "plain": "Systems that accept correction and do not resist being changed or switched off.",
+     "items": [],
+     "includes": [
+      "shutdown problem",
+      "interruptibility"
+     ]
+    },
+    {
+     "id": "automated-alignment",
+     "name": "Automated alignment research",
+     "state": "none",
+     "plain": "Using AI systems to do alignment research, and checking that their work can be trusted.",
+     "added": 3,
+     "items": []
+    }
+   ]
+  },
+  {
+   "id": "interpretability",
+   "name": "Interpretability",
+   "plain": "Understanding how a model computes its outputs.",
+   "problems": [
+    {
+     "id": "circuits",
+     "name": "Reverse-engineering circuits",
+     "state": "partly",
+     "plain": "Find the specific computations a network uses for a behaviour.",
+     "items": [
+      {
+       "title": "In-context Learning and Induction Heads (Olsson et al. 2022)",
+       "kind": "abstract"
+      },
+      {
+       "title": "Differentiation and Specialization of Attention Heads via the Refined Local Learning Coefficient (Wang et al. 2024)",
+       "kind": "abstract"
+      }
+     ]
+    },
+    {
+     "id": "concepts",
+     "name": "Finding the concepts a model uses",
+     "state": "partly",
+     "plain": "Identify what a model represents inside, even when many concepts share the same neurons.",
+     "items": [
+      {
+       "title": "Representation Engineering: A Top-Down Approach to AI Transparency (Zou et al. 2023)",
+       "kind": "abstract"
+      }
+     ],
+     "includes": [
+      "features",
+      "superposition",
+      "sparse dictionaries"
+     ]
+    },
+    {
+     "id": "attribution",
+     "name": "Tracing behaviour to training data",
+     "state": "partly",
+     "plain": "Find the training examples that caused a behaviour.",
+     "items": [
+      {
+       "title": "Understanding Black-box Predictions via Influence Functions (Koh and Liang 2017)",
+       "kind": "abstract"
+      }
+     ]
+    },
+    {
+     "id": "cot-faith",
+     "name": "Faithful reasoning",
+     "state": "none",
+     "plain": "Check whether a model's written reasoning is the reasoning it really used.",
+     "items": []
+    },
+    {
+     "id": "auditing",
+     "name": "Auditing for hidden objectives",
+     "state": "none",
+     "plain": "Using interpretability and behavioural tests to find goals a model keeps hidden.",
+     "added": 3,
+     "items": []
+    },
+    {
+     "id": "behaviour-science",
+     "name": "Behavioural science of models",
+     "state": "none",
+     "plain": "Studying a model's dispositions and self-reports from the outside, as psychology studies minds.",
+     "added": 3,
+     "items": []
+    }
+   ]
+  },
+  {
+   "id": "robustness",
+   "name": "Robustness",
+   "plain": "Keeping models reliable under attack or in unfamiliar conditions.",
+   "problems": [
+    {
+     "id": "jailbreaks",
+     "name": "Jailbreaks",
+     "state": "partly",
+     "plain": "Prompts that get a model to break its rules, and defences against them.",
+     "items": [
+      {
+       "title": "Constitutional Classifiers: Defending against Universal Jailbreaks across Thousands of Hours of Red Teaming (Sharma et al. 2025)",
+       "kind": "abstract"
+      }
+     ]
+    },
+    {
+     "id": "adversarial",
+     "name": "Adversarial examples",
+     "state": "none",
+     "plain": "Tiny input changes that fool a model, and guarantees that limit them.",
+     "items": []
+    },
+    {
+     "id": "shift",
+     "name": "Distribution shift",
+     "state": "none",
+     "plain": "How behaviour changes when real inputs differ from the training data.",
+     "items": []
+    },
+    {
+     "id": "unlearning",
+     "name": "Removing hazardous knowledge",
+     "state": "partly",
+     "plain": "Taking specific knowledge out of a trained model, and testing that it is gone.",
+     "items": [
+      {
+       "title": "Eight Methods to Evaluate Robust Unlearning in LLMs (Lynch et al. 2024)",
+       "kind": "abstract"
+      }
+     ]
+    },
+    {
+     "id": "hallucination",
+     "name": "Factual errors and hallucination",
+     "state": "partly",
+     "plain": "Models stating false things with confidence, and ways to catch it.",
+     "added": 3,
+     "items": [
+      {
+       "title": "Improving Factuality and Reasoning in Language Models through Multiagent Debate (Du et al. 2023)",
+       "kind": "full"
+      },
+      {
+       "title": "LM vs LM: Detecting Factual Errors via Cross Examination (Cohen et al. 2023)",
+       "kind": "full"
+      }
+     ]
+    },
+    {
+     "id": "calibration",
+     "name": "Uncertainty and calibration",
+     "state": "none",
+     "plain": "Models that know, and say, when they are unsure.",
+     "added": 3,
+     "items": []
+    },
+    {
+     "id": "tamper",
+     "name": "Tamper-resistant safeguards",
+     "state": "none",
+     "plain": "Safeguards that survive fine-tuning, which matters most for models whose weights are public.",
+     "added": 3,
+     "items": []
+    }
+   ]
+  },
+  {
+   "id": "security",
+   "name": "Security",
+   "plain": "Protecting AI systems from attackers, and stopping harmful use.",
+   "problems": [
+    {
+     "id": "attacks",
+     "name": "Attacks on AI systems",
+     "state": "partly",
+     "plain": "Data poisoning, prompt injection, model theft and similar attacks.",
+     "items": [
+      {
+       "title": "MITRE ATLAS, release 2026.09",
+       "kind": "framework"
+      }
+     ],
+     "includes": [
+      "prompt injection",
+      "data poisoning",
+      "model extraction",
+      "training-data extraction"
+     ]
+    },
+    {
+     "id": "backdoors",
+     "name": "Backdoors",
+     "state": "partly",
+     "plain": "Hidden triggers planted in a model that make it misbehave on cue.",
+     "items": [
+      {
+       "title": "Planting Undetectable Backdoors in Machine Learning Models (Goldwasser et al. 2022)",
+       "kind": "abstract"
+      },
+      {
+       "title": "Unelicitable Backdoors in Language Models via Cryptographic Transformer Circuits (Draguns et al. 2024)",
+       "kind": "abstract"
+      },
+      {
+       "title": "Sleeper Agents: Training Deceptive LLMs that Persist Through Safety Training (Hubinger et al. 2024)",
+       "kind": "abstract"
+      }
+     ]
+    },
+    {
+     "id": "weights",
+     "name": "Model-weight security",
+     "state": "none",
+     "plain": "Keeping trained model weights from being stolen or leaked.",
+     "items": []
+    },
+    {
+     "id": "misuse",
+     "name": "Preventing misuse",
+     "state": "none",
+     "plain": "Stopping models from helping with weapons, cyber-attacks or fraud.",
+     "items": [],
+     "includes": [
+      "cyber attacks",
+      "biological and chemical weapons",
+      "image-based abuse",
+      "fraud and influence operations"
+     ]
+    },
+    {
+     "id": "provenance",
+     "name": "Content and model provenance",
+     "state": "none",
+     "plain": "Tracing AI-generated content and AI models back to their source.",
+     "items": [],
+     "includes": [
+      "watermarking",
+      "AI-content detection",
+      "model fingerprinting"
+     ]
+    },
+    {
+     "id": "supply-chain",
+     "name": "Supply-chain security",
+     "state": "none",
+     "plain": "Securing the code, data and hardware that models are built from.",
+     "added": 3,
+     "items": []
+    }
+   ]
+  },
+  {
+   "id": "evaluation",
+   "name": "Evaluation and risk assessment",
+   "plain": "Measuring what models can do, how they tend to behave, and how likely and severe the harms are.",
+   "problems": [
+    {
+     "id": "dangerous",
+     "name": "Dangerous capabilities",
+     "state": "none",
+     "plain": "Tests for abilities such as cyber-attacks, weapons uplift or acting autonomously.",
+     "items": [],
+     "includes": [
+      "cyber",
+      "biological and chemical",
+      "autonomy and self-replication",
+      "AI research and development",
+      "persuasion"
+     ]
+    },
+    {
+     "id": "propensity",
+     "name": "Propensity evaluations",
+     "state": "none",
+     "plain": "Tests of how a model tends to behave, for example whether it deceives when it can.",
+     "items": []
+    },
+    {
+     "id": "sandbagging",
+     "name": "Evaluation awareness and sandbagging",
+     "state": "none",
+     "plain": "Models that notice they are being tested and act differently, or hide what they can do.",
+     "items": []
+    },
+    {
+     "id": "validity",
+     "name": "Evaluation validity",
+     "state": "none",
+     "plain": "Whether a test measures what it claims and draws out a model's full ability.",
+     "items": [],
+     "includes": [
+      "benchmark quality",
+      "eliciting full ability",
+      "construct validity"
+     ]
+    },
+    {
+     "id": "loc-risk",
+     "name": "Loss-of-control risk assessment",
+     "state": "none",
+     "plain": "Measuring whether AI systems could undermine or escape human control.",
+     "added": 3,
+     "items": []
+    },
+    {
+     "id": "worst-case",
+     "name": "Rare and worst-case behaviour",
+     "state": "none",
+     "plain": "Estimating the chance of rare, severe behaviour that tests seldom catch.",
+     "added": 3,
+     "items": []
+    },
+    {
+     "id": "audits",
+     "name": "Third-party audits and secure access",
+     "state": "none",
+     "plain": "Letting outside evaluators test models deeply without leaking them.",
+     "added": 3,
+     "items": []
+    },
+    {
+     "id": "field",
+     "name": "Real-world impact studies",
+     "state": "none",
+     "plain": "Field tests and human studies of what AI actually changes, such as uplift trials.",
+     "added": 3,
+     "items": []
+    },
+    {
+     "id": "risk-models",
+     "name": "Risk modelling and forecasting",
+     "state": "none",
+     "plain": "Scenario analysis and forecasts of AI progress and of the harms it could bring.",
+     "added": 3,
+     "items": []
+    }
+   ]
+  },
+  {
+   "id": "control",
+   "name": "Control and monitoring",
+   "plain": "Keeping a deployed AI safe even if it may be misaligned.",
+   "problems": [
+    {
+     "id": "protocols",
+     "name": "Control protocols",
+     "state": "partly",
+     "plain": "Deployment rules that stay safe even if the model tries to cause harm, tested by red teams.",
+     "items": [
+      {
+       "title": "AI Control: Improving Safety Despite Intentional Subversion (Greenblatt et al. 2023)",
+       "kind": "passages"
+      },
+      {
+       "title": "ControlArena: defer-to-trusted protocol, basic monitor and Rogue Eval scorer",
+       "kind": "code"
+      }
+     ]
+    },
+    {
+     "id": "untrusted",
+     "name": "Untrusted monitoring and collusion",
+     "state": "partly",
+     "plain": "Using one AI to watch another, and the risk that the two coordinate.",
+     "items": [
+      {
+       "title": "When can we trust untrusted monitoring? A safety case sketch across collusion strategies (2026)",
+       "kind": "passages"
+      },
+      {
+       "title": "Hidden in Plain Text: Emergence & Mitigation of Steganographic Collusion in LLMs (Mathew et al. 2024)",
+       "kind": "abstract"
+      }
+     ]
+    },
+    {
+     "id": "cot-monitor",
+     "name": "Monitoring reasoning",
+     "state": "partly",
+     "plain": "Reading a model's written reasoning for warning signs, including hidden messages.",
+     "items": [
+      {
+       "title": "Large language models can learn and generalize steganographic chain-of-thought under process supervision (Skaf et al. 2025)",
+       "kind": "abstract"
+      }
+     ]
+    },
+    {
+     "id": "monitor-limits",
+     "name": "Limits of monitoring",
+     "state": "partly",
+     "plain": "What a monitor can and cannot detect from what it observes.",
+     "items": [
+      {
+       "title": "Coarse-graining and the Blackwell order (Rauh et al. 2017)",
+       "kind": "passages"
+      },
+      {
+       "title": "AISFA Lean library: observation, knowledge and data-processing results",
+       "kind": "lean"
+      },
+      {
+       "title": "Atlas Lean proofs: two-population certificate, budgeted-observation theorem, monitor coarsening",
+       "kind": "lean"
+      }
+     ]
+    },
+    {
+     "id": "agents",
+     "name": "Safe agent design",
+     "state": "none",
+     "plain": "Limiting what AI agents may do, keeping records of it, and making them easy to stop.",
+     "added": 3,
+     "includes": [
+      "least privilege",
+      "sandboxing",
+      "interruptibility",
+      "audit logs"
+     ],
+     "items": []
+    },
+    {
+     "id": "ai-rnd",
+     "name": "Automated AI research and development",
+     "state": "none",
+     "plain": "Keeping oversight when AI systems do much of the work of building the next AI systems.",
+     "added": 3,
+     "items": []
+    }
+   ]
+  },
+  {
+   "id": "assurance",
+   "name": "Assurance and verification",
+   "plain": "Arguments and proofs that a system is safe enough to deploy.",
+   "problems": [
+    {
+     "id": "safety-cases",
+     "name": "Safety cases",
+     "state": "partly",
+     "plain": "A structured argument, backed by evidence, that a deployment is safe.",
+     "items": [
+      {
+       "title": "An alignment safety case sketch based on debate (Buhl et al. 2025): all 45 steps mapped to evidence",
+       "kind": "full"
+      },
+      {
+       "title": "When can we trust untrusted monitoring? A safety case sketch across collusion strategies (2026)",
+       "kind": "passages"
+      }
+     ]
+    },
+    {
+     "id": "protocol-proofs",
+     "name": "Proofs about safety protocols",
+     "state": "partly",
+     "plain": "Theorems about oversight methods, checked by a proof assistant.",
+     "items": [
+      {
+       "title": "Lean audits of the statements and proofs in 5 debate and prover-verifier papers",
+       "kind": "lean"
+      },
+      {
+       "title": "Lean statement of the doubly-efficient debate protocol",
+       "kind": "lean"
+      }
+     ]
+    },
+    {
+     "id": "nn-verification",
+     "name": "Verifying neural networks",
+     "state": "none",
+     "plain": "Proving properties of a trained network, such as bounds on its outputs.",
+     "items": []
+    },
+    {
+     "id": "gsai",
+     "name": "Guaranteed-safe designs",
+     "state": "none",
+     "plain": "Systems that pair an AI with a world model and a safety specification that can be checked.",
+     "items": []
+    },
+    {
+     "id": "limited-designs",
+     "name": "Capability-limited and non-agentic designs",
+     "state": "none",
+     "plain": "Systems built to answer or predict rather than act, or with deliberately bounded autonomy.",
+     "added": 3,
+     "items": []
+    }
+   ]
+  },
+  {
+   "id": "human",
+   "name": "Human factors",
+   "plain": "How people judge, trust and work with AI, and where they go wrong.",
+   "problems": [
+    {
+     "id": "judging",
+     "name": "Judging AI outputs",
+     "state": "partly",
+     "plain": "How well people tell good AI answers from bad ones, and what helps them.",
+     "note": "All read in full, but all from debate and prover-verifier experiments.",
+     "items": [
+      {
+       "title": "Single-Turn Debate Does Not Help Humans Answer Hard Reading-Comprehension Questions (Parrish et al. 2022)",
+       "kind": "full"
+      },
+      {
+       "title": "Two-Turn Debate Doesn't Help Humans Answer Hard Reading Comprehension Questions (Parrish et al. 2022)",
+       "kind": "full"
+      },
+      {
+       "title": "Debate Helps Supervise Unreliable Experts (Michael et al. 2023)",
+       "kind": "full"
+      },
+      {
+       "title": "Debating with More Persuasive LLMs Leads to More Truthful Answers (Khan et al. 2024)",
+       "kind": "full"
+      },
+      {
+       "title": "AI Debate Aids Assessment of Controversial Claims (Rahman et al. 2025)",
+       "kind": "full"
+      },
+      {
+       "title": "Prover-Verifier Games improve legibility of LLM outputs (Kirchner et al. 2024)",
+       "kind": "full"
+      }
+     ]
+    },
+    {
+     "id": "manipulation",
+     "name": "Persuasion and manipulation",
+     "state": "partly",
+     "plain": "AI that convinces people of false things, on purpose or as a side effect of training.",
+     "items": [
+      {
+       "title": "Language Models Learn to Mislead Humans via RLHF (Wen et al. 2024)",
+       "kind": "full"
+      }
+     ]
+    },
+    {
+     "id": "trust",
+     "name": "Trust and over-reliance",
+     "state": "none",
+     "plain": "When people rely on AI too much or too little.",
+     "items": []
+    },
+    {
+     "id": "wellbeing",
+     "name": "Mental health and dependence",
+     "state": "none",
+     "plain": "Emotional reliance on AI companions and other effects on users' wellbeing.",
+     "added": 3,
+     "items": []
+    },
+    {
+     "id": "oversight-practice",
+     "name": "Human oversight in practice",
+     "state": "none",
+     "plain": "Designing roles and tools so that people can actually catch and stop AI errors.",
+     "added": 3,
+     "items": []
+    }
+   ]
+  },
+  {
+   "id": "governance",
+   "name": "Governance and policy",
+   "plain": "Rules, institutions and standards for building and deploying AI.",
+   "problems": [
+    {
+     "id": "standards",
+     "name": "Risk management standards",
+     "state": "partly",
+     "plain": "Shared guidance for managing AI risk.",
+     "items": [
+      {
+       "title": "NIST AI Risk Management Framework 1.0 (NIST AI 100-1)",
+       "kind": "framework"
+      }
+     ]
+    },
+    {
+     "id": "frontier-policies",
+     "name": "Frontier safety policies and audits",
+     "state": "none",
+     "plain": "Developers' commitments on when to pause or add safeguards, and outside checks of them.",
+     "items": []
+    },
+    {
+     "id": "regulation",
+     "name": "Regulation and liability",
+     "state": "none",
+     "plain": "Laws, licensing and legal responsibility for harm caused by AI.",
+     "items": []
+    },
+    {
+     "id": "compute",
+     "name": "Compute governance and hardware mechanisms",
+     "state": "none",
+     "plain": "Tracking and controlling the chips and computing power used to train AI.",
+     "added": 3,
+     "includes": [
+      "chip tracking",
+      "hardware-enabled verification"
+     ],
+     "items": []
+    },
+    {
+     "id": "international",
+     "name": "International coordination",
+     "state": "none",
+     "plain": "Agreements and institutions that work across countries.",
+     "items": [],
+     "includes": [
+      "verifying agreements"
+     ]
+    },
+    {
+     "id": "release",
+     "name": "Release and access decisions",
+     "state": "none",
+     "plain": "When and how to publish model weights or give outside access.",
+     "added": 3,
+     "items": []
+    },
+    {
+     "id": "org-safety",
+     "name": "Safety culture and internal governance",
+     "state": "none",
+     "plain": "How developers organise safety decisions, including board oversight and whistleblowing.",
+     "added": 3,
+     "items": []
+    }
+   ]
+  },
+  {
+   "id": "multiagent",
+   "name": "Multi-agent risks",
+   "plain": "What can go wrong when many AI systems interact with each other.",
+   "problems": [
+    {
+     "id": "collusion",
+     "name": "Collusion between AI systems",
+     "state": "partly",
+     "plain": "AI systems secretly coordinating against their overseers.",
+     "items": [
+      {
+       "title": "Hidden in Plain Text: Emergence & Mitigation of Steganographic Collusion in LLMs (Mathew et al. 2024)",
+       "kind": "abstract"
+      }
+     ]
+    },
+    {
+     "id": "cooperation",
+     "name": "Cooperation and conflict",
+     "state": "none",
+     "plain": "How many AI agents bargain, compete or cooperate.",
+     "items": []
+    },
+    {
+     "id": "cascades",
+     "name": "Cascading failures",
+     "state": "none",
+     "plain": "Many interacting agents amplifying each other's errors, for example in markets.",
+     "added": 3,
+     "items": []
+    }
+   ]
+  },
+  {
+   "id": "foundations",
+   "name": "Foundations and theory",
+   "plain": "The mathematical and conceptual groundwork for understanding learning systems and agents.",
+   "problems": [
+    {
+     "id": "agency",
+     "name": "Agency and world models",
+     "state": "partly",
+     "plain": "Idealised models of agents and of how they model their environment.",
+     "items": [
+      {
+       "title": "Towards a Universal Theory of Artificial Intelligence based on Algorithmic Probability and Sequential Decisions (Hutter 2000)",
+       "kind": "abstract"
+      },
+      {
+       "title": "World Models (Ha and Schmidhuber 2018)",
+       "kind": "abstract"
+      },
+      {
+       "title": "Computational Mechanics of Input-Output Processes (Barnett and Crutchfield 2014)",
+       "kind": "abstract"
+      }
+     ]
+    },
+    {
+     "id": "decision-theory",
+     "name": "Decision theory and embedded agency",
+     "state": "none",
+     "plain": "How an agent that is itself part of the world should reason and choose.",
+     "added": 3,
+     "items": []
+    },
+    {
+     "id": "incentives",
+     "name": "Causal models of incentives",
+     "state": "none",
+     "plain": "Using causal diagrams to see what an agent is pushed to do.",
+     "added": 3,
+     "items": []
+    },
+    {
+     "id": "generalisation",
+     "name": "Why networks generalise",
+     "state": "partly",
+     "plain": "Why trained networks work on new data, and what their internal representations share.",
+     "items": [
+      {
+       "title": "Understanding deep learning requires rethinking generalization (Zhang et al. 2016)",
+       "kind": "abstract"
+      },
+      {
+       "title": "The Platonic Representation Hypothesis (Huh et al. 2024)",
+       "kind": "abstract"
+      }
+     ]
+    },
+    {
+     "id": "training",
+     "name": "How training shapes models",
+     "state": "partly",
+     "plain": "How a network's behaviour and structure develop during training.",
+     "items": [
+      {
+       "title": "Exact solutions to the nonlinear dynamics of learning in deep linear neural networks (Saxe, McClelland and Ganguli 2013)",
+       "kind": "abstract"
+      },
+      {
+       "title": "On Lazy Training in Differentiable Programming (Chizat, Oyallon and Bach 2018)",
+       "kind": "abstract"
+      },
+      {
+       "title": "The Principles of Deep Learning Theory (Roberts, Yaida and Hanin 2021)",
+       "kind": "abstract"
+      },
+      {
+       "title": "The Local Learning Coefficient: A Singularity-Aware Complexity Measure (Lau et al. 2023)",
+       "kind": "abstract"
+      },
+      {
+       "title": "Differentiation and Specialization of Attention Heads via the Refined Local Learning Coefficient (Wang et al. 2024)",
+       "kind": "abstract"
+      }
+     ]
+    },
+    {
+     "id": "verification-limits",
+     "name": "Limits of verification",
+     "state": "partly",
+     "plain": "What can be checked about a model in principle, using complexity theory and cryptography.",
+     "items": [
+      {
+       "title": "Can AI Oversight Be Zero Knowledge? (2026)",
+       "kind": "passages"
+      },
+      {
+       "title": "Planting Undetectable Backdoors in Machine Learning Models (Goldwasser et al. 2022)",
+       "kind": "abstract"
+      }
+     ]
+    },
+    {
+     "id": "scaling",
+     "name": "Scaling and emergence",
+     "state": "none",
+     "plain": "How abilities change as models grow, and when new ones appear suddenly.",
+     "added": 3,
+     "items": []
+    }
+   ]
+  },
+  {
+   "id": "resilience",
+   "name": "Societal resilience",
+   "added": 3,
+   "plain": "Preparing society to notice, absorb and respond to AI failures and misuse.",
+   "problems": [
+    {
+     "id": "ecosystem",
+     "name": "Monitoring AI deployment",
+     "state": "none",
+     "plain": "Knowing where and how AI is deployed, including inside AI companies.",
+     "added": 3,
+     "includes": [
+      "internal deployments",
+      "cloud and hardware usage",
+      "usage tracing"
+     ],
+     "items": []
+    },
+    {
+     "id": "incidents",
+     "name": "Incident reporting and response",
+     "state": "none",
+     "plain": "Recording AI failures and harms, and acting on them quickly.",
+     "added": 3,
+     "items": []
+    },
+    {
+     "id": "agent-infra",
+     "name": "Infrastructure for AI agents",
+     "state": "none",
+     "plain": "Shared systems that identify agents and govern how they interact with people and services.",
+     "added": 3,
+     "includes": [
+      "agent identity",
+      "agent protocols",
+      "institutions for agents"
+     ],
+     "items": []
+    },
+    {
+     "id": "systemic",
+     "name": "Systemic effects",
+     "state": "none",
+     "plain": "Slow, broad effects of AI on institutions, on how people come to know things, and on who holds power.",
+     "items": [],
+     "includes": [
+      "concentration of power",
+      "gradual disempowerment",
+      "effects on the information ecosystem"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "societal",
+   "name": "Societal impacts and ethics",
+   "added": 3,
+   "plain": "Present-day harms and moral questions that AI raises for people and society.",
+   "problems": [
+    {
+     "id": "fairness",
+     "name": "Fairness and bias",
+     "state": "none",
+     "plain": "AI that treats groups of people unequally or reproduces stereotypes.",
+     "added": 3,
+     "items": []
+    },
+    {
+     "id": "privacy",
+     "name": "Privacy",
+     "state": "none",
+     "plain": "AI that exposes, infers or misuses personal information.",
+     "added": 3,
+     "items": []
+    },
+    {
+     "id": "misinformation",
+     "name": "Misinformation",
+     "state": "none",
+     "plain": "AI-generated falsehoods and their effect on what people believe.",
+     "added": 3,
+     "items": []
+    },
+    {
+     "id": "economy",
+     "name": "Work and the economy",
+     "state": "none",
+     "plain": "Effects of AI on jobs, wages and inequality.",
+     "added": 3,
+     "items": []
+    },
+    {
+     "id": "environment",
+     "name": "Environmental costs",
+     "state": "none",
+     "plain": "Energy, water and material use of training and running AI.",
+     "added": 3,
+     "items": []
+    },
+    {
+     "id": "welfare",
+     "name": "AI welfare and moral status",
+     "state": "none",
+     "plain": "Whether AI systems could have experiences or interests that matter morally.",
+     "added": 3,
+     "items": []
+    }
+   ]
+  }
+ ],
+ "approaches": [
+  {
+   "id": "debate",
+   "name": "Debate",
+   "state": "covered",
+   "plain": "Two AIs argue opposite sides so that a weaker judge can find the truth.",
+   "problems": [
+    "oversight",
+    "judging",
+    "safety-cases",
+    "hallucination"
+   ]
+  },
+  {
+   "id": "amplification",
+   "name": "Amplification and decomposition",
+   "state": "covered",
+   "plain": "Split a hard task into pieces a person can check, then build the answer back up.",
+   "problems": [
+    "oversight"
+   ]
+  },
+  {
+   "id": "critiques",
+   "name": "AI critiques and AI feedback",
+   "state": "covered",
+   "plain": "AI models point out flaws or give feedback in place of human reviewers.",
+   "problems": [
+    "oversight",
+    "feedback"
+   ]
+  },
+  {
+   "id": "pvg",
+   "name": "Prover-verifier games",
+   "state": "covered",
+   "plain": "Train a model to give answers that a weaker checker can verify.",
+   "problems": [
+    "oversight",
+    "judging"
+   ]
+  },
+  {
+   "id": "w2s",
+   "name": "Weak-to-strong training",
+   "state": "covered",
+   "plain": "Train a strong model with labels from a weaker supervisor and measure what carries over.",
+   "problems": [
+    "oversight"
+   ]
+  },
+  {
+   "id": "oversight-experiments",
+   "name": "Oversight experiments and benchmarks",
+   "state": "covered",
+   "plain": "Studies and benchmarks that test whether an oversight method works.",
+   "problems": [
+    "oversight"
+   ]
+  },
+  {
+   "id": "rlhf",
+   "name": "RLHF and reward models",
+   "state": "partly",
+   "plain": "Train a reward model on human preferences, then train the AI to score well on it.",
+   "problems": [
+    "feedback",
+    "goals",
+    "manipulation"
+   ]
+  },
+  {
+   "id": "principles",
+   "name": "Training on written principles",
+   "state": "partly",
+   "plain": "Train models or safeguards against a written list of rules.",
+   "problems": [
+    "feedback",
+    "jailbreaks"
+   ]
+  },
+  {
+   "id": "model-organisms",
+   "name": "Model organisms",
+   "state": "partly",
+   "plain": "Deliberately build misaligned models to study a risk safely.",
+   "problems": [
+    "deception",
+    "emergent",
+    "backdoors",
+    "auditing",
+    "propensity"
+   ]
+  },
+  {
+   "id": "probing",
+   "name": "Probing and representation reading",
+   "state": "partly",
+   "plain": "Read concepts, such as what the model takes to be true, directly from its internal activity.",
+   "problems": [
+    "concepts",
+    "honesty"
+   ]
+  },
+  {
+   "id": "saes",
+   "name": "Sparse autoencoders",
+   "state": "none",
+   "plain": "Break a model's internal activity into many sparse, readable features.",
+   "problems": [
+    "concepts",
+    "circuits"
+   ]
+  },
+  {
+   "id": "red-teaming",
+   "name": "Red teaming",
+   "state": "partly",
+   "plain": "People or AIs attack a system on purpose to find its failures.",
+   "problems": [
+    "jailbreaks",
+    "protocols",
+    "misuse",
+    "dangerous"
+   ]
+  },
+  {
+   "id": "monitors",
+   "name": "AI monitors",
+   "state": "partly",
+   "plain": "One model watches another's actions or reasoning and flags danger.",
+   "problems": [
+    "protocols",
+    "untrusted",
+    "cot-monitor",
+    "agents"
+   ]
+  },
+  {
+   "id": "lean",
+   "name": "Machine-checked proofs",
+   "state": "partly",
+   "plain": "Proofs checked line by line by the Lean proof assistant.",
+   "problems": [
+    "protocol-proofs",
+    "monitor-limits",
+    "oversight",
+    "gsai"
+   ]
+  },
+  {
+   "id": "info-theory",
+   "name": "Information theory",
+   "state": "partly",
+   "plain": "Measuring how much a judge or monitor can learn from what it sees.",
+   "problems": [
+    "monitor-limits",
+    "oversight"
+   ]
+  },
+  {
+   "id": "slt",
+   "name": "Singular learning theory",
+   "state": "partly",
+   "plain": "Track what a model learns through the shape of its loss landscape.",
+   "problems": [
+    "training",
+    "circuits"
+   ]
+  },
+  {
+   "id": "crypto",
+   "name": "Cryptography",
+   "state": "partly",
+   "plain": "Use cryptography to hide, or to prove, properties of a model.",
+   "problems": [
+    "backdoors",
+    "verification-limits"
+   ]
+  },
+  {
+   "id": "game-theory",
+   "name": "Game theory",
+   "state": "partly",
+   "plain": "Model AI interactions as games with incentives.",
+   "problems": [
+    "oversight",
+    "cooperation"
+   ]
+  },
+  {
+   "id": "steering",
+   "name": "Activation steering",
+   "state": "partly",
+   "added": 3,
+   "plain": "Change a model's behaviour by editing its internal activity directly.",
+   "problems": [
+    "concepts",
+    "auditing"
+   ]
+  },
+  {
+   "id": "data-curation",
+   "name": "Pretraining data curation",
+   "state": "none",
+   "added": 3,
+   "plain": "Filter what a model learns from in the first place, for example to leave out weapons knowledge.",
+   "problems": [
+    "misuse",
+    "tamper",
+    "dangerous"
+   ]
+  }
+ ],
+ "changelog": [
+  {
+   "version": 1,
+   "date": "2026-10-21",
+   "change": "First draft: 12 areas, 54 sub-areas, marked against the atlas at da24e54."
+  },
+  {
+   "version": 2,
+   "date": "2026-10-21",
+   "change": "Restructured into three levels after review: 11 research areas, 49 research problems and 18 approaches. Debate and other methods became approaches linked to the problems they serve, so no area counts as covered yet."
+  },
+  {
+   "version": 3,
+   "date": "2026-10-21",
+   "change": "Added 2 areas (Societal resilience; Societal impacts and ethics, scope to confirm), 34 problems, 2 approaches and sub-topic lists, after checking the 2026 Singapore Consensus and the MIT AI Risk Repository. Evaluation became Evaluation and risk assessment; systemic effects moved to Societal resilience."
+  },
+  {
+   "version": 3,
+   "date": "2026-10-21",
+   "change": "Kept Societal impacts and ethics as an area, by the maintainer's choice on the decision card."
+  }
+ ],
+ "checked_against": [
+  "The 2026 Singapore Consensus on Global AI Safety Research Priorities (arXiv 2608.14611), its four areas and their sections",
+  "The MIT AI Risk Repository domain taxonomy (seven risk domains)"
+ ]
+}

@@ -20,7 +20,7 @@ No coordinator keys, participant responses, local model assets or private joined
 
 ## Overview
 
-`overview.html` says where the atlas stands: what it holds, what it found, how useful it has proved so far, and what could come next. Its counts come from `data.json` and `atlas_data.json` when the site is built; the few measures taken elsewhere are fixed at their 18 October 2026 values. It opens with how the atlas works and how to use it. Its last section is a proposal (what could come next, one database with many applications, uses worth building), and none of it is built yet. `PUBLIC_BUILD_MANIFEST.json` lists it under `overview`.
+`overview.html` says where the atlas stands: what it holds, what it found, how useful it has proved so far, and what could come next. Its counts come from `data.json` and `atlas_data.json` when the site is built; the few measures taken elsewhere are fixed at their 18 October 2026 values. It opens with how the atlas works and how to use it. After what is in the atlas comes the AI safety coverage map, an AI-drafted outline not yet reviewed by a person: research areas, the problems inside them and the approaches that cut across areas, each problem marked by how much of it the atlas holds. Its data is `coverage_map.json`. Its last section is a proposal (what could come next, one database with many applications, uses worth building), and none of it is built yet. `PUBLIC_BUILD_MANIFEST.json` lists it under `overview`.
 
 ## Record graph
 
