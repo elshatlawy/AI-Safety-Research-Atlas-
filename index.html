@@ -24,7 +24,7 @@ if (window.top !== window.self) document.documentElement.classList.add("embed");
   --lg-proved:#1baf7a; --lg-problem:#eb6834; --lg-derived:#6250d6; --lg-partly:#256abf; --lg-narrowed:#86b6ef; --lg-answered:#184f95;
   --g-proved:#1b1c1a; --g-multi:#184f95; --g-single:#3987e5; --g-prelim:#9ec5f4;
   --area0:#2a78d6; --area1:#1baf7a; --area2:#eda100;
-  --k0:#2a78d6; --k1:#eb6834; --k2:#1baf7a; --k3:#eda100; --k4:#e87ba4; --k5:#008300;
+  --k0:#2a78d6; --k1:#eb6834; --k2:#1baf7a; --k3:#eda100; --k4:#e87ba4; --k5:#008300; --k6:#6250d6; --k7:#e34948;
   --fp1:#cde2fb; --fp2:#9ec5f4; --fp3:#6da7ec; --fp4:#3987e5; --fp5:#256abf; --fp6:#184f95; --fp7:#0d366b;
   --shadow:0 1px 2px rgba(27,28,26,.05),0 12px 32px rgba(27,28,26,.08);
   --r:14px;
@@ -38,7 +38,7 @@ if (window.top !== window.self) document.documentElement.classList.add("embed");
   --lg-proved:#199e70; --lg-problem:#d95926; --lg-derived:#9085e9; --lg-partly:#3987e5; --lg-narrowed:#1c5cab; --lg-answered:#86b6ef;
   --g-proved:#ecebe5; --g-multi:#9ec5f4; --g-single:#3987e5; --g-prelim:#1c5cab;
   --area0:#3987e5; --area1:#199e70; --area2:#c98500;
-  --k0:#3987e5; --k1:#d95926; --k2:#199e70; --k3:#c98500; --k4:#d55181; --k5:#008300;
+  --k0:#3987e5; --k1:#d95926; --k2:#199e70; --k3:#c98500; --k4:#d55181; --k5:#008300; --k6:#9085e9; --k7:#e66767;
   --fp1:#223f66; --fp2:#1f5291; --fp3:#1c5cab; --fp4:#2f74c9; --fp5:#3987e5; --fp6:#6da7ec; --fp7:#9ec5f4;
   --shadow:0 1px 2px rgba(0,0,0,.3),0 12px 32px rgba(0,0,0,.35); color-scheme:dark}}
 :root[data-theme="dark"]{
@@ -50,7 +50,7 @@ if (window.top !== window.self) document.documentElement.classList.add("embed");
   --lg-proved:#199e70; --lg-problem:#d95926; --lg-derived:#9085e9; --lg-partly:#3987e5; --lg-narrowed:#1c5cab; --lg-answered:#86b6ef;
   --g-proved:#ecebe5; --g-multi:#9ec5f4; --g-single:#3987e5; --g-prelim:#1c5cab;
   --area0:#3987e5; --area1:#199e70; --area2:#c98500;
-  --k0:#3987e5; --k1:#d95926; --k2:#199e70; --k3:#c98500; --k4:#d55181; --k5:#008300;
+  --k0:#3987e5; --k1:#d95926; --k2:#199e70; --k3:#c98500; --k4:#d55181; --k5:#008300; --k6:#9085e9; --k7:#e66767;
   --fp1:#223f66; --fp2:#1f5291; --fp3:#1c5cab; --fp4:#2f74c9; --fp5:#3987e5; --fp6:#6da7ec; --fp7:#9ec5f4;
   --shadow:0 1px 2px rgba(0,0,0,.3),0 12px 32px rgba(0,0,0,.35); color-scheme:dark}
 *{box-sizing:border-box}
@@ -1095,6 +1095,55 @@ a.fdot2:hover,a.fdot2:focus-visible{box-shadow:0 0 0 2px var(--surface),0 0 0 3.
 .embed .rgbox{flex:1;height:auto;min-height:0}
 .embed .sheet{top:0}
 @media (max-width:720px){.embed .sheet,.embed .sheet.wide{top:auto;max-height:88vh}}
+
+/* ---------- definitions: each concept's definitions side by side ---------- */
+.dchips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 22px}
+.dchip{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line2);border-radius:999px;padding:4px 11px;font-size:13px;color:var(--ink2);text-decoration:none;white-space:nowrap}
+.dchip:hover{border-color:var(--ink2);color:var(--ink)}
+.dchip b{font-weight:400;color:var(--muted);font-size:12px}
+.dchip.on{background:var(--ink);color:var(--bg);border-color:var(--ink)} .dchip.on b{color:var(--bg);opacity:.7}
+.dcard{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px 20px 18px;min-width:0}
+.dhead{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px}
+.dhead h2{font-family:"Source Serif 4",Georgia,serif;font-weight:600;font-size:26px;letter-spacing:-.01em}
+.dhead span{color:var(--muted);font-size:13.5px}
+.dplain{color:var(--ink2);margin:4px 0 16px;font-size:15.5px}
+.dswipe{display:none;margin:0 0 8px;font-size:12.5px;color:var(--muted)}
+.dgrid{overflow-x:auto;margin:0 -4px;padding:0 4px}
+.dgrid table{border-collapse:separate;border-spacing:4px;width:100%;min-width:820px;table-layout:fixed}
+.dgrid thead th{font-size:11.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);font-weight:600;text-align:left;padding:0 8px 4px;vertical-align:bottom}
+.dgrid thead th:first-child{width:150px}
+.dgrid tbody th{text-align:left;font-weight:500;padding:6px 8px 6px 0;vertical-align:top;position:sticky;left:0;background:var(--surface);z-index:1}
+.dgrid tbody th a{display:block;font-weight:600;font-size:14px;line-height:1.25;color:var(--ink);text-decoration:none}
+.dgrid tbody th a:hover{text-decoration:underline}
+.dgrid tbody th small{display:block;color:var(--muted);font-size:11.5px;font-family:"JetBrains Mono",ui-monospace,monospace;white-space:nowrap}
+td.dc{background:color-mix(in srgb,var(--g) 13%,var(--surface));border-left:3px solid var(--g);border-radius:6px;padding:7px 9px;font-size:13px;line-height:1.3;vertical-align:top;cursor:pointer;transition:opacity .15s}
+td.dc.none{--g:transparent;background:var(--sunk);color:var(--muted);text-align:center}
+td.dc.unc{border-left-style:dashed}
+td.dc:hover{outline:1px solid var(--line2)}
+td.dc.on{outline:2px solid var(--ink);outline-offset:1px}
+td.dc:focus-visible{outline:2px solid var(--seq);outline-offset:1px}
+.dgrid.dim td.dc{opacity:.28} .dgrid.dim td.dc.lit{opacity:1;outline:2px solid var(--ink2)}
+.dq{margin:14px 0 0;border:1px solid var(--line2);border-radius:12px;padding:14px 16px;background:var(--bg);min-width:0}
+.dqh{display:flex;flex-wrap:wrap;gap:2px 12px;align-items:baseline}.dqh span{color:var(--muted);font-size:13px}
+.dqv{margin:6px 0 0;font-size:15px}
+.dq blockquote{margin:10px 0 6px;font-family:"Source Serif 4",Georgia,serif;font-size:15px;line-height:1.55;color:var(--ink2);overflow-wrap:anywhere}
+.dq mark{color:var(--ink)}
+.dqf{font-size:12.5px;color:var(--muted)} .dqf a{color:var(--ink2)}
+.dqx{margin-top:12px;padding-top:10px;border-top:1px dashed var(--line2)}
+.dad{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.5fr);gap:12px;margin:16px 0 0;align-items:start}
+.dad>div{border-radius:12px;padding:14px 16px;background:var(--sunk);min-width:0}
+.dad h3{font-size:12px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);font-weight:600;margin:0 0 8px;display:flex;align-items:center;gap:7px}
+.dad h3 i{width:9px;height:9px;border-radius:50%;display:inline-block}
+.dad ul{margin:0;padding-left:18px;font-size:14px;line-height:1.5}.dad li+li{margin-top:6px}
+.dad li{cursor:default;border-radius:4px}.dad li:hover{background:color-mix(in srgb,var(--ink) 5%,transparent)}
+.dwarn{margin:16px 0 0;border-left:3px solid var(--disputes);padding:4px 0 4px 14px}
+.dwarn.carry{border-left-color:var(--builds)}
+.dwarn b{display:block;font-size:14.5px}.dwarn p{margin:4px 0 0;font-size:14px;color:var(--ink2)}
+.dwarn q{font-family:"Source Serif 4",Georgia,serif;font-style:italic}
+.dwarn ul{margin:6px 0 0;padding-left:18px;font-size:14px;color:var(--ink2)}
+.dnote{margin:16px 0 0;font-size:12.5px;color:var(--muted)}
+.dsingle{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+@media (max-width:760px){.dswipe{display:block}.dad{grid-template-columns:minmax(0,1fr)}.dcard{padding:16px 12px}.dgrid table{min-width:700px}.dgrid thead th:first-child{width:112px}}
 </style>
 </head>
 <body>
@@ -1102,7 +1151,7 @@ a.fdot2:hover,a.fdot2:focus-visible{box-shadow:0 0 0 2px var(--surface),0 0 0 3.
   <a class="brand" href="#gaps" aria-label="Safety Research Atlas, open questions">
     <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><path d="M6 19 L12 7 L20 15" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M6 19 Q14 23 20 15" fill="none" stroke="currentColor" stroke-width="1.6" stroke-dasharray="2 2.4"/><circle cx="6" cy="19" r="3.2" fill="currentColor"/><circle cx="12" cy="7" r="3.2" fill="var(--bg)" stroke="currentColor" stroke-width="1.6"/><circle cx="20" cy="15" r="3.2" fill="currentColor"/></svg>
     <span>Safety Research Atlas</span></a>
-  <nav class="nav" aria-label="Views"><a href="overview.html">Overview</a><a href="#gaps" data-v="gaps">Gaps</a><a href="#discoveries" data-v="ledger">Discoveries</a><a href="#results" data-v="results">Results</a><a href="#map" data-v="map">Map</a><a href="#papers" data-v="papers">Papers</a><a href="#assumptions" data-v="assumptions" hidden>Assumptions</a><a href="#proofs" data-v="proofs" hidden>Proofs</a></nav>
+  <nav class="nav" aria-label="Views"><a href="overview.html">Overview</a><a href="#gaps" data-v="gaps">Gaps</a><a href="#discoveries" data-v="ledger">Discoveries</a><a href="#results" data-v="results">Results</a><a href="#map" data-v="map">Map</a><a href="#papers" data-v="papers">Papers</a><a href="#assumptions" data-v="assumptions" hidden>Assumptions</a><a href="#proofs" data-v="proofs" hidden>Proofs</a><a href="#definitions" data-v="definitions" hidden>Definitions</a></nav>
   <button class="sbtn" id="openSearch" type="button" aria-label="Search the atlas"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M11 11l3.5 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Search</span><kbd>/</kbd></button>
 </div></header>
 <main class="wrap" id="app"><div class="empty">Loading the atlas…</div></main>
@@ -1141,7 +1190,7 @@ const LG_VAR = {"Proved":"--lg-proved","Paper problem":"--lg-problem","Derived":
 
 let D, P, R, L, GQ, QBY, STEPS, STEP, BRANCHES, LG, CD, CARD_BY_R, ARX, ADJ, PREC, CASE = null, PAIRS = [], POOLED_E = null, lastStep;
 const CN = {}, CKIDS = new Map();
-const S = {fams:new Set(FAMS.map(f => f[0])), leads:false, pbase:"papers", kq:null, sk:null, step:null, gstatus:null, grade:null, openQ:null, back:"gaps", hops:1, lgoff:new Set(), focusStep:null, fam:null, focusFam:null, famPaper:null, bfam:null, ppaper:null, prob:null, pnode:null, lproj:null, lsel:null, lprob:null, flow:null};
+const S = {dcon:null, dcell:[0, 0], fams:new Set(FAMS.map(f => f[0])), leads:false, pbase:"papers", kq:null, sk:null, step:null, gstatus:null, grade:null, openQ:null, back:"gaps", hops:1, lgoff:new Set(), focusStep:null, fam:null, focusFam:null, famPaper:null, bfam:null, ppaper:null, prob:null, pnode:null, lproj:null, lsel:null, lprob:null, flow:null};
 const $ = (s, r = document) => r.querySelector(s);
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const fmt = n => n.toLocaleString("en-US");
@@ -1188,7 +1237,7 @@ const statusSVG = (st, s) => fracSVG(STATUS_FILL[st] ?? 0, s);
 
 async function boot() {
   try {
-    const res = await fetch("data.json?v=c360866df9b1");
+    const res = await fetch("data.json?v=4c2738bf315b");
     if (!res.ok) throw new Error(res.status);
     D = await res.json();
   } catch (e) {
@@ -1218,6 +1267,7 @@ async function boot() {
   L.forEach((l, j) => { l.i = j; l.f = FAM[l.r] || "related"; ADJ[l.s].push(j); ADJ[l.t].push(j); l.ps = R[l.s].p; l.pt = R[l.t].p; });
   GQ.forEach(q => { q.lane = q.origin != null && R[q.origin] ? P[R[q.origin].p].lane : null; });
   bootDeps();
+  bootDefs();
   window.addEventListener("hashchange", route);
   route();
 }
@@ -1257,6 +1307,7 @@ function route() {
   else if ((m = h.match(/^k-([a-z]+)$/)) && KMAP[m[1]]) view = ["kind", m[1]];
   else if ((m = h.match(/^assumptions(?:=(.*))?$/)) && DP) view = ["assumptions", m[1] ? m[1].toUpperCase() : null];
   else if ((m = h.match(/^proofs(?:=(.*))?$/)) && DP) view = ["proofs", m[1] || ""];
+  else if ((m = h.match(/^definitions(?:=(.*))?$/)) && DF) view = ["definitions", m[1] || null];
   else view = ["gaps", null, null];
   document.querySelectorAll(".nav a").forEach(a => a.classList.toggle("on", a.dataset.v === view[0]));
   const sheetQ = view[0] === "gaps" && view[1] && QBY[view[1]] ? QBY[view[1]] : null;
@@ -1276,10 +1327,11 @@ function route() {
   else if (view[0] === "kind") renderKind(view[1]);
   else if (view[0] === "assumptions") renderAssumptions(view[1]);
   else if (view[0] === "proofs") renderProofs(view[1]);
+  else if (view[0] === "definitions") renderDefinitions(view[1]);
   const navOn = $(".nav a.on"), nav = $(".nav");
   if (!navOn && nav) nav.scrollLeft = 0;
   if (navOn && nav && nav.scrollWidth > nav.clientWidth) { const a = navOn.getBoundingClientRect(), b = nav.getBoundingClientRect(); if (a.left < b.left || a.right > b.right) nav.scrollLeft += a.left - b.left - (b.width - a.width) / 2; }
-  const key = ["papers", "gaps", "assumptions", "proofs", "graph"].includes(view[0]) ? view[0] : h;
+  const key = ["papers", "gaps", "assumptions", "proofs", "graph", "definitions"].includes(view[0]) ? view[0] : h;
   if (key !== lastView) { window.scrollTo(0, 0); lastView = key; }
   if (h === "agents") $("#agents")?.scrollIntoView({block:"start"});
 }
@@ -2341,6 +2393,7 @@ function renderRecord(i) {
         <p class="summary clamp c3">${esc(r.x)}</p>
         <div class="actions"><button class="btn" type="button" id="cpc">Copy citation</button><button class="btn" type="button" id="cpj">Copy as JSON</button></div>
         ${famStrip(i)}
+        ${defStrip(i)}
         ${raises.map(q => `<a class="qbox" href="#q${q.id.slice(1)}">${statusSVG(q.status, 30)}<span><span class="eyebrow">Raises open question · rank ${q.rank}</span><br><span class="qt2">${esc(q.question)}</span></span></a>`).join("")}
         ${card ? cardBlock(card, p) : ""}
       </div>
@@ -3609,6 +3662,138 @@ function applyLean(svg, lp) {
   document.querySelectorAll("#lcard .prow").forEach(r => { const on = r.dataset.prow === S.lprob; r.classList.toggle("on", on); r.querySelector(".prb").setAttribute("aria-pressed", on); });
 }
 function pickLean(i) { const lp = lpOf(S.lproj); if (!lp) return; S.lprob = null; S.lsel = S.lsel === i ? null : i; applyLean($(".lg2"), lp); }
+
+/* ---------- definitions: each concept's definitions side by side, with the exact words behind every cell ---------- */
+let DF = null;
+const DEF_BY_R = {};
+function bootDefs() {
+  DF = D.defs && (D.defs.concepts || []).length ? D.defs : null;
+  document.querySelectorAll('.nav a[data-v="definitions"]').forEach(a => { a.hidden = !DF; });
+  if (!DF) return;
+  DF.concepts.forEach(c => {
+    c.rows.forEach(row => { (DEF_BY_R[row.r] = DEF_BY_R[row.r] || []).push(c.id); });
+    // a colour per group, in the order the groups first appear down each column
+    c.gk = c.cols.map((_, k) => { const m = {}; c.cells.forEach(cs => { const x = cs[k]; if (x.v != null && !(x.g in m)) m[x.g] = Object.keys(m).length; }); return m; });
+  });
+}
+const defById = id => DF.concepts.find(c => c.id === id);
+const defPapers = c => uniq(c.rows.map(row => R[row.r].p));
+function defFirst(c) {
+  for (let i = 0; i < c.rows.length; i++) for (let k = 0; k < c.cols.length; k++) if (c.cells[i][k].v != null) return [i, k];
+  return [0, 0];
+}
+/* the text with each phrase marked where it first occurs; whitespace (line breaks) may differ between them */
+function defMark(text, phrases) {
+  let h = esc(String(text || "").replace(/\s+/g, " ").trim());
+  phrases.forEach(ph => {
+    const words = esc(String(ph).replace(/\s+/g, " ").trim()).split(" ").map(w => w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
+    if (words[0]) h = h.replace(new RegExp(words.join("\\s+")), x => `<mark>${x}</mark>`);
+  });
+  return h;
+}
+function defsGuide() {
+  const cell = (x, y, w, k, t) => `<rect x="${x}" y="${y}" width="${w}" height="15" rx="3" style="fill:color-mix(in srgb,var(--k${k}) 16%,var(--surface));stroke:var(--k${k})"/>${gtxt(x + 5, y + 11, t, "")}`;
+  return guideStrip("How to read a definition comparison", [
+    [gpic(`${[0, 1, 2].map(y => gtxt(0, 14 + y * 20, "paper " + "ABC"[y], "") + [0, 1, 2, 3].map(x => gbox(46 + x * 21, 4 + y * 20, 15, `color-mix(in srgb,var(--k${[[0, 1, 0, 2], [0, 0, 3, 2], [0, 1, 0, 2]][y][x]}) 70%,var(--surface))`)).join("")).join("")}`),
+      "One row per paper",
+      `Each row is one paper's definition of the same idea, oldest first. Each column is one rule a definition can set, such as who picks the answers.`],
+    [gpic(`${cell(2, 4, 70, 0, "opposing")}${cell(2, 26, 70, 0, "opposing")}${cell(2, 48, 70, 3, "may be same")}<path class="ln" d="M78 6V40"/>${gtxt(84, 26, "same rule", "")}${gtxt(84, 59, "differs", "")}`),
+      "Same colour, same rule",
+      "In a column, cells of one colour set the same rule, so agreement shows at a glance. A dash means the paper's quoted lines do not say."],
+    [gpic(`<rect x="1" y="2" width="128" height="64" rx="6" style="fill:var(--sunk)"/><rect class="hlq" x="7" y="22" width="104" height="12" rx="2"/>${gtxt(8, 16, "p. 3 · lines 5–12")}${gtxt(10, 31, "which may be the same", "")}${gtxt(8, 50, "the exact words, highlighted")}`),
+      "Tap a cell for the paper's words",
+      "Every cell points to the exact words in the paper, highlighted in the quote, with the page and lines."]]);
+}
+function defChips(cur) {
+  return `<nav class="dchips" aria-label="Concepts">${DF.concepts.map(c => `<a class="dchip${c.id === cur ? " on" : ""}" href="#definitions=${esc(c.id)}">${esc(c.name)} <b>${c.rows.length}</b></a>`).join("")}<a class="dchip${cur === "one" ? " on" : ""}" href="#definitions=one">Defined in one paper only <b>${DF.single.length}</b></a></nav>`;
+}
+function defGrid(c) {
+  const [si, sk] = S.dcell;
+  const head = `<thead><tr><th scope="col">Paper</th>${c.cols.map(col => `<th scope="col" title="${esc(col.q)}">${esc(col.name)}</th>`).join("")}</tr></thead>`;
+  const body = c.rows.map((row, i) => {
+    const r = R[row.r];
+    return `<tr><th scope="row"><a href="#r${row.r}">${esc(row.label)}</a><small>p${r.pg} · l${esc(r.ln)}</small></th>${c.cells[i].map((x, k) => {
+      const on = i === si && k === sk ? " on" : "", unc = x.st !== "AI_CHECKED" ? " unc" : "";
+      return x.v == null
+        ? `<td class="dc none${on}${unc}" data-c="${i},${k}" tabindex="0" role="button" aria-label="${esc(`${row.label}, ${c.cols[k].name}: not stated in the quoted lines`)}">—</td>`
+        : `<td class="dc${on}${unc}" data-c="${i},${k}" tabindex="0" role="button" style="--g:var(--k${c.gk[k][x.g]})">${esc(x.v)}</td>`;
+    }).join("")}</tr>`;
+  }).join("");
+  return `<div class="dgrid" id="dgrid"><table>${head}<tbody>${body}</tbody></table></div>`;
+}
+function defDrawer(c) {
+  const [i, k] = S.dcell, x = c.cells[i][k], row = c.rows[i], col = c.cols[k], r = R[row.r], p = P[r.p];
+  const inQuote = x.ev.filter(e => e.pg == null).map(e => e.ph);
+  const spans = [];
+  x.ev.filter(e => e.pg != null).forEach(e => { const s = spans.find(z => z.pg === e.pg && z.a === e.a && z.b === e.b); if (s) s.ph.push(e.ph); else spans.push({...e, ph: [e.ph]}); });
+  const rv = REVIEW[x.st] || ["Not yet checked", "var(--related)", "Not yet read by the AI checks"];
+  return `<div class="dq" aria-live="polite">
+    <div class="dqh"><b>${esc(row.label)} · ${esc(col.name)}</b><span>${esc(col.q)}</span></div>
+    <div class="dqv">${x.v == null ? `<span class="muted">Not stated in the lines the atlas quotes from this paper.</span>` : `“${esc(x.v)}”`}</div>
+    <blockquote>${defMark(r.q, inQuote)}</blockquote>
+    <div class="dqf">${esc(p.short)}, “${esc(p.title)}” · page ${r.pg}, lines ${esc(r.ln)} · <a href="${esc(p.pdf)}#page=${r.pg}" target="_blank" rel="noopener">Open the PDF at this page ↗</a></div>
+    ${spans.map(s => `<div class="dqx"><div class="dqf">More lines of the same paper · page ${s.pg}, lines ${s.a}–${s.b} · <a href="${esc(p.pdf)}#page=${s.pg}" target="_blank" rel="noopener">Open the PDF ↗</a></div><blockquote>${defMark(s.tx, s.ph)}</blockquote></div>`).join("")}
+    <div class="dqf" style="margin-top:8px"><span class="badge" data-tip="${esc(rv[2])}"><i style="background:${rv[1]}"></i>${esc(rv[0])}</span></div>
+  </div>`;
+}
+/* what in the atlas rests on these definitions: links whose target is a row and that use or build on it */
+function defCarry(c) {
+  const rows = new Set(c.rows.map(x => x.r)), seen = new Set();
+  const uses = L.filter(l => rows.has(l.t) && !rows.has(l.s) && (l.r === "depends" || l.r === "extends") && !seen.has(l.s + ":" + l.t) && seen.add(l.s + ":" + l.t));
+  if (!uses.length) return "";
+  const lab = Object.fromEntries(c.rows.map(x => [x.r, x.label]));
+  return `<div class="dwarn carry"><b>Before you carry a result over</b><p>A result holds for the definition it was proved or tested under. These atlas entries rest on one of the definitions above; check that the rows match before reusing them for another.</p>
+    <ul>${uses.map(l => `<li><a href="#r${l.s}">${esc(P[R[l.s].p].short)}: ${esc(R[l.s].t)}</a> <span class="muted">${l.r === "depends" ? "uses" : "builds on"} ${esc(lab[l.t])}</span></li>`).join("")}</ul></div>`;
+}
+function defCard(c) {
+  const ps = defPapers(c), years = ps.map(pi => P[pi].year);
+  const all = [...c.cells.flat(), ...c.cols, ...c.agree, ...c.differ, ...c.notes], ok = all.filter(x => x.st === "AI_CHECKED").length;
+  const st = it => it.st !== "AI_CHECKED" ? ` <span class="muted">(not yet checked)</span>` : "";
+  const refs = it => esc(it.c.map(x => x.join(",")).join(";"));
+  const back = DF.concepts.filter(o => o.notes.some(n => n.concept === c.id));
+  return `<div class="dhead"><h2>${esc(c.name)}</h2><span>${plural(c.rows.length, "definition")} in ${plural(ps.length, "paper")}, ${Math.min(...years)} to ${Math.max(...years)}</span></div>
+    <p class="dplain">${esc(c.plain)}</p>
+    <p class="dswipe">Swipe the grid sideways to see all ${c.cols.length} columns.</p>
+    ${defGrid(c)}
+    <div id="ddrawer">${defDrawer(c)}</div>
+    <div class="dad"><div><h3><i style="background:var(--agrees)"></i>Where they agree</h3>${c.agree.length ? `<ul>${c.agree.map(a => `<li data-c="${refs(a)}">${esc(a.t)}${st(a)}</li>`).join("")}</ul>` : `<p class="muted" style="margin:0;font-size:14px">No rule is shared by every paper that states it.</p>`}</div>
+      <div><h3><i style="background:var(--disputes)"></i>Where they differ</h3><ul>${c.differ.map(d => `<li data-c="${refs(d)}"><b>${esc(d.l)}</b> ${esc(d.t)}${st(d)}</li>`).join("")}</ul></div></div>
+    ${c.notes.map(n => { const o = defById(n.concept), q = R[n.r]; return `<div class="dwarn"><b>Same word, different idea: ${esc(o.name)}</b><p>${esc(n.t)} ${esc(P[q.p].short)}: <q>${esc(n.ph)}</q> <a href="#definitions=${esc(o.id)}">See ${esc(o.name)} →</a></p></div>`; }).join("")}
+    ${back.map(o => `<div class="dwarn"><b>Same word, different idea: ${esc(o.name)}</b><p>The atlas keeps these apart from ${esc(o.name)}. <a href="#definitions=${esc(o.id)}">See ${esc(o.name)} →</a></p></div>`).join("")}
+    ${defCarry(c)}
+    <p class="dnote">AI draft, not reviewed by a person. ${ok === all.length ? `Two independent AI checks read every cell and statement on this card against the paper's words.` : `${ok} of ${all.length} cells and statements on this card have passed two independent AI checks.`} A machine check confirms every highlighted phrase appears word for word in the paper.</p>`;
+}
+function wireDefs(c) {
+  const card = $("#dcard");
+  const pick = td => { const [i, k] = td.dataset.c.split(",").map(Number); S.dcell = [i, k];
+    card.querySelectorAll("td.dc.on").forEach(x => x.classList.remove("on")); td.classList.add("on"); $("#ddrawer").innerHTML = defDrawer(c); };
+  card.addEventListener("click", e => { const td = e.target.closest("td.dc"); if (td) pick(td); });
+  card.addEventListener("keydown", e => { const td = e.target.closest("td.dc"); if (td && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); pick(td); } });
+  // a statement lights the cells it rests on
+  const grid = $("#dgrid");
+  const light = li => { grid.classList.add("dim"); li.dataset.c.split(";").forEach(rc => { const td = grid.querySelector(`td[data-c="${rc}"]`); if (td) td.classList.add("lit"); }); };
+  const dark = () => { grid.classList.remove("dim"); grid.querySelectorAll("td.lit").forEach(x => x.classList.remove("lit")); };
+  card.querySelectorAll(".dad li[data-c]").forEach(li => { li.addEventListener("mouseenter", () => light(li)); li.addEventListener("mouseleave", dark); });
+}
+function renderDefinitions(arg) {
+  const sizes = DF.concepts.map(c => defPapers(c).length);
+  const one = arg === "one", c = one ? null : (arg && defById(arg)) || DF.concepts[0];
+  if (c && S.dcon !== c.id) { S.dcon = c.id; S.dcell = defFirst(c); }
+  $("#app").innerHTML = `
+    <div class="ghead"><div class="eyebrow">Definitions · ${DF.concepts.length} concepts, each defined by ${Math.min(...sizes)} to ${Math.max(...sizes)} papers</div>
+      <h1 class="gtitle">One word, different rules</h1>
+      <p class="lede">Papers often use the same word for different setups. Pick a concept to see each paper's definition side by side, and exactly where they agree or differ.</p></div>
+    ${defsGuide()}
+    ${defChips(one ? "one" : c.id)}
+    ${one ? `<section><div class="sechead"><h2>Defined in one paper only</h2></div><p class="muted" style="margin:0 0 14px">These ${DF.single.length} definitions have no counterpart in another paper of the atlas yet, so there is nothing to set them beside.</p>
+      <div class="dsingle">${DF.single.map(i => { const r = R[i]; return `<a class="card" href="#r${i}"><div class="cp">${esc(P[r.p].short)} · p. ${r.pg}</div><div class="ct">${esc(r.t)}</div></a>`; }).join("")}</div></section>`
+      : `<section class="dcard" id="dcard">${defCard(c)}</section>`}`;
+  if (c) wireDefs(c);
+}
+function defStrip(i) {
+  if (!DF || !DEF_BY_R[i]) return "";
+  return `<div class="fstrip">${DEF_BY_R[i].map(id => { const c = defById(id); return `<a class="plink" href="#definitions=${esc(id)}">Compare with ${plural(c.rows.length - 1, "other definition")} of ${esc(c.name)} →</a>`; }).join("")}</div>`;
+}
 
 /* ---------- cross-links: the families a result uses, its place in a proof graph; the families that name a step ---------- */
 function famStrip(i) {

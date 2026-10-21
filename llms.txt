@@ -48,6 +48,10 @@ Recipes:
 - "What would settle this gap?": read `remaining_question` and `remaining_type` in its file; an empirical gap may carry an experiment package with hypothesis, design, sample size and cost estimates.
 - "What did the pilot find that is not easy to find elsewhere?": read agent/ledger.json; Paper problem entries are flaws in a paper's own statements found by Lean audits.
 
+## Definition comparisons
+
+- [definitions.json](https://elshatlawy.github.io/AI-Safety-Research-Atlas-/definitions.json): 11 concepts from the debate and scalable-oversight papers, 49 definitions set side by side (the page's Definitions tab). Each cell says what one paper's definition sets for one question and cites the exact words, in the record's quote or in further lines of the same PDF with page and lines. Cells with the same group set the same rule. AI-drafted; every cell and statement passed two blind AI checks; no person has reviewed them. Check the cells that differ before carrying a result from one row's definition to another.
+
 ## Humans
 
 The visual atlas is at the site root, https://elshatlawy.github.io/AI-Safety-Research-Atlas-/. Every record is a dot in the record graph at https://elshatlawy.github.io/AI-Safety-Research-Atlas-/#graph (a card's human_url opens one record there). Corrections and new sources go to the research repository through its maintainer.
