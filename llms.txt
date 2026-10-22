@@ -58,7 +58,7 @@ Recipes:
 
 ## Understanding cards
 
-- [understanding.json](https://elshatlawy.github.io/AI-Safety-Research-Atlas-/understanding.json): 248 results (86 marked key) explained in plain words (the top of each result's page): why it matters, what it says, the key idea, what it was shown for and what it does not show, each line citing the exact words it rests on. AI-drafted; every card passed two blind AI checks; no person has reviewed them. Cite the paper's own words, not the card's.
+- [understanding.json](https://elshatlawy.github.io/AI-Safety-Research-Atlas-/understanding.json): 248 results explained in plain words (the top of each result's page): why it matters, what it says, the key idea, what it was shown for and what it does not show, each line citing the exact words it rests on. AI-drafted; every card passed two blind AI checks; no person has reviewed them. Cite the paper's own words, not the card's.
 
 ## Humans
 

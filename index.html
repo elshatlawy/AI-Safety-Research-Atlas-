@@ -1094,21 +1094,6 @@ a.ulean:hover{border-color:var(--ink2)}
 .uwords dd > span{display:block}
 @media (max-width:560px){.utwo{grid-template-columns:1fr}.ur{grid-template-columns:22px minmax(0,1fr);gap:10px;padding:12px 13px}.ux .plain{font-size:17.5px}.uwords dl{grid-template-columns:1fr}.uwords dt{padding-top:6px}}
 /* the Start-here row on Results */
-.ucstart{margin:18px 0 6px;border:1px solid var(--line2);border-radius:16px;background:var(--surface);padding:14px 16px}
-.ucstart .ush{display:flex;justify-content:space-between;align-items:baseline;gap:6px 12px;flex-wrap:wrap}
-.ucstart .ush b{font-family:"Source Serif 4",Georgia,serif;font-size:19px;font-weight:600}
-.ucstart .ush span{font-size:12.5px;color:var(--muted)}
-.ucstart .ush + p{margin:4px 0 0;font-size:13.5px;color:var(--ink2)}
-.usg{margin-top:14px}
-.usg .mlab{margin:0 0 8px}
-.uslist{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:8px}
-.ucs{display:flex;flex-direction:column;gap:4px;border:1px solid var(--line);border-radius:12px;padding:9px 11px;text-decoration:none;color:var(--ink);background:var(--bg);min-width:0}
-.ucs:hover{border-color:var(--ink2)}
-.ucs[hidden]{display:none}
-.ucs .p{font-size:11.5px;color:var(--muted)}
-.ucs .p i{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;vertical-align:0}
-.ucs .t{font-family:"Source Serif 4",Georgia,serif;font-size:14.5px;line-height:1.32}
-.usmore{margin-top:10px}
 .fstrip{margin-top:16px;display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px}
 .fstrip .eyebrow{width:100%}
 .fdots{display:inline-flex;flex-wrap:wrap;align-items:center;gap:3px;max-width:100%}
@@ -1364,7 +1349,7 @@ const statusSVG = (st, s) => fracSVG(STATUS_FILL[st] ?? 0, s);
 
 async function boot() {
   try {
-    const res = await fetch("data.json?v=2e3c89b96152");
+    const res = await fetch("data.json?v=f2f11ec1d3c4");
     if (!res.ok) throw new Error(res.status);
     D = await res.json();
   } catch (e) {
@@ -2092,9 +2077,8 @@ function renderResults() {
   const strength = strengthSVG(cards);
   $("#app").innerHTML = `
     <div class="ghead"><div class="eyebrow">Result cards</div><h1 class="gtitle">${cards.length} results from ${nP} papers, graded by their evidence</h1>
-      <p class="lede">One line per result: its evidence grade, one dot per stated hypothesis (hollow where the list is not verified) and its setting. Open a line for the full card.</p></div>
+      <p class="lede">One line per result: its evidence grade, one dot per stated hypothesis (hollow where the list is not verified) and its setting. Every result opens on a short card in plain words, then its full details.</p></div>
     ${resultsGuide(cards, gt)}
-    ${ucStart()}
     ${strength ? `<div class="vpanel"><div class="cph"><b>Evidence strength over time</b><span class="muted">one column per paper, one square per result</span></div><div class="st-sc">${strength}</div></div>` : ""}
     <div class="legend gfilter" role="group" aria-label="Filter by grade"><button type="button" class="chip ${S.grade ? "" : "on"}" data-grade="">All <span class="mono">${cards.length}</span></button>${grades.map(g => `<button type="button" class="chip ${S.grade === g ? "on" : ""}" data-grade="${esc(g)}" data-tip="${esc(G[g] || "")}"><i class="gsw g-${esc(g)}"></i>${esc(human(g))} <span class="mono">${gt[g]}</span></button>`).join("")}</div>
     ${S.grade && G[S.grade] ? `<p class="gdesc"><b>${esc(human(S.grade))}</b> · ${esc(G[S.grade])}</p>` : ""}
@@ -2103,7 +2087,6 @@ function renderResults() {
     ${loose.length ? `<div class="lanehead">Other</div>${loose.map(k => paperCards(k, byPaper.get(k))).join("")}` : ""}
     ${shown.length ? "" : `<div class="empty">No result cards with this grade.</div>`}`;
   document.querySelectorAll("[data-grade]").forEach(b => b.onclick = () => { S.grade = b.dataset.grade || null; renderResults(); });
-  wireStart();
   const jump = g => { const t = document.getElementById("rp-" + g.dataset.rp); if (t) { t.scrollIntoView({behavior:"smooth", block:"start"}); const d = t.querySelector("details"); if (d) d.querySelector("summary")?.focus({preventScroll:true}); } };
   document.querySelectorAll(".st-col").forEach(g => { g.onclick = () => jump(g); g.onkeydown = e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); jump(g); } }; });
 }
@@ -4182,28 +4165,6 @@ function ucBlock(i) {
     ${ucWords(c, p)}
   </section>`;
 }
-// Results: every card, in the order of the safety case's argument, then each paper's headline result by topic
-function ucStart() {
-  if (!UN) return "";
-  const lead = UN.cards.filter(c => c.k && UN_MAPS[c.r]).sort((a, b) => UN_MAPS[a.r][0].k - UN_MAPS[b.r][0].k || a.r - b.r);
-  const head = UN.cards.filter(c => c.k && !UN_MAPS[c.r]).sort((a, b) => (P[R[a.r].p].lane ?? 99) - (P[R[b.r].p].lane ?? 99) || pdate(R[a.r].p) - pdate(R[b.r].p) || a.r - b.r);
-  const tile = c => { const m = (UN_MAPS[c.r] || [])[0], lab = m ? (CN[m.nid] || {}).label || m.nid : LANE_SHORT[P[R[c.r].p].lane] || "";
-    return `<a class="ucs" href="#r${c.r}"><span class="p"><i style="background:${m ? `var(--ev-sup)` : `var(--related)`}"></i>${esc(P[R[c.r].p].short)} · ${esc(lab)}</span><span class="t">${esc(c.plain.l)}</span></a>`; };
-  const group = (id, title, cs) => cs.length ? `<div class="usg"><div class="mlab">${esc(title)} · ${cs.length}</div><div class="uslist" id="${id}">${cs.map((c, k) => k < 6 ? tile(c) : tile(c).replace('<a class="ucs"', '<a class="ucs" hidden')).join("")}</div></div>` : "";
-  const ok = UN.cards.filter(c => c.st === "AI_CHECKED").length, nk = lead.length + head.length, all = UN.cards.length === CD.cards.length;
-  return `<section class="ucstart" id="start">
-    <div class="ush"><b>Start here: ${nk} key results in plain words</b><span>${ok === UN.cards.length ? `all ${UN.cards.length} cards checked by two blind AI reviews` : `${ok} of ${UN.cards.length} cards checked by two blind AI reviews`}; AI draft, not reviewed by a person</span></div>
-    <p>${all ? `Every one of the ${UN.cards.length} results` : `${UN.cards.length} of the ${CD.cards.length} results`} opens on a short card: why it matters, what it says, the key idea, the assumptions that matter, what it lets us conclude about an AI system, and what remains open. These ${nk} are the ones to read first: the ${lead.length} the debate safety case leans on and each paper's headline result.</p>
-    ${group("us-lead", "What the debate safety case leans on, in the order of its argument", lead)}
-    ${group("us-head", "Each paper's headline result", head)}
-    ${nk > 12 ? `<button type="button" class="btn usmore" id="usmore">Show all ${nk}</button>` : ""}
-  </section>`;
-}
-function wireStart() {
-  const b = $("#usmore"); if (!b) return;
-  b.onclick = () => { document.querySelectorAll(".ucs[hidden]").forEach(a => { a.hidden = false; }); b.remove(); };
-}
-
 /* ---------- cross-links: the families a result uses, its place in a proof graph; the families that name a step ---------- */
 function famStrip(i) {
   if (!DP) return "";
