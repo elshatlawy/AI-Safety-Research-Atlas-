@@ -1026,7 +1026,7 @@ a.fgrow:focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
 .pcl{border:0;background:transparent;color:var(--ink2);text-decoration:underline;cursor:pointer;font-size:12.5px;padding:0;margin-left:6px}
 
 /* cross-links: a result's families, a step's families */
-/* understanding card: six short fields at the top of a key result's page */
+/* understanding card: six short fields at the top of a result's page */
 .uc{margin:16px 0 18px;border:1px solid var(--line2);border-radius:16px;background:var(--surface);overflow:hidden}
 .uch{display:flex;justify-content:space-between;align-items:center;gap:6px 12px;flex-wrap:wrap;padding:11px 16px;border-bottom:1px solid var(--line);background:var(--sunk)}
 .uch b{font-size:12.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink2)}
@@ -1364,7 +1364,7 @@ const statusSVG = (st, s) => fracSVG(STATUS_FILL[st] ?? 0, s);
 
 async function boot() {
   try {
-    const res = await fetch("data.json?v=62e4d5bc8a8f");
+    const res = await fetch("data.json?v=2e3c89b96152");
     if (!res.ok) throw new Error(res.status);
     D = await res.json();
   } catch (e) {
@@ -4089,7 +4089,7 @@ function repStrip(i) {
   }).join("")}</div>`;
 }
 
-/* ---------- understanding cards: six short fields at the top of a key result's page ---------- */
+/* ---------- understanding cards: six short fields at the top of a result's page ---------- */
 let UN = null;
 const UN_BY_R = {}, UN_MAPS = {};
 const UC_COL = ["var(--k0)", "var(--k1)", "var(--k2)", "var(--k6)"];
@@ -4185,18 +4185,18 @@ function ucBlock(i) {
 // Results: every card, in the order of the safety case's argument, then each paper's headline result by topic
 function ucStart() {
   if (!UN) return "";
-  const lead = UN.cards.filter(c => UN_MAPS[c.r]).sort((a, b) => UN_MAPS[a.r][0].k - UN_MAPS[b.r][0].k || a.r - b.r);
-  const head = UN.cards.filter(c => !UN_MAPS[c.r]).sort((a, b) => (P[R[a.r].p].lane ?? 99) - (P[R[b.r].p].lane ?? 99) || pdate(R[a.r].p) - pdate(R[b.r].p) || a.r - b.r);
+  const lead = UN.cards.filter(c => c.k && UN_MAPS[c.r]).sort((a, b) => UN_MAPS[a.r][0].k - UN_MAPS[b.r][0].k || a.r - b.r);
+  const head = UN.cards.filter(c => c.k && !UN_MAPS[c.r]).sort((a, b) => (P[R[a.r].p].lane ?? 99) - (P[R[b.r].p].lane ?? 99) || pdate(R[a.r].p) - pdate(R[b.r].p) || a.r - b.r);
   const tile = c => { const m = (UN_MAPS[c.r] || [])[0], lab = m ? (CN[m.nid] || {}).label || m.nid : LANE_SHORT[P[R[c.r].p].lane] || "";
     return `<a class="ucs" href="#r${c.r}"><span class="p"><i style="background:${m ? `var(--ev-sup)` : `var(--related)`}"></i>${esc(P[R[c.r].p].short)} · ${esc(lab)}</span><span class="t">${esc(c.plain.l)}</span></a>`; };
   const group = (id, title, cs) => cs.length ? `<div class="usg"><div class="mlab">${esc(title)} · ${cs.length}</div><div class="uslist" id="${id}">${cs.map((c, k) => k < 6 ? tile(c) : tile(c).replace('<a class="ucs"', '<a class="ucs" hidden')).join("")}</div></div>` : "";
-  const ok = UN.cards.filter(c => c.st === "AI_CHECKED").length;
+  const ok = UN.cards.filter(c => c.st === "AI_CHECKED").length, nk = lead.length + head.length, all = UN.cards.length === CD.cards.length;
   return `<section class="ucstart" id="start">
-    <div class="ush"><b>Start here: ${UN.cards.length} key results in plain words</b><span>${ok === UN.cards.length ? "every card checked by two blind AI reviews" : `${ok} of ${UN.cards.length} cards checked by two blind AI reviews`}; AI draft, not reviewed by a person</span></div>
-    <p>Each opens on a short card: why it matters, what it says, the key idea, the assumptions that matter, what it lets us conclude about an AI system, and what remains open.</p>
+    <div class="ush"><b>Start here: ${nk} key results in plain words</b><span>${ok === UN.cards.length ? `all ${UN.cards.length} cards checked by two blind AI reviews` : `${ok} of ${UN.cards.length} cards checked by two blind AI reviews`}; AI draft, not reviewed by a person</span></div>
+    <p>${all ? `Every one of the ${UN.cards.length} results` : `${UN.cards.length} of the ${CD.cards.length} results`} opens on a short card: why it matters, what it says, the key idea, the assumptions that matter, what it lets us conclude about an AI system, and what remains open. These ${nk} are the ones to read first: the ${lead.length} the debate safety case leans on and each paper's headline result.</p>
     ${group("us-lead", "What the debate safety case leans on, in the order of its argument", lead)}
     ${group("us-head", "Each paper's headline result", head)}
-    ${lead.length + head.length > 12 ? `<button type="button" class="btn usmore" id="usmore">Show all ${UN.cards.length}</button>` : ""}
+    ${nk > 12 ? `<button type="button" class="btn usmore" id="usmore">Show all ${nk}</button>` : ""}
   </section>`;
 }
 function wireStart() {
