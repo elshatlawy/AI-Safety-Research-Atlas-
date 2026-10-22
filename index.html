@@ -1026,6 +1026,89 @@ a.fgrow:focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
 .pcl{border:0;background:transparent;color:var(--ink2);text-decoration:underline;cursor:pointer;font-size:12.5px;padding:0;margin-left:6px}
 
 /* cross-links: a result's families, a step's families */
+/* understanding card: six short fields at the top of a key result's page */
+.uc{margin:16px 0 18px;border:1px solid var(--line2);border-radius:16px;background:var(--surface);overflow:hidden}
+.uch{display:flex;justify-content:space-between;align-items:center;gap:6px 12px;flex-wrap:wrap;padding:11px 16px;border-bottom:1px solid var(--line);background:var(--sunk)}
+.uch b{font-size:12.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink2)}
+.uch span{font-size:12px;color:var(--muted)}
+.uch span i{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px;vertical-align:0}
+.ur{display:grid;grid-template-columns:24px minmax(0,1fr);gap:12px;padding:13px 16px;border-top:1px solid var(--line)}
+.uch + .ur{border-top:0}
+.un{width:22px;height:22px;border-radius:50%;background:var(--ink);color:var(--bg);font-size:12px;font-weight:600;display:grid;place-items:center;margin-top:1px}
+.ut{font-size:11.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:5px}
+.ux{font-size:14.5px;color:var(--ink);min-width:0}
+.ux p{margin:0}
+.ux .plain{font-family:"Source Serif 4",Georgia,serif;font-size:19px;line-height:1.35;text-wrap:pretty}
+.uai{display:inline-block;font-size:10.5px;font-weight:600;letter-spacing:.03em;color:var(--ink2);border:1px dashed var(--line2);border-radius:999px;padding:0 7px;margin-left:6px;vertical-align:2px;text-transform:none}
+.usteps{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 7px}
+.ust{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:3px 10px;font-size:12.5px;border:1px solid var(--line2);color:var(--ink);text-decoration:none}
+a.ust:hover{border-color:var(--ink2)}
+.ust i{width:9px;height:9px;border-radius:50%;flex:none}
+.ust.sup i{background:var(--ev-sup)} .ust.bear i{background:var(--related)} .ust.und i{background:var(--disputes)}
+.ust small{color:var(--muted);font-size:11.5px}
+.urank{display:block;margin-top:6px;font-size:13px;color:var(--ink2)}
+.urank a{color:var(--ink)}
+.ucht{margin-top:12px}
+.ucrow{display:grid;grid-template-columns:minmax(64px,auto) minmax(0,1fr);gap:4px 12px;align-items:center;font-size:12.5px;color:var(--ink2)}
+.usc{position:relative;height:44px}
+.usc::before{content:"";position:absolute;left:0;right:0;top:22px;border-top:1px solid var(--line2)}
+.usc i{position:absolute;top:16px;width:13px;height:13px;border-radius:50%;transform:translateX(-6.5px);box-shadow:0 0 0 2px var(--surface);cursor:default}
+.usc em{position:absolute;top:0;font-style:normal;font-size:11px;font-weight:600;transform:translateX(-50%);color:var(--ink);white-space:nowrap}
+.usc em.lo{top:31px}
+.usc .ue{position:absolute;top:31px;font-size:10.5px;color:var(--muted)}
+.usc .ue.r{right:0}
+.ulgd{font-size:12px;color:var(--ink2);display:flex;gap:4px 14px;margin-top:6px;flex-wrap:wrap}
+.ulgd i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px;vertical-align:0}
+.ulgd span.m{color:var(--muted)}
+.ulean{display:inline-flex;gap:6px;align-items:center;margin-top:10px;font-size:12.5px;border:1px solid var(--line2);border-radius:8px;padding:3px 9px;color:var(--ink);text-decoration:none}
+.ulean code{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:12px}
+a.ulean:hover{border-color:var(--ink2)}
+.uhs{display:flex;flex-direction:column;gap:6px}
+.uh{font-size:13.5px;border-radius:9px;padding:6px 10px;background:var(--sunk);color:var(--ink2)}
+.uh.key{background:var(--mark);color:var(--ink);box-shadow:inset 3px 0 0 var(--steps)}
+.uh.key b{display:block;font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink2);margin-bottom:1px}
+.umore{font-size:12.5px;color:var(--muted)}
+.ucx{margin-top:10px;border-left:3px solid var(--disputes);padding:7px 11px;background:var(--sunk);border-radius:0 9px 9px 0;font-size:13.5px;color:var(--ink2)}
+.ucx b{color:var(--ink)} .ucx a{color:var(--ink)}
+.ucx + .ucx{margin-top:6px}
+.ucx.none{border-left-color:var(--line2)}
+.utwo{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.utwo div{border-radius:10px;padding:8px 11px;font-size:13.5px;color:var(--ink)}
+.utwo .y{background:color-mix(in srgb,var(--agrees) 13%,var(--surface))}
+.utwo .n{background:color-mix(in srgb,var(--disputes) 11%,var(--surface))}
+.utwo b{display:block;font-size:11px;letter-spacing:.07em;text-transform:uppercase;margin-bottom:3px;color:var(--ink2)}
+.uopen{font-size:14px;color:var(--ink)}
+.uopen a{color:var(--ink)}
+.uopen .rem{display:block;margin-top:4px;font-size:13px;color:var(--ink2)}
+.uwords{border-top:1px solid var(--line);padding:0 16px}
+.uwords summary{cursor:pointer;padding:10px 0;font-size:13px;color:var(--ink2);list-style:none}
+.uwords summary::-webkit-details-marker{display:none}
+.uwords summary::before{content:"▸ ";color:var(--muted)}
+.uwords[open] summary::before{content:"▾ "}
+.uwords dl{margin:0 0 12px;display:grid;grid-template-columns:minmax(90px,auto) minmax(0,1fr);gap:6px 12px;font-size:13px}
+.uwords dt{color:var(--muted);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;font-weight:600;padding-top:2px}
+.uwords dd{margin:0;color:var(--ink2)}
+.uwords q{color:var(--ink);quotes:"“" "”"}
+.uwords .src{font-size:11.5px;color:var(--muted);margin-left:4px}
+.uwords .src a{color:var(--muted)}
+.uwords dd > span{display:block}
+@media (max-width:560px){.utwo{grid-template-columns:1fr}.ur{grid-template-columns:22px minmax(0,1fr);gap:10px;padding:12px 13px}.ux .plain{font-size:17.5px}.uwords dl{grid-template-columns:1fr}.uwords dt{padding-top:6px}}
+/* the Start-here row on Results */
+.ucstart{margin:18px 0 6px;border:1px solid var(--line2);border-radius:16px;background:var(--surface);padding:14px 16px}
+.ucstart .ush{display:flex;justify-content:space-between;align-items:baseline;gap:6px 12px;flex-wrap:wrap}
+.ucstart .ush b{font-family:"Source Serif 4",Georgia,serif;font-size:19px;font-weight:600}
+.ucstart .ush span{font-size:12.5px;color:var(--muted)}
+.ucstart .ush + p{margin:4px 0 0;font-size:13.5px;color:var(--ink2)}
+.usg{margin-top:14px}
+.usg .mlab{margin:0 0 8px}
+.uslist{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:8px}
+.ucs{display:flex;flex-direction:column;gap:4px;border:1px solid var(--line);border-radius:12px;padding:9px 11px;text-decoration:none;color:var(--ink);background:var(--bg);min-width:0}
+.ucs:hover{border-color:var(--ink2)}
+.ucs[hidden]{display:none}
+.ucs .p{font-size:11.5px;color:var(--muted)}
+.ucs .p i{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;vertical-align:0}
+.ucs .t{font-family:"Source Serif 4",Georgia,serif;font-size:14.5px;line-height:1.32}
+.usmore{margin-top:10px}
 .fstrip{margin-top:16px;display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px}
 .fstrip .eyebrow{width:100%}
 .fdots{display:inline-flex;flex-wrap:wrap;align-items:center;gap:3px;max-width:100%}
@@ -1281,7 +1364,7 @@ const statusSVG = (st, s) => fracSVG(STATUS_FILL[st] ?? 0, s);
 
 async function boot() {
   try {
-    const res = await fetch("data.json?v=abf2204295de");
+    const res = await fetch("data.json?v=62e4d5bc8a8f");
     if (!res.ok) throw new Error(res.status);
     D = await res.json();
   } catch (e) {
@@ -1313,6 +1396,7 @@ async function boot() {
   bootDeps();
   bootDefs();
   bootReps();
+  bootUnder();
   window.addEventListener("hashchange", route);
   route();
 }
@@ -2010,6 +2094,7 @@ function renderResults() {
     <div class="ghead"><div class="eyebrow">Result cards</div><h1 class="gtitle">${cards.length} results from ${nP} papers, graded by their evidence</h1>
       <p class="lede">One line per result: its evidence grade, one dot per stated hypothesis (hollow where the list is not verified) and its setting. Open a line for the full card.</p></div>
     ${resultsGuide(cards, gt)}
+    ${ucStart()}
     ${strength ? `<div class="vpanel"><div class="cph"><b>Evidence strength over time</b><span class="muted">one column per paper, one square per result</span></div><div class="st-sc">${strength}</div></div>` : ""}
     <div class="legend gfilter" role="group" aria-label="Filter by grade"><button type="button" class="chip ${S.grade ? "" : "on"}" data-grade="">All <span class="mono">${cards.length}</span></button>${grades.map(g => `<button type="button" class="chip ${S.grade === g ? "on" : ""}" data-grade="${esc(g)}" data-tip="${esc(G[g] || "")}"><i class="gsw g-${esc(g)}"></i>${esc(human(g))} <span class="mono">${gt[g]}</span></button>`).join("")}</div>
     ${S.grade && G[S.grade] ? `<p class="gdesc"><b>${esc(human(S.grade))}</b> · ${esc(G[S.grade])}</p>` : ""}
@@ -2018,6 +2103,7 @@ function renderResults() {
     ${loose.length ? `<div class="lanehead">Other</div>${loose.map(k => paperCards(k, byPaper.get(k))).join("")}` : ""}
     ${shown.length ? "" : `<div class="empty">No result cards with this grade.</div>`}`;
   document.querySelectorAll("[data-grade]").forEach(b => b.onclick = () => { S.grade = b.dataset.grade || null; renderResults(); });
+  wireStart();
   const jump = g => { const t = document.getElementById("rp-" + g.dataset.rp); if (t) { t.scrollIntoView({behavior:"smooth", block:"start"}); const d = t.querySelector("details"); if (d) d.querySelector("summary")?.focus({preventScroll:true}); } };
   document.querySelectorAll(".st-col").forEach(g => { g.onclick = () => jump(g); g.onkeydown = e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); jump(g); } }; });
 }
@@ -2436,6 +2522,7 @@ function renderRecord(i) {
       <div style="min-width:0">
         <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap"><span class="kchip">${kicon(r.k)} ${esc(K[1])}</span>${card ? `<span class="gchip"><i class="gsw g-${esc(card.grade)}"></i>${esc(human(card.grade))}</span>` : ""}<span class="badge" data-tip="${esc(rv[2])}"><i style="background:${rv[1]}"></i>${esc(rv[0])}</span></div>
         <h1 class="rtitle">${esc(r.t)}</h1>
+        ${ucBlock(i)}
         ${quoteBlock(r)}
         ${r.set ? `<div class="setting"><b>Setting</b> · ${esc(r.set)}</div>` : ""}
         <p class="summary clamp c3">${esc(r.x)}</p>
@@ -4000,6 +4087,121 @@ function repStrip(i) {
     const parts = [same && `${same} find${same === 1 ? "s" : ""} the same`, opp && `${opp} find${opp === 1 ? "s" : ""} otherwise`, rest && `${rest} partly`].filter(Boolean);
     return `<a class="plink" href="#replications=${esc(id)}">Tested by ${plural(others.length, "other paper")}: ${parts.join(", ")} →</a>`;
   }).join("")}</div>`;
+}
+
+/* ---------- understanding cards: six short fields at the top of a key result's page ---------- */
+let UN = null;
+const UN_BY_R = {}, UN_MAPS = {};
+const UC_COL = ["var(--k0)", "var(--k1)", "var(--k2)", "var(--k6)"];
+const UC_REL = {SUPPORTS: ["sup", "supports"], UNDERMINES: ["und", "undermines"], BEARS_ON: ["bear", "bears on"]};
+const UC_ST = {AI_CHECKED: ["var(--agrees)", "Checked by two blind AI reviews"], AI_FLAGGED: ["var(--disputes)", "Flagged by the AI reviews"],
+               CANNOT_TELL: ["var(--k3)", "The AI reviews could not decide"], STALE: ["var(--related)", "Changed since its AI review"],
+               UNCHECKED: ["var(--related)", "Not reviewed yet"]};
+function bootUnder() {
+  UN = D.under && (D.under.cards || []).length ? D.under : null;
+  if (!UN) return;
+  UN.cards.forEach(c => { UN_BY_R[c.r] = c; });
+  if (CASE) {
+    const at = {}; CASE.nodes.forEach((n, k) => { at[n.id] = k; });
+    Object.entries(CASE.maps || {}).forEach(([nid, ms]) => ms.forEach(m => { if (m.r != null) (UN_MAPS[m.r] = UN_MAPS[m.r] || []).push({nid, rel: m.rel, w: m.w, k: at[nid] ?? 1e9}); }));
+    Object.values(UN_MAPS).forEach(ms => ms.sort((a, b) => a.k - b.k));
+  }
+}
+// where other work differs: the Lean audit's problems on the result's proof, and other papers that answer its question differently
+function ucCounter(i, c) {
+  const out = [];
+  if (DP) {
+    const ids = uniq((PNODE_BY_R[i] || []).flatMap(([paper, k]) => ((pgOf(paper) || {}).nodes || [])[+k]?.problems || []));
+    if (c.lean) { const lp = (DP.lean || []).find(x => x.project === c.lean.project), n = lp && lp.nodes.find(x => x.id === c.lean.node); (n?.problems || []).forEach(id => { if (!ids.includes(id)) ids.push(id); }); }
+    const sevRank = s => { const k = SEV_ORDER.indexOf(s); return k < 0 ? 9 : k; };
+    ids.filter(id => DP.problems[id]).sort((a, b) => sevRank(DP.problems[a].sev) - sevRank(DP.problems[b].sev)).slice(0, 2).forEach(id => {
+      const q = DP.problems[id], pn = (PNODE_BY_R[i] || [])[0];
+      out.push(`<div class="ucx"><b>The Lean audit found ${esc(art(String(q.sev || "problem")).toLowerCase())} ${esc(q.sev || "problem")} in the proof.</b> ${esc(q.what)} ${pn ? `<a href="#proofs=${esc(pn[0])}&n=${encodeURIComponent((pgOf(pn[0]).nodes[+pn[1]] || {}).label || "")}">See in Proofs →</a>` : c.lean ? `<a href="#proofs=lean:${esc(c.lean.project)}">See in Proofs →</a>` : ""}</div>`);
+    });
+  }
+  if (RP && REP_BY_R[i]) {
+    REP_BY_R[i].forEach(id => {
+      const q = RQ[id], mine = q.rows.find(r => r.r === i);
+      q.rows.filter(r => R[r.r].p !== R[i].p && r.a !== mine.a).slice(0, 2).forEach(o => {
+        out.push(`<div class="ucx"><b>${esc(o.label)} answers ${esc(ANS[o.a][0].toLowerCase())}</b> where this paper answers ${esc(ANS[mine.a][0].toLowerCase())}, on “${esc(q.q)}”: ${esc(o.f)}${o.set.length ? ` <span class="muted">(${esc(o.set.map(s => s.t).join(", "))})</span>` : ""}. <a href="#replications=${esc(id)}">Compare on Replications →</a></div>`);
+      });
+    });
+  }
+  return out.length ? out.slice(0, 3).join("") : `<div class="ucx none">No counterexample in the atlas yet: no Lean audit problem on its proof and no other paper that answers its question differently.</div>`;
+}
+function ucChart(ch) {
+  const pos = v => Math.max(0, Math.min(100, (v - ch.min) / (ch.max - ch.min) * 100));
+  const rows = ch.rows.map(row => {
+    const vs = row.v.slice().sort((a, b) => a.v - b.v);
+    let last = -1e9, lo = false;
+    const dots = vs.map(v => { const x = pos(v.v); lo = x - last < 9 ? !lo : false; last = x; return {...v, x, lo}; });
+    return `<span>${esc(row.label)}</span><div class="usc" role="img" aria-label="${esc(row.label)}: ${esc(row.v.map(v => `${ch.series[v.s]} ${v.v}`).join(", "))}">${dots.map(v => `<i style="left:${v.x.toFixed(1)}%;background:${UC_COL[v.s]}" data-tip="${esc(row.label)}, ${esc(ch.series[v.s])}: ${esc(v.v)} (${esc(ch.unit)})"></i><em class="${v.lo ? "lo" : ""}" style="left:${v.x.toFixed(1)}%">${esc(v.v)}</em>`).join("")}<span class="ue">${esc(ch.min)}</span><span class="ue r">${esc(ch.max)}</span></div>`;
+  }).join("");
+  return `<div class="ucht"><div class="ucrow">${rows}</div><div class="ulgd">${ch.series.map((s, k) => `<span><i style="background:${UC_COL[k]}"></i>${esc(s)}</span>`).join("")}<span class="m">${esc(ch.unit)}, scale ${esc(ch.min)} to ${esc(ch.max)}</span></div></div>`;
+}
+function ucWords(c, p) {
+  const src = e => e.f ? `<span class="src">${esc(e.f)}</span>` : e.pg != null ? `<span class="src"><a href="${esc(p.pdf)}#page=${e.pg}" target="_blank" rel="noopener">p. ${e.pg}, lines ${e.a}–${e.b}</a></span>` : `<span class="src">the quote above</span>`;
+  const list = ev => ev.map(e => `<span><q>${esc(e.ph)}</q>${src(e)}</span>`).join("");
+  const rows = [["Why it matters", c.why.ev], ["What it says", c.plain.ev], ...(c.chart ? [["Chart", uniqBy(c.chart.rows.flatMap(r => r.v.map(v => v.ev)), e => e.ph + "|" + (e.pg ?? ""))]] : []),
+                ["The key idea", c.idea.ev], ...(c.marks.length ? [["Needs most", c.marks.flatMap(m => m.ev)]] : []), ["Shown for", c.shown.ev], ["Not shown", c.not_shown.ev]];
+  return `<details class="uwords"><summary>The exact words behind each line</summary><dl>${rows.map(([k, ev]) => `<dt>${esc(k)}</dt><dd>${list(ev)}</dd>`).join("")}</dl></details>`;
+}
+const uniqBy = (xs, f) => { const seen = new Set(); return xs.filter(x => { const k = f(x); if (seen.has(k)) return false; seen.add(k); return true; }); };
+function ucBlock(i) {
+  const c = UN && UN_BY_R[i]; if (!c) return "";
+  const r = R[i], p = P[r.p], card = CARD_BY_R[i], st = UC_ST[c.st] || UC_ST.UNCHECKED;
+  const ai = `<span class="uai">AI draft</span>`;
+  const maps = UN_MAPS[i] || [];
+  const oq = c.open && c.open.q ? QBY[c.open.q] : null, orec = c.open && c.open.r != null ? R[c.open.r] : null;
+  const steps = maps.map(m => { const [cls, word] = UC_REL[m.rel] || ["bear", human(m.rel)], lab = (CN[m.nid] || {}).label || m.nid;
+    const inner = `<i></i>${esc(lab)} <small>${esc(word)}${m.w ? " · " + esc(m.w) : ""}</small>`;
+    return STEP[m.nid] ? `<a class="ust ${cls}" href="#step=${esc(m.nid)}">${inner}</a>` : `<span class="ust ${cls}">${inner}</span>`; }).join("");
+  const hyp = card ? card.hyp : [], marked = new Set(c.marks.map(m => m.h));
+  const rest = hyp.length - marked.size;
+  return `<section class="uc" aria-label="Understanding card">
+    <div class="uch"><b>Understand this result</b><span><i style="background:${st[0]}"></i>${esc(st[1])} · lines marked AI draft are not reviewed by a person</span></div>
+    <div class="ur"><div class="un">1</div><div class="ux"><div class="ut">Why it matters</div>
+      ${steps ? `<div class="usteps">${steps}</div>` : ""}<p>${esc(c.why.l)}${ai}</p>
+      ${oq ? `<span class="urank">Its open question <a href="#q${oq.id.slice(1)}">ranks ${oq.rank} of ${GQ.length} on Gaps →</a></span>` : ""}</div></div>
+    <div class="ur"><div class="un">2</div><div class="ux"><div class="ut">What it says</div>
+      <p class="plain">${esc(c.plain.l)}${ai}</p>
+      ${c.chart ? ucChart(c.chart) : ""}
+      ${c.lean ? `<a class="ulean" href="#proofs=lean:${esc(c.lean.project)}">✓ Restated in Lean: <code>${esc(c.lean.node)}</code></a>` : ""}</div></div>
+    <div class="ur"><div class="un">3</div><div class="ux"><div class="ut">The key idea</div><p>${esc(c.idea.l)}${ai}</p></div></div>
+    <div class="ur"><div class="un">4</div><div class="ux"><div class="ut">Assumptions that matter</div>
+      ${card && card.hcheck ? `<p class="umore">${plural(hyp.length, "stated hypothesis", "stated hypotheses")}, listed below; the list has not passed its checks, so none is marked.</p>` :
+        marked.size ? `<div class="uhs">${c.marks.map(m => `<div class="uh key"><b>Needs most, in the paper's own words</b>${esc(hyp[m.h - 1] || "")}</div>`).join("")}</div>${rest ? `<p class="umore" style="margin-top:6px">and ${plural(rest, "more stated hypothesis", "more stated hypotheses")} in the result card below</p>` : ""}` :
+        hyp.length ? `<p class="umore">${plural(hyp.length, "stated hypothesis", "stated hypotheses")}, listed in the result card below. The paper does not single one out.</p>` : `<p class="umore">The paper states no hypotheses for it.</p>`}
+      ${ucCounter(i, c)}</div></div>
+    <div class="ur"><div class="un">5</div><div class="ux"><div class="ut">What it lets us conclude about an AI system</div>
+      <div class="utwo"><div class="y"><b>Shown for</b>${esc(c.shown.l)}${ai}</div><div class="n"><b>Not shown</b>${esc(c.not_shown.l)}${ai}</div></div></div></div>
+    <div class="ur"><div class="un">6</div><div class="ux"><div class="ut">What remains open</div>
+      ${oq ? `<div class="uopen"><a href="#q${oq.id.slice(1)}">${esc(oq.question)} →</a><span class="rem">${esc(oq.remaining_question || "")}</span></div>` :
+        orec ? `<div class="uopen">The paper's own open question: <a href="#r${c.open.r}">${esc(orec.t)} →</a></div>` :
+        `<div class="uopen muted">No open question in the atlas is tied to this result yet.</div>`}</div></div>
+    ${ucWords(c, p)}
+  </section>`;
+}
+// Results: every card, in the order of the safety case's argument, then each paper's headline result by topic
+function ucStart() {
+  if (!UN) return "";
+  const lead = UN.cards.filter(c => UN_MAPS[c.r]).sort((a, b) => UN_MAPS[a.r][0].k - UN_MAPS[b.r][0].k || a.r - b.r);
+  const head = UN.cards.filter(c => !UN_MAPS[c.r]).sort((a, b) => (P[R[a.r].p].lane ?? 99) - (P[R[b.r].p].lane ?? 99) || pdate(R[a.r].p) - pdate(R[b.r].p) || a.r - b.r);
+  const tile = c => { const m = (UN_MAPS[c.r] || [])[0], lab = m ? (CN[m.nid] || {}).label || m.nid : LANE_SHORT[P[R[c.r].p].lane] || "";
+    return `<a class="ucs" href="#r${c.r}"><span class="p"><i style="background:${m ? `var(--ev-sup)` : `var(--related)`}"></i>${esc(P[R[c.r].p].short)} · ${esc(lab)}</span><span class="t">${esc(c.plain.l)}</span></a>`; };
+  const group = (id, title, cs) => cs.length ? `<div class="usg"><div class="mlab">${esc(title)} · ${cs.length}</div><div class="uslist" id="${id}">${cs.map((c, k) => k < 6 ? tile(c) : tile(c).replace('<a class="ucs"', '<a class="ucs" hidden')).join("")}</div></div>` : "";
+  const ok = UN.cards.filter(c => c.st === "AI_CHECKED").length;
+  return `<section class="ucstart" id="start">
+    <div class="ush"><b>Start here: ${UN.cards.length} key results in plain words</b><span>${ok === UN.cards.length ? "every card checked by two blind AI reviews" : `${ok} of ${UN.cards.length} cards checked by two blind AI reviews`}; AI draft, not reviewed by a person</span></div>
+    <p>Each opens on a short card: why it matters, what it says, the key idea, the assumptions that matter, what it lets us conclude about an AI system, and what remains open.</p>
+    ${group("us-lead", "What the debate safety case leans on, in the order of its argument", lead)}
+    ${group("us-head", "Each paper's headline result", head)}
+    ${lead.length + head.length > 12 ? `<button type="button" class="btn usmore" id="usmore">Show all ${UN.cards.length}</button>` : ""}
+  </section>`;
+}
+function wireStart() {
+  const b = $("#usmore"); if (!b) return;
+  b.onclick = () => { document.querySelectorAll(".ucs[hidden]").forEach(a => { a.hidden = false; }); b.remove(); };
 }
 
 /* ---------- cross-links: the families a result uses, its place in a proof graph; the families that name a step ---------- */

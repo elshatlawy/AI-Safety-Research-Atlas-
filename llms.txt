@@ -56,6 +56,10 @@ Recipes:
 
 - [replications.json](https://elshatlawy.github.io/AI-Safety-Research-Atlas-/replications.json): 41 questions that several debate and scalable-oversight papers test, one row per paper with its answer, finding and setting, each citing the exact words (the page's Replications tab). Of the 224 results and main claims, 23 hold in every other paper on their question, 8 conflict, 66 are mixed and 127 are tested once. AI-drafted; every entry passed two blind AI checks; no person has reviewed them. Before citing a result, check its status and the differences between settings.
 
+## Understanding cards
+
+- [understanding.json](https://elshatlawy.github.io/AI-Safety-Research-Atlas-/understanding.json): 86 key results explained in plain words (the top of each result's page): why it matters, what it says, the key idea, what it was shown for and what it does not show, each line citing the exact words it rests on. AI-drafted; every card passed two blind AI checks; no person has reviewed them. Cite the paper's own words, not the card's.
+
 ## Humans
 
 The visual atlas is at the site root, https://elshatlawy.github.io/AI-Safety-Research-Atlas-/. Every record is a dot in the record graph at https://elshatlawy.github.io/AI-Safety-Research-Atlas-/#graph (a card's human_url opens one record there). Corrections and new sources go to the research repository through its maintainer.
