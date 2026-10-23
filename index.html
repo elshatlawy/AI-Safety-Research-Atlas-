@@ -236,7 +236,7 @@ section{margin-top:44px}
 .gtitle{font-family:"Source Serif 4",Georgia,serif;font-weight:600;font-size:clamp(26px,3.4vw,38px);line-height:1.1;letter-spacing:-.02em;margin-top:8px}
 .ghead .lede{color:var(--ink2);font-size:16px;max-width:62ch;margin:10px 0 0}
 .gapwrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,380px);gap:28px;align-items:start}
-@media (max-width:1079px){.gapwrap{grid-template-columns:1fr;gap:20px}}
+@media (max-width:1079px){.gapwrap{grid-template-columns:minmax(0,1fr);gap:20px}}
 .casepanel{position:sticky;top:76px;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px 18px 14px;max-height:calc(100vh - 92px);overflow:auto}
 @media (max-width:1079px){.casepanel{position:static;max-height:none;scroll-margin-top:110px}}
 .cph{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
@@ -607,6 +607,25 @@ mark{background:var(--mark);color:inherit;border-radius:3px;padding:0 1px}
 .tree .tn.sel .ring{display:inline;stroke:var(--ink);stroke-width:2.4}
 .tree.lit .tn:not(.on):not(.sel){opacity:.22}
 .tree.lit .kc{opacity:.45}
+.tree .fr{fill:none;display:none}
+.tree .tn.fw .fr{display:inline;stroke:var(--disputes);stroke-width:1.6;stroke-dasharray:3 2.3}
+.tree .tn.fok .fr{display:inline;stroke:var(--agrees);stroke-width:2}
+.tree .tn.fsup .fr{display:inline;stroke:var(--agrees);stroke-width:1.6;stroke-dasharray:3 2.3}
+.tree .tn.frise .fr{display:inline;stroke:var(--agrees);stroke-width:2.6}
+.tree .tn.fstop .fr{display:inline;stroke:var(--ink);stroke-width:2;stroke-dasharray:1.5 2.5}
+.tree .edge.climb{stroke:var(--agrees);stroke-width:2.4}
+.tree .fstopt{font:600 10.5px "JetBrains Mono",ui-monospace,monospace;fill:var(--ink);paint-order:stroke;stroke:var(--surface);stroke-width:3px;stroke-linejoin:round}
+.flowbox{border:1px solid var(--line2);border-radius:12px;padding:10px 12px;display:grid;grid-template-columns:minmax(0,1fr);gap:9px;font-size:13.5px;color:var(--ink2);margin-top:4px}
+.flowbox b{color:var(--ink)} .flowbox p{margin:0}
+.flk{display:block;font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:5px}
+.fchips{display:flex;flex-wrap:wrap;gap:6px}
+.fchips .chip{padding:2px 9px;font-size:12px;gap:5px;max-width:100%;min-width:0;text-decoration:none}
+.fchips .chip span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.fchips .chip.w{border-color:var(--disputes);border-style:dashed}
+.supbtn{justify-self:start;border:1px solid var(--agrees);color:var(--ink);background:color-mix(in srgb,var(--agrees) 12%,var(--surface));border-radius:999px;padding:5px 12px;font:inherit;font-size:13px;font-weight:600;cursor:pointer}
+.supbtn:hover{background:color-mix(in srgb,var(--agrees) 22%,var(--surface))}
+.supbtn.back{border-color:var(--line2);background:transparent}
+.flown{margin:2px 0 0;font-size:13px;color:var(--muted)}
 .evn{fill:var(--surface);stroke:var(--muted);stroke-width:1.4;stroke-dasharray:2.4 2}
 .evw{fill:var(--ev-weak);stroke:var(--ev-weak)} .evs{fill:var(--ev-sup);stroke:var(--ev-sup)} .evc{fill:var(--ev-con);stroke:var(--ev-con)}
 .gk{fill:var(--line2);stroke:var(--ink2);stroke-width:1.1}
@@ -1302,7 +1321,7 @@ const LG_VAR = {"Proved":"--lg-proved","Paper problem":"--lg-problem","Derived":
 
 let D, P, R, L, GQ, QBY, STEPS, STEP, BRANCHES, LG, CD, CARD_BY_R, ARX, ADJ, PREC, CASE = null, PAIRS = [], POOLED_E = null, lastStep;
 const CN = {}, CKIDS = new Map();
-const S = {dcon:null, dcell:[0, 0], fams:new Set(FAMS.map(f => f[0])), leads:false, pbase:"papers", kq:null, sk:null, step:null, gstatus:null, grade:null, openQ:null, back:"gaps", hops:1, lgoff:new Set(), focusStep:null, fam:null, focusFam:null, famPaper:null, bfam:null, ppaper:null, prob:null, pnode:null, lproj:null, lsel:null, lprob:null, flow:null};
+const S = {dcon:null, dcell:[0, 0], fams:new Set(FAMS.map(f => f[0])), leads:false, pbase:"papers", kq:null, sk:null, step:null, gstatus:null, grade:null, openQ:null, back:"gaps", hops:1, lgoff:new Set(), focusStep:null, fam:null, focusFam:null, famPaper:null, bfam:null, ppaper:null, prob:null, pnode:null, lproj:null, lsel:null, lprob:null, flow:null, suppose:null};
 const $ = (s, r = document) => r.querySelector(s);
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const fmt = n => n.toLocaleString("en-US");
@@ -1349,7 +1368,7 @@ const statusSVG = (st, s) => fracSVG(STATUS_FILL[st] ?? 0, s);
 
 async function boot() {
   try {
-    const res = await fetch("data.json?v=f2f11ec1d3c4");
+    const res = await fetch("data.json?v=c0bc4913e1f5");
     if (!res.ok) throw new Error(res.status);
     D = await res.json();
   } catch (e) {
@@ -1464,6 +1483,7 @@ function renderGaps() {
   if (S.gstatus && !tally[S.gstatus]) S.gstatus = null;
   const box = $("#treebox"), keep = box ? [box.scrollLeft, box.scrollTop] : null;
   const changed = S.step !== lastStep; lastStep = S.step;
+  if (changed) S.suppose = null;
   const hasStep = S.step && (CN[S.step] || STEP[S.step]);
   $("#app").innerHTML = `
     <div class="ghead">
@@ -1535,6 +1555,122 @@ function nodeShort(n) {
 }
 const isKeyClaim = n => /\(Key claim \d+\)/.test(n.pl || "");
 const stepQs = id => (STEP[id] ? STEP[id].qs : GQ.filter(q => q.steps.includes(id)));
+
+/* ---------- support flows up the safety case ----------
+   The rule is visual_data.py's FLOW_RULE (D.case.flow_rule); the build stores each step's result as st and wait.
+   This copy of the rule runs the what-if: steps supposed supported count as supported, nothing is saved. */
+const NOTE_KIND = {open_problem: 1, evidence_needed: 1};
+function caseParts(id) {
+  const ks = CKIDS.get(id) || [];
+  return [ks.filter(k => CN[k].kind === "claim" || CN[k].kind === "top_claim"), ks.filter(k => CN[k].kind === "assumption"), ks.filter(k => CN[k].kind === "defeater")];
+}
+/* a step's own checked evidence; a threat's SUPPORTS mapping is evidence that the failure happens */
+function ownStands(n) {
+  const ms = (CASE.maps || {})[n.id] || [];
+  if (n.kind !== "defeater") return n.ev === "SUPPORTED";
+  const good = ms.filter(m => m.rel === "UNDERMINES");
+  return !ms.some(m => m.rel === "SUPPORTS") && (good.some(m => m.w === "strong") || good.filter(m => m.w === "moderate").length >= 2);
+}
+function flowState(sup) {
+  const st = {};
+  const go = id => {
+    if (!(id in st)) {
+      const [subs, asms, threats] = caseParts(id);
+      const below = subs.length > 0 && [...subs, ...asms].map(go).every(Boolean);
+      st[id] = !!(sup && sup.has(id)) || ((ownStands(CN[id]) || below) && threats.map(go).every(Boolean));
+    }
+    return st[id];
+  };
+  CASE.nodes.forEach(n => go(n.id));
+  return st;
+}
+/* the steps at the bottom that a step still waits on: claims that need their own evidence, threats not ruled out */
+function flowBottom(id, st, sup) {
+  const n = CN[id];
+  if (st[id] || NOTE_KIND[n.kind]) return [];
+  const [subs, asms, threats] = caseParts(id);
+  const mine = (sup && sup.has(id)) || ownStands(n) ? [] : subs.length ? [...subs, ...asms].flatMap(k => flowBottom(k, st, sup)) : [id];
+  return [...mine, ...threats.flatMap(k => flowBottom(k, st, sup))];
+}
+let FLOW0 = null;
+function flowBase() {
+  if (!FLOW0) {
+    FLOW0 = flowState(null);
+    const off = CASE.nodes.filter(n => n.st != null && !!n.st !== FLOW0[n.id]);
+    if (off.length) console.error("Support flow differs from the build's for " + off.map(n => n.id).join(", "));
+  }
+  return FLOW0;
+}
+/* how far support climbs from a step if `sup` were supported: the steps that would rise, and the first step above that would not */
+function flowClimb(id, sup) {
+  const st0 = flowBase(), st = sup.size ? flowState(sup) : st0;
+  const depth = k => { let d = 0; for (let x = CN[k].parent; x; x = CN[x].parent) d++; return d; };
+  const rise = CASE.nodes.filter(n => st[n.id] && !st0[n.id] && !sup.has(n.id)).map(n => n.id).sort((a, b) => depth(b) - depth(a));   // lowest first
+  let stop = id;
+  while (stop && st[stop]) stop = CN[stop].parent;
+  const left = stop ? caseParts(stop).flat().filter(k => !st[k]) : [];
+  const [subs] = stop ? caseParts(stop) : [[]];
+  return {st, rise, stop, left, own: !!stop && !subs.length && !ownStands(CN[stop]) && !sup.has(stop)};
+}
+const stepB = id => `<b class="mono">${esc(nodeShort(CN[id]))}</b>`;
+function climbText(c, real) {
+  const still = [c.own ? "still needs its own evidence" : "", c.left.length ? `still waits on ${andList(c.left.map(stepB))}` : ""].filter(Boolean).join(" and ");
+  if (!c.stop) return real ? "Its support reaches the top claim." : `Support would climb ${c.rise.length ? `through ${andList(c.rise.map(stepB))} ` : ""}all the way to the top claim.`;
+  const at = `${stepB(c.stop)}, which ${still || "still waits on its own evidence"}.`;
+  if (real) return `Its support reaches ${at}`;
+  return c.rise.length ? `Support would climb through ${andList(c.rise.map(stepB))}, then stop at ${at}` : `Support would stop at ${at}`;
+}
+function flowChip(id, cls) {
+  const n = CN[id];
+  return `<a class="chip${cls ? " " + cls : ""}" href="#step=${esc(id.toLowerCase())}" data-pop="step:${esc(id)}">${glyphSVG(n, 13)}<b class="mono">${esc(nodeShort(n))}</b><span>${esc(n.label)}</span></a>`;
+}
+function flowBox(n) {
+  if (NOTE_KIND[n.kind]) return `<div class="mlab">How support flows</div><p class="flown">A note on the step above, not a step the argument rests on: it holds nothing back.</p>`;
+  const st0 = flowBase(), threat = n.kind === "defeater", verb = threat ? "ruled out" : "supported";
+  const sp = S.suppose && S.suppose.for === n.id ? S.suppose.set : null;
+  if (sp) {
+    const c = flowClimb(n.id, sp), ids = [...sp], nt = ids.filter(k => CN[k].kind === "defeater").length, nc = ids.length - nt;
+    const what = ids.length === 1 ? `If ${stepB(ids[0])} were ${CN[ids[0]].kind === "defeater" ? "ruled out" : "supported"}`
+      : `If these ${ids.length} steps were settled</b> (${[nc ? `${plural(nc, "step")} proved or measured` : "", nt ? `${plural(nt, "threat")} ruled out` : ""].filter(Boolean).join(", ")})<b>`;
+    return `<div class="mlab">Suppose · not real evidence</div><div class="flowbox">
+      <p><b>${what}</b>, ${climbText(c, false).replace(/^S/, "s")}</p>
+      ${c.rise.length ? `<div><span class="flk">Would rise</span><div class="fchips">${c.rise.map(k => flowChip(k)).join("")}</div></div>` : ""}
+      <button class="supbtn back" type="button" data-suppose="">Back to the evidence as it is</button></div>`;
+  }
+  const [subs, asms, threats] = caseParts(n.id);
+  let head;
+  if (st0[n.id]) head = `<b>Supported.</b> ${ownStands(n) ? (threat ? "Evidence shows this failure does not happen." : `Its own evidence supports it${threats.length ? ", and every threat under it is ruled out" : ""}.`) : "Every step it rests on is supported, and every threat under it is ruled out."}`;
+  else if (threat) head = `<b>Not ruled out yet.</b> A threat is ruled out once evidence shows the failure does not happen: one strong or two moderate results against it, and none for it.`;
+  else if (subs.length) {
+    const ok = subs.filter(k => st0[k]).length;
+    head = `<b>Not yet.</b> It counts as supported once every sub-claim${asms.length ? " and assumption" : ""} under it is${threats.length ? " and every threat under it is ruled out" : ""}. ${ok ? `${ok} of its ${subs.length} sub-claims ${ok === 1 ? "is" : "are"} supported already.` : subs.length === 1 ? "Its one sub-claim is not supported yet." : `None of its ${subs.length} sub-claims is supported yet.`}`;
+  } else head = `<b>Not yet.</b> It has no sub-claims, so it needs its own evidence: a proof or a measurement${threats.length ? ", and every threat under it ruled out" : ""}.`;
+  const bot = flowBottom(n.id, st0, null), only = bot.length === 1 && bot[0] === n.id;
+  const waits = bot.length && !only ? `<div><span class="flk">Still waiting on ${plural(bot.length, "step")} at the bottom</span><div class="fchips">${bot.map(k => flowChip(k, "w")).join("")}</div></div>` : "";
+  const climb = !n.parent ? "" : st0[n.id] ? `<p>${climbText(flowClimb(n.id, new Set()), true)}</p>`
+    : `<div><span class="flk">If it were ${verb}</span><p>${climbText(flowClimb(n.id, new Set([n.id])), false)}</p></div>`;
+  const btn = st0[n.id] ? "" : `<button class="supbtn" type="button" data-suppose="${esc(n.id)}">${bot.length > 1 ? `Suppose these ${bot.length} are settled` : `Suppose it is ${verb}`}</button>`;
+  return `<div class="mlab">How support flows</div><div class="flowbox"><p>${head}</p>${waits}${climb}${btn}</div>`;
+}
+/* the tree's flow marks for the selected step: what it waits on, or, while supposing, what rises and where it stops */
+function flowMarks() {
+  const id = S.step, st0 = flowBase(), mk = {}, edges = new Set();
+  if (!id || !CN[id] || NOTE_KIND[CN[id].kind]) return {mk, edges, stop: null};
+  const sp = S.suppose && S.suppose.for === id ? S.suppose.set : null;
+  if (!sp) {
+    const bot = flowBottom(id, st0, null);
+    if (!(bot.length === 1 && bot[0] === id)) bot.forEach(k => { mk[k] = "fw"; });
+    const under = k => (CKIDS.get(k) || []).forEach(c => { if (!NOTE_KIND[CN[c].kind]) { if (st0[c]) mk[c] = "fok"; under(c); } });
+    under(id);
+    return {mk, edges, stop: null};
+  }
+  const c = flowClimb(id, sp);
+  sp.forEach(k => { mk[k] = "fsup"; });
+  c.rise.forEach(k => { mk[k] = "frise"; });
+  if (c.stop) mk[c.stop] = "fstop";
+  CASE.nodes.forEach(n => { if (n.parent && c.st[n.id] && !NOTE_KIND[n.kind] && (mk[n.parent] === "frise" || (n.parent === c.stop && (n.id === id || mk[n.id] === "frise")))) edges.add(n.id); });
+  return {mk, edges, stop: c.stop};
+}
 /* the glyph: shape by the step's kind, fill by its evidence label (NONE is a dashed outline) */
 function glyph(n, x, y, s = 1, cls) {
   const c = cls || EVC[n.ev] || "evn", k = n.kind;
@@ -1582,21 +1718,25 @@ function treeSVG() {
   const DX = 88, ROW = 22, L = caseLayout(DX, ROW, 20, 18, true);
   const lw = t => t.length * 6.6;
   const path = new Set(); for (let id = S.step; id && CN[id]; id = CN[id].parent) path.add(id);
+  const FM = flowMarks(), st0 = flowBase();
   let W = 0;
-  const edges = [], hot = [], marks = [], caps = [];
+  const edges = [], hot = [], marks = [], caps = [], flows = [];
   CASE.nodes.forEach(n => {
     const {x, y} = L.pos[n.id], lab = nodeShort(n), q = stepQs(n.id).length;
     if (n.parent && L.pos[n.parent]) {
       const pp = L.pos[n.parent], pq = stepQs(n.parent).length;
       const mx = pp.x + DX - 22, sx = Math.min(pp.x + 12 + lw(nodeShort(CN[n.parent])) + (pq ? 21 : 4), mx - 4);
-      (path.has(n.id) ? hot : edges).push(`<path class="edge${path.has(n.id) ? " on" : ""}" d="M${f1(sx)} ${f1(pp.y)}H${f1(mx)}V${f1(y)}H${f1(x - 11)}"/>`);
+      const climb = FM.edges.has(n.id);
+      (climb ? flows : path.has(n.id) ? hot : edges).push(`<path class="edge${climb ? " climb" : path.has(n.id) ? " on" : ""}" d="M${f1(sx)} ${f1(pp.y)}H${f1(mx)}V${f1(y)}H${f1(x - 11)}"/>`);
     }
     const tw = lw(lab), bx = x + 12 + tw + 9, right = q ? bx + 8 : x + 12 + tw;
     W = Math.max(W, right);
-    const aria = `${n.pl || NKIND[n.kind] || n.kind}: ${n.label}. Evidence: ${human(n.ev).toLowerCase()}. ${plural(q, "open question")}.`;
-    marks.push(`<g class="tn" data-step="${esc(n.id)}" data-pop="step:${esc(n.id)}" tabindex="0" role="button" aria-pressed="${S.step === n.id}" aria-label="${esc(aria)}">
+    const fm = FM.mk[n.id] || "", fill = fm === "fsup" || fm === "frise" || (st0[n.id] && !ownStands(n) && !NOTE_KIND[n.kind]) ? "evs" : null;
+    const aria = `${n.pl || NKIND[n.kind] || n.kind}: ${n.label}. Evidence: ${human(n.ev).toLowerCase()}.${st0[n.id] && !ownStands(n) ? " Supported from below." : ""} ${plural(q, "open question")}.`;
+    if (fm === "fstop") caps.push(`<text class="fstopt" x="${f1(x - 12)}" y="${f1(y - 15)}">stops here</text>`);
+    marks.push(`<g class="tn${fm ? " " + fm : ""}" data-step="${esc(n.id)}" data-pop="step:${esc(n.id)}" tabindex="0" role="button" aria-pressed="${S.step === n.id}" aria-label="${esc(aria)}">
       <rect class="hz" x="${f1(x - 13)}" y="${f1(y - ROW / 2 + 1)}" width="${f1(right - x + 18)}" height="${ROW - 2}" rx="6"/>
-      <circle class="ring" cx="${f1(x)}" cy="${f1(y)}" r="11.5"/>${glyph(n, x, y)}
+      <circle class="ring" cx="${f1(x)}" cy="${f1(y)}" r="11.5"/><circle class="fr" cx="${f1(x)}" cy="${f1(y)}" r="13"/>${glyph(n, x, y, 1, fill)}
       <text class="nid" x="${f1(x + 12)}" y="${f1(y + 3.8)}">${esc(lab)}</text>${q ? `<circle class="qb" cx="${f1(bx)}" cy="${f1(y)}" r="7.5"/><text class="qn" x="${f1(bx)}" y="${f1(y + 3.3)}" text-anchor="middle">${q}</text>` : ""}</g>`);
   });
   Object.entries(L.capy).forEach(([id, cy]) => {
@@ -1606,7 +1746,7 @@ function treeSVG() {
   });
   const Wt = Math.ceil(W + 12), Ht = Math.ceil(L.H);
   return `<svg class="tree" id="tree" width="${Wt}" height="${Ht}" viewBox="0 0 ${Wt} ${Ht}" role="group" aria-label="The debate safety case as an argument tree, ${CASE.nodes.length} steps from the top claim on the left; select a step to see its quotes and records">
-    <g>${edges.join("")}</g><g>${hot.join("")}</g>${caps.join("")}${marks.join("")}</svg>`;
+    <g>${edges.join("")}</g><g>${hot.join("")}</g><g>${flows.join("")}</g>${caps.join("")}${marks.join("")}</svg>`;
 }
 /* compact step tree for the question sheet: the question's steps ringed, the rest faded */
 function miniTreeSVG(on) {
@@ -1636,11 +1776,12 @@ function stepPanel() {
       <div class="spm"><span class="evk"><i class="sn ${evCls(n.ev)}"></i>Evidence: ${esc(human(n.ev).toLowerCase())}</span><span class="mono muted" style="font-size:11.5px">${esc(n.id)}</span></div></div>
       <a class="x2" href="#gaps" aria-label="Clear the selected step">×</a></div>
     <div class="spq"><span class="bn">${qs.length}</span><span>${qs.length === 1 ? "open question" : "open questions"}</span>${qs.map(q => `<a class="chip" href="#q${q.id.slice(1)}" data-pop="q:${esc(q.id)}">#${q.rank} ${esc(q.id)}</a>`).join("")}</div>
+    ${flowBox(n)}
     ${stepFams(n.id)}
     ${pooled ? `<div class="mlab">Debate vs baseline · ${plural(PAIRS.length, "comparison")}</div>${pooledFigure()}` : ""}
     <div class="mlab">The paper's words · ${plural(n.passages.length, "passage")}</div>
     ${n.passages.map(p => casePassage(p, pdf)).join("")}
-    <div class="mlab">Records mapped to it · ${maps.length}</div>
+    <div class="mlab">${maps.some(m => m.q) ? "Records and proofs" : "Records"} mapped to it · ${maps.length}</div>
     ${maps.length ? `<div class="mapsq" aria-hidden="true">${groups.map(g => g[2].map(() => `<i style="--c:var(--${g[1]})"></i>`).join("")).join("")}</div>
       ${groups.map(([lab, fam, ms]) => `<div class="mgh" style="--c:var(--${fam})"><i></i>${esc(lab)} <b>${ms.length}</b></div>${ms.map(m => mapRow(m, fam)).join("")}`).join("")}`
     : `<p class="muted" style="margin:4px 0 0;font-size:13px">No checked record maps to this step.</p>`}`;
@@ -1650,9 +1791,10 @@ function casePassage(p, pdf) {
   return `<figure class="quote sm"><div class="qh"><span>Exact words · page ${esc(p.pg)}${ln}</span><a href="${esc(pdf)}#page=${esc(p.pg)}" target="_blank" rel="noopener">Page ${esc(p.pg)} ↗</a></div><p class="qtx clamp">${esc(flow(p.text))}</p></figure>`;
 }
 function mapRow(m, fam) {
-  const r = m.r != null ? R[m.r] : null;
-  return `<details class="mr" style="--c:var(--${fam})"><summary${r ? ` data-pop="rec:${m.r}"` : ""}><span class="bar"></span><span class="mt">${esc(r ? r.t : m.id)}</span><span class="mp">${r ? esc(P[r.p].tag) : ""}${m.w ? ` · ${esc(m.w)}` : ""}</span></summary>
-    <div class="mrb">${m.why ? `<p>${esc(m.why)}</p>` : ""}${m.gap ? `<p class="muted"><b>Setting gap</b> · ${esc(m.gap)}</p>` : ""}${r ? `<a href="#r${m.r}">Open the record →</a>` : ""}</div></details>`;
+  const r = m.r != null ? R[m.r] : null, q = !r && m.q ? QBY[m.q] : null;
+  const title = r ? r.t : q ? `Lean proof · ${q.question}` : m.id;
+  return `<details class="mr" style="--c:var(--${fam})"><summary${r ? ` data-pop="rec:${m.r}"` : q ? ` data-pop="q:${esc(q.id)}"` : ""}><span class="bar"></span><span class="mt">${q ? kicon("lean", 12) + " " : ""}${esc(title)}</span><span class="mp">${r ? esc(P[r.p].tag) : q ? "Lean" : ""}${m.w ? ` · ${esc(m.w)}` : ""}</span></summary>
+    <div class="mrb">${m.why ? `<p>${esc(m.why)}</p>` : ""}${m.gap ? `<p class="muted"><b>Setting gap</b> · ${esc(m.gap)}</p>` : ""}${r ? `<a href="#r${m.r}">Open the record →</a>` : q ? `<a href="#q${q.id.slice(1)}">Open the question and its proof →</a>` : ""}</div></details>`;
 }
 function miniNode(id) {
   const n = CN[id], s = STEP[id];
@@ -1681,10 +1823,20 @@ function rankRule() {
   if (rr.indirect_link_factor != null) rows.push(["Indirect link", `× ${esc(rr.indirect_link_factor)}`]);
   if (rr.tie_break) rows.push(["Ties", esc(rr.tie_break)]);
   if (rr.node_label) rows.push(["Step evidence", esc(rr.node_label)]);
+  if (CASE && CASE.flow_rule) rows.push(["Support flows up", esc(CASE.flow_rule)]);
   if (rr.counted) rows.push(["Counted", esc(rr.counted)]);
   return rows.length ? `<details class="rrule"><summary>How the ranking works</summary><dl>${rows.map(([a, b]) => `<dt>${a}</dt><dd>${b}</dd>`).join("")}</dl></details>` : "";
 }
 function wireGaps() {
+  $("#steppanel")?.addEventListener("click", e => {
+    const b = e.target.closest("[data-suppose]");
+    if (!b || !CASE) return;
+    const id = b.dataset.suppose;
+    if (id) { const bot = flowBottom(id, flowBase(), null); S.suppose = {for: id, set: new Set(bot.length ? bot : [id])}; }
+    else S.suppose = null;
+    renderGaps();
+    $("#steppanel [data-suppose]")?.focus({preventScroll: true});
+  });
   const tree = $("#tree");
   if (tree) {
     const pick = n => { const id = n.dataset.step; hidePop(); S.focusStep = document.activeElement === n ? id : null; location.hash = S.step === id ? "gaps" : "step=" + id; };
@@ -3423,7 +3575,7 @@ function gapsGuide() {
       `It argues, step by step, that an AI system is safe to use. This one${p ? `, from ${esc(p.short)},` : ""} argues that a system trained with debate ${top ? esc(top.label.replace(/^System X /, "")) : "is safe"}. Each box is a claim, held up by the boxes to its right.`],
     [gpic(cell(4, 4, "NONE", "none") + cell(68, 4, "WEAK", "weak") + cell(4, 38, "CONTESTED", "contested") + cell(68, 38, "SUPPORTED", "supported")),
       "Colour is the evidence",
-      `It shows how well the papers back each step: ${ev.NONE || 0} steps have no evidence, ${ev.WEAK || 0} weak, ${ev.CONTESTED || 0} contested and ${ev.SUPPORTED || 0} supported.`],
+      `It shows how well the papers back each step: ${ev.NONE || 0} steps have no evidence, ${ev.WEAK || 0} weak, ${ev.CONTESTED || 0} contested and ${ev.SUPPORTED || 0} supported. A step also counts as supported once every step holding it up is; select one to see what it still waits on.`],
     [gpic(`${gbox(6, 27, 14, "var(--ev-weak)")}<circle class="gbadge" cx="23" cy="26" r="7"/><text class="gbadget" x="23" y="29.2" text-anchor="middle">3</text><path class="ln" d="M33 34H48"/>
       <rect class="pg-doc" x="50" y="14" width="78" height="40" rx="6"/><rect x="58" y="21" width="10" height="10" rx="2.5" class="gst"/><path d="M58 26h10v2.5a2.5 2.5 0 0 1-2.5 2.5h-5a2.5 2.5 0 0 1-2.5-2.5z" style="fill:var(--seq)"/>
       <path class="gbar" d="M74 26H120M58 43H112"/>`),

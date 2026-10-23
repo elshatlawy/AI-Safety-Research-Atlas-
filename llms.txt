@@ -60,6 +60,10 @@ Recipes:
 
 - [understanding.json](https://elshatlawy.github.io/AI-Safety-Research-Atlas-/understanding.json): 248 results explained in plain words (the top of each result's page): why it matters, what it says, the key idea, what it was shown for and what it does not show, each line citing the exact words it rests on. AI-drafted; every card passed two blind AI checks; no person has reviewed them. Cite the paper's own words, not the card's.
 
+## Support on the safety case
+
+- [data.json](https://elshatlawy.github.io/AI-Safety-Research-Atlas-/data.json) `case.nodes`: every step of the debate safety case with `ev` (its own evidence label), `st` (1 when support reaches it) and `wait` (the steps at the bottom it still waits on). The rule (`case.flow_rule`): A step counts as supported when its own checked evidence supports it, or when it is split into sub-claims and every sub-claim and assumption under it counts as supported. Either way, every threat under it (a way the argument could fail) must be ruled out: at least one strong or two moderate results show the failure does not happen, and none shows it does. Open problems and evidence-needed notes hold nothing back. The rule only adds support: a step's own evidence label never changes. Today 2 of 45 steps count as supported and the top claim waits on 27 steps. `case.maps` lists each step's checked evidence; 7 entries are Lean proofs, whose `q` names the question the proof answers. The mappings are AI-drafted and passed two blind AI checks; no person has reviewed them.
+
 ## Humans
 
 The visual atlas is at the site root, https://elshatlawy.github.io/AI-Safety-Research-Atlas-/. Every record is a dot in the record graph at https://elshatlawy.github.io/AI-Safety-Research-Atlas-/#graph (a card's human_url opens one record there). Corrections and new sources go to the research repository through its maintainer.
