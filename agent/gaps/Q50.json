@@ -8,6 +8,24 @@
  "status_check": "AI_CHECKED",
  "remaining_question": "Is there a debate protocol, trained end to end, whose guarantees survive (a) human judges with bounded but systematic, correlated errors and (b) debaters free to choose among winning decompositions or subclaims to leak or steer information, and does it keep its reward-hacking benefits in domains without verifiable ground truth?",
  "remaining_type": "MIXED",
+ "blockers": [
+  {
+   "part": "Q50.a",
+   "blocker": "PROOF",
+   "name": "A proof",
+   "role": "Prover",
+   "covers": "Is there a debate protocol, trained end to end, whose guarantees survive (a) human judges with bounded but systematic, correlated errors and (b) debaters free to choose among winning decompositions or subclaims to leak or steer information",
+   "next": "Prove or refute that some debate protocol trained end to end keeps its guarantees with human judges whose errors are bounded but systematic and correlated, and with debaters free to choose winning decompositions or subclaims to leak or steer information."
+  },
+  {
+   "part": "Q50.b",
+   "blocker": "MEASUREMENT",
+   "name": "A measurement",
+   "role": "Experimenter",
+   "covers": "does it keep its reward-hacking benefits in domains without verifiable ground truth?",
+   "next": "Train such a protocol in domains without verifiable ground truth and measure whether it keeps its reward-hacking benefits."
+  }
+ ],
  "safety_case": [
   {
    "node": "SC-C4.5",

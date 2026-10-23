@@ -8,6 +8,16 @@
  "status_check": "AI_CHECKED",
  "remaining_question": "In multi-turn free-text debates on questions hard enough that honest debaters must argue from long decompositions, with strong debaters (human, prompted or RL-trained models) and human or LLM judges, how often does the dishonest side win by presenting arguments whose flaw the honest side cannot locate, and does restricting debates to stable, low-sensitivity decompositions reduce that rate?",
  "remaining_type": "EMPIRICAL",
+ "blockers": [
+  {
+   "part": "Q21",
+   "blocker": "MEASUREMENT",
+   "name": "A measurement",
+   "role": "Experimenter",
+   "covers": null,
+   "next": "Run multi-turn free-text debates on questions that need long decompositions, count how often the dishonest side wins with an argument whose flaw the honest side cannot locate, and compare with debates restricted to stable, low-sensitivity decompositions."
+  }
+ ],
  "safety_case": [
   {
    "node": "SC-OP-EMPIRICAL",

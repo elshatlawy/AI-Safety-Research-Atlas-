@@ -8,6 +8,16 @@
  "status_check": "AI_CHECKED",
  "remaining_question": "For scalable oversight protocols scored by ASD, does choosing or training a protocol for a higher worst-case (minimum over questions) ASD lower the rate at which a single catastrophic falsehood, such as one vulnerable code sample, is accepted when tested on rare or adversarially selected inputs at deployment-relevant scale?",
  "remaining_type": "EMPIRICAL",
+ "blockers": [
+  {
+   "part": "Q41",
+   "blocker": "MEASUREMENT",
+   "name": "A measurement",
+   "role": "Experimenter",
+   "covers": null,
+   "next": "Choose or train protocols for a higher worst-case ASD and measure how often a single catastrophic falsehood, such as one vulnerable code sample, is accepted on rare or adversarially selected inputs at deployment-relevant scale."
+  }
+ ],
  "safety_case": [
   {
    "node": "SC-OP-HIGH-STAKES",

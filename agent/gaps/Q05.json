@@ -8,6 +8,24 @@
  "status_check": "AI_CHECKED",
  "remaining_question": "Can a full amplify-and-distill loop, with humans (or a learned model of them) decomposing, be trained on a real-world task where neither demonstrations nor reliable evaluations of the final output are available, and how would success be verified there?",
  "remaining_type": "MIXED",
+ "blockers": [
+  {
+   "part": "Q05.a",
+   "blocker": "MEASUREMENT",
+   "name": "A measurement",
+   "role": "Experimenter",
+   "covers": "Can a full amplify-and-distill loop, with humans (or a learned model of them) decomposing, be trained on a real-world task where neither demonstrations nor reliable evaluations of the final output are available",
+   "next": "Train a full amplify-and-distill loop, with humans or a learned model of them decomposing, on a real-world task that has neither demonstrations nor reliable evaluations of the final output."
+  },
+  {
+   "part": "Q05.b",
+   "blocker": "DEFINITION",
+   "name": "A definition",
+   "role": "Definer",
+   "covers": "how would success be verified there?",
+   "next": "State what would count as success on such a task and how it could be verified without demonstrations or reliable evaluations of the final output."
+  }
+ ],
  "safety_case": [],
  "findings": [
   {

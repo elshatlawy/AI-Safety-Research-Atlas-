@@ -8,6 +8,16 @@
  "status_check": "AI_CHECKED",
  "remaining_question": "Do models that were not explicitly trained to exploration hack acquire it spontaneously during RL training, including debate training, and when it does not show in their chain-of-thought, can it be detected or prevented well enough to supply the exploration guarantee (no high-reward strategies left unexplored) that the debate safety case requires?",
  "remaining_type": "MIXED",
+ "blockers": [
+  {
+   "part": "Q44",
+   "blocker": "MEASUREMENT",
+   "name": "A measurement",
+   "role": "Experimenter",
+   "covers": null,
+   "next": "Run RL training, including debate training, on models never trained to exploration hack and measure whether they start to; then test whether detection or prevention works on cases that do not show in the chain-of-thought, well enough for the exploration guarantee."
+  }
+ ],
  "safety_case": [
   {
    "node": "SC-OP-EXPLORATION",

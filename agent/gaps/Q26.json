@@ -8,6 +8,24 @@
  "status_check": "AI_CHECKED",
  "remaining_question": "Can the absolute test error of a weak-to-strong model (not only its trend across weak supervisors) be estimated with no ground-truth labels, including for hyperparameter selection, for fully finetuned models, for reward modeling and when realizability fails? And which property of a concept (expansion, overlap density, linear decodability, salience) causally determines whether it is easy or hard to learn from weak labels when manipulated directly rather than only correlated?",
  "remaining_type": "MIXED",
+ "blockers": [
+  {
+   "part": "Q26.a",
+   "blocker": "PROOF",
+   "name": "A proof",
+   "role": "Prover",
+   "covers": "Can the absolute test error of a weak-to-strong model (not only its trend across weak supervisors) be estimated with no ground-truth labels, including for hyperparameter selection, for fully finetuned models, for reward modeling and when realizability fails?",
+   "next": "Prove conditions under which a weak-to-strong model's absolute test error can be estimated without ground-truth labels, covering hyperparameter selection, fully finetuned models, reward modeling and non-realizable settings."
+  },
+  {
+   "part": "Q26.b",
+   "blocker": "MEASUREMENT",
+   "name": "A measurement",
+   "role": "Experimenter",
+   "covers": "which property of a concept (expansion, overlap density, linear decodability, salience) causally determines whether it is easy or hard to learn from weak labels when manipulated directly rather than only correlated?",
+   "next": "Manipulate a concept's expansion, overlap density, linear decodability and salience directly, and measure which change makes it easier or harder to learn from weak labels."
+  }
+ ],
  "safety_case": [],
  "findings": [
   {

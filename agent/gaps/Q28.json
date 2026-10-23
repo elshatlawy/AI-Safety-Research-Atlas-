@@ -8,6 +8,16 @@
  "status_check": "AI_CHECKED",
  "remaining_question": "When the decisive evidence must be found in a large external corpus (e.g. published scientific literature) that the judge can only spot-check, or when the debaters can draw only on their own uncitable (parametric) knowledge with no source text, does debate between stronger models raise a weaker judge's accuracy above direct QA and consultancy?",
  "remaining_type": "EMPIRICAL",
+ "blockers": [
+  {
+   "part": "Q28",
+   "blocker": "MEASUREMENT",
+   "name": "A measurement",
+   "role": "Experimenter",
+   "covers": null,
+   "next": "Compare a weaker judge's accuracy under debate, direct QA and consultancy when the decisive evidence sits in a large corpus the judge can only spot-check, and when the debaters have only uncitable parametric knowledge."
+  }
+ ],
  "safety_case": [
   {
    "node": "SC-D5.4",

@@ -8,6 +8,16 @@
  "status_check": "AI_CHECKED",
  "remaining_question": "On a task with verifiable flaws (e.g. tampered code), what fraction of the flaws a model can be shown to detect (by its best discriminator, a probe on its activations or a generative verifier) do its trained critiques articulate to humans, does that fraction rise with critique-training compute and model scale, and what prevents the remaining detected flaws from being articulated (given that fine-tuning on ground-truth explanations left freeform rule articulation at 0% for 7/10 rules)?",
  "remaining_type": "EMPIRICAL",
+ "blockers": [
+  {
+   "part": "Q11",
+   "blocker": "MEASUREMENT",
+   "name": "A measurement",
+   "role": "Experimenter",
+   "covers": null,
+   "next": "On a task with verifiable flaws such as tampered code, measure what fraction of the flaws a model can be shown to detect its trained critiques articulate, how that fraction changes with critique-training compute and model scale, and what stops the rest being articulated."
+  }
+ ],
  "safety_case": [
   {
    "node": "SC-D5.4",

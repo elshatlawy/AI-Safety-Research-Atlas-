@@ -246,6 +246,38 @@
    "branch": "deployment and low stakes"
   }
  },
+ "blocker_labels": {
+  "MEASUREMENT": {
+   "name": "A measurement",
+   "role": "Experimenter",
+   "work": "Run the experiment or study the question names and measure the outcome."
+  },
+  "PROOF": {
+   "name": "A proof",
+   "role": "Prover",
+   "work": "Prove the statement, a bound or a construction in a stated formal model, or find a counterexample."
+  },
+  "DEFINITION": {
+   "name": "A definition",
+   "role": "Definer",
+   "work": "Pin down a term, class or success criterion the question relies on but does not define."
+  },
+  "STATEMENT_MATCH": {
+   "name": "A statement check",
+   "role": "Auditor",
+   "work": "Check that a formal statement or model says what the paper says."
+  },
+  "SYSTEM_EVIDENCE": {
+   "name": "Evidence from a real system",
+   "role": "Inspector",
+   "work": "Inspect the code, configuration and traces of a deployed system."
+  },
+  "EXPLANATION": {
+   "name": "An explanation",
+   "role": "Explainer",
+   "work": "Write a worked example of a known result and test whether readers understand it."
+  }
+ },
  "gaps": [
   {
    "id": "Q43",
@@ -254,6 +286,9 @@
    "status": "PARTLY_ANSWERED_BY_LATER_WORK",
    "status_check": "AI_CHECKED",
    "remaining_type": "EMPIRICAL",
+   "blockers": [
+    "MEASUREMENT"
+   ],
    "safety_case_steps": [
     "SC-OP-EMPIRICAL",
     "SC-C4.6",
@@ -271,6 +306,9 @@
    "status": "PARTLY_ANSWERED_BY_LATER_WORK",
    "status_check": "AI_CHECKED",
    "remaining_type": "MIXED",
+   "blockers": [
+    "MEASUREMENT"
+   ],
    "safety_case_steps": [
     "SC-OP-EXPLORATION",
     "SC-E5.3"
@@ -286,6 +324,9 @@
    "status": "STILL_OPEN",
    "status_check": "AI_CHECKED",
    "remaining_type": "EMPIRICAL",
+   "blockers": [
+    "MEASUREMENT"
+   ],
    "safety_case_steps": [
     "SC-OP-HIGH-STAKES"
    ],
@@ -300,6 +341,9 @@
    "status": "NARROWED",
    "status_check": "AI_CHECKED",
    "remaining_type": "MIXED",
+   "blockers": [
+    "MEASUREMENT"
+   ],
    "safety_case_steps": [
     "SC-OP-HIGH-STAKES",
     "SC-D4.4",
@@ -316,6 +360,9 @@
    "status": "STILL_OPEN",
    "status_check": "AI_CHECKED",
    "remaining_type": "EMPIRICAL",
+   "blockers": [
+    "MEASUREMENT"
+   ],
    "safety_case_steps": [
     "SC-D5.4"
    ],
@@ -330,6 +377,9 @@
    "status": "STILL_OPEN",
    "status_check": "AI_CHECKED",
    "remaining_type": "EMPIRICAL",
+   "blockers": [
+    "MEASUREMENT"
+   ],
    "safety_case_steps": [
     "SC-E6.1"
    ],
@@ -344,6 +394,9 @@
    "status": "NARROWED",
    "status_check": "AI_CHECKED",
    "remaining_type": "EMPIRICAL",
+   "blockers": [
+    "MEASUREMENT"
+   ],
    "safety_case_steps": [
     "SC-D5.4"
    ],
@@ -358,6 +411,9 @@
    "status": "NARROWED",
    "status_check": "AI_CHECKED",
    "remaining_type": "EMPIRICAL",
+   "blockers": [
+    "MEASUREMENT"
+   ],
    "safety_case_steps": [
     "SC-OP-EMPIRICAL",
     "SC-ASM-NO-OBFUSCATION"
@@ -373,6 +429,9 @@
    "status": "NARROWED",
    "status_check": "AI_CHECKED",
    "remaining_type": "MATHEMATICAL",
+   "blockers": [
+    "PROOF"
+   ],
    "safety_case_steps": [
     "SC-C4.5",
     "SC-ASM-RANDOM-WASHOUT"
@@ -388,6 +447,9 @@
    "status": "NARROWED",
    "status_check": "AI_CHECKED",
    "remaining_type": "EMPIRICAL",
+   "blockers": [
+    "MEASUREMENT"
+   ],
    "safety_case_steps": [
     "SC-D5.4",
     "SC-OP-EMPIRICAL"
@@ -403,6 +465,9 @@
    "status": "NARROWED",
    "status_check": "AI_CHECKED",
    "remaining_type": "EMPIRICAL",
+   "blockers": [
+    "MEASUREMENT"
+   ],
    "safety_case_steps": [
     "SC-OP-EMPIRICAL"
    ],
@@ -417,6 +482,9 @@
    "status": "NARROWED",
    "status_check": "AI_CHECKED",
    "remaining_type": "MATHEMATICAL",
+   "blockers": [
+    "PROOF"
+   ],
    "safety_case_steps": [
     "SC-C4.1",
     "SC-C2.2"
@@ -432,6 +500,9 @@
    "status": "NARROWED",
    "status_check": "AI_CHECKED",
    "remaining_type": "MIXED",
+   "blockers": [
+    "MEASUREMENT"
+   ],
    "safety_case_steps": [
     "SC-C5.2"
    ],
@@ -446,6 +517,9 @@
    "status": "PARTLY_ANSWERED_BY_LATER_WORK",
    "status_check": "AI_CHECKED",
    "remaining_type": "EMPIRICAL",
+   "blockers": [
+    "MEASUREMENT"
+   ],
    "safety_case_steps": [
     "SC-D4.2",
     "SC-E6.1"
@@ -461,6 +535,9 @@
    "status": "PARTLY_ANSWERED_BY_LATER_WORK",
    "status_check": "AI_CHECKED",
    "remaining_type": "EMPIRICAL",
+   "blockers": [
+    "MEASUREMENT"
+   ],
    "safety_case_steps": [
     "SC-C5.2"
    ],
@@ -475,6 +552,9 @@
    "status": "PARTLY_ANSWERED_BY_LATER_WORK",
    "status_check": "AI_CHECKED",
    "remaining_type": "MATHEMATICAL",
+   "blockers": [
+    "PROOF"
+   ],
    "safety_case_steps": [
     "SC-C4.6"
    ],
@@ -489,6 +569,10 @@
    "status": "PARTLY_ANSWERED_BY_LATER_WORK",
    "status_check": "AI_CHECKED",
    "remaining_type": "MIXED",
+   "blockers": [
+    "MEASUREMENT",
+    "PROOF"
+   ],
    "safety_case_steps": [
     "SC-C4.5",
     "SC-D4.2"
@@ -504,6 +588,10 @@
    "status": "PARTLY_ANSWERED_BY_LATER_WORK",
    "status_check": "AI_CHECKED",
    "remaining_type": "MIXED",
+   "blockers": [
+    "PROOF",
+    "DEFINITION"
+   ],
    "safety_case_steps": [
     "SC-C4.6"
    ],
@@ -518,6 +606,9 @@
    "status": "STILL_OPEN",
    "status_check": "AI_CHECKED",
    "remaining_type": "EMPIRICAL",
+   "blockers": [
+    "MEASUREMENT"
+   ],
    "safety_case_steps": [],
    "findings_counted": 4,
    "has_experiment_package": false,
@@ -530,6 +621,9 @@
    "status": "STILL_OPEN",
    "status_check": "AI_CHECKED",
    "remaining_type": "MIXED",
+   "blockers": [
+    "MEASUREMENT"
+   ],
    "safety_case_steps": [],
    "findings_counted": 3,
    "has_experiment_package": false,
@@ -542,6 +636,9 @@
    "status": "STILL_OPEN",
    "status_check": "AI_CHECKED",
    "remaining_type": "EMPIRICAL",
+   "blockers": [
+    "MEASUREMENT"
+   ],
    "safety_case_steps": [],
    "findings_counted": 3,
    "has_experiment_package": false,
@@ -554,6 +651,9 @@
    "status": "NARROWED",
    "status_check": "AI_CHECKED",
    "remaining_type": "EMPIRICAL",
+   "blockers": [
+    "MEASUREMENT"
+   ],
    "safety_case_steps": [],
    "findings_counted": 7,
    "has_experiment_package": false,
@@ -566,6 +666,10 @@
    "status": "NARROWED",
    "status_check": "AI_CHECKED",
    "remaining_type": "MIXED",
+   "blockers": [
+    "MEASUREMENT",
+    "DEFINITION"
+   ],
    "safety_case_steps": [],
    "findings_counted": 3,
    "has_experiment_package": false,
@@ -578,6 +682,9 @@
    "status": "NARROWED",
    "status_check": "AI_CHECKED",
    "remaining_type": "EMPIRICAL",
+   "blockers": [
+    "MEASUREMENT"
+   ],
    "safety_case_steps": [],
    "findings_counted": 6,
    "has_experiment_package": false,
@@ -590,6 +697,9 @@
    "status": "NARROWED",
    "status_check": "AI_CHECKED",
    "remaining_type": "EMPIRICAL",
+   "blockers": [
+    "MEASUREMENT"
+   ],
    "safety_case_steps": [],
    "findings_counted": 4,
    "has_experiment_package": false,
@@ -602,6 +712,9 @@
    "status": "NARROWED",
    "status_check": "AI_CHECKED",
    "remaining_type": "EMPIRICAL",
+   "blockers": [
+    "MEASUREMENT"
+   ],
    "safety_case_steps": [],
    "findings_counted": 3,
    "has_experiment_package": false,
@@ -614,6 +727,9 @@
    "status": "NARROWED",
    "status_check": "AI_CHECKED",
    "remaining_type": "MIXED",
+   "blockers": [
+    "MEASUREMENT"
+   ],
    "safety_case_steps": [],
    "findings_counted": 4,
    "has_experiment_package": false,
@@ -626,6 +742,9 @@
    "status": "NARROWED",
    "status_check": "AI_CHECKED",
    "remaining_type": "MATHEMATICAL",
+   "blockers": [
+    "PROOF"
+   ],
    "safety_case_steps": [],
    "findings_counted": 4,
    "has_experiment_package": false,
@@ -638,6 +757,9 @@
    "status": "PARTLY_ANSWERED_BY_LATER_WORK",
    "status_check": "AI_CHECKED",
    "remaining_type": "EMPIRICAL",
+   "blockers": [
+    "MEASUREMENT"
+   ],
    "safety_case_steps": [],
    "findings_counted": 5,
    "has_experiment_package": false,
@@ -650,6 +772,9 @@
    "status": "PARTLY_ANSWERED_BY_LATER_WORK",
    "status_check": "AI_CHECKED",
    "remaining_type": "EMPIRICAL",
+   "blockers": [
+    "MEASUREMENT"
+   ],
    "safety_case_steps": [],
    "findings_counted": 6,
    "has_experiment_package": false,
@@ -662,6 +787,9 @@
    "status": "PARTLY_ANSWERED_BY_LATER_WORK",
    "status_check": "AI_CHECKED",
    "remaining_type": "EMPIRICAL",
+   "blockers": [
+    "MEASUREMENT"
+   ],
    "safety_case_steps": [],
    "findings_counted": 7,
    "has_experiment_package": false,
@@ -674,6 +802,10 @@
    "status": "PARTLY_ANSWERED_BY_LATER_WORK",
    "status_check": "AI_CHECKED",
    "remaining_type": "MIXED",
+   "blockers": [
+    "MEASUREMENT",
+    "PROOF"
+   ],
    "safety_case_steps": [],
    "findings_counted": 5,
    "has_experiment_package": false,
@@ -686,6 +818,9 @@
    "status": "PARTLY_ANSWERED_BY_LATER_WORK",
    "status_check": "AI_CHECKED",
    "remaining_type": "EMPIRICAL",
+   "blockers": [
+    "MEASUREMENT"
+   ],
    "safety_case_steps": [],
    "findings_counted": 5,
    "has_experiment_package": false,

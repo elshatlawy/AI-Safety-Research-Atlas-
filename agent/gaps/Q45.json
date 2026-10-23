@@ -8,6 +8,16 @@
  "status_check": "AI_CHECKED",
  "remaining_question": "In a high-stakes deployment of a debate-trained agent with no online training, what evidence can bound (a) train-to-deploy behaviour gaps under distribution shift, including alignment faking that can persist through training, and (b) coordinated errors between instances of the same model, covering both correlated honest mistakes the judge's reward signal misses and deliberate coordination (active or acausal collusion, attacks split across instances), given that, of the collusion strategies, only passive self-recognition can so far be elicited (by SFT) well enough to be bounded, while it is unclear how to comprehensively elicit and evaluate active signalling strategies and acausal collusion and per-agent monitoring degrades as an attack is split across more agents?",
  "remaining_type": "MIXED",
+ "blockers": [
+  {
+   "part": "Q45",
+   "blocker": "MEASUREMENT",
+   "name": "A measurement",
+   "role": "Experimenter",
+   "covers": null,
+   "next": "For a debate-trained agent deployed without online training, measure train-to-deploy behaviour gaps under distribution shift, including alignment faking, and coordinated errors between instances, and find ways to elicit and evaluate active signalling and acausal collusion."
+  }
+ ],
  "safety_case": [
   {
    "node": "SC-OP-HIGH-STAKES",

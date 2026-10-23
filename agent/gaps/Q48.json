@@ -8,6 +8,16 @@
  "status_check": "AI_CHECKED",
  "remaining_question": "Does debate whose debaters know the judge's persona raise human judges' accuracy and calibration over non-persona debate and consultancy? Two cases are open: (a) content whose truthfulness is subjective or contested, such as satire, propaganda and manipulated media, and (b) claims unresolved at judging time and scored after resolution (for example prediction-market questions).",
  "remaining_type": "EMPIRICAL",
+ "blockers": [
+  {
+   "part": "Q48",
+   "blocker": "MEASUREMENT",
+   "name": "A measurement",
+   "role": "Experimenter",
+   "covers": null,
+   "next": "Run debates whose debaters know the judge's persona, on satire, propaganda and manipulated media and on claims scored after they resolve, and compare human judges' accuracy and calibration with non-persona debate and consultancy."
+  }
+ ],
  "safety_case": [
   {
    "node": "SC-E6.1",

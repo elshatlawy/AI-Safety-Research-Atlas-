@@ -46,6 +46,7 @@ Recipes:
 - "Which gaps matter most for a debate safety case?": sort agent/gaps.json by `rank`; each question's `safety_case_steps` names the steps it affects, and the top-level `safety_case_steps` map gives each step's evidence label (NONE, WEAK, CONTESTED, SUPPORTED) and wording.
 - "What holds, by what method, under which assumptions, and how strongly?": filter agent/cards.json by paper, grade or regime, then open the paper's file and read `assumptions` (stated hypotheses and assumption records) before carrying a result elsewhere; on theorem cards the list is not verified (`hypotheses_verified` is false), so check the theorem's own statement at the cited page.
 - "What would settle this gap?": read `remaining_question` and `remaining_type` in its file; an empirical gap may carry an experiment package with hypothesis, design, sample size and cost estimates.
+- "Which question should I work on next, given my role?": find your role in `blocker_labels` of agent/gaps.json (Experimenter: MEASUREMENT, Prover: PROOF, Definer: DEFINITION, Auditor: STATEMENT_MATCH, Inspector: SYSTEM_EVIDENCE, Explainer: EXPLANATION), keep the questions whose `blockers` hold that label, and take the best `rank`; its file's `blockers` give each part's next action and the words of `remaining_question` it covers (no `covers` means the whole question). Labels are AI drafts that passed two blind AI checks.
 - "What did the pilot find that is not easy to find elsewhere?": read agent/ledger.json; Paper problem entries are flaws in a paper's own statements found by Lean audits.
 
 ## Definition comparisons
@@ -63,6 +64,10 @@ Recipes:
 ## Support on the safety case
 
 - [data.json](https://elshatlawy.github.io/AI-Safety-Research-Atlas-/data.json) `case.nodes`: every step of the debate safety case with `ev` (its own evidence label), `st` (1 when support reaches it) and `wait` (the steps at the bottom it still waits on). The rule (`case.flow_rule`): A step counts as supported when its own checked evidence supports it, or when it is split into sub-claims and every sub-claim and assumption under it counts as supported. Either way, every threat under it (a way the argument could fail) must be ruled out: at least one strong or two moderate results show the failure does not happen, and none shows it does. Open problems and evidence-needed notes hold nothing back. The rule only adds support: a step's own evidence label never changes. Today 2 of 45 steps count as supported and the top claim waits on 27 steps. `case.maps` lists each step's checked evidence; 7 entries are Lean proofs, whose `q` names the question the proof answers. The mappings are AI-drafted and passed two blind AI checks; no person has reviewed them.
+
+## What would move each question
+
+- [data.json](https://elshatlawy.github.io/AI-Safety-Research-Atlas-/data.json) `gap.questions[].blockers`: each open question's parts, each with `k` (the kind of work it waits on), `next` (the next action, drawn only from the question's `remaining_question`) and `covers` (the words of `remaining_question` the part covers; none means the whole question). `gap.blocker_labels` names each kind and the role that does it (Experimenter takes MEASUREMENT, Prover takes PROOF, Definer takes DEFINITION, Auditor takes STATEMENT_MATCH, Inspector takes SYSTEM_EVIDENCE, Explainer takes EXPLANATION). Today 33 of 33 questions are labelled: 28 measurement, 7 proof, 2 definition (a question in two parts counts under both). To pick your top item, keep the questions whose parts carry your role's kind and take the lowest `rank`; agent/gaps.json carries the same labels. The labels are AI-drafted and passed two blind AI checks; no person has reviewed them.
 
 ## Humans
 

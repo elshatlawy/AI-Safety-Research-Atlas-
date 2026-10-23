@@ -8,6 +8,16 @@
  "status_check": "AI_CHECKED",
  "remaining_question": "With debaters RL-trained against human (or human-simulating) judges on tasks beyond QuALITY, does debate measurably raise judge accuracy over consultancy, does training reliably reach a stable honest equilibrium, do obfuscated arguments emerge, how large are the judges' systematic errors relative to ground truth and in which domains, and how many questions in the target domain are hard to settle by deductive argument?",
  "remaining_type": "EMPIRICAL",
+ "blockers": [
+  {
+   "part": "Q43",
+   "blocker": "MEASUREMENT",
+   "name": "A measurement",
+   "role": "Experimenter",
+   "covers": null,
+   "next": "Train debaters with RL against human or human-simulating judges on tasks beyond QuALITY, then measure judge accuracy against consultancy, whether training reaches a stable honest equilibrium, obfuscated arguments, judge errors by domain, and how many questions resist deductive argument."
+  }
+ ],
  "safety_case": [
   {
    "node": "SC-OP-EMPIRICAL",

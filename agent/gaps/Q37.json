@@ -8,6 +8,16 @@
  "status_check": "AI_CHECKED",
  "remaining_question": "For learned provers and verifiers (e.g. neural networks trained to equilibrium in a prover-verifier game), what bounds relate the verifier's hypothesis-class capacity and training-sample size, and the prover's capacity, to the soundness and completeness the trained protocol achieves?",
  "remaining_type": "MATHEMATICAL",
+ "blockers": [
+  {
+   "part": "Q37",
+   "blocker": "PROOF",
+   "name": "A proof",
+   "role": "Prover",
+   "covers": null,
+   "next": "Prove bounds that relate the verifier's hypothesis-class capacity and training-sample size, and the prover's capacity, to the soundness and completeness of a protocol whose prover and verifier are learned."
+  }
+ ],
  "safety_case": [
   {
    "node": "SC-C4.1",

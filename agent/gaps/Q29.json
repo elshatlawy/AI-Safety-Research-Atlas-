@@ -8,6 +8,16 @@
  "status_check": "AI_CHECKED",
  "remaining_question": "Does making the contrastive pretraining objective aware of the pseudolabeler ỹ (e.g. defining or weighting positive pairs with the weak labels) lower the strong student's error on the true labels compared with pseudolabeler-agnostic contrastive pretraining under the same weak labels, and if so, does the gain come with greater measured expansion between correctly and incorrectly pseudolabeled sets?",
  "remaining_type": "MIXED",
+ "blockers": [
+  {
+   "part": "Q29",
+   "blocker": "MEASUREMENT",
+   "name": "A measurement",
+   "role": "Experimenter",
+   "covers": null,
+   "next": "Pretrain the strong student with a pseudolabeler-aware and with a pseudolabeler-agnostic contrastive objective under the same weak labels, compare its error on the true labels, and measure expansion between correctly and incorrectly pseudolabeled sets."
+  }
+ ],
  "safety_case": [],
  "findings": [
   {

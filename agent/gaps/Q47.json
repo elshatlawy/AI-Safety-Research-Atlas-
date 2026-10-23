@@ -8,6 +8,16 @@
  "status_check": "AI_CHECKED",
  "remaining_question": "Can a recursive debate protocol that rewards honest reporting of the debaters' beliefs (rather than deciding L(x)), or that uses non-black-box access to human judgment or the debaters' bounded computation, achieve completeness on decompositions whose fractional block sensitivity rho makes rho^d superpolynomial, while keeping prover-estimator debate's soundness without stability (an average-case guarantee)?",
  "remaining_type": "MATHEMATICAL",
+ "blockers": [
+  {
+   "part": "Q47",
+   "blocker": "PROOF",
+   "name": "A proof",
+   "role": "Prover",
+   "covers": null,
+   "next": "Prove or refute that a recursive debate protocol that rewards honest reporting of beliefs, or uses non-black-box access to human judgment or the debaters' bounded computation, keeps completeness when rho^d is superpolynomial and prover-estimator debate's soundness without stability."
+  }
+ ],
  "safety_case": [
   {
    "node": "SC-C4.6",

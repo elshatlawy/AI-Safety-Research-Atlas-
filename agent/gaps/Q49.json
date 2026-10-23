@@ -8,6 +8,16 @@
  "status_check": "AI_CHECKED",
  "remaining_question": "For an ICM-trained reward model built from a stated constitution, which human-run checks (e.g. reviewing cross-model or cross-run label disagreements, critique-assisted audits of the elicited labels, small human-labelled probe sets per principle) detect labels that follow a reading other than the authors' intended one, and at what rate on deliberately planted misreadings?",
  "remaining_type": "MIXED",
+ "blockers": [
+  {
+   "part": "Q49",
+   "blocker": "MEASUREMENT",
+   "name": "A measurement",
+   "role": "Experimenter",
+   "covers": null,
+   "next": "Plant misreadings of the constitution in an ICM-trained reward model's labels, run human checks such as reviewing cross-model or cross-run label disagreements, critique-assisted audits and small probe sets per principle, and measure how many each detects."
+  }
+ ],
  "safety_case": [
   {
    "node": "SC-C5.2",

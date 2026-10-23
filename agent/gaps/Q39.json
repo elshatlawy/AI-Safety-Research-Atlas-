@@ -8,6 +8,16 @@
  "status_check": "AI_CHECKED",
  "remaining_question": "Does a free-text similarity measure between models (for example residualised compression distance on outputs, the judge's likelihood of a response, or a CAPA-style agreement computed on answer-matched free-form answers) predict how often a weaker judge sides with a similar debater in judged debate with ground-truth labels, and how often a process reward model misses step errors made by a similar policy?",
  "remaining_type": "EMPIRICAL",
+ "blockers": [
+  {
+   "part": "Q39",
+   "blocker": "MEASUREMENT",
+   "name": "A measurement",
+   "role": "Experimenter",
+   "covers": null,
+   "next": "Compute free-text similarity measures between models, such as compression distance, the judge's likelihood of a response or CAPA-style agreement, and test whether they predict how often a weaker judge sides with a similar debater and a process reward model misses a similar policy's step errors."
+  }
+ ],
  "safety_case": [
   {
    "node": "SC-C5.2",

@@ -8,6 +8,16 @@
  "status_check": "AI_CHECKED",
  "remaining_question": "What escape probability per deployment does the Elo-gap win probability of Eq. (5) predict, and what is observed, in realistic settings such as RLHF, supervised fine-tuning and AI-control environments (with prompted and trained attackers), across a controlled range of attacker-monitor capability gaps, audit budgets and horizons, and how does it extrapolate toward the ASI regime?",
  "remaining_type": "MIXED",
+ "blockers": [
+  {
+   "part": "Q42",
+   "blocker": "MEASUREMENT",
+   "name": "A measurement",
+   "role": "Experimenter",
+   "covers": null,
+   "next": "Compare the escape probability per deployment that Eq. (5) predicts with observed escapes in RLHF, supervised fine-tuning and AI-control settings with prompted and trained attackers, across controlled capability gaps, audit budgets and horizons, and how it extrapolates toward the ASI regime."
+  }
+ ],
  "safety_case": [],
  "findings": [
   {

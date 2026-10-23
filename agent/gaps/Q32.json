@@ -8,6 +8,16 @@
  "status_check": "AI_CHECKED",
  "remaining_question": "On closed tasks without information asymmetry (e.g. GPQA or MMLU-Pro), does a weak judge fine-tuned on debate judging reach higher accuracy with debate than the same judge fine-tuned on direct QA with matched data and compute?",
  "remaining_type": "EMPIRICAL",
+ "blockers": [
+  {
+   "part": "Q32",
+   "blocker": "MEASUREMENT",
+   "name": "A measurement",
+   "role": "Experimenter",
+   "covers": null,
+   "next": "On closed tasks without information asymmetry, such as GPQA or MMLU-Pro, fine-tune the same weak judge either on debate judging or on direct QA with matched data and compute, and compare its accuracy."
+  }
+ ],
  "safety_case": [
   {
    "node": "SC-OP-EMPIRICAL",

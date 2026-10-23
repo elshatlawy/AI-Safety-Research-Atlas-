@@ -8,6 +8,16 @@
  "status_check": "AI_CHECKED",
  "remaining_question": "Why do MAD hyperparameter settings (such as agreement intensity) tuned on GPT-3.5 transfer to GPT-4 but not to Mixtral 8x7B: the sparse-MoE architecture, or model-specific differences in conformity and instruction following? Testable by re-tuning the hyperparameters per model and comparing transfer on matched MoE/dense pairs, measuring whether realized agent behaviour follows the prompted setting.",
  "remaining_type": "EMPIRICAL",
+ "blockers": [
+  {
+   "part": "Q24",
+   "blocker": "MEASUREMENT",
+   "name": "A measurement",
+   "role": "Experimenter",
+   "covers": null,
+   "next": "Re-tune MAD hyperparameters such as agreement intensity per model, compare transfer on matched MoE and dense model pairs, and measure whether the agents' realized behaviour follows the prompted setting."
+  }
+ ],
  "safety_case": [],
  "findings": [
   {

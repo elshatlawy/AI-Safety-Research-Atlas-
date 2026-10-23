@@ -8,6 +8,16 @@
  "status_check": "AI_CHECKED",
  "remaining_question": "In a sandwiching trial with non-expert humans, a model stronger than them, and expert or ground-truth scoring, do multi-turn debate between model debaters, market making, and genuinely recursive reward modeling (assistant models trained in earlier rounds helping the non-experts evaluate the next model) raise non-expert accuracy above consultancy and above simple deference to the model?",
  "remaining_type": "EMPIRICAL",
+ "blockers": [
+  {
+   "part": "Q13",
+   "blocker": "MEASUREMENT",
+   "name": "A measurement",
+   "role": "Experimenter",
+   "covers": null,
+   "next": "Run sandwiching trials with non-expert humans, a model stronger than them and expert or ground-truth scoring, and compare non-expert accuracy under multi-turn debate between model debaters, market making and genuinely recursive reward modeling (assistant models trained in earlier rounds helping the non-experts evaluate the next model) with consultancy and simple deference."
+  }
+ ],
  "safety_case": [],
  "findings": [
   {

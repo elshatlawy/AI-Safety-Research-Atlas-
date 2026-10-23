@@ -8,6 +8,16 @@
  "status_check": "AI_CHECKED",
  "remaining_question": "In Choi et al.'s DCM debate model, exactly which debate graph topologies and prior assignments make condition (1) hold for every agent at every round, beyond Proposition 1's sufficient conditions? And on topologies where it fails (e.g. a directed star centred on a leader and gated on the leader's transcript, where the symmetry condition generally fails for the leader's update), is some weaker quantity, such as the average belief, still a martingale?",
  "remaining_type": "MATHEMATICAL",
+ "blockers": [
+  {
+   "part": "Q52",
+   "blocker": "PROOF",
+   "name": "A proof",
+   "role": "Prover",
+   "covers": null,
+   "next": "Characterize exactly which debate graph topologies and prior assignments make condition (1) hold for every agent at every round in Choi et al.'s DCM model, and prove whether a weaker quantity such as the average belief is still a martingale where it fails."
+  }
+ ],
  "safety_case": [],
  "findings": [
   {

@@ -8,6 +8,16 @@
  "status_check": "AI_CHECKED",
  "remaining_question": "With step labels of comparable quality to PRM800K's human labels, does process supervision beat outcome supervision outside math (e.g. law, medicine, open-ended writing), and which task properties (how definable steps are, chain-of-thought length, label noise) decide the sign of the effect?",
  "remaining_type": "EMPIRICAL",
+ "blockers": [
+  {
+   "part": "Q18",
+   "blocker": "MEASUREMENT",
+   "name": "A measurement",
+   "role": "Experimenter",
+   "covers": null,
+   "next": "Collect step labels of PRM800K-like quality outside math, for example in law, medicine or open-ended writing, compare process and outcome supervision, and vary step definability, chain-of-thought length and label noise to see which decides the sign."
+  }
+ ],
  "safety_case": [],
  "findings": [
   {

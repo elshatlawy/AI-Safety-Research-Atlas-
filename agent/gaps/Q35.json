@@ -8,6 +8,16 @@
  "status_check": "AI_CHECKED",
  "remaining_question": "Do task decomposition, critique and debate assistance raise human evaluators' detection of unintended, RLHF-induced misleading errors (U-SOPHISTRY) on tasks like QuALITY and APPS above unassisted evaluation, and does any gain hold when the policy is trained against the assisted evaluator?",
  "remaining_type": "EMPIRICAL",
+ "blockers": [
+  {
+   "part": "Q35",
+   "blocker": "MEASUREMENT",
+   "name": "A measurement",
+   "role": "Experimenter",
+   "covers": null,
+   "next": "Measure whether decomposition, critique and debate assistance raise human evaluators' detection of RLHF-induced misleading errors on tasks like QuALITY and APPS above unassisted evaluation, then train the policy against the assisted evaluator and measure again."
+  }
+ ],
  "safety_case": [
   {
    "node": "SC-D4.2",

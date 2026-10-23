@@ -8,6 +8,16 @@
  "status_check": "AI_CHECKED",
  "remaining_question": "In simple continuous-control tasks (cartpole balance, pendulum swing-up) with deep RL, when the true reward is revealed on only a random 10% of episodes, does an agent that also learns from the unlabeled episodes (e.g. via a learned reward model) match the learning curve of an agent given reward on every episode, and how much does actively choosing the labeled episodes change this?",
  "remaining_type": "EMPIRICAL",
+ "blockers": [
+  {
+   "part": "Q02",
+   "blocker": "MEASUREMENT",
+   "name": "A measurement",
+   "role": "Experimenter",
+   "covers": null,
+   "next": "On cartpole balance and pendulum swing-up with deep RL, reveal the true reward on a random 10% of episodes, compare the learning curve of an agent that also learns from unlabeled episodes with one given reward on every episode, and repeat with actively chosen labeled episodes."
+  }
+ ],
  "safety_case": [],
  "findings": [
   {

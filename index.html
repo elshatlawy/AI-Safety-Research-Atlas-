@@ -300,6 +300,26 @@ button.sn:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .qt.hit{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
 .qdiv{grid-column:1/-1;display:flex;align-items:baseline;gap:10px;font-size:11.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);font-weight:600;padding:16px 2px 2px;margin-top:6px;border-top:1px solid var(--line)}
 .qdiv b{font-family:"JetBrains Mono",monospace;font-weight:500}
+/* what would move a question: the kinds of work it waits on */
+.mvw{margin:0 0 14px}
+.mvhd{display:flex;align-items:baseline;gap:4px 10px;flex-wrap:wrap;margin:0 0 8px}.mvhd b{font-size:15px}.mvhd span{font-size:12.5px;color:var(--muted)}
+.mvrow{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(150px,100%),1fr));gap:8px}
+.mvt{display:grid;grid-template-columns:auto minmax(0,1fr);grid-template-rows:auto auto;column-gap:9px;align-items:center;border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:8px 10px;cursor:pointer;text-align:left;min-width:0}
+.mvt:hover{border-color:var(--ink2)}
+.mvt.on{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+.mvt:disabled{opacity:.45;cursor:default}.mvt:disabled:hover{border-color:var(--line)}
+.mvi{width:28px;height:28px;border-radius:8px;display:grid;place-items:center;background:color-mix(in srgb,var(--ink) 7%,var(--surface));flex:none}
+.mvt .mvi{grid-row:span 2}
+.mvn{font-size:13px;line-height:1.2;min-width:0}.mvn b{font-family:"JetBrains Mono",monospace;font-weight:500;font-size:17px;margin-right:6px}
+.mvr{font-size:11.5px;color:var(--muted)}
+.mvline{font-size:12.5px;color:var(--ink2);margin:8px 0 0;max-width:72ch}
+.mvx{width:17px;height:17px;border-radius:5px;display:inline-grid;place-items:center;background:color-mix(in srgb,var(--ink) 9%,var(--surface))}
+.qnone{font-size:13px;color:var(--muted);margin:4px 2px}
+.mvbox{display:grid;gap:8px;margin:6px 0 4px}
+.mvp{border:1px solid var(--line2);border-radius:12px;padding:10px 12px;display:grid;gap:5px;min-width:0}
+.mvph{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.mvph .mvi{width:24px;height:24px;border-radius:7px}
+.mvph b{font-size:14px}.mvrole{font-size:12px;color:var(--muted)}.mvpl{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--muted)}
+.mvp p{margin:0;font-size:13.5px;color:var(--ink2)}.mvp .mvwhy{font-size:12.5px;color:var(--muted)}
 .qdiv[hidden]{display:none}
 .rrule{margin-top:18px;font-size:13px;color:var(--ink2)}
 .rrule summary{cursor:pointer;color:var(--muted);font-size:13px}
@@ -1321,7 +1341,7 @@ const LG_VAR = {"Proved":"--lg-proved","Paper problem":"--lg-problem","Derived":
 
 let D, P, R, L, GQ, QBY, STEPS, STEP, BRANCHES, LG, CD, CARD_BY_R, ARX, ADJ, PREC, CASE = null, PAIRS = [], POOLED_E = null, lastStep;
 const CN = {}, CKIDS = new Map();
-const S = {dcon:null, dcell:[0, 0], fams:new Set(FAMS.map(f => f[0])), leads:false, pbase:"papers", kq:null, sk:null, step:null, gstatus:null, grade:null, openQ:null, back:"gaps", hops:1, lgoff:new Set(), focusStep:null, fam:null, focusFam:null, famPaper:null, bfam:null, ppaper:null, prob:null, pnode:null, lproj:null, lsel:null, lprob:null, flow:null, suppose:null};
+const S = {dcon:null, dcell:[0, 0], fams:new Set(FAMS.map(f => f[0])), leads:false, pbase:"papers", kq:null, sk:null, step:null, gstatus:null, grade:null, openQ:null, back:"gaps", hops:1, lgoff:new Set(), focusStep:null, fam:null, focusFam:null, famPaper:null, bfam:null, ppaper:null, prob:null, pnode:null, lproj:null, lsel:null, lprob:null, flow:null, suppose:null, gkind:null};
 const $ = (s, r = document) => r.querySelector(s);
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const fmt = n => n.toLocaleString("en-US");
@@ -1350,6 +1370,23 @@ function kicon(k, size = 12) {
   }[k] || "";
   return `<svg ${s}>${body}</svg>`;
 }
+/* the kinds of work that would move an open question next, in a fixed order */
+const MV_ORDER = ["MEASUREMENT", "PROOF", "DEFINITION", "STATEMENT_MATCH", "SYSTEM_EVIDENCE", "EXPLANATION"];
+function mvIcon(k, size = 14) {
+  const c = "currentColor", s = `width="${size}" height="${size}" viewBox="0 0 12 12" aria-hidden="true"`;
+  const body = {
+    MEASUREMENT:`<rect x=".9" y="3.4" width="10.2" height="5.2" rx="1" fill="none" stroke="${c}" stroke-width="1.3"/><path d="M3.3 3.4v2.1M5.3 3.4v1.3M7.3 3.4v2.1M9.3 3.4v1.3" stroke="${c}" stroke-width="1.1"/>`,
+    PROOF:`<circle cx="6" cy="2.7" r="1.45" fill="${c}"/><circle cx="2.5" cy="9.1" r="1.45" fill="${c}"/><circle cx="9.5" cy="9.1" r="1.45" fill="${c}"/>`,
+    DEFINITION:`<path d="M1.5 3.2h9M1.5 6h9M1.5 8.8h9" stroke="${c}" stroke-width="1.5"/>`,
+    STATEMENT_MATCH:`<rect x="1" y="1.5" width="6" height="7.5" rx="1" fill="none" stroke="${c}" stroke-width="1.3"/><rect x="5" y="3" width="6" height="7.5" rx="1" fill="none" stroke="${c}" stroke-width="1.3"/>`,
+    SYSTEM_EVIDENCE:`<rect x=".9" y="1.6" width="10.2" height="8.8" rx="1.3" fill="none" stroke="${c}" stroke-width="1.3"/><path d="M3 5l1.8 1.4L3 7.8M6 8h3" fill="none" stroke="${c}" stroke-width="1.2" stroke-linecap="round"/>`,
+    EXPLANATION:`<path d="M1.5 2.2h9v6H5.2L3 10.2V8.2H1.5z" fill="none" stroke="${c}" stroke-width="1.3" stroke-linejoin="round"/>`
+  }[k] || "";
+  return `<svg ${s}>${body}</svg>`;
+}
+const mvLab = k => ((D.gap && D.gap.blocker_labels) || {})[k] || {};
+const mvName = k => mvLab(k).name || human(k);
+const qKinds = q => [...new Set((q.blockers || []).map(b => b.k))];
 function famSwatch(f, w = 18) {
   const dash = f === "topic" ? ' stroke-dasharray="3 3"' : "";
   return `<svg width="${w}" height="10" viewBox="0 0 ${w} 10" aria-hidden="true"><path d="M1 5h${w - 2}" stroke="${famColor(f)}" stroke-width="3" stroke-linecap="round"${dash}/></svg>`;
@@ -1368,7 +1405,7 @@ const statusSVG = (st, s) => fracSVG(STATUS_FILL[st] ?? 0, s);
 
 async function boot() {
   try {
-    const res = await fetch("data.json?v=c0bc4913e1f5");
+    const res = await fetch("data.json?v=71c774b1e65c");
     if (!res.ok) throw new Error(res.status);
     D = await res.json();
   } catch (e) {
@@ -1481,6 +1518,7 @@ function renderGaps() {
   const onCase = qs.filter(q => q.steps.length), offCase = qs.filter(q => !q.steps.length);
   const nPapers = new Set(GQ.map(q => q.asked_by)).size;
   if (S.gstatus && !tally[S.gstatus]) S.gstatus = null;
+  if (S.gkind && !GQ.some(q => qKinds(q).includes(S.gkind))) S.gkind = null;
   const box = $("#treebox"), keep = box ? [box.scrollLeft, box.scrollTop] : null;
   const changed = S.step !== lastStep; lastStep = S.step;
   if (changed) S.suppose = null;
@@ -1496,6 +1534,7 @@ function renderGaps() {
       ${CASE ? treeCard() : casePanelHTML()}
       <div class="ranked">
         ${hasStep ? `<div class="stepban" id="steppanel" aria-live="polite">${CASE ? stepPanel() : stepCaption()}</div>` : ""}
+        ${moveRow()}
         <div class="rhead">
           <div class="sfilter" role="group" aria-label="Filter by status">${statuses.map(s => `<button type="button" class="sf${S.gstatus === s ? " on" : ""}" data-st="${esc(s)}" aria-pressed="${S.gstatus === s}">${statusSVG(s, 26)}<b>${tally[s]}</b><span>${esc(human(s))}</span></button>`).join("")}</div>
           <div class="iconkey">${CASE ? `<span>${miniTLKey()} later findings by date</span>` : ""}<span>${kicon("lean", 12)} Lean proof</span><span>${kicon("flask", 12)} suggested experiment</span></div>
@@ -1504,6 +1543,7 @@ function renderGaps() {
           ${onCase.map(tileHTML).join("")}
           ${offCase.length ? `<div class="qdiv" id="qdiv"><span>Not tied to a step of the case</span><b>${offCase.length}</b></div>${offCase.map(tileHTML).join("")}` : ""}
         </div>
+        <p class="qnone" id="qnone" hidden>No question matches both filters.</p>
         ${rankRule()}
       </div>
     </div>`;
@@ -1522,6 +1562,32 @@ function renderGaps() {
     const sp = $("#steppanel"), r = sp && sp.getBoundingClientRect();
     if (r && (r.top < 60 || r.top > innerHeight - 140)) sp.scrollIntoView({block: "start"});
   }
+}
+/* "What would move it": one tile per kind of work, filtering the ranked list */
+function moveRow() {
+  if (!GQ.some(q => (q.blockers || []).length)) return "";
+  const n = {}; GQ.forEach(q => qKinds(q).forEach(k => { n[k] = (n[k] || 0) + 1; }));
+  const labs = (D.gap && D.gap.blocker_labels) || {};
+  const kinds = [...MV_ORDER.filter(k => labs[k] || n[k]), ...Object.keys(n).filter(k => !MV_ORDER.includes(k))];
+  return `<div class="mvw">
+    <div class="mvhd"><b>What would move it</b><span>Pick the kind of work; its questions stay in rank order.</span></div>
+    <div class="mvrow" role="group" aria-label="Filter by the kind of work that would move a question">${kinds.map(k => `<button type="button" class="mvt${S.gkind === k ? " on" : ""}" data-k="${esc(k)}" aria-pressed="${S.gkind === k}"${n[k] ? "" : " disabled"}><span class="mvi">${mvIcon(k)}</span><span class="mvn"><b>${n[k] || 0}</b>${esc(mvName(k))}</span><span class="mvr">${esc(mvLab(k).role || "")}</span></button>`).join("")}</div>
+    <p class="mvline" id="mvline">${moveLine()}</p>
+  </div>`;
+}
+function moveLine() {
+  if (!S.gkind) return "Each question shows the kind of work it waits on; a question in two parts can wait on two. The labels are AI drafts, and each passed two blind AI checks.";
+  const k = S.gkind, pk = GQ.filter(q => qKinds(q).includes(k) && q.has_experiment_package).length;
+  return `<b>${esc(mvName(k))}</b> · ${esc(mvLab(k).work || "")}${pk ? ` ${pk} already ${pk === 1 ? "has" : "have"} a suggested experiment.` : ""}`;
+}
+/* the question page's box: each part, its kind of work and the next action */
+function moveHTML(q) {
+  const bs = q.blockers || [];
+  if (!bs.length) return "";
+  const many = bs.length > 1;
+  return `<h4>What would move it${many ? ` · ${bs.length} parts` : ""}</h4><div class="mvbox">${bs.map((b, i) => `<div class="mvp">
+    <div class="mvph">${many ? `<span class="mvpl">${esc((b.part || "").split(".")[1] || "abcdef"[i])}</span>` : ""}<span class="mvi">${mvIcon(b.k)}</span><b>${esc(mvName(b.k))}</b><span class="mvrole">${esc(mvLab(b.k).role || "")}</span></div>
+    <p>${esc(b.next)}</p>${b.covers ? `<p class="mvwhy">From what is left: “${esc(b.covers)}”</p>` : ""}</div>`).join("")}</div>`;
 }
 /* the old step grid, used only when the build had no pilot data for the tree */
 function casePanelHTML() {
@@ -1808,6 +1874,7 @@ function tileHTML(q) {
     <span class="qbody">
       <span class="qq">${esc(q.question)}</span>
       <span class="qf">
+        ${qKinds(q).map(k => `<span class="mvx" data-tip="What would move it: ${esc(mvName(k).toLowerCase())}">${mvIcon(k, 11)}</span>`).join("")}
         <span class="ic" data-tip="${esc(human(q.status))}">${statusSVG(q.status, 15)}</span>
         ${q.steps.length ? `<span class="ministeps">${q.steps.map(miniNode).join("")}</span>` : ""}
         ${CASE ? `<span class="ic" data-tip="${plural(nf, "later finding")} that count, by date">${miniTL(q)}</span>` : `<span class="ic">${kicon("citation", 12)}${q.findings_counted ?? 0}</span>`}
@@ -1852,6 +1919,12 @@ function wireGaps() {
     document.querySelectorAll(".sf[data-st]").forEach(x => { const on = x.dataset.st === S.gstatus; x.classList.toggle("on", on); x.setAttribute("aria-pressed", on); });
     paintGaps();
   });
+  document.querySelectorAll(".mvt[data-k]").forEach(b => b.onclick = () => {
+    S.gkind = S.gkind === b.dataset.k ? null : b.dataset.k;
+    document.querySelectorAll(".mvt[data-k]").forEach(x => { const on = x.dataset.k === S.gkind; x.classList.toggle("on", on); x.setAttribute("aria-pressed", on); });
+    $("#mvline").innerHTML = moveLine();
+    paintGaps();
+  });
   document.querySelectorAll(".qt[data-q]").forEach(t => {
     t.addEventListener("mouseenter", () => paintGaps(t.dataset.q));
     t.addEventListener("mouseleave", () => paintGaps());
@@ -1866,8 +1939,10 @@ function paintGaps(hoverQ) {
   grid.querySelectorAll(".qt").forEach(t => {
     const q = QBY[t.dataset.q];
     t.classList.toggle("hit", !!st && q.steps.includes(st));
-    t.hidden = !!S.gstatus && q.status !== S.gstatus;
+    t.hidden = (!!S.gstatus && q.status !== S.gstatus) || (!!S.gkind && !qKinds(q).includes(S.gkind));
   });
+  const none = $("#qnone");
+  if (none) none.hidden = !!grid.querySelector(".qt:not([hidden])");
   const div = $("#qdiv");
   if (div) { let n = div.nextElementSibling, any = false; while (n) { if (!n.hidden) { any = true; break; } n = n.nextElementSibling; } div.hidden = !any; }
   const hq = QBY[hoverQ || S.openQ];
@@ -1977,6 +2052,7 @@ function openQuestionSheet(q) {
     ${fs.length || !CASE ? "" : `<p class="muted" style="margin:4px 0 0;font-size:13px">No later-work finding counts yet.</p>`}
     <h4>What is left</h4>
     <div class="left">${esc(q.remaining_question)}</div>
+    ${moveHTML(q)}
     ${pooled ? `<h4>Debate vs baseline · ${plural(PAIRS.length, "comparison")} <a class="tag" href="#discoveries" style="text-transform:none;letter-spacing:0">${esc(POOLED_E.label)}</a></h4>${pooledFigure()}` : ""}
     <h4>Where it sits in the safety case${q.links.length ? ` · ${plural(q.links.length, "step")}` : ""}</h4>
     ${q.links.length ? (CASE ? `<div class="sit"><div class="mtwrap">${miniTreeSVG(new Set(q.steps))}</div><div style="min-width:0">${q.links.map(linkRow).join("")}</div></div>` : q.links.map(linkRow).join("")) : `<p class="muted" style="margin:0">Not tied to a step of the safety case.</p>`}

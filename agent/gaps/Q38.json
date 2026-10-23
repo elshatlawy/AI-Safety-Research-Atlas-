@@ -8,6 +8,16 @@
  "status_check": "AI_CHECKED",
  "remaining_question": "Does task decomposition combined with weak-to-strong training (a strong model trained on weak supervision of decomposed subtasks, testing part-to-complete generalization) recover more of the performance gap, measured against held-out ground-truth or expert labels, than plain W2SG or debate+W2SG, on verifiable tasks and on tasks without an automatic verifier?",
  "remaining_type": "EMPIRICAL",
+ "blockers": [
+  {
+   "part": "Q38",
+   "blocker": "MEASUREMENT",
+   "name": "A measurement",
+   "role": "Experimenter",
+   "covers": null,
+   "next": "Train a strong model on weak supervision of decomposed subtasks and compare the performance gap it recovers, against held-out ground-truth or expert labels, with plain W2SG and debate+W2SG, on verifiable tasks and on tasks without an automatic verifier."
+  }
+ ],
  "safety_case": [],
  "findings": [
   {

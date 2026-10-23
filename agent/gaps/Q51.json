@@ -8,6 +8,24 @@
  "status_check": "AI_CHECKED",
  "remaining_question": "Outside the black-box judgment model of 2610.02557 (e.g. exploiting the debaters' equal computational power or a relaxed judgment oracle), can a debate protocol efficiently decide problems all of whose decompositions have large fractional block sensitivity, and which natural problem classes (proof-like vs evidence-aggregating claims) admit decompositions with rho^d polynomial in the input size?",
  "remaining_type": "MIXED",
+ "blockers": [
+  {
+   "part": "Q51.a",
+   "blocker": "PROOF",
+   "name": "A proof",
+   "role": "Prover",
+   "covers": "Outside the black-box judgment model of 2610.02557 (e.g. exploiting the debaters' equal computational power or a relaxed judgment oracle), can a debate protocol efficiently decide problems all of whose decompositions have large fractional block sensitivity",
+   "next": "Prove or refute that a debate protocol outside the black-box judgment model, for example one exploiting the debaters' equal computational power or a relaxed judgment oracle, efficiently decides problems all of whose decompositions have large fractional block sensitivity."
+  },
+  {
+   "part": "Q51.b",
+   "blocker": "DEFINITION",
+   "name": "A definition",
+   "role": "Definer",
+   "covers": "which natural problem classes (proof-like vs evidence-aggregating claims) admit decompositions with rho^d polynomial in the input size?",
+   "next": "Define proof-like and evidence-aggregating claims as problem classes precisely enough to ask which of them admit decompositions with rho^d polynomial in the input size."
+  }
+ ],
  "safety_case": [
   {
    "node": "SC-C4.6",

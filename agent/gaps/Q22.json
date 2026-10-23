@@ -8,6 +8,16 @@
  "status_check": "AI_CHECKED",
  "remaining_question": "For a natural class of oracle machines (for example eps-robust or K-Lipschitz ones), is there a doubly-efficient debate protocol that still decides the language defined by the intended judgment oracle H when the verifier can only query an oracle O that disagrees with H on an arbitrary set of queries of bounded size or density (or on a randomly chosen delta-fraction), with polynomial-time honest provers and poly(1/delta) verifier queries?",
  "remaining_type": "MATHEMATICAL",
+ "blockers": [
+  {
+   "part": "Q22",
+   "blocker": "PROOF",
+   "name": "A proof",
+   "role": "Prover",
+   "covers": null,
+   "next": "Prove or refute: for a natural class such as eps-robust or K-Lipschitz oracle machines, some doubly-efficient debate protocol decides the language of H when the verifier's oracle O disagrees with H on an arbitrary set of queries of bounded size or density, or on a randomly chosen delta-fraction, with polynomial-time honest provers and poly(1/delta) queries."
+  }
+ ],
  "safety_case": [
   {
    "node": "SC-C4.5",

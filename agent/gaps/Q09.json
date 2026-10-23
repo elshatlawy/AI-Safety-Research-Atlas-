@@ -8,6 +8,16 @@
  "status_check": "AI_CHECKED",
  "remaining_question": "Can a decomposition model trained from human feedback beat a fixed decomposition on a hard real-world task without verifiable answers (e.g. book-length summarization), measured by the quality of the human supervision it enables, and on which tasks do cross-part dependencies make it fail?",
  "remaining_type": "EMPIRICAL",
+ "blockers": [
+  {
+   "part": "Q09",
+   "blocker": "MEASUREMENT",
+   "name": "A measurement",
+   "role": "Experimenter",
+   "covers": null,
+   "next": "Train a decomposition model from human feedback on a hard real-world task without verifiable answers, such as book-length summarization, compare the quality of human supervision it enables with a fixed decomposition, and find tasks where cross-part dependencies make it fail."
+  }
+ ],
  "safety_case": [],
  "findings": [
   {

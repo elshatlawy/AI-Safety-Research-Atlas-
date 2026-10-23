@@ -8,6 +8,16 @@
  "status_check": "AI_CHECKED",
  "remaining_question": "Does training the examiner's question generation (e.g. with RL rewarded on detection correctness), or pooling several diverse examiners, raise cross-examination F1 at detecting factual errors above a single prompted examiner with a majority-vote or trained (e.g. linear) decision rule, and do correlated mistakes across capable examiner LMs limit the gain from pooling?",
  "remaining_type": "EMPIRICAL",
+ "blockers": [
+  {
+   "part": "Q16",
+   "blocker": "MEASUREMENT",
+   "name": "A measurement",
+   "role": "Experimenter",
+   "covers": null,
+   "next": "Train the examiner's question generation (for example with RL rewarded on detection correctness) or pool diverse examiners, compare cross-examination F1 with a single prompted examiner using a majority-vote or trained decision rule, and measure correlated mistakes across examiners."
+  }
+ ],
  "safety_case": [],
  "findings": [
   {

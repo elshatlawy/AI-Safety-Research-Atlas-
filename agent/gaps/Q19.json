@@ -8,6 +8,16 @@
  "status_check": "AI_CHECKED",
  "remaining_question": "On questions whose correct answers rest on knowledge the stronger models cannot back with short, judge-checkable evidence (e.g. expert intuitions or regularities induced from many examples), does debate raise a weaker judge's accuracy above direct QA and consultancy?",
  "remaining_type": "EMPIRICAL",
+ "blockers": [
+  {
+   "part": "Q19",
+   "blocker": "MEASUREMENT",
+   "name": "A measurement",
+   "role": "Experimenter",
+   "covers": null,
+   "next": "On questions whose answers rest on knowledge the stronger models cannot back with short, judge-checkable evidence, such as expert intuitions, compare a weaker judge's accuracy under debate, direct QA and consultancy."
+  }
+ ],
  "safety_case": [
   {
    "node": "SC-D5.4",

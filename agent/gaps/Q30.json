@@ -8,6 +8,16 @@
  "status_check": "AI_CHECKED",
  "remaining_question": "In Yang et al.'s weak-to-strong preference-alignment setup with a conflicting target, given that correctness of weak preference orders alone lets the strong model perceive weak-unknown samples, does it do so by checking each weak order against its own knowledge (as F2's stronger model predicting the weaker model's correctness suggests) or by inferring per-domain weak competence from the portion and distribution of supervised samples across domains, as would be tested by ablations that equalize the per-domain distribution while holding the correctness of the orders and the strong model fixed?",
  "remaining_type": "EMPIRICAL",
+ "blockers": [
+  {
+   "part": "Q30",
+   "blocker": "MEASUREMENT",
+   "name": "A measurement",
+   "role": "Experimenter",
+   "covers": null,
+   "next": "In Yang et al.'s weak-to-strong preference-alignment setup, run ablations that equalize the per-domain distribution of supervised samples while holding the correctness of the weak orders and the strong model fixed, and see whether its perception of weak-unknown samples changes."
+  }
+ ],
  "safety_case": [],
  "findings": [
   {

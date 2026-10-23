@@ -8,6 +8,16 @@
  "status_check": "AI_CHECKED",
  "remaining_question": "Can an LM revise the decomposition of a multi-step LM program, localize what causes a failure and repair it reliably enough to replace human iteration (e.g. a failed-to-success flip rate approaching a human developer's), both on tasks with automatic evaluation (where, on Who&When, the best of three attribution methods found the decisive failure step only 14.2% of the time and a trained tracer, AgenTracer-8B, only improved on frontier LLMs) and on tasks with subjective answers that have no ground-truth answers or automatic evaluation function?",
  "remaining_type": "EMPIRICAL",
+ "blockers": [
+  {
+   "part": "Q15",
+   "blocker": "MEASUREMENT",
+   "name": "A measurement",
+   "role": "Experimenter",
+   "covers": null,
+   "next": "Measure how often an LM that revises a multi-step LM program's decomposition, localizes the cause of a failure and repairs it turns failures into successes, against a human developer, on tasks with automatic evaluation and on subjective tasks without it."
+  }
+ ],
  "safety_case": [],
  "findings": [
   {

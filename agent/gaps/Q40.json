@@ -8,6 +8,16 @@
  "status_check": "AI_CHECKED",
  "remaining_question": "In AI-AI recursive self-critiquing where the critic is stronger than the supervised model, does improving the supervised model's self-critique (for example by RL critique training) or making the critic verify rather than defer to that self-critique remove the advantage of direct critique over higher-order critique on the asking paper's tasks?",
  "remaining_type": "EMPIRICAL",
+ "blockers": [
+  {
+   "part": "Q40",
+   "blocker": "MEASUREMENT",
+   "name": "A measurement",
+   "role": "Experimenter",
+   "covers": null,
+   "next": "On the asking paper's tasks, improve the supervised model's self-critique (for example by RL critique training) or make the stronger critic verify rather than defer to it, and test whether direct critique still beats higher-order critique."
+  }
+ ],
  "safety_case": [],
  "findings": [
   {
