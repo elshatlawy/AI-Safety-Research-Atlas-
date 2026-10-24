@@ -108,7 +108,6 @@
     .hn{font-size:15px;font-weight:500;vertical-align:2px}
     .part.sm{margin-top:22px}
     .part h4{font-size:14.5px;font-weight:650;margin:0}
-    .apps.open{justify-content:flex-start}
     /* one way to use it */
     .walk{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
     @media (max-width:860px){.walk{grid-template-columns:repeat(2,minmax(0,1fr))}}
@@ -217,7 +216,13 @@
     .mkey span{display:inline-flex;align-items:center;gap:6px}
     .mkey .app{padding:0;width:16px;height:11px;border-radius:3px}
     .mkey .dot{width:11px;height:11px}
-    @media (max-width:640px){.ly{grid-template-columns:14px minmax(0,1fr);grid-template-areas:"d b" "d t";gap:2px 10px}.ly .dot{grid-area:d}.ly b{grid-area:b}.ly span{grid-area:t}}
+    .ly .lyt{display:flex;flex-direction:column;gap:7px}
+    .arow{display:flex;flex-wrap:wrap;gap:6px}
+    .app.ar{display:inline-flex;align-items:center;gap:6px;padding:3px 9px;font-size:12.5px;border-radius:8px;border:1.5px dashed var(--line2);color:var(--ink2);text-decoration:none}
+    .app.ar.on{border-style:solid;color:var(--ink)}
+    .app.ar:hover{border-color:var(--seq)}
+    .app.ar .dot{width:10px;height:10px;flex:none}
+    @media (max-width:640px){.ly{grid-template-columns:14px minmax(0,1fr);grid-template-areas:"d b" "d t";gap:2px 10px}.ly .dot{grid-area:d}.ly b{grid-area:b}.ly .lyt{grid-area:t}.ly .arow .dot{grid-area:auto}}
     
     
     /* the AI safety coverage map */
@@ -443,17 +448,14 @@
       <p class="sub">One database for all of AI safety, kept live as papers arrive, where people and AI agents prove, test, review and build on each other's work, and every claim stays checkable.</p>
       <div class="part" id="database"><h3>One database, many applications</h3></div>
       <p class="psub">A reusable master database connecting theory, AI-safety research, formal results, implementations and evidence. Applications grow from that shared foundation instead of each building its own.</p>
-      <div class="panel mdb" role="img" aria-label="8 applications live today and 8 proposed, all resting on one database of five layers: theory, AI-safety research, formal results, implementations and empirical evidence">
+      <div class="panel mdb" role="img" aria-label="8 applications live today and 8 proposed, all resting on one database of five layers: theory, AI-safety research, formal results, implementations and empirical evidence; the research layer names the 13 research areas the database will hold, 10 of them started">
         <div class="apps"><span class="app live">Open questions</span><span class="app live">Discoveries</span><span class="app live">Result grades</span><span class="app live">Record graph</span><span class="app live">Agent entrance</span><span class="app live">Data downloads</span><span class="app">Pre-citation check</span><span class="app">Safety-case audit</span><span class="app">Transfer check</span><span class="app">Research missions</span><span class="app">Experiment priorities</span><span class="app">Living reviews</span><span class="app">Learning paths</span><span class="app live">Definition atlas</span><span class="app">New-paper triage</span><span class="app live">Replication tracker</span></div>
         <div class="stems" aria-hidden="true"></div>
-        <div class="found"><div class="ly"><i class="dot p" title="started"></i><b>Empirical evidence</b><span>248 debate results graded by their evidence; 152 rest on one setting</span></div><div class="ly"><i class="dot n" title="thin"></i><b>Implementations</b><span>a toy debate system, one ControlArena case and one open-model oversight study</span></div><div class="ly"><i class="dot p" title="started"></i><b>Formal results</b><span>997 Lean and Metamath records; 14 Lean projects machine-checked</span></div><div class="ly"><i class="dot p" title="started"></i><b>AI-safety research</b><span>657 debate records from 42 papers read in full; 96 on 22 other topics</span></div><div class="ly"><i class="dot p" title="started"></i><b>Theory</b><span>59 definitions and 27 theorems quoted from the debate papers</span></div></div>
+        <div class="found"><div class="ly"><i class="dot p" title="started"></i><b>Empirical evidence</b><span class="lyt">248 debate results graded by their evidence; 152 rest on one setting</span></div><div class="ly"><i class="dot n" title="thin"></i><b>Implementations</b><span class="lyt">a toy debate system, one ControlArena case and one open-model oversight study</span></div><div class="ly"><i class="dot p" title="started"></i><b>Formal results</b><span class="lyt">997 Lean and Metamath records; 14 Lean projects machine-checked</span></div><div class="ly"><i class="dot p" title="started"></i><b>AI-safety research</b><span class="lyt">657 debate records from 42 papers read in full; 96 on 22 other topics<span class="arow" role="list" aria-label="13 research areas, 10 started"><a class="app ar on" href="#cv-area-alignment"><i class="dot p"></i>Alignment</a><a class="app ar on" href="#cv-area-interpretability"><i class="dot p"></i>Interpretability</a><a class="app ar on" href="#cv-area-robustness"><i class="dot p"></i>Robustness</a><a class="app ar on" href="#cv-area-security"><i class="dot p"></i>Security</a><a class="app ar" href="#cv-area-evaluation"><i class="dot n"></i>Evaluation and risk assessment</a><a class="app ar on" href="#cv-area-control"><i class="dot p"></i>Control and monitoring</a><a class="app ar on" href="#cv-area-assurance"><i class="dot p"></i>Assurance and verification</a><a class="app ar on" href="#cv-area-human"><i class="dot p"></i>Human factors</a><a class="app ar on" href="#cv-area-governance"><i class="dot p"></i>Governance and policy</a><a class="app ar on" href="#cv-area-multiagent"><i class="dot p"></i>Multi-agent risks</a><a class="app ar on" href="#cv-area-foundations"><i class="dot p"></i>Foundations and theory</a><a class="app ar" href="#cv-area-resilience"><i class="dot n"></i>Societal resilience</a><a class="app ar" href="#cv-area-societal"><i class="dot n"></i>Societal impacts and ethics</a></span></span></div><div class="ly"><i class="dot p" title="started"></i><b>Theory</b><span class="lyt">59 definitions and 27 theorems quoted from the debate papers</span></div></div>
         <div class="fcap">One shared foundation</div>
       </div>
-      <div class="mkey"><span><i class="app live"></i>live today</span><span><i class="app"></i>could be built</span><span><i class="dot p"></i>layer started</span><span><i class="dot n"></i>layer thin</span></div>
-
-      <div class="part"><h3>Open doors</h3></div>
-      <p class="psub">Any of these could come next. None is promised, and none is closed.</p>
-      <div class="apps open" role="list" aria-label="Open doors"><span class="app" role="listitem">Debate kept live, new papers each week</span><span class="app" role="listitem">One Lean library of the debate theorems</span><span class="app" role="listitem">The suggested experiments, run</span><span class="app" role="listitem">A public state-of-evidence review</span><span class="app" role="listitem">Experts confirming the finds</span><span class="app" role="listitem">Usefulness measured on real questions</span><span class="app" role="listitem">AI control and monitoring</span><span class="app" role="listitem">Reward hacking and specification gaming</span><span class="app" role="listitem">ELK and deceptive alignment</span><span class="app" role="listitem">Interpretability</span><span class="app" role="listitem">Agent foundations and learning theory</span><span class="app" role="listitem">An area you bring</span></div>
+      <div class="mkey"><span><i class="app live"></i>live today</span><span><i class="app"></i>could be built</span><span><i class="dot p"></i>started</span><span><i class="dot n"></i>thin, still to add</span></div>
+      <p class="psub">Each research area in the picture opens its place on the coverage map above.</p>
       <p class="note">It counts as useful only if researchers find the right sources faster, catch missing assumptions, avoid invalid transfers, reuse its exports and send corrections. Record counts don't.</p>
 
     </section>
@@ -487,7 +489,9 @@
     const a = e.target.closest("a[data-jump]");
     if (a && open(a.dataset.jump)) e.preventDefault();
   });
-  if (location.hash.startsWith("#cv-")) open(location.hash.slice(4));
+  const fromHash = () => { if (location.hash.startsWith("#cv-")) open(location.hash.slice(4)); };
+  window.addEventListener("hashchange", fromHash);
+  fromHash();
 })();
 </script>
     </body>
