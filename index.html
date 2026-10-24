@@ -1297,11 +1297,37 @@ a.sml:hover{text-decoration:underline}
 .lk{border:0;background:transparent;padding:0;color:var(--ink2);text-decoration:underline;text-underline-offset:3px;cursor:pointer;font-size:13px}
 .sheet .actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
 @media (max-width:720px){.rgbox{height:62vh}}
+/* arrangements and highlights of the same dots */
+.rglens{display:flex;flex-wrap:wrap;gap:8px 24px;align-items:center;margin:0 0 12px}
+.rgset{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.rgset .eyebrow{margin-right:4px}
+.rgsel{border:1px solid var(--line2);background:transparent;border-radius:999px;padding:4px 10px;font:inherit;font-size:13px;color:var(--ink2);max-width:260px;cursor:pointer}
+.rgsel.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.rgband{fill:var(--sunk);opacity:.6}
+.rgbl{fill:var(--ink);font-weight:600}
+.rgbl tspan{fill:var(--muted);font-weight:500}
+.rgbr line{stroke:var(--seq);stroke-opacity:.5;stroke-width:1.2px;vector-effect:non-scaling-stroke}
+.rgag line{stroke-width:1.5px;vector-effect:non-scaling-stroke;stroke-opacity:.85}
+.rgag line.dis{stroke:var(--disputes)} .rgag line.sup{stroke:var(--agrees)}
+.rgring circle{fill:none;stroke-width:1.8px;vector-effect:non-scaling-stroke}
+.rgring .conflicts{stroke:var(--disputes)} .rgring .mixed{stroke:var(--steps)} .rgring .holds{stroke:var(--agrees)}
+.rgpath line{stroke:var(--seq);stroke-width:2.6px;stroke-opacity:.9;vector-effect:non-scaling-stroke}
+.rgpath circle{fill:none;stroke:var(--seq);stroke-width:2px;vector-effect:non-scaling-stroke}
+.rgreach{display:flex;flex-wrap:wrap;gap:6px}
+.rgreach .chip b{font-family:"JetBrains Mono",ui-monospace,monospace;font-weight:500;font-size:12px;opacity:.8}
+.rgreach .chip[disabled]{opacity:.45;cursor:default}
+.rgsmall{font-size:12.5px;margin:8px 0 0}
+.rgfind.rgpath{flex:none;width:100%;box-sizing:border-box}
+.rgres button{display:block;width:100%;text-align:left;border:0;background:transparent;font:inherit;font-size:13.5px;color:var(--ink);padding:6px 9px;border-radius:8px;cursor:pointer;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rgres button:hover,.rgres button:focus{background:var(--sunk);outline:0}
+.rghops{padding-left:18px;font-size:13.5px;margin:8px 0 0;color:var(--ink)} .rghops li{margin:5px 0} .rghops .rel{display:block;font-size:11.5px;color:var(--muted)} .rghops a{color:var(--ink);text-decoration:none}
+.rghops a:hover{text-decoration:underline}
 /* inside a frame: the record graph alone, filling the frame */
 .embed .top,.embed .ghead,.embed .rgnote,.embed #app>section{display:none}
 .embed main.wrap{padding:0;max-width:none}
 .embed #app{display:flex;flex-direction:column;height:100vh}
 .embed .rgtools{margin:0 0 10px}
+.embed .rglens{margin:0 0 10px}
 .embed .rgbox{flex:1;height:auto;min-height:0}
 .embed .sheet{top:0}
 @media (max-width:720px){.embed .sheet,.embed .sheet.wide{top:auto;max-height:88vh}}
@@ -2945,10 +2971,16 @@ const AREA_VAR = ["var(--area0)", "var(--area1)", "var(--area2)"];
 const RELN = {kernel_proof_depends_on:"proof uses", kernel_type_depends_on:"type uses", kernel_value_depends_on:"definition uses", kernel_constructor_depends_on:"constructor uses",
   candidate_mapping:"linked to", metamath_proof_ref:"proof cites", source_contains:"source contains", application_requires:"application requires", curated_context:"context for",
   formal_statement_requires:"statement requires", formal_proof_uses:"proof uses", formal_definition_uses:"definition uses", investigation_targets:"investigates"};
-// GT: the layout is drawn transposed (x and y swapped) when the box is taller than wide, so a phone screen holds it.
+// The same dots can be arranged four ways (groups is the community plot; layers, time and bridges are computed here from
+// graph.json's layer, date and col fields) and lit by four highlights (what rests on a record, an assumption family,
+// where papers agree or disagree, and the shortest path between two records). None of it adds a link: every line is a recorded link.
+const ARRANGE = [["groups", "Groups"], ["layers", "Layers"], ["time", "Time"], ["bridges", "Bridges"]];
+const GAP = 10, DIS = {challenges: "dis", critiques: "dis", supports: "sup"}, RING = {conflicts: "conflicts", mixed: "mixed", holds: "holds"};
+// GT: the group layout is drawn transposed (x and y swapped) when the box is taller than wide, so a phone screen holds it.
 let GR = null, GRI = null, GADJ = null, GVB = null, GT = false, GSEL = -1, GHITS = null, GAREA = -1, gAnim = 0, gResize = false;
+let GARR = "groups", GHL = null, GFAM = "", GLAY = {}, GCONE = null, GPATH = null, GREST = null, FNODE = null, GAGREE = null;
 function loadGraph() {
-  if (!loadGraph.p) loadGraph.p = fetch("graph.json?v=590ee8675439").then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }).then(g => {
+  if (!loadGraph.p) loadGraph.p = fetch("graph.json?v=28bda433ee38").then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }).then(g => {
     const N = g.nodes;
     GRI = {}; N.id.forEach((id, i) => { GRI[id.toLowerCase()] = i; });
     GADJ = N.id.map(() => []);
@@ -2956,16 +2988,92 @@ function loadGraph() {
       const s = g.links[j], t = g.links[j + 1], r = g.links[j + 2];
       GADJ[s].push([t, r, 1]); if (t !== s) GADJ[t].push([s, r, 0]);
     }
-    GR = g; return g;
+    FNODE = {}; N.finding.forEach((f, i) => { if (f >= 0) FNODE[f] = i; });
+    GR = g; GLAY = {}; return g;
   });
   return loadGraph.p;
 }
 const relLabel = r => RELN[GR.relations[r]] || GR.relations[r].replace(/_/g, " ");
 const kindLabel = k => { const t = (k || "record").replace(/_/g, " "); return t[0].toUpperCase() + t.slice(1); };
 const graphHref = i => "#graph/" + encodeURIComponent(GR.nodes.id[i]);
-const gx = i => GT ? GR.nodes.y[i] : GR.nodes.x[i], gy = i => GT ? GR.nodes.x[i] : GR.nodes.y[i];
+const lay = () => GARR === "groups" ? null : (GLAY[GARR] || (GLAY[GARR] = {layers: layoutLayers, time: layoutTime, bridges: layoutBridges}[GARR]()));
+const gx = i => { const L = lay(); return L ? L.x[i] : GT ? GR.nodes.y[i] : GR.nodes.x[i]; };
+const gy = i => { const L = lay(); return L ? L.y[i] : GT ? GR.nodes.x[i] : GR.nodes.y[i]; };
 const gcx = G => GT ? G.y : G.x, gcy = G => GT ? G.x : G.y;
-const gW = () => GT ? GR.height : GR.width, gH = () => GT ? GR.width : GR.height;
+const gW = () => { const L = lay(); return L ? L.w : GT ? GR.height : GR.width; };
+const gH = () => { const L = lay(); return L ? L.h : GT ? GR.width : GR.height; };
+// Records sorted so that, inside one rung or column, the four populations and then the groups stay together.
+const byPlace = (N, keys) => [...Array(N.id.length).keys()].sort((a, b) => { for (const k of keys) { const d = k(a) - k(b); if (d) return d; } return a - b; });
+// Lay members out in rows of `slots` dots, odd rows shifted half a step; returns the number of rows used.
+function grid(L, members, slots, x0, y0, step = GAP * .9) {
+  members.forEach((i, k) => { const r = Math.floor(k / slots), c = k % slots; L.x[i] = x0 + c * GAP + GAP / 2 + (r % 2) * GAP / 2; L.y[i] = y0 + r * step + GAP / 2; });
+  return Math.max(1, Math.ceil(members.length / slots));
+}
+function layoutLayers() {
+  const N = GR.nodes, n = N.id.length, pad = 30;
+  const order = byPlace(N, [i => N.layer[i], i => N.col[i], i => N.group[i]]);
+  const per = GR.layers.map((_, k) => order.filter(i => N.layer[i] === k));
+  // rows wide enough that the whole ladder is about as wide as it is tall and a half, like the box that shows it
+  const height = slots => per.reduce((h, m) => h + 24 + Math.max(1, Math.ceil(m.length / slots)) * GAP * .9 + 16, 6);
+  let slots = 40; for (let s = 24; s <= 160; s += 4) if (Math.abs((s * GAP + 2 * pad) / height(s) - 1.6) < Math.abs((slots * GAP + 2 * pad) / height(slots) - 1.6)) slots = s;
+  const L = {x: new Float64Array(n), y: new Float64Array(n), w: slots * GAP + 2 * pad, h: 0, bands: []};
+  let yy = 6;
+  GR.layers.forEach((name, k) => {
+    const y0 = yy, rows = grid(L, per[k], slots, pad, y0 + 24);
+    const h = 24 + rows * GAP * .9 + 10;
+    L.bands.push({name, y: y0, h, n: per[k].length, x: pad});
+    yy += h + 6;
+  });
+  L.h = yy;
+  return L;
+}
+function layoutTime() {
+  const N = GR.nodes, n = N.id.length;
+  const years = [...new Set(N.date.filter(Boolean).map(d => d.slice(0, 4)))].sort();
+  const cols = years.map(y => ({name: y, slots: 10})).concat([{name: "Undated", slots: 40}]);
+  const gap = 12, pad = 30, L = {x: new Float64Array(n), y: new Float64Array(n), w: 0, h: 0, bands: [], cols: []};
+  let xx = pad;
+  cols.forEach(c => { c.x = xx; c.w = c.slots * GAP; xx += c.w + gap; });
+  L.w = xx - gap + pad;
+  const colOf = i => N.date[i] ? years.indexOf(N.date[i].slice(0, 4)) : cols.length - 1;
+  const order = byPlace(N, [i => N.layer[i], colOf, i => N.date[i] ? +N.date[i].slice(5) : 0, i => N.group[i]]);
+  let yy = 34;
+  GR.layers.forEach((name, k) => {
+    const members = order.filter(i => N.layer[i] === k), y0 = yy;
+    let rows = 1;
+    cols.forEach((c, ci) => { rows = Math.max(rows, grid(L, members.filter(i => colOf(i) === ci), c.slots, c.x, y0 + 24)); });
+    const h = 24 + rows * GAP * .9 + 10;
+    L.bands.push({name, y: y0, h, n: members.length, x: pad});
+    yy += h + 6;
+  });
+  L.h = yy; L.cols = cols;
+  L.dated = N.date.filter(Boolean).length;
+  return L;
+}
+function layoutBridges() {
+  const N = GR.nodes, n = N.id.length, slots = 20, gap = 40, pad = 30;
+  const L = {x: new Float64Array(n), y: new Float64Array(n), w: 0, h: 0, cols: [], cross: []};
+  const order = byPlace(N, [i => N.col[i], i => N.layer[i], i => N.group[i]]);
+  let xx = pad, hh = 0;
+  GR.columns.forEach((name, c) => {
+    const members = order.filter(i => N.col[i] === c);
+    let yy = 30, prev = -1, k0 = 0;
+    // one block per rung inside the column, with a half-row gap between rungs
+    for (let k = 0; k <= members.length; k++) {
+      const done = k === members.length;
+      if (!done && N.layer[members[k]] === prev) continue;
+      if (k > k0) yy += grid(L, members.slice(k0, k), slots, xx, yy) * GAP * .9 + GAP * .5;
+      if (done) break;
+      prev = N.layer[members[k]]; k0 = k;
+    }
+    L.cols.push({name, x: xx, w: slots * GAP, n: members.length});
+    hh = Math.max(hh, yy);
+    xx += slots * GAP + gap;
+  });
+  L.w = xx - gap + pad; L.h = hh + 10;
+  for (let j = 0; j < GR.links.length; j += 3) { const s = GR.links[j], t = GR.links[j + 1]; if (N.col[s] !== N.col[t]) L.cross.push([s, t, GR.links[j + 2]]); }
+  return L;
+}
 function renderGraph(sel) {
   if (!GR) {
     $("#app").innerHTML = `<div class="empty">Loading every record…</div>`;
@@ -2976,36 +3084,80 @@ function renderGraph(sel) {
   if (!$("#rgsvg")) drawGraph();
   selectRecord(sel != null && GRI[sel] != null ? GRI[sel] : -1);
 }
+function famOptions() {
+  if (!D || !D.deps || !D.deps.families) return "";
+  const use = {}; (D.deps.grid || []).forEach(g => Object.keys(g.cells || {}).forEach(f => { use[f] = (use[f] || 0) + 1; }));
+  return D.deps.families.map(f => `<option value="${esc(f.id)}">${esc(f.name)} (${use[f.id] || 0})</option>`).join("");
+}
 function drawGraph() {
   const g = GR, n = g.nodes.id.length;
   $("#app").innerHTML = `
   <div class="ghead"><div class="eyebrow">Whole atlas</div><h1 class="gtitle">Every record, grouped by what it links to</h1>
-    <p class="lede">${fmt(n)} records in ${g.groups.length} groups. Records that link to each other or quote the same source sit together. Click a dot to read it and see its links.</p></div>
+    <p class="lede">${fmt(n)} records in ${g.groups.length} groups. Records that link to each other or quote the same source sit together. Click a dot to read it and see its links; arrange the same dots by kind, by year or by population, and light what rests on a record.</p></div>
   <div class="rgtools">
     <label class="rgfind"><svg width="15" height="15" viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M11 11l3.5 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
       <input id="rgq" type="search" placeholder="Find a record" autocomplete="off" spellcheck="false" aria-label="Find a record"><span id="rgqn"></span><div class="rgres" id="rgres" hidden></div></label>
     <div class="legend rgleg">${g.areas.map((a, k) => `<button class="chip" type="button" data-area="${k}" aria-pressed="false" style="--c:${AREA_VAR[k]}"><i></i>${esc(a.name)} <span class="muted mono">${fmt(a.n)}</span></button>`).join("")}</div>
   </div>
+  <div class="rglens">
+    <div class="rgset" role="group" aria-label="Arrange the records"><span class="eyebrow">Arrange</span>${ARRANGE.map(([k, label]) => `<button class="chip${k === GARR ? " on" : ""}" type="button" data-arr="${k}" aria-pressed="${k === GARR}">${label}</button>`).join("")}</div>
+    <div class="rgset" role="group" aria-label="Highlight"><span class="eyebrow">Highlight</span><button class="chip" type="button" data-hl="load" aria-pressed="false">What rests on it</button>${D && D.links ? `<button class="chip" type="button" data-hl="agree" aria-pressed="false">Agree / disagree</button>` : ""}${famOptions() ? `<select id="rgfam" class="rgsel" aria-label="Light the results that use one assumption family"><option value="">Assumption family…</option>${famOptions()}</select>` : ""}</div>
+  </div>
   <div class="rgbox" id="rgbox">
     <svg id="rgsvg" class="rgsvg" role="img" aria-label="${fmt(n)} records drawn as dots in ${g.groups.length} groups; the list below names every group"></svg>
-    <div class="rgzoom"><button type="button" data-z="in" aria-label="Zoom in">+</button><button type="button" data-z="out" aria-label="Zoom out">−</button><button type="button" data-z="fit" aria-label="Show every group">⤢</button></div>
+    <div class="rgzoom"><button type="button" data-z="in" aria-label="Zoom in">+</button><button type="button" data-z="out" aria-label="Zoom out">−</button><button type="button" data-z="fit" aria-label="Show everything">⤢</button></div>
   </div>
-  <p class="rgnote">Groups come from community detection (Louvain) over the ${fmt(g.links.length / 3)} recorded links, with a weaker tie between records that quote the same source. A group is not a field, and two dots side by side are not a claimed link.</p>
+  <p class="rgnote" id="rgnote"></p>
   <section><div class="sechead"><h2>The ${g.groups.length} groups</h2><span class="muted" style="font-size:13px">largest first</span></div>
     <div class="rglist">${g.groups.map((G, k) => `<button type="button" data-g="${k}" style="--c:${AREA_VAR[G.area]}"><i></i><span>${esc(G.name)}</span><b>${G.n}</b></button>`).join("")}</div></section>`;
-  GHITS = null; GAREA = -1; GSEL = -1;
+  GHITS = null; GAREA = -1; GSEL = -1; GCONE = null; GPATH = null;
   fillGraph();
   wireGraph();
 }
+// The plain-language line under the box: what this arrangement or highlight shows, and what it does not claim.
+function graphNote() {
+  const g = GR, N = g.nodes, L = lay();
+  let s;
+  if (GARR === "layers") {
+    const pair = {}; for (let j = 0; j < g.links.length; j += 3) { const k = N.layer[g.links[j]] + ">" + N.layer[g.links[j + 1]]; pair[k] = (pair[k] || 0) + 1; }
+    const [top, cnt] = Object.entries(pair).sort((a, b) => b[1] - a[1])[0] || ["0>0", 0], [a, b] = top.split(">").map(Number);
+    s = `Every record on one of ${g.layers.length} rungs by its kind, from methods at the bottom to open problems at the top; inside a rung the groups stay together. Hover or pick a dot to see its links. The commonest link runs from ${g.layers[a].toLowerCase()} to ${g.layers[b].toLowerCase()} (${fmt(cnt)} of ${fmt(g.links.length / 3)}). A rung is a kind, not a rank.`;
+  } else if (GARR === "time") {
+    s = `${fmt(L.dated)} records placed by the year of the arXiv paper they quote (the identifier carries the month), on the same rungs as Layers. The other ${fmt(N.id.length - L.dated)}, mostly Lean and Metamath declarations, carry no date and sit in the last column. Position is the source's date, not when the record was made.`;
+  } else if (GARR === "bridges") {
+    s = `The four populations side by side, each stacked by rung. The ${fmt(L.cross.length)} lines are the links that cross between populations; the other ${fmt(g.links.length / 3 - L.cross.length)} links stay inside one. A missing line is a missing bridge, not a disagreement.`;
+  } else s = `Groups come from community detection (Louvain) over the ${fmt(g.links.length / 3)} recorded links, with a weaker tie between records that quote the same source. A group is not a field, and two dots side by side are not a claimed link.`;
+  if (GHL === "load") {
+    const c = restsCounts(), top = [...c.keys()].sort((a, b) => c[b] - c[a]).slice(0, 3);
+    s += ` Dot size: how many records rest on it, following links backwards; largest ${top.map(i => `${N.title[i]} (${fmt(c[i])})`).join(", ")}.`;
+  } else if (GHL === "agree") {
+    const a = agreeData();
+    s += ` Red lines: ${a.dis} checked links where a paper challenges or critiques a result; green: ${a.sup} where it supports one. Rings mark results other papers tested: red conflicts, amber mixed, green holds elsewhere.`;
+  } else if (GFAM) {
+    const f = (D.deps.families || []).find(f => f.id === GFAM);
+    s += ` Lit: the ${fmt(famHits().size)} results whose checked assumption units use “${f ? f.name : GFAM}”.`;
+  }
+  if (GCONE) s += ` Lit: ${fmt(GCONE.set.size)} records ${GCONE.dir ? "that this record needs" : "that rest on this record"}, following links ${GCONE.dir ? "forwards" : "backwards"} as far as they go.`;
+  if (GPATH) s += ` The drawn path is the shortest chain of recorded links between the two records (${GPATH.length - 1} hop${GPATH.length > 2 ? "s" : ""}), in either direction.`;
+  return s;
+}
 function fillGraph() {
-  const g = GR, N = g.nodes, [bw, bh] = boxSize();
-  GT = bh > bw * 1.15;
-  const halos = g.groups.map((G, k) => `<circle class="rgh" cx="${gcx(G)}" cy="${gcy(G)}" r="${G.r + 6}" data-g="${k}" data-tip="${esc(G.name)}\n${G.n} record${G.n > 1 ? "s" : ""}"/>`).join("");
+  const g = GR, N = g.nodes, [bw, bh] = boxSize(), L = lay();
+  GT = GARR === "groups" && bh > bw * 1.15;
+  let guide = "", halos = "", labs = "";
+  if (!L) {
+    halos = g.groups.map((G, k) => `<circle class="rgh" cx="${gcx(G)}" cy="${gcy(G)}" r="${G.r + 6}" data-g="${k}" data-tip="${esc(G.name)}\n${G.n} record${G.n > 1 ? "s" : ""}"/>`).join("");
+    labs = g.groups.map((G, k) => G.n >= 12 ? `<text x="${gcx(G)}" data-x="${gcx(G)}" y="${(gcy(G) - G.r - 10).toFixed(1)}" text-anchor="middle" data-g="${k}">${esc(G.name)} <tspan>${G.n}</tspan></text>` : "").join("");
+  } else {
+    if (L.bands) guide += L.bands.map(b => `<rect class="rgband" x="0" y="${b.y}" width="${L.w}" height="${b.h}" rx="6"/><text class="rgbl" x="${b.x}" y="${b.y + 14}">${esc(b.name)} <tspan>${fmt(b.n)}</tspan></text>`).join("");
+    if (L.cols) guide += L.cols.map(c => `<text class="rgbl${GARR === "bridges" ? " rgcol" : ""}" x="${c.x + (GARR === "bridges" ? 0 : 2)}" y="${GARR === "bridges" ? 18 : 16}">${esc(c.name)}${c.n != null ? ` <tspan>${fmt(c.n)}</tspan>` : ""}</text>`).join("");
+    if (L.cross) guide += `<g class="rgbr">${L.cross.map(([s, t]) => `<line x1="${L.x[s]}" y1="${L.y[s]}" x2="${L.x[t]}" y2="${L.y[t]}"/>`).join("")}</g>`;
+  }
   const dots = N.id.map((_, i) => `<circle class="rgd a${N.area[i]}" cx="${gx(i)}" cy="${gy(i)}" r="${g.dot}" data-i="${i}"/>`).join("");
-  const labs = g.groups.map((G, k) => G.n >= 12 ? `<text x="${gcx(G)}" data-x="${gcx(G)}" y="${(gcy(G) - G.r - 10).toFixed(1)}" text-anchor="middle" data-g="${k}">${esc(G.name)} <tspan>${G.n}</tspan></text>` : "").join("");
-  $("#rgsvg").innerHTML = `<g class="rghalo">${halos}</g><g class="rgl" id="rgl"></g><g class="rgdots">${dots}</g><g class="rglab" id="rglab">${labs}</g>`;
+  $("#rgsvg").innerHTML = `<g class="rgguide" id="rgguide">${guide}</g><g class="rghalo">${halos}</g><g class="rgag" id="rgag"></g><g class="rgl" id="rgl"></g><g class="rgdots">${dots}</g><g class="rgring" id="rgring"></g><g class="rglab" id="rglab">${labs}</g>`;
+  $("#rgsvg").setAttribute("aria-label", L ? `${fmt(N.id.length)} records drawn as dots, arranged by ${GARR === "layers" ? "kind" : GARR === "time" ? "year and kind" : "population"}` : `${fmt(N.id.length)} records drawn as dots in ${g.groups.length} groups; the list below names every group`);
   setVB(fitVB(0, 0, gW(), gH()));
-  applyDim();
+  applyHighlight();
   if (GSEL >= 0) { $(`#rgsvg .rgd[data-i="${GSEL}"]`)?.classList.add("sel"); showLinks(GSEL); }
 }
 function boxSize() { const b = $("#rgbox"); return [b.clientWidth || 1, b.clientHeight || 1]; }
@@ -3028,8 +3180,9 @@ function setVB(vb) {
   GVB = w >= full.w - 1e-6 ? full : {x: cx - w / 2, y: cy - h / 2, w, h};
   const svg = $("#rgsvg"); if (!svg) return;
   svg.setAttribute("viewBox", `${GVB.x.toFixed(1)} ${GVB.y.toFixed(1)} ${GVB.w.toFixed(1)} ${GVB.h.toFixed(1)}`);
-  const upp = GVB.w / boxSize()[0], lab = $("#rglab");
+  const upp = GVB.w / boxSize()[0], lab = $("#rglab"), guide = $("#rgguide");
   lab.style.fontSize = (12.5 * upp).toFixed(2) + "px"; lab.style.strokeWidth = (4 * upp).toFixed(2) + "px";
+  guide.style.fontSize = (12 * upp).toFixed(2) + "px";
   // A label whose group is in view slides inside the box edge; larger groups keep their label when two would overlap.
   const placed = [], pad = 3 * upp, lo = GVB.x + 6 * upp, hi = GVB.x + GVB.w - 6 * upp;
   lab.querySelectorAll("text").forEach(t => {
@@ -3060,21 +3213,84 @@ function animateVB(to) {
 function zoomBy(f, px, py) { const vb = GVB; setVB({x: px - (px - vb.x) * f, y: py - (py - vb.y) * f, w: vb.w * f, h: vb.h * f}); }
 function svgPoint(cx, cy) { const r = $("#rgsvg").getBoundingClientRect(); return [GVB.x + (cx - r.left) / r.width * GVB.w, GVB.y + (cy - r.top) / r.height * GVB.h]; }
 function zoomGroup(k) {
+  if (lay()) { zoomAround(GR.groups[k] ? firstOfGroup(k) : -1); return; }
   const G = GR.groups[k], pad = Math.max(G.r * .3, 30);
   animateVB(fitVB(gcx(G) - G.r - pad, gcy(G) - G.r - pad - 16, 2 * (G.r + pad), 2 * (G.r + pad) + 16, sheetCover()));
 }
+const firstOfGroup = k => GR.nodes.group.indexOf(k);
+// In the computed arrangements a group has no disc, so zooming goes to a window around one record.
+function zoomAround(i) {
+  if (i < 0) return;
+  const r = 90;
+  animateVB(fitVB(gx(i) - r * 1.6, gy(i) - r, r * 3.2, r * 2, sheetCover()));
+}
 function showLinks(i) {
   const l = $("#rgl"); if (!l) return;
-  if (i < 0) { l.innerHTML = ""; return; }
-  const x = gx(i), y = gy(i), r = GR.dot + 2.2;
-  l.innerHTML = GADJ[i].map(([o]) => `<line x1="${x}" y1="${y}" x2="${gx(o)}" y2="${gy(o)}"/>`).join("") + GADJ[i].map(([o]) => `<circle cx="${gx(o)}" cy="${gy(o)}" r="${r}"/>`).join("");
+  if (i < 0 && !GPATH) { l.innerHTML = ""; return; }
+  let s = "";
+  if (GPATH) s += `<g class="rgpath">${GPATH.slice(1).map((o, k) => `<line x1="${gx(GPATH[k])}" y1="${gy(GPATH[k])}" x2="${gx(o)}" y2="${gy(o)}"/>`).join("")}${GPATH.map(o => `<circle cx="${gx(o)}" cy="${gy(o)}" r="${GR.dot + 2.2}"/>`).join("")}</g>`;
+  if (i >= 0) {
+    const x = gx(i), y = gy(i), r = GR.dot + 2.2;
+    s += GADJ[i].map(([o]) => `<line x1="${x}" y1="${y}" x2="${gx(o)}" y2="${gy(o)}"/>`).join("") + GADJ[i].map(([o]) => `<circle cx="${gx(o)}" cy="${gy(o)}" r="${r}"/>`).join("");
+  }
+  l.innerHTML = s;
 }
-function applyDim() {
+// Transitive reach along the recorded links: dir 1 follows them forwards (what this record needs), 0 backwards (what rests on it).
+function reach(i, dir) {
+  const seen = new Set([i]), q = [i];
+  while (q.length) { const v = q.pop(); for (const [o, , d] of GADJ[v]) if (d === dir && !seen.has(o)) { seen.add(o); q.push(o); } }
+  seen.delete(i);
+  return seen;
+}
+function restsCounts() {
+  if (!GREST) { GREST = new Float64Array(GR.nodes.id.length); for (let i = 0; i < GREST.length; i++) GREST[i] = reach(i, 0).size; }
+  return GREST;
+}
+function famHits() {
+  const hits = new Set();
+  if (GFAM && D && D.deps) (D.deps.grid || []).forEach(g => { if (g.cells && g.cells[GFAM] && FNODE[g.r] != null) hits.add(FNODE[g.r]); });
+  return hits;
+}
+function agreeData() {
+  if (!GAGREE) {
+    const lines = [], rings = [], involved = new Set(); let dis = 0, sup = 0;
+    (D.links || []).forEach(l => { const k = DIS[l.r]; if (!k || FNODE[l.s] == null || FNODE[l.t] == null) return; lines.push([FNODE[l.s], FNODE[l.t], k]); involved.add(FNODE[l.s]); involved.add(FNODE[l.t]); if (k === "dis") dis++; else sup++; });
+    Object.entries((D.reps && D.reps.units) || {}).forEach(([r, st]) => { if (RING[st] && FNODE[+r] != null) { rings.push([FNODE[+r], RING[st]]); involved.add(FNODE[+r]); } });
+    GAGREE = {lines, rings, involved, dis, sup};
+  }
+  return GAGREE;
+}
+// Dim every dot outside the active filters; size the dots when the load highlight is on; draw the agree/disagree marks.
+function applyHighlight() {
   const svg = $("#rgsvg"); if (!svg) return;
-  const N = GR.nodes, on = GHITS || GAREA >= 0;
-  svg.classList.toggle("dim", !!on);
-  svg.querySelectorAll(".rgd").forEach(d => { const i = +d.dataset.i; d.classList.toggle("hit", !!on && (!GHITS || GHITS.has(i)) && (GAREA < 0 || N.area[i] === GAREA)); });
+  const N = GR.nodes, fam = GFAM ? famHits() : null, ag = GHL === "agree" ? agreeData() : null, c = GHL === "load" ? restsCounts() : null;
+  let cmax = 1; if (c) for (const v of c) cmax = Math.max(cmax, v);
+  const on = !!(GHITS || GAREA >= 0 || fam || ag || GCONE || GPATH);
+  svg.classList.toggle("dim", on);
+  svg.querySelectorAll(".rgd").forEach(d => {
+    const i = +d.dataset.i;
+    const hit = (!GHITS || GHITS.has(i)) && (GAREA < 0 || N.area[i] === GAREA) && (!fam || fam.has(i)) && (!ag || ag.involved.has(i)) && (!GCONE || GCONE.set.has(i) || i === GCONE.from) && (!GPATH || GPATH.includes(i));
+    d.classList.toggle("hit", on && hit);
+    d.setAttribute("r", c ? (GR.dot * (.7 + 1.3 * Math.sqrt(c[i] / cmax))).toFixed(2) : GR.dot);
+  });
+  $("#rgag").innerHTML = ag ? ag.lines.map(([s, t, k]) => `<line class="${k}" x1="${gx(s)}" y1="${gy(s)}" x2="${gx(t)}" y2="${gy(t)}"/>`).join("") : "";
+  $("#rgring").innerHTML = ag ? ag.rings.map(([i, k]) => `<circle class="${k}" cx="${gx(i)}" cy="${gy(i)}" r="${GR.dot + 2.6}"/>`).join("") : "";
+  const note = $("#rgnote"); if (note) note.textContent = graphNote();
 }
+const applyDim = applyHighlight;
+function setArrange(k) {
+  if (!ARRANGE.some(([a]) => a === k) || k === GARR) return;
+  GARR = k; gAnim++;
+  document.querySelectorAll("[data-arr]").forEach(b => { const on = b.dataset.arr === k; b.classList.toggle("on", on); b.setAttribute("aria-pressed", on); });
+  fillGraph();
+  if (GSEL >= 0 && lay()) zoomAround(GSEL);
+}
+function setHighlight(k) {
+  GHL = GHL === k ? null : k;
+  document.querySelectorAll("[data-hl]").forEach(b => { const on = b.dataset.hl === GHL; b.classList.toggle("on", on); b.setAttribute("aria-pressed", on); });
+  applyHighlight();
+}
+function clearCone() { GCONE = null; GPATH = null; applyHighlight(); showLinks(GSEL); }
 function findRecords(q) {
   const N = GR.nodes, terms = q.toLowerCase().split(/\s+/).filter(Boolean);
   if (!terms.length) return null;
@@ -3082,11 +3298,21 @@ function findRecords(q) {
   N.id.forEach((id, i) => { const t = (N.title[i] + " " + id).toLowerCase(); if (terms.every(w => t.includes(w))) hits.push(i); });
   return hits;
 }
+// Breadth-first search over the recorded links in either direction: the fewest hops from a to b, or null when no chain exists.
+function shortestPath(a, b) {
+  if (a === b) return [a];
+  const prev = new Map([[a, -1]]), q = [a];
+  for (let h = 0; h < q.length; h++) {
+    const v = q[h];
+    for (const [o] of GADJ[v]) if (!prev.has(o)) { prev.set(o, v); if (o === b) { const p = [b]; let c = b; while ((c = prev.get(c)) >= 0) p.push(c); return p.reverse(); } q.push(o); }
+  }
+  return null;
+}
 function wireGraph() {
   const svg = $("#rgsvg"), box = $("#rgbox"), N = GR.nodes;
   svg.addEventListener("mouseover", e => {
     const d = e.target.closest(".rgd");
-    if (d) { const i = +d.dataset.i; if (!d.dataset.tip) d.dataset.tip = `${N.title[i]}\n${GR.groups[N.group[i]].name}`; showLinks(i); }
+    if (d) { const i = +d.dataset.i; if (!d.dataset.tip) d.dataset.tip = `${N.title[i]}\n${GR.layers[N.layer[i]]} · ${GR.groups[N.group[i]].name}${N.date[i] ? " · " + N.date[i] : ""}`; showLinks(i); }
     else showLinks(GSEL);
   }, true);
   svg.addEventListener("mouseleave", () => showLinks(GSEL));
@@ -3138,12 +3364,17 @@ function wireGraph() {
     const b = e.target.closest("[data-area]"); if (!b) return;
     const k = +b.dataset.area; GAREA = GAREA === k ? -1 : k;
     document.querySelectorAll(".rgleg [data-area]").forEach(c => { const on = +c.dataset.area === GAREA; c.classList.toggle("on", on); c.setAttribute("aria-pressed", on); });
-    applyDim();
+    applyHighlight();
   });
+  $(".rglens").addEventListener("click", e => {
+    const a = e.target.closest("[data-arr]"); if (a) { setArrange(a.dataset.arr); return; }
+    const h = e.target.closest("[data-hl]"); if (h) setHighlight(h.dataset.hl);
+  });
+  const fam = $("#rgfam"); if (fam) fam.addEventListener("change", () => { GFAM = fam.value; fam.classList.toggle("on", !!GFAM); applyHighlight(); });
   const q = $("#rgq"), res = $("#rgres"); let tq = 0;
   const runFind = () => {
     const hits = findRecords(q.value);
-    GHITS = hits ? new Set(hits) : null; applyDim();
+    GHITS = hits ? new Set(hits) : null; applyHighlight();
     $("#rgqn").textContent = hits ? `${fmt(hits.length)} found` : "";
     res.hidden = !hits || !hits.length;
     res.innerHTML = hits ? hits.slice(0, 8).map(i => `<a href="${esc(graphHref(i))}"><span class="rgdot" style="--c:${AREA_VAR[N.area[i]]};margin-right:8px"></span>${esc(N.title[i])}</a>`).join("") : "";
@@ -3168,20 +3399,21 @@ function wireGraph() {
     window.addEventListener("resize", () => { clearTimeout(tr); tr = setTimeout(() => {
       if (!$("#rgsvg")) return;
       const [bw, bh] = boxSize();
-      if ((bh > bw * 1.15) !== GT) fillGraph(); else setVB(isFull() ? fullVB() : GVB);
+      if ((GARR === "groups" && bh > bw * 1.15) !== GT) fillGraph(); else setVB(isFull() ? fullVB() : GVB);
     }, 150); });
   }
 }
 function selectRecord(i) {
   const svg = $("#rgsvg"); if (!svg) return;
   svg.querySelector(".rgd.sel")?.classList.remove("sel");
-  GSEL = i; showLinks(i);
+  if (i !== GSEL) { GCONE = null; GPATH = null; }
+  GSEL = i; applyHighlight(); showLinks(i);
   if (i < 0) { closeSheet(); return; }
   svg.querySelector(`.rgd[data-i="${i}"]`)?.classList.add("sel");
   openRecordSheet(i);
   const [bw] = boxSize(), vw = bw - sheetCover(), k = GVB.w / bw, x = gx(i), y = gy(i);
   const inView = x > GVB.x + .05 * vw * k && x < GVB.x + .95 * vw * k && y > GVB.y + GVB.h * .05 && y < GVB.y + GVB.h * .95;
-  if (isFull()) zoomGroup(GR.nodes.group[i]);
+  if (isFull()) { if (lay()) zoomAround(i); else zoomGroup(GR.nodes.group[i]); }
   else if (!inView) animateVB({x: x - vw / 2 * k, y: y - GVB.h / 2, w: GVB.w, h: GVB.h});
 }
 function linkList(i, dir, title) {
@@ -3189,17 +3421,46 @@ function linkList(i, dir, title) {
   if (!list.length) return "";
   return `<h4>${title} <span class="muted mono" style="font-weight:500">${list.length}</span></h4><div class="rglinks">${list.map(([o, r], k) => `<a href="${esc(graphHref(o))}"${k >= 30 ? " hidden" : ""}><span class="rel">${esc(relLabel(r))}</span>${esc(N.title[o])}</a>`).join("")}${list.length > 30 ? `<button class="lk" type="button" data-more>Show all ${list.length}</button>` : ""}</div>`;
 }
+// The chain of hops of a drawn path, each with the recorded link's relation read in the direction travelled.
+function pathList(p) {
+  const N = GR.nodes;
+  return `<ol class="rghops">${p.slice(1).map((o, k) => { const from = p[k], e = GADJ[from].find(x => x[0] === o); return `<li><span class="rel">${e ? (e[2] ? "" : "← ") + esc(relLabel(e[1])) : "linked"}</span><a href="${esc(graphHref(o))}">${esc(N.title[o])}</a></li>`; }).join("")}</ol>`;
+}
 async function openRecordSheet(i) {
-  const N = GR.nodes, k = N.group[i], G = GR.groups[k];
+  const N = GR.nodes, k = N.group[i], G = GR.groups[k], up = reach(i, 0).size, down = reach(i, 1).size;
   openSheet(`<div class="kchip"><span class="rgdot" style="--c:${AREA_VAR[N.area[i]]}"></span>${esc(kindLabel(N.kind[i]))}</div>
     <h2>${esc(N.title[i])}</h2>
-    <div class="meta"><span>${esc(GR.areas[N.area[i]].name)}</span><button class="lk" type="button" data-zg="${k}">${esc(G.name)}</button></div>
+    <div class="meta"><span>${esc(GR.areas[N.area[i]].name)}</span><button class="lk" type="button" data-zg="${k}">${esc(G.name)}</button>${N.date[i] ? `<span>${esc(N.date[i])}</span>` : ""}</div>
     <div id="rgcard"><p class="muted" style="margin-top:14px">Loading the record…</p></div>
     ${linkList(i, 1, "Links from this record")}${linkList(i, 0, "Links to this record")}
+    <h4>Reach</h4><div class="rgreach"><button class="chip${GCONE && !GCONE.dir ? " on" : ""}" type="button" data-cone="0"${up ? "" : " disabled"}>Everything that rests on it <b>${fmt(up)}</b></button><button class="chip${GCONE && GCONE.dir ? " on" : ""}" type="button" data-cone="1"${down ? "" : " disabled"}>Everything it needs <b>${fmt(down)}</b></button></div>
+    <p class="muted rgsmall">Following the recorded links as far as they go. Reach is navigation, not a claim that every record on the way is used.</p>
+    <h4>Path to another record</h4><label class="rgfind rgpath"><input id="rgpq" type="search" placeholder="Type a record's name" autocomplete="off" spellcheck="false" aria-label="Find a path to another record"><div class="rgres" id="rgpres" hidden></div></label><div id="rgpathlist">${GPATH ? pathList(GPATH) : ""}</div>
     <div class="actions">${N.finding[i] >= 0 ? `<a class="btn dark" href="#r${N.finding[i]}">Open the finding and its quote</a>` : ""}<a class="btn" href="${esc(N.card[i])}" target="_blank" rel="noopener">JSON card ↗</a><button class="btn" type="button" data-copy="${esc(LIVE + graphHref(i))}">Copy link</button></div>`, "graph");
   const sh = $("#sheet");
   sh.querySelectorAll("[data-more]").forEach(b => b.onclick = () => { b.parentElement.querySelectorAll("a[hidden]").forEach(a => { a.hidden = false; }); b.remove(); });
   sh.querySelector("[data-zg]").onclick = () => zoomGroup(k);
+  sh.querySelectorAll("[data-cone]").forEach(b => b.onclick = () => {
+    const dir = +b.dataset.cone;
+    if (GCONE && GCONE.dir === dir) { clearCone(); } else { GPATH = null; GCONE = {from: i, dir, set: reach(i, dir)}; applyHighlight(); showLinks(i); }
+    sh.querySelectorAll("[data-cone]").forEach(o => o.classList.toggle("on", !!GCONE && +o.dataset.cone === GCONE.dir));
+  });
+  const pq = $("#rgpq"), pres = $("#rgpres"); let tp = 0;
+  const runPath = () => {
+    const hits = (findRecords(pq.value) || []).filter(o => o !== i).slice(0, 8);
+    pres.hidden = !hits.length;
+    pres.innerHTML = hits.map(o => `<button type="button" data-to="${o}"><span class="rgdot" style="--c:${AREA_VAR[N.area[o]]};margin-right:8px"></span>${esc(N.title[o])}</button>`).join("");
+  };
+  pq.addEventListener("input", () => { clearTimeout(tp); tp = setTimeout(runPath, 120); });
+  pq.addEventListener("focus", () => { if (pres.innerHTML) pres.hidden = false; });
+  pres.addEventListener("click", e => {
+    const b = e.target.closest("[data-to]"); if (!b) return;
+    pres.hidden = true; pq.value = N.title[+b.dataset.to];
+    const p = shortestPath(i, +b.dataset.to);
+    GCONE = null; GPATH = p; applyHighlight(); showLinks(i);
+    sh.querySelectorAll("[data-cone]").forEach(o => o.classList.remove("on"));
+    $("#rgpathlist").innerHTML = p ? pathList(p) : `<p class="muted rgsmall">No chain of recorded links joins these two records.</p>`;
+  });
   let c = null;
   try { const r = await fetch(N.card[i]); if (r.ok) c = await r.json(); } catch (e) { c = null; }
   const slot = $("#rgcard"); if (GSEL !== i || !slot) return;
