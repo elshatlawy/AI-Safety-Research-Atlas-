@@ -878,6 +878,30 @@ button.x2{background:none;cursor:pointer;padding:0}
 #fampanel{scroll-margin-top:76px}
 @media (max-width:720px){#fampanel{scroll-margin-top:100px}}
 .fdef{font-size:13.5px;color:var(--ink2);margin:10px 0 0}
+/* equilibrium stress test (Assumptions family panel) */
+.stw{border:1px solid var(--line2);border-radius:12px;padding:11px 13px;margin:12px 0 2px;display:grid;gap:10px;background:var(--surface)}
+.sthdr{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap}.sthdr b{font-family:"Source Serif 4",Georgia,serif;font-size:15.5px}
+.stlede{margin:0;font-size:13px;color:var(--ink2)}
+.stfind{border-radius:10px;background:color-mix(in srgb,var(--agrees) 9%,var(--surface));padding:9px 11px;display:grid;gap:6px}
+.stfind>b{font-size:13.5px}.stfind ol{margin:0;padding-left:20px;font-size:13px;color:var(--ink2);display:grid;gap:3px}
+.stfind p{margin:0;font-size:12.5px;color:var(--ink2)}
+.sttags{display:flex;gap:6px;flex-wrap:wrap}.sttags span{font-size:11px;border:1px solid var(--line2);border-radius:20px;padding:1px 9px;color:var(--muted);background:var(--surface)}
+.stg{display:grid;grid-template-columns:minmax(0,1.8fr) 1fr 1fr 1fr;column-gap:6px;row-gap:4px;align-items:center}
+.stch{font-size:11px;color:var(--muted);text-align:center;line-height:1.15;align-self:end;padding-bottom:2px}
+.sthd{grid-column:1/-1;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-top:7px}
+.stlb{font-size:12.5px;line-height:1.22;min-width:0;display:flex;align-items:center;gap:6px;overflow-wrap:anywhere;hyphens:auto}.stlb svg{flex:none}
+.stcell{height:22px;border-radius:6px;border:0;display:grid;place-items:center;font-size:12px;font-weight:600;color:#fff}
+button.stcell{cursor:pointer}button.stcell:hover{outline:2px solid var(--ink2);outline-offset:1px}
+.stcell.sel{outline:2px solid var(--ink);outline-offset:1px}
+.v-as{background:var(--seq)}.v-ok{background:var(--agrees)}.v-bad{background:var(--disputes);color:var(--ev-con-ink)}
+.v-chk{background:color-mix(in srgb,var(--agrees) 12%,var(--surface));box-shadow:inset 0 0 0 2px var(--agrees);color:var(--agrees)}
+.v-na{background:var(--sunk);box-shadow:inset 0 0 0 1px var(--line2)}
+.v-op{background:color-mix(in srgb,var(--steps) 10%,var(--surface));box-shadow:inset 0 0 0 1.5px var(--steps);color:var(--steps)}
+.stleg{display:flex;flex-wrap:wrap;gap:9px;font-size:11.5px;color:var(--muted)}.stleg span{display:inline-flex;align-items:center;gap:5px}
+.stleg .stcell{width:16px;height:13px;border-radius:3px;font-size:9px}
+.std{border:1px solid var(--line2);border-radius:10px;padding:9px 11px;display:grid;gap:3px}
+.std .h{font-size:11.5px;color:var(--muted)}.std b{font-size:13px}.std p{margin:0;font-size:12.5px;color:var(--ink2)}
+@media (max-width:560px){.stg{grid-template-columns:minmax(0,1.6fr) 1fr 1fr 1fr;column-gap:4px}.stch{font-size:10px}}
 .fsteps{display:flex;flex-wrap:wrap;gap:6px}
 .fsteps .chip{white-space:normal;text-align:left;padding:3px 10px 3px 7px;font-size:12.5px;line-height:1.3}
 .fsteps .chip svg{flex:none}
@@ -1146,6 +1170,9 @@ a.fdot2:hover,a.fdot2:focus-visible{box-shadow:0 0 0 2px var(--surface),0 0 0 3.
 .spf{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:8px;font-size:12.5px;color:var(--ink2)}
 .spf .chip{padding:2px 9px;font-size:12px;white-space:normal}
 .spf .mlab{margin:0 4px 0 0}
+.stepstress{display:block;margin-top:8px;padding:6px 9px;border-radius:9px;background:color-mix(in srgb,var(--agrees) 8%,var(--surface));border:1px solid var(--line2);font-size:12px;color:var(--ink2);text-decoration:none;line-height:1.4}
+.stepstress b{color:var(--ink);font-weight:600}.stepstress .go{color:var(--seq);white-space:nowrap}
+.stepstress:hover{border-color:var(--ink2)}
 .fgrow > *{grid-row:1}
 .pg.hl .pb:not(.on){opacity:.25}
 
@@ -1405,7 +1432,7 @@ const statusSVG = (st, s) => fracSVG(STATUS_FILL[st] ?? 0, s);
 
 async function boot() {
   try {
-    const res = await fetch("data.json?v=71c774b1e65c");
+    const res = await fetch("data.json?v=456f4af2af9d");
     if (!res.ok) throw new Error(res.status);
     D = await res.json();
   } catch (e) {
@@ -1608,8 +1635,17 @@ function stepCaption() {
   if (!s) return "";
   return `<div class="capin"><i class="sn ${evCls(s.label)}"></i><div style="min-width:0"><div class="capt">${esc(s.step)}</div>
     <div class="capm">${esc(human(s.label))} evidence · ${esc(human(s.branch))} · <span class="mono">${esc(s.id)}</span></div>
-    <div class="capq">${s.qs.length ? s.qs.map(q => `<a class="chip" href="#q${q.id.slice(1)}" data-pop="q:${esc(q.id)}">#${q.rank} ${esc(q.id)}</a>`).join("") : `<span class="muted">No ranked question sits on this step.</span>`}</div></div>
+    <div class="capq">${s.qs.length ? s.qs.map(q => `<a class="chip" href="#q${q.id.slice(1)}" data-pop="q:${esc(q.id)}">#${q.rank} ${esc(q.id)}</a>`).join("") : `<span class="muted">No ranked question sits on this step.</span>`}</div>
+    ${stressStepLine(s.id)}</div>
     <a class="x2" href="#gaps" aria-label="Clear the selected step">×</a></div>`;
+}
+/* one line on what happens to this step if the stress-tested assumption is loosened, linking to the grid */
+function stressStepLine(id) {
+  const st = DP && DP.stress; if (!st) return "";
+  const s = st.steps.find(x => x.id === id); if (!s) return "";
+  const V = st.verdicts, lbl = st.strengths.reduce((m, c) => (m[c.id] = c.name, m), {});
+  const part = st.strengths.filter(c => c.id !== "as").map(c => `<b>${esc(lbl[c.id])}:</b> ${esc(V[s.cells[c.id].v].label)}`).join(" · ");
+  return `<a class="stepstress" href="#assumptions=${esc(st.family_id.toLowerCase())}">What if training falls short? ${part} <span class="go">see the stress test →</span></a>`;
 }
 
 /* ---------- argument tree ---------- */
@@ -1844,6 +1880,7 @@ function stepPanel() {
     <div class="spq"><span class="bn">${qs.length}</span><span>${qs.length === 1 ? "open question" : "open questions"}</span>${qs.map(q => `<a class="chip" href="#q${q.id.slice(1)}" data-pop="q:${esc(q.id)}">#${q.rank} ${esc(q.id)}</a>`).join("")}</div>
     ${flowBox(n)}
     ${stepFams(n.id)}
+    ${stressStepLine(n.id)}
     ${pooled ? `<div class="mlab">Debate vs baseline · ${plural(PAIRS.length, "comparison")}</div>${pooledFigure()}` : ""}
     <div class="mlab">The paper's words · ${plural(n.passages.length, "passage")}</div>
     ${n.passages.map(p => casePassage(p, pdf)).join("")}
@@ -3448,8 +3485,52 @@ function famPanel(f) {
     <div class="mlab">Steps that name it · ${f.steps.length}${unc ? ` <span class="unv">link not yet checked</span>` : ""}</div>
     ${f.steps.length ? `<div class="fsteps">${f.steps.map(s => `<a class="chip${unc ? " unc" : ""}" href="#step=${esc(s.id.toLowerCase())}" data-pop="step:${esc(s.id)}">${CN[s.id] ? glyphSVG(CN[s.id], 14) : ""}<span>${esc(s.label)}</span></a>`).join("")}</div>`
       : `<p class="muted" style="margin:2px 0 0;font-size:13px">No step of the safety case names it.</p>`}
+    ${stressBox(f)}
     <div class="mlab">Results that use it · ${rows.length}${nHit ? ` · ${nHit} from ${esc(fp >= 0 ? P[fp].short : "other papers")} first` : ""}</div>
     <div class="fres">${rows.map((g, i) => `<a class="frr${i < nHit ? " hit" : ""}"${g.r != null ? ` href="#r${g.r}"` : ""}><span class="t">${g.hv === false ? `<span class="unv sm">not verified</span>` : ""}${esc(gTitle(g))}</span><span class="m">${esc(g.cells[f.id].map(unitLab).join(" · "))}</span><span class="p">${esc(gPaper(g) ? gPaper(g).short : "")}</span></a>`).join("")}</div>`;
+}
+/* the equilibrium stress test: for the one family it names, loosen the assumption and show which of its
+   steps still hold at two weaker strengths. Tapping a cell shows why. */
+const ST_MARK = {as: "", ok: "", chk: "✓", bad: "", na: "", op: "?"};
+function stressWhy(btn) {
+  const p = $("#stwhy"); if (!p) return;
+  document.querySelectorAll("#fampanel .stcell.sel").forEach(x => x.classList.remove("sel"));
+  btn.classList.add("sel");
+  p.innerHTML = `<div class="h">${esc(btn.dataset.step)} · ${esc(btn.dataset.col)}</div><b>${esc(btn.dataset.vlabel)}</b><p>${esc(btn.dataset.why)}</p>`;
+  p.hidden = false;
+}
+function stressBox(f) {
+  const st = DP && DP.stress; if (!st || st.family_id !== f.id) return "";
+  const V = st.verdicts, loos = st.strengths.filter(c => c.id !== "as");
+  const draft = st.review_status !== "AI_CHECKED";
+  const C = st.counts || {};
+  const cell = (s, col) => {
+    const c = s.cells[col.id], vl = V[c.v].label;
+    return `<button type="button" class="stcell v-${c.v}" aria-label="${esc(`${s.label}, ${col.name}: ${vl}`)}" data-step="${esc(s.label)}" data-col="${esc(col.name)}" data-vlabel="${esc(vl)}" data-why="${esc(c.why)}" onclick="stressWhy(this)">${ST_MARK[c.v]}</button>`;
+  };
+  const rows = st.groups.map(g => {
+    const steps = st.steps.filter(s => s.group === g.id);
+    if (!steps.length) return "";
+    return `<div class="sthd" role="rowheader">${esc(g.name)}</div>` + steps.map(s =>
+      `<span class="stlb" role="rowheader">${CN[s.id] ? glyphSVG(CN[s.id], 13) : ""}<span>${esc(s.label)}</span></span>`
+      + `<i class="stcell v-as" role="cell" aria-label="assumed today"></i>` + loos.map(col => cell(s, col)).join("")).join("");
+  }).join("");
+  const legend = Object.entries(V).map(([k, v]) => `<span><i class="stcell v-${k}" aria-hidden="true">${ST_MARK[k]}</i>${esc(v.label)}</span>`).join("");
+  const nLean = (st.finding.lean || []).length;
+  return `<div class="stw"${draft ? ' data-draft="1"' : ""}>
+    <div class="sthdr"><b>Stress test: what still holds if training falls short?</b>${draft ? `<span class="unv">AI draft</span>` : ""}</div>
+    <p class="stlede">The safety case assumes ${esc(st.loosened)}. Loosen it one notch at a time and see which of the ${st.steps.length} steps that name it still stand.</p>
+    <div class="stfind">
+      <b>The error bound survives, with no equilibrium, if two checks pass</b>
+      <ol>${st.checks.map(c => `<li><b>${esc(c.name)}.</b> ${esc(c.text)}</li>`).join("")}</ol>
+      <p>${esc(st.finding.claim)}</p>
+      <div class="sttags"><span>Checked in Lean (${nLean} ${nLean === 1 ? "theorem" : "theorems"}, all proved)</span>${st.finding.census ? `<span>Census of small games</span>` : ""}<span>Reads the paper's own proof</span></div>
+    </div>
+    <div class="stg" role="table" aria-label="${st.steps.length} safety-case steps that rest on training reaching equilibrium, at three strengths of the assumption">
+      <span></span>${st.strengths.map(c => `<span class="stch" title="${esc(c.desc)}">${esc(c.name)}</span>`).join("")}
+      ${rows}</div>
+    <div class="stleg">${legend}</div>
+    <div class="std" id="stwhy" hidden></div></div>`;
 }
 /* fingerprints: one row per paper (by date), one column per family (grouped by kind); the cell darkens with the number of the paper's results that use the family */
 function gridCols() {

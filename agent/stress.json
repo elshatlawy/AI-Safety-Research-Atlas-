@@ -1,0 +1,354 @@
+{
+ "schema": "ASRA-GAP-CLOSING-AGENT-v1",
+ "review_status": "provisional_ai_draft",
+ "rules": [
+  "Everything here is an AI draft (provisional_ai_draft): each counted item passed two blind AI checks that were tested on planted errors, and no person has reviewed it.",
+  "A finding counts only in the setting its own quoted lines show; read `setting` before carrying it to another setting.",
+  "A question's status is a label from fixed rules over its counted findings; `status_check` says whether that label itself passed its check.",
+  "Cite the paper and page from the passage, and read the PDF page before relying on a claim."
+ ],
+ "assumption": {
+  "family_id": "AF21",
+  "name": "Training reaches equilibrium",
+  "loosened": "training reaches an approximate global equilibrium of the debate game"
+ },
+ "strengths": [
+  {
+   "id": "as",
+   "name": "As assumed",
+   "desc": "Training reaches an approximate global equilibrium, as the safety case assumes."
+  },
+  {
+   "id": "local",
+   "name": "Local only",
+   "desc": "Training ends at a point where no small change helps either debater, but a large change could; it need not be a global equilibrium."
+  },
+  {
+   "id": "early",
+   "name": "Stops early",
+   "desc": "Training stops before any equilibrium, global or local."
+  }
+ ],
+ "verdicts": {
+  "as": {
+   "label": "assumed today",
+   "gloss": "assumed by the safety case"
+  },
+  "ok": {
+   "label": "still stands",
+   "gloss": "the step still holds as the case argues it"
+  },
+  "chk": {
+   "label": "stands if the two checks pass",
+   "gloss": "the step's job is done by the two-check bound instead of by the equilibrium"
+  },
+  "bad": {
+   "label": "fails, or the failure happens",
+   "gloss": "the claim no longer holds, or the defeater it names now occurs"
+  },
+  "na": {
+   "label": "no longer used",
+   "gloss": "the case no longer routes through this step"
+  },
+  "op": {
+   "label": "still open",
+   "gloss": "an open question, unchanged by loosening the assumption"
+  }
+ },
+ "checks": [
+  {
+   "n": 1,
+   "name": "Bob cannot do better against the final Alice",
+   "text": "Bob already plays within a small margin of his best reply to this Alice, so no Bob strategy pulls Alice's score down much further.",
+   "role": "This is the soundness half of the paper's Theorem 6.1 (Lemma A.4), used at the final pair rather than only at an equilibrium. The paper's own idea E5.3, training Bob against a frozen Alice, is one way to establish it."
+  },
+  {
+   "n": 2,
+   "name": "Alice's measured score clears a known bar",
+   "text": "Alice's expected payoff is at least the bar the completeness direction sets.",
+   "role": "At an equilibrium the paper gets this from Alice's half of the equilibrium plus Lemma A.5. Measuring Alice's score gives it directly, up to sampling error, with no equilibrium assumed."
+  }
+ ],
+ "finding": {
+  "claim": "The error bound of Theorem 6.2, that Alice answers correctly at least 1 - 5ε of the time, holds at any pair of debaters that passes the two checks: a global equilibrium, a local one, or a point reached before any equilibrium. The proof of Theorem 6.2 uses only soundness (Lemma A.4) at the final pair and a score bar; Alice's half of the equilibrium, the hard half, is used only to reach the bar, and a measurement reaches it directly. Without the first check the bound fails: a small game has a pair where Alice is wrong on most inputs yet her score clears the bar because Bob is stuck.",
+  "status": "provisional_ai_draft",
+  "backing": [
+   {
+    "kind": "lean",
+    "path": "data/maths/stress/lean/EquilibriumStress.lean",
+    "theorems": [
+     "two_check_bound",
+     "five_eps_without_equilibrium",
+     "stackelberg_passes_checks",
+     "theorem_6_2",
+     "checks_weaker"
+    ],
+    "note": "Lean 4.8.0, Mathlib v4.8.0; compile_log.txt shows no sorry and only the standard axioms."
+   },
+   {
+    "kind": "census",
+    "path": "data/maths/stress/census/",
+    "note": "Exhaustive over all small abstract debate games (every m=2 game and all 6,207,875 sound m=3 games): no game has a local equilibrium passing both checks where Alice is wrong. Strict bad local equilibria exist throughout, so a stuck wrong answer is realisable."
+   }
+  ],
+  "quotes": [
+   {
+    "version": "2506.13609v2",
+    "page": 6,
+    "text": "in every α-approximate, A-leading Stackelberg equilibrium of G, P[A(x) = L(x)] > 1 - 5ϵ"
+   },
+   {
+    "version": "2506.13609v2",
+    "page": 6,
+    "text": "The proof of Theorem 6.2 follows from an analysis of Stackelberg equilibria via the soundness and completeness of Lemma A.4 and Lemma A.5."
+   }
+  ]
+ },
+ "census": {
+  "note": "Across all small abstract debate games, no local equilibrium passes both checks while Alice is wrong; strict bad local equilibria are common.",
+  "exhaustive": [
+   {
+    "m": 2,
+    "sound_games": 3675,
+    "bad_local_eq": 196,
+    "strict": 0,
+    "both_checks_pass_wrong": 0
+   },
+   {
+    "m": 3,
+    "sound_games": 6207875,
+    "bad_local_eq": 2342875,
+    "strict": 338000,
+    "both_checks_pass_wrong": 0
+   }
+  ],
+  "sampled": "m = 3 to 6, 200,000 games each: both_checks_pass_wrong = 0 at every size"
+ },
+ "steps": [
+  {
+   "id": "SC-C1.1",
+   "label": "A's error rate is at most ε",
+   "kind": "claim",
+   "cells": {
+    "local": {
+     "verdict": "chk",
+     "why": "The bound does not need a global equilibrium. At a local equilibrium it holds if Bob cannot do better and Alice's score clears the bar."
+    },
+    "early": {
+     "verdict": "chk",
+     "why": "The same two checks give the bound even when training stopped before any equilibrium; the proof never uses that an equilibrium was reached."
+    }
+   }
+  },
+  {
+   "id": "SC-C2.2",
+   "label": "Game equilibria are mostly correct",
+   "kind": "claim",
+   "cells": {
+    "local": {
+     "verdict": "chk",
+     "why": "This step delivered correctness through the global equilibrium. Training reached only a local one, so that route is gone; the error bound holds at the reached pair if the two checks pass, so the checks now do this step's job."
+    },
+    "early": {
+     "verdict": "chk",
+     "why": "This step delivered correctness through the global equilibrium. Training reached no equilibrium, so that route is gone; the error bound holds at the reached pair if the two checks pass, so the checks now do this step's job."
+    }
+   }
+  },
+  {
+   "id": "SC-C3.4",
+   "label": "Equilibria approximate big computation M",
+   "kind": "claim",
+   "cells": {
+    "local": {
+     "verdict": "na",
+     "why": "A sub-argument of 'equilibria are correct'. Once the error bound is reached from the two checks, this step is no longer on the path."
+    },
+    "early": {
+     "verdict": "na",
+     "why": "A sub-claim about the game's equilibria. Training reached none of them and the bound now comes from the two checks, so this step is off the path."
+    }
+   }
+  },
+  {
+   "id": "SC-C2.3",
+   "label": "Error rate does not drift in deployment",
+   "kind": "claim",
+   "cells": {
+    "local": {
+     "verdict": "chk",
+     "why": "Online training still holds the bound in deployment; what it must keep satisfied is now the two checks rather than the equilibrium."
+    },
+    "early": {
+     "verdict": "chk",
+     "why": "Unchanged mechanism; it preserves whatever established the bound, which is now the two checks."
+    }
+   }
+  },
+  {
+   "id": "SC-C2.1",
+   "label": "Training reaches an approximate global equilibrium",
+   "kind": "claim",
+   "cells": {
+    "local": {
+     "verdict": "bad",
+     "why": "This is the assumption being loosened. A local-only equilibrium is not a global one, so the claim as stated is false."
+    },
+    "early": {
+     "verdict": "bad",
+     "why": "No equilibrium is reached at all, so the claim is false."
+    }
+   }
+  },
+  {
+   "id": "SC-C3.2",
+   "label": "Training converged to a local equilibrium",
+   "kind": "claim",
+   "cells": {
+    "local": {
+     "verdict": "ok",
+     "why": "This is exactly the local-only case: training did converge to a local equilibrium."
+    },
+    "early": {
+     "verdict": "bad",
+     "why": "Training stopped before any equilibrium, so even a local one was not reached."
+    }
+   }
+  },
+  {
+   "id": "SC-C3.3",
+   "label": "Reached local equilibrium is global",
+   "kind": "claim",
+   "cells": {
+    "local": {
+     "verdict": "bad",
+     "why": "The loosening is precisely that the local equilibrium is not known to be global, so this claim is not established."
+    },
+    "early": {
+     "verdict": "na",
+     "why": "No local equilibrium was reached, so there is nothing to promote to global."
+    }
+   }
+  },
+  {
+   "id": "SC-C4.1",
+   "label": "Training finds efficient equilibrium debaters efficiently",
+   "kind": "claim",
+   "cells": {
+    "local": {
+     "verdict": "bad",
+     "why": "This supports reaching the global efficient equilibrium. If only a local one is reached, the claim that the process finds the efficient equilibrium in efficient time is not established."
+    },
+    "early": {
+     "verdict": "bad",
+     "why": "Training stopped early, so it did not find the efficient equilibrium debaters."
+    }
+   }
+  },
+  {
+   "id": "SC-C4.2",
+   "label": "Exploration hacking is the main failure",
+   "kind": "claim",
+   "cells": {
+    "local": {
+     "verdict": "bad",
+     "why": "This presumes the only obstacle to reaching the equilibrium is exploration hacking. If training ends local, the local-to-global gap is the obstacle, so the claim does not hold."
+    },
+    "early": {
+     "verdict": "na",
+     "why": "The case is no longer trying to reach the equilibrium, so a claim about why it would not reach it is off the path."
+    }
+   }
+  },
+  {
+   "id": "SC-C4.3",
+   "label": "A is not exploration hacking",
+   "kind": "claim",
+   "cells": {
+    "local": {
+     "verdict": "op",
+     "why": "Still open: robust exploration guarantees are a named gap. The stress test narrows the worry to Bob, since if Alice holds back her score drops and check 2 catches it."
+    },
+    "early": {
+     "verdict": "op",
+     "why": "Open for the same reason, and the narrowing to Bob holds here too."
+    }
+   }
+  },
+  {
+   "id": "SC-D5.1",
+   "label": "Convergence time prohibitive, e.g. ELK problems",
+   "kind": "defeater",
+   "cells": {
+    "local": {
+     "verdict": "na",
+     "why": "This defeats the claim that the efficient equilibrium is reached in good time. With that claim withdrawn, the defeater has nothing to attack."
+    },
+    "early": {
+     "verdict": "na",
+     "why": "This defeats the claim that the efficient equilibrium is reached in good time. The two checks give the bound without any equilibrium being reached, so that claim is withdrawn and the defeater has nothing to attack."
+    }
+   }
+  },
+  {
+   "id": "SC-D5.2",
+   "label": "Models are gradient hacking",
+   "kind": "defeater",
+   "cells": {
+    "local": {
+     "verdict": "na",
+     "why": "Gradient hacking is named as a way training could fail to reach the equilibrium. The two checks give the bound without reaching it, so the defeater's target is withdrawn and the case no longer routes through it."
+    },
+    "early": {
+     "verdict": "na",
+     "why": "Gradient hacking is named as a way training could fail to reach the equilibrium. The two checks give the bound without reaching it, so the defeater's target is withdrawn and the case no longer routes through it."
+    }
+   }
+  },
+  {
+   "id": "SC-D5.3",
+   "label": "Training stuck in a local minimum",
+   "kind": "defeater",
+   "cells": {
+    "local": {
+     "verdict": "bad",
+     "why": "The local-only case is exactly this defeater: training is stuck at a local point that is not global."
+    },
+    "early": {
+     "verdict": "na",
+     "why": "Stopping before any equilibrium is earlier than being stuck at a local minimum, so this specific defeater does not describe it."
+    }
+   }
+  },
+  {
+   "id": "SC-OP-EMPIRICAL",
+   "label": "Empirical tests of debate's key assumptions",
+   "kind": "open_problem",
+   "cells": {
+    "local": {
+     "verdict": "op",
+     "why": "Whether training reliably reaches equilibrium is itself one of the empirical questions this open problem names; loosening the assumption does not settle it."
+    },
+    "early": {
+     "verdict": "op",
+     "why": "Whether debate's key assumptions hold in practice is an open empirical question; supposing training stops before any equilibrium does not test it, so it stays open."
+    }
+   }
+  },
+  {
+   "id": "SC-OP-EXPLORATION",
+   "label": "How serious is exploration hacking?",
+   "kind": "open_problem",
+   "cells": {
+    "local": {
+     "verdict": "op",
+     "why": "A major gap the sketch leaves open; the equilibrium strength does not change it."
+    },
+    "early": {
+     "verdict": "op",
+     "why": "How serious exploration hacking is remains a gap the case leaves open; supposing training stops before any equilibrium does not settle it."
+    }
+   }
+  }
+ ]
+}
