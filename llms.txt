@@ -2,7 +2,7 @@
 
 > A source-pinned research database that connects AI-safety questions to theories, assumptions, formal results and evidence. Every record names its source and location, and every connection keeps its review state. This file tells AI agents how to use it.
 
-Snapshot 4571dcd419e477499ca46ce8a3d785a33972a650fff46446afb7a9c16d9a22a3 (canonical commit f196efd449cdb2fa065ca6d6178f781bfcc2cafa): 1,750 records, 5,821 recorded links, 245 sources. Static files only; no login, no rate limit beyond the host's.
+Snapshot daf7fa34c20f24c9e2291c13a1a93e9f60d2f676508467d830b26b1154db9b89 (canonical commit f196efd449cdb2fa065ca6d6178f781bfcc2cafa): 1,224 records, 2,000 recorded links, 245 sources. Static files only; no login, no rate limit beyond the host's.
 
 ## Rules
 
@@ -18,6 +18,7 @@ Snapshot 4571dcd419e477499ca46ce8a3d785a33972a650fff46446afb7a9c16d9a22a3 (canon
 - [agent/papers.json](https://elshatlawy.github.io/AI-Safety-Research-Atlas-/agent/papers.json): every source with the records drawn from it.
 - [atlas_data.json](https://elshatlawy.github.io/AI-Safety-Research-Atlas-/atlas_data.json): the full public view (records, links, sources, aliases, review events) for programmatic use; [PUBLIC_BUILD_MANIFEST.json](https://elshatlawy.github.io/AI-Safety-Research-Atlas-/PUBLIC_BUILD_MANIFEST.json) has every file's hash.
 - [problem_routes.json](https://elshatlawy.github.io/AI-Safety-Research-Atlas-/problem_routes.json): guided problem routes (monitoring limits; information and oversight) over existing records.
+- [proof_dependencies.json](https://elshatlawy.github.io/AI-Safety-Research-Atlas-/proof_dependencies.json): 517 general maths facts that the atlas's proofs rest on (Lean core and Mathlib facts, names Lean writes itself, set.mm facts), with their 3,818 links. They are not AI-safety records, so the records, links and counts above leave them out; `rests_on` lists, for each of 102 atlas records, the facts its proof uses, and record cards carry the same list as `rests_on_general_facts`.
 
 ## Recipes
 

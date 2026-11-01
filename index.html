@@ -1317,6 +1317,8 @@ a.sml:hover{text-decoration:underline}
 .rgreach .chip b{font-family:"JetBrains Mono",ui-monospace,monospace;font-weight:500;font-size:12px;opacity:.8}
 .rgreach .chip[disabled]{opacity:.45;cursor:default}
 .rgsmall{font-size:12.5px;margin:8px 0 0}
+.rgfacts{display:flex;flex-wrap:wrap;gap:4px;margin:10px 0 0}
+.rgfacts span{font-size:11.5px;padding:2px 7px;border-radius:6px;background:var(--sunk);color:var(--ink2);overflow-wrap:anywhere}
 .rgfind.rgpath{flex:none;width:100%;box-sizing:border-box}
 .rgres button{display:block;width:100%;text-align:left;border:0;background:transparent;font:inherit;font-size:13.5px;color:var(--ink);padding:6px 9px;border-radius:8px;cursor:pointer;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .rgres button:hover,.rgres button:focus{background:var(--sunk);outline:0}
@@ -1534,7 +1536,7 @@ const statusSVG = (st, s) => fracSVG(STATUS_FILL[st] ?? 0, s);
 
 async function boot() {
   try {
-    const res = await fetch("data.json?v=3bb1fcee210c");
+    const res = await fetch("data.json?v=a8410036293c");
     if (!res.ok) throw new Error(res.status);
     D = await res.json();
   } catch (e) {
@@ -2980,7 +2982,7 @@ const GAP = 10, DIS = {challenges: "dis", critiques: "dis", supports: "sup"}, RI
 let GR = null, GRI = null, GADJ = null, GVB = null, GT = false, GSEL = -1, GHITS = null, GAREA = -1, gAnim = 0, gResize = false;
 let GARR = "groups", GHL = null, GFAM = "", GLAY = {}, GCONE = null, GPATH = null, GREST = null, FNODE = null, GAGREE = null;
 function loadGraph() {
-  if (!loadGraph.p) loadGraph.p = fetch("graph.json?v=28bda433ee38").then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }).then(g => {
+  if (!loadGraph.p) loadGraph.p = fetch("graph.json?v=332ff306b758").then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }).then(g => {
     const N = g.nodes;
     GRI = {}; N.id.forEach((id, i) => { GRI[id.toLowerCase()] = i; });
     GADJ = N.id.map(() => []);
@@ -3468,7 +3470,16 @@ async function openRecordSheet(i) {
   const src = (c.sources || []).map(s => `<li>${/^https:\/\//.test(s.url || "") ? `<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.title || s.source_id)}</a>` : esc(s.title || s.source_id)}${s.locator ? ` <span class="muted">· ${esc(s.locator)}</span>` : ""}</li>`).join("");
   slot.innerHTML = `${c.text ? `<p class="rgtext">${esc(c.text)}</p>` : ""}
     <div class="rgstate"><b>${esc(c.state || "")}</b>${esc(c.state_meaning || "")}</div>
-    ${src ? `<h4>Source</h4><ul>${src}</ul>` : ""}`;
+    ${src ? `<h4>Source</h4><ul>${src}</ul>` : ""}${restsOn(c.rests_on_general_facts)}`;
+  slot.querySelectorAll("[data-facts]").forEach(b => b.onclick = () => { b.parentElement.querySelectorAll("span[hidden]").forEach(x => { x.hidden = false; }); b.remove(); });
+}
+// General maths facts a proof uses sit outside the atlas, in the proof-dependency file; the card lists them by name.
+function restsOn(r) {
+  if (!r || !r.facts || !r.facts.length) return "";
+  const f = r.facts;
+  return `<h4>Rests on general maths facts <span class="muted mono" style="font-weight:500">${fmt(r.count)}</span></h4>
+    <p class="muted rgsmall">Lean and Metamath library facts this proof uses. They are not AI-safety records, so the graph leaves them out; <a href="${esc(r.file)}" target="_blank" rel="noopener">${esc(r.file)}</a> keeps them with their links.</p>
+    <div class="rgfacts">${f.map((x, k) => `<span class="mono"${k >= 24 ? " hidden" : ""}>${esc(String(x.title || x.id).replace(/^(Lean|Metamath) /, ""))}</span>`).join("")}${f.length > 24 ? `<button class="lk" type="button" data-facts>Show all ${fmt(f.length)}</button>` : ""}</div>`;
 }
 
 /* ---------- search ---------- */
