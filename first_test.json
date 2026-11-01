@@ -1,0 +1,1398 @@
+{
+ "schema": "ASRA-FIRST-TEST-SUMMARY-v1",
+ "status": "provisional_ai_draft",
+ "title": "Does the atlas make answers better?",
+ "dates": {
+  "answers": "2026-10-24",
+  "judging_finished": "2026-10-31"
+ },
+ "atlas_version": {
+  "pages_commit": "eca4747",
+  "private_main": "854556b"
+ },
+ "scripts_commit": "6321b33",
+ "method": [
+  "An AI answered 52 open research questions twice: once with the web only, once with the web and the atlas.",
+  "Each answer had at most 250 words, cited arXiv papers for every claim, and did not mention the atlas.",
+  "Two AI judges compared the two answers to each question without knowing which used the atlas, and picked the better one: accuracy first, then coverage, then whether it states assumptions and open parts.",
+  "The second judge saw the answers in the opposite order. A side wins a question only when both judges pick it.",
+  "Two more AI graders also scored each answer on its own, checking every cited paper."
+ ],
+ "questions": [
+  {
+   "id": "Q01",
+   "question": "How can a system be made to respect parts of its objective that are too expensive to evaluate often during training?",
+   "atlas_status": "ANSWERED",
+   "winner": "atlas"
+  },
+  {
+   "id": "Q02",
+   "question": "Proposed experiments: can RL learn nearly as fast with reward on 10% of episodes?",
+   "atlas_status": "NOT_ANSWERED",
+   "winner": "no_atlas"
+  },
+  {
+   "id": "Q03",
+   "question": "Does self-play training stably converge to honest debate equilibria?",
+   "atlas_status": "ANSWERED",
+   "winner": "atlas"
+  },
+  {
+   "id": "Q04",
+   "question": "Is there a natural debate protocol for stochastic simulations, where each step adds noise?",
+   "atlas_status": "ANSWERED",
+   "winner": "atlas"
+  },
+  {
+   "id": "Q05",
+   "question": "Can Iterated Amplification be applied to complex real-world beyond-human-scale tasks?",
+   "atlas_status": "PARTLY_ANSWERED",
+   "winner": "atlas"
+  },
+  {
+   "id": "Q06",
+   "question": "Does debate's honesty assumption hold beyond fact-checkable claims; can humans judge?",
+   "atlas_status": "ANSWERED",
+   "winner": "atlas"
+  },
+  {
+   "id": "Q07",
+   "question": "Do errors accumulate across levels of recursive reward modeling?",
+   "atlas_status": "ANSWERED",
+   "winner": "atlas"
+  },
+  {
+   "id": "Q08",
+   "question": "How do provers and verifiers behave at approximate equilibria when prover-verifier games are scaled to harder problems?",
+   "atlas_status": "ANSWERED",
+   "winner": "atlas"
+  },
+  {
+   "id": "Q09",
+   "question": "Is learned task decomposition feasible for hard real-world tasks, and where does it fail?",
+   "atlas_status": "PARTLY_ANSWERED",
+   "winner": "atlas"
+  },
+  {
+   "id": "Q10",
+   "question": "Is multi-turn debate with explicit counterarguments needed to help human judges?",
+   "atlas_status": "ANSWERED",
+   "winner": "split"
+  },
+  {
+   "id": "Q11",
+   "question": "How far can critique training be pushed relative to discriminator performance, and what stops models from explaining what they know?",
+   "atlas_status": "PARTLY_ANSWERED",
+   "winner": "split"
+  },
+  {
+   "id": "Q12",
+   "question": "Could debate help human judges in other set-ups such as highly technical tasks?",
+   "atlas_status": "ANSWERED",
+   "winner": "no_atlas"
+  },
+  {
+   "id": "Q13",
+   "question": "Do debate, market-making and recursive reward modeling work in sandwiching trials?",
+   "atlas_status": "PARTLY_ANSWERED",
+   "winner": "atlas"
+  },
+  {
+   "id": "Q14",
+   "question": "Can helpfulness and instruction-following be trained without human feedback labels?",
+   "atlas_status": "ANSWERED",
+   "winner": "atlas"
+  },
+  {
+   "id": "Q15",
+   "question": "What is needed to automate decomposition, error analysis and program repair?",
+   "atlas_status": "PARTLY_ANSWERED",
+   "winner": "atlas"
+  },
+  {
+   "id": "Q16",
+   "question": "Can several examiner models, or a trained examiner, make cross-examination better at detecting factual errors?",
+   "atlas_status": "PARTLY_ANSWERED",
+   "winner": "atlas"
+  },
+  {
+   "id": "Q17",
+   "question": "How many agents should take part in a multi-agent debate, and can debate serve as AI feedback for alignment?",
+   "atlas_status": "ANSWERED",
+   "winner": "no_atlas"
+  },
+  {
+   "id": "Q18",
+   "question": "Open question: does process supervision's advantage generalize beyond math?",
+   "atlas_status": "PARTLY_ANSWERED",
+   "winner": "atlas"
+  },
+  {
+   "id": "Q19",
+   "question": "Can debate extract inductive or tacit knowledge that lacks short, citeable justifications?",
+   "atlas_status": "NOT_ANSWERED",
+   "winner": "atlas"
+  },
+  {
+   "id": "Q20",
+   "question": "Does debate still work when judges hold strong inaccurate priors or cognitive biases?",
+   "atlas_status": "ANSWERED",
+   "winner": "no_atlas"
+  },
+  {
+   "id": "Q21",
+   "question": "Will obfuscated arguments become an obstacle for debate on harder questions?",
+   "atlas_status": "PARTLY_ANSWERED",
+   "winner": "atlas"
+  },
+  {
+   "id": "Q22",
+   "question": "Do doubly-efficient debate guarantees survive an oracle that gives wrong answers on some queries?",
+   "atlas_status": "NOT_ANSWERED",
+   "winner": "atlas"
+  },
+  {
+   "id": "Q23",
+   "question": "Is there a debate model where the honest prover always has an efficient strategy even without a short human-verifiable transcript?",
+   "atlas_status": "ANSWERED",
+   "winner": "atlas"
+  },
+  {
+   "id": "Q24",
+   "question": "Why do MAD hyperparameters transfer from GPT-3.5 to GPT-4 but not to Mixtral?",
+   "atlas_status": "NOT_ANSWERED",
+   "winner": "atlas"
+  },
+  {
+   "id": "Q25",
+   "question": "Which oracle models, regret notions and equilibrium concepts suit debate modelled as a game with a very large action space?",
+   "atlas_status": "ANSWERED",
+   "winner": "atlas"
+  },
+  {
+   "id": "Q26",
+   "question": "What makes a concept easy or hard for a strong model to learn from weak labels, and can weak-to-strong generalization error be estimated without labels?",
+   "atlas_status": "PARTLY_ANSWERED",
+   "winner": "no_atlas"
+  },
+  {
+   "id": "Q27",
+   "question": "Open question: are the tested hardness gaps large enough to generalize easy-to-hard?",
+   "atlas_status": "ANSWERED",
+   "winner": "no_atlas"
+  },
+  {
+   "id": "Q28",
+   "question": "Does debate generalise to larger evidence bases or uncitable parametric knowledge?",
+   "atlas_status": "PARTLY_ANSWERED",
+   "winner": "no_atlas"
+  },
+  {
+   "id": "Q29",
+   "question": "Open question: can pseudolabeler-aware contrastive pretraining improve weak-to-strong?",
+   "atlas_status": "NOT_ANSWERED",
+   "winner": "atlas"
+  },
+  {
+   "id": "Q30",
+   "question": "Open question: how do strong models perceive the knowledge boundaries of weak supervisors?",
+   "atlas_status": "PARTLY_ANSWERED",
+   "winner": "atlas"
+  },
+  {
+   "id": "Q31",
+   "question": "When is a further recursive reward modeling step appropriate; can critique support it?",
+   "atlas_status": "ANSWERED",
+   "winner": "atlas"
+  },
+  {
+   "id": "Q32",
+   "question": "Can debate with weak judges beat direct QA baselines, e.g. via judge fine-tuning?",
+   "atlas_status": "PARTLY_ANSWERED",
+   "winner": "split"
+  },
+  {
+   "id": "Q33",
+   "question": "Does training debaters and consultants on weak-judge signals improve judge accuracy?",
+   "atlas_status": "ANSWERED",
+   "winner": "atlas"
+  },
+  {
+   "id": "Q34",
+   "question": "Open question: what assistance best helps humans judge solutions from larger models?",
+   "atlas_status": "ANSWERED",
+   "winner": "split"
+  },
+  {
+   "id": "Q35",
+   "question": "Do scalable oversight methods (critique, debate, decomposition) work on misleading errors?",
+   "atlas_status": "PARTLY_ANSWERED",
+   "winner": "atlas"
+  },
+  {
+   "id": "Q36",
+   "question": "Could stronger debaters find judge-perplexing strategies such as obfuscated arguments?",
+   "atlas_status": "ANSWERED",
+   "winner": "atlas"
+  },
+  {
+   "id": "Q37",
+   "question": "Can learning-theoretic results say how the abilities of learning agents and available data affect a weaker agent's ability to verify a stronger one?",
+   "atlas_status": "NOT_ANSWERED",
+   "winner": "atlas"
+  },
+  {
+   "id": "Q38",
+   "question": "Which other combinations of scalable oversight and weak-to-strong generalization work?",
+   "atlas_status": "PARTLY_ANSWERED",
+   "winner": "atlas"
+  },
+  {
+   "id": "Q39",
+   "question": "How can model similarity be measured on free-text answers and reasoning, to study its role in debate and process supervision?",
+   "atlas_status": "PARTLY_ANSWERED",
+   "winner": "atlas"
+  },
+  {
+   "id": "Q40",
+   "question": "Why does direct supervision beat recursive critique when a stronger model supervises a weaker one, and would better critique abilities change that?",
+   "atlas_status": "PARTLY_ANSWERED",
+   "winner": "atlas"
+  },
+  {
+   "id": "Q41",
+   "question": "Do protocols that raise worst-case ASD resist rare catastrophic failures?",
+   "atlas_status": "NOT_ANSWERED",
+   "winner": "atlas"
+  },
+  {
+   "id": "Q42",
+   "question": "What is the probability that ASI escapes control (Compton constant) in realistic settings?",
+   "atlas_status": "NOT_ANSWERED",
+   "winner": "atlas"
+  },
+  {
+   "id": "Q43",
+   "question": "Open empirical questions: does debate help, reach equilibrium, show obfuscation?",
+   "atlas_status": "PARTLY_ANSWERED",
+   "winner": "split"
+  },
+  {
+   "id": "Q44",
+   "question": "Open: how serious is exploration hacking and how can it be prevented?",
+   "atlas_status": "NOT_ANSWERED",
+   "winner": "atlas"
+  },
+  {
+   "id": "Q45",
+   "question": "Without online training in high-stakes settings, how can distribution shift, alignment faking and coordinated errors be handled?",
+   "atlas_status": "NOT_ANSWERED",
+   "winner": "split"
+  },
+  {
+   "id": "Q46",
+   "question": "Open: does prover-estimator debate avoid obfuscation, and are its debaters poly-time?",
+   "atlas_status": "ANSWERED",
+   "winner": "atlas"
+  },
+  {
+   "id": "Q47",
+   "question": "Can a debate protocol avoid needing stability, for example by targeting honesty instead of correctness?",
+   "atlas_status": "PARTLY_ANSWERED",
+   "winner": "atlas"
+  },
+  {
+   "id": "Q48",
+   "question": "Does persona-aware debate help human judges on manipulated content, satire, propaganda and unresolved claims?",
+   "atlas_status": "NOT_ANSWERED",
+   "winner": "atlas"
+  },
+  {
+   "id": "Q49",
+   "question": "How would humans check that an unsupervised elicitation method reads a constitution as intended?",
+   "atlas_status": "NOT_ANSWERED",
+   "winner": "atlas"
+  },
+  {
+   "id": "Q50",
+   "question": "Does some variant of debate work as a component of an overall alignment strategy?",
+   "atlas_status": "PARTLY_ANSWERED",
+   "winner": "atlas"
+  },
+  {
+   "id": "Q51",
+   "question": "Open: is stability necessary, and which problems admit stable decompositions?",
+   "atlas_status": "NOT_ANSWERED",
+   "winner": "no_atlas"
+  },
+  {
+   "id": "Q52",
+   "question": "Which debate graph topologies satisfy the martingale condition?",
+   "atlas_status": "NOT_ANSWERED",
+   "winner": "atlas"
+  }
+ ],
+ "side_by_side": {
+  "better": {
+   "atlas": 38,
+   "no_atlas": 8,
+   "split": 6
+  },
+  "accuracy": {
+   "atlas": 18,
+   "no_atlas": 6
+  },
+  "coverage": {
+   "atlas": 25,
+   "no_atlas": 12
+  },
+  "assumptions_and_open_parts": {
+   "atlas": 18,
+   "no_atlas": 7
+  },
+  "by_atlas_status": {
+   "ANSWERED": {
+    "atlas": 13,
+    "no_atlas": 4,
+    "split": 2
+   },
+   "NOT_ANSWERED": {
+    "atlas": 11,
+    "no_atlas": 2,
+    "split": 1
+   },
+   "PARTLY_ANSWERED": {
+    "atlas": 14,
+    "no_atlas": 2,
+    "split": 3
+   }
+  },
+  "mistakes_listed": {
+   "atlas": 57,
+   "no_atlas": 117
+  },
+  "fewer_mistakes_per_question": {
+   "atlas": 31,
+   "no_atlas": 11,
+   "same": 10
+  },
+  "single_judgements": {
+   "atlas": 82,
+   "no_atlas": 22
+  },
+  "picked_first_shown": 52,
+  "picked_second_shown": 52
+ },
+ "one_at_a_time": {
+  "score_0_to_3": {
+   "atlas": 2.99,
+   "no_atlas": 2.97
+  },
+  "correct_sources_per_answer": {
+   "atlas": 7,
+   "no_atlas": 8.9
+  },
+  "made_up_papers": {
+   "atlas": 0,
+   "no_atlas": 0
+  },
+  "median_seconds": {
+   "atlas": 180,
+   "no_atlas": 153
+  }
+ },
+ "limits": [
+  "All judging and grading is by AI, from the same model family that wrote the answers. No person has checked the verdicts yet.",
+  "The questions and the reference papers come from the atlas, which may favour the atlas side.",
+  "One setting only: a strong AI model with web access. A closed-book run, a weaker model or a human reader may differ.",
+  "Each answer was written once."
+ ],
+ "missing_papers": [
+  {
+   "arxiv": "2610.28539",
+   "questions": [
+    "Q10",
+    "Q20",
+    "Q32",
+    "Q33",
+    "Q43"
+   ],
+   "note": "Debate corrects human priors; consultancy, weaker LLMs do not."
+  },
+  {
+   "arxiv": "2211.14275",
+   "questions": [
+    "Q15",
+    "Q18"
+   ],
+   "note": "Compares process versus outcome feedback on GSM8K math."
+  },
+  {
+   "arxiv": "2212.10561",
+   "questions": [
+    "Q09",
+    "Q15"
+   ],
+   "note": "Parsel: automatic hierarchical decomposition, APPS competition-level gains"
+  },
+  {
+   "arxiv": "2307.11768",
+   "questions": [
+    "Q05",
+    "Q09"
+   ],
+   "note": "Radhakrishnan et al.; faithfulness up, retains only some CoT gains."
+  },
+  {
+   "arxiv": "2404.13076",
+   "questions": [
+    "Q14",
+    "Q39"
+   ],
+   "note": "LLM evaluators self-recognize and self-prefer; causal link shown."
+  },
+  {
+   "arxiv": "2410.04638",
+   "questions": [
+    "Q26",
+    "Q37"
+   ],
+   "note": "Wu benign overfitting; two phases, success versus random guessing."
+  },
+  {
+   "arxiv": "2412.02674",
+   "questions": [
+    "Q11",
+    "Q14"
+   ],
+   "note": "Variant of generation-verification gap scales monotonically with pretraining flops"
+  },
+  {
+   "arxiv": "2501.17315",
+   "questions": [
+    "Q41",
+    "Q45"
+   ],
+   "note": "Control safety case; elicitation, transfer, extrapolation claims"
+  },
+  {
+   "arxiv": "2503.10965",
+   "questions": [
+    "Q45",
+    "Q49"
+   ],
+   "note": "Three of four teams found planted hidden objective"
+  },
+  {
+   "arxiv": "2504.10374",
+   "questions": [
+    "Q41",
+    "Q45"
+   ],
+   "note": "Ctrl-Z abstract confirms 58% to 7% at 5% cost"
+  },
+  {
+   "arxiv": "1504.02089",
+   "questions": [
+    "Q25"
+   ],
+   "note": "Hazan-Koren; Theta(sqrt N) runtime bound, Chen restates as regret"
+  },
+  {
+   "arxiv": "1612.00429",
+   "questions": [
+    "Q02"
+   ],
+   "note": "Formalises semi-supervised RL with labelled and unlabelled MDPs; generalises."
+  },
+  {
+   "arxiv": "1708.00075",
+   "questions": [
+    "Q25"
+   ],
+   "note": "Hazan-Singh-Zhang; local regret, non-convex gradient-based games confirmed"
+  },
+  {
+   "arxiv": "1709.02738",
+   "questions": [
+    "Q03"
+   ],
+   "note": "Poincare recurrence of regularised learning in zero-sum games; cycling confirmed."
+  },
+  {
+   "arxiv": "1711.00141",
+   "questions": [
+    "Q03"
+   ],
+   "note": "OMD last-iterate convergence proved for bilinear games; GAN use empirical."
+  },
+  {
+   "arxiv": "1802.05642",
+   "questions": [
+    "Q03"
+   ],
+   "note": "Hamiltonian (zero-sum) games: gradient dynamics cycle; general-game result."
+  },
+  {
+   "arxiv": "1812.01647",
+   "questions": [
+    "Q41"
+   ],
+   "note": "Uesato adversarial evaluation finds rare catastrophic failures"
+  },
+  {
+   "arxiv": "1909.10618",
+   "questions": [
+    "Q09"
+   ],
+   "note": "Nachum; hierarchy benefits attributed mostly to exploration, confirmed."
+  },
+  {
+   "arxiv": "2002.02794",
+   "questions": [
+    "Q02"
+   ],
+   "note": "Reward-free exploration in polynomial episodes; 'not wasted' is inference."
+  },
+  {
+   "arxiv": "2002.09758",
+   "questions": [
+    "Q09"
+   ],
+   "note": "ONUS unsupervised decomposition improves HotpotQA multi-hop QA"
+  },
+  {
+   "arxiv": "2006.14779",
+   "questions": [
+    "Q34"
+   ],
+   "note": "Explanations raised acceptance regardless of correctness, no complementary gain."
+  },
+  {
+   "arxiv": "2010.03622",
+   "questions": [
+    "Q29"
+   ],
+   "note": "Wei et al. expansion assumption; Lang's framework explicitly builds on it"
+  },
+  {
+   "arxiv": "2106.04156",
+   "questions": [
+    "Q29"
+   ],
+   "note": "Spectral contrastive loss on augmentation graph; Lang cites it for conjecture"
+  },
+  {
+   "arxiv": "2106.05091",
+   "questions": [
+    "Q01"
+   ],
+   "note": "PEBBLE: relabeling plus unsupervised pre-training, abstract verified."
+  },
+  {
+   "arxiv": "2202.01741",
+   "questions": [
+    "Q02"
+   ],
+   "note": "Zero-reward labels trade bias, sample complexity, distributional shift."
+  },
+  {
+   "arxiv": "2204.02892",
+   "questions": [
+    "Q09"
+   ],
+   "note": "Wies et al.; positive learnability theorem with intermediate supervision confirmed."
+  },
+  {
+   "arxiv": "2205.10625",
+   "questions": [
+    "Q09"
+   ],
+   "note": "Least-to-most prompting; large compositional generalization gains, confirmed."
+  },
+  {
+   "arxiv": "2206.13353",
+   "questions": [
+    "Q42"
+   ],
+   "note": "Abstract gives ~5% by 2070, May 2022 update >10%"
+  },
+  {
+   "arxiv": "2207.05221",
+   "questions": [
+    "Q11"
+   ],
+   "note": "Models calibrated on P(True) for their own proposed answers"
+  },
+  {
+   "arxiv": "2207.10397",
+   "questions": [
+    "Q15"
+   ],
+   "note": "CodeT executes generated tests to rank candidate programs."
+  },
+  {
+   "arxiv": "2210.02406",
+   "questions": [
+    "Q15"
+   ],
+   "note": "Decomposed Prompting delegates sub-tasks to dedicated prompt handlers."
+  },
+  {
+   "arxiv": "2210.03350",
+   "questions": [
+    "Q09"
+   ],
+   "note": "Compositionality gap; knows sub-facts, fails composition, confirmed."
+  },
+  {
+   "arxiv": "2210.10760",
+   "questions": [
+    "Q01"
+   ],
+   "note": "Gold reward peaks then falls with KL; RM size, data matter."
+  },
+  {
+   "arxiv": "2211.17096",
+   "questions": [
+    "Q37"
+   ],
+   "note": "Mutreja-Shafer: sqrt(d)/eps^2 lower bound, interval protocol; abstract confirms"
+  },
+  {
+   "arxiv": "2212.09689",
+   "questions": [
+    "Q14"
+   ],
+   "note": "Unnatural Instructions: model-generated data rivals human-written instruction datasets."
+  },
+  {
+   "arxiv": "2212.10560",
+   "questions": [
+    "Q14"
+   ],
+   "note": "Abstract confirms 33-point gain, 5% gap to InstructGPT-001, 175 seeds."
+  },
+  {
+   "arxiv": "2301.13246",
+   "questions": [
+    "Q15"
+   ],
+   "note": "Conversational APR feeds test failure info back iteratively."
+  },
+  {
+   "arxiv": "2302.08468",
+   "questions": [
+    "Q15"
+   ],
+   "note": "LEVER trains verifier on program plus execution result."
+  },
+  {
+   "arxiv": "2302.09664",
+   "questions": [
+    "Q39"
+   ],
+   "note": "Kuhn 2023 semantic entropy; bidirectional-entailment clustering of answers"
+  },
+  {
+   "arxiv": "2302.13493",
+   "questions": [
+    "Q02"
+   ],
+   "note": "PDS: provable benefits of reward-free data in linear MDPs."
+  },
+  {
+   "arxiv": "2303.11366",
+   "questions": [
+    "Q15"
+   ],
+   "note": "Reflexion reflects verbally on environment and test feedback."
+  },
+  {
+   "arxiv": "2304.05128",
+   "questions": [
+    "Q15"
+   ],
+   "note": "Self-Debugging uses execution results and explanations to fix code."
+  },
+  {
+   "arxiv": "2305.03047",
+   "questions": [
+    "Q14"
+   ],
+   "note": "Abstract confirms Dromedary uses under 300 lines of human annotations."
+  },
+  {
+   "arxiv": "2305.04388",
+   "questions": [
+    "Q11"
+   ],
+   "note": "CoT explanations systematically omit biasing features that drove answers"
+  },
+  {
+   "arxiv": "2305.11206",
+   "questions": [
+    "Q14"
+   ],
+   "note": "LIMA: 1000 examples, Superficial Alignment Hypothesis."
+  },
+  {
+   "arxiv": "2305.15717",
+   "questions": [
+    "Q14"
+   ],
+   "note": "False Promise of Imitation: copies style, not capability."
+  },
+  {
+   "arxiv": "2305.18654",
+   "questions": [
+    "Q09"
+   ],
+   "note": "Faith and Fate; decay with depth, scratchpad finetuning insufficient."
+  },
+  {
+   "arxiv": "2306.05685",
+   "questions": [
+    "Q14"
+   ],
+   "note": "MT-Bench judge: position, verbosity, self-enhancement biases; 80% human agreement."
+  },
+  {
+   "arxiv": "2308.06259",
+   "questions": [
+    "Q14"
+   ],
+   "note": "Abstract confirms small seed set plus web corpus self-augmentation."
+  },
+  {
+   "arxiv": "2308.15299",
+   "questions": [
+    "Q09"
+   ],
+   "note": "TaskLAMA; steps good, pairwise temporal dependencies poor, confirmed."
+  },
+  {
+   "arxiv": "2309.00267",
+   "questions": [
+    "Q14"
+   ],
+   "note": "RLAIF comparable to RLHF; works with same-size or same-checkpoint labeler."
+  },
+  {
+   "arxiv": "2309.12226",
+   "questions": [
+    "Q25"
+   ],
+   "note": "Daskalakis et al.; smooth-strategy deviations make equilibrium tractable."
+  },
+  {
+   "arxiv": "2310.01377",
+   "questions": [
+    "Q14"
+   ],
+   "note": "UltraFeedback: over 1M GPT-4 preference annotations replacing human feedback."
+  },
+  {
+   "arxiv": "2310.01726",
+   "questions": [
+    "Q15"
+   ],
+   "note": "LLMAO localizes faults without test coverage information."
+  },
+  {
+   "arxiv": "2310.01798",
+   "questions": [
+    "Q15"
+   ],
+   "note": "Intrinsic self-correction without external feedback fails, can degrade."
+  },
+  {
+   "arxiv": "2310.03716",
+   "questions": [
+    "Q14"
+   ],
+   "note": "RLHF reward gains largely driven by response length increase."
+  },
+  {
+   "arxiv": "2310.05910",
+   "questions": [
+    "Q14"
+   ],
+   "note": "SALMON instructable reward model trained on synthetic preferences, principles only."
+  },
+  {
+   "arxiv": "2310.06770",
+   "questions": [
+    "Q15"
+   ],
+   "note": "SWE-bench real GitHub issues with ground-truth test validation."
+  },
+  {
+   "arxiv": "2310.10080",
+   "questions": [
+    "Q18"
+   ],
+   "note": "Abstract: auto step-reward data, PRM-guided search improves code"
+  },
+  {
+   "arxiv": "2310.13548",
+   "questions": [
+    "Q11"
+   ],
+   "note": "Humans and preference models prefer convincing sycophantic responses nontrivially"
+  },
+  {
+   "arxiv": "2310.13798",
+   "questions": [
+    "Q49"
+   ],
+   "note": "Single general principle generalizes; detailed constitutions still improve control"
+  },
+  {
+   "arxiv": "2310.16944",
+   "questions": [
+    "Q14"
+   ],
+   "note": "Zephyr beats Llama2-Chat-70B on MT-Bench, no human annotation; UltraChat was ChatGPT-written though."
+  },
+  {
+   "arxiv": "2310.19647",
+   "questions": [
+    "Q25"
+   ],
+   "note": "Content right but authors swapped: this is Peng-Rubinstein"
+  },
+  {
+   "arxiv": "2310.19786",
+   "questions": [
+    "Q25"
+   ],
+   "note": "Content right but authors swapped: this is Dagan et al."
+  },
+  {
+   "arxiv": "2311.05772",
+   "questions": [
+    "Q09"
+   ],
+   "note": "ADaPT; as-needed recursive decomposition on executor failure, confirmed."
+  },
+  {
+   "arxiv": "2311.12022",
+   "questions": [
+    "Q06"
+   ],
+   "note": "GPQA: non-expert validators with web access reach 34%."
+  },
+  {
+   "arxiv": "2312.01552",
+   "questions": [
+    "Q14"
+   ],
+   "note": "URIAL: three constant stylistic in-context examples match SFT/RLHF models."
+  },
+  {
+   "arxiv": "2401.01335",
+   "questions": [
+    "Q14"
+   ],
+   "note": "SPIN self-play uses only existing SFT demonstration data."
+  },
+  {
+   "arxiv": "2401.02843",
+   "questions": [
+    "Q42"
+   ],
+   "note": "Section 4.2: median 5% extremely bad; control-loss question median 10%"
+  },
+  {
+   "arxiv": "2401.04088",
+   "questions": [
+    "Q24"
+   ],
+   "note": "Mixtral 8x7B sparse MoE paper; Instruct trained via SFT then DPO"
+  },
+  {
+   "arxiv": "2401.10020",
+   "questions": [
+    "Q14"
+   ],
+   "note": "Abstract confirms LLM-as-judge iterative DPO improves Llama-2-70B instruction following."
+  },
+  {
+   "arxiv": "2402.00667",
+   "questions": [
+    "Q38"
+   ],
+   "note": "Sang et al.; SciQ pilot, bagging/boosting, debate, human-AI, confirmed"
+  },
+  {
+   "arxiv": "2402.05120",
+   "questions": [
+    "Q17"
+   ],
+   "note": "More Agents Is All You Need; sampling-and-voting scales with agents"
+  },
+  {
+   "arxiv": "2402.12366",
+   "questions": [
+    "Q40"
+   ],
+   "note": "Abstract states GPT-4 SFT beats weak-SFT plus RLAIF pipelines"
+  },
+  {
+   "arxiv": "2402.16906",
+   "questions": [
+    "Q15"
+   ],
+   "note": "LDB tracks intermediate variables per basic block for debugging."
+  },
+  {
+   "arxiv": "2402.18272",
+   "questions": [
+    "Q17"
+   ],
+   "note": "Strongly prompted single agent matches best multi-agent discussion."
+  },
+  {
+   "arxiv": "2403.05030",
+   "questions": [
+    "Q45"
+   ],
+   "note": "LAT defends against unforeseen failure modes, removes backdoors"
+  },
+  {
+   "arxiv": "2403.17134",
+   "questions": [
+    "Q15"
+   ],
+   "note": "RepairAgent autonomously plans and invokes tools for repair."
+  },
+  {
+   "arxiv": "2404.05427",
+   "questions": [
+    "Q15"
+   ],
+   "note": "AutoCodeRover uses AST-aware code search to localize, patch."
+  },
+  {
+   "arxiv": "2404.08158",
+   "questions": [
+    "Q37"
+   ],
+   "note": "Gur et al.: Fourier, AC0[2], juntas; O(1) triviality confirmed"
+  },
+  {
+   "arxiv": "2404.18796",
+   "questions": [
+    "Q16"
+   ],
+   "note": "PoLL abstract confirms panel beats single judge, less intra-model bias."
+  },
+  {
+   "arxiv": "2405.06624",
+   "questions": [
+    "Q41"
+   ],
+   "note": "Dalrymple guaranteed safe AI framework, formal guarantees"
+  },
+  {
+   "arxiv": "2405.15793",
+   "questions": [
+    "Q15"
+   ],
+   "note": "SWE-agent custom agent-computer interface for repository fixing."
+  },
+  {
+   "arxiv": "2405.19550",
+   "questions": [
+    "Q44"
+   ],
+   "note": "Paper: RL cannot explore good behaviors from weak starting policy."
+  },
+  {
+   "arxiv": "2406.03199",
+   "questions": [
+    "Q38"
+   ],
+   "note": "Cui et al.; Bayesian weak ensembles, generation with DPO, confirmed"
+  },
+  {
+   "arxiv": "2406.07358",
+   "questions": [
+    "Q44"
+   ],
+   "note": "van der Weij sandbagging; listed in sources only, not used in body"
+  },
+  {
+   "arxiv": "2406.08464",
+   "questions": [
+    "Q14"
+   ],
+   "note": "Abstract confirms extracting instruction data from aligned Llama-3-Instruct."
+  },
+  {
+   "arxiv": "2406.11776",
+   "questions": [
+    "Q17"
+   ],
+   "note": "Sparse topology comparable or better at lower cost, confirmed"
+  },
+  {
+   "arxiv": "2407.01489",
+   "questions": [
+    "Q15"
+   ],
+   "note": "Agentless localization-repair-validation pipeline competitive with agents."
+  },
+  {
+   "arxiv": "2407.15549",
+   "questions": [
+    "Q45"
+   ],
+   "note": "Targeted LAT removes backdoors without trigger knowledge"
+  },
+  {
+   "arxiv": "2408.11791",
+   "questions": [
+    "Q31"
+   ],
+   "note": "CLoud gains 4.65 and 5.84 points; roughly five is fair."
+  },
+  {
+   "arxiv": "2409.07985",
+   "questions": [
+    "Q41"
+   ],
+   "note": "AI-Control Games formalism; adversary best response, modelling assumptions"
+  },
+  {
+   "arxiv": "2409.18433",
+   "questions": [
+    "Q27"
+   ],
+   "note": "IRT/Glicko-2 labels; naive SFT transfer deteriorates on E2H-AMC"
+  },
+  {
+   "arxiv": "2410.08146",
+   "questions": [
+    "Q18"
+   ],
+   "note": "Setlur PAVs; process reward as step advantage, confirmed"
+  },
+  {
+   "arxiv": "2410.13502",
+   "questions": [
+    "Q27"
+   ],
+   "note": "Significant drop with proof depth/width; generalization noisy"
+  },
+  {
+   "arxiv": "2410.18837",
+   "questions": [
+    "Q26"
+   ],
+   "note": "Ildiz ridgeless distillation; W2S helps, cannot improve scaling law."
+  },
+  {
+   "arxiv": "2410.21819",
+   "questions": [
+    "Q39"
+   ],
+   "note": "Wataoka 2024; self-preference tied to lower perplexity under judge"
+  },
+  {
+   "arxiv": "2411.02400",
+   "questions": [
+    "Q09"
+   ],
+   "note": "Trade-off between accuracy gains and decomposition-introduced noise"
+  },
+  {
+   "arxiv": "2411.17693",
+   "questions": [
+    "Q45"
+   ],
+   "note": "Adaptive macro-protocols for distributed threat control setting"
+  },
+  {
+   "arxiv": "2412.01784",
+   "questions": [
+    "Q44"
+   ],
+   "note": "Tice noise injection; anomalous performance gains flag sandbagging confirmed"
+  },
+  {
+   "arxiv": "2412.04984",
+   "questions": [
+    "Q42"
+   ],
+   "note": "Models disable oversight and exfiltrate weights in agentic evaluations"
+  },
+  {
+   "arxiv": "2412.14161",
+   "questions": [
+    "Q09"
+   ],
+   "note": "TheAgentCompany; v1 said 24%, current abstract says 30%."
+  },
+  {
+   "arxiv": "2412.15118",
+   "questions": [
+    "Q18"
+   ],
+   "note": "Yu ORPS; execution-grounded process plus outcome, confirmed"
+  },
+  {
+   "arxiv": "2501.07301",
+   "questions": [
+    "Q18"
+   ],
+   "note": "Qwen PRM lessons; MC labels weak, BoN scores inflated"
+  },
+  {
+   "arxiv": "2501.07886",
+   "questions": [
+    "Q38"
+   ],
+   "note": "Ye et al.; DPO fails, ILR works under unreliable supervision, confirmed"
+  },
+  {
+   "arxiv": "2502.01456",
+   "questions": [
+    "Q18"
+   ],
+   "note": "PRIME implicit PRM from outcome labels; math and code"
+  },
+  {
+   "arxiv": "2502.01458",
+   "questions": [
+    "Q26"
+   ],
+   "note": "Yao KL extension; teacher error and calibration bounds"
+  },
+  {
+   "arxiv": "2502.01534",
+   "questions": [
+    "Q39"
+   ],
+   "note": "Li 2025 preference leakage; same/inheritance/family relatedness bias"
+  },
+  {
+   "arxiv": "2502.03492",
+   "questions": [
+    "Q11"
+   ],
+   "note": "CTRL RL critics raise pass rates for fixed generator, no human supervision"
+  },
+  {
+   "arxiv": "2502.10325",
+   "questions": [
+    "Q18"
+   ],
+   "note": "AgentPRM framework; also has ALFWorld results, not just proposal"
+  },
+  {
+   "arxiv": "2502.12150",
+   "questions": [
+    "Q39"
+   ],
+   "note": "Sun 2025; 97.1% five-way, persists after rewrite/translation"
+  },
+  {
+   "arxiv": "2502.16797",
+   "questions": [
+    "Q41"
+   ],
+   "note": "Jones et al.; elicitation-probability tail extrapolation, as described"
+  },
+  {
+   "arxiv": "2502.19130",
+   "questions": [
+    "Q17"
+   ],
+   "note": "Abstract: more agents help, more rounds before voting hurt."
+  },
+  {
+   "arxiv": "2503.02877",
+   "questions": [
+    "Q26"
+   ],
+   "note": "Medvedev random features; early stopping enables W2S, quantitative limits."
+  },
+  {
+   "arxiv": "2503.09572",
+   "questions": [
+    "Q09"
+   ],
+   "note": "Plan-and-Act; planner/executor split trained on synthetic plans."
+  },
+  {
+   "arxiv": "2503.11926",
+   "questions": [
+    "Q18"
+   ],
+   "note": "Abstract: CoT-monitor RL reward yields obfuscated hacking under optimization"
+  },
+  {
+   "arxiv": "2503.13657",
+   "questions": [
+    "Q09"
+   ],
+   "note": "MAST taxonomy; design/misalignment/verification; 'decomposition' slight gloss."
+  },
+  {
+   "arxiv": "2503.22989",
+   "questions": [
+    "Q12"
+   ],
+   "note": "FindTheFlaws: expert-annotated flawed solutions across five domains"
+  },
+  {
+   "arxiv": "2504.07316",
+   "questions": [
+    "Q30"
+   ],
+   "note": "Alice elicits teacher uncertainty; student self-generates supervision confirmed"
+  },
+  {
+   "arxiv": "2504.11741",
+   "questions": [
+    "Q27"
+   ],
+   "note": "All SFT models score 0% on Exh tier; SFT data not tier-labelled"
+  },
+  {
+   "arxiv": "2504.16828",
+   "questions": [
+    "Q18"
+   ],
+   "note": "ThinkPRM; ~1K examples (8K step labels), GPQA, LiveCodeBench"
+  },
+  {
+   "arxiv": "2505.05410",
+   "questions": [
+    "Q11"
+   ],
+   "note": "Reasoning models reveal used hints often below 20% of time"
+  },
+  {
+   "arxiv": "2505.18346",
+   "questions": [
+    "Q26"
+   ],
+   "note": "Moniri three mechanisms: regularization compensation, alignment, easy-hard features."
+  },
+  {
+   "arxiv": "2505.24313",
+   "questions": [
+    "Q26"
+   ],
+   "note": "Xu Bregman bias-variance; risk gap equals misfit without convexity."
+  },
+  {
+   "arxiv": "2506.07962",
+   "questions": [
+    "Q39"
+   ],
+   "note": "Kim 2025; 350+ LLMs, 60% joint-error agreement, judge effects"
+  },
+  {
+   "arxiv": "2509.14260",
+   "questions": [
+    "Q42"
+   ],
+   "note": "Palisade: some frontier models subvert shutdown to finish incomplete tasks"
+  },
+  {
+   "arxiv": "2509.24005",
+   "questions": [
+    "Q26"
+   ],
+   "note": "Liu spurious correlations; gain diminishes with teacher-unlabeled group mismatch."
+  },
+  {
+   "arxiv": "2510.22954",
+   "questions": [
+    "Q39"
+   ],
+   "note": "Jiang 2025 Artificial Hivemind; inter-model homogeneity, open-ended prompts"
+  },
+  {
+   "arxiv": "2510.24812",
+   "questions": [
+    "Q26"
+   ],
+   "note": "Oh CNN feature learning; data regimes, overtraining degrades performance."
+  },
+  {
+   "arxiv": "2511.02997",
+   "questions": [
+    "Q41"
+   ],
+   "note": "Abstract confirms 50% to 96%, affordances drop to 17%"
+  },
+  {
+   "arxiv": "2512.22154",
+   "questions": [
+    "Q41"
+   ],
+   "note": "Lindner deployment monitoring: latency, parallel instances, incremental attacks"
+  },
+  {
+   "arxiv": "2602.08630",
+   "questions": [
+    "Q10"
+   ],
+   "note": "Debate Query Complexity: bits a verifier must inspect."
+  },
+  {
+   "arxiv": "2602.20400",
+   "questions": [
+    "Q27"
+   ],
+   "note": "Three dataset properties; no technique reliably survives stress tests"
+  },
+  {
+   "arxiv": "2602.23248",
+   "questions": [
+    "Q08"
+   ],
+   "note": "GSM8K-Aug Table 1 shows 56.9 vs 22.3; Theorem 1 confirmed."
+  },
+  {
+   "arxiv": "2605.25629",
+   "questions": [
+    "Q38"
+   ],
+   "note": "Le et al. 2026; W2S reward models brittle under preference shift, confirmed"
+  },
+  {
+   "arxiv": "2606.01000",
+   "questions": [
+    "Q30"
+   ],
+   "note": "Trust functions filter weak labels; near-lossless generalization confirmed"
+  },
+  {
+   "arxiv": "2608.18091",
+   "questions": [
+    "Q39"
+   ],
+   "note": "Chae 2026; blind self-preference vanishes, self/other labels bias"
+  },
+  {
+   "arxiv": "2609.33936",
+   "questions": [
+    "Q39"
+   ],
+   "note": "Schaeffer 2026 critique; null baseline and 0.8 threshold disputed"
+  }
+ ],
+ "sources": {
+  "data/questions.json": "c784669c12bb815c260de0d100d8e781e1ca8e854c46b125296038c6e5deaa72",
+  "data/pairs_per_question.tsv": "bf78b464567a538521a8450d0103b16bfd2c11edc49d02c23075a8b226bd0621",
+  "data/pairs_results.json": "38ed98b13cb2042388050f488280d139ecdb9983f6d16d6fbd93677b7d47032b",
+  "data/results.json": "ef497b4a1df6f82d1e442c0df8d7bd71d3ee6c2c8008ef6378e211858489f11d",
+  "missing_from_atlas.tsv": "175a6cfd963d3002e5c9ebaffc4950694f23c242b41a965cc79cc995330edf15"
+ }
+}

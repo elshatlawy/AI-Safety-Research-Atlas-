@@ -1,0 +1,376 @@
+<!doctype html>
+    <html lang="en">
+    <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+    <title>First test · Safety Research Atlas</title>
+    <meta name="description" content="A first test of whether the atlas makes AI answers to research questions better: how it was run, every number, its limits and the papers still missing.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Schibsted+Grotesk:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+    <style>
+    /* layout: one reading column; every section opens with its picture, then at most two lines of text */
+    :root{
+      --bg:#fbfaf7; --surface:#ffffff; --sunk:#f3f1ec; --ink:#1b1c1a; --ink2:#55574f; --muted:#86887f; --line:#e7e4dc; --line2:#d5d2c8;
+      --seq:#256abf; --seq-soft:#86b6ef; --good:#1baf7a; --warn:#eb6834;
+      --sev-err:#c4420f; --sev-gap:#f08a5d; --sev-amb:#f8c9b1;
+      --ev-sup:#1baf7a; --ev-weak:#9ec5f4; --ev-con:#eb6834;
+      --font-display:"Source Serif 4",Georgia,serif; --font-body:"Schibsted Grotesk",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif; --font-mono:"JetBrains Mono",ui-monospace,monospace;
+    }
+    @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+      --bg:#131412; --surface:#1b1c1a; --sunk:#222320; --ink:#ecebe5; --ink2:#b3b2aa; --muted:#878780; --line:#2c2d2a; --line2:#3a3b37;
+      --seq:#6aa7ee; --seq-soft:#1c5cab; --good:#199e70; --warn:#d95926;
+      --sev-err:#f07a45; --sev-gap:#b4532a; --sev-amb:#5a3322;
+      --ev-sup:#199e70; --ev-weak:#2b5f9c; --ev-con:#d95926; color-scheme:dark}}
+    :root[data-theme="dark"]{
+      --bg:#131412; --surface:#1b1c1a; --sunk:#222320; --ink:#ecebe5; --ink2:#b3b2aa; --muted:#878780; --line:#2c2d2a; --line2:#3a3b37;
+      --seq:#6aa7ee; --seq-soft:#1c5cab; --good:#199e70; --warn:#d95926;
+      --sev-err:#f07a45; --sev-gap:#b4532a; --sev-amb:#5a3322;
+      --ev-sup:#199e70; --ev-weak:#2b5f9c; --ev-con:#d95926; color-scheme:dark}
+    *{box-sizing:border-box}
+    body{background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
+    .wrap{max-width:1000px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:36px calc(72px + env(safe-area-inset-bottom,0px))}
+    h1,h2,h3{margin:0;text-wrap:balance}
+    .eyebrow{font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
+    h1{font-family:var(--font-display);font-weight:600;font-size:clamp(30px,4.4vw,44px);line-height:1.08;letter-spacing:-.02em;margin-top:10px}
+    .lede{color:var(--ink2);font-size:17px;max-width:62ch;margin:12px 0 0}
+    section{margin-top:54px}
+    h2{font-size:21px;font-weight:650;letter-spacing:-.01em;margin-bottom:4px}
+    .sub{color:var(--ink2);margin:0 0 16px;max-width:68ch}
+    .note{font-size:12.5px;color:var(--muted);margin:10px 0 0;max-width:74ch}
+    a{color:var(--seq)}
+    a:focus-visible{outline:2px solid var(--seq);outline-offset:2px;border-radius:4px}
+    .panel{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px 18px;min-width:0}
+    .mono{font-family:var(--font-mono);font-variant-numeric:tabular-nums}
+    .fig{display:block;width:100%;height:auto;font-family:var(--font-body)}
+    .scroll{overflow-x:auto}
+    .scroll .fig{min-width:520px}
+
+    /* composition bar */
+    .comp{display:flex;height:34px;border-radius:9px;overflow:hidden;gap:2px;margin:6px 0 10px}
+    .comp span{display:block;min-width:6px}
+    .c-formal{background:var(--ink2)} .c-deb{background:var(--seq)} .c-oth{background:var(--warn)}
+    .ckey{display:flex;flex-wrap:wrap;gap:6px 22px;font-size:13.5px;color:var(--ink2)}
+    .ckey b{font-family:var(--font-mono);font-weight:500;color:var(--ink);font-size:16px;margin-right:6px}
+    .ckey i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:7px;vertical-align:0}
+
+    /* depth ladder */
+    .ladder{display:grid;grid-template-columns:minmax(120px,1.3fr) repeat(6,minmax(0,1fr));gap:0;margin-top:18px;font-size:12.5px}
+    .ladder>div{padding:9px 6px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:center;text-align:center;min-width:0}
+    .ladder .lh{color:var(--muted);font-weight:600;font-size:11.5px;letter-spacing:.02em;align-items:flex-end}
+    .ladder .ln{justify-content:flex-start;text-align:left;font-weight:600;color:var(--ink);font-size:13.5px}
+    .ladder .ln small{display:block;font-weight:400;color:var(--muted);font-size:12px}
+    .dot{width:14px;height:14px;border-radius:50%;display:inline-block}
+    .dot.y{background:var(--seq)} .dot.n{box-shadow:inset 0 0 0 1.5px var(--line2)} .dot.p{background:linear-gradient(90deg,var(--seq) 50%,transparent 50%);box-shadow:inset 0 0 0 1.5px var(--seq)}
+    @media (max-width:640px){.ladder{grid-template-columns:minmax(96px,1.1fr) repeat(6,minmax(0,1fr));font-size:11px}.ladder .lh{font-size:10px;letter-spacing:0}.ladder .ln{font-size:12px}.ladder .ln small{display:none}}
+
+    /* result tiles */
+    .tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+    @media (max-width:760px){.tiles{grid-template-columns:1fr}}
+    .tile h3{font-family:var(--font-display);font-weight:600;font-size:19px;line-height:1.2;margin:2px 0 10px}
+    .tile .k{font-size:11.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);font-weight:600}
+    .sq{display:flex;flex-wrap:wrap;gap:3px}
+    .sq i{width:13px;height:13px;border-radius:3px;display:block}
+    .e-sup{background:var(--ev-sup)} .e-con{background:var(--ev-con)} .e-weak{background:var(--ev-weak)} .e-none{box-shadow:inset 0 0 0 1.5px var(--line2)}
+    .s-err{background:var(--sev-err)} .s-gap{background:var(--sev-gap)} .s-amb{background:var(--sev-amb)}
+    .q-nar{background:var(--seq-soft)} .q-par{background:var(--seq)} .q-open{box-shadow:inset 0 0 0 1.5px var(--line2)}
+    .tkey{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12.5px;color:var(--ink2);margin-top:10px}
+    .tkey span{display:inline-flex;align-items:center;gap:6px}
+    .tkey i{width:10px;height:10px;border-radius:3px;display:inline-block}
+    .tile p{margin:10px 0 0;font-size:13.5px;color:var(--ink2)}
+    .callout{margin-top:12px;padding:14px 18px;border-radius:14px;background:var(--sunk);font-size:14.5px}
+    .callout b{font-weight:650}
+    svg .dk{fill:none;stroke:var(--seq);stroke-width:1.6} svg .do{fill:var(--seq)}
+    svg .zero{stroke:var(--ink2);stroke-width:1.2;stroke-dasharray:3 3} svg .base{stroke:var(--line2)} svg .tk{stroke:var(--line2)}
+    svg .ax{font:11px var(--font-mono);fill:var(--muted)} svg .med{stroke:var(--warn);stroke-width:1.5} svg .mt{font:11.5px var(--font-body);fill:var(--ink2)}
+
+    @media (prefers-reduced-motion: reduce){*{transition:none!important}}
+    
+    /* the record graph, shown in a frame */
+    .gframe{height:min(78vh,700px);margin-top:4px}
+    .gframe iframe{display:block;width:100%;height:100%;border:0;background:var(--bg)}
+    @media (max-width:720px){.gframe{height:76vh}}
+    /* start here: four doors into the site */
+    .doors{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+    @media (max-width:860px){.doors{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media (max-width:480px){.doors{grid-template-columns:1fr}}
+    a.door{display:flex;flex-direction:column;gap:3px;text-decoration:none;color:var(--ink)}
+    a.door:hover{border-color:var(--seq)}
+    .door svg{width:28px;height:28px;color:var(--seq);margin-bottom:4px}
+    .door b{font-size:14.5px}
+    .door span{font-size:13px;color:var(--ink2);flex:1}
+    .door em{font-style:normal;font-size:12.5px;color:var(--seq);margin-top:8px}
+    /* the page's five parts */
+    .toc{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:18px;font-size:13.5px}
+    .toc a{text-decoration:none;color:var(--ink2)}
+    .toc a:hover{color:var(--ink)}
+    .toc i,.hn{font-style:normal;font-family:var(--font-mono);color:var(--muted);margin-right:7px}
+    .hn{font-size:15px;font-weight:500;vertical-align:2px}
+    .part.sm{margin-top:22px}
+    .part h4{font-size:14.5px;font-weight:650;margin:0}
+    /* one way to use it */
+    .walk{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+    @media (max-width:860px){.walk{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media (max-width:520px){.walk{grid-template-columns:1fr}}
+    a.wk{display:flex;flex-direction:column;text-decoration:none;color:var(--ink);position:relative}
+    a.wk:hover{border-color:var(--ink2)}
+    .wk .gn,.ls .gn{font-family:var(--font-mono);font-size:12px;color:var(--muted)}
+    .wk b{font-size:14.5px;margin:2px 0 4px}
+    .wk span:last-child{font-size:13px;color:var(--ink2)}
+    .wk:not(:last-child)::after{content:"→";position:absolute;right:-6px;top:50%;transform:translate(50%,-50%);color:var(--muted);font-size:14px}
+    @media (max-width:860px){.wk::after{display:none}}
+    /* three words */
+    .gloss{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:0 0 16px}
+    @media (max-width:760px){.gloss{grid-template-columns:1fr}}
+    .gloss div{border-left:3px solid var(--seq);padding:2px 0 2px 12px}
+    .gloss b{display:block;font-size:14px}
+    .gloss span{font-size:13px;color:var(--ink2)}
+    /* evidence levels */
+    .evdef{margin:10px 0 0;display:grid;gap:5px}
+    .evdef div{display:grid;grid-template-columns:112px minmax(0,1fr);gap:8px;font-size:12.5px}
+    .evdef dt{display:flex;align-items:center;gap:6px;color:var(--ink);font-weight:500}
+    .evdef dt i{width:10px;height:10px;border-radius:3px;display:inline-block;flex:none}
+    .evdef dd{margin:0;color:var(--ink2)}
+    /* problems by paper */
+    .pprows{margin-top:12px;display:grid;gap:8px}
+    .pprow{display:grid;grid-template-columns:150px minmax(0,1fr) 24px;gap:2px 10px;align-items:center}
+    .pprow .pn{font-size:13px;font-weight:600;text-decoration:none;color:var(--ink)}
+    .pprow .pn:hover{text-decoration:underline}
+    .pprow .sq{gap:2px}
+    .pprow .sq i{width:9px;height:9px;border-radius:2px}
+    .pprow b{font-size:13px;font-weight:500;text-align:right}
+    .pprow small{grid-column:2/-1;font-size:12px;color:var(--muted);line-height:1.35}
+    @media (max-width:480px){.pprow{grid-template-columns:minmax(0,1fr) 24px}.pprow .sq{grid-column:1/-1;grid-row:2}.pprow small{grid-column:1/-1}}
+    .tile p.tx{margin:0 0 8px}
+    /* the research team */
+    .team{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-areas:"r1 r2 r3" "r4 hub r5" "r6 r7 r8";gap:10px}
+    .role{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 14px;min-width:0}
+    .r1{grid-area:r1} .r2{grid-area:r2} .r3{grid-area:r3} .r4{grid-area:r4} .r5{grid-area:r5} .r6{grid-area:r6} .r7{grid-area:r7} .r8{grid-area:r8}
+    .rh{display:flex;justify-content:space-between;align-items:center;gap:8px}
+    .rh b{font-size:14.5px}
+    .rh .dot{width:12px;height:12px;flex:none}
+    .role p{margin:3px 0 6px;font-size:13px;color:var(--ink2)}
+    .role .rs{font-family:var(--font-mono);font-size:11.5px;color:var(--ink)}
+    .hubc{grid-area:hub;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:4px;border-radius:14px;background:var(--sunk);box-shadow:inset 0 0 0 2px var(--seq);padding:14px;color:var(--seq)}
+    .hubc b{font-family:var(--font-display);font-size:22px;font-weight:600;color:var(--ink)}
+    .hubc span{font-size:12.5px;color:var(--ink2);max-width:28ch}
+    @media (max-width:760px){.team{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-areas:"hub hub" "r1 r2" "r3 r4" "r5 r6" "r7 r8"}}
+    @media (max-width:460px){.team{grid-template-columns:1fr;grid-template-areas:"hub" "r1" "r2" "r3" "r4" "r5" "r6" "r7" "r8"}}
+    /* the research loop */
+    .loop{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px}
+    .ls{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px;display:flex;flex-direction:column;min-width:0}
+    .ls:not(:last-child)::after{content:"→";position:absolute;right:-6px;top:22px;transform:translateX(50%);color:var(--muted);font-size:13px;line-height:1}
+    .ls b{font-size:14px;margin:2px 0 4px}
+    .ls p{margin:0;font-size:12.5px;color:var(--ink2);flex:1}
+    .ls .lt{display:flex;gap:6px;align-items:flex-start;font-size:12px;color:var(--ink);margin-top:8px;line-height:1.35}
+    .ls .lt .dot{width:11px;height:11px;flex:none;margin-top:2px}
+    .ls a{font-size:12.5px;margin-top:6px;text-decoration:none}
+    .ret{display:block;width:100%;height:30px;overflow:visible}
+    .ret path{fill:none;stroke:var(--seq);stroke-width:1.6;vector-effect:non-scaling-stroke}
+    .lback p{margin:6px auto 0;text-align:center;font-size:13px;color:var(--ink2);max-width:80ch}
+    .lback p b{color:var(--ink);font-weight:600}
+    @media (max-width:980px){.loop{grid-template-columns:repeat(3,minmax(0,1fr))}.ls:nth-child(3)::after{display:none}}
+    @media (max-width:560px){.loop{grid-template-columns:1fr}.ls::after{display:none}.ret{display:none}.lback p{text-align:left;margin-top:12px}.lback p b::before{content:"↺ "}}
+    
+    
+    body{margin:0}
+    body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+    /* top bar: the same as the front page's */
+    .top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:saturate(1.4) blur(12px);-webkit-backdrop-filter:saturate(1.4) blur(12px);border-bottom:1px solid var(--line)}
+    .topin{max-width:1200px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;align-items:center;gap:18px;height:56px}
+    .brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:650;letter-spacing:-.01em;white-space:nowrap;color:var(--ink)}
+    .brand svg{flex:none}
+    .nav{display:flex;gap:2px;margin-left:auto;overflow-x:auto;scrollbar-width:none;min-width:0}
+    .nav::-webkit-scrollbar{display:none}
+    .nav a{text-decoration:none;padding:7px 12px;border-radius:999px;color:var(--ink2);font-weight:500;font-size:14.5px;white-space:nowrap}
+    .nav a:hover{background:var(--sunk);color:var(--ink)}
+    .nav a.on{background:var(--ink);color:var(--bg)}
+    @media (max-width:980px){.brand span{display:none}.nav a{padding:7px 10px}.topin{gap:10px}}
+    @media (max-width:720px){.topin{flex-wrap:wrap;height:auto;padding-top:9px;gap:6px 10px}.brand span{display:inline;font-size:14.5px}.nav{order:3;width:100%;margin-left:0;justify-content:space-between;padding-bottom:7px}.nav a{padding:5px 9px;font-size:13.5px}}
+    /* how the atlas works */
+    .flow{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;position:relative}
+    .fs{position:relative;display:flex;flex-direction:column;gap:2px}
+    .fs:not(:last-child)::after{content:"→";position:absolute;top:5px;right:-9px;color:var(--muted);font-size:14px}
+    .fs svg{width:30px;height:30px;color:var(--seq);margin-bottom:6px}
+    .fs b{font-family:var(--font-mono);font-weight:500;font-size:22px;letter-spacing:-.02em;line-height:1.1}
+    .fs .fk{font-weight:600;font-size:13.5px}
+    .fs small{font-size:12.5px;color:var(--ink2);line-height:1.4;margin-top:2px}
+    @media (max-width:860px){.flow{grid-template-columns:1fr}.fs{display:grid;grid-template-columns:40px minmax(0,1fr);grid-template-areas:"i b" "i k" "i s";gap:0 12px}.fs svg{grid-area:i;margin:4px 0 0}.fs b{grid-area:b}.fs .fk{grid-area:k}.fs small{grid-area:s}.fs:not(:last-child)::after{display:none}}
+    /* section parts */
+    .part{display:flex;align-items:baseline;gap:10px;margin:30px 0 4px}
+    .part h3{font-size:16px;font-weight:650}
+    .psub{color:var(--ink2);font-size:13.5px;margin:0 0 12px;max-width:72ch}
+    /* one database, many applications */
+    .mdb{padding:18px}
+    .apps{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+    .app{font-size:13px;padding:6px 12px;border-radius:10px;border:1.5px dashed var(--seq-soft);color:var(--ink2);background:var(--bg)}
+    .app.live{border:1.5px solid var(--seq);background:var(--seq);color:var(--bg);font-weight:600}
+    .stems{height:26px;margin:4px 8% 0;background:repeating-linear-gradient(90deg,var(--line2) 0 1.5px,transparent 1.5px 12.5%)}
+    .found{border-radius:12px;overflow:hidden;border:1px solid var(--line2)}
+    .ly{display:grid;grid-template-columns:14px 170px minmax(0,1fr);gap:10px;align-items:center;padding:9px 14px;font-size:13px;color:var(--ink2);background:var(--sunk);border-bottom:1px solid var(--bg)}
+    .ly:last-child{border-bottom:0}
+    .ly b{color:var(--ink);font-size:13.5px}
+    .ly .dot{width:12px;height:12px}
+    .fcap{text-align:center;font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-top:8px}
+    .mkey{display:flex;flex-wrap:wrap;gap:4px 16px;font-size:12.5px;color:var(--ink2);margin-top:10px}
+    .mkey span{display:inline-flex;align-items:center;gap:6px}
+    .mkey .app{padding:0;width:16px;height:11px;border-radius:3px}
+    .mkey .dot{width:11px;height:11px}
+    .ly .lyt{display:flex;flex-direction:column;gap:7px}
+    .arow{display:flex;flex-wrap:wrap;gap:6px}
+    .app.ar{display:inline-flex;align-items:center;gap:6px;padding:3px 9px;font-size:12.5px;border-radius:8px;border:1.5px dashed var(--line2);color:var(--ink2);text-decoration:none}
+    .app.ar.on{border-style:solid;color:var(--ink)}
+    .app.ar:hover{border-color:var(--seq)}
+    .app.ar .dot{width:10px;height:10px;flex:none}
+    @media (max-width:640px){.ly{grid-template-columns:14px minmax(0,1fr);grid-template-areas:"d b" "d t";gap:2px 10px}.ly .dot{grid-area:d}.ly b{grid-area:b}.ly .lyt{grid-area:t}.ly .arow .dot{grid-area:auto}}
+    
+    /* first test: does the atlas make answers better? */
+    .ft-a{background:var(--seq)} .ft-n{background:var(--warn)} .ft-s{box-shadow:inset 0 0 0 1.5px var(--line2)}
+    .ftp .sq{margin:2px 0 0}
+    .ftm{display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px 12px;align-items:center;margin-top:16px;font-size:13px;color:var(--ink2)}
+    .ftm .ftml{grid-column:1/-1;font-size:11.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);font-weight:600}
+    .ftm .bar{display:flex;align-items:center;gap:8px;min-width:0}
+    .ftm .bar span{display:block;height:12px;border-radius:3px}
+    .ftm .bar b{font-family:var(--font-mono);font-weight:500;color:var(--ink);font-size:14px}
+    .ftc{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px 28px;margin-top:22px;padding-top:18px;border-top:1px solid var(--line)}
+    @media (max-width:820px){.ftc{grid-template-columns:minmax(0,1fr)}}
+    .ftc h4{margin:0 0 6px;font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);font-weight:600}
+    .ftc p,.ftc ol{margin:0;font-size:13.5px;line-height:1.55;color:var(--ink2)}
+    .ftc ol{padding-left:18px} .ftc li+li{margin-top:6px}
+    .ftg{margin:20px 0 0;padding:12px 14px;border-radius:8px;background:var(--sunk);box-shadow:inset 3px 0 0 var(--seq);font-size:13.5px;line-height:1.55;color:var(--ink2);max-width:80ch}
+    .ftg b{color:var(--ink);font-weight:600}
+    .ftn{margin:14px 0 0;font-size:12.5px;color:var(--muted)}
+    
+    /* the AI safety coverage map */
+    .cv-covered{background:var(--seq)} .cv-partly{background:var(--seq-soft)} .cv-none{box-shadow:inset 0 0 0 1.5px var(--line2)}
+    #coverage [data-p]{transition:opacity .15s}
+    #coverage.dim [data-p]:not(.hit){opacity:.2}
+    #coverage.dim .cvp:not(.hit){opacity:.4}
+    #coverage.dim i.hit{outline:2px solid var(--ink);outline-offset:1px}
+    #coverage.dim .cva:not(.has) .cvan{color:var(--muted)}
+    /* approaches */
+    .cvaps{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 12px}
+    .cvap{display:inline-flex;align-items:center;gap:7px;padding:5px 11px 5px 9px;border:1px solid var(--line);border-radius:999px;background:var(--surface);color:var(--ink);font:inherit;font-size:13px;line-height:1.3;cursor:pointer;white-space:nowrap}
+    .cvap:hover{border-color:var(--line2)}
+    .cvap i{width:10px;height:10px;border-radius:3px;flex:none}
+    .cvap .mono{font-size:11.5px;color:var(--muted)}
+    .cvap[aria-pressed="true"]{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+    .cvap:focus-visible,.cva>summary:focus-visible,.cvp>summary:focus-visible{outline:2px solid var(--seq);outline-offset:2px;border-radius:6px}
+    @media (max-width:560px){.cvap{font-size:12.5px;padding:4px 10px 4px 8px}}
+    .cvapd{margin:0;padding:10px 14px;border-left:3px solid var(--seq);background:var(--surface);border-radius:0 10px 10px 0;font-size:13.5px;color:var(--ink2);max-width:80ch}
+    .cvapd b{color:var(--ink)}
+    .cvapd small{font-size:12px;color:var(--muted)}
+    /* area by area */
+    .cvkey{margin:0 0 10px}
+    .cvrows{padding:2px 18px 4px}
+    .cvh,.cva>summary{display:grid;grid-template-columns:14px minmax(0,210px) minmax(0,1fr) 96px;gap:4px 12px;align-items:center}
+    .cvh{padding:10px 0 7px;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600;border-bottom:1px solid var(--line)}
+    .cvh span:first-child{grid-column:1/3} .cvh span:last-child{text-align:right}
+    .cva{border-bottom:1px solid var(--line);scroll-margin-top:72px}
+    .cva:last-child{border-bottom:0}
+    .cva>summary,.cvp>summary{cursor:pointer;list-style:none}
+    .cva>summary::-webkit-details-marker,.cvp>summary::-webkit-details-marker{display:none}
+    .cva>summary{padding:9px 0}
+    .cva>summary::before,.cvp>summary::before{content:"";width:6px;height:6px;border-right:1.5px solid var(--muted);border-bottom:1.5px solid var(--muted);transform:rotate(-45deg);transition:transform .15s;justify-self:center}
+    .cva[open]>summary::before,.cvp[open]>summary::before{transform:rotate(45deg)}
+    .cvan{font-size:14px;font-weight:600;min-width:0}
+    .cva>summary:hover .cvan,.cvp>summary:hover span{text-decoration:underline}
+    .cvsq{gap:3px}
+    .cvc{font-size:13px;text-align:right;color:var(--muted)}
+    .cvc b{color:var(--ink);font-weight:500}
+    .cvab{padding:0 0 12px 26px}
+    .cvab>p{margin:0 0 6px;font-size:13px;color:var(--ink2);max-width:72ch}
+    .cvp{scroll-margin-top:72px}
+    .cvp>summary{display:grid;grid-template-columns:10px 13px minmax(0,1fr) auto;gap:8px;align-items:center;padding:5px 0;font-size:13.5px}
+    .cvp>summary i{width:13px;height:13px;border-radius:3px}
+    .cvp>summary small{font-size:12px;color:var(--muted);white-space:nowrap}
+    .cvp[open]>summary span{font-weight:600}
+    .cvb{padding:2px 0 10px 31px;font-size:13px;color:var(--ink2)}
+    .cvb p{margin:0 0 6px;max-width:72ch}
+    .cvb b{color:var(--ink);font-weight:600}
+    .cvb .cvnote{border-left:2px solid var(--seq);padding-left:10px}
+    .cvb .cvz{color:var(--muted);font-style:italic}
+    .cvg{font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600;margin:8px 0 4px}
+    .cvi{list-style:none;margin:0;padding:0;display:grid;gap:4px}
+    .cvi li{display:grid;grid-template-columns:auto minmax(0,1fr);gap:8px;align-items:baseline}
+    .cvk{font-family:var(--font-mono);font-size:10.5px;color:var(--ink2);background:var(--sunk);border-radius:4px;padding:1px 6px;white-space:nowrap}
+    @media (max-width:560px){
+      .cvrows{padding:2px 14px 4px}
+      .cvh{display:none}
+      .cva>summary{grid-template-columns:14px minmax(0,1fr) auto;grid-template-areas:"c n k" ". s s";gap:6px 10px}
+      .cva>summary::before{grid-area:c} .cvan{grid-area:n} .cvsq{grid-area:s} .cvc{grid-area:k}
+      .cvab{padding-left:4px}
+      .cvb{padding-left:18px}
+    }
+
+    
+    .ftt{border-collapse:collapse;width:100%;font-size:13.5px;margin-top:6px}
+    .ftt th{text-align:left;font-size:11.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);font-weight:600;padding:6px 10px 6px 0;border-bottom:1px solid var(--line2)}
+    .ftt td{padding:7px 10px 7px 0;border-bottom:1px solid var(--line);vertical-align:top;color:var(--ink2)}
+    .ftt td:first-child{color:var(--ink)}
+    .ftt .num{font-family:var(--font-mono);font-variant-numeric:tabular-nums;color:var(--ink);white-space:nowrap}
+    .steps{margin:4px 0 0;padding-left:22px;max-width:72ch;color:var(--ink2)}
+    .steps li{margin:6px 0}
+    .ftrow{display:grid;grid-template-columns:minmax(150px,220px) minmax(0,1fr);gap:8px 16px;align-items:center;margin-top:10px}
+    .ftrow b{font-size:13.5px;font-weight:600}
+    @media (max-width:560px){.ftrow{grid-template-columns:1fr}}
+    details.ftd{margin-top:12px}
+    details.ftd summary{cursor:pointer;color:var(--seq);font-size:14px}
+    .limits{margin:4px 0 0;padding-left:22px;max-width:72ch;color:var(--ink2)}
+    .limits li{margin:6px 0}
+    </style>
+    </head>
+    <body>
+    <header class="top"><div class="topin">
+      <a class="brand" href="./" aria-label="Safety Research Atlas, front page">
+        <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><path d="M6 19 L12 7 L20 15" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M6 19 Q14 23 20 15" fill="none" stroke="currentColor" stroke-width="1.6" stroke-dasharray="2 2.4"/><circle cx="6" cy="19" r="3.2" fill="currentColor"/><circle cx="12" cy="7" r="3.2" fill="var(--bg)" stroke="currentColor" stroke-width="1.6"/><circle cx="20" cy="15" r="3.2" fill="currentColor"/></svg>
+        <span>Safety Research Atlas</span></a>
+      <nav class="nav" aria-label="Views"><a href="overview.html">Overview</a><a href="./#gaps">Gaps</a><a href="./#discoveries">Discoveries</a><a href="./#results">Results</a><a href="./#map">Map</a><a href="./#papers">Papers</a><a href="./#assumptions">Assumptions</a><a href="./#proofs">Proofs</a></nav>
+    </div></header>
+    <div class="wrap">
+    <header>
+      <div class="eyebrow">AI Safety Research Atlas · First test · run 24 to 31 October 2026</div>
+      <h1>Does the atlas make answers better?</h1>
+      <p class="lede">Side by side, answers written with the atlas were better in 38 of 52 questions and worse in 8, mainly because they held about half as many mistakes. This is a first test, judged by AI; no person has checked the verdicts yet.</p>
+    </header>
+
+    <section id="how">
+      <h2>How it was run</h2>
+      <ol class="steps"><li>An AI answered 52 open research questions twice: once with the web only, once with the web and the atlas.</li><li>Each answer had at most 250 words, cited arXiv papers for every claim, and did not mention the atlas.</li><li>Two AI judges compared the two answers to each question without knowing which used the atlas, and picked the better one: accuracy first, then coverage, then whether it states assumptions and open parts.</li><li>The second judge saw the answers in the opposite order. A side wins a question only when both judges pick it.</li><li>Two more AI graders also scored each answer on its own, checking every cited paper.</li></ol>
+    </section>
+
+    <section id="side-by-side">
+      <h2>Side by side</h2>
+      <p class="sub">One square per question, grouped by how well the atlas already answers it. Hover a square to read its question.</p>
+      <div class="ftrow"><b>Questions the atlas answers (19)</b><div><div class="sq" role="img" aria-label="Questions the atlas answers: atlas better 13, split 2, without the atlas better 4"><i class="ft-a" title="Q01: atlas answer better. How can a system be made to respect parts of its objective that are too expensive to evaluate often during training?"></i><i class="ft-a" title="Q03: atlas answer better. Does self-play training stably converge to honest debate equilibria?"></i><i class="ft-a" title="Q04: atlas answer better. Is there a natural debate protocol for stochastic simulations, where each step adds noise?"></i><i class="ft-a" title="Q06: atlas answer better. Does debate&#x27;s honesty assumption hold beyond fact-checkable claims; can humans judge?"></i><i class="ft-a" title="Q07: atlas answer better. Do errors accumulate across levels of recursive reward modeling?"></i><i class="ft-a" title="Q08: atlas answer better. How do provers and verifiers behave at approximate equilibria when prover-verifier games are scaled to harder problems?"></i><i class="ft-a" title="Q14: atlas answer better. Can helpfulness and instruction-following be trained without human feedback labels?"></i><i class="ft-a" title="Q23: atlas answer better. Is there a debate model where the honest prover always has an efficient strategy even without a short human-verifiable transcript?"></i><i class="ft-a" title="Q25: atlas answer better. Which oracle models, regret notions and equilibrium concepts suit debate modelled as a game with a very large action space?"></i><i class="ft-a" title="Q31: atlas answer better. When is a further recursive reward modeling step appropriate; can critique support it?"></i><i class="ft-a" title="Q33: atlas answer better. Does training debaters and consultants on weak-judge signals improve judge accuracy?"></i><i class="ft-a" title="Q36: atlas answer better. Could stronger debaters find judge-perplexing strategies such as obfuscated arguments?"></i><i class="ft-a" title="Q46: atlas answer better. Open: does prover-estimator debate avoid obfuscation, and are its debaters poly-time?"></i><i class="ft-s" title="Q10: judges split. Is multi-turn debate with explicit counterarguments needed to help human judges?"></i><i class="ft-s" title="Q34: judges split. Open question: what assistance best helps humans judge solutions from larger models?"></i><i class="ft-n" title="Q12: answer without the atlas better. Could debate help human judges in other set-ups such as highly technical tasks?"></i><i class="ft-n" title="Q17: answer without the atlas better. How many agents should take part in a multi-agent debate, and can debate serve as AI feedback for alignment?"></i><i class="ft-n" title="Q20: answer without the atlas better. Does debate still work when judges hold strong inaccurate priors or cognitive biases?"></i><i class="ft-n" title="Q27: answer without the atlas better. Open question: are the tested hardness gaps large enough to generalize easy-to-hard?"></i></div></div></div><div class="ftrow"><b>Questions it partly answers (19)</b><div><div class="sq" role="img" aria-label="Questions it partly answers: atlas better 14, split 3, without the atlas better 2"><i class="ft-a" title="Q05: atlas answer better. Can Iterated Amplification be applied to complex real-world beyond-human-scale tasks?"></i><i class="ft-a" title="Q09: atlas answer better. Is learned task decomposition feasible for hard real-world tasks, and where does it fail?"></i><i class="ft-a" title="Q13: atlas answer better. Do debate, market-making and recursive reward modeling work in sandwiching trials?"></i><i class="ft-a" title="Q15: atlas answer better. What is needed to automate decomposition, error analysis and program repair?"></i><i class="ft-a" title="Q16: atlas answer better. Can several examiner models, or a trained examiner, make cross-examination better at detecting factual errors?"></i><i class="ft-a" title="Q18: atlas answer better. Open question: does process supervision&#x27;s advantage generalize beyond math?"></i><i class="ft-a" title="Q21: atlas answer better. Will obfuscated arguments become an obstacle for debate on harder questions?"></i><i class="ft-a" title="Q30: atlas answer better. Open question: how do strong models perceive the knowledge boundaries of weak supervisors?"></i><i class="ft-a" title="Q35: atlas answer better. Do scalable oversight methods (critique, debate, decomposition) work on misleading errors?"></i><i class="ft-a" title="Q38: atlas answer better. Which other combinations of scalable oversight and weak-to-strong generalization work?"></i><i class="ft-a" title="Q39: atlas answer better. How can model similarity be measured on free-text answers and reasoning, to study its role in debate and process supervision?"></i><i class="ft-a" title="Q40: atlas answer better. Why does direct supervision beat recursive critique when a stronger model supervises a weaker one, and would better critique abilities change that?"></i><i class="ft-a" title="Q47: atlas answer better. Can a debate protocol avoid needing stability, for example by targeting honesty instead of correctness?"></i><i class="ft-a" title="Q50: atlas answer better. Does some variant of debate work as a component of an overall alignment strategy?"></i><i class="ft-s" title="Q11: judges split. How far can critique training be pushed relative to discriminator performance, and what stops models from explaining what they know?"></i><i class="ft-s" title="Q32: judges split. Can debate with weak judges beat direct QA baselines, e.g. via judge fine-tuning?"></i><i class="ft-s" title="Q43: judges split. Open empirical questions: does debate help, reach equilibrium, show obfuscation?"></i><i class="ft-n" title="Q26: answer without the atlas better. What makes a concept easy or hard for a strong model to learn from weak labels, and can weak-to-strong generalization error be estimated without labels?"></i><i class="ft-n" title="Q28: answer without the atlas better. Does debate generalise to larger evidence bases or uncitable parametric knowledge?"></i></div></div></div><div class="ftrow"><b>Questions it does not answer (14)</b><div><div class="sq" role="img" aria-label="Questions it does not answer: atlas better 11, split 1, without the atlas better 2"><i class="ft-a" title="Q19: atlas answer better. Can debate extract inductive or tacit knowledge that lacks short, citeable justifications?"></i><i class="ft-a" title="Q22: atlas answer better. Do doubly-efficient debate guarantees survive an oracle that gives wrong answers on some queries?"></i><i class="ft-a" title="Q24: atlas answer better. Why do MAD hyperparameters transfer from GPT-3.5 to GPT-4 but not to Mixtral?"></i><i class="ft-a" title="Q29: atlas answer better. Open question: can pseudolabeler-aware contrastive pretraining improve weak-to-strong?"></i><i class="ft-a" title="Q37: atlas answer better. Can learning-theoretic results say how the abilities of learning agents and available data affect a weaker agent&#x27;s ability to verify a stronger one?"></i><i class="ft-a" title="Q41: atlas answer better. Do protocols that raise worst-case ASD resist rare catastrophic failures?"></i><i class="ft-a" title="Q42: atlas answer better. What is the probability that ASI escapes control (Compton constant) in realistic settings?"></i><i class="ft-a" title="Q44: atlas answer better. Open: how serious is exploration hacking and how can it be prevented?"></i><i class="ft-a" title="Q48: atlas answer better. Does persona-aware debate help human judges on manipulated content, satire, propaganda and unresolved claims?"></i><i class="ft-a" title="Q49: atlas answer better. How would humans check that an unsupervised elicitation method reads a constitution as intended?"></i><i class="ft-a" title="Q52: atlas answer better. Which debate graph topologies satisfy the martingale condition?"></i><i class="ft-s" title="Q45: judges split. Without online training in high-stakes settings, how can distribution shift, alignment faking and coordinated errors be handled?"></i><i class="ft-n" title="Q02: answer without the atlas better. Proposed experiments: can RL learn nearly as fast with reward on 10% of episodes?"></i><i class="ft-n" title="Q51: answer without the atlas better. Open: is stability necessary, and which problems admit stable decompositions?"></i></div></div></div>
+      <div class="tkey"><span><i class="ft-a"></i>38 atlas answer better</span><span><i class="ft-s"></i>6 judges split</span><span><i class="ft-n"></i>8 answer without the atlas better</span></div>
+      <div class="scroll"><table class="ftt"><thead><tr><th>Which answer was better</th><th>With the atlas</th><th>Without it</th></tr></thead><tbody><tr><td>Overall, both judges agree</td><td><span class="num">38</span></td><td><span class="num">8</span></td></tr><tr><td>Accuracy</td><td><span class="num">18</span></td><td><span class="num">6</span></td></tr><tr><td>Coverage</td><td><span class="num">25</span></td><td><span class="num">12</span></td></tr><tr><td>States its assumptions and open parts</td><td><span class="num">18</span></td><td><span class="num">7</span></td></tr><tr><td>Mistakes the judges found</td><td><span class="num">57</span></td><td><span class="num">117</span></td></tr><tr><td>Questions where its answer had fewer mistakes</td><td><span class="num">31</span></td><td><span class="num">11</span></td></tr></tbody></table></div>
+      <p class="note">A criterion counts only where both judges agree; the rest are ties or splits. Across all 104 single verdicts, judges picked the atlas answer 82 times. The answer shown first was picked 52 times and the one shown second 52 times, so the order made no difference.</p>
+    </section>
+
+    <section id="one-at-a-time">
+      <h2>Graded one answer at a time</h2>
+      <p class="sub">Before the side-by-side test, two AI graders checked every cited paper in each answer on its own. Both sides scored near the top, so this could not tell a good answer from a better one; that is why the side-by-side test was added. Without the atlas, answers cited more correct papers.</p>
+      <div class="scroll"><table class="ftt"><thead><tr><th>Graded one answer at a time</th><th>With the atlas</th><th>Without it</th></tr></thead><tbody><tr><td>Score, 0 to 3</td><td><span class="num">2.99</span></td><td><span class="num">2.97</span></td></tr><tr><td>Correct sources per answer</td><td><span class="num">7.0</span></td><td><span class="num">8.9</span></td></tr><tr><td>Made-up papers</td><td><span class="num">0</span></td><td><span class="num">0</span></td></tr><tr><td>Median time per answer</td><td><span class="num">180 s</span></td><td><span class="num">153 s</span></td></tr></tbody></table></div>
+    </section>
+
+    <section id="limits">
+      <h2>Limits</h2>
+      <ul class="limits"><li>All judging and grading is by AI, from the same model family that wrote the answers. No person has checked the verdicts yet.</li><li>The questions and the reference papers come from the atlas, which may favour the atlas side.</li><li>One setting only: a strong AI model with web access. A closed-book run, a weaker model or a human reader may differ.</li><li>Each answer was written once.</li></ul>
+    </section>
+
+    <section id="missing">
+      <h2>Still missing from the atlas</h2>
+      <p class="sub">138 papers that both graders found real, on topic and correctly described, used by answers to these questions but absent from the atlas.</p>
+      <details class="ftd"><summary>Show all 138 papers</summary><div class="scroll"><table class="ftt"><thead><tr><th>Paper</th><th>Used for</th><th>What it adds (a grader's note)</th></tr></thead><tbody><tr><td><a href="https://arxiv.org/abs/2610.28539">2610.28539</a></td><td>Q10, Q20, Q32, Q33, Q43</td><td>Debate corrects human priors; consultancy, weaker LLMs do not.</td></tr><tr><td><a href="https://arxiv.org/abs/2211.14275">2211.14275</a></td><td>Q15, Q18</td><td>Compares process versus outcome feedback on GSM8K math.</td></tr><tr><td><a href="https://arxiv.org/abs/2212.10561">2212.10561</a></td><td>Q09, Q15</td><td>Parsel: automatic hierarchical decomposition, APPS competition-level gains</td></tr><tr><td><a href="https://arxiv.org/abs/2307.11768">2307.11768</a></td><td>Q05, Q09</td><td>Radhakrishnan et al.; faithfulness up, retains only some CoT gains.</td></tr><tr><td><a href="https://arxiv.org/abs/2404.13076">2404.13076</a></td><td>Q14, Q39</td><td>LLM evaluators self-recognize and self-prefer; causal link shown.</td></tr><tr><td><a href="https://arxiv.org/abs/2410.04638">2410.04638</a></td><td>Q26, Q37</td><td>Wu benign overfitting; two phases, success versus random guessing.</td></tr><tr><td><a href="https://arxiv.org/abs/2412.02674">2412.02674</a></td><td>Q11, Q14</td><td>Variant of generation-verification gap scales monotonically with pretraining flops</td></tr><tr><td><a href="https://arxiv.org/abs/2501.17315">2501.17315</a></td><td>Q41, Q45</td><td>Control safety case; elicitation, transfer, extrapolation claims</td></tr><tr><td><a href="https://arxiv.org/abs/2503.10965">2503.10965</a></td><td>Q45, Q49</td><td>Three of four teams found planted hidden objective</td></tr><tr><td><a href="https://arxiv.org/abs/2504.10374">2504.10374</a></td><td>Q41, Q45</td><td>Ctrl-Z abstract confirms 58% to 7% at 5% cost</td></tr><tr><td><a href="https://arxiv.org/abs/1504.02089">1504.02089</a></td><td>Q25</td><td>Hazan-Koren; Theta(sqrt N) runtime bound, Chen restates as regret</td></tr><tr><td><a href="https://arxiv.org/abs/1612.00429">1612.00429</a></td><td>Q02</td><td>Formalises semi-supervised RL with labelled and unlabelled MDPs; generalises.</td></tr><tr><td><a href="https://arxiv.org/abs/1708.00075">1708.00075</a></td><td>Q25</td><td>Hazan-Singh-Zhang; local regret, non-convex gradient-based games confirmed</td></tr><tr><td><a href="https://arxiv.org/abs/1709.02738">1709.02738</a></td><td>Q03</td><td>Poincare recurrence of regularised learning in zero-sum games; cycling confirmed.</td></tr><tr><td><a href="https://arxiv.org/abs/1711.00141">1711.00141</a></td><td>Q03</td><td>OMD last-iterate convergence proved for bilinear games; GAN use empirical.</td></tr><tr><td><a href="https://arxiv.org/abs/1802.05642">1802.05642</a></td><td>Q03</td><td>Hamiltonian (zero-sum) games: gradient dynamics cycle; general-game result.</td></tr><tr><td><a href="https://arxiv.org/abs/1812.01647">1812.01647</a></td><td>Q41</td><td>Uesato adversarial evaluation finds rare catastrophic failures</td></tr><tr><td><a href="https://arxiv.org/abs/1909.10618">1909.10618</a></td><td>Q09</td><td>Nachum; hierarchy benefits attributed mostly to exploration, confirmed.</td></tr><tr><td><a href="https://arxiv.org/abs/2002.02794">2002.02794</a></td><td>Q02</td><td>Reward-free exploration in polynomial episodes; &#x27;not wasted&#x27; is inference.</td></tr><tr><td><a href="https://arxiv.org/abs/2002.09758">2002.09758</a></td><td>Q09</td><td>ONUS unsupervised decomposition improves HotpotQA multi-hop QA</td></tr><tr><td><a href="https://arxiv.org/abs/2006.14779">2006.14779</a></td><td>Q34</td><td>Explanations raised acceptance regardless of correctness, no complementary gain.</td></tr><tr><td><a href="https://arxiv.org/abs/2010.03622">2010.03622</a></td><td>Q29</td><td>Wei et al. expansion assumption; Lang&#x27;s framework explicitly builds on it</td></tr><tr><td><a href="https://arxiv.org/abs/2106.04156">2106.04156</a></td><td>Q29</td><td>Spectral contrastive loss on augmentation graph; Lang cites it for conjecture</td></tr><tr><td><a href="https://arxiv.org/abs/2106.05091">2106.05091</a></td><td>Q01</td><td>PEBBLE: relabeling plus unsupervised pre-training, abstract verified.</td></tr><tr><td><a href="https://arxiv.org/abs/2202.01741">2202.01741</a></td><td>Q02</td><td>Zero-reward labels trade bias, sample complexity, distributional shift.</td></tr><tr><td><a href="https://arxiv.org/abs/2204.02892">2204.02892</a></td><td>Q09</td><td>Wies et al.; positive learnability theorem with intermediate supervision confirmed.</td></tr><tr><td><a href="https://arxiv.org/abs/2205.10625">2205.10625</a></td><td>Q09</td><td>Least-to-most prompting; large compositional generalization gains, confirmed.</td></tr><tr><td><a href="https://arxiv.org/abs/2206.13353">2206.13353</a></td><td>Q42</td><td>Abstract gives ~5% by 2070, May 2022 update &gt;10%</td></tr><tr><td><a href="https://arxiv.org/abs/2207.05221">2207.05221</a></td><td>Q11</td><td>Models calibrated on P(True) for their own proposed answers</td></tr><tr><td><a href="https://arxiv.org/abs/2207.10397">2207.10397</a></td><td>Q15</td><td>CodeT executes generated tests to rank candidate programs.</td></tr><tr><td><a href="https://arxiv.org/abs/2210.02406">2210.02406</a></td><td>Q15</td><td>Decomposed Prompting delegates sub-tasks to dedicated prompt handlers.</td></tr><tr><td><a href="https://arxiv.org/abs/2210.03350">2210.03350</a></td><td>Q09</td><td>Compositionality gap; knows sub-facts, fails composition, confirmed.</td></tr><tr><td><a href="https://arxiv.org/abs/2210.10760">2210.10760</a></td><td>Q01</td><td>Gold reward peaks then falls with KL; RM size, data matter.</td></tr><tr><td><a href="https://arxiv.org/abs/2211.17096">2211.17096</a></td><td>Q37</td><td>Mutreja-Shafer: sqrt(d)/eps^2 lower bound, interval protocol; abstract confirms</td></tr><tr><td><a href="https://arxiv.org/abs/2212.09689">2212.09689</a></td><td>Q14</td><td>Unnatural Instructions: model-generated data rivals human-written instruction datasets.</td></tr><tr><td><a href="https://arxiv.org/abs/2212.10560">2212.10560</a></td><td>Q14</td><td>Abstract confirms 33-point gain, 5% gap to InstructGPT-001, 175 seeds.</td></tr><tr><td><a href="https://arxiv.org/abs/2301.13246">2301.13246</a></td><td>Q15</td><td>Conversational APR feeds test failure info back iteratively.</td></tr><tr><td><a href="https://arxiv.org/abs/2302.08468">2302.08468</a></td><td>Q15</td><td>LEVER trains verifier on program plus execution result.</td></tr><tr><td><a href="https://arxiv.org/abs/2302.09664">2302.09664</a></td><td>Q39</td><td>Kuhn 2023 semantic entropy; bidirectional-entailment clustering of answers</td></tr><tr><td><a href="https://arxiv.org/abs/2302.13493">2302.13493</a></td><td>Q02</td><td>PDS: provable benefits of reward-free data in linear MDPs.</td></tr><tr><td><a href="https://arxiv.org/abs/2303.11366">2303.11366</a></td><td>Q15</td><td>Reflexion reflects verbally on environment and test feedback.</td></tr><tr><td><a href="https://arxiv.org/abs/2304.05128">2304.05128</a></td><td>Q15</td><td>Self-Debugging uses execution results and explanations to fix code.</td></tr><tr><td><a href="https://arxiv.org/abs/2305.03047">2305.03047</a></td><td>Q14</td><td>Abstract confirms Dromedary uses under 300 lines of human annotations.</td></tr><tr><td><a href="https://arxiv.org/abs/2305.04388">2305.04388</a></td><td>Q11</td><td>CoT explanations systematically omit biasing features that drove answers</td></tr><tr><td><a href="https://arxiv.org/abs/2305.11206">2305.11206</a></td><td>Q14</td><td>LIMA: 1000 examples, Superficial Alignment Hypothesis.</td></tr><tr><td><a href="https://arxiv.org/abs/2305.15717">2305.15717</a></td><td>Q14</td><td>False Promise of Imitation: copies style, not capability.</td></tr><tr><td><a href="https://arxiv.org/abs/2305.18654">2305.18654</a></td><td>Q09</td><td>Faith and Fate; decay with depth, scratchpad finetuning insufficient.</td></tr><tr><td><a href="https://arxiv.org/abs/2306.05685">2306.05685</a></td><td>Q14</td><td>MT-Bench judge: position, verbosity, self-enhancement biases; 80% human agreement.</td></tr><tr><td><a href="https://arxiv.org/abs/2308.06259">2308.06259</a></td><td>Q14</td><td>Abstract confirms small seed set plus web corpus self-augmentation.</td></tr><tr><td><a href="https://arxiv.org/abs/2308.15299">2308.15299</a></td><td>Q09</td><td>TaskLAMA; steps good, pairwise temporal dependencies poor, confirmed.</td></tr><tr><td><a href="https://arxiv.org/abs/2309.00267">2309.00267</a></td><td>Q14</td><td>RLAIF comparable to RLHF; works with same-size or same-checkpoint labeler.</td></tr><tr><td><a href="https://arxiv.org/abs/2309.12226">2309.12226</a></td><td>Q25</td><td>Daskalakis et al.; smooth-strategy deviations make equilibrium tractable.</td></tr><tr><td><a href="https://arxiv.org/abs/2310.01377">2310.01377</a></td><td>Q14</td><td>UltraFeedback: over 1M GPT-4 preference annotations replacing human feedback.</td></tr><tr><td><a href="https://arxiv.org/abs/2310.01726">2310.01726</a></td><td>Q15</td><td>LLMAO localizes faults without test coverage information.</td></tr><tr><td><a href="https://arxiv.org/abs/2310.01798">2310.01798</a></td><td>Q15</td><td>Intrinsic self-correction without external feedback fails, can degrade.</td></tr><tr><td><a href="https://arxiv.org/abs/2310.03716">2310.03716</a></td><td>Q14</td><td>RLHF reward gains largely driven by response length increase.</td></tr><tr><td><a href="https://arxiv.org/abs/2310.05910">2310.05910</a></td><td>Q14</td><td>SALMON instructable reward model trained on synthetic preferences, principles only.</td></tr><tr><td><a href="https://arxiv.org/abs/2310.06770">2310.06770</a></td><td>Q15</td><td>SWE-bench real GitHub issues with ground-truth test validation.</td></tr><tr><td><a href="https://arxiv.org/abs/2310.10080">2310.10080</a></td><td>Q18</td><td>Abstract: auto step-reward data, PRM-guided search improves code</td></tr><tr><td><a href="https://arxiv.org/abs/2310.13548">2310.13548</a></td><td>Q11</td><td>Humans and preference models prefer convincing sycophantic responses nontrivially</td></tr><tr><td><a href="https://arxiv.org/abs/2310.13798">2310.13798</a></td><td>Q49</td><td>Single general principle generalizes; detailed constitutions still improve control</td></tr><tr><td><a href="https://arxiv.org/abs/2310.16944">2310.16944</a></td><td>Q14</td><td>Zephyr beats Llama2-Chat-70B on MT-Bench, no human annotation; UltraChat was ChatGPT-written though.</td></tr><tr><td><a href="https://arxiv.org/abs/2310.19647">2310.19647</a></td><td>Q25</td><td>Content right but authors swapped: this is Peng-Rubinstein</td></tr><tr><td><a href="https://arxiv.org/abs/2310.19786">2310.19786</a></td><td>Q25</td><td>Content right but authors swapped: this is Dagan et al.</td></tr><tr><td><a href="https://arxiv.org/abs/2311.05772">2311.05772</a></td><td>Q09</td><td>ADaPT; as-needed recursive decomposition on executor failure, confirmed.</td></tr><tr><td><a href="https://arxiv.org/abs/2311.12022">2311.12022</a></td><td>Q06</td><td>GPQA: non-expert validators with web access reach 34%.</td></tr><tr><td><a href="https://arxiv.org/abs/2312.01552">2312.01552</a></td><td>Q14</td><td>URIAL: three constant stylistic in-context examples match SFT/RLHF models.</td></tr><tr><td><a href="https://arxiv.org/abs/2401.01335">2401.01335</a></td><td>Q14</td><td>SPIN self-play uses only existing SFT demonstration data.</td></tr><tr><td><a href="https://arxiv.org/abs/2401.02843">2401.02843</a></td><td>Q42</td><td>Section 4.2: median 5% extremely bad; control-loss question median 10%</td></tr><tr><td><a href="https://arxiv.org/abs/2401.04088">2401.04088</a></td><td>Q24</td><td>Mixtral 8x7B sparse MoE paper; Instruct trained via SFT then DPO</td></tr><tr><td><a href="https://arxiv.org/abs/2401.10020">2401.10020</a></td><td>Q14</td><td>Abstract confirms LLM-as-judge iterative DPO improves Llama-2-70B instruction following.</td></tr><tr><td><a href="https://arxiv.org/abs/2402.00667">2402.00667</a></td><td>Q38</td><td>Sang et al.; SciQ pilot, bagging/boosting, debate, human-AI, confirmed</td></tr><tr><td><a href="https://arxiv.org/abs/2402.05120">2402.05120</a></td><td>Q17</td><td>More Agents Is All You Need; sampling-and-voting scales with agents</td></tr><tr><td><a href="https://arxiv.org/abs/2402.12366">2402.12366</a></td><td>Q40</td><td>Abstract states GPT-4 SFT beats weak-SFT plus RLAIF pipelines</td></tr><tr><td><a href="https://arxiv.org/abs/2402.16906">2402.16906</a></td><td>Q15</td><td>LDB tracks intermediate variables per basic block for debugging.</td></tr><tr><td><a href="https://arxiv.org/abs/2402.18272">2402.18272</a></td><td>Q17</td><td>Strongly prompted single agent matches best multi-agent discussion.</td></tr><tr><td><a href="https://arxiv.org/abs/2403.05030">2403.05030</a></td><td>Q45</td><td>LAT defends against unforeseen failure modes, removes backdoors</td></tr><tr><td><a href="https://arxiv.org/abs/2403.17134">2403.17134</a></td><td>Q15</td><td>RepairAgent autonomously plans and invokes tools for repair.</td></tr><tr><td><a href="https://arxiv.org/abs/2404.05427">2404.05427</a></td><td>Q15</td><td>AutoCodeRover uses AST-aware code search to localize, patch.</td></tr><tr><td><a href="https://arxiv.org/abs/2404.08158">2404.08158</a></td><td>Q37</td><td>Gur et al.: Fourier, AC0[2], juntas; O(1) triviality confirmed</td></tr><tr><td><a href="https://arxiv.org/abs/2404.18796">2404.18796</a></td><td>Q16</td><td>PoLL abstract confirms panel beats single judge, less intra-model bias.</td></tr><tr><td><a href="https://arxiv.org/abs/2405.06624">2405.06624</a></td><td>Q41</td><td>Dalrymple guaranteed safe AI framework, formal guarantees</td></tr><tr><td><a href="https://arxiv.org/abs/2405.15793">2405.15793</a></td><td>Q15</td><td>SWE-agent custom agent-computer interface for repository fixing.</td></tr><tr><td><a href="https://arxiv.org/abs/2405.19550">2405.19550</a></td><td>Q44</td><td>Paper: RL cannot explore good behaviors from weak starting policy.</td></tr><tr><td><a href="https://arxiv.org/abs/2406.03199">2406.03199</a></td><td>Q38</td><td>Cui et al.; Bayesian weak ensembles, generation with DPO, confirmed</td></tr><tr><td><a href="https://arxiv.org/abs/2406.07358">2406.07358</a></td><td>Q44</td><td>van der Weij sandbagging; listed in sources only, not used in body</td></tr><tr><td><a href="https://arxiv.org/abs/2406.08464">2406.08464</a></td><td>Q14</td><td>Abstract confirms extracting instruction data from aligned Llama-3-Instruct.</td></tr><tr><td><a href="https://arxiv.org/abs/2406.11776">2406.11776</a></td><td>Q17</td><td>Sparse topology comparable or better at lower cost, confirmed</td></tr><tr><td><a href="https://arxiv.org/abs/2407.01489">2407.01489</a></td><td>Q15</td><td>Agentless localization-repair-validation pipeline competitive with agents.</td></tr><tr><td><a href="https://arxiv.org/abs/2407.15549">2407.15549</a></td><td>Q45</td><td>Targeted LAT removes backdoors without trigger knowledge</td></tr><tr><td><a href="https://arxiv.org/abs/2408.11791">2408.11791</a></td><td>Q31</td><td>CLoud gains 4.65 and 5.84 points; roughly five is fair.</td></tr><tr><td><a href="https://arxiv.org/abs/2409.07985">2409.07985</a></td><td>Q41</td><td>AI-Control Games formalism; adversary best response, modelling assumptions</td></tr><tr><td><a href="https://arxiv.org/abs/2409.18433">2409.18433</a></td><td>Q27</td><td>IRT/Glicko-2 labels; naive SFT transfer deteriorates on E2H-AMC</td></tr><tr><td><a href="https://arxiv.org/abs/2410.08146">2410.08146</a></td><td>Q18</td><td>Setlur PAVs; process reward as step advantage, confirmed</td></tr><tr><td><a href="https://arxiv.org/abs/2410.13502">2410.13502</a></td><td>Q27</td><td>Significant drop with proof depth/width; generalization noisy</td></tr><tr><td><a href="https://arxiv.org/abs/2410.18837">2410.18837</a></td><td>Q26</td><td>Ildiz ridgeless distillation; W2S helps, cannot improve scaling law.</td></tr><tr><td><a href="https://arxiv.org/abs/2410.21819">2410.21819</a></td><td>Q39</td><td>Wataoka 2024; self-preference tied to lower perplexity under judge</td></tr><tr><td><a href="https://arxiv.org/abs/2411.02400">2411.02400</a></td><td>Q09</td><td>Trade-off between accuracy gains and decomposition-introduced noise</td></tr><tr><td><a href="https://arxiv.org/abs/2411.17693">2411.17693</a></td><td>Q45</td><td>Adaptive macro-protocols for distributed threat control setting</td></tr><tr><td><a href="https://arxiv.org/abs/2412.01784">2412.01784</a></td><td>Q44</td><td>Tice noise injection; anomalous performance gains flag sandbagging confirmed</td></tr><tr><td><a href="https://arxiv.org/abs/2412.04984">2412.04984</a></td><td>Q42</td><td>Models disable oversight and exfiltrate weights in agentic evaluations</td></tr><tr><td><a href="https://arxiv.org/abs/2412.14161">2412.14161</a></td><td>Q09</td><td>TheAgentCompany; v1 said 24%, current abstract says 30%.</td></tr><tr><td><a href="https://arxiv.org/abs/2412.15118">2412.15118</a></td><td>Q18</td><td>Yu ORPS; execution-grounded process plus outcome, confirmed</td></tr><tr><td><a href="https://arxiv.org/abs/2501.07301">2501.07301</a></td><td>Q18</td><td>Qwen PRM lessons; MC labels weak, BoN scores inflated</td></tr><tr><td><a href="https://arxiv.org/abs/2501.07886">2501.07886</a></td><td>Q38</td><td>Ye et al.; DPO fails, ILR works under unreliable supervision, confirmed</td></tr><tr><td><a href="https://arxiv.org/abs/2502.01456">2502.01456</a></td><td>Q18</td><td>PRIME implicit PRM from outcome labels; math and code</td></tr><tr><td><a href="https://arxiv.org/abs/2502.01458">2502.01458</a></td><td>Q26</td><td>Yao KL extension; teacher error and calibration bounds</td></tr><tr><td><a href="https://arxiv.org/abs/2502.01534">2502.01534</a></td><td>Q39</td><td>Li 2025 preference leakage; same/inheritance/family relatedness bias</td></tr><tr><td><a href="https://arxiv.org/abs/2502.03492">2502.03492</a></td><td>Q11</td><td>CTRL RL critics raise pass rates for fixed generator, no human supervision</td></tr><tr><td><a href="https://arxiv.org/abs/2502.10325">2502.10325</a></td><td>Q18</td><td>AgentPRM framework; also has ALFWorld results, not just proposal</td></tr><tr><td><a href="https://arxiv.org/abs/2502.12150">2502.12150</a></td><td>Q39</td><td>Sun 2025; 97.1% five-way, persists after rewrite/translation</td></tr><tr><td><a href="https://arxiv.org/abs/2502.16797">2502.16797</a></td><td>Q41</td><td>Jones et al.; elicitation-probability tail extrapolation, as described</td></tr><tr><td><a href="https://arxiv.org/abs/2502.19130">2502.19130</a></td><td>Q17</td><td>Abstract: more agents help, more rounds before voting hurt.</td></tr><tr><td><a href="https://arxiv.org/abs/2503.02877">2503.02877</a></td><td>Q26</td><td>Medvedev random features; early stopping enables W2S, quantitative limits.</td></tr><tr><td><a href="https://arxiv.org/abs/2503.09572">2503.09572</a></td><td>Q09</td><td>Plan-and-Act; planner/executor split trained on synthetic plans.</td></tr><tr><td><a href="https://arxiv.org/abs/2503.11926">2503.11926</a></td><td>Q18</td><td>Abstract: CoT-monitor RL reward yields obfuscated hacking under optimization</td></tr><tr><td><a href="https://arxiv.org/abs/2503.13657">2503.13657</a></td><td>Q09</td><td>MAST taxonomy; design/misalignment/verification; &#x27;decomposition&#x27; slight gloss.</td></tr><tr><td><a href="https://arxiv.org/abs/2503.22989">2503.22989</a></td><td>Q12</td><td>FindTheFlaws: expert-annotated flawed solutions across five domains</td></tr><tr><td><a href="https://arxiv.org/abs/2504.07316">2504.07316</a></td><td>Q30</td><td>Alice elicits teacher uncertainty; student self-generates supervision confirmed</td></tr><tr><td><a href="https://arxiv.org/abs/2504.11741">2504.11741</a></td><td>Q27</td><td>All SFT models score 0% on Exh tier; SFT data not tier-labelled</td></tr><tr><td><a href="https://arxiv.org/abs/2504.16828">2504.16828</a></td><td>Q18</td><td>ThinkPRM; ~1K examples (8K step labels), GPQA, LiveCodeBench</td></tr><tr><td><a href="https://arxiv.org/abs/2505.05410">2505.05410</a></td><td>Q11</td><td>Reasoning models reveal used hints often below 20% of time</td></tr><tr><td><a href="https://arxiv.org/abs/2505.18346">2505.18346</a></td><td>Q26</td><td>Moniri three mechanisms: regularization compensation, alignment, easy-hard features.</td></tr><tr><td><a href="https://arxiv.org/abs/2505.24313">2505.24313</a></td><td>Q26</td><td>Xu Bregman bias-variance; risk gap equals misfit without convexity.</td></tr><tr><td><a href="https://arxiv.org/abs/2506.07962">2506.07962</a></td><td>Q39</td><td>Kim 2025; 350+ LLMs, 60% joint-error agreement, judge effects</td></tr><tr><td><a href="https://arxiv.org/abs/2509.14260">2509.14260</a></td><td>Q42</td><td>Palisade: some frontier models subvert shutdown to finish incomplete tasks</td></tr><tr><td><a href="https://arxiv.org/abs/2509.24005">2509.24005</a></td><td>Q26</td><td>Liu spurious correlations; gain diminishes with teacher-unlabeled group mismatch.</td></tr><tr><td><a href="https://arxiv.org/abs/2510.22954">2510.22954</a></td><td>Q39</td><td>Jiang 2025 Artificial Hivemind; inter-model homogeneity, open-ended prompts</td></tr><tr><td><a href="https://arxiv.org/abs/2510.24812">2510.24812</a></td><td>Q26</td><td>Oh CNN feature learning; data regimes, overtraining degrades performance.</td></tr><tr><td><a href="https://arxiv.org/abs/2511.02997">2511.02997</a></td><td>Q41</td><td>Abstract confirms 50% to 96%, affordances drop to 17%</td></tr><tr><td><a href="https://arxiv.org/abs/2512.22154">2512.22154</a></td><td>Q41</td><td>Lindner deployment monitoring: latency, parallel instances, incremental attacks</td></tr><tr><td><a href="https://arxiv.org/abs/2602.08630">2602.08630</a></td><td>Q10</td><td>Debate Query Complexity: bits a verifier must inspect.</td></tr><tr><td><a href="https://arxiv.org/abs/2602.20400">2602.20400</a></td><td>Q27</td><td>Three dataset properties; no technique reliably survives stress tests</td></tr><tr><td><a href="https://arxiv.org/abs/2602.23248">2602.23248</a></td><td>Q08</td><td>GSM8K-Aug Table 1 shows 56.9 vs 22.3; Theorem 1 confirmed.</td></tr><tr><td><a href="https://arxiv.org/abs/2605.25629">2605.25629</a></td><td>Q38</td><td>Le et al. 2026; W2S reward models brittle under preference shift, confirmed</td></tr><tr><td><a href="https://arxiv.org/abs/2606.01000">2606.01000</a></td><td>Q30</td><td>Trust functions filter weak labels; near-lossless generalization confirmed</td></tr><tr><td><a href="https://arxiv.org/abs/2608.18091">2608.18091</a></td><td>Q39</td><td>Chae 2026; blind self-preference vanishes, self/other labels bias</td></tr><tr><td><a href="https://arxiv.org/abs/2609.33936">2609.33936</a></td><td>Q39</td><td>Schaeffer 2026 critique; null baseline and 0.8 threshold disputed</td></tr></tbody></table></div></details>
+    </section>
+
+    <section id="questions">
+      <h2>All 52 questions</h2>
+      <details class="ftd"><summary>Show every question and its result</summary><div class="scroll"><table class="ftt"><thead><tr><th>Question</th><th>Better answer</th><th>Atlas</th></tr></thead><tbody><tr><td><a href="./#q01">Q01</a> How can a system be made to respect parts of its objective that are too expensive to evaluate often during training?</td><td>atlas answer</td><td>answers</td></tr><tr><td><a href="./#q02">Q02</a> Proposed experiments: can RL learn nearly as fast with reward on 10% of episodes?</td><td>answer without the atlas</td><td>does not answer</td></tr><tr><td><a href="./#q03">Q03</a> Does self-play training stably converge to honest debate equilibria?</td><td>atlas answer</td><td>answers</td></tr><tr><td><a href="./#q04">Q04</a> Is there a natural debate protocol for stochastic simulations, where each step adds noise?</td><td>atlas answer</td><td>answers</td></tr><tr><td><a href="./#q05">Q05</a> Can Iterated Amplification be applied to complex real-world beyond-human-scale tasks?</td><td>atlas answer</td><td>partly answers</td></tr><tr><td><a href="./#q06">Q06</a> Does debate&#x27;s honesty assumption hold beyond fact-checkable claims; can humans judge?</td><td>atlas answer</td><td>answers</td></tr><tr><td><a href="./#q07">Q07</a> Do errors accumulate across levels of recursive reward modeling?</td><td>atlas answer</td><td>answers</td></tr><tr><td><a href="./#q08">Q08</a> How do provers and verifiers behave at approximate equilibria when prover-verifier games are scaled to harder problems?</td><td>atlas answer</td><td>answers</td></tr><tr><td><a href="./#q09">Q09</a> Is learned task decomposition feasible for hard real-world tasks, and where does it fail?</td><td>atlas answer</td><td>partly answers</td></tr><tr><td><a href="./#q10">Q10</a> Is multi-turn debate with explicit counterarguments needed to help human judges?</td><td>judges split</td><td>answers</td></tr><tr><td><a href="./#q11">Q11</a> How far can critique training be pushed relative to discriminator performance, and what stops models from explaining what they know?</td><td>judges split</td><td>partly answers</td></tr><tr><td><a href="./#q12">Q12</a> Could debate help human judges in other set-ups such as highly technical tasks?</td><td>answer without the atlas</td><td>answers</td></tr><tr><td><a href="./#q13">Q13</a> Do debate, market-making and recursive reward modeling work in sandwiching trials?</td><td>atlas answer</td><td>partly answers</td></tr><tr><td><a href="./#q14">Q14</a> Can helpfulness and instruction-following be trained without human feedback labels?</td><td>atlas answer</td><td>answers</td></tr><tr><td><a href="./#q15">Q15</a> What is needed to automate decomposition, error analysis and program repair?</td><td>atlas answer</td><td>partly answers</td></tr><tr><td><a href="./#q16">Q16</a> Can several examiner models, or a trained examiner, make cross-examination better at detecting factual errors?</td><td>atlas answer</td><td>partly answers</td></tr><tr><td><a href="./#q17">Q17</a> How many agents should take part in a multi-agent debate, and can debate serve as AI feedback for alignment?</td><td>answer without the atlas</td><td>answers</td></tr><tr><td><a href="./#q18">Q18</a> Open question: does process supervision&#x27;s advantage generalize beyond math?</td><td>atlas answer</td><td>partly answers</td></tr><tr><td><a href="./#q19">Q19</a> Can debate extract inductive or tacit knowledge that lacks short, citeable justifications?</td><td>atlas answer</td><td>does not answer</td></tr><tr><td><a href="./#q20">Q20</a> Does debate still work when judges hold strong inaccurate priors or cognitive biases?</td><td>answer without the atlas</td><td>answers</td></tr><tr><td><a href="./#q21">Q21</a> Will obfuscated arguments become an obstacle for debate on harder questions?</td><td>atlas answer</td><td>partly answers</td></tr><tr><td><a href="./#q22">Q22</a> Do doubly-efficient debate guarantees survive an oracle that gives wrong answers on some queries?</td><td>atlas answer</td><td>does not answer</td></tr><tr><td><a href="./#q23">Q23</a> Is there a debate model where the honest prover always has an efficient strategy even without a short human-verifiable transcript?</td><td>atlas answer</td><td>answers</td></tr><tr><td><a href="./#q24">Q24</a> Why do MAD hyperparameters transfer from GPT-3.5 to GPT-4 but not to Mixtral?</td><td>atlas answer</td><td>does not answer</td></tr><tr><td><a href="./#q25">Q25</a> Which oracle models, regret notions and equilibrium concepts suit debate modelled as a game with a very large action space?</td><td>atlas answer</td><td>answers</td></tr><tr><td><a href="./#q26">Q26</a> What makes a concept easy or hard for a strong model to learn from weak labels, and can weak-to-strong generalization error be estimated without labels?</td><td>answer without the atlas</td><td>partly answers</td></tr><tr><td><a href="./#q27">Q27</a> Open question: are the tested hardness gaps large enough to generalize easy-to-hard?</td><td>answer without the atlas</td><td>answers</td></tr><tr><td><a href="./#q28">Q28</a> Does debate generalise to larger evidence bases or uncitable parametric knowledge?</td><td>answer without the atlas</td><td>partly answers</td></tr><tr><td><a href="./#q29">Q29</a> Open question: can pseudolabeler-aware contrastive pretraining improve weak-to-strong?</td><td>atlas answer</td><td>does not answer</td></tr><tr><td><a href="./#q30">Q30</a> Open question: how do strong models perceive the knowledge boundaries of weak supervisors?</td><td>atlas answer</td><td>partly answers</td></tr><tr><td><a href="./#q31">Q31</a> When is a further recursive reward modeling step appropriate; can critique support it?</td><td>atlas answer</td><td>answers</td></tr><tr><td><a href="./#q32">Q32</a> Can debate with weak judges beat direct QA baselines, e.g. via judge fine-tuning?</td><td>judges split</td><td>partly answers</td></tr><tr><td><a href="./#q33">Q33</a> Does training debaters and consultants on weak-judge signals improve judge accuracy?</td><td>atlas answer</td><td>answers</td></tr><tr><td><a href="./#q34">Q34</a> Open question: what assistance best helps humans judge solutions from larger models?</td><td>judges split</td><td>answers</td></tr><tr><td><a href="./#q35">Q35</a> Do scalable oversight methods (critique, debate, decomposition) work on misleading errors?</td><td>atlas answer</td><td>partly answers</td></tr><tr><td><a href="./#q36">Q36</a> Could stronger debaters find judge-perplexing strategies such as obfuscated arguments?</td><td>atlas answer</td><td>answers</td></tr><tr><td><a href="./#q37">Q37</a> Can learning-theoretic results say how the abilities of learning agents and available data affect a weaker agent&#x27;s ability to verify a stronger one?</td><td>atlas answer</td><td>does not answer</td></tr><tr><td><a href="./#q38">Q38</a> Which other combinations of scalable oversight and weak-to-strong generalization work?</td><td>atlas answer</td><td>partly answers</td></tr><tr><td><a href="./#q39">Q39</a> How can model similarity be measured on free-text answers and reasoning, to study its role in debate and process supervision?</td><td>atlas answer</td><td>partly answers</td></tr><tr><td><a href="./#q40">Q40</a> Why does direct supervision beat recursive critique when a stronger model supervises a weaker one, and would better critique abilities change that?</td><td>atlas answer</td><td>partly answers</td></tr><tr><td><a href="./#q41">Q41</a> Do protocols that raise worst-case ASD resist rare catastrophic failures?</td><td>atlas answer</td><td>does not answer</td></tr><tr><td><a href="./#q42">Q42</a> What is the probability that ASI escapes control (Compton constant) in realistic settings?</td><td>atlas answer</td><td>does not answer</td></tr><tr><td><a href="./#q43">Q43</a> Open empirical questions: does debate help, reach equilibrium, show obfuscation?</td><td>judges split</td><td>partly answers</td></tr><tr><td><a href="./#q44">Q44</a> Open: how serious is exploration hacking and how can it be prevented?</td><td>atlas answer</td><td>does not answer</td></tr><tr><td><a href="./#q45">Q45</a> Without online training in high-stakes settings, how can distribution shift, alignment faking and coordinated errors be handled?</td><td>judges split</td><td>does not answer</td></tr><tr><td><a href="./#q46">Q46</a> Open: does prover-estimator debate avoid obfuscation, and are its debaters poly-time?</td><td>atlas answer</td><td>answers</td></tr><tr><td><a href="./#q47">Q47</a> Can a debate protocol avoid needing stability, for example by targeting honesty instead of correctness?</td><td>atlas answer</td><td>partly answers</td></tr><tr><td><a href="./#q48">Q48</a> Does persona-aware debate help human judges on manipulated content, satire, propaganda and unresolved claims?</td><td>atlas answer</td><td>does not answer</td></tr><tr><td><a href="./#q49">Q49</a> How would humans check that an unsupervised elicitation method reads a constitution as intended?</td><td>atlas answer</td><td>does not answer</td></tr><tr><td><a href="./#q50">Q50</a> Does some variant of debate work as a component of an overall alignment strategy?</td><td>atlas answer</td><td>partly answers</td></tr><tr><td><a href="./#q51">Q51</a> Open: is stability necessary, and which problems admit stable decompositions?</td><td>answer without the atlas</td><td>does not answer</td></tr><tr><td><a href="./#q52">Q52</a> Which debate graph topologies satisfy the martingale condition?</td><td>atlas answer</td><td>does not answer</td></tr></tbody></table></div></details>
+      <p class="note">Run on the public build of 24 October 2026 (site commit eca4747). The questions, prompts and scoring scripts are kept at commit 6321b33 of the project's repository. The numbers on this page come from <a href="first_test.json">first_test.json</a>.</p>
+    </section>
+    </div>
+    </body>
+    </html>
+    
